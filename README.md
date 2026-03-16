@@ -27,7 +27,7 @@ cp .env.example .env
 Минимально для запуска:
 
 ```env
-DATABASE_URI=postgresql://user:password@localhost:5432/8blocks
+DATABASE_URI=postgresql://user:password@localhost:5432/eightblocks
 PAYLOAD_SECRET=your-random-secret-key
 ```
 
