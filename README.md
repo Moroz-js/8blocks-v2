@@ -36,7 +36,7 @@ PAYLOAD_SECRET=your-random-secret-key
 Создайте базу PostgreSQL и при необходимости пользователя:
 
 ```sql
-CREATE DATABASE 8blocks;
+CREATE DATABASE eightblocks;
 ```
 
 ### 4. Миграции
