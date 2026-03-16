@@ -1,0 +1,233 @@
+@use '@/shared/styles/variables' as *;
+
+.root {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  padding-block: $space-10 $space-12;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    padding-block: $space-5 $space-7;
+    gap: $space-6;
+  }
+}
+
+// ── Page header ───────────────────────────────────────────────────
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  padding-bottom: $space-8;
+  border-bottom: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-mobile}) {
+    gap: $space-4;
+    padding-bottom: $space-5;
+  }
+}
+
+.pageHeaderInner {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.labelBracket {
+  opacity: 0.5;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.count {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+// ── Category filter ───────────────────────────────────────────────
+.categoryNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.catChip {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 $space-4;
+  border: 1px solid $border-secondary;
+  border-radius: 100px;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-secondary;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: border-color $transition-fast, color $transition-fast, background $transition-fast;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $border-primary;
+    color: $text-primary;
+  }
+}
+
+.catChipActive {
+  border-color: rgba(197, 61, 255, 0.45);
+  color: rgba(197, 61, 255, 0.9);
+  background: rgba(197, 61, 255, 0.06);
+
+  &:hover {
+    border-color: $accent-purple;
+    color: $accent-purple;
+  }
+}
+
+// ── Article grid ──────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-6;
+  align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+    gap: $space-5;
+  }
+}
+
+// ── Empty state ───────────────────────────────────────────────────
+.empty {
+  padding-block: $space-12;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-3;
+  text-align: center;
+}
+
+.emptyText {
+  font-family: $font-base;
+  font-size: $text-xl;
+  font-weight: 500;
+  color: $text-primary;
+  margin: 0;
+}
+
+.emptyHint {
+  font-size: $text-base;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+// ── Pagination ────────────────────────────────────────────────────
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+}
+
+.pageNumbers {
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.pageArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-md;
+  font-size: $text-base;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: border-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    border-color: $border-primary;
+    color: $text-primary;
+  }
+}
+
+.pageNum {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid transparent;
+  border-radius: $radius-md;
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: border-color $transition-fast, color $transition-fast, background $transition-fast;
+
+  &:hover {
+    border-color: $border-secondary;
+    color: $text-primary;
+  }
+}
+
+.pageNumActive {
+  border-color: $border-primary;
+  color: $text-primary;
+  background: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+
+.pageEllipsis {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-tertiary;
+  font-size: $text-sm;
+  user-select: none;
+}
+
+// ── Page info ─────────────────────────────────────────────────────
+.pageInfo {
+  text-align: center;
+  font-family: $font-base;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.04em;
+  margin: 0;
+  margin-top: -$space-6;
+}

@@ -1,0 +1,104 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  position: relative;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  padding-block: $space-10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-6;
+  text-align: center;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-xl;
+  background: $bg-secondary;
+  overflow: hidden;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    padding-block: $space-8;
+    gap: $space-5;
+  }
+}
+
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width:  min(600px, 90%);
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(194, 78, 136, 0.12) 0%,
+    rgba(142, 74, 189, 0.06) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.headline {
+  position: relative;
+  z-index: 1;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  max-width: 560px;
+}
+
+.cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  height: 54px;
+  padding: 0 $space-8;
+  background: $text-primary;
+  color: #050308;
+  border-radius: $radius-sm;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  text-decoration: none;
+  transition: background $transition-base, transform $transition-fast, box-shadow $transition-base;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.ctaArrow {
+  font-size: 16px;
+  transition: transform $transition-fast;
+
+  .cta:hover & {
+    transform: translateX(3px);
+  }
+}

@@ -1,0 +1,118 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: $space-6;
+  align-items: flex-start;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 56px 1fr;
+    gap: $space-4;
+  }
+}
+
+.stepLeft {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: $bg-tertiary;
+  border: 1px solid $border-secondary;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  color: $text-primary;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: border-color $transition-base, color $transition-base;
+
+  .step:hover & {
+    border-color: rgba(194, 78, 136, 0.4);
+    color: $accent-purple;
+  }
+}
+
+.stepLine {
+  position: absolute;
+  top: 52px;
+  left: 50%;
+  width: 1px;
+  height: calc(100% + $space-6);
+  background: linear-gradient(to bottom, $border-secondary, transparent);
+  transform: translateX(-50%);
+}
+
+.step:last-child .stepLine {
+  display: none;
+}
+
+.stepRight {
+  padding-bottom: $space-8;
+}
+
+.stepTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-lg;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0 0 $space-2;
+}
+
+.stepDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}

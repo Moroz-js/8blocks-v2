@@ -1,0 +1,139 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.labelBracket {
+  opacity: 0.6;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  position: relative;
+  padding: $space-6;
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: border-color $transition-base, background $transition-base;
+
+  &:hover {
+    background: $bg-tertiary;
+    border-color: rgba(255, 255, 255, 0.12);
+
+    .cardTopBorder {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .cardIcon {
+      color: $accent-purple;
+      opacity: 1;
+    }
+  }
+}
+
+.cardTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: $gradient-card-border;
+  opacity: 0;
+  transform: scaleX(0.5);
+  transform-origin: left center;
+  transition: opacity $transition-base, transform 0.4s ease;
+}
+
+.cardIcon {
+  width: 28px;
+  height: 28px;
+  color: $text-tertiary;
+  opacity: 0.7;
+  margin-bottom: $space-4;
+  transition: color $transition-base, opacity $transition-base;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0 0 $space-2;
+}
+
+.cardDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}

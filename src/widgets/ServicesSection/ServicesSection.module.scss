@@ -1,0 +1,281 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────────
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.labelBracket {
+  opacity: 0.6;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: $space-6;
+
+  @media (max-width: #{$bp-mobile}) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(30px, 3.8vw, 52px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+
+.viewAll {
+  flex-shrink: 0;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding-bottom: 4px;
+  border-bottom: 1px solid $border-secondary;
+  transition: color $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+    border-color: $border-primary;
+  }
+}
+
+// ── Grid ──────────────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  // motion.div wrappers must be flex so <Link> can fill their height
+  > * {
+    display: flex;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Card ──────────────────────────────────────────────────────────
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: $space-6 $space-7 $space-7;
+  border-radius: $radius-xl;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(12, 10, 18, 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color $transition-base, background $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.13);
+    background: rgba(18, 14, 28, 0.65);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+
+    .cardTopBorder {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .cardArrow {
+      transform: translateX(4px);
+    }
+
+    .iconSmall {
+      opacity: 1;
+    }
+
+    .cardBgIcon {
+      opacity: 0.12;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-6;
+  }
+}
+
+// Hover top accent border
+.cardTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  opacity: 0;
+  transform: scaleX(0.4);
+  transform-origin: left center;
+  transition: opacity $transition-base, transform 0.45s ease;
+}
+
+// Accent color modifiers
+.accentPurple {
+  .cardTopBorder {
+    background: $gradient-card-border;
+  }
+  .iconSmall { color: rgba(194, 78, 136, 0.9); }
+  .cardBgIcon { color: rgba(194, 78, 136, 1); }
+}
+
+.accentGreen {
+  .cardTopBorder {
+    background: linear-gradient(90deg, $accent-green 0%, rgba(117, 251, 99, 0) 80%);
+  }
+  .iconSmall { color: rgba(117, 251, 99, 0.9); }
+  .cardBgIcon { color: rgba(117, 251, 99, 1); }
+}
+
+.accentBlue {
+  .cardTopBorder {
+    background: linear-gradient(90deg, $accent-blue 0%, rgba(99, 142, 251, 0) 80%);
+  }
+  .iconSmall { color: rgba(99, 142, 251, 0.9); }
+  .cardBgIcon { color: rgba(99, 142, 251, 1); }
+}
+
+// ── Background watermark icon ──────────────────────────────────────
+.cardBgIcon {
+  display: none;
+}
+
+// ── Small foreground icon ──────────────────────────────────────────
+.iconSmall {
+  width: 28px;
+  height: 28px;
+  color: $text-tertiary;
+  opacity: 0.7;
+  transition: opacity $transition-base, color $transition-base;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// ── Card number ────────────────────────────────────────────────────
+.cardNumber {
+  position: absolute;
+  top: $space-6;
+  right: $space-6;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  opacity: 0.3;
+}
+
+// ── Content ───────────────────────────────────────────────────────
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin-top: $space-5;
+  padding-bottom: $space-6;
+}
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-lg;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cardDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.65;
+  color: $text-tertiary;
+  margin: 0;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+// ── Card footer ────────────────────────────────────────────────────
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: $space-5;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.cardLink {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.cardArrow {
+  font-size: 14px;
+  color: $text-tertiary;
+  transition: transform $transition-fast;
+}

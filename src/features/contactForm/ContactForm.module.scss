@@ -1,0 +1,196 @@
+@use '@/shared/styles/variables' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.label {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+%input-base {
+  font-family: $font-base;
+  font-size: $text-base;
+  color: $text-primary;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid $border-secondary;
+  border-radius: $radius-sm;
+  padding: $space-3 $space-4;
+  width: 100%;
+  transition: border-color $transition-fast, background $transition-fast;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  &:hover {
+    border-color: $border-primary;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  &:focus {
+    border-color: rgba(197, 61, 255, 0.5);
+    background: rgba(197, 61, 255, 0.04);
+    box-shadow: 0 0 0 3px rgba(197, 61, 255, 0.1);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.input {
+  @extend %input-base;
+  height: 48px;
+}
+
+.textarea {
+  @extend %input-base;
+  resize: none;
+  min-height: 110px;
+  line-height: $leading-relaxed;
+}
+
+.errorMsg {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: #ff6b6b;
+  padding: $space-3 $space-4;
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: $radius-sm;
+}
+
+// ── Submit button ──────────────────────────────────────────────────
+.submit {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  height: 52px;
+  padding: 0 $space-7;
+  background: $text-primary;
+  color: #050308;
+  border: none;
+  border-radius: $radius-sm;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  cursor: pointer;
+  transition: background $transition-base, transform $transition-fast, opacity $transition-fast;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.88);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 3px;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    align-self: stretch;
+    justify-content: center;
+  }
+}
+
+.submitArrow {
+  font-size: 16px;
+  transition: transform $transition-fast;
+
+  .submit:hover:not(:disabled) & {
+    transform: translateX(3px);
+  }
+}
+
+// ── Spinner ────────────────────────────────────────────────────────
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  border-top-color: #050308;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Success state ──────────────────────────────────────────────────
+.success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-6;
+  border: 1px solid rgba(117, 251, 99, 0.25);
+  border-radius: $radius-md;
+  background: rgba(117, 251, 99, 0.04);
+}
+
+.successIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(117, 251, 99, 0.15);
+  border: 1px solid rgba(117, 251, 99, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: $accent-green;
+}
+
+.successTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-lg;
+  color: $text-primary;
+  margin: 0;
+}
+
+.successBody {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  color: $text-secondary;
+  margin: 0;
+}

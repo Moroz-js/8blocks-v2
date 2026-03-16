@@ -1,0 +1,35 @@
+@use '@/shared/styles/variables' as *;
+
+.root {
+  margin-top: $space-12;
+  padding-top: $space-9;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.label {
+  font-size: $text-xs;
+  font-weight: 500;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 $space-7;
+}
+
+.bracket {
+  color: $accent-purple;
+  margin-inline: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-6;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}

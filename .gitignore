@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# uploads (keep only .gitkeep)
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+# payload generated types
+payload-types.ts
+
+# env files
+.env.local

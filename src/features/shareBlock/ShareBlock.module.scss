@@ -1,0 +1,47 @@
+@use '@/shared/styles/variables' as *;
+
+.root {
+  margin-bottom: $space-7;
+}
+
+.label {
+  font-size: $text-xs;
+  font-weight: 400;
+  color: $text-tertiary;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: $space-3;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: $text-tertiary;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color $transition-fast, color $transition-fast, background $transition-fast;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: $text-primary;
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.copied {
+  border-color: rgba(80, 220, 140, 0.4) !important;
+  color: rgb(80, 220, 140) !important;
+}

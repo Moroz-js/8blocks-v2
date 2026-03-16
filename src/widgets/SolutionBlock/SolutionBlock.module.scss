@@ -1,0 +1,175 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.description {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 640px;
+}
+
+// ── Flow variant ──────────────────────────────────────────────────
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  row-gap: $space-4;
+
+  @media (max-width: #{$bp-tablet}) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.flowNode {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.flowLabel {
+  display: inline-block;
+  padding: $space-3 $space-5;
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-md;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  color: $text-primary;
+  white-space: nowrap;
+  transition: border-color $transition-base, background $transition-base;
+
+  .flowNode:hover & {
+    background: $bg-tertiary;
+    border-color: rgba(194, 78, 136, 0.35);
+  }
+
+  @media (max-width: #{$bp-tablet}) {
+    white-space: normal;
+  }
+}
+
+.flowConnector {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  margin: 0 $space-2;
+  background: $gradient-accent-h;
+  opacity: 0.5;
+  flex-shrink: 0;
+
+  @media (max-width: #{$bp-tablet}) {
+    width: 1px;
+    height: 20px;
+    margin: 0 0 0 $space-5;
+    background: linear-gradient(to bottom, $pal-magenta, transparent);
+  }
+}
+
+// ── Principles variant ──────────────────────────────────────────────
+.principlesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-4;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.principleCard {
+  position: relative;
+  padding: $space-6;
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  transition: border-color $transition-base, background $transition-base;
+
+  &:hover {
+    background: $bg-tertiary;
+    border-color: rgba(255, 255, 255, 0.12);
+
+    .cardTopBorder {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+}
+
+.cardTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, $accent-green 0%, transparent 80%);
+  opacity: 0;
+  transform: scaleX(0.5);
+  transform-origin: left center;
+  transition: opacity $transition-base, transform 0.4s ease;
+}
+
+.principleTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0 0 $space-2;
+}
+
+.principleDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}

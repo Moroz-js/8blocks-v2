@@ -1,0 +1,171 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-11;
+  align-items: start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    gap: $space-8;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+// ── Headline column ───────────────────────────────────────────────
+.headlineCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  position: sticky;
+  top: 96px;
+
+  @media (max-width: 960px) {
+    position: static;
+    gap: $space-5;
+  }
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.labelBracket {
+  opacity: 0.6;
+}
+
+// ScrollRevealText container
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  display: block;
+
+  // Ensure inline-block word layout
+  span {
+    display: inline;
+  }
+}
+
+.decorLine {
+  width: 40px;
+  height: 2px;
+  background: $gradient-accent-h;
+  border-radius: 1px;
+}
+
+// ── Cards column ──────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: $border-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-6;
+  background: $bg-secondary;
+  transition: background $transition-base;
+
+  &:hover {
+    background: $bg-tertiary;
+
+    .cardIcon {
+      color: $accent-purple;
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.cardIcon {
+  width: 28px;
+  height: 28px;
+  color: $text-secondary;
+  opacity: 0.65;
+  transition: color $transition-base, opacity $transition-base;
+  flex-shrink: 0;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.cardNumber {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.cardDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}

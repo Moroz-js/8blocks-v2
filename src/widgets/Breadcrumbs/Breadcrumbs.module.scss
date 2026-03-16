@@ -1,0 +1,56 @@
+@use '@/shared/styles/variables' as *;
+
+.breadcrumbs {
+  padding: $space-5 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+}
+
+.link {
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  color: $text-tertiary;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.current {
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  color: $text-secondary;
+  letter-spacing: 0.02em;
+
+  // Truncate long titles
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sep {
+  font-size: $text-xs;
+  color: $text-tertiary;
+  opacity: 0.6;
+  user-select: none;
+}

@@ -1,0 +1,136 @@
+@use '@/shared/styles/variables' as *;
+
+.root {
+  max-width: 860px;
+  margin: 0 auto;
+  padding-inline: $container-padding;
+  padding-top: $space-9;
+  padding-bottom: $space-12;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-top: $space-7;
+    padding-bottom: $space-10;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+// ── Header ─────────────────────────────────────────────────────────
+.header {
+  margin-bottom: $space-9;
+}
+
+.category {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 $space-3;
+  border: 1px solid rgba(194, 78, 136, 0.3);
+  border-radius: 100px;
+  font-family: $font-base;
+  font-size: $text-xs;
+  font-weight: 400;
+  color: rgba(194, 78, 136, 0.85);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  margin-bottom: $space-5;
+  transition: border-color $transition-fast, color $transition-fast;
+
+  &:hover {
+    border-color: $accent-purple;
+    color: $accent-purple;
+  }
+}
+
+.title {
+  font-family: $font-base;
+  font-size: $text-4xl;
+  font-weight: 500;
+  line-height: $leading-tight;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0 0 $space-5;
+
+  @media (max-width: #{$bp-tablet}) {
+    font-size: $text-3xl;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-2xl;
+  }
+}
+
+.excerpt {
+  font-family: $font-base;
+  font-size: $text-md;
+  font-weight: 400;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0 0 $space-6;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.author,
+.date,
+.readingTime {
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  color: $text-tertiary;
+  letter-spacing: 0.03em;
+}
+
+.metaSep {
+  color: $text-tertiary;
+  opacity: 0.5;
+  user-select: none;
+}
+
+// ── Cover ───────────────────────────────────────────────────────────
+.coverWrap {
+  margin-bottom: $space-9;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.coverImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+// ── Body layout ─────────────────────────────────────────────────────
+.body {
+  display: block;
+}
+
+.bodyWithToc {
+  @media (min-width: #{$bp-desktop}) {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: $space-9;
+    align-items: stretch; // sidebar stretches to full height so sticky works
+
+    // Allow article page to be wider when ToC is present
+    max-width: unset;
+  }
+}
+
+.content {
+  min-width: 0;
+}
+
+.sidebar {
+  @media (max-width: calc(#{$bp-desktop} - 1px)) {
+    display: none;
+  }
+}

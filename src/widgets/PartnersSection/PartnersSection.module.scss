@@ -1,0 +1,51 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-7;
+  overflow: hidden;
+}
+
+// ── Marquee ───────────────────────────────────────────────────────
+.marqueeWrap {
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  width: max-content;
+  animation: marquee 120s linear infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+// ── Slot ──────────────────────────────────────────────────────────
+.partnerSlot {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: $space-6;
+  opacity: 0.45;
+  transition: opacity $transition-base;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.partnerLogo {
+  width: auto;
+  height: 32px;
+  max-width: 140px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}

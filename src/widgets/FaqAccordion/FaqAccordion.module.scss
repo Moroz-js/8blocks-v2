@@ -1,0 +1,129 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.accordionRoot {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.accordionItem {
+  background: $bg-secondary !important;
+  border: 1px solid $border-secondary !important;
+  border-radius: $radius-lg !important;
+  overflow: hidden;
+  transition: border-color $transition-base, background $transition-base;
+
+  &:hover {
+    background: $bg-tertiary !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  &[data-active] {
+    border-color: rgba(194, 78, 136, 0.35) !important;
+  }
+}
+
+.accordionControl {
+  padding: $space-5 $space-6 !important;
+  padding-inline: $space-6 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: $space-4 !important;
+  color: $text-primary !important;
+  font-family: $font-base !important;
+  font-weight: 500 !important;
+  font-size: $text-base !important;
+  line-height: $leading-snug !important;
+
+  &:hover {
+    background: transparent !important;
+  }
+}
+
+.accordionLabel {
+  flex: 1;
+  min-width: 0;
+  font-family: $font-base !important;
+  font-weight: 500 !important;
+  font-size: $text-base !important;
+  color: $text-primary !important;
+  padding: 0 !important;
+}
+
+.accordionPanel {
+  padding: 0 $space-6 0 !important;
+}
+
+.accordionItem[data-active] .accordionPanel {
+  padding-bottom: $space-5 !important;
+}
+
+.accordionContent {
+  padding: 0 !important;
+}
+
+.accordionChevron {
+  flex-shrink: 0;
+  margin-left: 0 !important;
+  color: $text-tertiary !important;
+  width: 20px !important;
+  height: 20px !important;
+
+  [data-active] & {
+    color: $accent-purple !important;
+  }
+}
+
+.item {
+  // alias for Accordion.Item wrapper
+}
+
+.control {
+  // alias
+}
+
+.panel {
+  font-family: $font-base !important;
+  font-weight: 400 !important;
+  font-size: $text-sm !important;
+  line-height: $leading-relaxed !important;
+  color: $text-secondary !important;
+}

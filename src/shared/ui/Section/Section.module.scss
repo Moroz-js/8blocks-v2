@@ -1,0 +1,64 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  width: 100%;
+  position: relative;
+}
+
+// Spacing variants
+.spacing-none {
+  padding-block: 0;
+}
+
+.spacing-sm {
+  padding-block: $space-7;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-6;
+  }
+}
+
+.spacing-md {
+  padding-block: $space-9;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-7;
+  }
+}
+
+.spacing-lg {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-8;
+  }
+}
+
+.spacing-xl {
+  padding-block: $space-12;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-11;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-9;
+  }
+}
+
+// Background variants
+.bg-primary {
+  background-color: var(--bg-primary);
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+.bg-tertiary {
+  background-color: var(--bg-tertiary);
+}

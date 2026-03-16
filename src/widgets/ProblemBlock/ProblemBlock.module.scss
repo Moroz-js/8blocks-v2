@@ -1,0 +1,103 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  max-width: 720px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: $border-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-lg;
+  overflow: hidden;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-6 $space-7;
+  background: $bg-secondary;
+  position: relative;
+  transition: background $transition-base;
+
+  &:hover {
+    background: $bg-tertiary;
+
+    .cardNumber {
+      color: $accent-purple;
+      opacity: 0.9;
+    }
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5 $space-6;
+  }
+}
+
+.cardNumber {
+  position: absolute;
+  top: $space-5;
+  right: $space-6;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  transition: color $transition-base, opacity $transition-base;
+}
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-lg;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+  padding-right: $space-10;
+}
+
+.cardDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}

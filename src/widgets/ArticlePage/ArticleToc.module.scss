@@ -1,0 +1,60 @@
+@use '@/shared/styles/variables' as *;
+
+.toc {
+  position: sticky;
+  top: 100px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.tocTitle {
+  font-family: $font-base;
+  font-size: $text-xs;
+  font-weight: 500;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 $space-4;
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tocItem {
+  &.tocItemL3 {
+    padding-left: $space-4;
+  }
+}
+
+.tocLink {
+  display: block;
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  line-height: $leading-normal;
+  color: $text-tertiary;
+  text-decoration: none;
+  padding: $space-1 $space-3;
+  border-left: 2px solid transparent;
+  transition: color $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    color: $text-secondary;
+  }
+
+  &.tocLinkActive {
+    color: $text-primary;
+    border-left-color: $accent-purple;
+  }
+}

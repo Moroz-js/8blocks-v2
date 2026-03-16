@@ -1,0 +1,136 @@
+@use 'variables' as *;
+
+// Responsive mixins
+@mixin mobile {
+  @media (max-width: #{$bp-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$bp-tablet}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: #{$bp-desktop}) {
+    @content;
+  }
+}
+
+@mixin above-tablet {
+  @media (min-width: #{$bp-tablet + 1px}) {
+    @content;
+  }
+}
+
+@mixin above-desktop {
+  @media (min-width: #{$bp-desktop + 1px}) {
+    @content;
+  }
+}
+
+// Typography mixins
+@mixin heading-hero {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-5xl;
+  line-height: $leading-tight;
+  color: $text-primary;
+
+  @include tablet {
+    font-size: $text-4xl;
+  }
+
+  @include mobile {
+    font-size: $text-3xl;
+  }
+}
+
+@mixin heading-section {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-4xl;
+  line-height: $leading-tight;
+  color: $text-primary;
+
+  @include tablet {
+    font-size: $text-3xl;
+  }
+
+  @include mobile {
+    font-size: $text-2xl;
+  }
+}
+
+@mixin heading-card {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-xl;
+  line-height: $leading-snug;
+  color: $text-primary;
+}
+
+@mixin body-text {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+@mixin label-small {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-tertiary;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// Section label (bracketed style from reference)
+@mixin section-label {
+  display: inline-block;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-tertiary;
+  letter-spacing: 0.08em;
+}
+
+// Flex utilities
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Frosted card surface
+@mixin card-surface {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: $radius-lg;
+}
+
+@mixin card-surface-elevated {
+  background: $bg-tertiary;
+  border: 1px solid $border-primary;
+  border-radius: $radius-lg;
+}
+
+// Focus visible
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}

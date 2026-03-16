@@ -1,0 +1,171 @@
+@use 'sass:color';
+@use '@/shared/styles/variables' as *;
+
+.richText {
+  font-family: $font-base;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+
+  // ── Headings ─────────────────────────────────────────────────────
+  .h2 {
+    font-size: $text-2xl;
+    font-weight: 500;
+    line-height: $leading-snug;
+    letter-spacing: -0.02em;
+    color: $text-primary;
+    margin: $space-9 0 $space-5;
+    scroll-margin-top: 100px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .h3 {
+    font-size: $text-xl;
+    font-weight: 500;
+    line-height: $leading-snug;
+    letter-spacing: -0.01em;
+    color: $text-primary;
+    margin: $space-7 0 $space-4;
+    scroll-margin-top: 100px;
+  }
+
+  // ── Paragraphs ───────────────────────────────────────────────────
+  .p {
+    margin: 0 0 $space-5;
+    color: $text-secondary;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    // Empty paragraphs (spacer blocks)
+    &:empty {
+      display: none;
+    }
+  }
+
+  // ── Lists ────────────────────────────────────────────────────────
+  .ul,
+  .ol {
+    margin: 0 0 $space-5;
+    padding-left: $space-6;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+  }
+
+  .ul {
+    list-style: none;
+
+    .li {
+      position: relative;
+      padding-left: $space-4;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.6em;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: $accent-purple;
+      }
+    }
+  }
+
+  .ol {
+    list-style: decimal;
+
+    .li {
+      padding-left: $space-2;
+
+      &::marker {
+        color: $accent-purple;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .li {
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+  }
+
+  // ── Blockquote ───────────────────────────────────────────────────
+  .blockquote {
+    margin: $space-7 0;
+    padding: $space-5 $space-6;
+    border-left: 3px solid $accent-purple;
+    background: rgba(194, 78, 136, 0.06);
+    border-radius: 0 $radius-sm $radius-sm 0;
+    font-size: $text-md;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+
+    .p {
+      margin: 0;
+      color: inherit;
+    }
+  }
+
+  // ── Horizontal rule ──────────────────────────────────────────────
+  .hr {
+    border: none;
+    border-top: 1px solid $border-secondary;
+    margin: $space-8 0;
+  }
+
+  // ── Links ────────────────────────────────────────────────────────
+  .a {
+    color: $accent-purple;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(194, 78, 136, 0.4);
+    transition: color $transition-fast, text-decoration-color $transition-fast;
+
+    &:hover {
+      color: color.adjust($accent-purple, $lightness: 15%);
+      text-decoration-color: rgba(194, 78, 136, 0.8);
+    }
+  }
+
+  // ── Inline code ──────────────────────────────────────────────────
+  code {
+    font-family: $font-mono;
+    font-size: 0.875em;
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid $border-secondary;
+    color: rgba(255, 255, 255, 0.85);
+    white-space: nowrap;
+  }
+
+  // ── Images ───────────────────────────────────────────────────────
+  .figure {
+    margin: $space-7 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-3;
+  }
+
+  .img {
+    border-radius: $radius-lg;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
+
+  .figcaption {
+    font-size: $text-sm;
+    color: $text-tertiary;
+    text-align: center;
+    font-style: italic;
+  }
+}

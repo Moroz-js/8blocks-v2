@@ -6,20 +6,44 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "validate": "npm run typecheck && npm run lint && npm run build",
+    "payload": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts payload",
+    "payload:migrate": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate",
+    "payload:migrate:create": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate:create",
+    "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs scripts/seed.ts",
+    "seed:blog": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs scripts/seed-blog.ts"
   },
   "dependencies": {
-    "next": "16.1.6",
+    "@mantine/core": "^7.17.1",
+    "@mantine/hooks": "^7.17.1",
+    "@payloadcms/db-postgres": "^3.79.0",
+    "@payloadcms/email-nodemailer": "^3.79.0",
+    "@payloadcms/next": "^3.79.0",
+    "@payloadcms/richtext-lexical": "^3.79.0",
+    "@payloadcms/ui": "^3.79.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.5.0",
+    "lenis": "^1.3.4",
+    "next": "^16.2.0-canary.99",
+    "nodemailer": "^6.10.0",
+    "payload": "^3.79.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "sass": "^1.86.0",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

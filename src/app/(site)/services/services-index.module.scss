@@ -1,0 +1,170 @@
+@use '@/shared/styles/variables' as *;
+
+.page {
+  padding-block: $space-10 $space-12;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8 $space-10;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  margin-bottom: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    margin-bottom: $space-8;
+  }
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.labelBracket {
+  opacity: 0.6;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.description {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 560px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-5;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: $space-7 $space-8;
+  border-radius: $radius-xl;
+  border: 1px solid $border-secondary;
+  background: $bg-secondary;
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color $transition-base, background $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    background: $bg-tertiary;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+
+    .cardTopBorder {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .cardLink span:last-child {
+      transform: translateX(4px);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.cardTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  opacity: 0;
+  transform: scaleX(0.5);
+  transform-origin: left center;
+  transition: opacity $transition-base, transform 0.4s ease;
+}
+
+.accent-purple .cardTopBorder {
+  background: $gradient-card-border;
+}
+
+.accent-green .cardTopBorder {
+  background: linear-gradient(90deg, $accent-green 0%, transparent 80%);
+}
+
+.accent-blue .cardTopBorder {
+  background: linear-gradient(90deg, $accent-blue 0%, transparent 80%);
+}
+
+.cardBadge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: $space-1 $space-3;
+  margin-bottom: $space-4;
+  border-radius: 100px;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-xl;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0 0 $space-3;
+}
+
+.cardDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0 0 $space-5;
+  flex: 1;
+}
+
+.cardLink {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+
+  span:last-child {
+    transition: transform $transition-fast;
+  }
+}

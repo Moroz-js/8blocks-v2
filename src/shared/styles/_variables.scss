@@ -1,0 +1,110 @@
+// Design tokens as SCSS variables
+// Use these in SCSS modules via @use '@/shared/styles/variables' as *
+
+// Background colors — transparent so global grid/gradient shows through everywhere
+$bg-primary:   transparent;
+$bg-secondary: rgba(255, 255, 255, 0.03);
+$bg-tertiary:  rgba(255, 255, 255, 0.06);
+
+// Text colors
+$text-primary: #ffffff;
+$text-secondary: rgba(255, 255, 255, 0.5);
+$text-tertiary: rgba(255, 255, 255, 0.4);
+
+// Border colors
+$border-primary: rgba(255, 255, 255, 0.2);
+$border-secondary: rgba(255, 255, 255, 0.07);
+
+// ─────────────────────────────────────────────────────────────────
+// Gradient palette — rose-magenta-purple (ref: hero-bg-test.svg)
+// Edit these base colors to retheme the entire site at once.
+// ─────────────────────────────────────────────────────────────────
+
+// Base palette colors
+$pal-rose:         #D9ADD0;   // dusty rose / light pinkish-lilac
+$pal-magenta:      #C24E88;   // deep magenta-pink (primary accent)
+$pal-purple:       #8E4ABD;   // medium purple (edge/shadow tone)
+$pal-warm-white:   #E3D0D5;   // very light pinkish white (highlight/glint)
+
+// Background bloom opacities (tweak to control global glow intensity)
+$bloom-top-left:   0.07;      // top-left primary bloom
+$bloom-top-center: 0.10;      // center-top warm bloom
+$bloom-right:      0.06;      // right counter-bloom
+$bloom-bottom:     0.04;      // bottom-right fade
+
+// Semantic accent aliases
+$accent-purple:      $pal-magenta;
+$accent-pink-light:  $pal-rose;
+$accent-pink-deep:   $pal-magenta;
+$accent-purple-deep: $pal-purple;
+$accent-green: #75fb63;
+$accent-blue:  #638efb;
+
+// ── Composed gradients ────────────────────────────────────────────
+
+// Primary text gradient — used on accent words (hero, footer headline)
+$gradient-accent:       linear-gradient(135deg, #{$pal-rose} 0%, #{$pal-magenta} 55%, #{$pal-purple} 100%);
+// Horizontal version — for decorative lines and card borders
+$gradient-accent-h:     linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
+// Card top border
+$gradient-card-border:  linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
+// Full horizontal span — logo or wide decorative elements
+$gradient-accent-wide:  linear-gradient(90deg, #{$pal-rose} 0%, #{$pal-magenta} 40%, #{$pal-purple} 100%);
+
+// Typography
+$font-base: 'Manrope', sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Mono', monospace;
+
+// Spacing scale (8px base)
+$space-1: 4px;
+$space-2: 8px;
+$space-3: 12px;
+$space-4: 16px;
+$space-5: 24px;
+$space-6: 32px;
+$space-7: 48px;
+$space-8: 64px;
+$space-9: 80px;
+$space-10: 96px;
+$space-11: 128px;
+$space-12: 160px;
+
+// Container
+$container-max: 1280px;
+$container-padding: 24px;
+$container-padding-mobile: 16px;
+
+// Breakpoints
+$bp-mobile: 640px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-wide: 1280px;
+
+// Border radius
+$radius-sm: 6px;
+$radius-md: 12px;
+$radius-lg: 20px;
+$radius-xl: 28px;
+
+// Typography scale
+$text-xs: 12px;
+$text-sm: 14px;
+$text-base: 16px;
+$text-md: 18px;
+$text-lg: 20px;
+$text-xl: 24px;
+$text-2xl: 32px;
+$text-3xl: 40px;
+$text-4xl: 56px;
+$text-5xl: 72px;
+
+// Line heights
+$leading-tight: 1.1;
+$leading-snug: 1.25;
+$leading-normal: 1.5;
+$leading-relaxed: 1.6;
+
+// Transitions
+$transition-fast: 150ms ease;
+$transition-base: 250ms ease;
+$transition-slow: 400ms ease;

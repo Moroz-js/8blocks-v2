@@ -1,0 +1,182 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-12;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-10;
+  }
+}
+
+// ── Layout ────────────────────────────────────────────────────────
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+    gap: $space-9;
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+// ── Text column ───────────────────────────────────────────────────
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+  max-width: 680px;
+}
+
+// ── Label ─────────────────────────────────────────────────────────
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.labelBracket {
+  opacity: 0.6;
+}
+
+// ── Headline ──────────────────────────────────────────────────────
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  display: block;
+
+  span {
+    display: inline;
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────
+.body {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 480px;
+}
+
+// ── Telegram column ───────────────────────────────────────────────
+.tgCol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  @media (max-width: #{$bp-tablet}) {
+    justify-content: center;
+  }
+}
+
+.tgLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  text-decoration: none;
+  position: relative;
+
+  &:hover .tgIcon {
+    transform: scale(1.06) translateY(-2px);
+    box-shadow:
+      0 0 0 10px rgba(41, 149, 237, 0.12),
+      0 0 50px rgba(41, 149, 237, 0.50),
+      0 0 100px rgba(41, 149, 237, 0.25),
+      0 20px 40px rgba(0, 0, 0, 0.4);
+  }
+
+  &:hover .tgGlow {
+    opacity: 1;
+  }
+
+  &:hover .tgLabel {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 6px;
+    border-radius: $radius-sm;
+  }
+}
+
+// Tight ambient glow
+.tgGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -58%;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(41, 149, 237, 0.45) 0%,
+    rgba(41, 149, 237, 0.12) 55%,
+    transparent 72%
+  );
+  pointer-events: none;
+  filter: blur(6px);
+
+  @media (max-width: #{$bp-tablet}) {
+    display: none;
+  }
+}
+
+.tgIcon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #45b3f0 0%, #2485cc 60%, #1a6faa 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 4px rgba(41, 149, 237, 0.12),
+    0 0 16px rgba(41, 149, 237, 0.45),
+    0 0 36px rgba(41, 149, 237, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  z-index: 1;
+
+  .tgLink:hover & {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow:
+      0 0 0 5px rgba(41, 149, 237, 0.16),
+      0 0 22px rgba(41, 149, 237, 0.55),
+      0 0 44px rgba(41, 149, 237, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.30);
+  }
+}
+
+.tgLabel {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.02em;
+  transition: color $transition-fast;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
