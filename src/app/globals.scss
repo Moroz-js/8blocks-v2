@@ -85,13 +85,14 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
 
   background:
     // Grid lines — horizontal
-    linear-gradient(rgba(255, 255, 255, 0.033) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     // Grid lines — vertical
-    linear-gradient(90deg, rgba(255, 255, 255, 0.033) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+
     // Center-top: warm pinkish-rose bloom
     radial-gradient(
       ellipse 110vw 60vh at 50vw -5vh,
@@ -123,11 +124,8 @@ body::before {
   background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
 }
 
-// All direct children of body sit above the fixed layer
-body > * {
-  position: relative;
-  z-index: 1;
-}
+// Content naturally sits above body::before (z-index: -1)
+// No stacking context created — allows backdrop-filter to work
 
 // Remove default list styles
 ul,

@@ -94,8 +94,6 @@ export function HeroHome() {
           ))}
         </div>
       </div>
-
-      <div className={styles.fadeBottom} aria-hidden="true" />
     </section>
   )
 }

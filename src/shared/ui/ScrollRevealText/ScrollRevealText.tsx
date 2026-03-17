@@ -8,21 +8,21 @@ interface WordProps {
   progress: MotionValue<number>
   index: number
   total: number
+  dark?: boolean
 }
 
-function Word({ word, progress, index, total }: WordProps) {
-  // Each word transitions within a window centered on its position.
-  // windowSize = 1.8 / total  →  ~2 words are mid-transition at any time → smooth wave.
+function Word({ word, progress, index, total, dark }: WordProps) {
   const windowSize = 1.8 / total
   const center = (index + 0.5) / total
   const start = Math.max(0, center - windowSize / 2)
   const end = Math.min(1, center + windowSize / 2)
 
-  // Only color changes: gray → white. No opacity — text is always readable.
   const color = useTransform(
     progress,
     [start, end],
-    ['rgba(255,255,255,0.18)', 'rgba(255,255,255,1)'],
+    dark
+      ? ['rgba(0,0,0,0.18)', 'rgba(0,0,0,0.9)']
+      : ['rgba(255,255,255,0.18)', 'rgba(255,255,255,1)'],
   )
 
   return (
@@ -37,6 +37,7 @@ interface Props {
   className?: string
   startOffset?: string
   endOffset?: string
+  dark?: boolean
 }
 
 export function ScrollRevealText({
@@ -44,6 +45,7 @@ export function ScrollRevealText({
   className,
   startOffset = 'start 0.88',
   endOffset = 'end 0.35',
+  dark,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,6 +63,7 @@ export function ScrollRevealText({
           progress={scrollYProgress}
           index={i}
           total={words.length}
+          dark={dark}
         />
       ))}
     </div>

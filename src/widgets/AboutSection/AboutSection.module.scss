@@ -150,10 +150,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
-  background: $border-secondary;
-  border: 1px solid $border-secondary;
+  background: transparent;
+  border: none;
   border-radius: $radius-lg;
   overflow: hidden;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
 
   // motion.div wrappers must stretch to fill grid cell
   > * {
@@ -168,11 +170,11 @@
   flex-direction: column;
   gap: $space-3;
   padding: $space-7;
-  background: rgba(255, 255, 255, 0.03);
+  background: #1a1a1f;
   transition: background $transition-base;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: #222228;
   }
 
   @media (max-width: #{$bp-mobile}) {

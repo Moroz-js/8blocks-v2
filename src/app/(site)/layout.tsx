@@ -36,6 +36,40 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <ColorSchemeScript defaultColorScheme="dark" />
       </head>
       <body suppressHydrationWarning>
+        {/* Top edge blur */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 120,
+            pointerEvents: 'none',
+            zIndex: 99,
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            maskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
+          }}
+        />
+        {/* Bottom edge blur */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 44,
+            pointerEvents: 'none',
+            zIndex: 99,
+            backdropFilter: 'blur(18px)',
+            WebkitBackdropFilter: 'blur(18px)',
+            maskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)',
+          }}
+        />
         <MantineProvider defaultColorScheme="dark">
           <GTMScript />
           <LenisProvider>
