@@ -38,6 +38,8 @@ interface Props {
   startOffset?: string
   endOffset?: string
   dark?: boolean
+  /** Когда задан (например, прогресс скролла спайсера), раскрытие текста привязано к нему, а не к позиции самого блока. Нужно для блоков внутри sticky. */
+  progress?: MotionValue<number>
 }
 
 export function ScrollRevealText({
@@ -46,11 +48,13 @@ export function ScrollRevealText({
   startOffset = 'start 0.88',
   endOffset = 'end 0.35',
   dark,
+  progress: progressProp,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const scrollOptions = { target: ref, offset: [startOffset, endOffset] } as any
-  const { scrollYProgress } = useScroll(scrollOptions)
+  const { scrollYProgress: scrollProgress } = useScroll(scrollOptions)
+  const progress = progressProp ?? scrollProgress
 
   const words = text.split(' ')
 
@@ -60,7 +64,7 @@ export function ScrollRevealText({
         <Word
           key={i}
           word={word}
-          progress={scrollYProgress}
+          progress={progress}
           index={i}
           total={words.length}
           dark={dark}

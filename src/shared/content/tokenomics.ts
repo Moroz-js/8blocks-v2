@@ -9,7 +9,7 @@ export const tokenomicsContent = {
     description:
       'Мы проектируем токеномику так, чтобы спрос был подкреплён механикой, а модель оставалась стабильной с первого дня. Эмиссия, распределение, вестинг и экосистема — в одной системе.',
     ctaLabel: 'Записаться на консультацию',
-    ctaHref: '#contact',
+    ctaHref: '/contact',
   },
   problem: {
     headline: 'Почему большинство токеномик не работают после запуска',
@@ -178,6 +178,6 @@ export const tokenomicsContent = {
   cta: {
     headline: 'Если у токена нет цели, у проекта нет будущего.',
     ctaLabel: 'Обсудить проект',
-    ctaHref: '#contact',
+    ctaHref: '/contact',
   },
 } as const

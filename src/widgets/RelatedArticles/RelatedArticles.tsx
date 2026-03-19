@@ -13,7 +13,7 @@ export function RelatedArticles({ articles }: Props) {
     <section className={styles.root}>
       <p className={styles.label}>
         <span className={styles.bracket}>[</span>
-        Read more
+        Читать ещё
         <span className={styles.bracket}>]</span>
       </p>
       <div className={styles.grid}>

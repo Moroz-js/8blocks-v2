@@ -26,6 +26,9 @@ function StackCard({ item, index }: {
     return 1.03 - p * 0.09
   })
 
+  // Текст раскрывается за первую половину маршрута спайсера, чтобы успевать заполняться до конца
+  const textProgress = useTransform(scrollYProgress, (v) => Math.min(1, v * 2))
+
   return (
     <Fragment>
       <motion.div
@@ -48,8 +51,7 @@ function StackCard({ item, index }: {
             text={item.description}
             className={styles.cardDescription}
             dark
-            startOffset="end 1"
-            endOffset="end 0.7"
+            progress={textProgress}
           />
         </div>
       </motion.div>

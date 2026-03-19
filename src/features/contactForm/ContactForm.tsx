@@ -30,13 +30,13 @@ export function ContactForm() {
       const data = await res.json() as { success?: boolean; error?: string }
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || 'Failed to send')
+        throw new Error(data.error || 'Не удалось отправить')
       }
 
       setStatus('success')
     } catch (err) {
       setStatus('error')
-      setErrorMsg(err instanceof Error ? err.message : 'Failed to send')
+      setErrorMsg(err instanceof Error ? err.message : 'Не удалось отправить')
     }
   }
 
@@ -44,8 +44,8 @@ export function ContactForm() {
     return (
       <div className={styles.success} role="status" aria-live="polite">
         <div className={styles.successIcon} aria-hidden="true">✓</div>
-        <p className={styles.successTitle}>Message sent</p>
-        <p className={styles.successBody}>{"We'll get back to you within one business day."}</p>
+        <p className={styles.successTitle}>Сообщение отправлено</p>
+        <p className={styles.successBody}>Мы ответим в течение одного рабочего дня.</p>
       </div>
     )
   }
@@ -54,13 +54,13 @@ export function ContactForm() {
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="cf-name" className={styles.label}>Name</label>
+          <label htmlFor="cf-name" className={styles.label}>Имя</label>
           <input
             id="cf-name"
             name="name"
             type="text"
             className={styles.input}
-            placeholder="John Smith"
+            placeholder="Иван Иванов"
             required
             autoComplete="name"
           />
@@ -72,7 +72,7 @@ export function ContactForm() {
             name="email"
             type="email"
             className={styles.input}
-            placeholder="john@company.io"
+            placeholder="ivan@company.io"
             required
             autoComplete="email"
           />
@@ -80,12 +80,12 @@ export function ContactForm() {
       </div>
 
       <div className={styles.field}>
-        <label htmlFor="cf-message" className={styles.label}>Message</label>
+        <label htmlFor="cf-message" className={styles.label}>Сообщение</label>
         <textarea
           id="cf-message"
           name="message"
           className={styles.textarea}
-          placeholder="Tell us about your project and what you're looking for"
+          placeholder="Расскажите о проекте и что вы ищете"
           rows={4}
           required
         />
@@ -104,11 +104,11 @@ export function ContactForm() {
         {status === 'loading' ? (
           <>
             <span className={styles.spinner} aria-hidden="true" />
-            Sending…
+            Отправка…
           </>
         ) : (
           <>
-            Send message
+            Отправить сообщение
             <span className={styles.submitArrow} aria-hidden="true">→</span>
           </>
         )}

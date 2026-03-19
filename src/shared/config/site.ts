@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: '8Blocks',
-  description: 'Token economies that power the business',
+  description: 'Токен-экономики, которые усиливают бизнес',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io',
   email: 'hello@8blocks.io',
   ogImage: '/og-image.png',
@@ -11,9 +11,9 @@ export const siteConfig = {
 } as const
 
 export const navLinks = [
-  { label: 'Services', href: '/services' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Услуги', href: '/services' },
+  { label: 'Блог', href: '/blog' },
+  { label: 'Обсудить проект', href: '/contact' },
 ] as const
 
 export const socialLinks = [

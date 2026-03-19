@@ -53,16 +53,16 @@ export async function BlogPreview() {
       <div className={styles.inner}>
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            <span className={styles.label}>[ Blog ]</span>
+            <span className={styles.label}>[ Блог ]</span>
             <h2 className={styles.headline}>
-              Materials on
+              Блог о
               <br className={styles.br} />
-              token&nbsp;economics
+              токеномике
             </h2>
           </div>
           <div className={styles.headerRight}>
             <Link href="/blog" className={styles.allLink}>
-              All articles
+              Все статьи
               <span className={styles.allArrow} aria-hidden="true">→</span>
             </Link>
           </div>

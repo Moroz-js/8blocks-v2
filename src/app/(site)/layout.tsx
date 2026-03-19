@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: siteConfig.name,
-    locale: 'en_US',
+    locale: 'ru_RU',
   },
   twitter: {
     card: 'summary_large_image',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <head>
         <ColorSchemeScript defaultColorScheme="dark" />
       </head>
@@ -53,7 +53,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
             WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
           }}
         />
-        {/* Bottom edge blur */}
+        {/* Bottom edge blur — закомментировано
         <div
           aria-hidden="true"
           style={{
@@ -70,6 +70,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
             WebkitMaskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)',
           }}
         />
+        */}
         <MantineProvider defaultColorScheme="dark">
           <GTMScript />
           <LenisProvider>

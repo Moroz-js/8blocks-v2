@@ -41,8 +41,8 @@ export default function ServicesPage() {
             {servicesContent.headline.replace('\n', ' ')}
           </h1>
           <p className={styles.description}>
-            We help projects turn tokens into working economic instruments — from strategy and
-            tokenomics design to audit of existing models.
+            Помогаем проектам превращать токены в рабочие экономические инструменты — от стратегии и
+            дизайна токеномики до аудита существующих моделей.
           </p>
         </header>
 
@@ -58,7 +58,7 @@ export default function ServicesPage() {
               <h2 className={styles.cardTitle}>{item.title}</h2>
               <p className={styles.cardDescription}>{item.description}</p>
               <span className={styles.cardLink}>
-                Learn more <span aria-hidden="true">→</span>
+                Подробнее <span aria-hidden="true">→</span>
               </span>
             </Link>
           ))}

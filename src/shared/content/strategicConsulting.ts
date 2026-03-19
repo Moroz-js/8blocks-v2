@@ -9,7 +9,7 @@ export const strategicConsultingContent = {
     description:
       'Мы собираем запуск токена в единую систему: экономика проекта, investor-ready материалы, партнёрская экосистема и подготовка к TGE. Не разрозненные документы, а согласованная стратегия.',
     ctaLabel: 'Записаться на консультацию',
-    ctaHref: '#contact',
+    ctaHref: '/contact',
   },
   problem: {
     headline: 'Запуск токена требует большего, чем просто токеномика',
@@ -188,6 +188,6 @@ export const strategicConsultingContent = {
   cta: {
     headline: 'Если у токена нет цели, у проекта нет будущего.',
     ctaLabel: 'Обсудить проект',
-    ctaHref: '#contact',
+    ctaHref: '/contact',
   },
 } as const

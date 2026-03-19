@@ -88,25 +88,25 @@ export function ShareBlock({ url, title }: Props) {
   const links = [
     {
       id: 'x',
-      label: 'Share on X',
+      label: 'Поделиться в X',
       href: `https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
       icon: <IconX />,
     },
     {
       id: 'facebook',
-      label: 'Share on Facebook',
+      label: 'Поделиться в Facebook',
       href: `https://www.facebook.com/sharer/sharer.php?u=${encoded}`,
       icon: <IconFacebook />,
     },
     {
       id: 'telegram',
-      label: 'Share on Telegram',
+      label: 'Поделиться в Telegram',
       href: `https://t.me/share/url?url=${encoded}&text=${encodedTitle}`,
       icon: <IconTelegram />,
     },
     {
       id: 'linkedin',
-      label: 'Share on LinkedIn',
+      label: 'Поделиться в LinkedIn',
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`,
       icon: <IconLinkedIn />,
     },
@@ -114,13 +114,13 @@ export function ShareBlock({ url, title }: Props) {
 
   return (
     <div className={styles.root}>
-      <p className={styles.label}>Share</p>
+      <p className={styles.label}>Поделиться</p>
       <div className={styles.buttons}>
         <button
           className={`${styles.btn} ${copied ? styles.copied : ''}`}
           onClick={handleCopy}
-          aria-label="Copy link"
-          title="Copy link"
+          aria-label="Копировать ссылку"
+          title="Копировать ссылку"
         >
           {copied ? <IconCheck /> : <IconLink />}
         </button>

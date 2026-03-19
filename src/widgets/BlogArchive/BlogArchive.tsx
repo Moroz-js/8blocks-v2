@@ -56,25 +56,25 @@ export function BlogArchive({
         <div className={styles.pageHeaderInner}>
           <span className={styles.label}>
             <span className={styles.labelBracket}>[</span>
-            {isCategory ? 'Category' : 'Blog'}
+            {isCategory ? 'Категория' : 'Блог'}
             <span className={styles.labelBracket}>]</span>
           </span>
           <h1 className={styles.headline}>
-            {isCategory ? categoryTitle : 'Insights & articles'}
+            {isCategory ? categoryTitle : 'Статьи и материалы'}
           </h1>
           {totalDocs > 0 && (
-            <p className={styles.count}>{totalDocs} article{totalDocs !== 1 ? 's' : ''}</p>
+            <p className={styles.count}>{totalDocs} {totalDocs === 1 ? 'статья' : totalDocs >= 2 && totalDocs <= 4 ? 'статьи' : 'статей'}</p>
           )}
         </div>
 
         {/* ── Category filter ───────────────────────────────────── */}
         {categories.length > 0 && (
-          <nav className={styles.categoryNav} aria-label="Filter by category">
+          <nav className={styles.categoryNav} aria-label="Фильтр по категории">
             <Link
               href="/blog"
               className={`${styles.catChip} ${!activeCategory ? styles.catChipActive : ''}`}
             >
-              All
+              Все
             </Link>
             {categories.map((cat) => (
               <Link
@@ -103,19 +103,19 @@ export function BlogArchive({
         </div>
       ) : (
         <div className={styles.empty}>
-          <p className={styles.emptyText}>No articles in this category yet.</p>
-          <p className={styles.emptyHint}>Check back soon.</p>
+          <p className={styles.emptyText}>В этой категории пока нет статей.</p>
+          <p className={styles.emptyHint}>Загляните позже.</p>
         </div>
       )}
 
       {/* ── Pagination ────────────────────────────────────────── */}
       {totalPages > 1 && (
-        <nav className={styles.pagination} aria-label="Pagination">
+        <nav className={styles.pagination} aria-label="Навигация по страницам">
           {currentPage > 1 && (
             <Link
               href={pageHref(currentPage - 1)}
               className={styles.pageArrow}
-              aria-label="Previous page"
+              aria-label="Предыдущая страница"
             >
               <ArrowLeft />
             </Link>
@@ -142,7 +142,7 @@ export function BlogArchive({
             <Link
               href={pageHref(currentPage + 1)}
               className={styles.pageArrow}
-              aria-label="Next page"
+              aria-label="Следующая страница"
             >
               <ArrowRight />
             </Link>

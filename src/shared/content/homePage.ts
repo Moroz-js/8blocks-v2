@@ -2,67 +2,70 @@
 // Edit text here; never scatter copy across components
 
 export const heroContent = {
-  label: 'Tokenomics',
-  headlineLine1: 'Token economies',
-  headlineLine2: 'that power',
-  headlineLine3: 'the business',
+  label: 'Токеномика',
+  headlineLine1: 'Токен-экономики',
+  headlineLine2: 'которые усиливают',
+  headlineLine3: 'бизнес',
   description:
-    'We help businesses turn tokens from one-time fundraising tools into working economic instruments. Tokens are embedded into products and operations, so usage and demand drive lasting value, not speculation.',
+    'Мы превращаем токены из разового способа привлечь деньги в работающие экономические механики. Они встроены в продукт и операционную логику, поэтому ценность формируется за счет спроса и использования, а не спекуляций.',
   serviceLinks: [
-    { label: 'Strategic consulting', href: '#services' },
-    { label: 'Tokenomics', href: '#services' },
-    { label: 'Audit', href: '#services' },
+    { label: 'Стратегический консалтинг', href: '#services' },
+    { label: 'Токеномика', href: '#services' },
+    { label: 'Аудит токеномики', href: '#services' },
   ],
   cta: {
-    label: 'Talk to the team',
-    href: '#contact',
+    label: 'Обсудить проект',
+    href: '/contact',
   },
 } as const
 
 export const servicesContent = {
-  label: 'Services',
-  headline: 'How we design\nand fix broken economics',
+  label: 'Услуги',
+  headline: 'Как мы создаем и восстанавливаем токен-экономики',
   items: [
     {
       id: 'strategic-consulting',
       href: '/services/strategic-consulting',
-      title: 'Strategic consulting',
-      description: 'We design the economic strategy behind the system. This includes defining token logic, incentives, and partner structure for Web3 projects and businesses entering tokenized ecosystems.',
+      title: 'Стратегический консалтинг',
+      description:
+        'Мы разрабатываем стратегию экономики проекта, формируем логику токена и стимулов, готовим проект к привлечению инвестиций и выстраиваем партнерскую экосистему до выхода токена на рынок.',
       accentColor: 'purple',
     },
     {
       id: 'tokenomics',
       href: '/services/tokenomics',
-      title: 'Basic tokenomics',
-      description: 'A foundational token economics model covering supply, emission, and distribution, built to keep the system stable from day one.',
+      title: 'Базовая токеномика',
+      description:
+        'Фундаментальная экономика токена с продуманным выпуском и распределением, заложенная для стабильной работы системы с первого дня.',
       accentColor: 'green',
     },
     {
       id: 'audit',
       href: '/services/audit',
-      title: 'Tokenomics audit',
-      description: 'A full assessment of an existing token economy, identifying structural risks, broken incentive loops, and scaling bottlenecks.',
+      title: 'Аудит токеномики',
+      description:
+        'Полный разбор существующей экономики токена с выявлением структурных рисков, сломанных стимулов и точек, где рост приводит к системным сбоям.',
       accentColor: 'blue',
     },
   ],
 } as const
 
 export const aboutContent = {
-  label: 'About',
+  label: 'О нас',
   attribution: '8Blocks Team',
   quote:
-    '"A token should generate value for the project over its entire lifetime. And that only happens when you clearly understand why it exists and who needs it."',
+    '«Токен должен создавать ценность для проекта на протяжении всего его жизненного цикла. Это возможно только тогда, когда четко понятно, зачем он существует и кому он действительно нужен».',
   stats: [
-    { value: '20+', label: 'token economies designed for products across multiple industries' },
-    { value: '$500M+', label: 'combined capitalization of client projects' },
-    { value: '6 weeks', label: 'average time to design a complete token economy model' },
-    { value: '12', label: 'backed projects built on our economic models' },
+    { value: '30+', label: 'токен-экономик, разработанных для проектов в различных отраслях' },
+    { value: '$180M+', label: 'совокупная капитализация проектов, построенных на наших моделях' },
+    { value: '21 день', label: 'средний срок разработки рабочей токен-экономической модели' },
+    { value: '14 фондов', label: 'инвестировали в проекты, основанные на нашей токен-экономике' },
   ],
 } as const
 
 export const partnersContent = {
-  label: 'Partners',
-  headline: 'Our partners',
+  label: 'Партнеры',
+  headline: 'Партнеры',
   partners: [
     { name: 'Partner 1', logo: '/partners/1.svg' },
     { name: 'Partner 2', logo: '/partners/2.svg' },
@@ -84,74 +87,54 @@ export const partnersContent = {
 } as const
 
 export const benefitsContent = {
-  label: 'Why 8Blocks',
-  headlinePart1: 'When a business grows,',
-  headlinePart2: "the token doesn't always follow.",
-  headlinePart3: 'So we design economies\nwhere it has to.',
+  label: 'Почему 8Blocks',
+  headlinePart1: 'Когда бизнес растет,',
+  headlinePart2: 'токен не всегда растёт вместе с ним.',
+  headlinePart3: 'Поэтому мы проектируем экономику,\nв которой он обязан это сделать.',
   items: [
     {
       id: 'business-tied',
-      title: 'Business-linked economics',
+      title: 'Экономика, встроенная в бизнес',
       description:
-        'Token value is structurally tied to usage, not market sentiment. When the business grows, demand has no choice but to follow.',
+        'Ценность токена структурно связана с использованием продукта, а не с динамикой рынка. Когда бизнес растет, спрос на токен вынужден расти вместе с ним.',
     },
     {
       id: 'usage-demand',
-      title: 'Usage-driven demand',
+      title: 'Спрос от использования',
       description:
-        "Tokens are required to access products, rights, or advantages. People hold them because they're needed, not because they're promised.",
+        'Токены нужны для доступа к продукту, правам или возможностям. И их держат потому, что они необходимы, а не потому, что что-то пообещали.',
     },
     {
       id: 'stress-tested',
-      title: 'Stress-tested circulation',
+      title: 'Проверка рынком',
       description:
-        'Models are tested against real behavior: selling pressure, churn, low liquidity, growth spikes. Because markets never follow best-case scenarios.',
+        'Мы тестируем модели в реальных условиях: продажи, отток пользователей, низкая ликвидность, резкие скачки роста. Потому что рынок никогда не живет по идеальному сценарию.',
     },
     {
       id: 'growth-mechanics',
-      title: 'Controlled growth mechanics',
+      title: 'Контролируемый рост',
       description:
-        'Supply, incentives, and circulation scale with operations, without handing control to speculation or market cycles.',
+        'Механики выпуска, стимулов и обращения развиваются вместе с процессами, сохраняя контроль у компании, а не у рынка.',
     },
   ],
 } as const
 
 export const teamContent = {
   members: [
-    {
-      name: 'Team member 1',
-      role: '8Blocks Team',
-      photo: '/team/team-1.png',
-    },
-    {
-      name: 'Team member 2',
-      role: '8Blocks Team',
-      photo: '/team/team-2.png',
-    },
-    {
-      name: 'Team member 3',
-      role: '8Blocks Team',
-      photo: '/team/team-3.png',
-    },
-    {
-      name: 'Team member 4',
-      role: '8Blocks Team',
-      photo: '/team/team-4.png',
-    },
-    {
-      name: 'Team member 5',
-      role: '8Blocks Team',
-      photo: '/team/team-5.png',
-    },
+    { photo: '/team/team-1.png' },
+    { photo: '/team/team-2.png' },
+    { photo: '/team/team-3.png' },
+    { photo: '/team/team-4.png' },
+    { photo: '/team/team-5.png' },
   ],
 } as const
 
 export const ctaContent = {
-  label: 'Next step',
-  headline: 'If the token has no purpose,\nthe project has no future.',
-  body: "We define the token's role and connect it directly to revenue and operations.",
+  label: 'Далее',
+  headline: 'Если у токена нет роли,\nу проекта нет будущего.',
+  body: 'Мы определяем роль токена и встраиваем ее в выручку и бизнес-процессы.',
   cta: {
-    label: 'Talk to the team',
-    href: '#contact',
+    label: 'Обсудить проект',
+    href: '/contact',
   },
 } as const

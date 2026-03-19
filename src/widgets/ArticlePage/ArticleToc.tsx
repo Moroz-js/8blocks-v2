@@ -37,8 +37,8 @@ export function ArticleToc({ items }: Props) {
   if (!items.length) return null
 
   return (
-    <nav className={styles.toc} aria-label="Table of contents">
-      <p className={styles.tocTitle}>Contents</p>
+    <nav className={styles.toc} aria-label="Содержание">
+      <p className={styles.tocTitle}>Содержание</p>
       <ol className={styles.tocList}>
         {items.map(({ id, text, level }) => (
           <li key={id} className={`${styles.tocItem} ${level === 3 ? styles.tocItemL3 : ''}`}>

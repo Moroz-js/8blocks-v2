@@ -53,7 +53,6 @@ export function AboutSection() {
 
           <p className={styles.attribution}>— {aboutContent.attribution}</p>
 
-          {/* Team strip — overlapping avatars */}
           <div className={styles.team}>
             {teamContent.members.map((member, i) => (
               <motion.div
@@ -64,12 +63,11 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, ease: 'easeOut', delay: 0.25 + i * 0.06 }}
-                title={member.name}
               >
-                <div className={styles.avatar} aria-label={member.name}>
+                <div className={styles.avatar} aria-hidden="true">
                   <Image
                     src={member.photo}
-                    alt={member.name}
+                    alt=""
                     fill
                     sizes="52px"
                     className={styles.avatarImg}

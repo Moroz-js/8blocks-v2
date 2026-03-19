@@ -12,7 +12,7 @@ import styles from './ArticlePage.module.scss'
 
 function formatDate(iso?: string | null): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString('en-US', {
+  return new Date(iso).toLocaleDateString('ru-RU', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -57,7 +57,7 @@ export function ArticlePage({ article, relatedArticles = [] }: Props) {
               <span className={styles.metaSep}>·</span>
             </>
           )}
-          <span className={styles.readingTime}>{readingTime} min read</span>
+          <span className={styles.readingTime}>{readingTime} мин</span>
         </div>
       </header>
 

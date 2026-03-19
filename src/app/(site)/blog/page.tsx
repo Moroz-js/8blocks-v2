@@ -6,18 +6,18 @@ import type { ArticleCard as ArticleCardType, CategoryRef } from '@/entities/art
 import { estimateReadingTime } from '@/entities/article'
 
 export const metadata: Metadata = {
-  title: 'Blog — 8Blocks',
-  description: 'Articles on tokenomics, Web3 economics, and token design from the 8Blocks team.',
+  title: 'Блог — 8Blocks',
+  description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Blog — 8Blocks',
-    description: 'Articles on tokenomics, Web3 economics, and token design from the 8Blocks team.',
+    title: 'Блог — 8Blocks',
+    description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
     url: '/blog',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog — 8Blocks',
-    description: 'Articles on tokenomics, Web3 economics, and token design from the 8Blocks team.',
+    title: 'Блог — 8Blocks',
+    description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
   },
 }
 

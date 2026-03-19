@@ -1,16 +1,7 @@
 @use '@/shared/styles/variables' as *;
 
 .footer {
-  overflow: clip; // clips decorative overflow without blocking iframe events
-}
-
-// ── Contact form section ──────────────────────────────────────────
-.formSection {
-  padding-block: $space-11;
-
-  @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-9;
-  }
+  overflow: clip;
 }
 
 .inner {
@@ -21,90 +12,6 @@
   @media (max-width: #{$bp-mobile}) {
     padding-inline: $container-padding-mobile;
   }
-}
-
-.formGrid {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: $space-11;
-  align-items: start;
-
-  @media (max-width: 960px) {
-    grid-template-columns: 1fr;
-    gap: $space-8;
-  }
-}
-
-.formMeta {
-  display: flex;
-  flex-direction: column;
-  gap: $space-5;
-  position: sticky;
-  top: 96px;
-
-  @media (max-width: 960px) {
-    position: static;
-  }
-}
-
-.formLabel {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-2;
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  color: $text-tertiary;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.labelBracket {
-  opacity: 0.6;
-}
-
-.formHeadline {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: clamp(36px, 4.5vw, 56px);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: $text-primary;
-  margin: 0;
-}
-
-.formHeadlineAccent {
-  background: $gradient-accent;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.formDescription {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-base;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-  margin: 0;
-  max-width: 360px;
-}
-
-.directEmail {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  color: $text-tertiary;
-  text-decoration: none;
-  transition: color $transition-fast;
-
-  &:hover {
-    color: $accent-purple;
-  }
-}
-
-.formWrap {
-  width: 100%;
 }
 
 // ── Brand watermark ───────────────────────────────────────────────

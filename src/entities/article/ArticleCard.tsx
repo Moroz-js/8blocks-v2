@@ -12,7 +12,7 @@ const PLACEHOLDERS = [
 
 function formatDate(iso?: string | null): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString('en-US', {
+  return new Date(iso).toLocaleDateString('ru-RU', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -81,10 +81,10 @@ export function ArticleCard({ article, index = 0, priority = false }: Props) {
       {/* Footer */}
       <div className={styles.footer}>
         {article.readingTime && (
-          <span className={styles.readingTime}>{article.readingTime} min read</span>
+          <span className={styles.readingTime}>{article.readingTime} мин</span>
         )}
         <Link href={href} className={styles.readLink}>
-          Read
+          Читать
           <span className={styles.readArrow} aria-hidden="true">→</span>
         </Link>
       </div>

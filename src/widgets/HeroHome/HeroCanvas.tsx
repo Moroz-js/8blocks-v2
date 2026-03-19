@@ -112,27 +112,27 @@ function drawGlassBlock(
   ctx.save()
 
   // Glow
-  ctx.shadowColor = 'rgba(255, 255, 255, 0.6)'
-  ctx.shadowBlur = 120
+  ctx.shadowColor = 'rgba(255, 255, 255, 0.75)'
+  ctx.shadowBlur = 140
 
-  fillPoly(ctx, leftPts,  'rgba(255, 255, 255, 0.45)')
-  fillPoly(ctx, rightPts, 'rgba(255, 255, 255, 0.35)')
-  fillPoly(ctx, topPts,   'rgba(255, 255, 255, 0.55)')
+  fillPoly(ctx, leftPts,  'rgba(255, 255, 255, 0.62)')
+  fillPoly(ctx, rightPts, 'rgba(255, 255, 255, 0.52)')
+  fillPoly(ctx, topPts,   'rgba(255, 255, 255, 0.72)')
 
   ctx.shadowBlur = 0
   ctx.shadowColor = 'transparent'
 
   // Top face highlight
   const hlGrad = ctx.createLinearGradient(tBack.x, tBack.y, tFront.x, tFront.y)
-  hlGrad.addColorStop(0,    'rgba(255,255,255,0.3)')
-  hlGrad.addColorStop(0.4,  'rgba(255,255,255,0.08)')
-  hlGrad.addColorStop(1,    'rgba(255,255,255,0)')
+  hlGrad.addColorStop(0,    'rgba(255,255,255,0.45)')
+  hlGrad.addColorStop(0.4,  'rgba(255,255,255,0.15)')
+  hlGrad.addColorStop(1,    'rgba(255,255,255,0.02)')
   fillPoly(ctx, topPts, hlGrad)
 
   // Edges
-  strokePoly(ctx, leftPts,  'rgba(255, 255, 255, 0.2)', 1)
-  strokePoly(ctx, rightPts, 'rgba(255, 255, 255, 0.15)', 1)
-  strokePoly(ctx, topPts,   'rgba(255, 255, 255, 0.25)', 1)
+  strokePoly(ctx, leftPts,  'rgba(255, 255, 255, 0.35)', 1)
+  strokePoly(ctx, rightPts, 'rgba(255, 255, 255, 0.28)', 1)
+  strokePoly(ctx, topPts,   'rgba(255, 255, 255, 0.4)', 1)
 
   ctx.restore()
 }
@@ -153,10 +153,10 @@ function drawBase(
   const bFront = p(GRID, GRID, 0)
   const bLeft  = p(0, GRID, 0)
 
-  fillPoly(ctx, [tLeft, tFront, bFront, bLeft], 'rgba(255,255,255,0.03)')
-  fillPoly(ctx, [tRight, tFront, bFront, bRight], 'rgba(255,255,255,0.02)')
-  fillPoly(ctx, [tBack, tRight, tFront, tLeft], 'rgba(255,255,255,0.025)')
-  strokePoly(ctx, [tBack, tRight, tFront, tLeft], 'rgba(255,255,255,0.06)', 0.5)
+  fillPoly(ctx, [tLeft, tFront, bFront, bLeft], 'rgba(255,255,255,0.08)')
+  fillPoly(ctx, [tRight, tFront, bFront, bRight], 'rgba(255,255,255,0.06)')
+  fillPoly(ctx, [tBack, tRight, tFront, tLeft], 'rgba(255,255,255,0.07)')
+  strokePoly(ctx, [tBack, tRight, tFront, tLeft], 'rgba(255,255,255,0.12)', 0.5)
 }
 
 export function HeroCanvas({ className }: { className?: string }) {

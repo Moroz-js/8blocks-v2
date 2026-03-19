@@ -42,9 +42,9 @@ export function Header() {
           </nav>
 
           <div className={styles.actions}>
-            <Link href="#contact" className={styles.ctaLink}>
+            <Link href="/contact" className={styles.ctaLink}>
               <Button variant="primary" size="sm" type="button">
-                Contact us
+                Обсудить проект
               </Button>
             </Link>
           </div>
@@ -52,11 +52,11 @@ export function Header() {
           <button
             className={`${styles.burger} ${isOpen ? styles.burgerOpen : ''}`}
             onClick={() => setIsOpen((v) => !v)}
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            aria-label={isOpen ? 'Закрыть меню' : 'Открыть меню'}
             aria-expanded={isOpen}
           >
             <span className={styles.burgerLabel}>
-              {isOpen ? 'Close' : 'Menu'}
+              {isOpen ? 'Закрыть' : 'Меню'}
             </span>
             <span className={styles.burgerLines} aria-hidden="true">
               <span />
@@ -91,12 +91,12 @@ export function Header() {
 
           <div className={styles.mobileActions}>
             <Link
-              href="#contact"
+              href="/contact"
               className={styles.mobileCta}
               onClick={() => setIsOpen(false)}
             >
               <Button variant="primary" size="lg" fullWidth type="button">
-                Contact Us
+                Обсудить проект
               </Button>
             </Link>
           </div>

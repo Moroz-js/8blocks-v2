@@ -9,9 +9,9 @@ import styles from './HeroHome.module.scss'
 const ease = 'easeOut' as const
 
 const MARQUEE_ITEMS = [
-  'Tokenomics', '·', 'Strategic consulting', '·',
-  'Basic tokenomics', '·', 'Audit', '·',
-  'Web3', '·', 'Token Economy', '·', 'DeFi', '·', 'GameFi', '·',
+  'Токеномика', '·', 'Стратегический консалтинг', '·',
+  'Базовая токеномика', '·', 'Аудит токеномики', '·',
+  'Web3', '·', 'Токен-экономика', '·', 'DeFi', '·', 'GameFi', '·',
 ]
 
 export function HeroHome() {

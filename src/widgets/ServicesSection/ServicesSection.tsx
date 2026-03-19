@@ -30,7 +30,7 @@ export function ServicesSection() {
               endOffset="end 0.45"
             />
             <Link href="/services" className={styles.viewAll}>
-              All services <span aria-hidden="true">→</span>
+              Все услуги <span aria-hidden="true">→</span>
             </Link>
           </div>
         </motion.div>
@@ -57,7 +57,7 @@ export function ServicesSection() {
                 </div>
 
                 <div className={styles.cardFooter}>
-                  <span className={styles.cardLink}>Learn more</span>
+                  <span className={styles.cardLink}>Подробнее</span>
                   <span className={styles.cardArrow} aria-hidden="true">→</span>
                 </div>
               </Link>

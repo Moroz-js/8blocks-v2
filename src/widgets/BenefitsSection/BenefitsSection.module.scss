@@ -13,7 +13,7 @@
   position: sticky;
   top: 80px;
   z-index: 0;
-  max-width: 960px;
+  max-width: 1200px;
   margin-inline: auto;
   padding-inline: $container-padding;
   padding-bottom: $space-11;
@@ -49,7 +49,7 @@
   line-height: 1.18;
   letter-spacing: -0.02em;
   display: block;
-  max-width: 720px;
+  max-width: 960px;
 
   span {
     display: inline;
@@ -65,7 +65,7 @@
 
 // ── Stacking cards ───────────────────────────────────────────────
 .stack {
-  max-width: 960px;
+  max-width: 1200px;
   margin-inline: auto;
   padding-inline: $container-padding;
 
