@@ -1,1 +1,1 @@
-export { ProblemBlock, type ProblemItem } from './ProblemBlock'
+export { ProblemBlock, type ProblemItem, type ProblemBlockVariant } from './ProblemBlock'

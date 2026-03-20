@@ -1,0 +1,414 @@
+@use '@/shared/styles/variables' as *;
+
+// ── 1. Hero ───────────────────────────────────────────────────────
+
+.hero {
+  padding-block: $space-11 $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9 $space-8;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-8 $space-7;
+  }
+}
+
+.heroInner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-5;
+  }
+}
+
+.label {
+  display: inline-block;
+  font-family: $font-base;
+  font-size: $text-xs;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.heroHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(36px, 5.5vw, 72px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.heroDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-md;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 520px;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-base;
+  }
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  height: 50px;
+  padding: 0 $space-6;
+  background: $text-primary;
+  border-radius: 0;
+  color: #000;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  text-decoration: none;
+  transition: opacity $transition-base;
+
+  &:hover {
+    opacity: 0.88;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.ctaSecondary {
+  display: inline-flex;
+  align-items: center;
+  height: 50px;
+  padding: 0 $space-6;
+  border: 1px solid $border-primary;
+  border-radius: 0;
+  color: $text-primary;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  text-decoration: none;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+// ── 2. Giant email ────────────────────────────────────────────────
+
+.emailSection {
+  padding-block: $space-10 $space-9;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-7;
+  }
+}
+
+.emailInner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-4;
+  }
+}
+
+.emailGiant {
+  display: block;
+  font-family: $font-base;
+  font-weight: 600;
+  font-size: clamp(44px, 8.5vw, 112px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: $text-primary;
+  text-decoration: none;
+  word-break: break-all;
+  transition: color $transition-base;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: clamp(32px, 9vw, 56px);
+    word-break: break-all;
+  }
+}
+
+.emailMeta {
+  display: flex;
+  align-items: center;
+  gap: $space-6;
+  flex-wrap: wrap;
+
+  @media (max-width: #{$bp-mobile}) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $space-3;
+  }
+}
+
+.emailSupport {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: 0;
+  max-width: 440px;
+}
+
+.copyBtn {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 $space-4;
+  border: 1px solid $border-secondary;
+  border-radius: 0;
+  background: transparent;
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.04em;
+  color: $text-tertiary;
+  cursor: pointer;
+  transition: border-color $transition-base, color $transition-base;
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  &:hover {
+    border-color: $border-primary;
+    color: $text-secondary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+// ── 3. Secondary contacts ─────────────────────────────────────────
+
+.contactsSection {
+  padding-block: $space-9;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-7;
+  }
+}
+
+.contactsInner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-8;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr 1fr;
+    gap: $space-7;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    grid-template-columns: 1fr;
+    gap: $space-7;
+  }
+}
+
+.contactCol {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.contactColLabel {
+  font-family: $font-base;
+  font-size: $text-xs;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.contactValue {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-md;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.socialList {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.socialLink {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-md;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+    border-radius: 0;
+  }
+}
+
+// ── 4. Calendly ───────────────────────────────────────────────────
+
+.calendlySection {
+  padding-block: $space-10;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-8;
+  }
+}
+
+.calendlyInner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: $space-10;
+  align-items: start;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+    gap: $space-7;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-6;
+  }
+}
+
+.calendlyLeft {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  position: sticky;
+  top: $space-8;
+
+  @media (max-width: #{$bp-tablet}) {
+    position: static;
+  }
+}
+
+.calendlyHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(26px, 3vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.calendlyDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.calendlyList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  li {
+    font-family: $font-base;
+    font-size: $text-sm;
+    color: $text-tertiary;
+    padding-left: $space-5;
+    position: relative;
+
+    &::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: $accent-purple;
+      opacity: 0.7;
+    }
+  }
+}
+
+.calendlyRight {
+  min-width: 0;
+}
+
+.calendlyEmbed {
+  border: 1px solid $border-secondary;
+  border-radius: 0;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.01);
+}
+

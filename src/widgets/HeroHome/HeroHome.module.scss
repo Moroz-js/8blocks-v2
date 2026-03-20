@@ -135,7 +135,7 @@
   padding: 0 $space-8;
   background: $text-primary;
   color: #050308;
-  border-radius: $radius-sm;
+  border-radius: 0;
   font-family: $font-base;
   font-weight: 500;
   font-size: $text-base;
@@ -180,7 +180,7 @@
   height: 34px;
   padding: 0 $space-3;
   border: 1px solid $border-secondary;
-  border-radius: 100px;
+  border-radius: 0;
   font-family: $font-base;
   font-weight: 400;
   font-size: $text-sm;
@@ -280,3 +280,4 @@
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+

@@ -71,7 +71,7 @@
         top: 0.6em;
         width: 5px;
         height: 5px;
-        border-radius: 50%;
+        border-radius: 0;
         background: $accent-purple;
       }
     }
@@ -101,7 +101,7 @@
     padding: $space-5 $space-6;
     border-left: 3px solid $accent-purple;
     background: rgba(194, 78, 136, 0.06);
-    border-radius: 0 $radius-sm $radius-sm 0;
+    border-radius: 0;
     font-size: $text-md;
     font-style: italic;
     color: rgba(255, 255, 255, 0.7);
@@ -138,7 +138,7 @@
     font-family: $font-mono;
     font-size: 0.875em;
     padding: 0.15em 0.4em;
-    border-radius: 4px;
+    border-radius: 0;
     background: rgba(255, 255, 255, 0.07);
     border: 1px solid $border-secondary;
     color: rgba(255, 255, 255, 0.85);
@@ -155,7 +155,7 @@
   }
 
   .img {
-    border-radius: $radius-lg;
+    border-radius: 0;
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -169,3 +169,4 @@
     font-style: italic;
   }
 }
+

@@ -12,10 +12,11 @@ export interface FalseAssumptionItem {
 
 interface FalseAssumptionsBlockProps {
   headline: string
+  description?: string
   items: readonly FalseAssumptionItem[]
 }
 
-export function FalseAssumptionsBlock({ headline, items }: FalseAssumptionsBlockProps) {
+export function FalseAssumptionsBlock({ headline, description, items }: FalseAssumptionsBlockProps) {
   return (
     <section className={styles.section} aria-label="False assumptions">
       <div className={styles.inner}>
@@ -28,6 +29,7 @@ export function FalseAssumptionsBlock({ headline, items }: FalseAssumptionsBlock
         >
           {headline}
         </motion.h2>
+        {description && <p className={styles.description}>{description}</p>}
 
         <div className={styles.grid}>
           {items.map((item, i) => (

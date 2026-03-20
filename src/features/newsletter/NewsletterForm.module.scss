@@ -18,7 +18,7 @@
   padding: 0 52px 0 $space-5;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid $border-primary;
-  border-radius: 10px;
+  border-radius: 0;
   font-family: $font-base;
   font-size: $text-base;
   color: $text-primary;
@@ -50,7 +50,7 @@
   flex-shrink: 0;
   background: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 0;
   font-size: 15px;
   line-height: 1;
   font-family: $font-base;
@@ -79,7 +79,7 @@
   height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: #fff;
-  border-radius: 50%;
+  border-radius: 0;
   animation: spin 0.6s linear infinite;
 }
 
@@ -109,7 +109,7 @@
   height: 28px;
   background: rgba(194, 78, 136, 0.15);
   border: 1px solid rgba(194, 78, 136, 0.3);
-  border-radius: 50%;
+  border-radius: 0;
   font-size: $text-sm;
   color: $accent-purple;
   flex-shrink: 0;
@@ -121,3 +121,4 @@
   color: $text-secondary;
   margin: 0;
 }
+

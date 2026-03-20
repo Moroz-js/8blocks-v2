@@ -60,7 +60,7 @@
   width: 40px;
   height: 2px;
   background: $gradient-accent-h;
-  border-radius: 1px;
+  border-radius: 0;
 }
 
 // ── Stacking cards ───────────────────────────────────────────────
@@ -85,7 +85,7 @@
 }
 
 .card {
-  border-radius: $radius-xl;
+  border-radius: 0;
   background: #f5f3f0;
   transform-origin: top center;
   will-change: transform;
@@ -159,3 +159,4 @@
     display: inline;
   }
 }
+

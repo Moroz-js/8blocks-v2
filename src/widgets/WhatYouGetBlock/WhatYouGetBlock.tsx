@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import styles from './WhatYouGetBlock.module.scss'
 
@@ -16,10 +17,13 @@ function CheckIcon() {
 
 interface WhatYouGetBlockProps {
   headline: string
+  description?: string
+  ctaLabel?: string
+  ctaHref?: string
   items: readonly string[]
 }
 
-export function WhatYouGetBlock({ headline, items }: WhatYouGetBlockProps) {
+export function WhatYouGetBlock({ headline, description, ctaLabel, ctaHref, items }: WhatYouGetBlockProps) {
   return (
     <section className={styles.section} aria-label="Что вы получите">
       <div className={styles.inner}>
@@ -32,6 +36,13 @@ export function WhatYouGetBlock({ headline, items }: WhatYouGetBlockProps) {
         >
           {headline}
         </motion.h2>
+        {description && <p className={styles.description}>{description}</p>}
+        {ctaLabel && ctaHref && (
+          <Link href={ctaHref} className={styles.cta}>
+            {ctaLabel}
+            <span aria-hidden="true">→</span>
+          </Link>
+        )}
 
         <div className={styles.grid}>
           {items.map((text, i) => (

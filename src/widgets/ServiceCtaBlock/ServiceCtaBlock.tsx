@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import styles from './ServiceCtaBlock.module.scss'
@@ -7,7 +8,7 @@ import styles from './ServiceCtaBlock.module.scss'
 const ease = 'easeOut' as const
 
 interface ServiceCtaBlockProps {
-  headline: string
+  headline: React.ReactNode
   ctaLabel: string
   ctaHref: string
 }

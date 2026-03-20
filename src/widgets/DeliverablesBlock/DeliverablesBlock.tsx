@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import styles from './DeliverablesBlock.module.scss'
 
@@ -23,10 +24,22 @@ export interface DeliverableItem {
 interface DeliverablesBlockProps {
   label?: string
   headline: string
+  description?: string
+  ctaLabel?: string
+  ctaHref?: string
+  columns?: 'default' | 'two'
   items: readonly DeliverableItem[]
 }
 
-export function DeliverablesBlock({ label, headline, items }: DeliverablesBlockProps) {
+export function DeliverablesBlock({
+  label,
+  headline,
+  description,
+  ctaLabel,
+  ctaHref,
+  columns = 'default',
+  items,
+}: DeliverablesBlockProps) {
   return (
     <section className={styles.section} aria-label="Deliverables">
       <div className={styles.inner}>
@@ -45,9 +58,21 @@ export function DeliverablesBlock({ label, headline, items }: DeliverablesBlockP
             </span>
           )}
           <h2 className={styles.headline}>{headline}</h2>
+          {description && <p className={styles.description}>{description}</p>}
+          {ctaLabel && ctaHref && (
+            <Link href={ctaHref} className={styles.cta}>
+              {ctaLabel}
+              <span aria-hidden="true">→</span>
+            </Link>
+          )}
         </motion.div>
 
-        <div className={styles.grid}>
+        {items.length > 0 && (
+        <div
+          className={`${styles.grid} ${items.length === 5 ? styles.gridFive : ''} ${
+            columns === 'two' ? styles.gridTwo : ''
+          }`}
+        >
           {items.map((item, i) => (
             <motion.article
               key={i}
@@ -66,6 +91,7 @@ export function DeliverablesBlock({ label, headline, items }: DeliverablesBlockP
             </motion.article>
           ))}
         </div>
+        )}
       </div>
     </section>
   )

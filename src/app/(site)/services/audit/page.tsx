@@ -2,40 +2,31 @@ import type { Metadata } from 'next'
 import { auditContent } from '@/shared/content/audit'
 import { ServiceHero } from '@/widgets/ServiceHero'
 import { ProblemBlock } from '@/widgets/ProblemBlock'
-import { WhenNeededBlock } from '@/widgets/WhenNeededBlock'
-import { DeliverablesBlock } from '@/widgets/DeliverablesBlock'
-import { FalseAssumptionsBlock } from '@/widgets/FalseAssumptionsBlock'
-import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
-import { WhatYouGetBlock } from '@/widgets/WhatYouGetBlock'
+import { SolutionBlock } from '@/widgets/SolutionBlock'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
+import { AuditZonesBlock } from '@/widgets/AuditZonesBlock'
+import { AuditAssumptionsBlock } from '@/widgets/AuditAssumptionsBlock'
+import { AuditOutputBlock } from '@/widgets/AuditOutputBlock'
+import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import { siteConfig } from '@/shared/config/site'
 
-const {
-  hero,
-  problem,
-  whenNeeded,
-  whatWeAnalyze,
-  whatYouGet,
-  falseAssumptions,
-  faq,
-  cta,
-} = auditContent
+const { hero, problem, solution, faq, whatWeAnalyze, falseAssumptions, whatYouGet } = auditContent
 
 export const metadata: Metadata = {
-  title: 'Tokenomics Audit',
+  title: 'Аудит токеномики',
   description:
-    'A full assessment of an existing token economy, identifying structural risks, broken incentive loops, and scaling bottlenecks.',
+    'Полная оценка существующей токен-экономики: структурные риски, нарушенные циклы стимулов, узкие места масштабирования.',
   alternates: { canonical: `${siteConfig.url.replace(/\/$/, '')}/services/audit` },
   openGraph: {
-    title: 'Tokenomics Audit | 8Blocks',
+    title: 'Аудит токеномики | 8Blocks',
     description:
-      'A full assessment of an existing token economy, identifying structural risks and scaling bottlenecks.',
+      'Полная оценка существующей токен-экономики: структурные риски и узкие места масштабирования.',
     url: '/services/audit',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tokenomics Audit | 8Blocks',
-    description: 'A full assessment of an existing token economy.',
+    title: 'Аудит токеномики | 8Blocks',
+    description: 'Полная оценка существующей токен-экономики.',
   },
 }
 
@@ -45,30 +36,43 @@ export default function AuditPage() {
       <ServiceHero
         label={hero.label}
         headline={hero.headline}
-        accentWord={hero.accentWord}
         description={hero.description}
         ctaLabel={hero.ctaLabel}
         ctaHref={hero.ctaHref}
         variant="audit"
       />
-      <ProblemBlock headline={problem.headline} items={problem.items} />
-      <WhenNeededBlock headline={whenNeeded.headline} items={whenNeeded.items} />
-      <DeliverablesBlock
-        label={whatWeAnalyze.label}
-        headline={whatWeAnalyze.headline}
-        items={whatWeAnalyze.items}
+      <ProblemBlock
+        variant="audit"
+        headline={problem.headline}
+        description={problem.description}
+        items={problem.items}
       />
-      <WhatYouGetBlock headline={whatYouGet.headline} items={whatYouGet.items} />
-      <FalseAssumptionsBlock
+      <SolutionBlock
+        variant={solution.variant}
+        headline={solution.headline}
+        description={solution.description}
+        items={solution.items}
+      />
+      <AuditZonesBlock
+        headline={whatWeAnalyze.headline}
+        description={whatWeAnalyze.description}
+      />
+      <AuditOutputBlock
+        headline={whatYouGet.headline}
+        description={whatYouGet.description}
+        ctaLabel={whatYouGet.ctaLabel}
+        ctaHref={whatYouGet.ctaHref}
+      />
+      <AuditAssumptionsBlock
         headline={falseAssumptions.headline}
         items={falseAssumptions.items}
       />
-      <FaqAccordion headline={faq.headline} items={faq.items} />
       <ServiceCtaBlock
-        headline={cta.headline}
-        ctaLabel={cta.ctaLabel}
-        ctaHref={cta.ctaHref}
+        headline={<>Перед запуском лучше услышать неудобные выводы от экспертов.<br />Чем потом от инвесторов и рынка.</>}
+        ctaLabel="Записаться на консультацию"
+        ctaHref="/contact"
       />
+      <FaqAccordion headline={faq.headline} items={faq.items} />
     </>
   )
 }

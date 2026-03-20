@@ -1,4 +1,5 @@
 @use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
 
 .section {
   padding-block: $space-11;
@@ -35,18 +36,10 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: $space-4;
 
-  @media (max-width: 1100px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  @media (max-width: 700px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: #{$bp-mobile}) {
+  @media (max-width: #{$bp-tablet}) {
     grid-template-columns: 1fr;
   }
 }
@@ -54,13 +47,13 @@
 .card {
   padding: $space-6;
   background: $bg-secondary;
-  border: 1px solid $border-secondary;
-  border-radius: $radius-lg;
-  transition: border-color $transition-base, background $transition-base;
+  border-radius: 0;
+  transition: background $transition-base;
+
+  @include card-corner-border();
 
   &:hover {
     background: $bg-tertiary;
-    border-color: rgba(255, 255, 255, 0.12);
   }
 }
 
@@ -81,3 +74,54 @@
   color: $text-secondary;
   margin: 0;
 }
+
+.cardIntro {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0 0 $space-4;
+  white-space: pre-line;
+}
+
+.bulletList {
+  list-style: none;
+  margin: $space-4 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.bulletItem {
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid $border-secondary;
+  padding-top: $space-4;
+
+  &:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+}
+
+.bulletTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0 0 $space-2;
+}
+
+.bulletDescription {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+

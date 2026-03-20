@@ -28,7 +28,7 @@
   height: 24px;
   padding: 0 $space-3;
   border: 1px solid rgba(194, 78, 136, 0.3);
-  border-radius: 100px;
+  border-radius: 0;
   font-family: $font-base;
   font-size: $text-xs;
   font-weight: 400;
@@ -97,7 +97,7 @@
 // ── Cover ───────────────────────────────────────────────────────────
 .coverWrap {
   margin-bottom: $space-9;
-  border-radius: $radius-lg;
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -134,3 +134,4 @@
     display: none;
   }
 }
+

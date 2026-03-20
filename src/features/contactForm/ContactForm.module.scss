@@ -37,7 +37,7 @@
   color: $text-primary;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid $border-secondary;
-  border-radius: $radius-sm;
+  border-radius: 0;
   padding: $space-3 $space-4;
   width: 100%;
   transition: border-color $transition-fast, background $transition-fast;
@@ -84,7 +84,7 @@
   padding: $space-3 $space-4;
   background: rgba(255, 107, 107, 0.08);
   border: 1px solid rgba(255, 107, 107, 0.2);
-  border-radius: $radius-sm;
+  border-radius: 0;
 }
 
 // ── Submit button ──────────────────────────────────────────────────
@@ -98,7 +98,7 @@
   background: $text-primary;
   color: #050308;
   border: none;
-  border-radius: $radius-sm;
+  border-radius: 0;
   font-family: $font-base;
   font-weight: 500;
   font-size: $text-base;
@@ -146,7 +146,7 @@
   height: 16px;
   border: 2px solid rgba(0, 0, 0, 0.3);
   border-top-color: #050308;
-  border-radius: 50%;
+  border-radius: 0;
   animation: spin 0.7s linear infinite;
 }
 
@@ -162,14 +162,14 @@
   gap: $space-3;
   padding: $space-6;
   border: 1px solid rgba(117, 251, 99, 0.25);
-  border-radius: $radius-md;
+  border-radius: 0;
   background: rgba(117, 251, 99, 0.04);
 }
 
 .successIcon {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 0;
   background: rgba(117, 251, 99, 0.15);
   border: 1px solid rgba(117, 251, 99, 0.3);
   display: flex;
@@ -194,3 +194,4 @@
   color: $text-secondary;
   margin: 0;
 }
+

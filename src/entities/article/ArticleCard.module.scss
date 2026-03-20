@@ -10,7 +10,7 @@
 // ── Cover ──────────────────────────────────────────────────────────
 .coverLink {
   display: block;
-  border-radius: $radius-lg;
+  border-radius: 0;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -75,7 +75,7 @@
   height: 24px;
   padding: 0 $space-3;
   border: 1px solid rgba(197, 61, 255, 0.3);
-  border-radius: 100px;
+  border-radius: 0;
   font-family: $font-base;
   font-weight: 400;
   font-size: $text-xs;
@@ -182,7 +182,7 @@
   &:focus-visible {
     outline: 2px solid $accent-purple;
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 0;
   }
 }
 
@@ -190,3 +190,4 @@
   font-size: 14px;
   transition: transform $transition-fast;
 }
+

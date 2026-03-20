@@ -1,0 +1,248 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-9;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+// ─── Headline ─────────────────────────────────────────────────────
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: $leading-tight;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+// ─── Wall ─────────────────────────────────────────────────────────
+
+.wall {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+// ─── Rows ─────────────────────────────────────────────────────────
+// Each row shifts slightly to the right to create a staircase feel.
+
+.rowA {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-3;
+
+  @media (max-width: #{$bp-desktop}) and (min-width: #{$bp-tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rowB {
+  display: grid;
+  gap: $space-3;
+
+  @media (min-width: #{$bp-desktop}) {
+    grid-template-columns: repeat(4, 1fr);
+    padding-inline: 4%;
+  }
+
+  @media (max-width: #{$bp-desktop}) and (min-width: #{$bp-tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rowC {
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: #{$bp-tablet}) {
+    display: block;
+  }
+}
+
+// ─── Base card ────────────────────────────────────────────────────
+
+.card {
+  position: relative;
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: 0;
+  padding: $space-5 $space-5 $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  overflow: hidden;
+  transition: border-color $transition-base, transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    border-color: rgba(194, 78, 136, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+
+    .cardSvg,
+    .cardSvgFinal {
+      opacity: 0.75;
+    }
+  }
+}
+
+.cardTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: $gradient-card-border;
+  pointer-events: none;
+}
+
+// ─── Card header ──────────────────────────────────────────────────
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-3;
+}
+
+.stepNum {
+  font-family: $font-mono;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
+  user-select: none;
+  transition: color $transition-base;
+
+  .card:hover & {
+    color: rgba(255, 255, 255, 0.28);
+  }
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.45);
+  transition: opacity $transition-base;
+}
+
+.cardSvg {
+  width: 64px;
+  height: 64px;
+  display: block;
+  transition: opacity $transition-base;
+}
+
+.cardSvgFinal {
+  width: 64px;
+  height: 64px;
+  display: block;
+  transition: opacity $transition-base;
+}
+
+// ─── Card text ────────────────────────────────────────────────────
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  line-height: $leading-snug;
+  letter-spacing: -0.01em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: $font-base;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ─── Final card (09) ──────────────────────────────────────────────
+
+.cardFinal {
+  width: 66%;
+  padding: $space-7;
+
+  @media (max-width: #{$bp-desktop}) and (min-width: #{$bp-tablet}) {
+    width: 100%;
+    padding: $space-6;
+  }
+
+  @media (max-width: #{$bp-tablet}) {
+    width: 100%;
+    padding: $space-6;
+  }
+
+  .stepNum {
+    font-size: 36px;
+  }
+
+  .cardTitle {
+    font-size: $text-lg;
+  }
+
+  .cardDesc {
+    font-size: $text-base;
+    max-width: 400px;
+  }
+}
+
+.cardFinalInner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $space-6;
+}
+
+.cardFinalText {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  flex: 1;
+}
+
+.cardFinalIcon {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: $space-1;
+
+  .cardSvgFinal {
+    width: 88px;
+    height: 88px;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    display: none;
+  }
+}
+

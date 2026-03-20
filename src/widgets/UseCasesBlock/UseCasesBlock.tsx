@@ -5,11 +5,18 @@ import styles from './UseCasesBlock.module.scss'
 
 const ease = 'easeOut' as const
 
+export interface UseCaseBullet {
+  title: string
+  description: string
+}
+
 export interface UseCaseItem {
   label: string
   title: string
-  description: string
-  tags?: string[]
+  /** @deprecated use intro + bullets */
+  description?: string
+  intro?: string
+  bullets?: readonly UseCaseBullet[]
 }
 
 interface UseCasesBlockProps {
@@ -42,7 +49,23 @@ export function UseCasesBlock({ headline, items }: UseCasesBlockProps) {
               transition={{ duration: 0.5, ease, delay: i * 0.08 }}
             >
               <h3 className={styles.cardTitle}>{item.title}</h3>
-              <p className={styles.cardDescription}>{item.description}</p>
+              {item.bullets && item.bullets.length > 0 ? (
+                <>
+                  {item.intro && <p className={styles.cardIntro}>{item.intro}</p>}
+                  <ul className={styles.bulletList}>
+                    {item.bullets.map((b, j) => (
+                      <li key={j} className={styles.bulletItem}>
+                        <p className={styles.bulletTitle}>{b.title}</p>
+                        <p className={styles.bulletDescription}>{b.description}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                item.description && (
+                  <p className={styles.cardDescription}>{item.description}</p>
+                )
+              )}
             </motion.article>
           ))}
         </div>

@@ -1,5 +1,25 @@
 @use '@/shared/styles/variables' as *;
 
+@keyframes blobA {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(12%, 8%) scale(1.18); }
+  66%  { transform: translate(-8%, 14%) scale(0.88); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes blobB {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-14%, -10%) scale(0.85); }
+  66%  { transform: translate(10%, -14%) scale(1.2); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes blobC {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(10%, -12%) scale(1.15); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
 .hero {
   position: relative;
   min-height: 100svh;
@@ -8,12 +28,52 @@
   justify-content: center;
   padding-top: $space-10;
   padding-bottom: $space-10;
-  overflow: hidden;
 
   @media (max-width: #{$bp-tablet}) {
     min-height: auto;
     padding-top: $space-9;
     padding-bottom: $space-8;
+  }
+}
+
+.blobLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 0;
+  filter: blur(80px);
+  pointer-events: none;
+  will-change: transform;
+
+  &A {
+    width: 600px;
+    height: 600px;
+    top: -15%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(194, 78, 136, 0.38) 0%, transparent 70%);
+    animation: blobA 18s ease-in-out infinite;
+  }
+
+  &B {
+    width: 500px;
+    height: 500px;
+    top: 20%;
+    right: -8%;
+    background: radial-gradient(circle, rgba(142, 74, 189, 0.30) 0%, transparent 70%);
+    animation: blobB 22s ease-in-out infinite;
+  }
+
+  &C {
+    width: 400px;
+    height: 400px;
+    bottom: -10%;
+    left: 30%;
+    background: radial-gradient(circle, rgba(217, 173, 208, 0.26) 0%, transparent 70%);
+    animation: blobC 26s ease-in-out infinite;
   }
 }
 
@@ -23,19 +83,10 @@
   max-width: $container-max;
   margin-inline: auto;
   padding-inline: $container-padding;
-  display: grid;
-  grid-template-columns: 1fr 360px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: $space-8;
-
-  @media (max-width: 1100px) {
-    grid-template-columns: 1fr 280px;
-  }
-
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr;
-    padding-bottom: 0;
-  }
+  text-align: center;
 
   @media (max-width: #{$bp-mobile}) {
     padding-inline: $container-padding-mobile;
@@ -45,7 +96,8 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: $space-6;
+  align-items: center;
+  gap: $space-7;
 }
 
 .label {
@@ -64,11 +116,15 @@
 .headline {
   font-family: $font-base;
   font-weight: 500;
-  font-size: clamp(36px, 5vw, 56px);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  font-size: clamp(42px, 6.5vw, 88px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
   margin: 0;
   color: $text-primary;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: clamp(36px, 9vw, 52px);
+  }
 }
 
 .headlineAccent {
@@ -79,11 +135,16 @@
 }
 
 .description {
-  font-size: $text-md;
-  line-height: $leading-relaxed;
+  font-size: clamp(22px, 3vw, 36px);
+  line-height: 1.45;
   color: $text-secondary;
-  max-width: 520px;
+  max-width: 860px;
   margin: 0;
+  text-align: center;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: clamp(18px, 4.5vw, 22px);
+  }
 }
 
 .actions {
@@ -99,7 +160,7 @@
   padding: 0 $space-8;
   background: $text-primary;
   color: #050308;
-  border-radius: $radius-sm;
+  border-radius: 0;
   font-family: $font-base;
   font-weight: 500;
   font-size: $text-base;
@@ -132,19 +193,4 @@
   }
 }
 
-.visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 280px;
 
-  @media (max-width: #{$bp-tablet}) {
-    min-height: 200px;
-  }
-}
-
-.decorSvg {
-  width: 100%;
-  max-width: 280px;
-  height: auto;
-}

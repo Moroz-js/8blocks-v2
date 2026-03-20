@@ -47,7 +47,7 @@
 .accordionItem {
   background: $bg-secondary !important;
   border: 1px solid $border-secondary !important;
-  border-radius: $radius-lg !important;
+  border-radius: 0;
   overflow: hidden;
   transition: border-color $transition-base, background $transition-base;
 
@@ -127,3 +127,4 @@
   line-height: $leading-relaxed !important;
   color: $text-secondary !important;
 }
+

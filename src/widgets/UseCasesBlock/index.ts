@@ -1,1 +1,1 @@
-export { UseCasesBlock, type UseCaseItem } from './UseCasesBlock'
+export { UseCasesBlock, type UseCaseItem, type UseCaseBullet } from './UseCasesBlock'

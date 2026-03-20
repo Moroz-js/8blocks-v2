@@ -185,7 +185,7 @@ select {
 
 ::-webkit-scrollbar-thumb {
   background: var(--border-primary);
-  border-radius: 3px;
+  border-radius: 0;
 
   &:hover {
     background: rgba(255, 255, 255, 0.35);
@@ -203,3 +203,4 @@ select {
   outline: 2px solid var(--accent-purple);
   outline-offset: 2px;
 }
+

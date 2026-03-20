@@ -1,4 +1,5 @@
 @use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
 
 .section {
   padding-block: $space-11;
@@ -32,14 +33,24 @@
   margin: 0;
 }
 
+.description {
+  margin: -$space-7 0 0;
+  max-width: 900px;
+  font-family: $font-base;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
 .list {
   display: flex;
   flex-direction: column;
   gap: 0;
-  border: 1px solid $border-secondary;
-  border-radius: $radius-lg;
+  border-radius: 0;
   overflow: hidden;
   background: $bg-secondary;
+
+  @include card-corner-border();
 }
 
 .row {
@@ -97,3 +108,5 @@
   line-height: $leading-relaxed;
   color: $text-secondary;
 }
+
+

@@ -1,0 +1,106 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-8;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  max-width: 760px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-8;
+
+  @media (max-width: #{$bp-tablet}) {
+    gap: $space-6;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    gap: $space-8;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    gap: $space-8;
+
+    &:not(:last-child) {
+      padding-bottom: $space-8;
+    }
+  }
+}
+
+.module {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.seems {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 255, 255, 0.2);
+  margin: 0;
+}
+
+.accentLine {
+  width: 36px;
+  height: 2px;
+  background: $accent-purple;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.reality {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: clamp(16px, 1.4vw, 20px);
+  line-height: $leading-relaxed;
+  color: $text-primary;
+  margin: 0;
+}
+

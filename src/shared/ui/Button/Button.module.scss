@@ -7,7 +7,7 @@
   gap: $space-2;
   font-family: $font-base;
   font-weight: 500;
-  border-radius: $radius-sm;
+  border-radius: 0;
   cursor: pointer;
   transition: background $transition-base, color $transition-base, border-color $transition-base, opacity $transition-base;
   white-space: nowrap;
@@ -67,7 +67,7 @@
   height: 36px;
   padding: 0 $space-4;
   font-size: $text-sm;
-  border-radius: $radius-sm;
+  border-radius: 0;
 }
 
 .size-md {
@@ -116,3 +116,4 @@
 .iconRight {
   margin-left: -2px;
 }
+

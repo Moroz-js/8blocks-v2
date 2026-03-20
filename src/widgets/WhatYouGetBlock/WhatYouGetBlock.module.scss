@@ -1,4 +1,5 @@
 @use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
 
 .section {
   padding-block: $space-11;
@@ -32,6 +33,33 @@
   margin: 0;
 }
 
+.description {
+  margin: -$space-4 0 0;
+  max-width: 980px;
+  font-family: $font-base;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  align-self: flex-start;
+  height: 46px;
+  padding: 0 $space-6;
+  border: 1px solid $border-primary;
+  border-radius: 0;
+  color: $text-primary;
+  text-decoration: none;
+  transition: border-color $transition-base;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -50,14 +78,14 @@
   position: relative;
   padding: $space-6;
   background: $bg-secondary;
-  border: 1px solid $border-secondary;
-  border-radius: $radius-lg;
+  border-radius: 0;
   overflow: hidden;
-  transition: border-color $transition-base, background $transition-base;
+  transition: background $transition-base;
+
+  @include card-corner-border();
 
   &:hover {
     background: $bg-tertiary;
-    border-color: rgba(255, 255, 255, 0.12);
 
     .cardTopBorder {
       opacity: 1;
@@ -106,3 +134,5 @@
   color: $text-secondary;
   margin: 0;
 }
+
+

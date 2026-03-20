@@ -18,28 +18,22 @@
   }
 }
 
-.formGrid {
+.infoBlock {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: $space-11;
-  align-items: start;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-8;
+  align-items: stretch;
 
-  @media (max-width: 960px) {
+  @media (max-width: #{$bp-tablet}) {
     grid-template-columns: 1fr;
     gap: $space-8;
   }
 }
 
-.formMeta {
+.leftCol {
   display: flex;
   flex-direction: column;
   gap: $space-5;
-  position: sticky;
-  top: 96px;
-
-  @media (max-width: 960px) {
-    position: static;
-  }
 }
 
 .formLabel {
@@ -85,13 +79,61 @@
   max-width: 360px;
 }
 
-.directEmail {
+.contactList {
+  list-style: none;
+  margin: $space-2 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid $border-secondary;
+}
+
+.contactItem {
+  display: flex;
+  align-items: flex-start;
+  gap: $space-4;
+  padding-block: $space-4;
+  border-bottom: 1px solid $border-secondary;
+}
+
+.contactIcon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  color: $text-primary;
+  flex: 0 0 auto;
+  margin-top: 2px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.contactTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  color: $text-primary;
+  margin: 0 0 $space-2;
+}
+
+.contactText {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0 0 $space-2;
+}
+
+.contactLink {
   font-family: $font-base;
   font-weight: 400;
   font-size: $text-sm;
   color: $text-tertiary;
   text-decoration: none;
-  transition: color $transition-fast;
+  transition: color $transition-base;
 
   &:hover {
     color: $accent-purple;
@@ -100,4 +142,8 @@
 
 .formWrap {
   width: 100%;
+  max-width: 560px;
+  margin-inline: 0;
+  justify-self: start;
+  align-self: center;
 }

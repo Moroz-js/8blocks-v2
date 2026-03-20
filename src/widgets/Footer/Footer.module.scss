@@ -35,6 +35,16 @@
   padding-block: clamp(16px, 3vw, 40px);
 }
 
+// Contact page variant: email fills the same watermark space
+.watermarkEmail {
+  font-size: clamp(28px, 7.8vw, 104px);
+  white-space: normal;
+  word-break: break-all;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  padding-block: clamp(20px, 3.5vw, 52px);
+}
+
 // ── Bottom section ────────────────────────────────────────────────
 .bottomSection {
   padding-block: $space-9 $space-6;
@@ -108,7 +118,7 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: $radius-sm;
+  border-radius: 0;
   text-decoration: none;
   opacity: 0.75;
   transition: opacity $transition-fast;
@@ -141,7 +151,7 @@
   width: 100%;
   height: 100%;
   min-height: 160px;
-  border-radius: $radius-sm;
+  border-radius: 0;
   overflow: hidden;
   border: 1px solid $border-secondary;
   // Filter on wrapper, not on iframe — avoids compositor blur artifact
@@ -190,7 +200,7 @@
   &:focus-visible {
     outline: 2px solid $accent-purple;
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 0;
   }
 }
 
@@ -240,3 +250,4 @@
     color: $text-secondary;
   }
 }
+

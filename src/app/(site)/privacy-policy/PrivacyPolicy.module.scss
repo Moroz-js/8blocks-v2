@@ -95,7 +95,7 @@
     padding: 16px;
     background: var(--surface);
     border: 1px solid var(--border-subtle);
-    border-radius: $radius-sm;
+    border-radius: 0;
 
     @media (max-width: #{$bp-mobile}) {
       grid-template-columns: 1fr;
@@ -123,3 +123,4 @@
     color: var(--accent);
   }
 }
+

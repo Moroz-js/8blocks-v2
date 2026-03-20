@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use '@/shared/styles/variables' as *;
 
 // Responsive mixins
 @mixin mobile {
@@ -118,13 +118,13 @@
 @mixin card-surface {
   background: $bg-secondary;
   border: 1px solid $border-secondary;
-  border-radius: $radius-lg;
+  border-radius: 0;
 }
 
 @mixin card-surface-elevated {
   background: $bg-tertiary;
   border: 1px solid $border-primary;
-  border-radius: $radius-lg;
+  border-radius: 0;
 }
 
 // Focus visible
@@ -134,3 +134,63 @@
     outline-offset: 2px;
   }
 }
+
+// Corner border effect: corners only by default, full border on hover
+@mixin card-corner-border($color: rgba(255, 255, 255, 0.18), $corner: 32px, $width: 1px) {
+  position: relative;
+  border: #{$width} solid transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background-image:
+      linear-gradient($color, $color),
+      linear-gradient($color, $color),
+      linear-gradient($color, $color),
+      linear-gradient($color, $color),
+      linear-gradient($color, $color),
+      linear-gradient($color, $color),
+      linear-gradient($color, $color),
+      linear-gradient($color, $color);
+
+    background-position:
+      0 0,
+      0 0,
+      100% 0,
+      100% 0,
+      0 100%,
+      0 100%,
+      100% 100%,
+      100% 100%;
+
+    background-repeat: no-repeat;
+
+    background-size:
+      #{$corner} #{$width},
+      #{$width} #{$corner},
+      #{$corner} #{$width},
+      #{$width} #{$corner},
+      #{$corner} #{$width},
+      #{$width} #{$corner},
+      #{$corner} #{$width},
+      #{$width} #{$corner};
+
+    transition: background-size 0.4s ease;
+  }
+
+  &:hover::before {
+    background-size:
+      50% #{$width},
+      #{$width} 50%,
+      50% #{$width},
+      #{$width} 50%,
+      50% #{$width},
+      #{$width} 50%,
+      50% #{$width},
+      #{$width} 50%;
+  }
+}
+

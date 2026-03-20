@@ -15,10 +15,11 @@ function CheckIcon() {
 
 interface WhenNeededBlockProps {
   headline: string
+  description?: string
   items: readonly string[]
 }
 
-export function WhenNeededBlock({ headline, items }: WhenNeededBlockProps) {
+export function WhenNeededBlock({ headline, description, items }: WhenNeededBlockProps) {
   return (
     <section className={styles.section} aria-label="When audit is needed">
       <div className={styles.inner}>
@@ -31,6 +32,7 @@ export function WhenNeededBlock({ headline, items }: WhenNeededBlockProps) {
         >
           {headline}
         </motion.h2>
+        {description && <p className={styles.description}>{description}</p>}
 
         <div className={styles.list}>
           {items.map((text, i) => (

@@ -130,7 +130,7 @@
 .avatar {
   width: 52px;
   height: 52px;
-  border-radius: 50%;
+  border-radius: 0;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
@@ -140,7 +140,7 @@
 
 .avatarImg {
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 0;
 }
 
 // ── Stats column ──────────────────────────────────────────────────
@@ -152,7 +152,7 @@
   gap: 1px;
   background: transparent;
   border: none;
-  border-radius: $radius-lg;
+  border-radius: 0;
   overflow: hidden;
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
@@ -202,3 +202,4 @@
   line-height: $leading-relaxed;
   color: $text-secondary;
 }
+

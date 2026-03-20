@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { socialLinks } from '@/shared/config/site'
 import { NewsletterForm } from '@/features/newsletter'
 import { Logo } from '@/shared/ui'
+import { FooterWatermark } from './FooterWatermark'
 import styles from './Footer.module.scss'
 
 const pageLinks = [
@@ -21,9 +22,7 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       {/* ── Brand watermark ──────────────────────────────────────── */}
-      <div className={styles.watermarkSection} aria-hidden="true">
-        <div className={styles.watermarkText}>8BLOCKS</div>
-      </div>
+      <FooterWatermark />
 
       {/* ── Bottom section ───────────────────────────────────────── */}
       <div className={styles.bottomSection}>

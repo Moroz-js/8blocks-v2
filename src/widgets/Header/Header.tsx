@@ -44,7 +44,7 @@ export function Header() {
           <div className={styles.actions}>
             <Link href="/contact" className={styles.ctaLink}>
               <Button variant="primary" size="sm" type="button">
-                Обсудить проект
+                Связаться с нами
               </Button>
             </Link>
           </div>
@@ -96,7 +96,7 @@ export function Header() {
               onClick={() => setIsOpen(false)}
             >
               <Button variant="primary" size="lg" fullWidth type="button">
-                Обсудить проект
+                Связаться с нами
               </Button>
             </Link>
           </div>
