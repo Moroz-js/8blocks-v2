@@ -1,0 +1,40 @@
+@use '@/shared/styles/variables' as *;
+
+.transition {
+  padding: $space-10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-4;
+  border: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding: $space-8;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-7 $space-6;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(20px, 2.5vw, 32px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  max-width: 620px;
+}
+
+.description {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 560px;
+}

@@ -47,7 +47,9 @@ export function ServiceHero({
                 {headlineParts[1]}
               </>
             ) : (
-              headline
+              headline.split('\n').map((line, i, arr) => (
+                <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+              ))
             )}
           </motion.h1>
 

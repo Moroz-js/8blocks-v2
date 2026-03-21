@@ -1,0 +1,163 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-9;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 44px);
+  line-height: $leading-tight;
+  letter-spacing: -0.025em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-7;
+  align-items: start;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.itemLink {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+
+  &:first-child .item {
+    padding-top: 0;
+  }
+
+  &:last-child .item {
+    border-bottom: none;
+  }
+}
+
+.item {
+  padding: $space-6 0;
+  border-bottom: 1px solid $border-secondary;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  cursor: pointer;
+  transition: border-color $transition-base;
+}
+
+.itemActive {
+  border-color: rgba(194, 78, 136, 0.3);
+
+  .itemTitle {
+    color: $text-primary;
+  }
+
+  .itemCta {
+    opacity: 1;
+  }
+}
+
+.itemTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-xl;
+  line-height: $leading-snug;
+  letter-spacing: -0.01em;
+  color: $text-secondary;
+  margin: 0;
+  transition: color $transition-base;
+
+  .item:hover & {
+    color: $text-primary;
+  }
+}
+
+.itemDesc {
+  font-family: $font-base;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 440px;
+}
+
+.itemCta {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: $text-primary;
+  opacity: 0.5;
+  transition: opacity $transition-base;
+  margin-top: $space-2;
+  padding: $space-2 $space-4;
+  border: 1px solid $border-primary;
+  width: fit-content;
+
+  .itemLink:hover & {
+    opacity: 1;
+  }
+}
+
+.itemArrow {
+  font-size: 14px;
+  transition: transform $transition-fast;
+
+  .itemLink:hover & {
+    transform: translateX(3px);
+  }
+}
+
+.animation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  aspect-ratio: 1;
+
+  @media (max-width: #{$bp-tablet}) {
+    aspect-ratio: 4 / 3;
+    order: -1;
+  }
+}
+
+.svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}

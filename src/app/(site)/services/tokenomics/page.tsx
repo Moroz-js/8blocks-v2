@@ -7,6 +7,7 @@ import { FaqAccordion } from '@/widgets/FaqAccordion'
 import { TokenomicsCompositionBlock } from '@/widgets/TokenomicsCompositionBlock'
 import { TokenomicsProcessWall } from '@/widgets/TokenomicsProcessWall'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
+import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
 
 const { hero, problem, solution, faq, deliverables, process, cta } = tokenomicsContent
@@ -57,6 +58,7 @@ export default function TokenomicsPage() {
         description={deliverables.headline}
       />
       <TokenomicsProcessWall headline={process.headline} />
+      <TokenomicsTestBlock />
       <ServiceCtaBlock
         headline={cta.headline}
         ctaLabel={cta.ctaLabel}

@@ -7,6 +7,7 @@ import { FaqAccordion } from '@/widgets/FaqAccordion'
 import { ConsultingDeliverablesWall } from '@/widgets/ConsultingDeliverablesWall'
 import { ProcessHorizontalSlider } from '@/widgets/ProcessHorizontalSlider'
 import { UseCasesTabs } from '@/widgets/UseCasesTabs'
+import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
 
 const { hero, problem, solution, midCta, faq, results, deliverables, process, useCases } = strategicConsultingContent
@@ -68,6 +69,7 @@ export default function StrategicConsultingPage() {
         headline={useCases.headline}
         items={useCases.items}
       />
+      <TokenomicsTestBlock />
       <FaqAccordion headline={faq.headline} items={faq.items} />
     </>
   )

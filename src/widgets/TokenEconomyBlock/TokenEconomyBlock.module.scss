@@ -1,0 +1,126 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-9;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  max-width: 680px;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 48px);
+  line-height: $leading-tight;
+  letter-spacing: -0.025em;
+  color: $text-primary;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.accent {
+  background: $gradient-accent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.description {
+  font-family: $font-base;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 560px;
+}
+
+// 3 top + 2 bottom (wider)
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-3;
+
+  > :nth-child(4) {
+    grid-column: 1 / 2;
+  }
+
+  > :nth-child(5) {
+    grid-column: 2 / 4;
+  }
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: repeat(2, 1fr);
+
+    > :nth-child(n) {
+      grid-column: auto;
+    }
+
+    > :nth-child(4) {
+      grid-column: auto;
+    }
+
+    > :nth-child(5) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+
+    > :nth-child(n) {
+      grid-column: auto;
+    }
+  }
+}
+
+.card {
+  @include card-corner-border();
+  background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  line-height: $leading-snug;
+  letter-spacing: -0.01em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: $font-base;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}

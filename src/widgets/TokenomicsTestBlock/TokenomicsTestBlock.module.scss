@@ -1,0 +1,153 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-9;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-9;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-4;
+  max-width: 660px;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(24px, 3vw, 40px);
+  line-height: $leading-tight;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.description {
+  font-family: $font-base;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-3;
+  width: 100%;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  @include card-corner-border();
+  background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.cardNumber {
+  font-family: $font-mono;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  letter-spacing: 0.04em;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.cardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  line-height: $leading-snug;
+  letter-spacing: -0.01em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: $font-base;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.ctaWrap {
+  display: flex;
+  justify-content: center;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  height: 54px;
+  padding: 0 $space-8;
+  background: $text-primary;
+  color: #050308;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  text-decoration: none;
+  transition: background $transition-base, transform $transition-fast, box-shadow $transition-base;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.ctaArrow {
+  font-size: 16px;
+  transition: transform $transition-fast;
+
+  .cta:hover & {
+    transform: translateX(3px);
+  }
+}

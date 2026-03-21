@@ -8,6 +8,7 @@ import { AuditZonesBlock } from '@/widgets/AuditZonesBlock'
 import { AuditAssumptionsBlock } from '@/widgets/AuditAssumptionsBlock'
 import { AuditOutputBlock } from '@/widgets/AuditOutputBlock'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
+import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
 
 const { hero, problem, solution, faq, whatWeAnalyze, falseAssumptions, whatYouGet } = auditContent
@@ -67,6 +68,7 @@ export default function AuditPage() {
         headline={falseAssumptions.headline}
         items={falseAssumptions.items}
       />
+      <TokenomicsTestBlock />
       <ServiceCtaBlock
         headline={<>Перед запуском лучше услышать неудобные выводы от экспертов.<br />Чем потом от инвесторов и рынка.</>}
         ctaLabel="Записаться на консультацию"
