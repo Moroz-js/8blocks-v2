@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './SolutionBlock.module.scss'
 
 export interface SolutionItem {
@@ -273,8 +274,8 @@ export function SolutionBlock({ headline, description, variant, items }: Solutio
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
           >
-            <h2 className={styles.headline}>{headline}</h2>
-            {description && <p className={styles.descriptionCenter}>{description}</p>}
+            <ScrollRevealText text={headline} className={styles.headline} />
+            {description && <ScrollRevealText text={description} className={styles.descriptionCenter} />}
           </motion.div>
 
           <div className={styles.panelsGrid}>
@@ -319,8 +320,8 @@ export function SolutionBlock({ headline, description, variant, items }: Solutio
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.55, ease: 'easeOut' }}
             >
-              <h2 className={styles.headline}>{headline}</h2>
-              {description && <p className={styles.description}>{description}</p>}
+              <ScrollRevealText text={headline} className={styles.headline} />
+              {description && <ScrollRevealText text={description} className={styles.description} />}
             </motion.div>
 
             {/* Right: staggered panels */}
@@ -362,8 +363,8 @@ export function SolutionBlock({ headline, description, variant, items }: Solutio
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
           >
-            <h2 className={styles.headline}>{headline}</h2>
-            {description && <p className={styles.description}>{description}</p>}
+            <ScrollRevealText text={headline} className={styles.headline} />
+            {description && <ScrollRevealText text={description} className={styles.description} />}
           </motion.div>
 
           <motion.div

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './AuditOutputBlock.module.scss'
 
 const ease = 'easeOut' as const
@@ -18,25 +19,9 @@ export function AuditOutputBlock({ headline, description, ctaLabel, ctaHref }: A
     <section className={styles.section} aria-label={headline}>
       <div className={styles.outer}>
         <div className={styles.inner}>
-          <motion.h2
-            className={styles.headline}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.55, ease }}
-          >
-            {headline}
-          </motion.h2>
+          <ScrollRevealText text={headline} className={styles.headline} />
 
-          <motion.p
-            className={styles.description}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.55, ease, delay: 0.1 }}
-          >
-            {description}
-          </motion.p>
+          <ScrollRevealText text={description} className={styles.description} />
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}

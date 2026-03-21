@@ -104,6 +104,8 @@
   &:hover:not(.tabActive) {
     color: $text-secondary;
     background: $bg-secondary;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   &:focus-visible {
@@ -123,6 +125,8 @@
   color: $text-primary;
   font-weight: 500;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   @media (max-width: #{$bp-mobile}) {
     border-color: $border-primary;

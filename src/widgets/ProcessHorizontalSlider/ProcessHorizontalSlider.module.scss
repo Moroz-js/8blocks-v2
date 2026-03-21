@@ -102,6 +102,8 @@
   justify-content: space-between;
   padding: $space-6;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 0;
 
   @include card-corner-border();
@@ -199,6 +201,8 @@
   flex-direction: column;
   padding: $space-5;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid $border-secondary;
   border-radius: 0;
 

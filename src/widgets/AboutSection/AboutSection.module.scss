@@ -130,7 +130,7 @@
 .avatar {
   width: 52px;
   height: 52px;
-  border-radius: 0;
+  border-radius: 50%;
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
@@ -140,7 +140,7 @@
 
 .avatarImg {
   object-fit: cover;
-  border-radius: 0;
+  border-radius: 50%;
 }
 
 // ── Stats column ──────────────────────────────────────────────────

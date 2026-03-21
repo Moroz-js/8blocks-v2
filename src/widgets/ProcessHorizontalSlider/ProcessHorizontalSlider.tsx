@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ProcessHorizontalSlider.module.scss'
 
 export interface ProcessSliderStep {
@@ -59,7 +60,7 @@ export function ProcessHorizontalSlider({ headline, description, steps }: Proces
       <div className={styles.sticky}>
         {/* Top: headline + progress bar */}
         <div className={styles.top}>
-          <h2 className={styles.headline}>{headline}</h2>
+          <ScrollRevealText text={headline} className={styles.headline} />
           {description && <p className={styles.description}>{description}</p>}
           <div className={styles.progressTrack} aria-hidden="true">
             <motion.div className={styles.progressFill} style={{ width: progressWidth }} />
@@ -87,7 +88,7 @@ export function ProcessHorizontalSlider({ headline, description, steps }: Proces
 
       {/* Mobile: static vertical stack */}
       <div className={styles.mobileStack}>
-        <h2 className={styles.mobileHeadline}>{headline}</h2>
+        <ScrollRevealText text={headline} className={styles.mobileHeadline} />
         {description && <p className={styles.mobileDescription}>{description}</p>}
         <div className={styles.mobileCards}>
           {steps.map((step) => (

@@ -46,6 +46,8 @@
 
 .accordionItem {
   background: $bg-secondary !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid $border-secondary !important;
   border-radius: 0;
   overflow: hidden;

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import { siteConfig, socialLinks } from '@/shared/config/site'
 import styles from './ContactPage.module.scss'
 
@@ -219,10 +220,11 @@ export function ContactPage() {
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.55, ease }}
           >
-            <h2 className={styles.calendlyHeadline}>Забронировать звонок</h2>
-            <p className={styles.calendlyDescription}>
-              Выберите удобное время, и мы обсудим задачу, контекст проекта и возможный формат работы.
-            </p>
+            <ScrollRevealText text="Забронировать звонок" className={styles.calendlyHeadline} />
+            <ScrollRevealText
+              text="Выберите удобное время, и мы обсудим задачу, контекст проекта и возможный формат работы."
+              className={styles.calendlyDescription}
+            />
             <ul className={styles.calendlyList}>
               <li>Стратегический консалтинг</li>
               <li>Разработка токеномики</li>

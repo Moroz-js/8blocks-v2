@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './AuditZonesBlock.module.scss'
 
 const ease = 'easeOut' as const
@@ -174,8 +175,8 @@ export function AuditZonesBlock({ label, headline, description }: AuditZonesBloc
               <span className={styles.bracket}>]</span>
             </span>
           )}
-          <h2 className={styles.headline}>{headline}</h2>
-          {description && <p className={styles.description}>{description}</p>}
+          <ScrollRevealText text={headline} className={styles.headline} />
+          {description && <ScrollRevealText text={description} className={styles.description} />}
         </motion.div>
 
         <div className={styles.field}>

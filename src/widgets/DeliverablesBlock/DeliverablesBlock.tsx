@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './DeliverablesBlock.module.scss'
 
 const ease = 'easeOut' as const
@@ -57,8 +58,8 @@ export function DeliverablesBlock({
               <span className={styles.labelBracket}>]</span>
             </span>
           )}
-          <h2 className={styles.headline}>{headline}</h2>
-          {description && <p className={styles.description}>{description}</p>}
+          <ScrollRevealText text={headline} className={styles.headline} />
+          {description && <ScrollRevealText text={description} className={styles.description} />}
           {ctaLabel && ctaHref && (
             <Link href={ctaHref} className={styles.cta}>
               {ctaLabel}

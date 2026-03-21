@@ -49,6 +49,8 @@
   border-radius: 0;
   overflow: hidden;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   @include card-corner-border();
 }

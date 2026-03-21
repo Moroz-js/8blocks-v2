@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ProcessSteps.module.scss'
 
 const ease = 'easeOut' as const
@@ -20,15 +21,7 @@ export function ProcessSteps({ headline, steps }: ProcessStepsProps) {
   return (
     <section className={styles.section} aria-label="Process">
       <div className={styles.inner}>
-        <motion.h2
-          className={styles.headline}
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-40px' }}
-          transition={{ duration: 0.55, ease }}
-        >
-          {headline}
-        </motion.h2>
+        <ScrollRevealText text={headline} className={styles.headline} />
 
         <div className={styles.timeline}>
           {steps.map((step, i) => (

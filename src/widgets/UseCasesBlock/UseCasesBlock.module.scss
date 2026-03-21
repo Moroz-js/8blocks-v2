@@ -47,6 +47,8 @@
 .card {
   padding: $space-6;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 0;
   transition: background $transition-base;
 

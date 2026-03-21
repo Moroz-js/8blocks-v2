@@ -229,6 +229,8 @@
   border-top: 1px solid $border-secondary;
   border-bottom: 1px solid $border-secondary;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
   padding-block: $space-4;
 

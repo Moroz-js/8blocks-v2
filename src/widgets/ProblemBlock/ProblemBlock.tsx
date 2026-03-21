@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ProblemBlock.module.scss'
 import {
   IconRouteFork,
@@ -61,25 +62,9 @@ export function ProblemBlock({ variant, headline, description, items, cta }: Pro
     <section className={styles.section} aria-label="Problem">
       <div className={styles.inner}>
         <div className={styles.header}>
-          <motion.h2
-            className={styles.headline}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.55, ease }}
-          >
-            {headline}
-          </motion.h2>
+          <ScrollRevealText text={headline} className={styles.headline} />
           {description && (
-            <motion.p
-              className={styles.description}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, ease, delay: 0.1 }}
-            >
-              {description}
-            </motion.p>
+            <ScrollRevealText text={description} className={styles.description} />
           )}
         </div>
 
@@ -95,12 +80,12 @@ export function ProblemBlock({ variant, headline, description, items, cta }: Pro
                 viewport={{ once: true, margin: '-30px' }}
                 transition={{ duration: 0.5, ease, delay: i * 0.08 }}
               >
-                <div className={styles.cardIcon}>
-                  <Icon />
-                </div>
                 <div className={styles.cardContent}>
                   <h3 className={styles.cardTitle}>{item.title}</h3>
                   <p className={styles.cardDescription}>{item.description}</p>
+                </div>
+                <div className={styles.cardIcon}>
+                  <Icon />
                 </div>
               </motion.article>
             )

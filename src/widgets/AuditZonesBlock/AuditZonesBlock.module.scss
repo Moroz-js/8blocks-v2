@@ -129,6 +129,8 @@
 .zone {
   position: relative;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid $border-secondary;
   border-radius: 0;
   padding: $space-6;

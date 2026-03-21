@@ -1,299 +1,285 @@
-// Custom stroke-based SVG icons for the ProblemBlock bento grid.
-// All icons share viewBox="0 0 96 96", fill="none", stroke="currentColor".
-// Sized by the parent .cardIcon container (80×80px desktop, 64×64px mobile).
+const c = {
+  purple: '#a78bfa',
+  green: '#4ade80',
+  red: '#f87171',
+  blue: '#60a5fa',
+  orange: '#fb923c',
+  w: 'rgba(255,255,255,0.9)',
+  w6: 'rgba(255,255,255,0.6)',
+  w3: 'rgba(255,255,255,0.3)',
+  w15: 'rgba(255,255,255,0.15)',
+  w08: 'rgba(255,255,255,0.08)',
+  w04: 'rgba(255,255,255,0.04)',
+}
 
-// ─── Consulting page icons ────────────────────────────────────────────────────
+// ─── Tokenomics ───────────────────────────────────────────────────────────────
 
-/** Route diverging into multiple paths — "No token strategy" */
-export const IconRouteFork = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="48" y1="82" x2="48" y2="57" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="48" cy="52" r="4.5" stroke="currentColor" strokeWidth="1.5" />
-    <line x1="45" y1="49" x2="18" y2="22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="48" y1="47" x2="48" y2="18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="51" y1="49" x2="78" y2="22" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="48" cy="82" r="2.5" fill="currentColor" />
-    <circle cx="48" cy="18" r="2.5" fill="currentColor" />
-    <circle cx="18" cy="22" r="2.5" fill="currentColor" />
-    <circle cx="78" cy="22" r="2.5" fill="currentColor" />
-  </svg>
-)
-
-/** Speech bubble with a signal wave that breaks — "Weak investor communication" */
-export const IconBrokenSignal = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M14 16 C14 13 17 11 20 11 L76 11 C79 11 82 13 82 16 L82 55 C82 58 79 60 76 60 L56 60 L46 76 L46 60 L20 60 C17 60 14 58 14 55 Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M22 36 L28 24 L34 46 L38 36 L42 36"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M48 36 L54 26 L60 48 L66 30 L72 36"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeDasharray="3 4"
-      opacity="0.45"
-    />
-  </svg>
-)
-
-/** Network of nodes with broken connections — "No partner ecosystem" */
-export const IconDisconnectedNodes = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="48" cy="48" r="5" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="18" cy="22" r="4" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="78" cy="22" r="4" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="18" cy="74" r="4" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="78" cy="74" r="4" stroke="currentColor" strokeWidth="1.5" opacity="0.38" />
-    <line x1="22" y1="25" x2="44" y2="44" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="74" y1="25" x2="52" y2="44" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="22" y1="71" x2="44" y2="51" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line
-      x1="74"
-      y1="71"
-      x2="52"
-      y2="51"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeDasharray="3 4"
-      opacity="0.32"
-    />
-    <line
-      x1="18"
-      y1="26"
-      x2="18"
-      y2="70"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeDasharray="3 4"
-      opacity="0.25"
-    />
-  </svg>
-)
-
-/** Checklist with a detached, misaligned last item — "Unsystematic TGE prep" */
-export const IconFragmentedChecklist = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="18" y="14" width="13" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M20 20.5 L23.5 25 L29 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <line x1="37" y1="20.5" x2="75" y2="20.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <rect x="18" y="35" width="13" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M20 41.5 L23.5 46 L29 37" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <line x1="37" y1="41.5" x2="70" y2="41.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <rect x="18" y="56" width="13" height="13" rx="2" stroke="currentColor" strokeWidth="1.5" />
-    <line x1="37" y1="62.5" x2="60" y2="62.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <rect
-      x="28"
-      y="77"
-      width="13"
-      height="13"
-      rx="2"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeDasharray="2.5 2.5"
-      opacity="0.45"
-    />
-    <line
-      x1="47"
-      y1="83.5"
-      x2="76"
-      y2="83.5"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeDasharray="3 3"
-      opacity="0.3"
-    />
-  </svg>
-)
-
-// ─── Audit page icons ─────────────────────────────────────────────────────────
-
-/** Balance scale visibly tilted — "Errors already in the balance" */
-export const IconTiltedScale = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="48" y1="22" x2="48" y2="78" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="36" y1="78" x2="60" y2="78" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="48" cy="36" r="3" fill="currentColor" />
-    <line x1="12" y1="30" x2="84" y2="45" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="12" y1="30" x2="12" y2="50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M4 50 Q12 57 20 50" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <line x1="84" y1="45" x2="84" y2="54" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M76 54 Q84 61 92 54" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-)
-
-/** Growth curve that rises then sharply collapses — "Tokenomics can't scale" */
-export const IconBrokenGrowth = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="14" y1="78" x2="84" y2="78" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.3" />
-    <line x1="14" y1="78" x2="14" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.3" />
-    <path d="M14 74 C22 66 30 54 46 38" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <circle cx="46" cy="38" r="4" fill="currentColor" />
-    <path
-      d="M46 38 L56 52 L66 62 L78 74"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeDasharray="3 4"
-      opacity="0.5"
-    />
-  </svg>
-)
-
-/** Shield with progressively obscured content lines — "Hard to defend to investors" */
-export const IconObscuredShield = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M48 13 L76 24 L76 50 C76 64 63 74 48 80 C33 74 20 64 20 50 L20 24 Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <line x1="33" y1="38" x2="63" y2="38" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.9" />
-    <line x1="33" y1="49" x2="57" y2="49" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.48" />
-    <line
-      x1="33"
-      y1="60"
-      x2="46"
-      y2="60"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeDasharray="2 2.5"
-      opacity="0.26"
-    />
-    <path d="M58 53 C58 48 66 48 66 53 C66 56 62 57.5 62 62" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.62" />
-    <circle cx="62" cy="65.5" r="1.8" fill="currentColor" opacity="0.62" />
-  </svg>
-)
-
-/** Radar rings with a blip appearing on the outermost ring — "Weak spots noticed too late" */
-export const IconRadarPing = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="46" cy="54" r="3" fill="currentColor" />
-    <circle cx="46" cy="54" r="11" stroke="currentColor" strokeWidth="1.5" opacity="0.8" />
-    <circle cx="46" cy="54" r="22" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
-    <circle cx="46" cy="54" r="33" stroke="currentColor" strokeWidth="1.5" opacity="0.26" />
-    <circle cx="46" cy="54" r="44" stroke="currentColor" strokeWidth="1.5" opacity="0.13" />
-    <line x1="46" y1="54" x2="78" y2="22" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.22" />
-    <circle cx="80" cy="28" r="5" fill="currentColor" opacity="0.88" />
-    <circle cx="80" cy="28" r="8" stroke="currentColor" strokeWidth="1" opacity="0.28" />
-  </svg>
-)
-
-// ─── Tokenomics page icons ────────────────────────────────────────────────────
-
-/**
- * Wide-format icon: hex token (left) — broken link (center) — product block (right).
- * Uses a landscape viewBox (240×80) designed for horizontal cards.
- * "Token not linked to product"
- */
 export const IconDisconnectedTokenProduct = () => (
-  <svg width="100%" height="100%" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Token — hexagon */}
-    <path d="M36 8 L64 24 L64 56 L36 72 L8 56 L8 24 Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    <circle cx="36" cy="40" r="4" fill="currentColor" opacity="0.45" />
+  <svg viewBox="0 0 400 180" fill="none">
+    <g>
+      <rect x="20" y="16" width="120" height="110" rx="14" fill={c.w04} stroke={c.w3} strokeWidth="1.3" />
+      <rect x="38" y="36" width="68" height="7" rx="3.5" fill={c.w6} />
+      <rect x="38" y="50" width="52" height="5" rx="2.5" fill={c.w3} />
+      <rect x="38" y="62" width="58" height="5" rx="2.5" fill="rgba(255,255,255,0.2)" />
+      <rect x="38" y="84" width="52" height="24" rx="7" fill={c.purple} />
+      <text x="64" y="100" textAnchor="middle" fill="white" fontSize="12" fontFamily="system-ui" fontWeight="600">Buy</text>
+      <text x="80" y="150" textAnchor="middle" fill={c.w3} fontSize="13" fontFamily="system-ui" fontWeight="500">Product</text>
+    </g>
 
-    {/* Left connection stub */}
-    <line x1="64" y1="40" x2="104" y2="40" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <line x1="150" y1="71" x2="178" y2="71" stroke={c.w3} strokeWidth="1.5" strokeDasharray="5 4" />
+    <g transform="translate(200, 71)">
+      <line x1="-10" y1="-10" x2="10" y2="10" stroke={c.red} strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="10" y1="-10" x2="-10" y2="10" stroke={c.red} strokeWidth="2.5" strokeLinecap="round" />
+    </g>
+    <line x1="222" y1="71" x2="250" y2="71" stroke={c.w3} strokeWidth="1.5" strokeDasharray="5 4" />
 
-    {/* Gap markers */}
-    <line x1="107" y1="33" x2="107" y2="47" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
-    <line x1="133" y1="33" x2="133" y2="47" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" opacity="0.5" />
-    {/* Dashed line across the gap */}
-    <line x1="107" y1="40" x2="133" y2="40" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="3 4" opacity="0.28" />
-
-    {/* Right connection stub */}
-    <line x1="133" y1="40" x2="176" y2="40" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-
-    {/* Product — rectangle */}
-    <rect x="176" y="14" width="56" height="52" rx="4" stroke="currentColor" strokeWidth="1.5" />
-    <line x1="184" y1="28" x2="224" y2="28" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-    <line x1="184" y1="38" x2="220" y2="38" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.32" />
-    <line x1="184" y1="48" x2="214" y2="48" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.18" />
+    <g transform="translate(320, 68)">
+      <circle cx="0" cy="0" r="46" fill={c.w04} stroke={c.purple} strokeWidth="1.8" strokeOpacity="0.45" />
+      <circle cx="0" cy="0" r="36" fill="rgba(167,139,250,0.06)" stroke={c.purple} strokeWidth="1.2" strokeOpacity="0.3" />
+      <path d="M 0 -20 L 17.3 -10 L 17.3 10 L 0 20 L -17.3 10 L -17.3 -10 Z" fill="rgba(167,139,250,0.1)" stroke={c.purple} strokeWidth="1.4" strokeOpacity="0.6" strokeLinejoin="round" />
+      <line x1="0" y1="-12" x2="0" y2="12" stroke={c.purple} strokeWidth="1.8" strokeLinecap="round" strokeOpacity="0.7" />
+      <path d="M -8 -5 C -8 -10, 8 -12, 8 -5 C 8 0, -8 0, -8 5 C -8 12, 8 10, 8 5" stroke={c.purple} strokeWidth="1.8" strokeLinecap="round" fill="none" strokeOpacity="0.7" />
+      <circle cx="0" cy="-46" r="1.5" fill={c.purple} fillOpacity="0.3" />
+      <circle cx="0" cy="46" r="1.5" fill={c.purple} fillOpacity="0.3" />
+      <circle cx="46" cy="0" r="1.5" fill={c.purple} fillOpacity="0.3" />
+      <circle cx="-46" cy="0" r="1.5" fill={c.purple} fillOpacity="0.3" />
+      <circle cx="32.5" cy="-32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
+      <circle cx="32.5" cy="32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
+      <circle cx="-32.5" cy="-32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
+      <circle cx="-32.5" cy="32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
+    </g>
+    <text x="320" y="150" textAnchor="middle" fill={c.w3} fontSize="13" fontFamily="system-ui" fontWeight="500">Token</text>
   </svg>
 )
 
-/** ECG pulse line that fades to a flatline — "Demand not backed by mechanics" */
 export const IconFadingPulse = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <line x1="10" y1="56" x2="86" y2="56" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.22" />
-    <path
-      d="M10 56 L18 56 L23 28 L31 76 L37 56 L44 56"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M44 56 L50 56 L54 40 L59 68 L63 56 L68 56"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      opacity="0.48"
-    />
-    <path
-      d="M68 56 L86 56"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeDasharray="2.5 3"
-      opacity="0.22"
-    />
+  <svg viewBox="0 0 220 200" fill="none">
+    <line x1="20" y1="155" x2="200" y2="155" stroke={c.w15} strokeWidth="0.8" />
+    <line x1="20" y1="120" x2="200" y2="120" stroke={c.w08} strokeWidth="0.6" strokeDasharray="3 4" />
+    <line x1="20" y1="85" x2="200" y2="85" stroke={c.w08} strokeWidth="0.6" strokeDasharray="3 4" />
+    <line x1="20" y1="50" x2="200" y2="50" stroke={c.w08} strokeWidth="0.6" strokeDasharray="3 4" />
+
+    <path d="M 24 130 C 55 125, 80 110, 105 95 C 130 80, 155 65, 180 48 L 198 38" stroke={c.green} strokeWidth="2.2" strokeLinecap="round" fill="none" />
+    <circle cx="198" cy="38" r="5" fill={c.green} />
+
+    <path d="M 24 75 C 55 82, 80 100, 105 115 C 130 128, 155 140, 180 147 L 198 150" stroke={c.red} strokeWidth="2.2" strokeLinecap="round" fill="none" />
+    <circle cx="198" cy="150" r="5" fill={c.red} />
+
+    <circle cx="148" cy="172" r="3.5" fill={c.green} />
+    <text x="156" y="176" fill={c.w} fontSize="10" fontFamily="system-ui" fontWeight="500">Revenue</text>
+    <circle cx="148" cy="186" r="3.5" fill={c.red} />
+    <text x="156" y="190" fill={c.w} fontSize="10" fontFamily="system-ui" fontWeight="500">Token price</text>
   </svg>
 )
 
-/** Container with open lock and tokens escaping — "Fast distribution kills the token" */
 export const IconOpenVault = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="20" y="44" width="46" height="38" rx="4" stroke="currentColor" strokeWidth="1.5" />
-    <path d="M20 44 L20 82 Q10 82 10 74 L10 52 Q10 44 20 44" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+  <svg viewBox="0 0 220 180" fill="none">
+    <line x1="16" y1="155" x2="204" y2="155" stroke={c.w15} strokeWidth="0.8" />
+
+    <line x1="72" y1="22" x2="72" y2="155" stroke={c.w15} strokeWidth="0.8" strokeDasharray="4 3" />
+    <line x1="108" y1="22" x2="108" y2="155" stroke={c.w15} strokeWidth="0.8" strokeDasharray="4 3" />
+    <text x="68" y="16" textAnchor="middle" fill={c.w3} fontSize="10" fontFamily="system-ui" fontWeight="500">TGE</text>
+    <text x="114" y="16" textAnchor="middle" fill={c.w3} fontSize="10" fontFamily="system-ui" fontWeight="500">Unlock</text>
+
+    <defs>
+      <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={c.red} stopOpacity="0.3" />
+        <stop offset="100%" stopColor={c.red} stopOpacity="0.02" />
+      </linearGradient>
+    </defs>
     <path
-      d="M34 44 L34 34 Q34 24 43 24 Q52 24 52 34 L52 44"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      opacity="0.65"
+      d="M 24 142 C 38 138, 54 132, 64 124 C 70 118, 74 104, 78 82 C 82 60, 90 38, 100 34 C 110 30, 116 50, 122 80 C 130 116, 145 140, 162 146 C 175 150, 188 152, 200 154 L 200 155 L 24 155 Z"
+      fill="url(#cg)"
     />
-    <path d="M52 32 C58 27 66 28 68 34" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
-    <circle cx="60" cy="60" r="3.5" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="72" cy="50" r="3" stroke="currentColor" strokeWidth="1.5" opacity="0.62" />
-    <circle cx="82" cy="40" r="2.5" stroke="currentColor" strokeWidth="1.5" opacity="0.38" />
+    <path
+      d="M 24 142 C 38 138, 54 132, 64 124 C 70 118, 74 104, 78 82 C 82 60, 90 38, 100 34 C 110 30, 116 50, 122 80 C 130 116, 145 140, 162 146 C 175 150, 188 152, 200 154"
+      stroke={c.red} strokeWidth="2.2" strokeLinecap="round" fill="none"
+    />
+
+    <text data-anim="pulse-text" x="172" y="112" textAnchor="middle" fill={c.red} fontSize="22" fontFamily="system-ui" fontWeight="700">-82%</text>
   </svg>
 )
 
-/** Hexagon ring with an empty, hollow center — "Distributing token is not enough" */
 export const IconHollowToken = () => (
-  <svg width="100%" height="100%" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M48 13 L74 28 L74 58 L48 73 L22 58 L22 28 Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+  <svg viewBox="0 0 440 160" fill="none">
+    <rect x="24" y="24" width="10" height="10" rx="2.5" fill={c.purple} />
+    <text x="40" y="33" fill={c.w} fontSize="12" fontFamily="system-ui" fontWeight="400">Team 20%</text>
+    <rect x="24" y="44" width="10" height="10" rx="2.5" fill={c.green} />
+    <text x="40" y="53" fill={c.w} fontSize="12" fontFamily="system-ui" fontWeight="400">Investors 25%</text>
+    <rect x="24" y="64" width="10" height="10" rx="2.5" fill={c.blue} />
+    <text x="40" y="73" fill={c.w} fontSize="12" fontFamily="system-ui" fontWeight="400">Community 40%</text>
+    <rect x="24" y="84" width="10" height="10" rx="2.5" fill={c.orange} />
+    <text x="40" y="93" fill={c.w} fontSize="12" fontFamily="system-ui" fontWeight="400">Treasury 15%</text>
+
+    <g transform="translate(320, 80)">
+      <path d="M 0 0 L 60 0 A 60 60 0 0 1 -18.5 57.1 Z" fill={c.blue} fillOpacity="0.8" />
+      <path d="M 0 0 L -18.5 57.1 A 60 60 0 0 1 -60 0 Z" fill={c.green} fillOpacity="0.8" />
+      <path d="M 0 0 L -60 0 A 60 60 0 0 1 -18.5 -57.1 Z" fill={c.purple} fillOpacity="0.8" />
+      <path d="M 0 0 L -18.5 -57.1 A 60 60 0 0 1 60 0 Z" fill={c.orange} fillOpacity="0.8" />
+    </g>
+
+    <g transform="translate(320, 80)">
+      <line x1="-28" y1="-28" x2="28" y2="28" stroke={c.red} strokeWidth="3.5" strokeLinecap="round" opacity="0.65" />
+      <line x1="28" y1="-28" x2="-28" y2="28" stroke={c.red} strokeWidth="3.5" strokeLinecap="round" opacity="0.65" />
+    </g>
+  </svg>
+)
+
+// ─── Consulting ───────────────────────────────────────────────────────────────
+
+export const IconRouteFork = () => (
+  <svg viewBox="0 0 96 96" fill="none">
+    <circle cx="48" cy="50" r="9" fill={c.w04} stroke={c.purple} strokeWidth="1.5" />
+    <circle cx="48" cy="50" r="3.5" fill={c.purple} fillOpacity="0.7" />
+
+    <path d="M 40 45 C 28 34, 18 26, 14 18" stroke={c.w6} strokeWidth="1.4" strokeLinecap="round" fill="none" />
+    <path d="M 48 41 C 48 30, 48 22, 48 14" stroke={c.w6} strokeWidth="1.4" strokeLinecap="round" fill="none" />
+    <path d="M 56 45 C 68 34, 78 26, 82 18" stroke={c.w6} strokeWidth="1.4" strokeLinecap="round" fill="none" />
+
+    <g>
+      <circle cx="14" cy="16" r="5" fill={c.w04} stroke={c.w3} strokeWidth="1.3" />
+      <text x="14" y="19.5" textAnchor="middle" fill={c.w3} fontSize="8" fontFamily="system-ui" fontWeight="600">?</text>
+    </g>
+    <g>
+      <circle cx="48" cy="12" r="5" fill={c.w04} stroke={c.w3} strokeWidth="1.3" />
+      <text x="48" y="15.5" textAnchor="middle" fill={c.w3} fontSize="8" fontFamily="system-ui" fontWeight="600">?</text>
+    </g>
+    <g>
+      <circle cx="82" cy="16" r="5" fill={c.w04} stroke={c.w3} strokeWidth="1.3" />
+      <text x="82" y="19.5" textAnchor="middle" fill={c.w3} fontSize="8" fontFamily="system-ui" fontWeight="600">?</text>
+    </g>
+
+    <line x1="48" y1="59" x2="48" y2="82" stroke={c.w6} strokeWidth="1.4" strokeLinecap="round" />
+    <circle cx="48" cy="84" r="3" fill={c.purple} fillOpacity="0.4" />
+  </svg>
+)
+
+export const IconBrokenSignal = () => (
+  <svg viewBox="0 0 96 96" fill="none">
+    <rect x="10" y="62" width="12" height="22" rx="2.5" fill={c.purple} fillOpacity="0.85" />
+    <rect x="26" y="48" width="12" height="36" rx="2.5" fill={c.purple} fillOpacity="0.65" />
+    <rect x="42" y="34" width="12" height="50" rx="2.5" fill={c.purple} fillOpacity="0.4" />
+    <rect x="58" y="20" width="12" height="64" rx="2.5" fill={c.w04} stroke={c.w3} strokeWidth="1" strokeDasharray="4 3" />
+    <rect x="74" y="8" width="12" height="76" rx="2.5" fill={c.w04} stroke={c.w15} strokeWidth="1" strokeDasharray="4 3" />
+
+    <g transform="translate(84, 14)">
+      <line x1="-4" y1="-4" x2="4" y2="4" stroke={c.red} strokeWidth="2" strokeLinecap="round" />
+      <line x1="4" y1="-4" x2="-4" y2="4" stroke={c.red} strokeWidth="2" strokeLinecap="round" />
+    </g>
+  </svg>
+)
+
+export const IconDisconnectedNodes = () => (
+  <svg viewBox="0 0 96 96" fill="none">
+    <circle cx="48" cy="48" r="11" fill={c.w04} stroke={c.purple} strokeWidth="1.5" />
+    <circle cx="48" cy="48" r="4" fill={c.purple} fillOpacity="0.6" />
+
+    <circle cx="16" cy="20" r="7" fill={c.w04} stroke={c.w6} strokeWidth="1.3" />
+    <circle cx="80" cy="20" r="7" fill={c.w04} stroke={c.w6} strokeWidth="1.3" />
+    <circle cx="16" cy="76" r="7" fill={c.w04} stroke={c.w6} strokeWidth="1.3" />
+    <g>
+      <circle cx="80" cy="76" r="7" fill={c.w04} stroke={c.red} strokeWidth="1.3" strokeOpacity="0.5" strokeDasharray="4 3" />
+    </g>
+
+    <line x1="22" y1="25" x2="40" y2="41" stroke={c.w3} strokeWidth="1.3" />
+    <line x1="74" y1="25" x2="56" y2="41" stroke={c.w3} strokeWidth="1.3" />
+    <line x1="22" y1="71" x2="40" y2="55" stroke={c.w3} strokeWidth="1.3" />
+    <line x1="74" y1="71" x2="56" y2="55" stroke={c.red} strokeWidth="1.3" strokeOpacity="0.3" strokeDasharray="4 3" />
+  </svg>
+)
+
+export const IconFragmentedChecklist = () => (
+  <svg viewBox="0 0 96 96" fill="none">
+    <rect x="12" y="10" width="16" height="16" rx="4" fill={c.w04} stroke={c.green} strokeWidth="1.3" strokeOpacity="0.7" />
+    <path d="M16 18 L20 22 L26 14" stroke={c.green} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    <rect x="34" y="16" width="48" height="4" rx="2" fill={c.w3} />
+
+    <rect x="12" y="34" width="16" height="16" rx="4" fill={c.w04} stroke={c.green} strokeWidth="1.3" strokeOpacity="0.7" />
+    <path d="M16 42 L20 46 L26 38" stroke={c.green} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    <rect x="34" y="40" width="38" height="4" rx="2" fill="rgba(255,255,255,0.22)" />
+
+    <rect x="12" y="58" width="16" height="16" rx="4" fill={c.w04} stroke={c.w3} strokeWidth="1.3" />
+    <rect x="34" y="64" width="30" height="4" rx="2" fill={c.w15} />
+
+    <g>
+      <rect x="20" y="82" width="16" height="14" rx="4" fill="rgba(255,255,255,0.02)" stroke={c.red} strokeWidth="1.3" strokeOpacity="0.4" strokeDasharray="3 3" />
+      <rect x="42" y="87" width="34" height="4" rx="2" fill={c.w08} />
+    </g>
+  </svg>
+)
+
+// ─── Audit ────────────────────────────────────────────────────────────────────
+
+export const IconTiltedScale = () => (
+  <svg viewBox="0 0 96 96" fill="none">
+    <line x1="48" y1="22" x2="48" y2="78" stroke={c.w6} strokeWidth="1.5" strokeLinecap="round" />
+    <rect x="35" y="76" width="26" height="4" rx="2" fill={c.w15} />
+    <path d="M 42 30 L 48 22 L 54 30" stroke={c.w6} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+
+    <g>
+      <line x1="12" y1="36" x2="84" y2="52" stroke={c.w6} strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="12" y1="36" x2="12" y2="48" stroke={c.w3} strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M 2 48 Q 12 56 22 48" stroke={c.green} strokeWidth="1.5" strokeLinecap="round" fill="none" strokeOpacity="0.6" />
+      <line x1="84" y1="52" x2="84" y2="64" stroke={c.w3} strokeWidth="1.3" strokeLinecap="round" />
+      <path d="M 74 64 Q 84 72 94 64" stroke={c.red} strokeWidth="1.5" strokeLinecap="round" fill="none" strokeOpacity="0.7" />
+      <rect x="78" y="55" width="12" height="7" rx="2" fill={c.red} fillOpacity="0.2" stroke={c.red} strokeWidth="0.8" strokeOpacity="0.4" />
+    </g>
+  </svg>
+)
+
+export const IconBrokenGrowth = () => (
+  <svg viewBox="0 0 96 96" fill="none">
+    <line x1="12" y1="82" x2="86" y2="82" stroke={c.w15} strokeWidth="1" />
+    <line x1="12" y1="82" x2="12" y2="12" stroke={c.w15} strokeWidth="1" />
+    <line x1="12" y1="62" x2="86" y2="62" stroke={c.w08} strokeWidth="0.6" strokeDasharray="3 4" />
+    <line x1="12" y1="42" x2="86" y2="42" stroke={c.w08} strokeWidth="0.6" strokeDasharray="3 4" />
+
+    <path d="M 16 76 C 28 68, 38 55, 46 42 C 50 34, 52 26, 54 20" stroke={c.green} strokeWidth="2" strokeLinecap="round" fill="none" />
+    <circle cx="54" cy="20" r="4" fill={c.green} fillOpacity="0.8" />
+
+    <path d="M 54 20 C 58 32, 62 50, 68 60 C 74 70, 78 76, 84 78" stroke={c.red} strokeWidth="2" strokeLinecap="round" strokeDasharray="4 3" fill="none" />
+    <g>
+      <path d="M 72 58 L 76 68 L 66 66 Z" fill={c.red} fillOpacity="0.5" />
+    </g>
+  </svg>
+)
+
+export const IconObscuredShield = () => (
+  <svg viewBox="0 0 96 96" fill="none">
     <path
-      d="M48 27 L60 34 L60 50 L48 57 L36 50 L36 34 Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-      opacity="0.2"
+      d="M 48 8 L 80 22 L 80 50 C 80 66 66 78 48 84 C 30 78 16 66 16 50 L 16 22 Z"
+      fill={c.w04} stroke={c.w6} strokeWidth="1.5" strokeOpacity="0.5" strokeLinejoin="round"
     />
-    <circle cx="48" cy="43" r="8" stroke="currentColor" strokeWidth="1" opacity="0.14" />
-    <circle cx="48" cy="43" r="2.5" stroke="currentColor" strokeWidth="1" opacity="0.22" />
-    <line x1="48" y1="13" x2="48" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.48" />
-    <line x1="74" y1="28" x2="71" y2="30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.48" />
-    <line x1="74" y1="58" x2="71" y2="56" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.48" />
-    <line x1="48" y1="73" x2="48" y2="68" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.48" />
-    <line x1="22" y1="58" x2="25" y2="56" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.48" />
-    <line x1="22" y1="28" x2="25" y2="30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.48" />
+    <rect x="30" y="34" width="36" height="4" rx="2" fill={c.w3} />
+    <rect x="30" y="44" width="28" height="4" rx="2" fill="rgba(255,255,255,0.18)" />
+    <rect x="30" y="54" width="22" height="4" rx="2" fill={c.w08} />
+
+    <g transform="translate(62, 62)">
+      <path d="M 0 -10 L 10 7 L -10 7 Z" fill={c.orange} fillOpacity="0.2" stroke={c.orange} strokeWidth="1.3" strokeLinejoin="round" />
+      <text x="0" y="4" textAnchor="middle" fill={c.orange} fontSize="11" fontFamily="system-ui" fontWeight="700">!</text>
+    </g>
+  </svg>
+)
+
+export const IconRadarPing = () => (
+  <svg viewBox="0 0 96 96" fill="none">
+    <circle cx="42" cy="52" r="38" stroke={c.w6} strokeWidth="0.7" strokeOpacity="0.1" />
+    <circle cx="42" cy="52" r="28" stroke={c.w6} strokeWidth="0.8" strokeOpacity="0.15" />
+    <circle cx="42" cy="52" r="18" stroke={c.w6} strokeWidth="1" strokeOpacity="0.25" />
+    <circle cx="42" cy="52" r="8" stroke={c.w6} strokeWidth="1" strokeOpacity="0.4" />
+    <circle cx="42" cy="52" r="3" fill={c.purple} fillOpacity="0.8" />
+
+    <line x1="42" y1="12" x2="42" y2="92" stroke={c.w6} strokeWidth="0.5" strokeOpacity="0.08" />
+    <line x1="2" y1="52" x2="82" y2="52" stroke={c.w6} strokeWidth="0.5" strokeOpacity="0.08" />
+
+    <g>
+      <line x1="42" y1="52" x2="74" y2="24" stroke={c.purple} strokeWidth="1.3" strokeOpacity="0.3" strokeLinecap="round" />
+    </g>
+
+    <g>
+      <circle cx="78" cy="20" r="6" fill={c.red} fillOpacity="0.8" />
+      <circle cx="78" cy="20" r="10" stroke={c.red} strokeWidth="1" strokeOpacity="0.3" fill="none" />
+      <circle cx="78" cy="20" r="15" stroke={c.red} strokeWidth="0.8" strokeOpacity="0.15" fill="none" />
+    </g>
   </svg>
 )

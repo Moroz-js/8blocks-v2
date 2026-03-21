@@ -60,6 +60,8 @@
 
 .card {
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 0;
   padding: $space-7 $space-6 $space-8;
   display: flex;
@@ -165,6 +167,8 @@
 .cta {
   position: relative;
   background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid $border-secondary;
   border-radius: 0;
   padding: $space-9 $space-8;
