@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
+import { useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
+import { ContactForm } from '@/features/contactForm/ContactForm'
 import { siteConfig, socialLinks } from '@/shared/config/site'
 import styles from './ContactPage.module.scss'
 
@@ -37,31 +38,9 @@ function CalendlyEmbed() {
     <div
       ref={containerRef}
       className="calendly-inline-widget"
-      data-url="https://calendly.com/8blocks?background_color=0a0a0a&text_color=ffffff&primary_color=c24e88"
-      style={{ minWidth: '320px', height: '660px' }}
+      data-url="https://calendly.com/x-method/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=a823d1"
+      style={{ minWidth: '320px', height: '680px' }}
     />
-  )
-}
-
-// ── Copy email button ─────────────────────────────────────────────
-
-function CopyEmailButton({ email }: { email: string }) {
-  const [copied, setCopied] = useState(false)
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(email)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // fallback silently
-    }
-  }
-
-  return (
-    <button className={styles.copyBtn} onClick={handleCopy} type="button">
-      {copied ? 'Скопировано' : 'Скопировать почту'}
-    </button>
   )
 }
 
@@ -70,108 +49,82 @@ function CopyEmailButton({ email }: { email: string }) {
 export function ContactPage() {
   return (
     <>
-      {/* ── 1. Hero ───────────────────────────────────────────────── */}
-      <section className={styles.hero} aria-label="Контакты — hero">
+      {/* ── 1. Hero: avatar + form ────────────────────────────────── */}
+      <section className={styles.hero} aria-label="Контакты">
         <div className={styles.heroInner}>
-          <motion.span
-            className={styles.label}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.05 }}
-          >
-            Контакты
-          </motion.span>
+          <div className={styles.heroGrid}>
 
-          <motion.h1
-            className={styles.heroHeadline}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease, delay: 0.12 }}
-          >
-            Обсудим ваш проект
-          </motion.h1>
+            {/* Left: info + avatar */}
+            <motion.div
+              className={styles.heroLeft}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease, delay: 0.05 }}
+            >
+              <span className={styles.label}>Контакты</span>
 
-          <motion.p
-            className={styles.heroDescription}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease, delay: 0.22 }}
-          >
-            Пишите по вопросам стратегического консалтинга, токеномики и аудита.
-            Если удобнее, сразу выберите слот для звонка.
-          </motion.p>
+              <h1 className={styles.heroHeadline}>Обсудим ваш проект</h1>
 
-          <motion.div
-            className={styles.heroActions}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.32 }}
-          >
-            <a href={`mailto:${siteConfig.email}`} className={styles.ctaPrimary}>
-              Написать на почту
-              <span aria-hidden="true">→</span>
-            </a>
-            <a href="#calendly" className={styles.ctaSecondary}>
-              Забронировать звонок
-            </a>
-          </motion.div>
+              <p className={styles.heroDescription}>
+                Пишите по вопросам стратегического консалтинга, токеномики и аудита.
+                Если удобнее, сразу выберите слот для звонка.
+              </p>
+
+              <div className={styles.personCard}>
+                <div className={styles.personAvatar}>
+                  <Image
+                    src="/team/team-3.png"
+                    alt="Оксана"
+                    width={72}
+                    height={72}
+                    className={styles.personImg}
+                  />
+                </div>
+                <div className={styles.personInfo}>
+                  <p className={styles.personName}>Оксана</p>
+                  <p className={styles.personRole}>COO</p>
+                  <a
+                    href="https://t.me/eightblocks"
+                    className={styles.personTg}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Telegram →
+                  </a>
+                </div>
+              </div>
+
+              <div className={styles.preferEmail}>
+                <p className={styles.preferLabel}>Предпочитаете почту?</p>
+                <a href={`mailto:${siteConfig.email}`} className={styles.preferValue}>
+                  {siteConfig.email}
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Right: form */}
+            <motion.div
+              className={styles.heroRight}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease, delay: 0.15 }}
+            >
+              <ContactForm />
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
-      {/* ── 2. Giant email ────────────────────────────────────────── */}
-      <section className={styles.emailSection} aria-label="Главный контакт">
-        <div className={styles.emailInner}>
-          <motion.a
-            href={`mailto:${siteConfig.email}`}
-            className={styles.emailGiant}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.65, ease }}
-            aria-label={`Написать на ${siteConfig.email}`}
-          >
-            {siteConfig.email}
-          </motion.a>
-
-          <motion.div
-            className={styles.emailMeta}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, ease, delay: 0.12 }}
-          >
-            <p className={styles.emailSupport}>
-              Основной канал для новых проектов, партнерств и рабочих запросов
-            </p>
-            <CopyEmailButton email={siteConfig.email} />
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── 3. Secondary contacts ─────────────────────────────────── */}
-      <section className={styles.contactsSection} aria-label="Вторичные контакты">
+      {/* ── 2. Secondary contacts ─────────────────────────────────── */}
+      <section className={styles.contactsSection} aria-label="Контактная информация">
         <div className={styles.contactsInner}>
-          {/* Phone */}
           <motion.div
             className={styles.contactCol}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-30px' }}
             transition={{ duration: 0.5, ease, delay: 0 }}
-          >
-            <p className={styles.contactColLabel}>Телефон</p>
-            <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`} className={styles.contactValue}>
-              {siteConfig.phone}
-            </a>
-          </motion.div>
-
-          {/* Socials */}
-          <motion.div
-            className={styles.contactCol}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.5, ease, delay: 0.08 }}
           >
             <p className={styles.contactColLabel}>Соцсети</p>
             <div className={styles.socialList}>
@@ -189,13 +142,12 @@ export function ContactPage() {
             </div>
           </motion.div>
 
-          {/* Address */}
           <motion.div
             className={styles.contactCol}
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.5, ease, delay: 0.16 }}
+            transition={{ duration: 0.5, ease, delay: 0.08 }}
           >
             <p className={styles.contactColLabel}>Адрес</p>
             <a
@@ -207,10 +159,23 @@ export function ContactPage() {
               {siteConfig.address}
             </a>
           </motion.div>
+
+          <motion.div
+            className={styles.contactCol}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={{ duration: 0.5, ease, delay: 0.16 }}
+          >
+            <p className={styles.contactColLabel}>Телефон</p>
+            <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`} className={styles.contactValue}>
+              {siteConfig.phone}
+            </a>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── 4. Calendly ───────────────────────────────────────────── */}
+      {/* ── 3. Calendly ───────────────────────────────────────────── */}
       <section id="calendly" className={styles.calendlySection} aria-label="Забронировать звонок">
         <div className={styles.calendlyInner}>
           <motion.div

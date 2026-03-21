@@ -79,7 +79,7 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div className={styles.field}>
+      <div className={`${styles.field} ${styles.fieldGrow}`}>
         <label htmlFor="cf-message" className={styles.label}>Сообщение</label>
         <textarea
           id="cf-message"
@@ -108,7 +108,7 @@ export function ContactForm() {
           </>
         ) : (
           <>
-            Отправить сообщение
+            Оставить заявку
             <span className={styles.submitArrow} aria-hidden="true">→</span>
           </>
         )}

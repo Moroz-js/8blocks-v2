@@ -123,7 +123,7 @@ export async function sendContactUser(to: string, data: {
     divider() +
     field('Your message', data.message) +
     divider() +
-    p('If you have any questions in the meantime, you can reply to this email or contact us at <a href="mailto:hello@8blocks.io" style="color:#C24E88;text-decoration:none;">hello@8blocks.io</a>.')
+    p('If you have any questions in the meantime, you can reply to this email or contact us at <a href="mailto:hi@токеномика.рф" style="color:#C24E88;text-decoration:none;">hi@токеномика.рф</a>.')
   )
 
   await send({ to, subject: 'We received your message — 8Blocks', html })

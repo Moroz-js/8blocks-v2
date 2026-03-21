@@ -19,7 +19,6 @@
   overflow: hidden;
   padding-block: 0;
   line-height: 0;
-  user-select: none;
 }
 
 .watermarkText {
@@ -37,12 +36,12 @@
 
 // Contact page variant: email fills the same watermark space
 .watermarkEmail {
-  font-size: clamp(28px, 7.8vw, 104px);
+  font-size: clamp(36px, 10vw, 140px);
   white-space: normal;
   word-break: break-all;
   letter-spacing: -0.03em;
   line-height: 0.9;
-  padding-block: clamp(20px, 3.5vw, 52px);
+  padding-block: clamp(24px, 4vw, 60px);
 }
 
 // ── Bottom section ────────────────────────────────────────────────

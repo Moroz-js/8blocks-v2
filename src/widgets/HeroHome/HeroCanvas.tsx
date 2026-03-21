@@ -111,28 +111,25 @@ function drawGlassBlock(
 
   ctx.save()
 
-  // Glow
-  ctx.shadowColor = 'rgba(255, 255, 255, 0.75)'
-  ctx.shadowBlur = 140
+  ctx.shadowColor = 'rgba(255, 255, 255, 0.6)'
+  ctx.shadowBlur = 120
 
-  fillPoly(ctx, leftPts,  'rgba(255, 255, 255, 0.62)')
-  fillPoly(ctx, rightPts, 'rgba(255, 255, 255, 0.52)')
-  fillPoly(ctx, topPts,   'rgba(255, 255, 255, 0.72)')
+  fillPoly(ctx, leftPts,  'rgb(200, 200, 205)')
+  fillPoly(ctx, rightPts, 'rgb(180, 180, 186)')
+  fillPoly(ctx, topPts,   'rgb(235, 235, 240)')
 
   ctx.shadowBlur = 0
   ctx.shadowColor = 'transparent'
 
-  // Top face highlight
   const hlGrad = ctx.createLinearGradient(tBack.x, tBack.y, tFront.x, tFront.y)
-  hlGrad.addColorStop(0,    'rgba(255,255,255,0.45)')
-  hlGrad.addColorStop(0.4,  'rgba(255,255,255,0.15)')
-  hlGrad.addColorStop(1,    'rgba(255,255,255,0.02)')
+  hlGrad.addColorStop(0,   'rgba(255,255,255,0.35)')
+  hlGrad.addColorStop(0.5, 'rgba(255,255,255,0.08)')
+  hlGrad.addColorStop(1,   'rgba(255,255,255,0)')
   fillPoly(ctx, topPts, hlGrad)
 
-  // Edges
-  strokePoly(ctx, leftPts,  'rgba(255, 255, 255, 0.35)', 1)
-  strokePoly(ctx, rightPts, 'rgba(255, 255, 255, 0.28)', 1)
-  strokePoly(ctx, topPts,   'rgba(255, 255, 255, 0.4)', 1)
+  strokePoly(ctx, leftPts,  'rgba(255, 255, 255, 0.5)', 0.8)
+  strokePoly(ctx, rightPts, 'rgba(255, 255, 255, 0.4)', 0.8)
+  strokePoly(ctx, topPts,   'rgba(255, 255, 255, 0.6)', 0.8)
 
   ctx.restore()
 }
@@ -229,8 +226,6 @@ export function HeroCanvas({ className }: { className?: string }) {
       const sorted = [...BLOCKS].sort(
         (a, b) => blockDepth(a, rX, rY) - blockDepth(b, rX, rY),
       )
-
-      drawBase(ctx, rX, rY, scale, ox, oy)
 
       for (const b of sorted) {
         drawGlassBlock(

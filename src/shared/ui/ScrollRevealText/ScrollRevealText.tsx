@@ -3,16 +3,16 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
 
-interface WordProps {
-  word: string
+interface CharProps {
+  char: string
   progress: MotionValue<number>
   index: number
   total: number
   dark?: boolean
 }
 
-function Word({ word, progress, index, total, dark }: WordProps) {
-  const windowSize = 1.8 / total
+function Char({ char, progress, index, total, dark }: CharProps) {
+  const windowSize = 2.2 / total
   const center = (index + 0.5) / total
   const start = Math.max(0, center - windowSize / 2)
   const end = Math.min(1, center + windowSize / 2)
@@ -25,9 +25,13 @@ function Word({ word, progress, index, total, dark }: WordProps) {
       : ['rgba(255,255,255,0.18)', 'rgba(255,255,255,1)'],
   )
 
+  if (char === ' ') {
+    return <span style={{ display: 'inline' }}>{' '}</span>
+  }
+
   return (
     <motion.span style={{ color, display: 'inline' }}>
-      {word}{' '}
+      {char}
     </motion.span>
   )
 }
@@ -38,7 +42,6 @@ interface Props {
   startOffset?: string
   endOffset?: string
   dark?: boolean
-  /** Когда задан (например, прогресс скролла спайсера), раскрытие текста привязано к нему, а не к позиции самого блока. Нужно для блоков внутри sticky. */
   progress?: MotionValue<number>
 }
 
@@ -56,17 +59,17 @@ export function ScrollRevealText({
   const { scrollYProgress: scrollProgress } = useScroll(scrollOptions)
   const progress = progressProp ?? scrollProgress
 
-  const words = text.split(' ')
+  const chars = text.split('')
 
   return (
     <div ref={ref} className={className} aria-label={text}>
-      {words.map((word, i) => (
-        <Word
+      {chars.map((char, i) => (
+        <Char
           key={i}
-          word={word}
+          char={char}
           progress={progress}
           index={i}
-          total={words.length}
+          total={chars.length}
           dark={dark}
         />
       ))}

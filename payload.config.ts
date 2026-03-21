@@ -48,7 +48,7 @@ export default buildConfig({
   ...(process.env.NODE_ENV === 'production' && process.env.SMTP_HOST
     ? {
         email: nodemailerAdapter({
-          defaultFromAddress: process.env.SMTP_FROM || 'hello@8blocks.io',
+          defaultFromAddress: process.env.SMTP_FROM || 'hi@токеномика.рф',
           defaultFromName: '8Blocks',
           transportOptions: {
             host:   process.env.SMTP_HOST,

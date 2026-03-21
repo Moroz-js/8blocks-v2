@@ -322,8 +322,8 @@ export default function PrivacyPolicyPage() {
             If you have any questions about this Privacy Policy, you can contact us by email:
           </p>
           <p>
-            <a href="mailto:hello@8blocks.io" className={styles.emailLink}>
-              hello@8blocks.io
+            <a href="mailto:hi@токеномика.рф" className={styles.emailLink}>
+              hi@токеномика.рф
             </a>
           </p>
         </section>

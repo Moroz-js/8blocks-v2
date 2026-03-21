@@ -1,6 +1,6 @@
 @use '@/shared/styles/variables' as *;
 
-// ── 1. Hero ───────────────────────────────────────────────────────
+// ── 1. Hero: avatar left + form right ─────────────────────────────
 
 .hero {
   padding-block: $space-11 $space-10;
@@ -18,13 +18,38 @@
   max-width: $container-max;
   margin-inline: auto;
   padding-inline: $container-padding;
-  display: flex;
-  flex-direction: column;
-  gap: $space-6;
 
   @media (max-width: #{$bp-mobile}) {
     padding-inline: $container-padding-mobile;
-    gap: $space-5;
+  }
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: $space-10;
+  align-items: stretch;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+    gap: $space-8;
+  }
+}
+
+.heroLeft {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.heroRight {
+  min-width: 0;
+  padding-top: $space-9;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-top: 0;
   }
 }
 
@@ -41,7 +66,7 @@
 .heroHeadline {
   font-family: $font-base;
   font-weight: 500;
-  font-size: clamp(36px, 5.5vw, 72px);
+  font-size: clamp(32px, 4vw, 52px);
   line-height: 1.1;
   letter-spacing: -0.03em;
   color: $text-primary;
@@ -51,176 +76,104 @@
 .heroDescription {
   font-family: $font-base;
   font-weight: 400;
-  font-size: $text-md;
+  font-size: $text-base;
   line-height: $leading-relaxed;
   color: $text-secondary;
-  margin: 0;
-  max-width: 520px;
-
-  @media (max-width: #{$bp-mobile}) {
-    font-size: $text-base;
-  }
-}
-
-.heroActions {
-  display: flex;
-  align-items: center;
-  gap: $space-3;
-  flex-wrap: wrap;
-}
-
-.ctaPrimary {
-  display: inline-flex;
-  align-items: center;
-  gap: $space-3;
-  height: 50px;
-  padding: 0 $space-6;
-  background: $text-primary;
-  border-radius: 0;
-  color: #000;
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: $text-base;
-  text-decoration: none;
-  transition: opacity $transition-base;
-
-  &:hover {
-    opacity: 0.88;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 2px;
-  }
-}
-
-.ctaSecondary {
-  display: inline-flex;
-  align-items: center;
-  height: 50px;
-  padding: 0 $space-6;
-  border: 1px solid $border-primary;
-  border-radius: 0;
-  color: $text-primary;
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-base;
-  text-decoration: none;
-  transition: border-color $transition-base;
-
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.5);
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 2px;
-  }
-}
-
-// ── 2. Giant email ────────────────────────────────────────────────
-
-.emailSection {
-  padding-block: $space-10 $space-9;
-  border-top: 1px solid $border-secondary;
-
-  @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-8;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-7;
-  }
-}
-
-.emailInner {
-  max-width: $container-max;
-  margin-inline: auto;
-  padding-inline: $container-padding;
-  display: flex;
-  flex-direction: column;
-  gap: $space-5;
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-    gap: $space-4;
-  }
-}
-
-.emailGiant {
-  display: block;
-  font-family: $font-base;
-  font-weight: 600;
-  font-size: clamp(44px, 8.5vw, 112px);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: $text-primary;
-  text-decoration: none;
-  word-break: break-all;
-  transition: color $transition-base;
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.75);
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    font-size: clamp(32px, 9vw, 56px);
-    word-break: break-all;
-  }
-}
-
-.emailMeta {
-  display: flex;
-  align-items: center;
-  gap: $space-6;
-  flex-wrap: wrap;
-
-  @media (max-width: #{$bp-mobile}) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: $space-3;
-  }
-}
-
-.emailSupport {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  line-height: $leading-relaxed;
-  color: $text-tertiary;
   margin: 0;
   max-width: 440px;
 }
 
-.copyBtn {
-  display: inline-flex;
+// ── Person card ──────────────────────────────────────────────────
+
+.personCard {
+  display: flex;
   align-items: center;
-  height: 34px;
-  padding: 0 $space-4;
+  gap: $space-4;
+  padding: $space-5;
   border: 1px solid $border-secondary;
-  border-radius: 0;
-  background: transparent;
-  font-family: $font-base;
-  font-size: $text-xs;
-  letter-spacing: 0.04em;
-  color: $text-tertiary;
-  cursor: pointer;
-  transition: border-color $transition-base, color $transition-base;
-  white-space: nowrap;
+  background: $bg-secondary;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  margin-top: $space-3;
+}
+
+.personAvatar {
   flex-shrink: 0;
+}
+
+.personImg {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.personInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.personName {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  color: $text-primary;
+  margin: 0;
+}
+
+.personRole {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.personTg {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $accent-purple;
+  text-decoration: none;
+  margin-top: $space-1;
+  transition: opacity $transition-fast;
 
   &:hover {
-    border-color: $border-primary;
-    color: $text-secondary;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 2px;
+    opacity: 0.75;
   }
 }
 
-// ── 3. Secondary contacts ─────────────────────────────────────────
+// ── Prefer email ─────────────────────────────────────────────────
+
+.preferEmail {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.preferLabel {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.preferValue {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+// ── 2. Secondary contacts ─────────────────────────────────────────
 
 .contactsSection {
   padding-block: $space-9;
@@ -410,5 +363,10 @@
   border-radius: 0;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.01);
+
+  :global(.calendly-inline-widget) {
+    margin-top: -44px;
+    margin-bottom: -16px;
+  }
 }
 
