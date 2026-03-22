@@ -49,7 +49,20 @@
   font-weight: 400;
   font-size: $text-base;
   text-decoration: none;
+  white-space: nowrap;
   transition: border-color $transition-base, color $transition-base;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-sm;
+    height: 44px;
+    padding: 0 $space-5;
+    gap: $space-2;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 13px;
+    padding: 0 $space-4;
+  }
 
   &:hover {
     border-color: rgba(255, 255, 255, 0.5);
@@ -68,6 +81,9 @@
 
 .ctaArrow {
   font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
   transition: transform $transition-fast;
 
   .cta:hover & {

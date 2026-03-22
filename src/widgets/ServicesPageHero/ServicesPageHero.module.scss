@@ -29,6 +29,12 @@
   max-width: 620px;
 }
 
+.lineBreak {
+  @media (max-width: #{$bp-mobile}) {
+    display: none;
+  }
+}
+
 .description {
   font-family: $font-base;
   font-weight: 400;

@@ -80,6 +80,20 @@
   text-decoration: none;
   transition: background $transition-base, transform $transition-fast, box-shadow $transition-base;
 
+  white-space: nowrap;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-sm;
+    height: 46px;
+    padding: 0 $space-5;
+    gap: $space-2;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 13px;
+    padding: 0 $space-4;
+  }
+
   &:hover {
     background: rgba(255, 255, 255, 0.9);
     transform: translateY(-2px);
@@ -98,6 +112,9 @@
 
 .ctaArrow {
   font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
   transition: transform $transition-fast;
 
   .cta:hover & {

@@ -17,7 +17,14 @@ export function ServicesPageHero({ headline, description }: ServicesTransitionPr
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <h2 className={styles.headline}>{headline}</h2>
+      <h2 className={styles.headline}>
+        {headline.split('\n').map((line, i, arr) => (
+          <span key={i}>
+            {line}
+            {i < arr.length - 1 && <span className={styles.lineBreak}><br /></span>}
+          </span>
+        ))}
+      </h2>
       <p className={styles.description}>{description}</p>
     </motion.div>
   )

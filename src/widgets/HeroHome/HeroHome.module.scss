@@ -14,6 +14,10 @@
     min-height: auto;
     padding-top: $space-9;
   }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-top: $space-7;
+  }
 }
 
 // ── Layout ────────────────────────────────────────────────────────
@@ -85,6 +89,10 @@
   line-height: 1.03;
   letter-spacing: -0.025em;
   margin: 0;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: 36px;
+  }
 }
 
 .headlineLine1 {
@@ -143,6 +151,20 @@
   transition: background $transition-base, transform $transition-fast, box-shadow $transition-base;
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
 
+  white-space: nowrap;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-sm;
+    height: 46px;
+    padding: 0 $space-5;
+    gap: $space-2;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 13px;
+    padding: 0 $space-4;
+  }
+
   &:hover {
     background: rgba(255, 255, 255, 0.9);
     transform: translateY(-2px);
@@ -161,6 +183,9 @@
 
 .ctaArrow {
   font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
   transition: transform $transition-fast;
 
   .cta:hover & {

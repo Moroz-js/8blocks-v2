@@ -53,7 +53,19 @@
   border-radius: 0;
   color: $text-primary;
   text-decoration: none;
+  white-space: nowrap;
   transition: border-color $transition-base;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-sm;
+    height: 42px;
+    padding: 0 $space-4;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 13px;
+    padding: 0 $space-3;
+  }
 
   &:hover {
     border-color: rgba(255, 255, 255, 0.5);
