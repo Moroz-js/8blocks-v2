@@ -55,9 +55,7 @@ export async function BlogPreview() {
           <div className={styles.headerLeft}>
             <span className={styles.label}>[ Блог ]</span>
             <h2 className={styles.headline}>
-              Блог о
-              <br className={styles.br} />
-              токеномике
+              Блог о токеномике
             </h2>
           </div>
           <div className={styles.headerRight}>

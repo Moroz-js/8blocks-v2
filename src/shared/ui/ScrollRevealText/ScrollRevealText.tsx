@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
 
 interface CharProps {
@@ -54,8 +54,20 @@ export function ScrollRevealText({
   progress: progressProp,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  const resolvedStart = isMobile ? 'start 0.98' : startOffset
+  const resolvedEnd = isMobile ? 'end 0.55' : endOffset
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const scrollOptions = { target: ref, offset: [startOffset, endOffset] } as any
+  const scrollOptions = { target: ref, offset: [resolvedStart, resolvedEnd] } as any
   const { scrollYProgress: scrollProgress } = useScroll(scrollOptions)
   const progress = progressProp ?? scrollProgress
 

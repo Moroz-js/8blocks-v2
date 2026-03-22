@@ -2,10 +2,10 @@
 @use '@/shared/styles/mixins' as *;
 
 .section {
-  padding-block: $space-12;
+  padding-block: $space-11;
 
   @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-10;
+    padding-block: $space-9;
   }
 
   @media (max-width: #{$bp-mobile}) {
@@ -98,6 +98,9 @@
 
 .ctaArrow {
   font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
   transition: transform $transition-fast;
 
   .cta:hover & {

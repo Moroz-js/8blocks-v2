@@ -23,6 +23,8 @@
 
   @media (max-width: #{$bp-mobile}) {
     padding-inline: $container-padding-mobile;
+    padding-bottom: $space-8;
+    gap: $space-3;
   }
 }
 
@@ -50,6 +52,10 @@
   letter-spacing: -0.02em;
   display: block;
   max-width: 960px;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: 20px;
+  }
 
   span {
     display: inline;
@@ -109,8 +115,10 @@
   }
 
   @media (max-width: #{$bp-mobile}) {
-    padding: $space-7 $space-5;
-    min-height: 300px;
+    padding: $space-5 $space-5;
+    min-height: auto;
+    height: 280px;
+    gap: $space-3;
   }
 }
 
@@ -145,6 +153,10 @@
   margin: 0;
   letter-spacing: -0.02em;
   max-width: 80%;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: 22px;
+  }
 }
 
 .cardDescription {
@@ -154,6 +166,11 @@
   line-height: 1.55;
   margin: 0;
   max-width: 680px;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: 14px;
+    line-height: 1.5;
+  }
 
   span {
     display: inline;
