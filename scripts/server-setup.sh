@@ -155,10 +155,13 @@ echo -ne "  ${YELLOW}Нажми Enter после того как добавил 
 read -r </dev/tty
 
 info "Проверяю доступ к GitHub..."
-if ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
+# ssh -T всегда возвращает exit code 1, поэтому захватываем вывод и игнорируем код
+SSH_CHECK=$(ssh -T git@github.com 2>&1) || true
+if echo "$SSH_CHECK" | grep -q "successfully authenticated"; then
   success "SSH доступ к GitHub работает"
 else
-  warn "GitHub ответил ошибкой аутентификации — убедись что ключ добавлен"
+  warn "Ответ GitHub: ${SSH_CHECK}"
+  warn "Убедись что публичный ключ добавлен в репо → Deploy keys"
   echo -ne "  ${YELLOW}Продолжить всё равно? (y/N): ${RESET}"
   read -r answer </dev/tty
   [[ "$answer" =~ ^[Yy]$ ]] || error "Прервано"
