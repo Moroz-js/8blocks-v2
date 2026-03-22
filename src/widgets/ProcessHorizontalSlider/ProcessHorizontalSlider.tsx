@@ -27,15 +27,18 @@ export function ProcessHorizontalSlider({ headline, description, steps }: Proces
   useEffect(() => {
     const measure = () => {
       if (!trackRef.current) return
-      // Measure from the track itself (not trackWrap) so padding-left is accounted for
-      const trackLeft = trackRef.current.getBoundingClientRect().left
-      const excess = trackRef.current.scrollWidth - (window.innerWidth - trackLeft)
+      const cards = trackRef.current.children
+      if (!cards.length) return
+      const lastCard = cards[cards.length - 1] as HTMLElement
+      const lastCardRight = lastCard.getBoundingClientRect().right
+      const target = window.innerWidth * 0.8
+      const excess = lastCardRight - target
       setScrollRange(Math.max(0, excess))
     }
-    measure()
+    requestAnimationFrame(measure)
     window.addEventListener('resize', measure)
     return () => window.removeEventListener('resize', measure)
-  }, [])
+  }, [steps.length])
 
   const { scrollYProgress } = useScroll({
     target: wrapperRef,

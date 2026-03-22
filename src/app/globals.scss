@@ -204,3 +204,13 @@ select {
   outline-offset: 2px;
 }
 
+// re:plain chat widget — dark theme override
+#__replain_widget,
+[id*="replain"],
+div[class*="replain"] {
+  background: transparent !important;
+  box-shadow: none !important;
+
+  
+}
+

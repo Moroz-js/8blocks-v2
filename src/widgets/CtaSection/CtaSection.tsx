@@ -52,7 +52,7 @@ export function CtaSection() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
         >
           <a
-            href="https://t.me/8blocks_io"
+            href="https://t.me/eightblocksio8"
             className={styles.tgLink}
             target="_blank"
             rel="noopener noreferrer"

@@ -5,7 +5,7 @@ import { ProblemBlock } from '@/widgets/ProblemBlock'
 import { SolutionBlock } from '@/widgets/SolutionBlock'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
 import { TokenomicsCompositionBlock } from '@/widgets/TokenomicsCompositionBlock'
-import { TokenomicsProcessWall } from '@/widgets/TokenomicsProcessWall'
+import { ProcessHorizontalSlider } from '@/widgets/ProcessHorizontalSlider'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
@@ -57,7 +57,10 @@ export default function TokenomicsPage() {
         headline={deliverables.label}
         description={deliverables.headline}
       />
-      <TokenomicsProcessWall headline={process.headline} />
+      <ProcessHorizontalSlider
+        headline={process.headline}
+        steps={process.steps}
+      />
       <TokenomicsTestBlock />
       <ServiceCtaBlock
         headline={cta.headline}

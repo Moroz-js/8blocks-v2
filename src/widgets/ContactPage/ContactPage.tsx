@@ -84,7 +84,7 @@ export function ContactPage() {
                   <p className={styles.personName}>Оксана</p>
                   <p className={styles.personRole}>COO</p>
                   <a
-                    href="https://t.me/eightblocks"
+                    href="https://t.me/Eight_Blocks"
                     className={styles.personTg}
                     target="_blank"
                     rel="noopener noreferrer"

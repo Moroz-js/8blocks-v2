@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import { ColorSchemeScript, MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
 import '../globals.scss'
@@ -73,6 +74,17 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         */}
         <MantineProvider defaultColorScheme="dark">
           <GTMScript />
+          <Script
+            id="replain-settings"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `window.replainSettings = { id: '5cfc493a-e46f-4094-8448-6a22285c4399' };`,
+            }}
+          />
+          <Script
+            src="https://widget.replain.cc/dist/client.js"
+            strategy="afterInteractive"
+          />
           <LenisProvider>
             <Header />
             <main>{children}</main>

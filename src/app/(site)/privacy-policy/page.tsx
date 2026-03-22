@@ -4,18 +4,18 @@ import { Container } from '@/shared/ui'
 import styles from './PrivacyPolicy.module.scss'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy',
+  title: 'Политика конфиденциальности',
   description:
-    'Privacy Policy for 8Blocks — how we collect, use and protect your personal data.',
+    'Политика конфиденциальности 8Blocks — как мы собираем, используем и защищаем ваши персональные данные.',
   alternates: { canonical: `${siteConfig.url}/privacy-policy` },
   openGraph: {
-    title: 'Privacy Policy | 8Blocks',
-    description: 'How 8Blocks collects, uses and protects your personal data.',
+    title: 'Политика конфиденциальности | 8Blocks',
+    description: 'Как 8Blocks собирает, использует и защищает ваши персональные данные.',
     url: `${siteConfig.url}/privacy-policy`,
   },
 }
 
-const LAST_UPDATED = 'February 9, 2026'
+const LAST_UPDATED = '9 февраля 2026'
 const COMPANY_ADDRESS =
   '8BLOCKS FZCO, Unit No: UT-12-CO-372, DMCC Business Centre, Level 12, Uptown Tower, Dubai, United Arab Emirates'
 
@@ -24,302 +24,304 @@ export default function PrivacyPolicyPage() {
     <Container>
       <article className={styles.article}>
 
-        {/* Block 1 — Introduction */}
         <header className={styles.header}>
-          <p className={styles.label}>[ Legal ]</p>
-          <h1 className={styles.title}>Privacy Policy</h1>
-          <p className={styles.updated}>Last updated: {LAST_UPDATED}</p>
+          <p className={styles.label}>[ Правовая информация ]</p>
+          <h1 className={styles.title}>Политика конфиденциальности</h1>
+          <p className={styles.updated}>Последнее обновление: {LAST_UPDATED}</p>
           <p>
-            This Privacy Policy describes our policies and procedures on the collection, use, and
-            disclosure of your information when you use the Service, and tells you about your
-            privacy rights and how the law protects you. We use your personal data to provide and
-            improve the Service. By using the Service, you agree to the collection and use of
-            information in accordance with this Privacy Policy.
+            Настоящая Политика конфиденциальности описывает наши правила и процедуры сбора,
+            использования и раскрытия вашей информации при использовании Сервиса, а также
+            информирует вас о ваших правах на конфиденциальность и о том, как закон защищает вас.
+            Мы используем ваши персональные данные для предоставления и улучшения Сервиса.
+            Используя Сервис, вы соглашаетесь со сбором и использованием информации в соответствии
+            с настоящей Политикой конфиденциальности.
           </p>
         </header>
 
-        {/* Block 2 — Interpretation and Definitions */}
         <section>
-          <h2>Interpretation and Definitions</h2>
-          <h3>Interpretation</h3>
+          <h2>Толкование и определения</h2>
+          <h3>Толкование</h3>
           <p>
-            Words with the initial letter capitalised have meanings defined under the following
-            conditions. The following definitions shall have the same meaning regardless of whether
-            they appear in singular or plural form.
+            Слова, начинающиеся с заглавной буквы, имеют значения, определённые ниже.
+            Приведённые определения имеют одинаковое значение независимо от того, употребляются
+            они в единственном или множественном числе.
           </p>
-          <h3>Definitions</h3>
-          <p>For the purposes of this Privacy Policy:</p>
+          <h3>Определения</h3>
+          <p>Для целей настоящей Политики конфиденциальности:</p>
           <dl className={styles.definitions}>
             <div>
-              <dt>Account</dt>
+              <dt>Аккаунт</dt>
               <dd>
-                A unique account created for you to access our Service or parts of our Service.
+                Уникальная учётная запись, созданная для вас с целью доступа к нашему Сервису
+                или его отдельным частям.
               </dd>
             </div>
             <div>
-              <dt>Affiliate</dt>
+              <dt>Аффилированное лицо</dt>
               <dd>
-                An entity that controls, is controlled by, or is under common control with a party,
-                where &quot;control&quot; means ownership of 50% or more of the shares, equity
-                interest, or other securities entitled to vote.
+                Организация, которая контролирует сторону, контролируется ею или находится под
+                общим контролем со стороной, где «контроль» означает владение 50% и более акций,
+                долей участия или иных ценных бумаг, дающих право голоса.
               </dd>
             </div>
             <div>
-              <dt>Company</dt>
+              <dt>Компания</dt>
               <dd>
-                (referred to as &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or
-                &quot;Our&quot; in this Agreement) — {COMPANY_ADDRESS}.
+                (упоминается как «Компания», «Мы», «Нас» или «Наш» в настоящем документе)
+                — {COMPANY_ADDRESS}.
               </dd>
             </div>
             <div>
-              <dt>Cookies</dt>
+              <dt>Файлы cookie</dt>
               <dd>
-                Small files placed on your computer, mobile device or any other device by a
-                website, containing details of your browsing history, among many other uses.
+                Небольшие файлы, размещаемые на вашем компьютере, мобильном устройстве или
+                любом другом устройстве веб-сайтом, содержащие информацию о вашей истории
+                просмотров и другие данные.
               </dd>
             </div>
             <div>
-              <dt>Country</dt>
-              <dd>United Arab Emirates.</dd>
+              <dt>Страна</dt>
+              <dd>Объединённые Арабские Эмираты.</dd>
             </div>
             <div>
-              <dt>Device</dt>
+              <dt>Устройство</dt>
               <dd>
-                Any device that can access the Service such as a computer, a mobile phone, or a
-                digital tablet.
+                Любое устройство, с которого можно получить доступ к Сервису: компьютер,
+                мобильный телефон или цифровой планшет.
               </dd>
             </div>
             <div>
-              <dt>Personal Data</dt>
+              <dt>Персональные данные</dt>
               <dd>
-                Any information that relates to an identified or identifiable individual.
+                Любая информация, которая относится к идентифицированному или идентифицируемому
+                физическому лицу.
               </dd>
             </div>
             <div>
-              <dt>Service</dt>
-              <dd>The website located at {siteConfig.url}.</dd>
+              <dt>Сервис</dt>
+              <dd>Веб-сайт, расположенный по адресу {siteConfig.url}.</dd>
             </div>
             <div>
-              <dt>Service Provider</dt>
+              <dt>Поставщик услуг</dt>
               <dd>
-                Any natural or legal person who processes the data on behalf of the Company. It
-                refers to third-party companies or individuals employed by the Company to facilitate
-                the Service, to provide the Service on behalf of the Company, to perform services
-                related to the Service, or to assist the Company in analysing how the Service is
-                used.
+                Любое физическое или юридическое лицо, обрабатывающее данные от имени Компании.
+                Под этим понимаются сторонние компании или физические лица, привлечённые Компанией
+                для содействия в предоставлении Сервиса, оказания услуг от имени Компании,
+                выполнения работ, связанных с Сервисом, или помощи в анализе использования Сервиса.
               </dd>
             </div>
             <div>
-              <dt>Usage Data</dt>
+              <dt>Данные об использовании</dt>
               <dd>
-                Data collected automatically, either generated by the use of the Service or from
-                the Service infrastructure itself (for example, the duration of a page visit).
+                Данные, собираемые автоматически в процессе использования Сервиса или
+                генерируемые инфраструктурой Сервиса (например, длительность посещения страницы).
               </dd>
             </div>
             <div>
-              <dt>You</dt>
+              <dt>Вы</dt>
               <dd>
-                The individual accessing or using the Service, or the company or other legal entity
-                on behalf of which such individual is accessing or using the Service, as applicable.
+                Физическое лицо, получающее доступ к Сервису или использующее его, либо компания
+                или иное юридическое лицо, от имени которого такое физическое лицо получает доступ
+                к Сервису или использует его.
               </dd>
             </div>
           </dl>
         </section>
 
-        {/* Block 3 — Data Collection and Use */}
         <section>
-          <h2>Collecting and Using Your Personal Data</h2>
+          <h2>Сбор и использование персональных данных</h2>
 
-          <h3>Types of Data Collected</h3>
-          <h4>Personal Data</h4>
+          <h3>Типы собираемых данных</h3>
+          <h4>Персональные данные</h4>
           <p>
-            While using our Service, we may ask you to provide us with certain personally
-            identifiable information that can be used to contact or identify you. Personally
-            identifiable information may include, but is not limited to:
+            При использовании нашего Сервиса мы можем попросить вас предоставить определённую
+            персональную информацию, которая может быть использована для связи с вами или вашей
+            идентификации. Такая информация может включать, но не ограничивается:
           </p>
           <ul>
-            <li>Email address</li>
-            <li>First name and last name</li>
-            <li>Phone number</li>
-            <li>Usage Data</li>
+            <li>Адрес электронной почты</li>
+            <li>Имя и фамилия</li>
+            <li>Номер телефона</li>
+            <li>Данные об использовании</li>
           </ul>
 
-          <h4>Usage Data</h4>
+          <h4>Данные об использовании</h4>
           <p>
-            Usage Data is collected automatically when using the Service. It may include information
-            such as your Device&apos;s Internet Protocol address (e.g. IP address), browser type,
-            browser version, the pages of our Service that you visit, the time and date of your
-            visit, the time spent on those pages, unique device identifiers and other diagnostic
-            data.
+            Данные об использовании собираются автоматически при работе с Сервисом. Они могут
+            включать такую информацию, как IP-адрес вашего устройства, тип и версия браузера,
+            страницы нашего Сервиса, которые вы посещаете, дата и время посещения, время,
+            проведённое на этих страницах, уникальные идентификаторы устройства и другие
+            диагностические данные.
           </p>
           <p>
-            When you access the Service by or through a mobile device, we may collect certain
-            information automatically, including the type of mobile device you use, your mobile
-            device unique ID, the IP address of your mobile device, your mobile operating system,
-            the type of mobile Internet browser you use, unique device identifiers and other
-            diagnostic data.
-          </p>
-
-          <h3>Tracking Technologies and Cookies</h3>
-          <p>
-            We use Cookies and similar tracking technologies to track activity on our Service and
-            store certain information. Tracking technologies used are beacons, tags, and scripts to
-            collect and track information and to improve and analyse our Service.
-          </p>
-          <p>
-            You can instruct your browser to refuse all Cookies or to indicate when a Cookie is
-            being sent. However, if you do not accept Cookies, you may not be able to use some
-            parts of our Service. Cookies can be &quot;Persistent&quot; or &quot;Session&quot;
-            cookies. We use both Session and Persistent Cookies for the purposes set out below.
+            При доступе к Сервису с мобильного устройства мы можем автоматически собирать
+            определённую информацию, включая тип мобильного устройства, его уникальный
+            идентификатор, IP-адрес, мобильную операционную систему, тип мобильного
+            интернет-браузера, уникальные идентификаторы устройства и другие диагностические данные.
           </p>
 
-          <h3>Use of Your Personal Data</h3>
-          <p>The Company may use Personal Data for the following purposes:</p>
+          <h3>Технологии отслеживания и файлы cookie</h3>
+          <p>
+            Мы используем файлы cookie и аналогичные технологии отслеживания для мониторинга
+            активности на нашем Сервисе и хранения определённой информации. Используемые
+            технологии отслеживания включают маяки, теги и скрипты для сбора и анализа информации,
+            а также для улучшения нашего Сервиса.
+          </p>
+          <p>
+            Вы можете настроить свой браузер на отклонение всех файлов cookie или на уведомление
+            при отправке cookie. Однако если вы не принимаете файлы cookie, вы можете не иметь
+            возможности использовать некоторые функции нашего Сервиса. Файлы cookie могут быть
+            «постоянными» или «сеансовыми». Мы используем оба типа для целей, описанных ниже.
+          </p>
+
+          <h3>Использование персональных данных</h3>
+          <p>Компания может использовать персональные данные в следующих целях:</p>
           <ul>
             <li>
-              <strong>To provide and maintain our Service</strong>, including to monitor the usage
-              of our Service.
+              <strong>Предоставление и поддержка Сервиса</strong>, включая мониторинг
+              использования нашего Сервиса.
             </li>
             <li>
-              <strong>To manage your requests</strong>: to attend and manage your requests to us.
+              <strong>Обработка ваших запросов</strong>: рассмотрение и управление вашими
+              обращениями к нам.
             </li>
             <li>
-              <strong>To contact you</strong>: to contact you by email or other equivalent forms of
-              electronic communication regarding updates or informative communications related to
-              the functionalities, products or contracted services.
+              <strong>Связь с вами</strong>: по электронной почте или иными аналогичными
+              средствами электронной связи для отправки обновлений или информационных сообщений,
+              связанных с функциями, продуктами или услугами.
             </li>
             <li>
-              <strong>To send you news and offers</strong>, and other information about similar
-              goods, services, and events we offer — unless you have opted not to receive such
-              information.
+              <strong>Отправка новостей и предложений</strong>, а также иной информации о
+              похожих товарах, услугах и мероприятиях — если вы не отказались от получения
+              такой информации.
             </li>
             <li>
-              <strong>For business transfers</strong>: we may use your information to evaluate or
-              conduct a merger, divestiture, restructuring, reorganisation, dissolution, or other
-              sale or transfer of some or all of our assets.
+              <strong>Деловые операции</strong>: мы можем использовать вашу информацию для
+              оценки или проведения слияния, реструктуризации, реорганизации, ликвидации или
+              иной продажи или передачи наших активов.
             </li>
             <li>
-              <strong>For other purposes</strong>: such as data analysis, identifying usage trends,
-              determining the effectiveness of our promotional campaigns, and evaluating and
-              improving our Service and your experience.
+              <strong>Иные цели</strong>: анализ данных, выявление тенденций использования,
+              оценка эффективности наших рекламных кампаний, а также оценка и улучшение
+              нашего Сервиса и вашего опыта.
             </li>
           </ul>
 
-          <h3>Retention of Your Personal Data</h3>
+          <h3>Хранение персональных данных</h3>
           <p>
-            The Company will retain your Personal Data only for as long as is necessary for the
-            purposes set out in this Privacy Policy. We will retain and use your Personal Data to
-            the extent necessary to comply with our legal obligations, resolve disputes, and enforce
-            our legal agreements and policies.
+            Компания хранит ваши персональные данные только в течение срока, необходимого для
+            целей, изложенных в настоящей Политике конфиденциальности. Мы будем хранить и
+            использовать ваши персональные данные в объёме, необходимом для выполнения наших
+            юридических обязательств, разрешения споров и обеспечения соблюдения наших
+            соглашений и политик.
           </p>
           <p>
-            Usage Data is generally retained for a shorter period of time, except when this data is
-            used to strengthen the security or to improve the functionality of our Service, or we
-            are legally obligated to retain this data for longer time periods.
-          </p>
-
-          <h3>Transfer of Your Personal Data</h3>
-          <p>
-            Your information, including Personal Data, may be transferred to — and maintained on —
-            computers located outside of your state, province, country, or other governmental
-            jurisdiction where the data protection laws may differ from those of your jurisdiction.
-          </p>
-          <p>
-            The Company will take all steps reasonably necessary to ensure that your data is treated
-            securely and in accordance with this Privacy Policy, and no transfer of your Personal
-            Data will take place to an organisation or a country unless there are adequate controls
-            in place including the security of your data and other personal information.
+            Данные об использовании, как правило, хранятся в течение более короткого периода,
+            за исключением случаев, когда они используются для усиления безопасности или
+            улучшения функциональности нашего Сервиса, либо когда мы обязаны хранить их
+            в течение более длительного срока по закону.
           </p>
 
-          <h3>Delete Your Personal Data</h3>
+          <h3>Передача персональных данных</h3>
           <p>
-            You have the right to delete or request that we assist in deleting the Personal Data
-            that we have collected about you. Our Service may give you the ability to delete certain
-            information about you from within the Service.
+            Ваша информация, включая персональные данные, может быть передана и храниться на
+            компьютерах, расположенных за пределами вашего штата, провинции, страны или иной
+            юрисдикции, где законодательство о защите данных может отличаться от вашего.
           </p>
           <p>
-            You may contact us to request access to, correct, or delete any personal information
-            that you have provided to us. Please note that we may need to retain certain information
-            when we have a legal obligation or lawful basis to do so.
+            Компания предпримет все разумно необходимые меры для обеспечения безопасной
+            обработки ваших данных в соответствии с настоящей Политикой конфиденциальности.
+            Передача ваших персональных данных не будет осуществляться в организацию или страну,
+            если не обеспечен надлежащий контроль, включая безопасность ваших данных.
           </p>
 
-          <h3>Disclosure of Your Personal Data</h3>
+          <h3>Удаление персональных данных</h3>
           <p>
-            The Company may disclose your Personal Data in the good faith belief that such action
-            is necessary to:
+            Вы имеете право удалить или запросить помощь в удалении персональных данных, которые
+            мы собрали о вас. Наш Сервис может предоставлять вам возможность удалить определённую
+            информацию о вас непосредственно из Сервиса.
+          </p>
+          <p>
+            Вы можете связаться с нами, чтобы запросить доступ к своим персональным данным,
+            их исправление или удаление. Обратите внимание, что мы можем быть обязаны сохранить
+            определённую информацию при наличии юридических обязательств или законных оснований.
+          </p>
+
+          <h3>Раскрытие персональных данных</h3>
+          <p>
+            Компания может раскрыть ваши персональные данные, если добросовестно полагает,
+            что такие действия необходимы для:
           </p>
           <ul>
-            <li>Comply with a legal obligation</li>
-            <li>Protect and defend the rights or property of the Company</li>
-            <li>
-              Prevent or investigate possible wrongdoing in connection with the Service
-            </li>
-            <li>Protect the personal safety of users of the Service or the public</li>
-            <li>Protect against legal liability</li>
+            <li>Выполнения юридических обязательств</li>
+            <li>Защиты прав или собственности Компании</li>
+            <li>Предотвращения или расследования возможных нарушений, связанных с Сервисом</li>
+            <li>Защиты личной безопасности пользователей Сервиса или общественности</li>
+            <li>Защиты от юридической ответственности</li>
           </ul>
 
-          <h3>Security of Your Personal Data</h3>
+          <h3>Безопасность персональных данных</h3>
           <p>
-            The security of your Personal Data is important to us, but remember that no method of
-            transmission over the Internet or method of electronic storage is 100% secure. While we
-            strive to use commercially acceptable means to protect your Personal Data, we cannot
-            guarantee its absolute security.
+            Безопасность ваших персональных данных важна для нас, однако помните, что ни один
+            способ передачи данных через Интернет или метод электронного хранения не является
+            абсолютно безопасным. Мы стремимся использовать коммерчески приемлемые средства
+            защиты ваших персональных данных, но не можем гарантировать их абсолютную
+            безопасность.
           </p>
         </section>
 
-        {/* Block 4 — Children's Privacy */}
         <section>
-          <h2>Children&apos;s Privacy</h2>
+          <h2>Конфиденциальность детей</h2>
           <p>
-            Our Service does not address anyone under the age of 16. We do not knowingly collect
-            personally identifiable information from anyone under the age of 16. If you are a parent
-            or guardian and you are aware that your child has provided us with Personal Data, please
-            contact us. If we become aware that we have collected Personal Data from anyone under
-            the age of 16 without verification of parental consent, we take steps to remove that
-            information from our servers.
+            Наш Сервис не предназначен для лиц младше 16 лет. Мы сознательно не собираем
+            персональные данные лиц младше 16 лет. Если вы являетесь родителем или опекуном и
+            вам стало известно, что ваш ребёнок предоставил нам персональные данные, пожалуйста,
+            свяжитесь с нами. Если нам станет известно, что мы собрали персональные данные лица
+            младше 16 лет без подтверждения согласия родителей, мы предпримем меры по удалению
+            этой информации с наших серверов.
           </p>
           <p>
-            If we need to rely on consent as a legal basis for processing your information and your
-            country requires consent from a parent, we may require your parent&apos;s consent before
-            we collect and use that information.
+            Если для обработки вашей информации нам необходимо согласие в качестве правового
+            основания и законодательство вашей страны требует согласия родителя, мы можем
+            запросить согласие вашего родителя перед сбором и использованием такой информации.
           </p>
         </section>
 
-        {/* Block 5 — Links to Other Websites */}
         <section>
-          <h2>Links to Other Websites</h2>
+          <h2>Ссылки на другие веб-сайты</h2>
           <p>
-            Our Service may contain links to other websites that are not operated by us. If you
-            click on a third-party link, you will be directed to that third party&apos;s site. We
-            strongly advise you to review the Privacy Policy of every site you visit.
+            Наш Сервис может содержать ссылки на другие веб-сайты, которые не управляются нами.
+            При переходе по ссылке третьей стороны вы будете перенаправлены на сайт этой третьей
+            стороны. Мы настоятельно рекомендуем вам ознакомиться с политикой конфиденциальности
+            каждого посещаемого вами сайта.
           </p>
           <p>
-            We have no control over and assume no responsibility for the content, privacy policies,
-            or practices of any third-party sites or services.
+            Мы не контролируем и не несём ответственности за содержание, политику
+            конфиденциальности или практики сторонних сайтов или сервисов.
           </p>
         </section>
 
-        {/* Block 6 — Changes to this Privacy Policy */}
         <section>
-          <h2>Changes to this Privacy Policy</h2>
+          <h2>Изменения настоящей Политики конфиденциальности</h2>
           <p>
-            We may update our Privacy Policy from time to time. We will notify you of any changes
-            by posting the new Privacy Policy on this page. We will let you know via email and/or a
-            prominent notice on our Service, prior to the change becoming effective, and update the
-            &quot;Last updated&quot; date at the top of this Privacy Policy.
+            Мы можем время от времени обновлять нашу Политику конфиденциальности. Мы уведомим
+            вас о любых изменениях, разместив новую Политику конфиденциальности на этой странице.
+            Мы сообщим вам об изменениях по электронной почте и/или посредством заметного
+            уведомления в нашем Сервисе до вступления изменений в силу, а также обновим дату
+            «Последнее обновление» в верхней части настоящей Политики.
           </p>
           <p>
-            You are advised to review this Privacy Policy periodically for any changes. Changes to
-            this Privacy Policy are effective when they are posted on this page. This policy was
-            last updated on {LAST_UPDATED}.
+            Рекомендуем периодически просматривать настоящую Политику конфиденциальности на
+            предмет изменений. Изменения вступают в силу с момента их публикации на данной
+            странице. Последнее обновление политики: {LAST_UPDATED}.
           </p>
         </section>
 
-        {/* Block 7 — Contact Us */}
         <section>
-          <h2>Contact Us</h2>
+          <h2>Свяжитесь с нами</h2>
           <p>
-            If you have any questions about this Privacy Policy, you can contact us by email:
+            Если у вас есть вопросы по настоящей Политике конфиденциальности, вы можете
+            связаться с нами по электронной почте:
           </p>
           <p>
             <a href="mailto:hi@токеномика.рф" className={styles.emailLink}>
