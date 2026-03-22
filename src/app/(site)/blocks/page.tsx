@@ -95,7 +95,7 @@ export default function BlocksPage() {
       <SolutionBlock
         headline={sc.solution.headline}
         description={sc.solution.description}
-        variant="flow"
+        variant="consulting"
         items={sc.solution.items}
       />
 
