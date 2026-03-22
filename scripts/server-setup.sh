@@ -185,14 +185,16 @@ else
     rm -rf "${PROJECT_DIR}"
   fi
   info "Клонирую ${REPO_SSH}"
-  if git clone --branch "${DEPLOY_BRANCH}" "${REPO_SSH}" "${PROJECT_DIR}" </dev/null 2>/dev/null; then
-    success "Репо склонировано по SSH"
-  else
-    warn "SSH не сработал, клоную по HTTPS"
+  GIT_SSH_ERR=$(git clone --branch "${DEPLOY_BRANCH}" "${REPO_SSH}" "${PROJECT_DIR}" </dev/null 2>&1) || {
+    warn "SSH clone не сработал: ${GIT_SSH_ERR}"
+    warn "Клоную по HTTPS"
+    rm -rf "${PROJECT_DIR}"
     git clone --branch "${DEPLOY_BRANCH}" "${REPO_HTTPS}" "${PROJECT_DIR}" </dev/null
     git -C "${PROJECT_DIR}" remote set-url origin "${REPO_SSH}"
-    success "Репо склонировано (remote переключён на SSH)"
-  fi
+    success "Репо склонировано по HTTPS (remote → SSH)"
+    return 0 2>/dev/null || true
+  }
+  success "Репо склонировано по SSH"
 fi
 
 chmod -R 775 "${PROJECT_DIR}/public/uploads"
