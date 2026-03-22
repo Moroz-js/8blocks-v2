@@ -31,7 +31,7 @@ export function FooterWatermark() {
         style={{ y, cursor: isContact ? 'pointer' : undefined, userSelect: isContact ? 'text' : 'none' }}
         onClick={handleClick}
       >
-        {isContact ? siteConfig.email : '8BLOCKS'}
+        {isContact ? siteConfig.email : 'ТОКЕНОМИКА'}
       </motion.div>
     </div>
   )

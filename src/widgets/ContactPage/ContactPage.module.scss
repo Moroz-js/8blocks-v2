@@ -6,11 +6,11 @@
   padding-block: $space-11 $space-10;
 
   @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-9 $space-8;
+    padding-block: $space-8 $space-7;
   }
 
   @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-8 $space-7;
+    padding-block: $space-7 $space-6;
   }
 }
 
@@ -270,11 +270,11 @@
   border-top: 1px solid $border-secondary;
 
   @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-9;
+    padding-block: $space-8;
   }
 
   @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-8;
+    padding-block: $space-7;
   }
 }
 

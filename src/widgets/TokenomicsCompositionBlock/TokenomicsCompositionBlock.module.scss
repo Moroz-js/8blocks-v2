@@ -4,7 +4,7 @@
   padding-block: $space-11;
 
   @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-9;
+    padding-block: $space-8;
   }
 }
 
@@ -81,6 +81,8 @@
   grid-template-rows: repeat(5, 1fr);
   gap: $space-3;
   aspect-ratio: 1;
+  max-width: 1020px;
+  margin-inline: auto;
 
   > :nth-child(1) { grid-area: 1 / 1 / 2 / 5; }
   > :nth-child(2) { grid-area: 5 / 1 / 6 / 6; }

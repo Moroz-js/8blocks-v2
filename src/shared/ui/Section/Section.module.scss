@@ -30,11 +30,11 @@
   padding-block: $space-11;
 
   @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-9;
+    padding-block: $space-8;
   }
 
   @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-8;
+    padding-block: $space-7;
   }
 }
 
@@ -42,11 +42,11 @@
   padding-block: $space-12;
 
   @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-11;
+    padding-block: $space-10;
   }
 
   @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-9;
+    padding-block: $space-8;
   }
 }
 

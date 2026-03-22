@@ -5,10 +5,6 @@
 
 .wrapper {
   height: calc(100vh + var(--scroll-range-buffered, 5000px));
-
-  @media (max-width: #{$bp-mobile}) {
-    height: auto !important;
-  }
 }
 
 // Full-viewport sticky frame
@@ -23,7 +19,7 @@
   gap: $space-7;
 
   @media (max-width: #{$bp-mobile}) {
-    display: none;
+    gap: $space-5;
   }
 }
 
@@ -97,10 +93,10 @@
 .card {
   position: relative;
   flex: 0 0 clamp(280px, 30vw, 400px);
-  height: clamp(280px, 35vh, 360px);
+  height: clamp(340px, 42vh, 400px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: $space-6;
   background: $bg-secondary;
   backdrop-filter: blur(12px);
@@ -129,7 +125,7 @@
   color: rgba(255, 255, 255, 0.08);
   letter-spacing: -0.03em;
   display: block;
-  margin-bottom: auto;
+  margin-bottom: $space-4;
 }
 
 .cardBody {
@@ -169,59 +165,10 @@
   letter-spacing: 0.04em;
 }
 
-// ── Mobile static stack ───────────────────────────────────────────
+// ── Mobile: hidden, reuses desktop sticky slider ─────────────────
 
 .mobileStack {
   display: none;
-
-  @media (max-width: #{$bp-mobile}) {
-    display: flex;
-    flex-direction: column;
-    gap: $space-7;
-    padding-inline: $container-padding-mobile;
-    padding-block: $space-9;
-  }
-}
-
-.mobileHeadline {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: clamp(24px, 6vw, 30px);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: $text-primary;
-  margin: 0;
-}
-
-.mobileDescription {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-  margin: -$space-4 0 0;
-}
-
-.mobileCards {
-  display: flex;
-  flex-direction: column;
-  gap: $space-4;
-}
-
-.mobileCard {
-  display: flex;
-  flex-direction: column;
-  padding: $space-5;
-  background: $bg-secondary;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid $border-secondary;
-  border-radius: 0;
-
-  .cardNumber {
-    font-size: 28px;
-    margin-bottom: $space-4;
-  }
 }
 
 

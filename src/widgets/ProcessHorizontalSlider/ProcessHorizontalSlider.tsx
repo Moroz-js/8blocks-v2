@@ -156,23 +156,30 @@ export function ProcessHorizontalSlider({ headline, description, steps }: Proces
         </div>
       </div>
 
-      {/* Mobile: static vertical stack */}
+      {/* Mobile: horizontal swipe slider */}
       <div className={styles.mobileStack}>
         <ScrollRevealText text={headline} className={styles.mobileHeadline} />
         {description && <p className={styles.mobileDescription}>{description}</p>}
-        <div className={styles.mobileCards}>
-          {steps.map((step) => (
-            <article key={step.number} className={styles.mobileCard}>
-              <span className={styles.cardNumber}>{String(step.number).padStart(2, '0')}</span>
-              <div className={styles.cardBody}>
-                <h3 className={styles.cardTitle}>{step.title}</h3>
-                <p className={styles.cardDescription}>{step.description}</p>
-              </div>
-              {step.duration && (
-                <span className={styles.chip}>{step.duration}</span>
-              )}
-            </article>
-          ))}
+        <div className={styles.mobileTrackWrap}>
+          <motion.div
+            className={styles.mobileTrack}
+            drag="x"
+            dragConstraints={{ left: -(steps.length - 1) * 260, right: 0 }}
+            dragElastic={0.12}
+          >
+            {steps.map((step) => (
+              <article key={step.number} className={styles.mobileCard}>
+                <span className={styles.cardNumber}>{String(step.number).padStart(2, '0')}</span>
+                <div className={styles.cardBody}>
+                  <h3 className={styles.cardTitle}>{step.title}</h3>
+                  <p className={styles.cardDescription}>{step.description}</p>
+                </div>
+                {step.duration && (
+                  <span className={styles.chip}>{step.duration}</span>
+                )}
+              </article>
+            ))}
+          </motion.div>
         </div>
       </div>
     </div>

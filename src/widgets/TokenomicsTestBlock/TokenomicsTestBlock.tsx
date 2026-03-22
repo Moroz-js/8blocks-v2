@@ -64,8 +64,8 @@ export function TokenomicsTestBlock() {
               <motion.div
                 key={i}
                 className={`${styles.row} ${reversed ? styles.rowReversed : ''}`}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, x: reversed ? 60 : -60 }}
+                whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.55, ease, delay: 0.05 }}
               >
