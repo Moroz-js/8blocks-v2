@@ -172,7 +172,6 @@ export default function BlocksPage() {
       <SectionLabel id="false-assumptions" title="FalseAssumptionsBlock" count={1} />
       <FalseAssumptionsBlock
         headline={audit.falseAssumptions.headline}
-        description={audit.falseAssumptions.description}
         items={audit.falseAssumptions.items}
       />
 
