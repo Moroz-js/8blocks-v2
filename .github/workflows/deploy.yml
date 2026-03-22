@@ -1,0 +1,161 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      deploy_mode:
+        description: 'Deploy mode: soft (rebuild only) or hard (rebuild + seed)'
+        required: false
+        default: 'soft'
+        type: choice
+        options:
+          - soft
+          - hard
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+          DOMAIN: ${{ secrets.DOMAIN }}
+          DATABASE_URI: ${{ secrets.DATABASE_URI }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_GTM_ID: ${{ secrets.NEXT_PUBLIC_GTM_ID }}
+          DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          command_timeout: 25m
+          envs: PROJECT_NAME,DOMAIN,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,DEPLOY_MODE
+          script: |
+            set -euo pipefail
+
+            error_exit() {
+              echo ""
+              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+              echo "❌ Deployment failed at line $1"
+              echo "Last command: ${BASH_COMMAND}"
+              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+              exit 1
+            }
+            trap 'error_exit $LINENO' ERR
+
+            DEPLOY_MODE="${DEPLOY_MODE:-soft}"
+            PROJECT_DIR="/var/www/${PROJECT_NAME}"
+
+            # ── pre-flight ────────────────────────────────
+            [ -n "${PROJECT_NAME:-}" ] || { echo "❌ PROJECT_NAME not set"; exit 1; }
+            [ -n "${DOMAIN:-}" ]       || { echo "❌ DOMAIN not set"; exit 1; }
+            [ -d "${PROJECT_DIR}" ]    || { echo "❌ Project dir not found: ${PROJECT_DIR}"; exit 1; }
+            command -v node &>/dev/null || { echo "❌ Node.js not found"; exit 1; }
+            command -v npm &>/dev/null  || { echo "❌ npm not found"; exit 1; }
+            command -v pm2 &>/dev/null  || { echo "❌ PM2 not found (npm install -g pm2)"; exit 1; }
+
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🚀 Deploying ${PROJECT_NAME}  |  mode: ${DEPLOY_MODE}"
+            echo "Node: $(node --version)  |  npm: $(npm --version)"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+            cd "${PROJECT_DIR}"
+
+            # ── pull latest code ──────────────────────────
+            echo "📥 Pulling latest changes from main"
+            git fetch --all
+            git reset --hard origin/main
+
+            # ── write .env ────────────────────────────────
+            echo "⚙️  Writing .env"
+            umask 077
+            printf '%s\n' \
+              "NODE_ENV=production" \
+              "DATABASE_URI=${DATABASE_URI}" \
+              "PAYLOAD_SECRET=${PAYLOAD_SECRET}" \
+              "ADMIN_EMAIL=${ADMIN_EMAIL}" \
+              "ADMIN_PASSWORD=${ADMIN_PASSWORD}" \
+              "SMTP_HOST=${SMTP_HOST}" \
+              "SMTP_PORT=${SMTP_PORT}" \
+              "SMTP_SECURE=${SMTP_SECURE}" \
+              "SMTP_USER=${SMTP_USER}" \
+              "SMTP_PASSWORD=${SMTP_PASSWORD}" \
+              "SMTP_FROM=${SMTP_FROM}" \
+              "NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}" \
+              "NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}" \
+              > .env
+            chmod 600 .env
+            echo "✓ .env written"
+
+            # ── install dependencies ──────────────────────
+            echo "📦 Installing dependencies"
+            npm ci --prefer-offline
+            echo "✓ Dependencies installed"
+
+            # ── run migrations ────────────────────────────
+            echo "🗄️  Running Payload migrations"
+            cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
+              node -r ./scripts/patch-next-env.cjs -r tsx/cjs \
+              node_modules/payload/dist/bin/index.js migrate
+            echo "✓ Migrations applied"
+
+            # ── build ─────────────────────────────────────
+            echo "🏗️  Building application"
+            npm run build
+            echo "✓ Build complete"
+
+            # ── restart via PM2 ───────────────────────────
+            echo "🔄 Restarting with PM2"
+            if pm2 describe "${PROJECT_NAME}" &>/dev/null; then
+              pm2 reload "${PROJECT_NAME}" --update-env
+            else
+              pm2 start npm --name "${PROJECT_NAME}" -- start
+            fi
+            pm2 save
+            echo "✓ PM2 process updated"
+
+            # ── ensure uploads dir ────────────────────────
+            mkdir -p "${PROJECT_DIR}/public/uploads"
+            chmod -R 775 "${PROJECT_DIR}/public/uploads" 2>/dev/null || true
+            echo "✓ Uploads directory ready"
+
+            # ── seed (hard only) ─────────────────────────
+            if [ "$DEPLOY_MODE" = "hard" ]; then
+              echo "🌱 Seeding database"
+              npm run seed || echo "⚠️  Seed failed (non-fatal)"
+            fi
+
+            # ── health check ─────────────────────────────
+            sleep 5
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/ 2>/dev/null || echo "000")
+            if echo "$HTTP_CODE" | grep -qE "^(200|301|302|307|308)$"; then
+              echo "✅ Health check passed (HTTP $HTTP_CODE)"
+            else
+              echo "⚠️  Health check returned HTTP $HTTP_CODE"
+              pm2 logs "${PROJECT_NAME}" --lines 50 --nostream || true
+            fi
+
+            # ── summary ──────────────────────────────────
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            pm2 list
+            echo ""
+            echo "✅ Deployment done  |  mode: ${DEPLOY_MODE}"
+            echo "🌐 https://${DOMAIN}"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
