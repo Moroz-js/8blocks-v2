@@ -103,7 +103,7 @@ export default function BlocksPage() {
       <SolutionBlock
         headline={tok.solution.headline}
         description={tok.solution.description}
-        variant="principles"
+        variant="tokenomics"
         items={tok.solution.items}
       />
 
