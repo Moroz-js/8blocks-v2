@@ -179,14 +179,17 @@ if [ -d "${PROJECT_DIR}/.git" ]; then
   git -C "${PROJECT_DIR}" reset --hard "origin/${DEPLOY_BRANCH}"
   success "Репо обновлено"
 else
+  # Папка может существовать без .git (незавершённый предыдущий запуск)
+  if [ -d "${PROJECT_DIR}" ]; then
+    info "Папка существует без .git — очищаю"
+    rm -rf "${PROJECT_DIR}"
+  fi
   info "Клонирую ${REPO_SSH}"
-  # Пробуем SSH, при ошибке — HTTPS
   if git clone --branch "${DEPLOY_BRANCH}" "${REPO_SSH}" "${PROJECT_DIR}" </dev/null 2>/dev/null; then
     success "Репо склонировано по SSH"
   else
     warn "SSH не сработал, клоную по HTTPS"
     git clone --branch "${DEPLOY_BRANCH}" "${REPO_HTTPS}" "${PROJECT_DIR}" </dev/null
-    # Сразу переключаем remote на SSH для последующих pull
     git -C "${PROJECT_DIR}" remote set-url origin "${REPO_SSH}"
     success "Репо склонировано (remote переключён на SSH)"
   fi
