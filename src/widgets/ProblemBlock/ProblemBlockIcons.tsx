@@ -16,39 +16,32 @@ const c = {
 
 export const IconDisconnectedTokenProduct = () => (
   <svg viewBox="0 0 400 180" fill="none">
+    {/* Product card */}
     <g>
-      <rect x="20" y="16" width="120" height="110" rx="14" fill={c.w04} stroke={c.w3} strokeWidth="1.3" />
-      <rect x="38" y="36" width="68" height="7" rx="3.5" fill={c.w6} />
-      <rect x="38" y="50" width="52" height="5" rx="2.5" fill={c.w3} />
-      <rect x="38" y="62" width="58" height="5" rx="2.5" fill="rgba(255,255,255,0.2)" />
-      <rect x="38" y="84" width="52" height="24" rx="7" fill={c.purple} />
-      <text x="64" y="100" textAnchor="middle" fill="white" fontSize="12" fontFamily="system-ui" fontWeight="600">Buy</text>
-      <text x="80" y="150" textAnchor="middle" fill={c.w3} fontSize="13" fontFamily="system-ui" fontWeight="500">Product</text>
+      <rect x="40" y="16" width="120" height="110" rx="14" fill={c.w04} stroke={c.w3} strokeWidth="1.3" />
+      <rect x="58" y="36" width="68" height="7" rx="3.5" fill={c.w6} />
+      <rect x="58" y="50" width="52" height="5" rx="2.5" fill={c.w3} />
+      <rect x="58" y="62" width="58" height="5" rx="2.5" fill="rgba(255,255,255,0.2)" />
+      <rect x="58" y="84" width="52" height="24" rx="7" fill={c.purple} />
+      <text x="84" y="100" textAnchor="middle" fill="white" fontSize="12" fontFamily="system-ui" fontWeight="600">Buy</text>
+      <text x="100" y="150" textAnchor="middle" fill={c.w3} fontSize="13" fontFamily="system-ui" fontWeight="500">Product</text>
     </g>
 
-    <line x1="150" y1="71" x2="178" y2="71" stroke={c.w3} strokeWidth="1.5" strokeDasharray="5 4" />
+    {/* Dashed line + X */}
+    <line x1="170" y1="71" x2="192" y2="71" stroke={c.w3} strokeWidth="1.5" strokeDasharray="5 4" />
     <g transform="translate(200, 71)">
-      <line x1="-10" y1="-10" x2="10" y2="10" stroke={c.red} strokeWidth="2.5" strokeLinecap="round" />
-      <line x1="10" y1="-10" x2="-10" y2="10" stroke={c.red} strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="-6" y1="-6" x2="6" y2="6" stroke={c.red} strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="6" y1="-6" x2="-6" y2="6" stroke={c.red} strokeWidth="2.5" strokeLinecap="round" />
     </g>
-    <line x1="222" y1="71" x2="250" y2="71" stroke={c.w3} strokeWidth="1.5" strokeDasharray="5 4" />
+    <line x1="208" y1="71" x2="230" y2="71" stroke={c.w3} strokeWidth="1.5" strokeDasharray="5 4" />
 
-    <g transform="translate(320, 68)">
-      <circle cx="0" cy="0" r="46" fill={c.w04} stroke={c.purple} strokeWidth="1.8" strokeOpacity="0.45" />
-      <circle cx="0" cy="0" r="36" fill="rgba(167,139,250,0.06)" stroke={c.purple} strokeWidth="1.2" strokeOpacity="0.3" />
-      <path d="M 0 -20 L 17.3 -10 L 17.3 10 L 0 20 L -17.3 10 L -17.3 -10 Z" fill="rgba(167,139,250,0.1)" stroke={c.purple} strokeWidth="1.4" strokeOpacity="0.6" strokeLinejoin="round" />
-      <line x1="0" y1="-12" x2="0" y2="12" stroke={c.purple} strokeWidth="1.8" strokeLinecap="round" strokeOpacity="0.7" />
-      <path d="M -8 -5 C -8 -10, 8 -12, 8 -5 C 8 0, -8 0, -8 5 C -8 12, 8 10, 8 5" stroke={c.purple} strokeWidth="1.8" strokeLinecap="round" fill="none" strokeOpacity="0.7" />
-      <circle cx="0" cy="-46" r="1.5" fill={c.purple} fillOpacity="0.3" />
-      <circle cx="0" cy="46" r="1.5" fill={c.purple} fillOpacity="0.3" />
-      <circle cx="46" cy="0" r="1.5" fill={c.purple} fillOpacity="0.3" />
-      <circle cx="-46" cy="0" r="1.5" fill={c.purple} fillOpacity="0.3" />
-      <circle cx="32.5" cy="-32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
-      <circle cx="32.5" cy="32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
-      <circle cx="-32.5" cy="-32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
-      <circle cx="-32.5" cy="32.5" r="1.5" fill={c.purple} fillOpacity="0.2" />
+    {/* Bitcoin-style token coin */}
+    <g transform="translate(300, 68)">
+      <circle cx="0" cy="0" r="46" fill="rgba(251,146,60,0.08)" stroke={c.orange} strokeWidth="1.8" strokeOpacity="0.5" />
+      <circle cx="0" cy="0" r="36" fill="rgba(251,146,60,0.12)" stroke={c.orange} strokeWidth="1.2" strokeOpacity="0.35" />
+      <text x="0" y="1" textAnchor="middle" dominantBaseline="central" fill={c.orange} fontSize="42" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700">&#x20BF;</text>
     </g>
-    <text x="320" y="150" textAnchor="middle" fill={c.w3} fontSize="13" fontFamily="system-ui" fontWeight="500">Token</text>
+    <text x="300" y="150" textAnchor="middle" fill={c.w3} fontSize="13" fontFamily="system-ui" fontWeight="500">Token</text>
   </svg>
 )
 
