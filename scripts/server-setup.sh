@@ -156,7 +156,7 @@ read -r </dev/tty
 
 info "Проверяю доступ к GitHub..."
 # ssh -T всегда возвращает exit code 1, поэтому захватываем вывод и игнорируем код
-SSH_CHECK=$(ssh -T git@github.com 2>&1) || true
+SSH_CHECK=$(ssh -T git@github.com </dev/null 2>&1) || true
 if echo "$SSH_CHECK" | grep -q "successfully authenticated"; then
   success "SSH доступ к GitHub работает"
 else
@@ -181,11 +181,11 @@ if [ -d "${PROJECT_DIR}/.git" ]; then
 else
   info "Клонирую ${REPO_SSH}"
   # Пробуем SSH, при ошибке — HTTPS
-  if git clone --branch "${DEPLOY_BRANCH}" "${REPO_SSH}" "${PROJECT_DIR}" 2>/dev/null; then
+  if git clone --branch "${DEPLOY_BRANCH}" "${REPO_SSH}" "${PROJECT_DIR}" </dev/null 2>/dev/null; then
     success "Репо склонировано по SSH"
   else
     warn "SSH не сработал, клоную по HTTPS"
-    git clone --branch "${DEPLOY_BRANCH}" "${REPO_HTTPS}" "${PROJECT_DIR}"
+    git clone --branch "${DEPLOY_BRANCH}" "${REPO_HTTPS}" "${PROJECT_DIR}" </dev/null
     # Сразу переключаем remote на SSH для последующих pull
     git -C "${PROJECT_DIR}" remote set-url origin "${REPO_SSH}"
     success "Репо склонировано (remote переключён на SSH)"
