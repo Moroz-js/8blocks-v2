@@ -95,6 +95,7 @@
 // ── Cards ─────────────────────────────────────────────────────────
 
 .card {
+  position: relative;
   flex: 0 0 clamp(280px, 30vw, 400px);
   height: clamp(280px, 35vh, 360px);
   display: flex;
@@ -105,8 +106,19 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 0;
+  transition: background $transition-base;
 
   @include card-corner-border();
+}
+
+.cardAccentBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: $gradient-card-border;
+  pointer-events: none;
 }
 
 .cardNumber {

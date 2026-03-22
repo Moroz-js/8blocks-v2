@@ -101,6 +101,30 @@
 - Токены и globals должны быть готовы в Phase 0–1 до массовой вёрстки виджетов.
 - Mantine и остальные зависимости установлены в Phase 0.
 
+## 10.1 Logo grid (8blocks)
+
+The 8blocks logo is a 5×5 grid with 8 blocks. Use this layout whenever content has exactly 8 items and should echo the brand.
+
+```css
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 12px;
+  aspect-ratio: 1;
+}
+.div1 { grid-area: 1 / 1 / 2 / 5; }  /* top bar */
+.div2 { grid-area: 5 / 1 / 6 / 6; }  /* bottom bar */
+.div3 { grid-area: 1 / 5 / 5 / 6; }  /* right column */
+.div4 { grid-area: 4 / 1 / 5 / 3; }
+.div5 { grid-area: 3 / 1 / 4 / 3; }
+.div6 { grid-area: 3 / 3 / 5 / 4; }
+.div7 { grid-area: 2 / 4 / 5 / 5; }
+.div8 { grid-area: 2 / 1 / 3 / 4; }
+```
+
+Used in: `TokenomicsCompositionBlock`.
+
 ## 11. Risks / open questions
 
 - Tailwind: в user rules указан Tailwind; в ТЗ — SCSS Modules. Для planning принимаем ТЗ (SCSS). Если проект позже перейдёт на Tailwind, токены нужно будет продублировать в tailwind.config.

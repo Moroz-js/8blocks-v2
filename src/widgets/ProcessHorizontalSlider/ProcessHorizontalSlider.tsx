@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
+import { motion, useScroll, useTransform, useSpring, type MotionValue } from 'framer-motion'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ProcessHorizontalSlider.module.scss'
 
@@ -16,6 +16,76 @@ interface ProcessHorizontalSliderProps {
   headline: string
   description?: string
   steps: readonly ProcessSliderStep[]
+}
+
+function StepCard({
+  step,
+  index,
+  total,
+  progress,
+}: {
+  step: ProcessSliderStep
+  index: number
+  total: number
+  progress: MotionValue<number>
+}) {
+  const isFirst = index === 0
+  const isLast = index === total - 1
+  const segmentSize = 1 / total
+  const center = (index + 0.5) * segmentSize
+  const fadeIn = Math.max(0, center - segmentSize * 0.8)
+  const fadeOut = Math.min(1, center + segmentSize * 0.8)
+
+  const off = 0.35
+  const on = 1
+  const dimNum = 'rgba(255,255,255,0.08)'
+  const activeNum = 'rgba(194,78,136,0.5)'
+  const noGlow = '0 0 0 0 transparent, inset 0 0 0 0 transparent'
+  const activeGlow = '0 0 28px 0 rgba(194,78,136,0.12), inset 0 1px 0 0 rgba(194,78,136,0.25)'
+
+  const opacity = useTransform(
+    progress,
+    isFirst ? [0, fadeOut] : isLast ? [fadeIn, 1] : [fadeIn, center, fadeOut],
+    isFirst ? [on, off] : isLast ? [off, on] : [off, on, off],
+  )
+  const borderOpacity = useTransform(
+    progress,
+    isFirst ? [0, fadeOut] : isLast ? [fadeIn, 1] : [fadeIn, center, fadeOut],
+    isFirst ? [1, 0] : isLast ? [0, 1] : [0, 1, 0],
+  )
+  const numColor = useTransform(
+    progress,
+    isFirst ? [0, fadeOut] : isLast ? [fadeIn, 1] : [fadeIn, center, fadeOut],
+    isFirst ? [activeNum, dimNum] : isLast ? [dimNum, activeNum] : [dimNum, activeNum, dimNum],
+  )
+  const glowShadow = useTransform(
+    progress,
+    isFirst ? [0, fadeOut] : isLast ? [fadeIn, 1] : [fadeIn, center, fadeOut],
+    isFirst ? [activeGlow, noGlow] : isLast ? [noGlow, activeGlow] : [noGlow, activeGlow, noGlow],
+  )
+
+  return (
+    <motion.article
+      className={styles.card}
+      style={{ opacity, boxShadow: glowShadow }}
+    >
+      <motion.div
+        className={styles.cardAccentBorder}
+        style={{ opacity: borderOpacity }}
+        aria-hidden
+      />
+      <motion.span className={styles.cardNumber} style={{ color: numColor }}>
+        {String(step.number).padStart(2, '0')}
+      </motion.span>
+      <div className={styles.cardBody}>
+        <h3 className={styles.cardTitle}>{step.title}</h3>
+        <p className={styles.cardDescription}>{step.description}</p>
+      </div>
+      {step.duration && (
+        <span className={styles.chip}>{step.duration}</span>
+      )}
+    </motion.article>
+  )
 }
 
 export function ProcessHorizontalSlider({ headline, description, steps }: ProcessHorizontalSliderProps) {
@@ -70,20 +140,17 @@ export function ProcessHorizontalSlider({ headline, description, steps }: Proces
           </div>
         </div>
 
-        {/* Bottom: overflowing card track — ref for measuring available width */}
+        {/* Bottom: overflowing card track */}
         <div ref={rightRef} className={styles.trackWrap}>
           <motion.div ref={trackRef} className={styles.track} style={{ x }}>
-            {steps.map((step) => (
-              <article key={step.number} className={styles.card}>
-                <span className={styles.cardNumber}>{String(step.number).padStart(2, '0')}</span>
-                <div className={styles.cardBody}>
-                  <h3 className={styles.cardTitle}>{step.title}</h3>
-                  <p className={styles.cardDescription}>{step.description}</p>
-                </div>
-                {step.duration && (
-                  <span className={styles.chip}>{step.duration}</span>
-                )}
-              </article>
+            {steps.map((step, i) => (
+              <StepCard
+                key={step.number}
+                step={step}
+                index={i}
+                total={steps.length}
+                progress={scrollYProgress}
+              />
             ))}
           </motion.div>
         </div>

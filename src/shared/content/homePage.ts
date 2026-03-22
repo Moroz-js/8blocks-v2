@@ -240,7 +240,7 @@ export const tokenomicsTestContent = {
     },
   ],
   ctaLabel: 'Открыть приложение',
-  ctaHref: '/app',
+  ctaHref: 'https://8blocks-token-lab.vercel.app/calculator',
 } as const
 
 export const servicesFaqContent = {

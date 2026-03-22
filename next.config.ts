@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
       { pathname: "/team/**" },
       { pathname: "/partners/**" },
       { pathname: "/icons/**" },
+      { pathname: "/img/**" },
       { pathname: "/api/media/file/**" },
     ],
   },

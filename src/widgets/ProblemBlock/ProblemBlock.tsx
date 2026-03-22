@@ -69,9 +69,7 @@ export function ProblemBlock({ variant, headline, description, items, cta }: Pro
         </div>
 
         <div className={gridClass}>
-          {items.map((item, i) => {
-            const Icon = icons[i]
-            return (
+          {items.map((item, i) => (
               <motion.article
                 key={i}
                 className={styles.card}
@@ -84,12 +82,8 @@ export function ProblemBlock({ variant, headline, description, items, cta }: Pro
                   <h3 className={styles.cardTitle}>{item.title}</h3>
                   <p className={styles.cardDescription}>{item.description}</p>
                 </div>
-                <div className={styles.cardIcon}>
-                  <Icon />
-                </div>
               </motion.article>
-            )
-          })}
+          ))}
         </div>
 
         {cta && (

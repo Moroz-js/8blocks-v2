@@ -43,7 +43,7 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: $space-10;
-  align-items: start;
+  align-items: stretch;
 
   @media (max-width: #{$bp-tablet}) {
     grid-template-columns: 240px 1fr;
@@ -61,7 +61,7 @@
 .tabList {
   display: flex;
   flex-direction: column;
-  gap: $space-1;
+  gap: 0;
   position: sticky;
   top: $space-8;
 
@@ -87,18 +87,19 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 44px;
-  padding: 0 $space-4;
+  flex: 1;
+  padding: 0 $space-5;
   border: none;
+  border-left: 2px solid transparent;
   border-radius: 0;
   background: transparent;
   font-family: $font-base;
   font-weight: 400;
-  font-size: $text-base;
+  font-size: $text-lg;
   color: $text-tertiary;
   cursor: pointer;
   text-align: left;
-  transition: color $transition-base, background $transition-base;
+  transition: color $transition-base, background $transition-base, border-color $transition-base;
   white-space: nowrap;
 
   &:hover:not(.tabActive) {
@@ -127,8 +128,10 @@
   background: $bg-secondary;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  border-left-color: $accent-pink-deep;
 
   @media (max-width: #{$bp-mobile}) {
+    border-left: none;
     border-color: $border-primary;
     background: $bg-tertiary;
   }

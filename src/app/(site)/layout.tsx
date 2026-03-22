@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { ColorSchemeScript, MantineProvider } from '@mantine/core'
+import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
 import '../globals.scss'
 import { Header } from '@/widgets/Header'
@@ -33,9 +33,7 @@ export const metadata: Metadata = {
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <head>
-        <ColorSchemeScript defaultColorScheme="dark" />
-      </head>
+      <head />
       <body suppressHydrationWarning>
         {/* Top edge blur */}
         <div

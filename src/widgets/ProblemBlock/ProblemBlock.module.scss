@@ -229,21 +229,19 @@
 // ─── Card icon ────────────────────────────────────────────────────────────────
 
 .cardIcon {
-  width: 100%;
   flex: 1 1 auto;
   min-height: 0;
   padding-top: $space-4;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.62);
   opacity: 0.85;
   transition:
     filter $transition-base,
     opacity $transition-base;
 
   svg {
-    width: 85%;
+    width: 80%;
     height: auto;
     max-height: 100%;
     transition: transform $transition-base;

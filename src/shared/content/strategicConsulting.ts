@@ -192,7 +192,7 @@ export const strategicConsultingContent = {
       },
       {
         label: 'invest',
-        title: 'Invest.',
+        title: 'Invest',
         bullets: [
           {
             title: 'Токеномика конфликтует с бизнес-моделью',
