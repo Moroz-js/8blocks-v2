@@ -12,6 +12,7 @@
     "payload": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts payload",
     "payload:migrate": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate",
     "payload:migrate:create": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate:create",
+    "payload:migrate:run": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs scripts/run-migrations.ts",
     "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs scripts/seed.ts",
     "seed:blog": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs scripts/seed-blog.ts"
   },
