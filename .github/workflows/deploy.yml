@@ -110,7 +110,7 @@ jobs:
 
             # ── run migrations ────────────────────────────
             echo "🗄️  Running Payload migrations"
-            cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
+            ./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
               node -r ./scripts/patch-next-env.cjs -r tsx/cjs \
               node_modules/payload/dist/bin/index.js migrate
             echo "✓ Migrations applied"
