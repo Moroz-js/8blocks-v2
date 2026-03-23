@@ -25,17 +25,13 @@
   font-family: $font-base;
   text-align: center;
   font-weight: 700;
-  font-size: clamp(60px, 14vw, 190px);
+  font-size: clamp(40px, 13.5vw, 160px);
   letter-spacing: -0.04em;
   line-height: 0.85;
   color: rgba(255, 255, 255, 1);
   white-space: nowrap;
   padding-inline: $container-padding;
   padding-block: clamp(16px, 3vw, 40px);
-
-  @media (max-width: 455px) {
-    font-size: 44px;
-  }
 }
 
 // Contact page variant: email fills the same watermark space
