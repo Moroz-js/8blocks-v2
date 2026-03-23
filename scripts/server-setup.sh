@@ -140,6 +140,16 @@ Host github.com
 SSHEOF
 chmod 600 /root/.ssh/config
 
+# Разрешаем GitHub Actions заходить на сервер этим же ключом
+touch /root/.ssh/authorized_keys
+chmod 600 /root/.ssh/authorized_keys
+if ! grep -qF "$(cat "${SSH_KEY_PATH}.pub")" /root/.ssh/authorized_keys 2>/dev/null; then
+  cat "${SSH_KEY_PATH}.pub" >> /root/.ssh/authorized_keys
+  success "Публичный ключ добавлен в authorized_keys (для GitHub Actions)"
+else
+  success "Ключ уже есть в authorized_keys"
+fi
+
 echo ""
 echo -e "${YELLOW}${BOLD}  ┌─────────────────────────────────────────────────────────┐${RESET}"
 echo -e "${YELLOW}${BOLD}  │  Добавь этот публичный ключ в GitHub как Deploy Key:     │${RESET}"
