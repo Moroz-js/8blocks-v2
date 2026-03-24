@@ -38,7 +38,7 @@ function CalendlyEmbed() {
     <div
       ref={containerRef}
       className="calendly-inline-widget"
-      data-url="https://calendly.com/x-method/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=a823d1"
+      data-url="https://calendly.com/care-8blocks/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=a10a63"
       style={{ minWidth: '320px', height: '680px' }}
     />
   )
