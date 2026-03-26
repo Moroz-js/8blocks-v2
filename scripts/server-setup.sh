@@ -58,9 +58,10 @@ SSH_KEY_PATH="/root/.ssh/id_ed25519_deploy"
 # ─────────────────────────────────────────────────────────────
 section "Параметры сервера"
 echo ""
-prompt LANG_CODE    "Язык деплоя (ru / en / ae ...)"  "ru"
-prompt PROJECT_NAME "Имя проекта (папка + PM2)"        "8blocks-${LANG_CODE}"
-prompt DOMAIN       "Домен сайта"                      "8blocks.ru"
+prompt LANG_CODE    "Метка сервера (ru / en / ae ...)"        "ru"
+prompt SITE_LANG    "Язык сайта NEXT_PUBLIC_LANG (ru / en)"  "ru"
+prompt PROJECT_NAME "Имя проекта (папка + PM2)"               "8blocks-${LANG_CODE}"
+prompt DOMAIN       "Домен сайта"                             "8blocks.ru"
 
 PROJECT_DIR="/var/www/${PROJECT_NAME}"
 PM2_APP_NAME="${PROJECT_NAME}"
@@ -272,7 +273,7 @@ SMTP_USER=${SMTP_USER}
 SMTP_PASSWORD=${SMTP_PASSWORD}
 SMTP_FROM=${SMTP_FROM}
 NEXT_PUBLIC_SITE_URL=${SITE_URL}
-NEXT_PUBLIC_LANG=${LANG_CODE}
+NEXT_PUBLIC_LANG=${SITE_LANG}
 NEXT_PUBLIC_GTM_ID=${GTM_ID}
 NEXT_PUBLIC_REPLAIN_ID=${REPLAIN_ID}
 NEXT_PUBLIC_CALENDLY_URL=${CALENDLY_URL}
@@ -302,7 +303,7 @@ success "Сборка завершена"
 
 # ─────────────────────────────────────────────────────────────
 section "Seed базы данных"
-if [ "${LANG_CODE}" = "ru" ]; then
+if [ "${SITE_LANG}" = "ru" ]; then
   SEED_CMD="seed"
 else
   SEED_CMD="seed:en"
