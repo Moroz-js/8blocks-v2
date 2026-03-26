@@ -4,6 +4,7 @@ import config from '@payload-config'
 import type { ArticleCard } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { ArticleCardUI } from '@/entities/article'
+import { t } from '@/shared/i18n'
 import styles from './BlogPreview.module.scss'
 
 async function getLatestArticles(): Promise<ArticleCard[]> {
@@ -53,14 +54,14 @@ export async function BlogPreview() {
       <div className={styles.inner}>
         <div className={styles.header}>
           <div className={styles.headerLeft}>
-            <span className={styles.label}>[ Блог ]</span>
+            <span className={styles.label}>[ {t({ ru: 'Блог', en: 'Blog' })} ]</span>
             <h2 className={styles.headline}>
-              Блог о токеномике
+              {t({ ru: 'Блог о токеномике', en: 'Blog on token economics' })}
             </h2>
           </div>
           <div className={styles.headerRight}>
             <Link href="/blog" className={styles.allLink}>
-              Все статьи
+              {t({ ru: 'Все статьи', en: 'All articles' })}
               <span className={styles.allArrow} aria-hidden="true">→</span>
             </Link>
           </div>

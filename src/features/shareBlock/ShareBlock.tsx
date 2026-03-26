@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { t } from '@/shared/i18n'
 import styles from './ShareBlock.module.scss'
 
 interface Props {
@@ -88,25 +89,25 @@ export function ShareBlock({ url, title }: Props) {
   const links = [
     {
       id: 'x',
-      label: 'Поделиться в X',
+      label: t({ ru: 'Поделиться в X', en: 'Share on X' }),
       href: `https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
       icon: <IconX />,
     },
     {
       id: 'facebook',
-      label: 'Поделиться в Facebook',
+      label: t({ ru: 'Поделиться в Facebook', en: 'Share on Facebook' }),
       href: `https://www.facebook.com/sharer/sharer.php?u=${encoded}`,
       icon: <IconFacebook />,
     },
     {
       id: 'telegram',
-      label: 'Поделиться в Telegram',
+      label: t({ ru: 'Поделиться в Telegram', en: 'Share on Telegram' }),
       href: `https://t.me/share/url?url=${encoded}&text=${encodedTitle}`,
       icon: <IconTelegram />,
     },
     {
       id: 'linkedin',
-      label: 'Поделиться в LinkedIn',
+      label: t({ ru: 'Поделиться в LinkedIn', en: 'Share on LinkedIn' }),
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`,
       icon: <IconLinkedIn />,
     },
@@ -114,13 +115,13 @@ export function ShareBlock({ url, title }: Props) {
 
   return (
     <div className={styles.root}>
-      <p className={styles.label}>Поделиться</p>
+      <p className={styles.label}>{t({ ru: 'Поделиться', en: 'Share' })}</p>
       <div className={styles.buttons}>
         <button
           className={`${styles.btn} ${copied ? styles.copied : ''}`}
           onClick={handleCopy}
-          aria-label="Копировать ссылку"
-          title="Копировать ссылку"
+          aria-label={t({ ru: 'Копировать ссылку', en: 'Copy link' })}
+          title={t({ ru: 'Копировать ссылку', en: 'Copy link' })}
         >
           {copied ? <IconCheck /> : <IconLink />}
         </button>

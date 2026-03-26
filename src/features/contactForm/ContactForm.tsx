@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { t } from '@/shared/i18n'
 import styles from './ContactForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -30,13 +31,13 @@ export function ContactForm() {
       const data = await res.json() as { success?: boolean; error?: string }
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || 'Не удалось отправить')
+        throw new Error(data.error || t({ ru: 'Не удалось отправить', en: 'Failed to send' }))
       }
 
       setStatus('success')
     } catch (err) {
       setStatus('error')
-      setErrorMsg(err instanceof Error ? err.message : 'Не удалось отправить')
+      setErrorMsg(err instanceof Error ? err.message : t({ ru: 'Не удалось отправить', en: 'Failed to send' }))
     }
   }
 
@@ -44,8 +45,8 @@ export function ContactForm() {
     return (
       <div className={styles.success} role="status" aria-live="polite">
         <div className={styles.successIcon} aria-hidden="true">✓</div>
-        <p className={styles.successTitle}>Сообщение отправлено</p>
-        <p className={styles.successBody}>Мы ответим в течение одного рабочего дня.</p>
+        <p className={styles.successTitle}>{t({ ru: 'Сообщение отправлено', en: 'Message sent' })}</p>
+        <p className={styles.successBody}>{t({ ru: 'Мы ответим в течение одного рабочего дня.', en: "We'll respond within one business day." })}</p>
       </div>
     )
   }
@@ -54,13 +55,13 @@ export function ContactForm() {
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="cf-name" className={styles.label}>Имя</label>
+          <label htmlFor="cf-name" className={styles.label}>{t({ ru: 'Имя', en: 'Name' })}</label>
           <input
             id="cf-name"
             name="name"
             type="text"
             className={styles.input}
-            placeholder="Иван Иванов"
+            placeholder={t({ ru: 'Иван Иванов', en: 'John Doe' })}
             required
             autoComplete="name"
           />
@@ -80,12 +81,12 @@ export function ContactForm() {
       </div>
 
       <div className={`${styles.field} ${styles.fieldGrow}`}>
-        <label htmlFor="cf-message" className={styles.label}>Сообщение</label>
+        <label htmlFor="cf-message" className={styles.label}>{t({ ru: 'Сообщение', en: 'Message' })}</label>
         <textarea
           id="cf-message"
           name="message"
           className={styles.textarea}
-          placeholder="Расскажите о проекте и что вы ищете"
+          placeholder={t({ ru: 'Расскажите о проекте и что вы ищете', en: 'Tell us about your project and what you are looking for' })}
           rows={4}
           required
         />
@@ -104,11 +105,11 @@ export function ContactForm() {
         {status === 'loading' ? (
           <>
             <span className={styles.spinner} aria-hidden="true" />
-            Отправка…
+            {t({ ru: 'Отправка…', en: 'Sending…' })}
           </>
         ) : (
           <>
-            Оставить заявку
+            {t({ ru: 'Оставить заявку', en: 'Submit request' })}
             <span className={styles.submitArrow} aria-hidden="true">→</span>
           </>
         )}

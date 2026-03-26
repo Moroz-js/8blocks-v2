@@ -39,16 +39,6 @@ prompt_secret() {
   eval "$var=\"$input\""
 }
 
-# prompt_multiline VAR "Question"
-prompt_multiline() {
-  local var="$1" msg="$2"
-  echo -e "  ${CYAN}?${RESET}  ${msg}"
-  echo -e "  ${DIM}  Вставь и нажми Enter, затем Ctrl+D:${RESET}"
-  local content
-  content=$(cat </dev/tty)
-  eval "$var=\"$content\""
-}
-
 [ "$(id -u)" -eq 0 ] || error "Запустите от root: sudo bash или под root"
 
 # ─────────────────────────────────────────────────────────────
@@ -62,42 +52,103 @@ echo ""
 REPO_SSH="git@github.com:Moroz-js/8blocks-v2.git"
 REPO_HTTPS="https://github.com/Moroz-js/8blocks-v2.git"
 DEPLOY_BRANCH="main"
-PROJECT_DIR="/var/www/site"
 NODE_VERSION="22"
-PM2_APP_NAME="site"
-DOMAIN_PUNYCODE="xn--80ajjgckgfd9a.xn--p1ai"
-DOMAIN_DISPLAY="токеномика.рф"
-DOMAIN_DEV_PUNYCODE="dev.xn--80ajjgckgfd9a.xn--p1ai"
-DOMAIN_DEV_DISPLAY="dev.токеномика.рф"
 SSH_KEY_PATH="/root/.ssh/id_ed25519_deploy"
 
 # ─────────────────────────────────────────────────────────────
-section "Переменные окружения"
+section "Параметры сервера"
 echo ""
-echo -e "  Заполни значения для ${BOLD}.env${RESET}. Пустой ввод = значение по умолчанию."
+prompt LANG_CODE    "Язык деплоя (ru / en / ae ...)"  "ru"
+prompt PROJECT_NAME "Имя проекта (папка + PM2)"        "8blocks-${LANG_CODE}"
+prompt DOMAIN       "Домен сайта"                      "8blocks.ru"
+
+PROJECT_DIR="/var/www/${PROJECT_NAME}"
+PM2_APP_NAME="${PROJECT_NAME}"
+
+# ─────────────────────────────────────────────────────────────
+section "Переменные окружения (.env)"
+echo ""
+echo -e "  Заполни значения. Пустой ввод = значение по умолчанию."
 echo ""
 
-prompt     DB_URI         "DATABASE_URI"            "postgresql://postgres:password@localhost:5432/site"
-prompt_secret PAYLOAD_SECRET "PAYLOAD_SECRET (случайная строка)"
-prompt     ADMIN_EMAIL    "ADMIN_EMAIL"              "hello@8blocks.io"
-prompt_secret ADMIN_PASSWORD "ADMIN_PASSWORD"
-prompt     SMTP_HOST      "SMTP_HOST"                "smtp.gmail.com"
-prompt     SMTP_PORT      "SMTP_PORT"                "587"
-prompt     SMTP_SECURE    "SMTP_SECURE (true/false)" "false"
-prompt     SMTP_USER      "SMTP_USER"                "hello@8blocks.io"
-prompt_secret SMTP_PASSWORD  "SMTP_PASSWORD"
-prompt     SMTP_FROM      "SMTP_FROM"                "hello@8blocks.io"
-prompt     SITE_URL       "NEXT_PUBLIC_SITE_URL"     "https://${DOMAIN_DISPLAY}"
-prompt     GTM_ID         "NEXT_PUBLIC_GTM_ID"       "GTM-KWVBDZ29"
+prompt        DB_URI          "DATABASE_URI"                        "postgresql://postgres:password@localhost:5432/${PROJECT_NAME}"
+prompt_secret PAYLOAD_SECRET  "PAYLOAD_SECRET (случайная строка)"
+prompt        ADMIN_EMAIL     "ADMIN_EMAIL"                         "admin@${DOMAIN}"
+prompt_secret ADMIN_PASSWORD  "ADMIN_PASSWORD"
+prompt        SMTP_HOST       "SMTP_HOST"                           "smtp.gmail.com"
+prompt        SMTP_PORT       "SMTP_PORT"                           "587"
+prompt        SMTP_SECURE     "SMTP_SECURE (true/false)"            "false"
+prompt        SMTP_USER       "SMTP_USER"                           "hello@${DOMAIN}"
+prompt_secret SMTP_PASSWORD   "SMTP_PASSWORD"
+prompt        SMTP_FROM       "SMTP_FROM"                           "hello@${DOMAIN}"
+prompt        SITE_URL        "NEXT_PUBLIC_SITE_URL"                "https://${DOMAIN}"
+prompt        GTM_ID          "NEXT_PUBLIC_GTM_ID (пусто = выкл)"  ""
+prompt        REPLAIN_ID      "NEXT_PUBLIC_REPLAIN_ID (пусто = выкл)" ""
+prompt        CALENDLY_URL    "NEXT_PUBLIC_CALENDLY_URL (пусто = дефолт по языку)" ""
 
 echo ""
-echo -e "${GREEN}  Переменные записаны.${RESET}"
+success "Переменные собраны."
 
 # ─────────────────────────────────────────────────────────────
 section "Системные пакеты"
 apt-get update -qq
 apt-get install -y -qq curl git build-essential nginx certbot python3-certbot-nginx ufw
 success "curl git nginx certbot ufw установлены"
+
+# ─────────────────────────────────────────────────────────────
+section "PostgreSQL"
+
+# Извлекаем компоненты из DATABASE_URI
+# postgresql://user:pass@host:port/dbname
+DB_USER=$(echo "${DB_URI}" | sed -E 's|postgresql://([^:]+):.*|\1|')
+DB_PASS=$(echo "${DB_URI}" | sed -E 's|postgresql://[^:]+:([^@]+)@.*|\1|')
+DB_HOST=$(echo "${DB_URI}" | sed -E 's|.*@([^:/]+)[:/].*|\1|')
+DB_PORT=$(echo "${DB_URI}" | sed -E 's|.*:([0-9]+)/.*|\1|')
+DB_NAME=$(echo "${DB_URI}" | sed -E 's|.*/([^?]+).*|\1|')
+
+if command -v psql &>/dev/null; then
+  success "PostgreSQL уже установлен ($(psql --version | head -1))"
+else
+  apt-get install -y -qq postgresql postgresql-contrib
+  systemctl enable postgresql
+  systemctl start postgresql
+  success "PostgreSQL установлен"
+fi
+
+# Создаём пользователя и БД если не существуют
+info "Настраиваю пользователя и базу данных..."
+sudo -u postgres psql -v ON_ERROR_STOP=0 << PGEOF
+DO \$\$
+BEGIN
+  IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '${DB_USER}') THEN
+    CREATE USER "${DB_USER}" WITH PASSWORD '${DB_PASS}';
+    RAISE NOTICE 'User ${DB_USER} created';
+  ELSE
+    ALTER USER "${DB_USER}" WITH PASSWORD '${DB_PASS}';
+    RAISE NOTICE 'User ${DB_USER} already exists, password updated';
+  END IF;
+END
+\$\$;
+
+SELECT 'CREATE DATABASE "${DB_NAME}" OWNER "${DB_USER}"'
+  WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = '${DB_NAME}')
+\gexec
+
+GRANT ALL PRIVILEGES ON DATABASE "${DB_NAME}" TO "${DB_USER}";
+PGEOF
+
+# Разрешаем подключение по паролю (md5) если хост локальный
+if [ "${DB_HOST}" = "localhost" ] || [ "${DB_HOST}" = "127.0.0.1" ]; then
+  PG_HBA=$(sudo -u postgres psql -t -c "SHOW hba_file;" | tr -d '[:space:]')
+  if ! grep -q "^host.*${DB_NAME}.*${DB_USER}" "${PG_HBA}" 2>/dev/null; then
+    echo "host    ${DB_NAME}    ${DB_USER}    127.0.0.1/32    md5" >> "${PG_HBA}"
+    echo "host    ${DB_NAME}    ${DB_USER}    ::1/128          md5" >> "${PG_HBA}"
+    systemctl reload postgresql
+    info "pg_hba.conf обновлён"
+  fi
+fi
+
+success "БД '${DB_NAME}' и пользователь '${DB_USER}' готовы"
 
 # ─────────────────────────────────────────────────────────────
 section "Node.js ${NODE_VERSION}.x"
@@ -123,13 +174,12 @@ fi
 section "Deploy key для GitHub"
 
 if [ ! -f "${SSH_KEY_PATH}" ]; then
-  ssh-keygen -t ed25519 -C "deploy@site" -f "${SSH_KEY_PATH}" -N "" -q
+  ssh-keygen -t ed25519 -C "deploy@${PROJECT_NAME}" -f "${SSH_KEY_PATH}" -N "" -q
   success "Ключ сгенерирован: ${SSH_KEY_PATH}"
 else
   success "Ключ уже существует: ${SSH_KEY_PATH}"
 fi
 
-# Настраиваем SSH config для использования этого ключа с GitHub
 mkdir -p /root/.ssh
 cat > /root/.ssh/config << 'SSHEOF'
 Host github.com
@@ -140,7 +190,6 @@ Host github.com
 SSHEOF
 chmod 600 /root/.ssh/config
 
-# Разрешаем GitHub Actions заходить на сервер этим же ключом
 touch /root/.ssh/authorized_keys
 chmod 600 /root/.ssh/authorized_keys
 if ! grep -qF "$(cat "${SSH_KEY_PATH}.pub")" /root/.ssh/authorized_keys 2>/dev/null; then
@@ -158,14 +207,13 @@ echo ""
 echo -e "${BOLD}$(cat "${SSH_KEY_PATH}.pub")${RESET}"
 echo ""
 echo -e "  Ссылка: ${CYAN}https://github.com/Moroz-js/8blocks-v2/settings/keys/new${RESET}"
-dim "  Title: deploy@site"
+dim "  Title: deploy@${PROJECT_NAME}"
 dim "  Allow write access: НЕТ (read-only)"
 echo ""
 echo -ne "  ${YELLOW}Нажми Enter после того как добавил ключ...${RESET} "
 read -r </dev/tty
 
 info "Проверяю доступ к GitHub..."
-# ssh -T всегда возвращает exit code 1, поэтому захватываем вывод и игнорируем код
 SSH_CHECK=$(ssh -T git@github.com </dev/null 2>&1) || true
 if echo "$SSH_CHECK" | grep -q "successfully authenticated"; then
   success "SSH доступ к GitHub работает"
@@ -189,7 +237,6 @@ if [ -d "${PROJECT_DIR}/.git" ]; then
   git -C "${PROJECT_DIR}" reset --hard "origin/${DEPLOY_BRANCH}"
   success "Репо обновлено"
 else
-  # Папка может существовать без .git (незавершённый предыдущий запуск)
   if [ -d "${PROJECT_DIR}" ]; then
     info "Папка существует без .git — очищаю"
     rm -rf "${PROJECT_DIR}"
@@ -202,9 +249,8 @@ else
     git clone --branch "${DEPLOY_BRANCH}" "${REPO_HTTPS}" "${PROJECT_DIR}" </dev/null
     git -C "${PROJECT_DIR}" remote set-url origin "${REPO_SSH}"
     success "Репо склонировано по HTTPS (remote → SSH)"
-    return 0 2>/dev/null || true
   }
-  success "Репо склонировано по SSH"
+  success "Репо склонировано"
 fi
 
 chmod -R 775 "${PROJECT_DIR}/public/uploads"
@@ -226,7 +272,10 @@ SMTP_USER=${SMTP_USER}
 SMTP_PASSWORD=${SMTP_PASSWORD}
 SMTP_FROM=${SMTP_FROM}
 NEXT_PUBLIC_SITE_URL=${SITE_URL}
+NEXT_PUBLIC_LANG=${LANG_CODE}
 NEXT_PUBLIC_GTM_ID=${GTM_ID}
+NEXT_PUBLIC_REPLAIN_ID=${REPLAIN_ID}
+NEXT_PUBLIC_CALENDLY_URL=${CALENDLY_URL}
 ENVEOF
 
 chmod 600 "${PROJECT_DIR}/.env"
@@ -240,20 +289,28 @@ success "npm ci завершён"
 
 # ─────────────────────────────────────────────────────────────
 section "Миграции базы данных"
-info "Проверяю подключение к PostgreSQL..."
-if node -e "
-const { Client } = require('pg'); // eslint-disable-line
-" 2>/dev/null || true; then : ; fi
-
-cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
-  node -r ./scripts/patch-next-env.cjs -r tsx/cjs \
-  node_modules/payload/dist/bin/index.js migrate && success "Миграции применены" \
+./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
+  node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs \
+  scripts/run-migrations.ts \
+  && success "Миграции применены" \
   || warn "Миграции не применены — запусти вручную: npm run payload:migrate"
 
 # ─────────────────────────────────────────────────────────────
 section "Сборка приложения"
 npm run build
 success "Сборка завершена"
+
+# ─────────────────────────────────────────────────────────────
+section "Seed базы данных"
+if [ "${LANG_CODE}" = "ru" ]; then
+  SEED_CMD="seed"
+else
+  SEED_CMD="seed:en"
+fi
+info "Запускаю npm run ${SEED_CMD}..."
+SEED_ALLOWED=true npm run "${SEED_CMD}" \
+  && success "Seed выполнен (${SEED_CMD})" \
+  || warn "Seed не выполнен — запусти вручную: npm run ${SEED_CMD}"
 
 # ─────────────────────────────────────────────────────────────
 section "PM2 — запуск приложения"
@@ -267,13 +324,13 @@ success "PM2 процесс '${PM2_APP_NAME}' запущен"
 
 # ─────────────────────────────────────────────────────────────
 section "Nginx"
-NGINX_CONF="/etc/nginx/sites-available/site"
+NGINX_CONF="/etc/nginx/sites-available/${PROJECT_NAME}"
 
 if [ ! -f "${NGINX_CONF}" ]; then
   cat > "${NGINX_CONF}" << NGINXEOF
 server {
     listen 80;
-    server_name ${DOMAIN_PUNYCODE} www.${DOMAIN_PUNYCODE} ${DOMAIN_DEV_PUNYCODE};
+    server_name ${DOMAIN} www.${DOMAIN};
 
     client_max_body_size 20M;
 
@@ -306,16 +363,16 @@ NGINXEOF
   ln -sf "${NGINX_CONF}" /etc/nginx/sites-enabled/
   rm -f /etc/nginx/sites-enabled/default 2>/dev/null || true
   nginx -t && systemctl reload nginx
-  success "Nginx настроен для ${DOMAIN_DISPLAY} + ${DOMAIN_DEV_DISPLAY}"
+  success "Nginx настроен для ${DOMAIN}"
 else
   success "Nginx конфиг уже существует"
 fi
 
 # ─────────────────────────────────────────────────────────────
 section "Firewall"
-ufw allow OpenSSH    2>/dev/null || true
+ufw allow OpenSSH      2>/dev/null || true
 ufw allow "Nginx Full" 2>/dev/null || true
-ufw --force enable   2>/dev/null || true
+ufw --force enable     2>/dev/null || true
 success "UFW: SSH + HTTP/HTTPS открыты"
 
 # ─────────────────────────────────────────────────────────────
@@ -335,28 +392,32 @@ echo -e "${GREEN}${BOLD}  Сервер настроен и приложение 
 echo ""
 echo -e "  ${BOLD}Следующие шаги:${RESET}"
 echo ""
-echo -e "  1. Настрой DNS: A-запись ${BOLD}${DOMAIN_DISPLAY}${RESET} → IP этого сервера"
-  echo -e "  2. Выпусти SSL:"
-  echo -e "     ${CYAN}certbot --nginx -d ${DOMAIN_PUNYCODE} -d www.${DOMAIN_PUNYCODE} -d ${DOMAIN_DEV_PUNYCODE}${RESET}"
+echo -e "  1. Настрой DNS: A-запись ${BOLD}${DOMAIN}${RESET} → IP этого сервера"
+echo -e "  2. Выпусти SSL:"
+echo -e "     ${CYAN}certbot --nginx -d ${DOMAIN} -d www.${DOMAIN}${RESET}"
 echo ""
 echo -e "  3. Добавь секреты в GitHub Actions"
 echo -e "     ${DIM}(Settings → Secrets → Actions):${RESET}"
 echo ""
-echo -e "     ${DIM}SSH_HOST${RESET}              = IP сервера"
-echo -e "     ${DIM}SSH_USER${RESET}              = root"
-echo -e "     ${DIM}SSH_PORT${RESET}              = 22"
-echo -e "     ${DIM}SSH_KEY${RESET}               = приватный ключ (см. ниже)"
-echo -e "     ${DIM}PROJECT_NAME${RESET}          = site"
-echo -e "     ${DIM}DOMAIN${RESET}                = ${DOMAIN_PUNYCODE}"
-echo -e "     ${DIM}DATABASE_URI${RESET}          = (как в .env)"
-echo -e "     ${DIM}PAYLOAD_SECRET${RESET}        = (как в .env)"
-echo -e "     ${DIM}ADMIN_EMAIL / PASSWORD${RESET} = (как в .env)"
-echo -e "     ${DIM}SMTP_*${RESET}                = (как в .env)"
-echo -e "     ${DIM}NEXT_PUBLIC_SITE_URL${RESET}  = (как в .env)"
-echo -e "     ${DIM}NEXT_PUBLIC_GTM_ID${RESET}    = (как в .env)"
-echo -e "     ${DIM}DEPLOY_MODE${RESET}           = soft"
+LANG_UPPER=$(echo "${LANG_CODE}" | tr '[:lower:]' '[:upper:]')
+echo -e "     ${DIM}DEPLOY_TARGETS${RESET}                    += ${LANG_CODE}"
+echo -e "     ${DIM}${LANG_UPPER}_SSH_HOST${RESET}                  = $(curl -s ifconfig.me 2>/dev/null || echo '<IP сервера>')"
+echo -e "     ${DIM}${LANG_UPPER}_SSH_USER${RESET}                  = root"
+echo -e "     ${DIM}${LANG_UPPER}_SSH_PORT${RESET}                  = 22"
+echo -e "     ${DIM}${LANG_UPPER}_SSH_KEY${RESET}                   = (приватный ключ — см. ниже)"
+echo -e "     ${DIM}${LANG_UPPER}_LANG${RESET}                      = ${LANG_CODE}"
+echo -e "     ${DIM}${LANG_UPPER}_PROJECT_NAME${RESET}              = ${PROJECT_NAME}"
+echo -e "     ${DIM}${LANG_UPPER}_DATABASE_URI${RESET}              = ${DB_URI}"
+echo -e "     ${DIM}${LANG_UPPER}_PAYLOAD_SECRET${RESET}            = (как в .env)"
+echo -e "     ${DIM}${LANG_UPPER}_ADMIN_EMAIL${RESET}               = ${ADMIN_EMAIL}"
+echo -e "     ${DIM}${LANG_UPPER}_ADMIN_PASSWORD${RESET}            = (как в .env)"
+echo -e "     ${DIM}${LANG_UPPER}_SMTP_*${RESET}                    = (как в .env)"
+echo -e "     ${DIM}${LANG_UPPER}_NEXT_PUBLIC_SITE_URL${RESET}      = ${SITE_URL}"
+echo -e "     ${DIM}${LANG_UPPER}_NEXT_PUBLIC_GTM_ID${RESET}        = ${GTM_ID}"
+echo -e "     ${DIM}${LANG_UPPER}_NEXT_PUBLIC_REPLAIN_ID${RESET}    = ${REPLAIN_ID}"
+echo -e "     ${DIM}${LANG_UPPER}_NEXT_PUBLIC_CALENDLY_URL${RESET}  = ${CALENDLY_URL}"
 echo ""
-echo -e "  4. Приватный ключ для ${BOLD}SSH_KEY${RESET} секрета:"
+echo -e "  4. Приватный ключ для ${BOLD}${LANG_UPPER}_SSH_KEY${RESET}:"
 echo ""
 echo -e "${DIM}$(cat "${SSH_KEY_PATH}")${RESET}"
 echo ""

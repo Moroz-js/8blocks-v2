@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { t } from '@/shared/i18n'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './SolutionBlock.module.scss'
 
@@ -141,12 +142,26 @@ type MapNode = {
 }
 
 const mapNodes: MapNode[] = [
-  { id: 'business',    lines: ['Бизнес-модель'],           cx: 95,  cy: 70,  w: 162, h: 40 },
-  { id: 'tokenomics',  lines: ['Токеномика'],              cx: 305, cy: 50,  w: 126, h: 40 },
-  { id: 'investment',  lines: ['Инвестиционная', 'упаковка'], cx: 440, cy: 168, w: 168, h: 52 },
-  { id: 'partners',    lines: ['Партнерская', 'экосистема'],  cx: 378, cy: 298, w: 168, h: 52 },
-  { id: 'tge',         lines: ['Подготовка', 'к TGE'],     cx: 196, cy: 330, w: 144, h: 52 },
-  { id: 'launch',      lines: ['Запуск'],                  cx: 70,  cy: 224, w: 104, h: 40 },
+  { id: 'business', cx: 95, cy: 70, w: 162, h: 40, lines: [t({ ru: 'Бизнес-модель', en: 'Business model' })] },
+  { id: 'tokenomics', cx: 305, cy: 50, w: 126, h: 40, lines: [t({ ru: 'Токеномика', en: 'Tokenomics' })] },
+  {
+    id: 'investment',
+    cx: 440,
+    cy: 168,
+    w: 168,
+    h: 52,
+    lines: [t({ ru: 'Инвестиционная', en: 'Investment' }), t({ ru: 'упаковка', en: 'packaging' })],
+  },
+  {
+    id: 'partners',
+    cx: 378,
+    cy: 298,
+    w: 168,
+    h: 52,
+    lines: [t({ ru: 'Партнерская', en: 'Partner' }), t({ ru: 'экосистема', en: 'ecosystem' })],
+  },
+  { id: 'tge', cx: 196, cy: 330, w: 144, h: 52, lines: [t({ ru: 'Подготовка', en: 'TGE' }), t({ ru: 'к TGE', en: 'readiness' })] },
+  { id: 'launch', cx: 70, cy: 224, w: 104, h: 40, lines: [t({ ru: 'Запуск', en: 'Launch' })] },
 ]
 
 // Main flow paths: N1→N2→N3→N4→N5→N6
@@ -265,7 +280,7 @@ function ConsultingMap() {
 export function SolutionBlock({ headline, description, variant, items }: SolutionBlockProps) {
   if (variant === 'tokenomics') {
     return (
-      <section className={styles.section} aria-label="Решение">
+      <section className={styles.section} aria-label={t({ ru: 'Решение', en: 'Solution' })}>
         <div className={styles.inner}>
           <motion.div
             className={styles.headerCenter}
@@ -308,7 +323,7 @@ export function SolutionBlock({ headline, description, variant, items }: Solutio
 
   if (variant === 'audit') {
     return (
-      <section className={styles.section} aria-label="Когда нужен аудит">
+      <section className={styles.section} aria-label={t({ ru: 'Когда нужен аудит', en: 'When an audit is needed' })}>
         <div className={styles.inner}>
           <div className={styles.auditSplit}>
 
@@ -353,7 +368,7 @@ export function SolutionBlock({ headline, description, variant, items }: Solutio
 
   // consulting
   return (
-    <section className={styles.section} aria-label="Решение">
+    <section className={styles.section} aria-label={t({ ru: 'Решение', en: 'Solution' })}>
       <div className={styles.inner}>
         <div className={styles.consultingLayout}>
           <motion.div

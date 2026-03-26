@@ -4,6 +4,7 @@ import { useRef, useCallback } from 'react'
 import { usePathname } from 'next/navigation'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 import { siteConfig } from '@/shared/config/site'
+import { lang } from '@/shared/i18n'
 import styles from './Footer.module.scss'
 
 export function FooterWatermark() {
@@ -27,11 +28,11 @@ export function FooterWatermark() {
   return (
     <div ref={ref} className={styles.watermarkSection} aria-hidden={!isContact}>
       <motion.div
-        className={`${styles.watermarkText} ${isContact ? styles.watermarkEmail : ''}`}
+        className={`${styles.watermarkText} ${isContact ? styles.watermarkEmail : ''} ${lang === 'en' && !isContact ? styles.watermarkEnglish : ''}`}
         style={{ y, cursor: isContact ? 'pointer' : undefined, userSelect: isContact ? 'text' : 'none' }}
         onClick={handleClick}
       >
-        {isContact ? siteConfig.email : 'ТОКЕНОМИКА'}
+        {isContact ? siteConfig.email : '8BLOCKS'}
       </motion.div>
     </div>
   )

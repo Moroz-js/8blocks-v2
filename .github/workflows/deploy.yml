@@ -1,9 +1,6 @@
 name: Deploy to Production
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       deploy_mode:
@@ -25,7 +22,6 @@ jobs:
         uses: appleboy/ssh-action@v1.0.0
         env:
           PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
-          DOMAIN: ${{ secrets.DOMAIN }}
           DATABASE_URI: ${{ secrets.DATABASE_URI }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
@@ -45,7 +41,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT || 22 }}
           command_timeout: 25m
-          envs: PROJECT_NAME,DOMAIN,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,DEPLOY_MODE
+          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,DEPLOY_MODE
           script: |
             set -euo pipefail
 
@@ -64,7 +60,6 @@ jobs:
 
             # ── pre-flight ────────────────────────────────
             [ -n "${PROJECT_NAME:-}" ] || { echo "❌ PROJECT_NAME not set"; exit 1; }
-            [ -n "${DOMAIN:-}" ]       || { echo "❌ DOMAIN not set"; exit 1; }
             [ -d "${PROJECT_DIR}" ]    || { echo "❌ Project dir not found: ${PROJECT_DIR}"; exit 1; }
             command -v node &>/dev/null || { echo "❌ Node.js not found"; exit 1; }
             command -v npm &>/dev/null  || { echo "❌ npm not found"; exit 1; }
@@ -157,5 +152,4 @@ jobs:
             pm2 list
             echo ""
             echo "✅ Deployment done  |  mode: ${DEPLOY_MODE}"
-            echo "🌐 https://${DOMAIN}"
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

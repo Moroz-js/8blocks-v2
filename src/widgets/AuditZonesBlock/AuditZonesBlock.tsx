@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { t } from '@/shared/i18n'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './AuditZonesBlock.module.scss'
 
@@ -123,28 +124,43 @@ function ConnectingLines() {
 
 const ZONES = [
   {
-    title: 'Текущая структура токеномики',
-    description: 'Проверяем эмиссию, utility, вестинг, распределение пулов и экономические взаимосвязи.',
+    title: t({ ru: 'Текущая структура токеномики', en: 'Current tokenomics structure' }),
+    description: t({
+      ru: 'Проверяем эмиссию, utility, вестинг, распределение пулов и экономические взаимосвязи.',
+      en: 'We check emission, utility, vesting, pool distribution, and economic relationships within the model.',
+    }),
     Icon: IconTokenMap,
   },
   {
-    title: 'Расчёты, прогнозы и сценарии',
-    description: 'Пересматриваем формулы, допущения и ключевые сценарии, чтобы выявить ошибки.',
+    title: t({ ru: 'Расчёты, прогнозы и сценарии', en: 'Calculations, forecasts, and scenarios' }),
+    description: t({
+      ru: 'Пересматриваем формулы, допущения и ключевые сценарии, чтобы выявить ошибки.',
+      en: 'We review formulas, assumptions, and key scenarios to identify errors and weaknesses.',
+    }),
     Icon: IconScenarios,
   },
   {
-    title: 'Связь модели с целями проекта',
-    description: 'Смотрим, насколько токеномика соответствует логике продукта и задачам бизнеса.',
+    title: t({ ru: 'Связь модели с целями проекта', en: "Model's connection to project goals" }),
+    description: t({
+      ru: 'Смотрим, насколько токеномика соответствует логике продукта и задачам бизнеса.',
+      en: 'We assess how well the tokenomics aligns with product logic, metrics, and current business objectives.',
+    }),
     Icon: IconLinkedTarget,
   },
   {
-    title: 'Рынок и конкуренты',
-    description: 'Сравниваем модель с лучшими практиками и смотрим, где она уступает, а где даёт преимущество.',
+    title: t({ ru: 'Рынок и конкуренты', en: 'Market and competitors' }),
+    description: t({
+      ru: 'Сравниваем модель с лучшими практиками и смотрим, где она уступает, а где даёт преимущество.',
+      en: 'We compare the model with best practices and see where it falls short of the market and where it gives the project an advantage.',
+    }),
     Icon: IconBenchmark,
   },
   {
-    title: 'Критичные бизнес-процессы',
-    description: 'Разбираем детали с CEO, CTO, CFO, чтобы увидеть риски, невидимые только по документам.',
+    title: t({ ru: 'Критичные бизнес-процессы', en: 'Critical business processes' }),
+    description: t({
+      ru: 'Разбираем детали с CEO, CTO, CFO, чтобы увидеть риски, невидимые только по документам.',
+      en: "We analyze details together with the CEO, CTO, CFO, and other process owners to see risks that aren't visible from documents alone.",
+    }),
     Icon: IconProcessChain,
   },
 ]
@@ -159,7 +175,7 @@ interface AuditZonesBlockProps {
 
 export function AuditZonesBlock({ label, headline, description }: AuditZonesBlockProps) {
   return (
-    <section className={styles.section} aria-label="Что мы проверяем">
+    <section className={styles.section} aria-label={t({ ru: 'Что мы проверяем', en: 'What we check' })}>
       <div className={styles.inner}>
         <motion.div
           className={styles.header}

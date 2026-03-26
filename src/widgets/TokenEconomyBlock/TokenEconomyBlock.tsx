@@ -3,6 +3,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { tokenEconomyContent } from '@/shared/content/homePage'
+import { t } from '@/shared/i18n'
 import styles from './TokenEconomyBlock.module.scss'
 
 const ease = 'easeOut' as const
@@ -27,7 +28,7 @@ export function TokenEconomyBlock() {
   const { headline, accentWords, description, cards } = tokenEconomyContent
 
   return (
-    <section className={styles.section} aria-label="Токен-экономика">
+    <section className={styles.section} aria-label={t({ ru: 'Токен-экономика', en: 'Token economy' })}>
       <div className={styles.inner}>
         <motion.div
           className={styles.header}

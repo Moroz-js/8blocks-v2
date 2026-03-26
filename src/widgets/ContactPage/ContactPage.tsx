@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import { ContactForm } from '@/features/contactForm/ContactForm'
 import { siteConfig, socialLinks } from '@/shared/config/site'
+import { lang, t } from '@/shared/i18n'
 import styles from './ContactPage.module.scss'
 
 const ease = 'easeOut' as const
@@ -34,11 +35,17 @@ function CalendlyEmbed() {
     }
   }, [])
 
+  const calendlyUrl =
+    process.env.NEXT_PUBLIC_CALENDLY_URL ||
+    (lang === 'en'
+      ? 'https://calendly.com/care-8blocks/intro?primary_color=ad0462'
+      : 'https://calendly.com/care-8blocks/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=a10a63')
+
   return (
     <div
       ref={containerRef}
       className="calendly-inline-widget"
-      data-url="https://calendly.com/care-8blocks/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=a10a63"
+      data-url={calendlyUrl}
       style={{ minWidth: '320px', height: '680px' }}
     />
   )
@@ -50,7 +57,7 @@ export function ContactPage() {
   return (
     <>
       {/* ── 1. Hero: avatar + form ────────────────────────────────── */}
-      <section className={styles.hero} aria-label="Контакты">
+      <section className={styles.hero} aria-label={t({ ru: 'Контакты', en: 'Contact' })}>
         <div className={styles.heroInner}>
           <div className={styles.heroGrid}>
 
@@ -61,27 +68,29 @@ export function ContactPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease, delay: 0.05 }}
             >
-              <span className={styles.label}>Контакты</span>
+              <span className={styles.label}>{t({ ru: 'Контакты', en: 'Contact' })}</span>
 
-              <h1 className={styles.heroHeadline}>Обсудим ваш проект</h1>
+              <h1 className={styles.heroHeadline}>{t({ ru: 'Обсудим ваш проект', en: "Let's discuss your project" })}</h1>
 
               <p className={styles.heroDescription}>
-                Пишите по вопросам стратегического консалтинга, токеномики и аудита.
-                Если удобнее, сразу выберите слот для звонка.
+                {t({
+                  ru: 'Пишите по вопросам стратегического консалтинга, токеномики и аудита. Если удобнее, сразу выберите слот для звонка.',
+                  en: 'Reach out about strategic consulting, tokenomics, and audit. If convenient, book a call slot right away.',
+                })}
               </p>
 
               <div className={styles.personCard}>
                 <div className={styles.personAvatar}>
                   <Image
                     src="/team/team-3.png"
-                    alt="Оксана"
+                    alt={t({ ru: 'Оксана', en: 'Oksana' })}
                     width={72}
                     height={72}
                     className={styles.personImg}
                   />
                 </div>
                 <div className={styles.personInfo}>
-                  <p className={styles.personName}>Оксана</p>
+                  <p className={styles.personName}>{t({ ru: 'Оксана', en: 'Oksana' })}</p>
                   <p className={styles.personRole}>COO</p>
                   <a
                     href="https://t.me/Eight_Blocks"
@@ -95,7 +104,7 @@ export function ContactPage() {
               </div>
 
               <div className={styles.preferEmail}>
-                <p className={styles.preferLabel}>Предпочитаете почту?</p>
+                <p className={styles.preferLabel}>{t({ ru: 'Предпочитаете почту?', en: 'Prefer email?' })}</p>
                 <a href={`mailto:${siteConfig.email}`} className={styles.preferValue}>
                   {siteConfig.email}
                 </a>
@@ -117,7 +126,7 @@ export function ContactPage() {
       </section>
 
       {/* ── 2. Secondary contacts ─────────────────────────────────── */}
-      <section className={styles.contactsSection} aria-label="Контактная информация">
+      <section className={styles.contactsSection} aria-label={t({ ru: 'Контактная информация', en: 'Contact details' })}>
         <div className={styles.contactsInner}>
           <motion.div
             className={styles.contactCol}
@@ -126,7 +135,7 @@ export function ContactPage() {
             viewport={{ once: true, margin: '-30px' }}
             transition={{ duration: 0.5, ease, delay: 0 }}
           >
-            <p className={styles.contactColLabel}>Соцсети</p>
+            <p className={styles.contactColLabel}>{t({ ru: 'Соцсети', en: 'Socials' })}</p>
             <div className={styles.socialList}>
               {socialLinks.map((link) => (
                 <a
@@ -149,7 +158,7 @@ export function ContactPage() {
             viewport={{ once: true, margin: '-30px' }}
             transition={{ duration: 0.5, ease, delay: 0.08 }}
           >
-            <p className={styles.contactColLabel}>Адрес</p>
+            <p className={styles.contactColLabel}>{t({ ru: 'Адрес', en: 'Address' })}</p>
             <a
               href={siteConfig.addressUrl}
               className={styles.contactValue}
@@ -167,7 +176,7 @@ export function ContactPage() {
             viewport={{ once: true, margin: '-30px' }}
             transition={{ duration: 0.5, ease, delay: 0.16 }}
           >
-            <p className={styles.contactColLabel}>Телефон</p>
+            <p className={styles.contactColLabel}>{t({ ru: 'Телефон', en: 'Phone' })}</p>
             <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`} className={styles.contactValue}>
               {siteConfig.phone}
             </a>
@@ -176,7 +185,7 @@ export function ContactPage() {
       </section>
 
       {/* ── 3. Calendly ───────────────────────────────────────────── */}
-      <section id="calendly" className={styles.calendlySection} aria-label="Забронировать звонок">
+      <section id="calendly" className={styles.calendlySection} aria-label={t({ ru: 'Забронировать звонок', en: 'Book a call' })}>
         <div className={styles.calendlyInner}>
           <motion.div
             className={styles.calendlyLeft}
@@ -185,15 +194,18 @@ export function ContactPage() {
             viewport={{ once: true, margin: '-40px' }}
             transition={{ duration: 0.55, ease }}
           >
-            <ScrollRevealText text="Забронировать звонок" className={styles.calendlyHeadline} />
+            <ScrollRevealText text={t({ ru: 'Забронировать звонок', en: 'Book a call' })} className={styles.calendlyHeadline} />
             <ScrollRevealText
-              text="Выберите удобное время, и мы обсудим задачу, контекст проекта и возможный формат работы."
+              text={t({
+                ru: 'Выберите удобное время, и мы обсудим задачу, контекст проекта и возможный формат работы.',
+                en: 'Choose a convenient time and we will discuss your task, project context, and possible engagement format.',
+              })}
               className={styles.calendlyDescription}
             />
             <ul className={styles.calendlyList}>
-              <li>Стратегический консалтинг</li>
-              <li>Разработка токеномики</li>
-              <li>Аудит текущей модели</li>
+              <li>{t({ ru: 'Стратегический консалтинг', en: 'Strategic consulting' })}</li>
+              <li>{t({ ru: 'Разработка токеномики', en: 'Tokenomics design' })}</li>
+              <li>{t({ ru: 'Аудит текущей модели', en: 'Current model audit' })}</li>
             </ul>
           </motion.div>
 

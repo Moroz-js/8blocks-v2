@@ -1,7 +1,11 @@
 // Tokenomics service page — single source of truth
 // Content from requirements.md §5.3
+import { t } from '@/shared/i18n'
 
-export const tokenomicsContent = {
+const localize = <TRu, TEn>(ru: TRu, en: TEn) =>
+  t({ ru, en } as { ru: TRu | TEn; en: TRu | TEn }) as TRu | TEn
+
+const ruObject = {
   hero: {
     label: 'Токеномика',
     headline: 'Токеномика',
@@ -232,3 +236,237 @@ export const tokenomicsContent = {
     ctaHref: '/contact',
   },
 } as const
+
+const enObject = {
+  hero: {
+    label: 'Tokenomics',
+    headline: 'Tokenomics',
+    description:
+      'We design token economic models for projects that need to connect business mechanics, stakeholders, and technical processes into one coherent system.',
+    ctaLabel: 'Book a consultation',
+    ctaHref: '/contact',
+  },
+  problem: {
+    headline: 'Why most tokenomics models fail after launch',
+    description:
+      'Because a polished white paper chart does not guarantee that the token creates value, sustains demand, or supports your project economy.',
+    items: [
+      {
+        title: 'Token is disconnected from the product',
+        description: 'It creates no real value inside the ecosystem.',
+      },
+      {
+        title: 'Demand is not supported by mechanics',
+        description: 'Users buy the product while the token gets sold off.',
+      },
+      {
+        title: 'Fast distribution kills the token',
+        description: 'Investors rarely wait for long.',
+      },
+      {
+        title: 'Distribution alone is not enough',
+        description: 'It is unclear why anyone should buy the token.',
+      },
+    ],
+  },
+  solution: {
+    headline: 'We design not just a token, but your project economic architecture',
+    description:
+      'We build tokenomics across product design, user journeys, treasury logic, financial flows, and technical processes so the model works in your real economy.',
+    variant: 'tokenomics' as const,
+    items: [
+      {
+        id: 'deep-dive',
+        label: 'Deep product immersion',
+        description:
+          'We analyze not just the token itself but also your business model, stakeholder roles, and usage scenarios.',
+      },
+      {
+        id: 'flows',
+        label: 'Ecosystem flow design',
+        description:
+          'We design token movement between product modules, users, guilds, and treasury.',
+      },
+      {
+        id: 'finance-tech',
+        label: 'Financial and technical alignment',
+        description:
+          'We connect tokenomics to on-chain logic and internal system rules.',
+      },
+      {
+        id: 'adaptive',
+        label: 'Market-adaptive model',
+        description:
+          'We build scenarios that can handle volatility and ecosystem growth.',
+      },
+    ],
+  },
+  deliverables: {
+    label: 'What your tokenomics includes',
+    headline:
+      'The outcome is not just a document, but a complete token economic model required for token sale launch, fundraising, strategic partnerships, and long-term project growth.',
+    items: [
+      {
+        title: 'Optimal issuance',
+        description:
+          'We define how the token enters the system: mining, purchase, or algorithmic distribution.',
+      },
+      {
+        title: 'Release mechanics',
+        description:
+          'We calculate volumes for sale, rewards, incentives, and other ecosystem needs.',
+      },
+      {
+        title: 'Allocation framework',
+        description:
+          'We split tokens into pools, define lock periods, and set release schedules by stakeholder category.',
+      },
+      {
+        title: 'Pools, lockups, and vesting',
+        description:
+          'We design token usage, treasury accumulation, redistribution, and recirculation logic.',
+      },
+      {
+        title: 'Closed-loop ecosystem',
+        description:
+          'We include safeguards against manipulation, large sell-offs, and scenarios that can quickly collapse price.',
+      },
+      {
+        title: 'Treasury, reserves, and hedging',
+        description:
+          'We design credit pools, derivatives, deflationary mechanics, and NFT/service/subscription layers that transfer value back to the ecosystem.',
+      },
+      {
+        title: 'Financial and utility mechanics',
+        description:
+          'We connect tokenomics to on-chain/off-chain logic, liquidity strategy, and internal system rules.',
+      },
+      {
+        title: 'White paper visualization',
+        description:
+          'We prepare diagrams, charts, and tables to embed tokenomics clearly into project documentation.',
+      },
+    ],
+  },
+  process: {
+    headline: 'How we work',
+    steps: [
+      {
+        number: 1,
+        title: 'Project immersion',
+        description:
+          'We review your materials, goals, and context to understand product logic and project priorities.',
+      },
+      {
+        number: 2,
+        title: 'Benchmarking',
+        description: 'We analyze competitor tokenomics, compare models, and extract strong patterns.',
+      },
+      {
+        number: 3,
+        title: 'Team workshops',
+        description:
+          'We run collaborative sessions to capture product nuance and build a robust model together.',
+      },
+      {
+        number: 4,
+        title: 'Token usage rules',
+        description:
+          'We define utility mechanics, holder rights, and vesting conditions across the ecosystem.',
+      },
+      {
+        number: 5,
+        title: 'Ecosystem architecture',
+        description: 'We connect the token to product flows, interfaces, and technical logic.',
+      },
+      {
+        number: 6,
+        title: 'Token flow design',
+        description: 'We build token flow scenarios across all ecosystem components.',
+      },
+      {
+        number: 7,
+        title: 'Token sale planning',
+        description: 'We define round count, sale format, timeline, and average ticket size.',
+      },
+      {
+        number: 8,
+        title: 'Model adaptation',
+        description: 'We test additional mechanics as your project evolves.',
+      },
+      {
+        number: 9,
+        title: 'Finalization and defense',
+        description:
+          'We finalize the tokenomics, prepare the presentation, and defend the model with your team.',
+      },
+    ],
+  },
+  faq: {
+    headline: 'FAQ',
+    items: [
+      {
+        question: 'Can we come to you with an existing tokenomics draft?',
+        answer:
+          'Yes. If you already have calculations, a white paper, a product deck, or a draft model, we do not restart from zero without reason. We first assess what can be retained, what needs refinement, and what should be rebuilt for a cohesive system.',
+      },
+      {
+        question: 'When do we need an audit instead of tokenomics development?',
+        answer:
+          'If your model is already built and you need to validate risks, assumptions, and weak points, you need an audit. If the model is still incomplete or requires deep restructuring, development is the right format.',
+      },
+      {
+        question: 'What do you need from us at kickoff?',
+        answer:
+          'Everything you already have: white paper, product deck, roadmap, token/NFT description, round data, team-pool structure, and related working files. Even partial documents are enough to start.',
+      },
+      {
+        question: 'Do you work only with utility tokens, or also with NFTs?',
+        answer:
+          'Not only utility tokens. We also work with NFT-based and hybrid structures when the asset is embedded in product economics and ecosystem logic.',
+      },
+      {
+        question: 'Is token sale logic included?',
+        answer:
+          'Yes. We design round structure, sale format, timing, and average ticket so tokenomics is aligned with go-to-market execution.',
+      },
+      {
+        question: 'Is modeling included in this scope?',
+        answer:
+          'No. Modeling is a separate service delivered either as Monte Carlo simulation in Python or visual simulation in Machinations.',
+      },
+      {
+        question: 'What is not included in tokenomics development?',
+        answer:
+          'This scope excludes legal services, smart contract development, marketing production, and contractor-side technical implementation. If needed, we can involve focused sessions with lawyers, market makers, and other specialists.',
+      },
+      {
+        question: 'How long does the work usually take?',
+        answer:
+          'Tokenomics development usually takes 3 to 7 weeks depending on model complexity, material quality, communication speed, and expected depth.',
+      },
+      {
+        question: 'Can the process be accelerated if timing is critical?',
+        answer:
+          'Yes, in selected cases. Speed depends on how quickly your team provides inputs, approves decisions, and moves through stages with us.',
+      },
+      {
+        question: 'Can tokenomics be updated later if the product changes?',
+        answer:
+          'Yes. As new mechanics, user scenarios, or product lines appear, the model can be adapted and scaled further. This is especially important for projects that evolve rapidly.',
+      },
+      {
+        question: 'What exactly do we receive in the end?',
+        answer:
+          'You get a complete economic model, not just token text. It supports token sale, fundraising, strategic partnerships, and ecosystem growth, including issuance, release, allocation, vesting, treasury, safeguards, and white paper visualization.',
+      },
+    ],
+  },
+  cta: {
+    headline: 'A token does not need a bear market to fail. Bad tokenomics is enough.',
+    ctaLabel: 'Book a consultation',
+    ctaHref: '/contact',
+  },
+} as const
+
+export const tokenomicsContent = localize(ruObject, enObject)

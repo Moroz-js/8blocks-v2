@@ -2,20 +2,69 @@
 
 import { useCallback, useRef } from 'react'
 import { motion } from 'framer-motion'
+import { t } from '@/shared/i18n'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './TokenomicsCompositionBlock.module.scss'
 
 const ease = 'easeOut' as const
 
 const ITEMS = [
-  { title: 'Оптимальная эмиссия', description: 'Определяем, как токен появляется в системе: через майнинг, покупку или алгоритмическое распределение.' },
-  { title: 'Механика выпуска', description: 'Объёмы на продажу, вознаграждения, поощрения и задачи экосистемы.' },
-  { title: 'Фонд распределения', description: 'Делим токены по пулам, задаём сроки заморозки и график раздачи.' },
-  { title: 'Пулы, заморозки и вестинг', description: 'Логика применения токенов, накопления во внутренних фондах и повторного вывода.' },
-  { title: 'Замкнутая экосистема', description: 'Механизмы против манипуляций, крупных продаж и сценариев, которые могут быстро обнулить цену.' },
-  { title: 'Treasury, резервы и хеджирование', description: 'Кредитные пулы, деривативы, дефляционные механики и NFT-инструменты.' },
-  { title: 'Финансовые и utility-механики', description: 'Связываем токеномику с on-chain/off-chain логикой, ликвидностью и правилами системы.' },
-  { title: 'Визуализация для white paper', description: 'Диаграммы, графики и таблицы для документации проекта.' },
+  {
+    title: t({ ru: 'Оптимальная эмиссия', en: 'Optimal issuance' }),
+    description: t({
+      ru: 'Определяем, как токен появляется в системе: через майнинг, покупку или алгоритмическое распределение.',
+      en: 'Define how tokens enter the system: mining, purchase, or algorithmic distribution.',
+    }),
+  },
+  {
+    title: t({ ru: 'Механика выпуска', en: 'Release mechanics' }),
+    description: t({
+      ru: 'Объёмы на продажу, вознаграждения, поощрения и задачи экосистемы.',
+      en: 'Allocate volumes across sales, rewards, incentives, and ecosystem goals.',
+    }),
+  },
+  {
+    title: t({ ru: 'Фонд распределения', en: 'Allocation framework' }),
+    description: t({
+      ru: 'Делим токены по пулам, задаём сроки заморозки и график раздачи.',
+      en: 'Split tokens into pools and define lock periods and release schedules.',
+    }),
+  },
+  {
+    title: t({ ru: 'Пулы, заморозки и вестинг', en: 'Pools, lockups, and vesting' }),
+    description: t({
+      ru: 'Логика применения токенов, накопления во внутренних фондах и повторного вывода.',
+      en: 'Design token utility, internal treasury accumulation, and recirculation logic.',
+    }),
+  },
+  {
+    title: t({ ru: 'Замкнутая экосистема', en: 'Closed-loop ecosystem' }),
+    description: t({
+      ru: 'Механизмы против манипуляций, крупных продаж и сценариев, которые могут быстро обнулить цену.',
+      en: 'Build safeguards against manipulation, large dumps, and scenarios that can rapidly collapse price.',
+    }),
+  },
+  {
+    title: t({ ru: 'Treasury, резервы и хеджирование', en: 'Treasury, reserves, and hedging' }),
+    description: t({
+      ru: 'Кредитные пулы, деривативы, дефляционные механики и NFT-инструменты.',
+      en: 'Cover lending pools, derivatives, deflationary mechanisms, and NFT utilities.',
+    }),
+  },
+  {
+    title: t({ ru: 'Финансовые и utility-механики', en: 'Financial and utility mechanics' }),
+    description: t({
+      ru: 'Связываем токеномику с on-chain/off-chain логикой, ликвидностью и правилами системы.',
+      en: 'Align tokenomics with on-chain/off-chain logic, liquidity, and system rules.',
+    }),
+  },
+  {
+    title: t({ ru: 'Визуализация для white paper', en: 'White paper visualization' }),
+    description: t({
+      ru: 'Диаграммы, графики и таблицы для документации проекта.',
+      en: 'Prepare diagrams, charts, and tables for project documentation.',
+    }),
+  },
 ]
 
 type Dir = 'top' | 'right' | 'bottom' | 'left'
@@ -88,7 +137,7 @@ export function TokenomicsCompositionBlock({
   description,
 }: TokenomicsCompositionBlockProps) {
   return (
-    <section className={styles.section} aria-label="Состав токеномики">
+    <section className={styles.section} aria-label={t({ ru: 'Состав токеномики', en: 'Tokenomics structure' })}>
       <div className={styles.inner}>
         <motion.div
           className={styles.header}

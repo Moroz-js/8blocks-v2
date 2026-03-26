@@ -1,7 +1,10 @@
 // All homepage content — single source of truth (per 15-content-plan.md)
 // Edit text here; never scatter copy across components
+import { t } from '@/shared/i18n'
 
-export const heroContent = {
+const localize = <T>(ru: T, en?: T) => t({ ru, en: en ?? ru })
+
+export const heroContent = localize({
   label: 'Токеномика',
   headlineLine1: 'Токен-экономики',
   headlineLine2: 'которые усиливают',
@@ -17,9 +20,25 @@ export const heroContent = {
     label: 'Обсудить проект',
     href: '/contact',
   },
-} as const
+} as const, {
+  label: 'Tokenomics',
+  headlineLine1: 'Token economies',
+  headlineLine2: 'that power',
+  headlineLine3: 'the business',
+  description:
+    'We turn tokens from a one-time fundraising tool into working economic instruments. They are embedded into product and operations, so value comes from demand and usage, not speculation.',
+  serviceLinks: [
+    { label: 'Strategic consulting', href: '#services' },
+    { label: 'Tokenomics', href: '#services' },
+    { label: 'Tokenomics audit', href: '#services' },
+  ],
+  cta: {
+    label: 'Talk to the team',
+    href: '/contact',
+  },
+} as const)
 
-export const servicesPageContent = {
+export const servicesPageContent = localize({
   hero: {
     label: 'Услуги',
     headline: 'Стратегия, токеномика и аудит\nдля web3- и web2-проектов',
@@ -33,9 +52,23 @@ export const servicesPageContent = {
     description:
       'Иногда проекту нужен аудит уже собранной модели. Иногда – проектирование новой. А иногда сначала нужно понять, какую роль токен вообще должен играть в бизнесе',
   },
-} as const
+} as const, {
+  hero: {
+    label: 'Services',
+    headline: 'Strategy, tokenomics, and audit\nfor Web3 and Web2 projects',
+    description:
+      'We step in at key stages: when you need to build a model from scratch, validate an existing economy, or chart the path from idea to listing',
+    ctaLabel: 'Discuss your task',
+    ctaHref: '/contact',
+  },
+  transition: {
+    headline: 'Not every project needs tokenomics development right away',
+    description:
+      'Sometimes a project needs an audit of an existing model. Sometimes — a new design. And sometimes you first need to understand what role the token should play in the business',
+  },
+} as const)
 
-export const servicesContent = {
+export const servicesContent = localize({
   label: 'Услуги',
   headline: 'Как мы создаем и улучшаем токен-экономики',
   items: [
@@ -64,9 +97,38 @@ export const servicesContent = {
       accentColor: 'blue',
     },
   ],
-} as const
+} as const, {
+  label: 'Services',
+  headline: 'How we build and improve token economies',
+  items: [
+    {
+      id: 'strategic-consulting',
+      href: '/services/strategic-consulting',
+      title: 'Strategic consulting',
+      description:
+        'We build the token economy strategy for the project: define token logic and incentives, create a roadmap, prepare the project for fundraising, and establish a partner ecosystem before the token hits the market.',
+      accentColor: 'purple',
+    },
+    {
+      id: 'tokenomics',
+      href: '/services/tokenomics',
+      title: 'Tokenomics',
+      description:
+        "We design the token's economic model, tied to the product, demand, and growth logic. We work through emission, distribution, vesting, treasury, incentives, and the model's internal architecture.",
+      accentColor: 'green',
+    },
+    {
+      id: 'audit',
+      href: '/services/audit',
+      title: 'Tokenomics audit',
+      description:
+        "We conduct a deep analysis of the current token model: identifying weaknesses, risks, and growth points, and provide recommendations for adjusting the project's economy.",
+      accentColor: 'blue',
+    },
+  ],
+} as const)
 
-export const servicesShowcaseContent = {
+export const servicesShowcaseContent = localize({
   headline: 'Как мы подключаемся к проекту',
   items: [
     {
@@ -91,9 +153,34 @@ export const servicesShowcaseContent = {
         'Когда модель уже собрана, но нужно проверить её на слабые места, риски или подтвердить её работоспособность',
     },
   ],
-} as const
+} as const, {
+  headline: 'How we engage with a project',
+  items: [
+    {
+      id: 'strategic-consulting',
+      href: '/services/strategic-consulting',
+      title: 'Strategic consulting',
+      description:
+        'When you need more than tokenomics — the full strategy: from idea and economics to TGE preparation and market launch',
+    },
+    {
+      id: 'tokenomics',
+      href: '/services/tokenomics',
+      title: 'Tokenomics',
+      description:
+        'For projects that need a full-fledged token economic model tied to the product, demand, and growth logic',
+    },
+    {
+      id: 'audit',
+      href: '/services/audit',
+      title: 'Tokenomics audit',
+      description:
+        'When the model is already built, but needs to be checked for weaknesses, risks, or validated for viability',
+    },
+  ],
+} as const)
 
-export const aboutContent = {
+export const aboutContent = localize({
   label: 'О нас',
   attribution: '8Blocks Team',
   quote:
@@ -104,9 +191,20 @@ export const aboutContent = {
     { value: '21 день', label: 'средний срок разработки рабочей токен-экономической модели' },
     { value: '14 фондов', label: 'инвестировали в проекты, основанные на нашей токен-экономике' },
   ],
-} as const
+} as const, {
+  label: 'About',
+  attribution: '8Blocks Team',
+  quote:
+    "\"A token should generate value for the project throughout its entire lifecycle. This is only possible when it's clearly understood why it exists and who truly needs it.\"",
+  stats: [
+    { value: '30+', label: 'token economies designed for projects across multiple industries' },
+    { value: '$180M+', label: 'combined capitalization of projects built on our models' },
+    { value: '21 days', label: 'average time to design a working token economy model' },
+    { value: '14 funds', label: 'invested in projects built on our token economics' },
+  ],
+} as const)
 
-export const partnersContent = {
+export const partnersContent = localize({
   label: 'Партнеры',
   headline: 'Партнеры',
   partners: [
@@ -127,9 +225,30 @@ export const partnersContent = {
     { name: 'Cicada', logo: '/partners/16.svg', href: 'https://www.cicada-mm.com/' },
     { name: 'Anogem', logo: '/partners/17.svg', href: 'https://anogem.io' },
   ],
-} as const
+} as const, {
+  label: 'Partners',
+  headline: 'Partners',
+  partners: [
+    { name: 'Partner 1', logo: '/partners/1.svg' },
+    { name: 'Partner 2', logo: '/partners/2.svg' },
+    { name: 'Partner 3', logo: '/partners/3.svg' },
+    { name: 'Lodes.tech', logo: '/partners/4.svg', href: 'https://lodestech.ru' },
+    { name: 'Partner 5', logo: '/partners/5.svg' },
+    { name: 'Partner 6', logo: '/partners/6.svg' },
+    { name: 'Fibonacci', logo: '/partners/7.svg', href: 'https://fibonacci.market/' },
+    { name: 'Partner 8', logo: '/partners/8.svg' },
+    { name: 'Partner 9', logo: '/partners/9.svg' },
+    { name: 'Partner 11', logo: '/partners/11.svg' },
+    { name: 'Partner 12', logo: '/partners/12.svg' },
+    { name: 'D&A', logo: '/partners/13.svg', href: 'https://dna.partners/' },
+    { name: 'Partner 14', logo: '/partners/14.svg' },
+    { name: 'Listing Help', logo: '/partners/15.svg', href: 'https://listing.help/' },
+    { name: 'Cicada', logo: '/partners/16.svg', href: 'https://www.cicada-mm.com/' },
+    { name: 'Anogem', logo: '/partners/17.svg', href: 'https://anogem.io' },
+  ],
+} as const)
 
-export const benefitsContent = {
+export const benefitsContent = localize({
   label: 'Почему 8Blocks',
   headlinePart1: 'Когда бизнес растет,',
   headlinePart2: 'токен не всегда растёт вместе с ним.',
@@ -160,9 +279,40 @@ export const benefitsContent = {
         'Механики выпуска, стимулов и обращения развиваются вместе с процессами, сохраняя контроль у компании, а не у рынка.',
     },
   ],
-} as const
+} as const, {
+  label: 'Why 8Blocks',
+  headlinePart1: 'When the business grows,',
+  headlinePart2: "the token doesn't always follow.",
+  headlinePart3: 'So we design economies\nwhere it has to.',
+  items: [
+    {
+      id: 'business-tied',
+      title: 'Business-linked economics',
+      description:
+        'Token value is structurally tied to product usage, not market dynamics. When the business grows, token demand has no choice but to follow.',
+    },
+    {
+      id: 'usage-demand',
+      title: 'Usage-driven demand',
+      description:
+        "Tokens are required to access the product, rights, or advantages. People hold them because they're needed, not because something was promised.",
+    },
+    {
+      id: 'stress-tested',
+      title: 'Stress-tested circulation',
+      description:
+        'We test models against real conditions: sell pressure, user churn, low liquidity, growth spikes. Because markets never follow best-case scenarios.',
+    },
+    {
+      id: 'growth-mechanics',
+      title: 'Controlled growth mechanics',
+      description:
+        'Supply, incentives, and circulation scale with operations, keeping control with the company — not the market.',
+    },
+  ],
+} as const)
 
-export const teamContent = {
+export const teamContent = localize({
   members: [
     { photo: '/team/team-1.png' },
     { photo: '/team/team-2.png' },
@@ -170,9 +320,9 @@ export const teamContent = {
     { photo: '/team/team-4.png' },
     { photo: '/team/team-5.png' },
   ],
-} as const
+} as const)
 
-export const tokenEconomyContent = {
+export const tokenEconomyContent = localize({
   headline: 'Мы не добавляем токен к бизнесу.\nМы встраиваем его в экономику',
   accentWords: ['добавляем', 'встраиваем'],
   description:
@@ -204,16 +354,53 @@ export const tokenEconomyContent = {
         'Позволяет нам быстро разбираться в сложных бизнес-моделях и находить решения, которые усиливают экономику проекта, а не усложняют её.',
     },
   ],
-} as const
+} as const, {
+  headline: "We don't add a token to the business.\nWe embed it into the economy",
+  accentWords: ['add', 'embed'],
+  description:
+    "A strong model makes the token part of the system: it strengthens the project's economy, drives user engagement, and clearly answers why the business needs it.",
+  cards: [
+    {
+      title: "Revenue shouldn't end at the token sale",
+      description:
+        'A strong model creates a cycle of usage, accumulation, and recurring demand.',
+    },
+    {
+      title: "Liquidity shouldn't come cheap",
+      description:
+        'We design mechanisms that expand user experience, not ones that boil down to a trivial discount.',
+    },
+    {
+      title: "If the model can't be explained quickly, it's already weak",
+      description:
+        "An investor should immediately understand the token's role in the business and what drives its value.",
+    },
+    {
+      title: 'In token economies since 2017',
+      description:
+        "During that time, we've seen thousands of models and built dozens of our own.",
+    },
+    {
+      title: 'Experience in traditional finance',
+      description:
+        "Enables us to quickly grasp complex business models and find solutions that strengthen the project's economy, not complicate it.",
+    },
+  ],
+} as const)
 
-export const tokenFilterContent = {
+export const tokenFilterContent = localize({
   headline: 'Не каждый токен должен существовать',
   subtitle: 'И не каждая модель заслуживает выход на рынок',
   ctaLabel: 'Обсудить задачу',
   ctaHref: '/contact',
-} as const
+} as const, {
+  headline: 'Not every token should exist',
+  subtitle: 'And not every model deserves to go to market',
+  ctaLabel: 'Discuss your task',
+  ctaHref: '/contact',
+} as const)
 
-export const tokenomicsTestContent = {
+export const tokenomicsTestContent = localize({
   headline: 'Протестируйте свою токеномику',
   description:
     'В нашем мини-приложении можно быстро собрать базовую модель, настроить вестинг, посмотреть график разлоков и увидеть первые риски токеномики.',
@@ -241,9 +428,37 @@ export const tokenomicsTestContent = {
   ],
   ctaLabel: 'Открыть приложение',
   ctaHref: 'https://8blocks-token-lab.vercel.app/calculator',
-} as const
+} as const, {
+  headline: 'Test your tokenomics',
+  description:
+    'In our mini-app you can quickly build a basic model, set up vesting, view the unlock schedule, and spot the first risks in your tokenomics.',
+  cards: [
+    {
+      title: 'Basic model',
+      description:
+        'Set the token supply, price, circulation, and allocations to quickly see the tokenomics overview',
+    },
+    {
+      title: 'Vesting and unlocks',
+      description:
+        'Set up unlocks for each pool, view unlock charts, potential spikes, and overall model health',
+    },
+    {
+      title: 'Final assessment',
+      description:
+        'Get a model snapshot with a brief summary of risks and tokenomics quality',
+    },
+    {
+      title: 'Daily practice',
+      description:
+        'Come back to the app daily, answer questions, and step by step improve your tokenomics understanding',
+    },
+  ],
+  ctaLabel: 'Open the app',
+  ctaHref: 'https://8blocks-token-lab.vercel.app/calculator',
+} as const)
 
-export const servicesFaqContent = {
+export const servicesFaqContent = localize({
   headline: 'Частые вопросы',
   items: [
     {
@@ -302,9 +517,68 @@ export const servicesFaqContent = {
         'Мы смотрим на токен не как на отдельный элемент модели, а как на часть экономики бизнеса. Поэтому для нас важны не только таблицы, графики и аллокации, а то, как токен встроен в продукт, спрос, пользовательский опыт, инвестиционную логику и рост проекта.',
     },
   ],
-} as const
+} as const, {
+  headline: 'FAQ',
+  items: [
+    {
+      question: 'How do I know which service is right for us?',
+      answer:
+        "It depends on what stage you're at and what the real challenge is. If you already have a model but have questions about it, you usually need an audit. If the tokenomics needs to be built from scratch — development. If the task is broader and includes strategy, TGE preparation, investor readiness, and market launch — strategic consulting. If you're unsure, that's a great reason to come for a consultation.",
+    },
+    {
+      question: "Can we come to you with a model that's already built?",
+      answer:
+        "Yes, of course. We often join projects that already have tokenomics, a white paper, calculation spreadsheets, or other working materials. In that case, we don't start from scratch without reason — we look at what can be used, what needs refinement, and what's better to rebuild.",
+    },
+    {
+      question: 'Do you only work with Web3 projects?',
+      answer:
+        'No. We work not only with Web3 projects but also with Web2 teams that already have an established business or product and want to enter Web3 through token economics.',
+    },
+    {
+      question: 'Can we start with an audit and then move to development or strategy?',
+      answer:
+        "Yes, that's a normal scenario. An audit often helps determine whether the model only needs minor fixes or if the project already requires a deeper tokenomics overhaul or strategic work.",
+    },
+    {
+      question: 'What does the first contact with you look like?',
+      answer:
+        'We usually start with a short conversation where we review your project, current task, and context. At this stage, we can already understand what work format is needed, how deep we need to go, and what the next step will be.',
+    },
+    {
+      question: 'What should we prepare before the first conversation?',
+      answer:
+        "Everything you already have on the project: presentations, white paper, tokenomics deck, Excel files, roadmap, product description, current calculations, or just a clear description of the task. Even if you have limited materials, it's enough to start a substantive conversation.",
+    },
+    {
+      question: "If we don't have a complete picture of the project yet, is there a point in coming to you?",
+      answer:
+        "Yes. The earlier you involve our team, the lower the risk of making mistakes at the start. Quite often people come to us not even with a full set of materials, but with a short, still unformed idea without a detailed written description. In such cases, we help understand what the project is missing, where the weak points are, and where to start.",
+    },
+    {
+      question: 'Can we just come for a consultation, without a large engagement right away?',
+      answer:
+        "Yes. If you first need an outside perspective and an honest assessment, you can start with a consultation. Sometimes after it, it becomes clear what to do next, and sometimes — that the project isn't ready for a major engagement yet.",
+    },
+    {
+      question: "Do you only get involved at the project's start, or later too?",
+      answer:
+        'Later too. We work with projects at different stages: when the token is just being discussed, when the model is already built, when the project is preparing for a token sale, or when it becomes clear that the current economy needs a rethink.',
+    },
+    {
+      question: 'Can we simply ask you whether our model is strong or not?',
+      answer:
+        "You can, but such a question almost always requires a deeper analysis. For us, it's important not just to give a general assessment, but to understand what actually makes the model strong, where risks are embedded, and how confidently you can rely on it going forward.",
+    },
+    {
+      question: 'How are you different from those who make a tokenomics document?',
+      answer:
+        "We look at the token not as a standalone model element, but as part of the business economy. That's why what matters to us isn't just tables, charts, and allocations, but how the token is embedded in the product, demand, user experience, investment logic, and project growth.",
+    },
+  ],
+} as const)
 
-export const ctaContent = {
+export const ctaContent = localize({
   label: 'Далее',
   headline: 'Если у токена нет роли,\nу проекта нет будущего.',
   body: 'Мы определяем роль токена и встраиваем ее в выручку и бизнес-процессы.',
@@ -312,4 +586,12 @@ export const ctaContent = {
     label: 'Обсудить проект',
     href: '/contact',
   },
-} as const
+} as const, {
+  label: 'Next step',
+  headline: 'If the token has no role,\nthe project has no future.',
+  body: 'We define the token’s role and connect it directly to revenue and operations.',
+  cta: {
+    label: 'Talk to the team',
+    href: '/contact',
+  },
+} as const)

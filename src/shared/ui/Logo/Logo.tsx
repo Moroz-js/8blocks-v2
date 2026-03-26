@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { t } from '@/shared/i18n'
 
 interface LogoProps {
   className?: string
@@ -7,7 +8,7 @@ interface LogoProps {
 
 export function Logo({ className, href = '/' }: LogoProps) {
   return (
-    <Link href={href} className={className} aria-label="8Blocks — на главную">
+    <Link href={href} className={className} aria-label={t({ ru: '8Blocks — на главную', en: '8Blocks — go to homepage' })}>
       <svg
         width="100"
         height="30"

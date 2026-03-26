@@ -9,24 +9,32 @@ import { ProcessHorizontalSlider } from '@/widgets/ProcessHorizontalSlider'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
+import { t } from '@/shared/i18n'
 
 const { hero, problem, solution, faq, deliverables, process, cta } = tokenomicsContent
 
 export const metadata: Metadata = {
-  title: 'Токеномика',
-  description:
-    'Базовая модель токен-экономики: эмиссия, распределение и вестинг — выстроены так, чтобы система была стабильной с первого дня.',
+  title: t({ ru: 'Токеномика', en: 'Tokenomics' }),
+  description: t({
+    ru: 'Базовая модель токен-экономики: эмиссия, распределение и вестинг — выстроены так, чтобы система была стабильной с первого дня.',
+    en: 'Token economy model: emission, distribution, and vesting — built to keep the system stable from day one.',
+  }),
   alternates: { canonical: `${siteConfig.url.replace(/\/$/, '')}/services/tokenomics` },
   openGraph: {
-    title: 'Токеномика | 8Blocks',
-    description:
-      'Базовая модель токен-экономики: эмиссия, распределение и вестинг — выстроены так, чтобы система была стабильной с первого дня.',
+    title: `${t({ ru: 'Токеномика', en: 'Tokenomics' })} | 8Blocks`,
+    description: t({
+      ru: 'Базовая модель токен-экономики: эмиссия, распределение и вестинг — выстроены так, чтобы система была стабильной с первого дня.',
+      en: 'Token economy model: emission, distribution, and vesting — built to keep the system stable from day one.',
+    }),
     url: '/services/tokenomics',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Токеномика | 8Blocks',
-    description: 'Базовая модель токен-экономики: эмиссия, распределение и вестинг.',
+    title: `${t({ ru: 'Токеномика', en: 'Tokenomics' })} | 8Blocks`,
+    description: t({
+      ru: 'Базовая модель токен-экономики: эмиссия, распределение и вестинг.',
+      en: 'Token economy model: emission, allocation, and vesting.',
+    }),
   },
 }
 

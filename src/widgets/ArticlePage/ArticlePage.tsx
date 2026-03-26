@@ -4,6 +4,7 @@ import { estimateReadingTime } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
 import { RichText } from '@/shared/render'
 import { buildToc } from '@/shared/lib/buildToc'
+import { lang, t } from '@/shared/i18n'
 import { ArticleViewTracker } from '@/features/articleView'
 import { ShareBlock } from '@/features/shareBlock'
 import { RelatedArticles } from '@/widgets/RelatedArticles'
@@ -12,7 +13,7 @@ import styles from './ArticlePage.module.scss'
 
 function formatDate(iso?: string | null): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString('ru-RU', {
+  return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-US' : 'ru-RU', {
     month: 'long',
     day: 'numeric',
     year: 'numeric',
@@ -57,7 +58,7 @@ export function ArticlePage({ article, relatedArticles = [] }: Props) {
               <span className={styles.metaSep}>·</span>
             </>
           )}
-          <span className={styles.readingTime}>{readingTime} мин</span>
+          <span className={styles.readingTime}>{readingTime} {t({ ru: 'мин', en: 'min' })}</span>
         </div>
       </header>
 

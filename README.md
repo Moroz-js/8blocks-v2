@@ -18,7 +18,7 @@ npm install --legacy-peer-deps
 
 ### 2. Переменные окружения
 
-Скопируйте `.env.example` в `.env` (или `.env.local`) и заполните значения:
+Скопируйте `.env.example` в `.env` и заполните значения:
 
 ```bash
 cp .env.example .env
@@ -29,11 +29,10 @@ cp .env.example .env
 ```env
 DATABASE_URI=postgresql://user:password@localhost:5432/eightblocks
 PAYLOAD_SECRET=your-random-secret-key
+NEXT_PUBLIC_LANG=ru
 ```
 
 ### 3. База данных
-
-Создайте базу PostgreSQL и при необходимости пользователя:
 
 ```sql
 CREATE DATABASE eightblocks;
@@ -41,13 +40,11 @@ CREATE DATABASE eightblocks;
 
 ### 4. Миграции
 
-Примените миграции для создания схемы Payload:
-
 ```bash
 npm run payload:migrate
 ```
 
-Если миграций ещё нет (первый запуск с пустой БД):
+Если первый запуск с пустой БД:
 
 ```bash
 npm run payload:migrate:create
@@ -56,19 +53,18 @@ npm run payload:migrate
 
 ### 5. Seed (опционально)
 
-Для локальной разработки можно заполнить БД тестовыми данными:
-
 ```bash
+# RU-данные (категории, статьи, лиды)
 npm run seed
-```
 
-Создаёт категории, теги и статьи для блога. Для расширенного seed блога:
+# EN-данные
+npm run seed:en
 
-```bash
+# Расширенный seed блога
 npm run seed:blog
 ```
 
-> ⚠️ Seed рассчитан на `NODE_ENV=development`. На production не запускайте без явного разрешения (например `SEED_ALLOWED=true`).
+> ⚠️ Seed рассчитан на `NODE_ENV=development`. На production не запускайте без `SEED_ALLOWED=true`.
 
 ### 6. Запуск
 
@@ -77,7 +73,20 @@ npm run dev
 ```
 
 - Сайт: [http://localhost:3000](http://localhost:3000)
-- Админка Payload: [http://localhost:3000/admin](http://localhost:3000/admin)
+- Админка: [http://localhost:3000/admin](http://localhost:3000/admin)
+
+---
+
+## Мультиязычность
+
+Язык определяется **на этапе сборки** через переменную окружения `NEXT_PUBLIC_LANG`. Переключалки языка на сайте нет — каждый деплой рендерится строго на одном языке.
+
+| `NEXT_PUBLIC_LANG` | Язык сайта |
+|--------------------|------------|
+| `ru` (по умолчанию) | Русский |
+| `en` | English |
+
+При смене языка пересобирать проект (`npm run build`).
 
 ---
 
@@ -92,13 +101,18 @@ src/
   widgets/                # Крупные блоки UI (Header, Footer, HeroHome, секции услуг…)
   features/               # Сценарии (ContactForm, NewsletterForm, ShareBlock, ArticleView)
   entities/               # Сущности и типы (Article, Category, Tag, Lead, Newsletter)
-  shared/                 # UI-kit, конфиги, контент, стили, утилиты
+  shared/
+    i18n/                 # Утилита t() для build-time локализации
+    config/               # site.ts — конфиг сайта, соцсети, адрес
+    content/              # Тексты страниц (homePage.ts, casesPage.ts и др.)
+    ui/                   # UI-kit
 
 payload/
-  collections/           # Коллекции Payload (Users, Articles, Categories, Leads, Media…)
+  collections/            # Коллекции Payload (Users, Articles, Categories, Leads, Media…)
 
 migrations/               # SQL-миграции БД (Payload)
-scripts/                  # seed.ts, seed-blog.ts и др.
+scripts/                  # seed.ts, seed-en.ts, seed-blog.ts и др.
+docs/                     # Документация: переводы, styleguide
 public/
   uploads/                # Загруженные медиа (не в git)
 ```
@@ -117,7 +131,8 @@ public/
 | `npm run validate` | typecheck + lint + build |
 | `npm run payload:migrate` | Применить миграции |
 | `npm run payload:migrate:create` | Создать новую миграцию |
-| `npm run seed` | Seed БД (категории, теги, статьи) |
+| `npm run seed` | Seed БД — RU-данные |
+| `npm run seed:en` | Seed БД — EN-данные |
 | `npm run seed:blog` | Расширенный seed блога |
 
 ---
@@ -128,12 +143,28 @@ public/
 |------------|----------|
 | `DATABASE_URI` | Строка подключения PostgreSQL |
 | `PAYLOAD_SECRET` | Секрет Payload CMS |
-| `ADMIN_EMAIL` | Email первого администратора (при seed) |
-| `ADMIN_PASSWORD` | Пароль первого администратора (при seed) |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Отправка писем (формы, уведомления) |
-| `ADMIN_NOTIFY_EMAIL` | Куда слать уведомления о заявках |
+| `ADMIN_EMAIL` | Email администратора (вход в /admin и seed) |
+| `ADMIN_PASSWORD` | Пароль администратора (seed) |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Отправка писем |
 | `NEXT_PUBLIC_SITE_URL` | Базовый URL сайта (canonical, OG) |
-| `NEXT_PUBLIC_GTM_ID` | ID контейнера Google Tag Manager |
+| `NEXT_PUBLIC_LANG` | Язык сборки: `ru` или `en` |
+| `NEXT_PUBLIC_GTM_ID` | ID контейнера Google Tag Manager (опционально) |
+| `NEXT_PUBLIC_REPLAIN_ID` | ID виджета Replain (опционально, скрыт если не задан) |
+| `NEXT_PUBLIC_CALENDLY_URL` | URL Calendly-виджета (опционально, есть дефолт по языку) |
+
+---
+
+## CI/CD
+
+Деплой настроен через GitHub Actions (`.github/workflows/deploy.yml`).
+
+Поддерживает несколько серверов одновременно (RU, EN и др.). Список деплоев задаётся секретом `DEPLOY_TARGETS`. Каждый сервер имеет свой набор секретов с языковым префиксом (`RU_*`, `EN_*`).
+
+Подробнее — см. `.env-github.example`.
+
+**Режимы деплоя** (выбираются вручную через `workflow_dispatch`):
+- `soft` — pull + build + restart (по умолчанию)
+- `hard` — pull + build + restart + seed
 
 ---
 
@@ -141,6 +172,9 @@ public/
 
 - **Главная** — hero, о компании, услуги, преимущества, партнёры, CTA, рассылка.
 - **Услуги** — индекс и лендинги: Strategic Consulting, Tokenomics, Tokenomics Audit (с FAQ).
+- **Кейсы** — портфолио с фильтрацией по тегам (DeFi, RWA, GameFi, Finance).
 - **Блог** — архив, категории, статья с rich text, ToC, счётчик просмотров, related articles.
+- **Контакты** — форма обратной связи + Calendly-виджет.
+- **Политика конфиденциальности** — отдельные компоненты для RU и EN.
 - **Формы** — контакт и подписка на рассылку (сохранение в БД + email).
 - **SEO** — метаданные, canonical, OG/Twitter, sitemap.xml, robots.txt, GTM.

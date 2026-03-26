@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { t } from '@/shared/i18n'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ConsultingDeliverablesWall.module.scss'
 
@@ -102,51 +103,90 @@ function IconAdvisory() {
 
 const DELIVERABLES = [
   {
-    title: 'Токеномика проекта',
-    description: 'Разрабатываем полную модель: утилизацию токена, распределение, клейф, вестинг и эмиссию.',
-    bullets: ['Эмиссия и распределение', 'Вестинг и клиффы', 'Utility-механики', 'Treasury и резервы'],
-    group: 'главный результат',
+    title: t({ ru: 'Токеномика проекта', en: 'Project tokenomics' }),
+    description: t({
+      ru: 'Разрабатываем полную модель: утилизацию токена, распределение, клейф, вестинг и эмиссию.',
+      en: 'We develop a full model: token utility, distribution, cliff, vesting, and emission.',
+    }),
+    bullets: [
+      t({ ru: 'Эмиссия и распределение', en: 'Emission and distribution' }),
+      t({ ru: 'Вестинг и клиффы', en: 'Vesting and cliffs' }),
+      t({ ru: 'Utility-механики', en: 'Utility mechanics' }),
+      t({ ru: 'Treasury и резервы', en: 'Treasury and reserves' }),
+    ],
+    group: t({ ru: 'главный результат', en: 'main result' }),
     Icon: IconTokenomics,
     large: true,
   },
   {
     title: 'White Paper',
-    description: 'Описываем концепцию проекта, логику токена и принципы экосистемы.',
-    bullets: ['Концепция и архитектура', 'Экономическая логика', 'Технические детали'],
-    group: 'материалы',
+    description: t({
+      ru: 'Описываем концепцию проекта, логику токена и принципы экосистемы.',
+      en: "We describe the project's concept, token logic, and ecosystem principles.",
+    }),
+    bullets: [
+      t({ ru: 'Концепция и архитектура', en: 'Concept and architecture' }),
+      t({ ru: 'Экономическая логика', en: 'Economic logic' }),
+      t({ ru: 'Технические детали', en: 'Technical details' }),
+    ],
+    group: t({ ru: 'материалы', en: 'materials' }),
     Icon: IconWhitePaper,
     large: false,
   },
   {
     title: 'Pitch Deck',
-    description: 'Готовим презентацию и дополнительные материалы для инвесторов.',
-    bullets: ['Инвест-нарратив', 'Ключевые метрики', 'Roadmap'],
-    group: 'материалы',
+    description: t({
+      ru: 'Готовим презентацию и дополнительные материалы для инвесторов.',
+      en: 'We prepare a presentation and supporting materials for investors.',
+    }),
+    bullets: [
+      t({ ru: 'Инвест-нарратив', en: 'Investment narrative' }),
+      t({ ru: 'Ключевые метрики', en: 'Key metrics' }),
+      'Roadmap',
+    ],
+    group: t({ ru: 'материалы', en: 'materials' }),
     Icon: IconPitchDeck,
     large: false,
   },
   {
-    title: 'Партнёрская стратегия',
-    description: 'Подбираем партнёров по ключевым направлениям и организуем встречи.',
-    bullets: ['Маркетмейкинг', 'Маркетинг партнёры', 'Технические подрядчики'],
-    group: 'выход в рынок',
+    title: t({ ru: 'Партнёрская стратегия', en: 'Partner strategy' }),
+    description: t({
+      ru: 'Подбираем партнёров по ключевым направлениям и организуем встречи.',
+      en: 'We select partners across key areas and organize meetings.',
+    }),
+    bullets: [
+      t({ ru: 'Маркетмейкинг', en: 'Market making' }),
+      t({ ru: 'Маркетинг партнёры', en: 'Marketing partners' }),
+      t({ ru: 'Технические подрядчики', en: 'Technical contractors' }),
+    ],
+    group: t({ ru: 'выход в рынок', en: 'market launch' }),
     Icon: IconPartners,
     large: false,
     wide: true,
   },
   {
-    title: 'Листинг и выход',
-    description: 'Помогаем с подготовкой к размещению токена на биржах.',
+    title: t({ ru: 'Листинг и выход', en: 'Listing and launch' }),
+    description: t({
+      ru: 'Помогаем с подготовкой к размещению токена на биржах.',
+      en: 'We help prepare for token listing on exchanges.',
+    }),
     bullets: ['CEX/DEX стратегия', 'Liquidity plan', 'Launch checklist'],
-    group: 'выход в рынок',
+    group: t({ ru: 'выход в рынок', en: 'market launch' }),
     Icon: IconListing,
     large: false,
   },
   {
-    title: 'Консультационная поддержка',
-    description: 'До 10 звонков в месяц по 90 минут с нашими экспертами на протяжении всего проекта.',
-    bullets: ['Экспертные звонки', 'Контроль результата', 'Поддержка команды'],
-    group: 'сопровождение',
+    title: t({ ru: 'Консультационная поддержка', en: 'Advisory support' }),
+    description: t({
+      ru: 'До 10 звонков в месяц по 90 минут с нашими экспертами на протяжении всего проекта.',
+      en: 'Up to 10 calls per month, 90 minutes each, with our experts throughout the project.',
+    }),
+    bullets: [
+      t({ ru: 'Экспертные звонки', en: 'Expert calls' }),
+      t({ ru: 'Контроль результата', en: 'Result monitoring' }),
+      t({ ru: 'Поддержка команды', en: 'Team support' }),
+    ],
+    group: t({ ru: 'сопровождение', en: 'support' }),
     Icon: IconAdvisory,
     large: false,
   },
@@ -170,7 +210,7 @@ export function ConsultingDeliverablesWall({
   ctaHref,
 }: ConsultingDeliverablesWallProps) {
   return (
-    <section className={styles.section} aria-label="Результаты консалтинга">
+    <section className={styles.section} aria-label={t({ ru: 'Результаты консалтинга', en: 'Consulting results' })}>
       <div className={styles.inner}>
         <ScrollRevealText text={headline} className={styles.headline} />
 

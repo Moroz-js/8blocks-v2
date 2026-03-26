@@ -17,6 +17,7 @@ function ArrowRight() {
 }
 import type { ArticleCard as ArticleCardType, CategoryRef } from '@/entities/article'
 import { ArticleCardUI } from '@/entities/article'
+import { t, lang } from '@/shared/i18n'
 import styles from './BlogArchive.module.scss'
 
 interface Props {
@@ -56,25 +57,30 @@ export function BlogArchive({
         <div className={styles.pageHeaderInner}>
           <span className={styles.label}>
             <span className={styles.labelBracket}>[</span>
-            {isCategory ? 'Категория' : 'Блог'}
+            {isCategory ? t({ ru: 'Категория', en: 'Category' }) : t({ ru: 'Блог', en: 'Blog' })}
             <span className={styles.labelBracket}>]</span>
           </span>
           <h1 className={styles.headline}>
-            {isCategory ? categoryTitle : 'Статьи и материалы'}
+            {isCategory ? categoryTitle : t({ ru: 'Статьи и материалы', en: 'Articles and insights' })}
           </h1>
           {totalDocs > 0 && (
-            <p className={styles.count}>{totalDocs} {totalDocs === 1 ? 'статья' : totalDocs >= 2 && totalDocs <= 4 ? 'статьи' : 'статей'}</p>
+            <p className={styles.count}>
+              {totalDocs}{' '}
+              {lang === 'ru'
+                ? (totalDocs === 1 ? 'статья' : totalDocs >= 2 && totalDocs <= 4 ? 'статьи' : 'статей')
+                : (totalDocs === 1 ? 'article' : 'articles')}
+            </p>
           )}
         </div>
 
         {/* ── Category filter ───────────────────────────────────── */}
         {categories.length > 0 && (
-          <nav className={styles.categoryNav} aria-label="Фильтр по категории">
+          <nav className={styles.categoryNav} aria-label={t({ ru: 'Фильтр по категории', en: 'Filter by category' })}>
             <Link
               href="/blog"
               className={`${styles.catChip} ${!activeCategory ? styles.catChipActive : ''}`}
             >
-              Все
+              {t({ ru: 'Все', en: 'All' })}
             </Link>
             {categories.map((cat) => (
               <Link
@@ -103,19 +109,19 @@ export function BlogArchive({
         </div>
       ) : (
         <div className={styles.empty}>
-          <p className={styles.emptyText}>В этой категории пока нет статей.</p>
-          <p className={styles.emptyHint}>Загляните позже.</p>
+          <p className={styles.emptyText}>{t({ ru: 'В этой категории пока нет статей.', en: 'No articles in this category yet.' })}</p>
+          <p className={styles.emptyHint}>{t({ ru: 'Загляните позже.', en: 'Please check back later.' })}</p>
         </div>
       )}
 
       {/* ── Pagination ────────────────────────────────────────── */}
       {totalPages > 1 && (
-        <nav className={styles.pagination} aria-label="Навигация по страницам">
+        <nav className={styles.pagination} aria-label={t({ ru: 'Навигация по страницам', en: 'Pagination' })}>
           {currentPage > 1 && (
             <Link
               href={pageHref(currentPage - 1)}
               className={styles.pageArrow}
-              aria-label="Предыдущая страница"
+              aria-label={t({ ru: 'Предыдущая страница', en: 'Previous page' })}
             >
               <ArrowLeft />
             </Link>
@@ -142,7 +148,7 @@ export function BlogArchive({
             <Link
               href={pageHref(currentPage + 1)}
               className={styles.pageArrow}
-              aria-label="Следующая страница"
+              aria-label={t({ ru: 'Следующая страница', en: 'Next page' })}
             >
               <ArrowRight />
             </Link>

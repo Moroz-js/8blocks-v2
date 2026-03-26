@@ -3,12 +3,13 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { servicesContent } from '@/shared/content/homePage'
+import { t } from '@/shared/i18n'
 import { ScrollRevealText } from '@/shared/ui'
 import styles from './ServicesSection.module.scss'
 
 export function ServicesSection() {
   return (
-    <section className={styles.section} id="services" aria-label="Услуги">
+    <section className={styles.section} id="services" aria-label={t({ ru: 'Услуги', en: 'Services' })}>
       <div className={styles.inner}>
         <motion.div
           className={styles.header}
@@ -30,7 +31,7 @@ export function ServicesSection() {
               endOffset="end 0.45"
             />
             <Link href="/services" className={styles.viewAll}>
-              Все услуги <span aria-hidden="true">→</span>
+              {t({ ru: 'Все услуги', en: 'All services' })} <span aria-hidden="true">→</span>
             </Link>
           </div>
         </motion.div>
@@ -57,7 +58,7 @@ export function ServicesSection() {
                 </div>
 
                 <div className={styles.cardFooter}>
-                  <span className={styles.cardLink}>Подробнее</span>
+                  <span className={styles.cardLink}>{t({ ru: 'Подробнее', en: 'Learn more' })}</span>
                   <span className={styles.cardArrow} aria-hidden="true">→</span>
                 </div>
               </Link>

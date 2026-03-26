@@ -4,20 +4,30 @@ import config from '@payload-config'
 import { BlogArchive } from '@/widgets/BlogArchive'
 import type { ArticleCard as ArticleCardType, CategoryRef } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
+import { t } from '@/shared/i18n'
 
 export const metadata: Metadata = {
-  title: 'Блог — 8Blocks',
-  description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
+  title: t({ ru: 'Блог — 8Blocks', en: 'Blog — 8Blocks' }),
+  description: t({
+    ru: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
+    en: 'Articles on tokenomics, Web3 economics, and token design by the 8Blocks team.',
+  }),
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Блог — 8Blocks',
-    description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
+    title: t({ ru: 'Блог — 8Blocks', en: 'Blog — 8Blocks' }),
+    description: t({
+      ru: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
+      en: 'Articles on tokenomics, Web3 economics, and token design by the 8Blocks team.',
+    }),
     url: '/blog',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Блог — 8Blocks',
-    description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
+    title: t({ ru: 'Блог — 8Blocks', en: 'Blog — 8Blocks' }),
+    description: t({
+      ru: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
+      en: 'Articles on tokenomics, Web3 economics, and token design by the 8Blocks team.',
+    }),
   },
 }
 

@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { t } from '@/shared/i18n'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './WhatYouGetBlock.module.scss'
 
@@ -26,7 +27,7 @@ interface WhatYouGetBlockProps {
 
 export function WhatYouGetBlock({ headline, description, ctaLabel, ctaHref, items }: WhatYouGetBlockProps) {
   return (
-    <section className={styles.section} aria-label="Что вы получите">
+    <section className={styles.section} aria-label={t({ ru: 'Что вы получите', en: "What you'll get" })}>
       <div className={styles.inner}>
         <ScrollRevealText text={headline} className={styles.headline} />
         {description && <ScrollRevealText text={description} className={styles.description} />}

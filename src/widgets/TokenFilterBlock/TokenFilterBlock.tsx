@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { tokenFilterContent } from '@/shared/content/homePage'
+import { t } from '@/shared/i18n'
 import styles from './TokenFilterBlock.module.scss'
 
 const ease = 'easeOut' as const
@@ -11,7 +12,7 @@ export function TokenFilterBlock() {
   const { headline, subtitle, ctaLabel, ctaHref } = tokenFilterContent
 
   return (
-    <section className={styles.section} aria-label="Фильтр токенов">
+    <section className={styles.section} aria-label={t({ ru: 'Фильтр токенов', en: 'Token filter' })}>
       <motion.div
         className={styles.inner}
         initial={{ opacity: 0, y: 20 }}

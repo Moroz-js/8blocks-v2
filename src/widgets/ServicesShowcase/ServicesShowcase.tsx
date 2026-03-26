@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { servicesShowcaseContent } from '@/shared/content/homePage'
+import { t } from '@/shared/i18n'
 import styles from './ServicesShowcase.module.scss'
 
 const ease = 'easeOut' as const
@@ -231,7 +232,7 @@ export function ServicesShowcase() {
   const inView = useInView(animRef, { once: true, margin: '-100px' })
 
   return (
-    <section className={styles.section} aria-label="Услуги">
+    <section className={styles.section} aria-label={t({ ru: 'Услуги', en: 'Services' })}>
       <div className={styles.inner}>
         <motion.h2
           className={styles.headline}
@@ -258,7 +259,7 @@ export function ServicesShowcase() {
                   <h3 className={styles.itemTitle}>{item.title}</h3>
                   <p className={styles.itemDesc}>{item.description}</p>
                   <span className={styles.itemCta}>
-                    Подробнее
+                    {t({ ru: 'Подробнее', en: 'Learn more' })}
                     <span className={styles.itemArrow} aria-hidden="true">→</span>
                   </span>
                 </motion.div>

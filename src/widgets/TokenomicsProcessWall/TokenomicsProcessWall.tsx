@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { t } from '@/shared/i18n'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './TokenomicsProcessWall.module.scss'
 
@@ -170,56 +171,83 @@ function IconFinalize() {
 const STEPS = [
   {
     num: '01',
-    title: 'Погружаемся в проект',
-    description: 'Изучаем материалы, цели и контекст, чтобы понять задачи проекта и логику продукта.',
+    title: t({ ru: 'Погружаемся в проект', en: 'Deep dive into the project' }),
+    description: t({
+      ru: 'Изучаем материалы, цели и контекст, чтобы понять задачи проекта и логику продукта.',
+      en: 'Review materials, objectives, and context to understand product logic and project priorities.',
+    }),
     Icon: IconImmerse,
   },
   {
     num: '02',
-    title: 'Проводим бенчмаркинг',
-    description: 'Анализируем токеномики конкурентов, сравниваем модели и выделяем сильные решения.',
+    title: t({ ru: 'Проводим бенчмаркинг', en: 'Run benchmark analysis' }),
+    description: t({
+      ru: 'Анализируем токеномики конкурентов, сравниваем модели и выделяем сильные решения.',
+      en: 'Analyze competitor tokenomics, compare structures, and identify strong patterns.',
+    }),
     Icon: IconBenchmark,
   },
   {
     num: '03',
-    title: 'Работаем с командой',
-    description: 'Проводим совместные сессии, чтобы учесть нюансы продукта и собрать сильную модель.',
+    title: t({ ru: 'Работаем с командой', en: 'Work with your team' }),
+    description: t({
+      ru: 'Проводим совместные сессии, чтобы учесть нюансы продукта и собрать сильную модель.',
+      en: 'Run joint sessions to capture product nuances and build a robust model.',
+    }),
     Icon: IconTeam,
   },
   {
     num: '04',
-    title: 'Формируем правила использования токена',
-    description: 'Определяем utility-механики, права держателей и условия вестинга.',
+    title: t({ ru: 'Формируем правила использования токена', en: 'Define token usage rules' }),
+    description: t({
+      ru: 'Определяем utility-механики, права держателей и условия вестинга.',
+      en: 'Define utility mechanics, holder rights, and vesting terms.',
+    }),
     Icon: IconRules,
   },
   {
     num: '05',
-    title: 'Прорабатываем экосистему',
-    description: 'Связываем токен с продуктом, интерфейсами и технической логикой проекта.',
+    title: t({ ru: 'Прорабатываем экосистему', en: 'Design ecosystem logic' }),
+    description: t({
+      ru: 'Связываем токен с продуктом, интерфейсами и технической логикой проекта.',
+      en: 'Connect the token with product flows, interfaces, and technical architecture.',
+    }),
     Icon: IconEcosystem,
   },
   {
     num: '06',
-    title: 'Проектируем движение токена',
-    description: 'Строим сценарии потоков токена между всеми элементами экосистемы.',
+    title: t({ ru: 'Проектируем движение токена', en: 'Design token flow' }),
+    description: t({
+      ru: 'Строим сценарии потоков токена между всеми элементами экосистемы.',
+      en: 'Build token flow scenarios across all ecosystem participants.',
+    }),
     Icon: IconTokenFlow,
   },
   {
     num: '07',
-    title: 'Планируем продажу токенов',
-    description: 'Определяем количество раундов, формат продажи, сроки и средний чек.',
+    title: t({ ru: 'Планируем продажу токенов', en: 'Plan token sale strategy' }),
+    description: t({
+      ru: 'Определяем количество раундов, формат продажи, сроки и средний чек.',
+      en: 'Define round count, sale format, timing, and target ticket size.',
+    }),
     Icon: IconSale,
   },
   {
     num: '08',
-    title: 'Адаптируем модель под новые механики',
-    description: 'Тестируем дополнительные функции по мере развития проекта.',
+    title: t({ ru: 'Адаптируем модель под новые механики', en: 'Adapt model to new mechanics' }),
+    description: t({
+      ru: 'Тестируем дополнительные функции по мере развития проекта.',
+      en: 'Test additional mechanics as the project evolves.',
+    }),
     Icon: IconAdapt,
   },
   {
     num: '09',
-    title: 'Финализируем и защищаем модель',
-    description: 'Собираем итоговую токеномику, готовим презентацию и защищаем решение перед вашей командой.',
+    title: t({ ru: 'Финализируем и защищаем модель', en: 'Finalize and defend the model' }),
+    description: t({
+      ru: 'Собираем итоговую токеномику, готовим презентацию и защищаем решение перед вашей командой.',
+      en: 'Consolidate final tokenomics, prepare the presentation, and defend decisions with your team.',
+    }),
     Icon: IconFinalize,
     final: true,
   },
@@ -237,7 +265,7 @@ export function TokenomicsProcessWall({ headline }: TokenomicsProcessWallProps) 
   const final = STEPS[8]
 
   return (
-    <section className={styles.section} aria-label="Процесс работы">
+    <section className={styles.section} aria-label={t({ ru: 'Процесс работы', en: 'Work process' })}>
       <div className={styles.inner}>
         <ScrollRevealText text={headline} className={styles.headline} />
 

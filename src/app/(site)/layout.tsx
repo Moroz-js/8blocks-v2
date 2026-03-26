@@ -6,6 +6,7 @@ import '../globals.scss'
 import { Header } from '@/widgets/Header'
 import { Footer } from '@/widgets/Footer'
 import { siteConfig } from '@/shared/config/site'
+import { htmlLang, locale } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
 
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: siteConfig.name,
-    locale: 'ru_RU',
+    locale,
   },
   twitter: {
     card: 'summary_large_image',
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang={htmlLang} suppressHydrationWarning>
       <head />
       <body suppressHydrationWarning>
         {/* Top edge blur */}
@@ -72,17 +73,21 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         */}
         <MantineProvider defaultColorScheme="dark">
           <GTMScript />
-          <Script
-            id="replain-settings"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `window.replainSettings = { id: '5cfc493a-e46f-4094-8448-6a22285c4399' };`,
-            }}
-          />
-          <Script
-            src="https://widget.replain.cc/dist/client.js"
-            strategy="afterInteractive"
-          />
+          {process.env.NEXT_PUBLIC_REPLAIN_ID && (
+            <>
+              <Script
+                id="replain-settings"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                  __html: `window.replainSettings = { id: '${process.env.NEXT_PUBLIC_REPLAIN_ID}' };`,
+                }}
+              />
+              <Script
+                src="https://widget.replain.cc/dist/client.js"
+                strategy="afterInteractive"
+              />
+            </>
+          )}
           <LenisProvider>
             <Header />
             <main>{children}</main>

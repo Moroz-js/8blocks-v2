@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { t } from '@/shared/i18n'
 import type { TocItem } from '@/shared/lib/buildToc'
 import styles from './ArticleToc.module.scss'
 
@@ -37,8 +38,8 @@ export function ArticleToc({ items }: Props) {
   if (!items.length) return null
 
   return (
-    <nav className={styles.toc} aria-label="Содержание">
-      <p className={styles.tocTitle}>Содержание</p>
+    <nav className={styles.toc} aria-label={t({ ru: 'Содержание', en: 'Table of contents' })}>
+      <p className={styles.tocTitle}>{t({ ru: 'Содержание', en: 'Table of contents' })}</p>
       <ol className={styles.tocList}>
         {items.map(({ id, text, level }) => (
           <li key={id} className={`${styles.tocItem} ${level === 3 ? styles.tocItemL3 : ''}`}>

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { t } from '@/shared/i18n'
 import styles from './FalseAssumptionsBlock.module.scss'
 
 const ease = 'easeOut' as const
@@ -42,12 +43,12 @@ export function FalseAssumptionsBlock({ headline, description, items }: FalseAss
               transition={{ duration: 0.5, ease, delay: i * 0.06 }}
             >
               <div className={styles.columnSeems}>
-                <span className={styles.columnLabel}>Кажется</span>
+                <span className={styles.columnLabel}>{t({ ru: 'Кажется', en: 'It seems' })}</span>
                 <p className={styles.seemsText}>{item.seems}</p>
               </div>
               <div className={styles.arrow} aria-hidden="true">→</div>
               <div className={styles.columnReality}>
-                <span className={styles.columnLabel}>На практике</span>
+                <span className={styles.columnLabel}>{t({ ru: 'На практике', en: 'In practice' })}</span>
                 <p className={styles.realityText}>{item.reality}</p>
               </div>
             </motion.article>

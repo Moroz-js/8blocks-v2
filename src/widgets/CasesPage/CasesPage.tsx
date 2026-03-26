@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import { cases, casesContent, allTags, type CaseTag, type CaseStudy } from '@/shared/content/casesPage'
+import { t } from '@/shared/i18n'
 import styles from './CasesPage.module.scss'
 
 const ease = 'easeOut' as const
@@ -30,12 +31,12 @@ function CaseCard({ c, index }: { c: CaseStudy; index: number }) {
       <h3 className={styles.cardTitle}>{c.title}</h3>
 
       <div className={styles.cardTask}>
-        <p className={styles.cardTaskLabel}>Задача</p>
+        <p className={styles.cardTaskLabel}>{t({ ru: 'Задача', en: 'Task' })}</p>
         <p className={styles.cardTaskText}>{c.task}</p>
       </div>
 
       <div className={styles.cardActions}>
-        <p className={styles.cardActionsLabel}>Что сделали</p>
+        <p className={styles.cardActionsLabel}>{t({ ru: 'Что сделали', en: 'What we did' })}</p>
         {c.actions.map((a, i) => (
           <div key={i} className={styles.actionItem}>
             <span className={styles.actionArrow} aria-hidden>→</span>
@@ -45,7 +46,7 @@ function CaseCard({ c, index }: { c: CaseStudy; index: number }) {
       </div>
 
       <div className={styles.cardResult}>
-        <p className={styles.resultLabel}>Результат</p>
+        <p className={styles.resultLabel}>{t({ ru: 'Результат', en: 'Result' })}</p>
         <p className={styles.resultText}>{c.result}</p>
       </div>
     </motion.article>
@@ -63,7 +64,7 @@ export function CasesPage() {
   return (
     <>
       {/* Hero */}
-      <section className={styles.hero} aria-label="Портфолио">
+      <section className={styles.hero} aria-label={t({ ru: 'Портфолио', en: 'Portfolio' })}>
         <div className={styles.heroInner}>
           <motion.span
             className={styles.label}
@@ -71,7 +72,7 @@ export function CasesPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, ease }}
           >
-            Кейсы
+            {t({ ru: 'Кейсы', en: 'Cases' })}
           </motion.span>
 
           <motion.h1
@@ -80,7 +81,7 @@ export function CasesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease, delay: 0.05 }}
           >
-            Портфолио
+            {t({ ru: 'Портфолио', en: 'Portfolio' })}
           </motion.h1>
 
           <motion.div
@@ -102,7 +103,7 @@ export function CasesPage() {
           className={activeTag === null ? styles.filterBtnActive : styles.filterBtn}
           onClick={() => setActiveTag(null)}
         >
-          Все
+          {t({ ru: 'Все', en: 'All' })}
         </button>
         {allTags.map((tag) => (
           <button
@@ -121,7 +122,7 @@ export function CasesPage() {
           {filtered.length > 0 ? (
             filtered.map((c, i) => <CaseCard key={c.title} c={c} index={i} />)
           ) : (
-            <p className={styles.empty}>Кейсов пока нет</p>
+            <p className={styles.empty}>{t({ ru: 'Кейсов пока нет', en: 'No cases yet' })}</p>
           )}
         </AnimatePresence>
       </div>

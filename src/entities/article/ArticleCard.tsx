@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { lang, t } from '@/shared/i18n'
 import type { ArticleCard as ArticleCardType } from './types'
 import styles from './ArticleCard.module.scss'
 
@@ -12,7 +13,7 @@ const PLACEHOLDERS = [
 
 function formatDate(iso?: string | null): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString('ru-RU', {
+  return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-US' : 'ru-RU', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -81,10 +82,10 @@ export function ArticleCard({ article, index = 0, priority = false }: Props) {
       {/* Footer */}
       <div className={styles.footer}>
         {article.readingTime && (
-          <span className={styles.readingTime}>{article.readingTime} мин</span>
+          <span className={styles.readingTime}>{article.readingTime} {t({ ru: 'мин', en: 'min' })}</span>
         )}
         <Link href={href} className={styles.readLink}>
-          Читать
+          {t({ ru: 'Читать', en: 'Read' })}
           <span className={styles.readArrow} aria-hidden="true">→</span>
         </Link>
       </div>

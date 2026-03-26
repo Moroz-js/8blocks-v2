@@ -1,4 +1,5 @@
 import { siteConfig } from '@/shared/config/site'
+import { t } from '@/shared/i18n'
 import { ContactForm } from '@/features/contactForm'
 import styles from './ContactSection.module.scss'
 
@@ -10,16 +11,18 @@ export function ContactSection() {
           <div className={styles.leftCol}>
             <span className={styles.formLabel}>
               <span className={styles.labelBracket}>[</span>
-              Контакт
+              {t({ ru: 'Контакт', en: 'Contact' })}
               <span className={styles.labelBracket}>]</span>
             </span>
             <h1 id="contact-heading" className={styles.formHeadline}>
-              Обсудим<br />
-              <span className={styles.formHeadlineAccent}>ваш проект</span>
+              {t({ ru: 'Обсудим', en: "Let's discuss" })}<br />
+              <span className={styles.formHeadlineAccent}>{t({ ru: 'ваш проект', en: 'your project' })}</span>
             </h1>
             <p className={styles.formDescription}>
-              Расскажите нам о своей задаче — мы ответим в течение одного рабочего дня и предложим
-              формат сотрудничества.
+              {t({
+                ru: 'Расскажите нам о своей задаче — мы ответим в течение одного рабочего дня и предложим формат сотрудничества.',
+                en: "Tell us about your challenge — we'll respond within one business day and suggest a collaboration format.",
+              })}
             </p>
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
@@ -73,7 +76,7 @@ export function ContactSection() {
                     rel="noreferrer"
                     className={styles.contactLink}
                   >
-                    Get Directions
+                    {t({ ru: 'Маршрут', en: 'Get Directions' })}
                   </a>
                 </div>
               </li>
