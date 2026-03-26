@@ -1,6 +1,6 @@
 import Script from 'next/script'
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || 'GTM-KWVBDZ29'
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
 export function GTMScript() {
   if (!GTM_ID) return null

@@ -1,23 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ProblemBlock.module.scss'
-import {
-  IconRouteFork,
-  IconBrokenSignal,
-  IconDisconnectedNodes,
-  IconFragmentedChecklist,
-  IconTiltedScale,
-  IconBrokenGrowth,
-  IconObscuredShield,
-  IconRadarPing,
-  IconDisconnectedTokenProduct,
-  IconFadingPulse,
-  IconOpenVault,
-  IconHollowToken,
-} from './ProblemBlockIcons'
 
 const ease = 'easeOut' as const
 
@@ -40,12 +27,10 @@ interface ProblemBlockProps {
   }
 }
 
-type IconComponent = React.FC
-
-const iconsByVariant: Record<ProblemBlockVariant, IconComponent[]> = {
-  consulting: [IconRouteFork, IconBrokenSignal, IconDisconnectedNodes, IconFragmentedChecklist],
-  audit: [IconTiltedScale, IconBrokenGrowth, IconObscuredShield, IconRadarPing],
-  tokenomics: [IconDisconnectedTokenProduct, IconFadingPulse, IconOpenVault, IconHollowToken],
+const iconsByVariant: Record<ProblemBlockVariant, string[]> = {
+  consulting: ['/icons/consulting-1.svg', '/icons/consulting-2.svg', '/icons/consulting-3.svg', '/icons/consulting-4.svg'],
+  audit: ['/icons/audit-1.svg', '/icons/audit-2.svg', '/icons/audit-3.svg', '/icons/audit-4.svg'],
+  tokenomics: ['/icons/tokenomic-1.svg', '/icons/tokenomic-2.svg', '/icons/tokenomic-3.svg', '/icons/tokenomic-4.svg'],
 }
 
 const gridClassByVariant: Record<ProblemBlockVariant, string> = {
@@ -70,19 +55,24 @@ export function ProblemBlock({ variant, headline, description, items, cta }: Pro
 
         <div className={gridClass}>
           {items.map((item, i) => (
-              <motion.article
-                key={i}
-                className={styles.card}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ duration: 0.5, ease, delay: i * 0.08 }}
-              >
-                <div className={styles.cardContent}>
-                  <h3 className={styles.cardTitle}>{item.title}</h3>
-                  <p className={styles.cardDescription}>{item.description}</p>
+            <motion.article
+              key={i}
+              className={styles.card}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-30px' }}
+              transition={{ duration: 0.5, ease, delay: i * 0.08 }}
+            >
+              <div className={styles.cardContent}>
+                <h3 className={styles.cardTitle}>{item.title}</h3>
+                <p className={styles.cardDescription}>{item.description}</p>
+              </div>
+              {icons[i] && (
+                <div className={styles.cardIcon}>
+                  <Image src={icons[i]} alt="" width={323} height={228} aria-hidden />
                 </div>
-              </motion.article>
+              )}
+            </motion.article>
           ))}
         </div>
 

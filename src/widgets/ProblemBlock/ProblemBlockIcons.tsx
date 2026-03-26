@@ -1,13 +1,17 @@
 const c = {
-  purple: '#a78bfa',
-  purpleDim: 'rgba(167,139,250,0.5)',
-  purpleBg: 'rgba(167,139,250,0.08)',
-  green: '#4ade80',
+  purple: '#C53DFF',
+  purpleDim: 'rgba(197,61,255,0.85)',
+  purpleBg: '#1E1B24',
+  purpleDark: '#49185E',
+  green: '#34a853',
+  greenMid: '#1f6a33',
+  greenDark: '#13381d',
   greenDim: 'rgba(74,222,128,0.5)',
   greenBg: 'rgba(74,222,128,0.08)',
-  red: '#f87171',
+  red: '#FB3737',
   redDim: 'rgba(248,113,113,0.5)',
   redBg: 'rgba(248,113,113,0.08)',
+  redBorder: '#662020',
   orange: '#fb923c',
   orangeDim: 'rgba(251,147,60,0.5)',
   orangeBg: 'rgba(251,147,60,0.08)',
@@ -18,101 +22,111 @@ const c = {
   w15: 'rgba(255,255,255,0.15)',
   w08: 'rgba(255,255,255,0.08)',
   w04: 'rgba(255,255,255,0.04)',
-  cardBg: 'rgba(255,255,255,0.05)',
-  cardStroke: 'rgba(255,255,255,0.1)',
+  cardBg: '#1E1B24',
+  cardStroke: '#383838',
+  lineColor: '#262626',
+  questionMark: '#656565',
 }
 
 // ─── Consulting ───────────────────────────────────────────────────────────────
 
 export const IconRouteFork = () => (
-  <svg viewBox="0 0 160 130" fill="none">
-    {/* Center node */}
-    <circle cx="80" cy="68" r="10" fill={c.purpleBg} stroke={c.purple} strokeWidth="1.5" />
-    <circle cx="80" cy="68" r="4" fill={c.purpleDim} />
+  <svg viewBox="0 0 323 228" fill="none">
+    {/* Branch lines */}
+    <rect x="159" y="49" width="4" height="64" fill={c.lineColor} />
+    <rect x="76.2" y="51.03" width="4" height="99.07" transform="rotate(-45 76.2 51.03)" fill={c.lineColor} />
+    <rect x="243.12" y="49.14" width="4" height="97.75" transform="rotate(45 243.12 49.14)" fill={c.lineColor} />
+    {/* Bottom stem */}
+    <rect x="159" y="153" width="4" height="41" fill={c.purpleDark} />
 
-    {/* Top branches */}
-    <path d="M72 62 C60 48, 42 38, 28 30" stroke={c.w3} strokeWidth="1.3" strokeLinecap="round" />
-    <path d="M80 58 C80 44, 80 36, 80 26" stroke={c.w3} strokeWidth="1.3" strokeLinecap="round" />
-    <path d="M88 62 C100 48, 118 38, 132 30" stroke={c.w3} strokeWidth="1.3" strokeLinecap="round" />
+    {/* Center hub */}
+    <circle cx="161" cy="133" r="20" fill={c.purpleBg} />
+    <circle cx="161" cy="133" r="19" stroke={c.purple} strokeOpacity="0.85" strokeWidth="2" fill="none" />
+    <circle cx="161" cy="133" r="9" fill={c.purple} />
+
+    {/* Bottom node */}
+    <circle cx="161" cy="206" r="12" fill={c.purpleBg} />
+    <circle cx="161" cy="206" r="11" stroke={c.purple} strokeOpacity="0.85" strokeWidth="2" fill="none" />
 
     {/* Question nodes */}
-    <circle cx="28" cy="26" r="8" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="1.2" />
-    <text x="28" y="30" textAnchor="middle" fill={c.w3} fontSize="11" fontFamily="system-ui" fontWeight="600">?</text>
-    <circle cx="80" cy="22" r="8" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="1.2" />
-    <text x="80" y="26" textAnchor="middle" fill={c.w3} fontSize="11" fontFamily="system-ui" fontWeight="600">?</text>
-    <circle cx="132" cy="26" r="8" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="1.2" />
-    <text x="132" y="30" textAnchor="middle" fill={c.w3} fontSize="11" fontFamily="system-ui" fontWeight="600">?</text>
-
-    {/* Bottom stem */}
-    <line x1="80" y1="78" x2="80" y2="108" stroke={c.w3} strokeWidth="1.3" strokeLinecap="round" />
-    <circle cx="80" cy="112" r="4" fill={c.purpleBg} stroke={c.purple} strokeWidth="1" strokeOpacity="0.4" />
+    <circle cx="63" cy="37" r="19" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="2" />
+    <text x="63" y="42" textAnchor="middle" fill={c.questionMark} fontSize="16" fontFamily="system-ui" fontWeight="500">?</text>
+    <circle cx="161" cy="29" r="19" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="2" />
+    <text x="161" y="34" textAnchor="middle" fill={c.questionMark} fontSize="16" fontFamily="system-ui" fontWeight="500">?</text>
+    <circle cx="259" cy="37" r="19" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="2" />
+    <text x="259" y="42" textAnchor="middle" fill={c.questionMark} fontSize="16" fontFamily="system-ui" fontWeight="500">?</text>
   </svg>
 )
 
 export const IconBrokenSignal = () => (
-  <svg viewBox="0 0 160 130" fill="none">
-    {/* Grid lines */}
-    <line x1="24" y1="106" x2="140" y2="106" stroke={c.w08} strokeWidth="0.8" />
-    <line x1="24" y1="82" x2="140" y2="82" stroke={c.w04} strokeWidth="0.6" strokeDasharray="3 4" />
-    <line x1="24" y1="58" x2="140" y2="58" stroke={c.w04} strokeWidth="0.6" strokeDasharray="3 4" />
-    <line x1="24" y1="34" x2="140" y2="34" stroke={c.w04} strokeWidth="0.6" strokeDasharray="3 4" />
+  <svg viewBox="0 0 323 228" fill="none">
+    {/* Green solid bars — ascending */}
+    <rect x="52" y="138" width="29" height="48" fill={c.green} />
+    <rect x="89" y="110" width="29" height="72" fill={c.greenMid} />
+    <rect x="126" y="74" width="29" height="106" fill={c.greenDark} />
 
-    {/* Solid bars */}
-    <rect x="30" y="78" width="16" height="28" rx="3" fill={c.purple} fillOpacity="0.7" />
-    <rect x="52" y="62" width="16" height="44" rx="3" fill={c.purple} fillOpacity="0.55" />
-    <rect x="74" y="46" width="16" height="60" rx="3" fill={c.purple} fillOpacity="0.4" />
+    {/* Dashed red-border bars — ghost projections */}
+    <rect x="163" y="52" width="29" height="129" fill="none" stroke={c.redBorder} strokeWidth="1.2" strokeDasharray="4.8 4.8" />
+    <rect x="200" y="32" width="29" height="149" fill="none" stroke={c.redBorder} strokeWidth="1.2" strokeDasharray="4.8 4.8" />
 
-    {/* Dashed/ghost bars */}
-    <rect x="96" y="34" width="16" height="72" rx="3" fill={c.w04} stroke={c.w15} strokeWidth="1" strokeDasharray="4 3" />
-    <rect x="118" y="24" width="16" height="82" rx="3" fill={c.w04} stroke={c.w08} strokeWidth="1" strokeDasharray="4 3" />
-
-    {/* X mark */}
-    <line x1="126" y1="16" x2="134" y2="24" stroke={c.red} strokeWidth="2" strokeLinecap="round" />
-    <line x1="134" y1="16" x2="126" y2="24" stroke={c.red} strokeWidth="2" strokeLinecap="round" />
+    {/* Red X mark */}
+    <circle cx="240" cy="22" r="12.5" fill={c.red} />
+    <path d="M234 16 L246 28 M246 16 L234 28" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
   </svg>
 )
 
 export const IconDisconnectedNodes = () => (
-  <svg viewBox="0 0 160 130" fill="none">
+  <svg viewBox="0 0 323 228" fill="none">
+    {/* Diagonal lines connecting corners through center */}
+    <rect x="31.95" y="34.78" width="4" height="66.87" transform="rotate(-45 31.95 34.78)" fill={c.lineColor} />
+    <rect x="243.12" y="34.78" width="4" height="66.87" transform="rotate(45 243.12 34.78)" fill={c.lineColor} />
+    <rect x="31.95" y="148.78" width="4" height="66.87" transform="rotate(-45 31.95 148.78)" fill={c.lineColor} />
+
+    {/* Top-left node */}
+    <circle cx="26" cy="28" r="19" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="2" />
+    {/* Top-right node */}
+    <circle cx="296" cy="28" r="19" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="2" />
+    {/* Bottom-left node */}
+    <circle cx="26" cy="200" r="19" fill={c.cardBg} stroke={c.cardStroke} strokeWidth="2" />
+
     {/* Center hub */}
-    <circle cx="80" cy="62" r="12" fill={c.purpleBg} stroke={c.purple} strokeWidth="1.5" />
-    <circle cx="80" cy="62" r="5" fill={c.purpleDim} />
+    <circle cx="161" cy="114" r="20" fill={c.purpleBg} />
+    <circle cx="161" cy="114" r="19" stroke={c.purple} strokeOpacity="0.85" strokeWidth="2" fill="none" />
+    <circle cx="161" cy="114" r="9" fill={c.purple} />
 
-    {/* Connected nodes */}
-    <line x1="32" y1="30" x2="70" y2="54" stroke={c.w3} strokeWidth="1.2" />
-    <circle cx="28" cy="26" r="9" fill={c.cardBg} stroke={c.w5} strokeWidth="1.2" />
-
-    <line x1="128" y1="30" x2="90" y2="54" stroke={c.w3} strokeWidth="1.2" />
-    <circle cx="132" cy="26" r="9" fill={c.cardBg} stroke={c.w5} strokeWidth="1.2" />
-
-    <line x1="32" y1="96" x2="70" y2="72" stroke={c.w3} strokeWidth="1.2" />
-    <circle cx="28" cy="100" r="9" fill={c.cardBg} stroke={c.w5} strokeWidth="1.2" />
-
-    {/* Disconnected node */}
-    <line x1="128" y1="96" x2="90" y2="72" stroke={c.red} strokeWidth="1.2" strokeOpacity="0.25" strokeDasharray="4 3" />
-    <circle cx="132" cy="100" r="9" fill={c.cardBg} stroke={c.red} strokeWidth="1.2" strokeDasharray="4 3" strokeOpacity="0.5" />
+    {/* Disconnected node — bottom right */}
+    <line x1="175" y1="128" x2="244" y2="186" stroke={c.lineColor} strokeWidth="4" strokeOpacity="0.3" />
+    <circle cx="260" cy="200" r="19" fill="none" stroke={c.redBorder} strokeWidth="2" strokeDasharray="6 4" />
+    <circle cx="260" cy="200" r="12" fill="none" stroke={c.redBorder} strokeWidth="1.5" strokeOpacity="0.4" strokeDasharray="4 3" />
   </svg>
 )
 
 export const IconFragmentedChecklist = () => (
-  <svg viewBox="0 0 160 130" fill="none">
-    {/* Row 1 — checked */}
-    <rect x="20" y="14" width="20" height="20" rx="5" fill={c.greenBg} stroke={c.green} strokeWidth="1.2" strokeOpacity="0.6" />
-    <path d="M25 24 L29 28 L37 20" stroke={c.green} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    <rect x="48" y="22" width="64" height="5" rx="2.5" fill={c.w3} />
+  <svg viewBox="0 0 323 228" fill="none">
+    {/* Purple launch node */}
+    <circle cx="80" cy="114" r="22" fill={c.purpleBg} />
+    <circle cx="80" cy="114" r="21" stroke={c.purple} strokeOpacity="0.85" strokeWidth="2.2" fill="none" />
+    <circle cx="80" cy="114" r="10" fill={c.purple} />
 
-    {/* Row 2 — checked */}
-    <rect x="20" y="44" width="20" height="20" rx="5" fill={c.greenBg} stroke={c.green} strokeWidth="1.2" strokeOpacity="0.6" />
-    <path d="M25 54 L29 58 L37 50" stroke={c.green} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    <rect x="48" y="52" width="50" height="5" rx="2.5" fill={c.w15} />
+    {/* Dashed red trajectory line */}
+    <line x1="104" y1="114" x2="185" y2="114" stroke={c.red} strokeWidth="4.5" strokeDasharray="4.5 4.5" />
 
-    {/* Row 3 — empty */}
-    <rect x="20" y="74" width="20" height="20" rx="5" fill={c.w04} stroke={c.w15} strokeWidth="1.2" />
-    <rect x="48" y="82" width="42" height="5" rx="2.5" fill={c.w08} />
+    {/* Dark purple base block */}
+    <rect x="166" y="98" width="29" height="48" fill={c.purpleDark} opacity="0.6" />
 
-    {/* Row 4 — missing/broken */}
-    <rect x="20" y="104" width="20" height="20" rx="5" fill={c.redBg} stroke={c.red} strokeWidth="1.2" strokeOpacity="0.35" strokeDasharray="3 3" />
-    <rect x="48" y="112" width="48" height="5" rx="2.5" fill={c.w04} />
+    {/* Shattered red fragments */}
+    <path d="M195 94 L207 94 L207 94 L219 80 L207 80 L195 94Z" fill={c.red} />
+    <path d="M207 78 L218 66 L230 66 L218 78 L207 78Z" fill={c.red} opacity="0.9" />
+    <path d="M220 90 L232 78 L244 78 L232 90 L220 90Z" fill={c.red} opacity="0.85" />
+    <path d="M210 104 L222 92 L234 92 L222 104 L210 104Z" fill={c.red} opacity="0.75" />
+    <path d="M200 118 L212 106 L224 106 L212 118 L200 118Z" fill={c.red} opacity="0.7" />
+    <path d="M228 64 L236 56 L244 56 L236 64 L228 64Z" fill={c.red} opacity="0.65" />
+    <path d="M238 82 L248 72 L258 72 L248 82 L238 82Z" fill={c.red} opacity="0.6" />
+    <path d="M230 100 L240 90 L250 90 L240 100 L230 100Z" fill={c.red} opacity="0.5" />
+    <path d="M222 116 L232 106 L242 106 L232 116 L222 116Z" fill={c.red} opacity="0.45" />
+    <path d="M214 126 L224 116 L234 116 L224 126 L214 126Z" fill={c.red} opacity="0.35" />
+    <path d="M244 60 L250 54 L256 54 L250 60 L244 60Z" fill={c.red} opacity="0.4" />
+    <path d="M252 74 L260 66 L268 66 L260 74 L252 74Z" fill={c.red} opacity="0.3" />
   </svg>
 )
 
