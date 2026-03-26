@@ -1,4 +1,4 @@
-// All homepage content — single source of truth (per 15-content-plan.md)
+﻿// All homepage content — single source of truth (per 15-content-plan.md)
 // Edit text here; never scatter copy across components
 import { t } from '@/shared/i18n'
 
@@ -195,7 +195,7 @@ export const aboutContent = localize({
   label: 'About',
   attribution: '8Blocks Team',
   quote:
-    "\"A token should generate value for the project throughout its entire lifecycle. This is only possible when it's clearly understood why it exists and who truly needs it.\"",
+    'A token should generate value for the project throughout its entire lifecycle. This is only possible when it\'s clearly understood why it exists and who truly needs it.',
   stats: [
     { value: '30+', label: 'token economies designed for projects across multiple industries' },
     { value: '$180M+', label: 'combined capitalization of projects built on our models' },
@@ -588,7 +588,7 @@ export const ctaContent = localize({
   },
 } as const, {
   label: 'Next step',
-  headline: 'If the token has no role,\nthe project has no future.',
+  headline: 'If the token has no purpose, the project has no future.',
   body: 'We define the token’s role and connect it directly to revenue and operations.',
   cta: {
     label: 'Talk to the team',

@@ -53,7 +53,7 @@ export function CtaSection() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
         >
           <a
-            href="https://t.me/eightblocksio8"
+            href={t({ ru: 'https://t.me/eightblocksio8', en: 'https://t.me/Eight_Blocks' })}
             className={styles.tgLink}
             target="_blank"
             rel="noopener noreferrer"
