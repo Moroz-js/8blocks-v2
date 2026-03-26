@@ -48,4 +48,4 @@ const enSocialLinks = [
   { id: 'clutch', label: 'Clutch', href: 'https://clutch.co/profile/8blocks-fzco', icon: '/icons/vc-icon.svg' },
 ] as const
 
-export const socialLinks = lang === 'en' ? enSocialLinks : ruSocialLinks
+export const socialLinks = lang === 'ru' ? ruSocialLinks : enSocialLinks
