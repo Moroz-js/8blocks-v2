@@ -1,6 +1,10 @@
 name: Deploy to Production
 
 on:
+  # Автодеплой при пуше в main (режим soft; hard — только вручную)
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       deploy_mode:
@@ -20,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy RU via SSH
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1.2.5
         env:
           PROJECT_NAME: ${{ secrets.RU_PROJECT_NAME }}
           DATABASE_URI: ${{ secrets.RU_DATABASE_URI }}
@@ -54,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy EN via SSH
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1.2.5
         env:
           PROJECT_NAME: ${{ secrets.EN_PROJECT_NAME }}
           DATABASE_URI: ${{ secrets.EN_DATABASE_URI }}
@@ -88,7 +92,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy AE via SSH
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1.2.5
         env:
           PROJECT_NAME: ${{ secrets.AE_PROJECT_NAME }}
           DATABASE_URI: ${{ secrets.AE_DATABASE_URI }}
