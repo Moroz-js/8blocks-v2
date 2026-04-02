@@ -91,6 +91,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           <LenisProvider>
             <Header />
             <main>{children}</main>
+            <Footer />
           </LenisProvider>
         </MantineProvider>
       </body>
