@@ -1,10 +1,10 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { navLinks } from '@/shared/config/site'
-import { t } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import { Button, Logo } from '@/shared/ui'
 import styles from './Header.module.scss'
 
@@ -45,7 +45,7 @@ export function Header() {
           <div className={styles.actions}>
             <Link href="/contact" className={styles.ctaLink}>
               <Button variant="primary" size="sm" type="button">
-                {t({ ru: 'Связаться с нами', en: 'Contact us' })}
+                {uiStrings.contactUs}
               </Button>
             </Link>
           </div>
@@ -53,11 +53,11 @@ export function Header() {
           <button
             className={`${styles.burger} ${isOpen ? styles.burgerOpen : ''}`}
             onClick={() => setIsOpen((v) => !v)}
-            aria-label={isOpen ? t({ ru: 'Закрыть меню', en: 'Close menu' }) : t({ ru: 'Открыть меню', en: 'Open menu' })}
+            aria-label={isOpen ? uiStrings.menuClose : uiStrings.menuOpen}
             aria-expanded={isOpen}
           >
             <span className={styles.burgerLabel}>
-              {isOpen ? t({ ru: 'Закрыть', en: 'Close' }) : t({ ru: 'Меню', en: 'Menu' })}
+              {isOpen ? uiStrings.menuCloseLabel : uiStrings.menuLabel}
             </span>
             <span className={styles.burgerLines} aria-hidden="true">
               <span />
@@ -97,7 +97,7 @@ export function Header() {
               onClick={() => setIsOpen(false)}
             >
               <Button variant="primary" size="lg" fullWidth type="button">
-                {t({ ru: 'Связаться с нами', en: 'Contact us' })}
+                {uiStrings.contactUs}
               </Button>
             </Link>
           </div>

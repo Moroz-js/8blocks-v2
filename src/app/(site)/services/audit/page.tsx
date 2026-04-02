@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { auditContent } from '@/shared/content/audit'
+import { auditContent, auditMeta } from '@/shared/content/audit'
 import { ServiceHero } from '@/widgets/ServiceHero'
 import { ProblemBlock } from '@/widgets/ProblemBlock'
 import { SolutionBlock } from '@/widgets/SolutionBlock'
@@ -10,32 +10,22 @@ import { AuditOutputBlock } from '@/widgets/AuditOutputBlock'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
-import { t } from '@/shared/i18n'
 
-const { hero, problem, solution, faq, whatWeAnalyze, falseAssumptions, whatYouGet } = auditContent
+const { hero, problem, solution, faq, whatWeAnalyze, falseAssumptions, whatYouGet, cta } = auditContent
 
 export const metadata: Metadata = {
-  title: t({ ru: 'Аудит токеномики', en: 'Tokenomics Audit' }),
-  description: t({
-    ru: 'Полная оценка существующей токен-экономики: структурные риски, нарушенные циклы стимулов, узкие места масштабирования.',
-    en: 'Full assessment of an existing token economy: structural risks, broken incentive loops, and scaling bottlenecks.',
-  }),
+  title: auditMeta.title,
+  description: auditMeta.description,
   alternates: { canonical: `${siteConfig.url.replace(/\/$/, '')}/services/audit` },
   openGraph: {
-    title: `${t({ ru: 'Аудит токеномики', en: 'Tokenomics Audit' })} | 8Blocks`,
-    description: t({
-      ru: 'Полная оценка существующей токен-экономики: структурные риски и узкие места масштабирования.',
-      en: 'Comprehensive token economy assessment with structural risks and growth bottlenecks.',
-    }),
+    title: auditMeta.ogTitle,
+    description: auditMeta.ogDescription,
     url: '/services/audit',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${t({ ru: 'Аудит токеномики', en: 'Tokenomics Audit' })} | 8Blocks`,
-    description: t({
-      ru: 'Полная оценка существующей токен-экономики.',
-      en: 'Comprehensive review of your existing token economy.',
-    }),
+    title: auditMeta.twitterTitle,
+    description: auditMeta.twitterDescription,
   },
 }
 
@@ -78,14 +68,9 @@ export default function AuditPage() {
       />
       <TokenomicsTestBlock />
       <ServiceCtaBlock
-        headline={
-          t({
-            ru: <>Перед запуском лучше услышать неудобные выводы от экспертов.<br />Чем потом от инвесторов и рынка.</>,
-            en: <>It is better to hear hard truths from experts before launch.<br />Than later from investors and the market.</>,
-          })
-        }
-        ctaLabel={t({ ru: 'Записаться на консультацию', en: 'Book a consultation' })}
-        ctaHref="/contact"
+        headline={<>{cta.headlineLine1}<br />{cta.headlineLine2}</>}
+        ctaLabel={cta.ctaLabel}
+        ctaHref={cta.ctaHref}
       />
       <FaqAccordion headline={faq.headline} items={faq.items} />
     </>

@@ -1,6 +1,7 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import Image from 'next/image'
-import { lang, t } from '@/shared/i18n'
+import { lang } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import type { ArticleCard as ArticleCardType } from './types'
 import styles from './ArticleCard.module.scss'
 
@@ -82,10 +83,10 @@ export function ArticleCard({ article, index = 0, priority = false }: Props) {
       {/* Footer */}
       <div className={styles.footer}>
         {article.readingTime && (
-          <span className={styles.readingTime}>{article.readingTime} {t({ ru: 'мин', en: 'min' })}</span>
+          <span className={styles.readingTime}>{article.readingTime} {uiStrings.minutes}</span>
         )}
         <Link href={href} className={styles.readLink}>
-          {t({ ru: 'Читать', en: 'Read' })}
+          {uiStrings.read}
           <span className={styles.readArrow} aria-hidden="true">→</span>
         </Link>
       </div>

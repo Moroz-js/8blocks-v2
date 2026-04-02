@@ -16,32 +16,103 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - target: ru
+            ssh_host: ${{ secrets.RU_SSH_HOST }}
+            ssh_user: ${{ secrets.RU_SSH_USER }}
+            ssh_port: ${{ secrets.RU_SSH_PORT }}
+            ssh_key: ${{ secrets.RU_SSH_KEY }}
+            project_name: ${{ secrets.RU_PROJECT_NAME }}
+            database_uri: ${{ secrets.RU_DATABASE_URI }}
+            payload_secret: ${{ secrets.RU_PAYLOAD_SECRET }}
+            admin_email: ${{ secrets.RU_ADMIN_EMAIL }}
+            admin_password: ${{ secrets.RU_ADMIN_PASSWORD }}
+            smtp_host: ${{ secrets.RU_SMTP_HOST }}
+            smtp_port: ${{ secrets.RU_SMTP_PORT }}
+            smtp_secure: ${{ secrets.RU_SMTP_SECURE }}
+            smtp_user: ${{ secrets.RU_SMTP_USER }}
+            smtp_password: ${{ secrets.RU_SMTP_PASSWORD }}
+            smtp_from: ${{ secrets.RU_SMTP_FROM }}
+            next_public_site_url: ${{ secrets.RU_NEXT_PUBLIC_SITE_URL }}
+            next_public_gtm_id: ${{ secrets.RU_NEXT_PUBLIC_GTM_ID }}
+            next_public_lang: ${{ secrets.RU_LANG }}
+            next_public_replain_id: ${{ secrets.RU_NEXT_PUBLIC_REPLAIN_ID }}
+            next_public_calendly_url: ${{ secrets.RU_NEXT_PUBLIC_CALENDLY_URL }}
+          - target: en
+            ssh_host: ${{ secrets.EN_SSH_HOST }}
+            ssh_user: ${{ secrets.EN_SSH_USER }}
+            ssh_port: ${{ secrets.EN_SSH_PORT }}
+            ssh_key: ${{ secrets.EN_SSH_KEY }}
+            project_name: ${{ secrets.EN_PROJECT_NAME }}
+            database_uri: ${{ secrets.EN_DATABASE_URI }}
+            payload_secret: ${{ secrets.EN_PAYLOAD_SECRET }}
+            admin_email: ${{ secrets.EN_ADMIN_EMAIL }}
+            admin_password: ${{ secrets.EN_ADMIN_PASSWORD }}
+            smtp_host: ${{ secrets.EN_SMTP_HOST }}
+            smtp_port: ${{ secrets.EN_SMTP_PORT }}
+            smtp_secure: ${{ secrets.EN_SMTP_SECURE }}
+            smtp_user: ${{ secrets.EN_SMTP_USER }}
+            smtp_password: ${{ secrets.EN_SMTP_PASSWORD }}
+            smtp_from: ${{ secrets.EN_SMTP_FROM }}
+            next_public_site_url: ${{ secrets.EN_NEXT_PUBLIC_SITE_URL }}
+            next_public_gtm_id: ${{ secrets.EN_NEXT_PUBLIC_GTM_ID }}
+            next_public_lang: ${{ secrets.EN_LANG }}
+            next_public_replain_id: ${{ secrets.EN_NEXT_PUBLIC_REPLAIN_ID }}
+            next_public_calendly_url: ${{ secrets.EN_NEXT_PUBLIC_CALENDLY_URL }}
+          - target: ae
+            ssh_host: ${{ secrets.AE_SSH_HOST }}
+            ssh_user: ${{ secrets.AE_SSH_USER }}
+            ssh_port: ${{ secrets.AE_SSH_PORT }}
+            ssh_key: ${{ secrets.AE_SSH_KEY }}
+            project_name: ${{ secrets.AE_PROJECT_NAME }}
+            database_uri: ${{ secrets.AE_DATABASE_URI }}
+            payload_secret: ${{ secrets.AE_PAYLOAD_SECRET }}
+            admin_email: ${{ secrets.AE_ADMIN_EMAIL }}
+            admin_password: ${{ secrets.AE_ADMIN_PASSWORD }}
+            smtp_host: ${{ secrets.AE_SMTP_HOST }}
+            smtp_port: ${{ secrets.AE_SMTP_PORT }}
+            smtp_secure: ${{ secrets.AE_SMTP_SECURE }}
+            smtp_user: ${{ secrets.AE_SMTP_USER }}
+            smtp_password: ${{ secrets.AE_SMTP_PASSWORD }}
+            smtp_from: ${{ secrets.AE_SMTP_FROM }}
+            next_public_site_url: ${{ secrets.AE_NEXT_PUBLIC_SITE_URL }}
+            next_public_gtm_id: ${{ secrets.AE_NEXT_PUBLIC_GTM_ID }}
+            next_public_lang: ${{ secrets.AE_LANG }}
+            next_public_replain_id: ${{ secrets.AE_NEXT_PUBLIC_REPLAIN_ID }}
+            next_public_calendly_url: ${{ secrets.AE_NEXT_PUBLIC_CALENDLY_URL }}
 
     steps:
-      - name: Deploy via SSH
+      - name: Deploy ${{ matrix.target }} via SSH
         uses: appleboy/ssh-action@v1.0.0
         env:
-          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
-          DATABASE_URI: ${{ secrets.DATABASE_URI }}
-          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          SMTP_HOST: ${{ secrets.SMTP_HOST }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_SECURE: ${{ secrets.SMTP_SECURE }}
-          SMTP_USER: ${{ secrets.SMTP_USER }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          SMTP_FROM: ${{ secrets.SMTP_FROM }}
-          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
-          NEXT_PUBLIC_GTM_ID: ${{ secrets.NEXT_PUBLIC_GTM_ID }}
+          PROJECT_NAME: ${{ matrix.project_name }}
+          DATABASE_URI: ${{ matrix.database_uri }}
+          PAYLOAD_SECRET: ${{ matrix.payload_secret }}
+          ADMIN_EMAIL: ${{ matrix.admin_email }}
+          ADMIN_PASSWORD: ${{ matrix.admin_password }}
+          SMTP_HOST: ${{ matrix.smtp_host }}
+          SMTP_PORT: ${{ matrix.smtp_port }}
+          SMTP_SECURE: ${{ matrix.smtp_secure }}
+          SMTP_USER: ${{ matrix.smtp_user }}
+          SMTP_PASSWORD: ${{ matrix.smtp_password }}
+          SMTP_FROM: ${{ matrix.smtp_from }}
+          NEXT_PUBLIC_SITE_URL: ${{ matrix.next_public_site_url }}
+          NEXT_PUBLIC_GTM_ID: ${{ matrix.next_public_gtm_id }}
+          NEXT_PUBLIC_LANG: ${{ matrix.next_public_lang }}
+          NEXT_PUBLIC_REPLAIN_ID: ${{ matrix.next_public_replain_id }}
+          NEXT_PUBLIC_CALENDLY_URL: ${{ matrix.next_public_calendly_url }}
           DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
+          host: ${{ matrix.ssh_host }}
+          username: ${{ matrix.ssh_user }}
+          key: ${{ matrix.ssh_key }}
+          port: ${{ matrix.ssh_port || 22 }}
           command_timeout: 25m
-          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,DEPLOY_MODE
+          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL,DEPLOY_MODE
           script: |
             set -euo pipefail
 
@@ -94,6 +165,9 @@ jobs:
               "SMTP_FROM=${SMTP_FROM}" \
               "NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}" \
               "NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}" \
+              "NEXT_PUBLIC_LANG=${NEXT_PUBLIC_LANG}" \
+              "NEXT_PUBLIC_REPLAIN_ID=${NEXT_PUBLIC_REPLAIN_ID}" \
+              "NEXT_PUBLIC_CALENDLY_URL=${NEXT_PUBLIC_CALENDLY_URL}" \
               > .env
             chmod 600 .env
             echo "✓ .env written"

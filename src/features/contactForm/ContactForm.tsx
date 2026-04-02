@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
-import { t } from '@/shared/i18n'
+import { contactFormContent } from '@/shared/content/contactPage'
 import styles from './ContactForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -31,13 +31,13 @@ export function ContactForm() {
       const data = await res.json() as { success?: boolean; error?: string }
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || t({ ru: 'Не удалось отправить', en: 'Failed to send' }))
+        throw new Error(data.error || contactFormContent.failedError)
       }
 
       setStatus('success')
     } catch (err) {
       setStatus('error')
-      setErrorMsg(err instanceof Error ? err.message : t({ ru: 'Не удалось отправить', en: 'Failed to send' }))
+      setErrorMsg(err instanceof Error ? err.message : contactFormContent.failedError)
     }
   }
 
@@ -45,8 +45,8 @@ export function ContactForm() {
     return (
       <div className={styles.success} role="status" aria-live="polite">
         <div className={styles.successIcon} aria-hidden="true">✓</div>
-        <p className={styles.successTitle}>{t({ ru: 'Сообщение отправлено', en: 'Message sent' })}</p>
-        <p className={styles.successBody}>{t({ ru: 'Мы ответим в течение одного рабочего дня.', en: "We'll respond within one business day." })}</p>
+        <p className={styles.successTitle}>{contactFormContent.successTitle}</p>
+        <p className={styles.successBody}>{contactFormContent.successBody}</p>
       </div>
     )
   }
@@ -55,13 +55,13 @@ export function ContactForm() {
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.row}>
         <div className={styles.field}>
-          <label htmlFor="cf-name" className={styles.label}>{t({ ru: 'Имя', en: 'Name' })}</label>
+          <label htmlFor="cf-name" className={styles.label}>{contactFormContent.nameLabel}</label>
           <input
             id="cf-name"
             name="name"
             type="text"
             className={styles.input}
-            placeholder={t({ ru: 'Иван Иванов', en: 'John Doe' })}
+            placeholder={contactFormContent.namePlaceholder}
             required
             autoComplete="name"
           />
@@ -81,12 +81,12 @@ export function ContactForm() {
       </div>
 
       <div className={`${styles.field} ${styles.fieldGrow}`}>
-        <label htmlFor="cf-message" className={styles.label}>{t({ ru: 'Сообщение', en: 'Message' })}</label>
+        <label htmlFor="cf-message" className={styles.label}>{contactFormContent.messageLabel}</label>
         <textarea
           id="cf-message"
           name="message"
           className={styles.textarea}
-          placeholder={t({ ru: 'Расскажите о проекте и что вы ищете', en: 'Tell us about your project and what you are looking for' })}
+          placeholder={contactFormContent.messagePlaceholder}
           rows={4}
           required
         />
@@ -105,11 +105,11 @@ export function ContactForm() {
         {status === 'loading' ? (
           <>
             <span className={styles.spinner} aria-hidden="true" />
-            {t({ ru: 'Отправка…', en: 'Sending…' })}
+            {contactFormContent.sendingLabel}
           </>
         ) : (
           <>
-            {t({ ru: 'Оставить заявку', en: 'Submit request' })}
+            {contactFormContent.submitLabel}
             <span className={styles.submitArrow} aria-hidden="true">→</span>
           </>
         )}

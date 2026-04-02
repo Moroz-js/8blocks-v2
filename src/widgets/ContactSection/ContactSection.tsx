@@ -1,5 +1,5 @@
 import { siteConfig } from '@/shared/config/site'
-import { t } from '@/shared/i18n'
+import { contactPageContent } from '@/shared/content/contactPage'
 import { ContactForm } from '@/features/contactForm'
 import styles from './ContactSection.module.scss'
 
@@ -11,18 +11,15 @@ export function ContactSection() {
           <div className={styles.leftCol}>
             <span className={styles.formLabel}>
               <span className={styles.labelBracket}>[</span>
-              {t({ ru: 'Контакт', en: 'Contact' })}
+              {contactPageContent.section.label}
               <span className={styles.labelBracket}>]</span>
             </span>
             <h1 id="contact-heading" className={styles.formHeadline}>
-              {t({ ru: 'Обсудим', en: "Let's discuss" })}<br />
-              <span className={styles.formHeadlineAccent}>{t({ ru: 'ваш проект', en: 'your project' })}</span>
+              {contactPageContent.section.headline}<br />
+              <span className={styles.formHeadlineAccent}>{contactPageContent.section.headlineAccent}</span>
             </h1>
             <p className={styles.formDescription}>
-              {t({
-                ru: 'Расскажите нам о своей задаче — мы ответим в течение одного рабочего дня и предложим формат сотрудничества.',
-                en: "Tell us about your challenge — we'll respond within one business day and suggest a collaboration format.",
-              })}
+              {contactPageContent.section.description}
             </p>
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
@@ -33,7 +30,7 @@ export function ContactSection() {
                   </svg>
                 </span>
                 <div>
-                  <p className={styles.contactTitle}>Email</p>
+                  <p className={styles.contactTitle}>{contactPageContent.section.emailLabel}</p>
                   <a href={`mailto:${siteConfig.email}`} className={styles.contactLink}>
                     {siteConfig.email}
                   </a>
@@ -50,7 +47,7 @@ export function ContactSection() {
                   </svg>
                 </span>
                 <div>
-                  <p className={styles.contactTitle}>Phone</p>
+                  <p className={styles.contactTitle}>{contactPageContent.section.phoneLabel}</p>
                   <a href={`tel:${siteConfig.phone.replace(/[^\d+]/g, '')}`} className={styles.contactLink}>
                     {siteConfig.phone}
                   </a>
@@ -68,7 +65,7 @@ export function ContactSection() {
                   </svg>
                 </span>
                 <div>
-                  <p className={styles.contactTitle}>Office</p>
+                  <p className={styles.contactTitle}>{contactPageContent.section.officeLabel}</p>
                   <p className={styles.contactText}>{siteConfig.address}</p>
                   <a
                     href={siteConfig.addressUrl}
@@ -76,7 +73,7 @@ export function ContactSection() {
                     rel="noreferrer"
                     className={styles.contactLink}
                   >
-                    {t({ ru: 'Маршрут', en: 'Get Directions' })}
+                    {contactPageContent.section.directionsLabel}
                   </a>
                 </div>
               </li>

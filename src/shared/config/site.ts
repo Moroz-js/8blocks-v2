@@ -1,12 +1,21 @@
 import { lang, t } from '@/shared/i18n'
 
+/** Canonical и metadataBase всегда с https, даже если в env указан http:// */
+function siteUrlWithHttps(raw: string): string {
+  const trimmed = raw.trim() || 'https://8blocks.io'
+  if (/^http:\/\//i.test(trimmed)) {
+    return `https://${trimmed.slice(7)}`
+  }
+  return trimmed
+}
+
 export const siteConfig = {
   name: '8Blocks',
   description: t({
     ru: 'Токен-экономики, которые усиливают бизнес',
     en: 'Token economies that power the business',
   }),
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io',
+  url: siteUrlWithHttps(process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io'),
   email: t({ ru: 'hi@токеномика.рф', en: 'hi@8blocks.io' }),
   legalName: '8BLOCKS FZCO',
   phone: '+971 56 286 5188',

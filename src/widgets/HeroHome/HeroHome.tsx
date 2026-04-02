@@ -2,17 +2,16 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { heroContent } from '@/shared/content/homePage'
-import { t } from '@/shared/i18n'
+import { heroContent, heroMarqueeItems } from '@/shared/content/homePage'
 import { HeroCanvas } from './HeroCanvas'
 import styles from './HeroHome.module.scss'
 
 const ease = 'easeOut' as const
 
 const MARQUEE_ITEMS = [
-  t({ ru: 'Токеномика', en: 'Tokenomics' }), '·', t({ ru: 'Стратегический консалтинг', en: 'Strategic consulting' }), '·',
-  t({ ru: 'Базовая токеномика', en: 'Basic tokenomics' }), '·', t({ ru: 'Аудит токеномики', en: 'Tokenomics audit' }), '·',
-  'Web3', '·', t({ ru: 'Токен-экономика', en: 'Token economy' }), '·', 'DeFi', '·', 'GameFi', '·',
+  heroMarqueeItems[0], '·', heroMarqueeItems[1], '·',
+  heroMarqueeItems[2], '·', heroMarqueeItems[3], '·',
+  'Web3', '·', heroMarqueeItems[4], '·', 'DeFi', '·', 'GameFi', '·',
 ]
 
 export function HeroHome() {

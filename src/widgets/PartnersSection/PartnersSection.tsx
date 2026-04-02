@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import Image from 'next/image'
 import { partnersContent } from '@/shared/content/homePage'
-import { t } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import styles from './PartnersSection.module.scss'
 
 export function PartnersSection() {
@@ -11,7 +11,7 @@ export function PartnersSection() {
   const items = [...base, ...base, ...base, ...base]
 
   return (
-    <section className={styles.section} id="partners" aria-label={t({ ru: 'Партнёры', en: 'Partners' })}>
+    <section className={styles.section} id="partners" aria-label={uiStrings.partnersAriaLabel}>
       <div className={styles.marqueeWrap}>
         <div className={styles.track} aria-hidden="true">
           {items.map((partner, i) => {

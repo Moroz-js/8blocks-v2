@@ -100,6 +100,11 @@
       grid-column: 7 / 13;
     }
   }
+
+  .cardTitle,
+  .cardDescription {
+    white-space: pre-line;
+  }
 }
 
 // ─── Audit layout ─────────────────────────────────────────────────────────────
@@ -135,6 +140,11 @@
       grid-column: 14 / 25;
     }
   }
+
+  .cardTitle,
+  .cardDescription {
+    white-space: pre-line;
+  }
 }
 
 // ─── Tokenomics layout ────────────────────────────────────────────────────────
@@ -169,6 +179,11 @@
     > *:nth-child(4) {
       grid-column: 6 / 13;
     }
+  }
+
+  .cardTitle,
+  .cardDescription {
+    white-space: pre-line;
   }
 }
 

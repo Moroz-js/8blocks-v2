@@ -17,7 +17,8 @@ function ArrowRight() {
 }
 import type { ArticleCard as ArticleCardType, CategoryRef } from '@/entities/article'
 import { ArticleCardUI } from '@/entities/article'
-import { t, lang } from '@/shared/i18n'
+import { lang } from '@/shared/i18n'
+import { blogArchiveContent } from '@/shared/content/blogPage'
 import styles from './BlogArchive.module.scss'
 
 interface Props {
@@ -50,6 +51,15 @@ export function BlogArchive({
     return `${paginationBase}?page=${page}`
   }
 
+  function articleCountLabel(count: number) {
+    if (lang === 'ru') {
+      if (count === 1) return blogArchiveContent.articleSingular
+      if (count >= 2 && count <= 4) return blogArchiveContent.articleFew
+      return blogArchiveContent.articleMany
+    }
+    return count === 1 ? blogArchiveContent.articleSingular : blogArchiveContent.articleMany
+  }
+
   return (
     <div className={styles.root}>
       {/* ── Page header ───────────────────────────────────────── */}
@@ -57,30 +67,27 @@ export function BlogArchive({
         <div className={styles.pageHeaderInner}>
           <span className={styles.label}>
             <span className={styles.labelBracket}>[</span>
-            {isCategory ? t({ ru: 'Категория', en: 'Category' }) : t({ ru: 'Блог', en: 'Blog' })}
+            {isCategory ? blogArchiveContent.labelCategory : blogArchiveContent.labelBlog}
             <span className={styles.labelBracket}>]</span>
           </span>
           <h1 className={styles.headline}>
-            {isCategory ? categoryTitle : t({ ru: 'Статьи и материалы', en: 'Articles and insights' })}
+            {isCategory ? categoryTitle : blogArchiveContent.articlesAndInsights}
           </h1>
           {totalDocs > 0 && (
             <p className={styles.count}>
-              {totalDocs}{' '}
-              {lang === 'ru'
-                ? (totalDocs === 1 ? 'статья' : totalDocs >= 2 && totalDocs <= 4 ? 'статьи' : 'статей')
-                : (totalDocs === 1 ? 'article' : 'articles')}
+              {totalDocs} {articleCountLabel(totalDocs)}
             </p>
           )}
         </div>
 
         {/* ── Category filter ───────────────────────────────────── */}
         {categories.length > 0 && (
-          <nav className={styles.categoryNav} aria-label={t({ ru: 'Фильтр по категории', en: 'Filter by category' })}>
+          <nav className={styles.categoryNav} aria-label={blogArchiveContent.filterByCategory}>
             <Link
               href="/blog"
               className={`${styles.catChip} ${!activeCategory ? styles.catChipActive : ''}`}
             >
-              {t({ ru: 'Все', en: 'All' })}
+              {blogArchiveContent.filterAll}
             </Link>
             {categories.map((cat) => (
               <Link
@@ -109,19 +116,19 @@ export function BlogArchive({
         </div>
       ) : (
         <div className={styles.empty}>
-          <p className={styles.emptyText}>{t({ ru: 'В этой категории пока нет статей.', en: 'No articles in this category yet.' })}</p>
-          <p className={styles.emptyHint}>{t({ ru: 'Загляните позже.', en: 'Please check back later.' })}</p>
+          <p className={styles.emptyText}>{blogArchiveContent.emptyCategory}</p>
+          <p className={styles.emptyHint}>{blogArchiveContent.emptyHint}</p>
         </div>
       )}
 
       {/* ── Pagination ────────────────────────────────────────── */}
       {totalPages > 1 && (
-        <nav className={styles.pagination} aria-label={t({ ru: 'Навигация по страницам', en: 'Pagination' })}>
+        <nav className={styles.pagination} aria-label={blogArchiveContent.paginationAriaLabel}>
           {currentPage > 1 && (
             <Link
               href={pageHref(currentPage - 1)}
               className={styles.pageArrow}
-              aria-label={t({ ru: 'Предыдущая страница', en: 'Previous page' })}
+              aria-label={blogArchiveContent.prevPage}
             >
               <ArrowLeft />
             </Link>
@@ -148,7 +155,7 @@ export function BlogArchive({
             <Link
               href={pageHref(currentPage + 1)}
               className={styles.pageArrow}
-              aria-label={t({ ru: 'Следующая страница', en: 'Next page' })}
+              aria-label={blogArchiveContent.nextPage}
             >
               <ArrowRight />
             </Link>

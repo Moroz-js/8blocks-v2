@@ -1,9 +1,9 @@
-'use client'
+﻿'use client'
 
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import Image from 'next/image'
-import { t } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import { aboutContent, teamContent } from '@/shared/content/homePage'
 import styles from './AboutSection.module.scss'
 
@@ -28,7 +28,7 @@ function AnimatedStat({ value, label }: { value: string; label: string }) {
 
 export function AboutSection() {
   return (
-    <section className={styles.section} aria-label={t({ ru: 'О компании', en: 'About the company' })}>
+    <section className={styles.section} aria-label={uiStrings.aboutAriaLabel}>
       <div className={styles.inner}>
         {/* Left: label + quote */}
         <motion.div

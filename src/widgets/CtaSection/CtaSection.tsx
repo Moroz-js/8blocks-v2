@@ -1,8 +1,8 @@
-'use client'
+﻿'use client'
 
 import { motion } from 'framer-motion'
 import { ctaContent } from '@/shared/content/homePage'
-import { t } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import { ScrollRevealText } from '@/shared/ui'
 import styles from './CtaSection.module.scss'
 
@@ -10,7 +10,7 @@ const CTA_REVEAL_TEXT = ctaContent.headline.replace('\n', ' ')
 
 export function CtaSection() {
   return (
-    <section className={styles.section} aria-label={t({ ru: 'Призыв к действию', en: 'Call to action' })}>
+    <section className={styles.section} aria-label={uiStrings.ctaAriaLabel}>
       <div className={styles.inner}>
         {/* Left: text */}
         <div className={styles.textCol}>
@@ -53,11 +53,11 @@ export function CtaSection() {
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
         >
           <a
-            href={t({ ru: 'https://t.me/eightblocksio8', en: 'https://t.me/Eight_Blocks' })}
+            href={uiStrings.ctaTelegramHref}
             className={styles.tgLink}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={t({ ru: 'Напишите нам в Telegram', en: 'Message us on Telegram' })}
+            aria-label={uiStrings.ctaTelegramLabel}
           >
             <div className={styles.tgGlow} aria-hidden="true" />
             <span className={styles.tgIcon} aria-hidden="true">
@@ -65,7 +65,7 @@ export function CtaSection() {
                 <path d="M11.3 16.4l-.4 5.3c.6 0 .8-.3 1.1-.6l2.7-2.6 5.6 4.1c1 .6 1.8.3 2-.9l3.6-17c.4-1.5-.5-2.1-1.5-1.7L1.9 11.2c-1.5.6-1.4 1.4-.3 1.8l5.7 1.8 13.3-8.4c.6-.4 1.2-.2.7.3L11.3 16.4z" fill="white"/>
               </svg>
             </span>
-            <span className={styles.tgLabel}>{t({ ru: 'Напишите нам в Telegram', en: 'Message us on Telegram' })}</span>
+            <span className={styles.tgLabel}>{uiStrings.ctaTelegramLabel}</span>
           </a>
         </motion.div>
       </div>

@@ -7,31 +7,21 @@ import { TokenFilterBlock } from '@/widgets/TokenFilterBlock'
 import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
 import { Container } from '@/shared/ui'
-import { servicesPageContent, servicesFaqContent } from '@/shared/content/homePage'
-import { t } from '@/shared/i18n'
+import { servicesPageContent, servicesFaqContent, servicesMeta } from '@/shared/content/homePage'
 
 export const metadata: Metadata = {
-  title: t({ ru: 'Услуги', en: 'Services' }),
-  description: t({
-    ru: 'Стратегический консалтинг, проектирование и аудит токеномики. Помогаем Web3-проектам создавать и восстанавливать работающие токен-экономики.',
-    en: 'Strategic consulting, tokenomics design and audit. We help Web3 projects build and fix working token economies.',
-  }),
+  title: servicesMeta.title,
+  description: servicesMeta.description,
   alternates: { canonical: '/services' },
   openGraph: {
-    title: `${t({ ru: 'Услуги', en: 'Services' })} | 8Blocks`,
-    description: t({
-      ru: 'Стратегический консалтинг, проектирование и аудит токеномики.',
-      en: 'Strategic consulting, tokenomics design, and audits.',
-    }),
+    title: `${servicesMeta.title} | 8Blocks`,
+    description: servicesMeta.ogDescription,
     url: '/services',
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${t({ ru: 'Услуги', en: 'Services' })} | 8Blocks`,
-    description: t({
-      ru: 'Стратегический консалтинг, проектирование и аудит токеномики.',
-      en: 'Strategic consulting, tokenomics design, and audits.',
-    }),
+    title: `${servicesMeta.title} | 8Blocks`,
+    description: servicesMeta.ogDescription,
   },
 }
 

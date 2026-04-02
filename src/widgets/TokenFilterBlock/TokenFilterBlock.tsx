@@ -1,9 +1,9 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { tokenFilterContent } from '@/shared/content/homePage'
-import { t } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import styles from './TokenFilterBlock.module.scss'
 
 const ease = 'easeOut' as const
@@ -12,7 +12,7 @@ export function TokenFilterBlock() {
   const { headline, subtitle, ctaLabel, ctaHref } = tokenFilterContent
 
   return (
-    <section className={styles.section} aria-label={t({ ru: 'Фильтр токенов', en: 'Token filter' })}>
+    <section className={styles.section} aria-label={uiStrings.tokenFilterAriaLabel}>
       <motion.div
         className={styles.inner}
         initial={{ opacity: 0, y: 20 }}

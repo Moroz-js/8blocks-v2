@@ -1,10 +1,11 @@
-import Image from 'next/image'
+﻿import Image from 'next/image'
 import type { Article, ArticleCard } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
 import { RichText } from '@/shared/render'
 import { buildToc } from '@/shared/lib/buildToc'
-import { lang, t } from '@/shared/i18n'
+import { lang } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import { ArticleViewTracker } from '@/features/articleView'
 import { ShareBlock } from '@/features/shareBlock'
 import { RelatedArticles } from '@/widgets/RelatedArticles'
@@ -58,7 +59,7 @@ export function ArticlePage({ article, relatedArticles = [] }: Props) {
               <span className={styles.metaSep}>·</span>
             </>
           )}
-          <span className={styles.readingTime}>{readingTime} {t({ ru: 'мин', en: 'min' })}</span>
+          <span className={styles.readingTime}>{readingTime} {uiStrings.minutes}</span>
         </div>
       </header>
 

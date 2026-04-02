@@ -1,6 +1,6 @@
-import type { ArticleCard } from '@/entities/article'
+﻿import type { ArticleCard } from '@/entities/article'
 import { ArticleCardUI } from '@/entities/article'
-import { t } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import styles from './RelatedArticles.module.scss'
 
 interface Props {
@@ -14,7 +14,7 @@ export function RelatedArticles({ articles }: Props) {
     <section className={styles.root}>
       <p className={styles.label}>
         <span className={styles.bracket}>[</span>
-        {t({ ru: 'Читать ещё', en: 'Read more' })}
+        {uiStrings.readMore}
         <span className={styles.bracket}>]</span>
       </p>
       <div className={styles.grid}>

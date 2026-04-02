@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
-import { t } from '@/shared/i18n'
+import { uiStrings } from '@/shared/content/uiStrings'
 import styles from './ShareBlock.module.scss'
 
 interface Props {
@@ -89,25 +89,25 @@ export function ShareBlock({ url, title }: Props) {
   const links = [
     {
       id: 'x',
-      label: t({ ru: 'Поделиться в X', en: 'Share on X' }),
+      label: uiStrings.shareOnX,
       href: `https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
       icon: <IconX />,
     },
     {
       id: 'facebook',
-      label: t({ ru: 'Поделиться в Facebook', en: 'Share on Facebook' }),
+      label: uiStrings.shareOnFacebook,
       href: `https://www.facebook.com/sharer/sharer.php?u=${encoded}`,
       icon: <IconFacebook />,
     },
     {
       id: 'telegram',
-      label: t({ ru: 'Поделиться в Telegram', en: 'Share on Telegram' }),
+      label: uiStrings.shareOnTelegram,
       href: `https://t.me/share/url?url=${encoded}&text=${encodedTitle}`,
       icon: <IconTelegram />,
     },
     {
       id: 'linkedin',
-      label: t({ ru: 'Поделиться в LinkedIn', en: 'Share on LinkedIn' }),
+      label: uiStrings.shareOnLinkedIn,
       href: `https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`,
       icon: <IconLinkedIn />,
     },
@@ -115,13 +115,13 @@ export function ShareBlock({ url, title }: Props) {
 
   return (
     <div className={styles.root}>
-      <p className={styles.label}>{t({ ru: 'Поделиться', en: 'Share' })}</p>
+      <p className={styles.label}>{uiStrings.share}</p>
       <div className={styles.buttons}>
         <button
           className={`${styles.btn} ${copied ? styles.copied : ''}`}
           onClick={handleCopy}
-          aria-label={t({ ru: 'Копировать ссылку', en: 'Copy link' })}
-          title={t({ ru: 'Копировать ссылку', en: 'Copy link' })}
+          aria-label={uiStrings.copyLink}
+          title={uiStrings.copyLink}
         >
           {copied ? <IconCheck /> : <IconLink />}
         </button>

@@ -62,7 +62,7 @@ function StackCard({ item, index }: {
 
 export function BenefitsSection() {
   return (
-    <section className={styles.section} aria-label="Преимущества">
+    <section className={styles.section} aria-label={benefitsContent.ariaLabel}>
       <div className={styles.stack}>
         <div className={styles.header}>
           <motion.span
