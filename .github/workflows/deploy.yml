@@ -12,218 +12,106 @@ on:
           - soft
           - hard
 
+# В matrix нельзя ссылаться на secrets — три параллельных job.
 jobs:
-  deploy:
+  deploy-ru:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      max-parallel: 3
-      matrix:
-        include:
-          - target: ru
-            ssh_host: ${{ secrets.RU_SSH_HOST }}
-            ssh_user: ${{ secrets.RU_SSH_USER }}
-            ssh_port: ${{ secrets.RU_SSH_PORT }}
-            ssh_key: ${{ secrets.RU_SSH_KEY }}
-            project_name: ${{ secrets.RU_PROJECT_NAME }}
-            database_uri: ${{ secrets.RU_DATABASE_URI }}
-            payload_secret: ${{ secrets.RU_PAYLOAD_SECRET }}
-            admin_email: ${{ secrets.RU_ADMIN_EMAIL }}
-            admin_password: ${{ secrets.RU_ADMIN_PASSWORD }}
-            smtp_host: ${{ secrets.RU_SMTP_HOST }}
-            smtp_port: ${{ secrets.RU_SMTP_PORT }}
-            smtp_secure: ${{ secrets.RU_SMTP_SECURE }}
-            smtp_user: ${{ secrets.RU_SMTP_USER }}
-            smtp_password: ${{ secrets.RU_SMTP_PASSWORD }}
-            smtp_from: ${{ secrets.RU_SMTP_FROM }}
-            next_public_site_url: ${{ secrets.RU_NEXT_PUBLIC_SITE_URL }}
-            next_public_gtm_id: ${{ secrets.RU_NEXT_PUBLIC_GTM_ID }}
-            next_public_lang: ${{ secrets.RU_LANG }}
-            next_public_replain_id: ${{ secrets.RU_NEXT_PUBLIC_REPLAIN_ID }}
-            next_public_calendly_url: ${{ secrets.RU_NEXT_PUBLIC_CALENDLY_URL }}
-          - target: en
-            ssh_host: ${{ secrets.EN_SSH_HOST }}
-            ssh_user: ${{ secrets.EN_SSH_USER }}
-            ssh_port: ${{ secrets.EN_SSH_PORT }}
-            ssh_key: ${{ secrets.EN_SSH_KEY }}
-            project_name: ${{ secrets.EN_PROJECT_NAME }}
-            database_uri: ${{ secrets.EN_DATABASE_URI }}
-            payload_secret: ${{ secrets.EN_PAYLOAD_SECRET }}
-            admin_email: ${{ secrets.EN_ADMIN_EMAIL }}
-            admin_password: ${{ secrets.EN_ADMIN_PASSWORD }}
-            smtp_host: ${{ secrets.EN_SMTP_HOST }}
-            smtp_port: ${{ secrets.EN_SMTP_PORT }}
-            smtp_secure: ${{ secrets.EN_SMTP_SECURE }}
-            smtp_user: ${{ secrets.EN_SMTP_USER }}
-            smtp_password: ${{ secrets.EN_SMTP_PASSWORD }}
-            smtp_from: ${{ secrets.EN_SMTP_FROM }}
-            next_public_site_url: ${{ secrets.EN_NEXT_PUBLIC_SITE_URL }}
-            next_public_gtm_id: ${{ secrets.EN_NEXT_PUBLIC_GTM_ID }}
-            next_public_lang: ${{ secrets.EN_LANG }}
-            next_public_replain_id: ${{ secrets.EN_NEXT_PUBLIC_REPLAIN_ID }}
-            next_public_calendly_url: ${{ secrets.EN_NEXT_PUBLIC_CALENDLY_URL }}
-          - target: ae
-            ssh_host: ${{ secrets.AE_SSH_HOST }}
-            ssh_user: ${{ secrets.AE_SSH_USER }}
-            ssh_port: ${{ secrets.AE_SSH_PORT }}
-            ssh_key: ${{ secrets.AE_SSH_KEY }}
-            project_name: ${{ secrets.AE_PROJECT_NAME }}
-            database_uri: ${{ secrets.AE_DATABASE_URI }}
-            payload_secret: ${{ secrets.AE_PAYLOAD_SECRET }}
-            admin_email: ${{ secrets.AE_ADMIN_EMAIL }}
-            admin_password: ${{ secrets.AE_ADMIN_PASSWORD }}
-            smtp_host: ${{ secrets.AE_SMTP_HOST }}
-            smtp_port: ${{ secrets.AE_SMTP_PORT }}
-            smtp_secure: ${{ secrets.AE_SMTP_SECURE }}
-            smtp_user: ${{ secrets.AE_SMTP_USER }}
-            smtp_password: ${{ secrets.AE_SMTP_PASSWORD }}
-            smtp_from: ${{ secrets.AE_SMTP_FROM }}
-            next_public_site_url: ${{ secrets.AE_NEXT_PUBLIC_SITE_URL }}
-            next_public_gtm_id: ${{ secrets.AE_NEXT_PUBLIC_GTM_ID }}
-            next_public_lang: ${{ secrets.AE_LANG }}
-            next_public_replain_id: ${{ secrets.AE_NEXT_PUBLIC_REPLAIN_ID }}
-            next_public_calendly_url: ${{ secrets.AE_NEXT_PUBLIC_CALENDLY_URL }}
-
     steps:
-      - name: Deploy ${{ matrix.target }} via SSH
+      - uses: actions/checkout@v4
+      - name: Deploy RU via SSH
         uses: appleboy/ssh-action@v1.0.0
         env:
-          PROJECT_NAME: ${{ matrix.project_name }}
-          DATABASE_URI: ${{ matrix.database_uri }}
-          PAYLOAD_SECRET: ${{ matrix.payload_secret }}
-          ADMIN_EMAIL: ${{ matrix.admin_email }}
-          ADMIN_PASSWORD: ${{ matrix.admin_password }}
-          SMTP_HOST: ${{ matrix.smtp_host }}
-          SMTP_PORT: ${{ matrix.smtp_port }}
-          SMTP_SECURE: ${{ matrix.smtp_secure }}
-          SMTP_USER: ${{ matrix.smtp_user }}
-          SMTP_PASSWORD: ${{ matrix.smtp_password }}
-          SMTP_FROM: ${{ matrix.smtp_from }}
-          NEXT_PUBLIC_SITE_URL: ${{ matrix.next_public_site_url }}
-          NEXT_PUBLIC_GTM_ID: ${{ matrix.next_public_gtm_id }}
-          NEXT_PUBLIC_LANG: ${{ matrix.next_public_lang }}
-          NEXT_PUBLIC_REPLAIN_ID: ${{ matrix.next_public_replain_id }}
-          NEXT_PUBLIC_CALENDLY_URL: ${{ matrix.next_public_calendly_url }}
+          PROJECT_NAME: ${{ secrets.RU_PROJECT_NAME }}
+          DATABASE_URI: ${{ secrets.RU_DATABASE_URI }}
+          PAYLOAD_SECRET: ${{ secrets.RU_PAYLOAD_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.RU_ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.RU_ADMIN_PASSWORD }}
+          SMTP_HOST: ${{ secrets.RU_SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.RU_SMTP_PORT }}
+          SMTP_SECURE: ${{ secrets.RU_SMTP_SECURE }}
+          SMTP_USER: ${{ secrets.RU_SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.RU_SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.RU_SMTP_FROM }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.RU_NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_GTM_ID: ${{ secrets.RU_NEXT_PUBLIC_GTM_ID }}
+          NEXT_PUBLIC_LANG: ${{ secrets.RU_LANG }}
+          NEXT_PUBLIC_REPLAIN_ID: ${{ secrets.RU_NEXT_PUBLIC_REPLAIN_ID }}
+          NEXT_PUBLIC_CALENDLY_URL: ${{ secrets.RU_NEXT_PUBLIC_CALENDLY_URL }}
           DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
         with:
-          host: ${{ matrix.ssh_host }}
-          username: ${{ matrix.ssh_user }}
-          key: ${{ matrix.ssh_key }}
-          port: ${{ matrix.ssh_port || 22 }}
+          host: ${{ secrets.RU_SSH_HOST }}
+          username: ${{ secrets.RU_SSH_USER }}
+          key: ${{ secrets.RU_SSH_KEY }}
+          port: ${{ secrets.RU_SSH_PORT || 22 }}
           command_timeout: 25m
+          script_path: scripts/github-deploy-remote.sh
           envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL,DEPLOY_MODE
-          script: |
-            set -euo pipefail
 
-            error_exit() {
-              echo ""
-              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-              echo "❌ Deployment failed at line $1"
-              echo "Last command: ${BASH_COMMAND}"
-              echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-              exit 1
-            }
-            trap 'error_exit $LINENO' ERR
+  deploy-en:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy EN via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          PROJECT_NAME: ${{ secrets.EN_PROJECT_NAME }}
+          DATABASE_URI: ${{ secrets.EN_DATABASE_URI }}
+          PAYLOAD_SECRET: ${{ secrets.EN_PAYLOAD_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.EN_ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.EN_ADMIN_PASSWORD }}
+          SMTP_HOST: ${{ secrets.EN_SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.EN_SMTP_PORT }}
+          SMTP_SECURE: ${{ secrets.EN_SMTP_SECURE }}
+          SMTP_USER: ${{ secrets.EN_SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.EN_SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.EN_SMTP_FROM }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.EN_NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_GTM_ID: ${{ secrets.EN_NEXT_PUBLIC_GTM_ID }}
+          NEXT_PUBLIC_LANG: ${{ secrets.EN_LANG }}
+          NEXT_PUBLIC_REPLAIN_ID: ${{ secrets.EN_NEXT_PUBLIC_REPLAIN_ID }}
+          NEXT_PUBLIC_CALENDLY_URL: ${{ secrets.EN_NEXT_PUBLIC_CALENDLY_URL }}
+          DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
+        with:
+          host: ${{ secrets.EN_SSH_HOST }}
+          username: ${{ secrets.EN_SSH_USER }}
+          key: ${{ secrets.EN_SSH_KEY }}
+          port: ${{ secrets.EN_SSH_PORT || 22 }}
+          command_timeout: 25m
+          script_path: scripts/github-deploy-remote.sh
+          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL,DEPLOY_MODE
 
-            DEPLOY_MODE="${DEPLOY_MODE:-soft}"
-            PROJECT_DIR="/var/www/${PROJECT_NAME}"
-
-            # ── pre-flight ────────────────────────────────
-            [ -n "${PROJECT_NAME:-}" ] || { echo "❌ PROJECT_NAME not set"; exit 1; }
-            [ -d "${PROJECT_DIR}" ]    || { echo "❌ Project dir not found: ${PROJECT_DIR}"; exit 1; }
-            command -v node &>/dev/null || { echo "❌ Node.js not found"; exit 1; }
-            command -v npm &>/dev/null  || { echo "❌ npm not found"; exit 1; }
-            command -v pm2 &>/dev/null  || { echo "❌ PM2 not found (npm install -g pm2)"; exit 1; }
-
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-            echo "🚀 Deploying ${PROJECT_NAME}  |  mode: ${DEPLOY_MODE}"
-            echo "Node: $(node --version)  |  npm: $(npm --version)"
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-
-            cd "${PROJECT_DIR}"
-
-            # ── pull latest code ──────────────────────────
-            echo "📥 Pulling latest changes from main"
-            git fetch --all
-            git reset --hard origin/main
-
-            # ── write .env ────────────────────────────────
-            echo "⚙️  Writing .env"
-            umask 077
-            printf '%s\n' \
-              "NODE_ENV=production" \
-              "DATABASE_URI=${DATABASE_URI}" \
-              "PAYLOAD_SECRET=${PAYLOAD_SECRET}" \
-              "ADMIN_EMAIL=${ADMIN_EMAIL}" \
-              "ADMIN_PASSWORD=${ADMIN_PASSWORD}" \
-              "SMTP_HOST=${SMTP_HOST}" \
-              "SMTP_PORT=${SMTP_PORT}" \
-              "SMTP_SECURE=${SMTP_SECURE}" \
-              "SMTP_USER=${SMTP_USER}" \
-              "SMTP_PASSWORD=${SMTP_PASSWORD}" \
-              "SMTP_FROM=${SMTP_FROM}" \
-              "NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}" \
-              "NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}" \
-              "NEXT_PUBLIC_LANG=${NEXT_PUBLIC_LANG}" \
-              "NEXT_PUBLIC_REPLAIN_ID=${NEXT_PUBLIC_REPLAIN_ID}" \
-              "NEXT_PUBLIC_CALENDLY_URL=${NEXT_PUBLIC_CALENDLY_URL}" \
-              > .env
-            chmod 600 .env
-            echo "✓ .env written"
-
-            # ── install dependencies ──────────────────────
-            echo "📦 Installing dependencies"
-            npm ci --prefer-offline
-            echo "✓ Dependencies installed"
-
-            # ── run migrations ────────────────────────────
-            echo "🗄️  Running Payload migrations"
-            ./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
-              node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs \
-              scripts/run-migrations.ts
-            echo "✓ Migrations applied"
-
-            # ── build ─────────────────────────────────────
-            echo "🏗️  Building application"
-            npm run build
-            echo "✓ Build complete"
-
-            # ── restart via PM2 ───────────────────────────
-            echo "🔄 Restarting with PM2"
-            if pm2 describe "${PROJECT_NAME}" &>/dev/null; then
-              pm2 reload "${PROJECT_NAME}" --update-env
-            else
-              pm2 start npm --name "${PROJECT_NAME}" -- start
-            fi
-            pm2 save
-            echo "✓ PM2 process updated"
-
-            # ── ensure uploads dir ────────────────────────
-            mkdir -p "${PROJECT_DIR}/public/uploads"
-            chmod -R 775 "${PROJECT_DIR}/public/uploads" 2>/dev/null || true
-            echo "✓ Uploads directory ready"
-
-            # ── seed (hard only) ─────────────────────────
-            if [ "$DEPLOY_MODE" = "hard" ]; then
-              echo "🌱 Seeding database"
-              npm run seed || echo "⚠️  Seed failed (non-fatal)"
-            fi
-
-            # ── health check ─────────────────────────────
-            sleep 5
-            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/ 2>/dev/null || echo "000")
-            if echo "$HTTP_CODE" | grep -qE "^(200|301|302|307|308)$"; then
-              echo "✅ Health check passed (HTTP $HTTP_CODE)"
-            else
-              echo "⚠️  Health check returned HTTP $HTTP_CODE"
-              pm2 logs "${PROJECT_NAME}" --lines 50 --nostream || true
-            fi
-
-            # ── summary ──────────────────────────────────
-            echo ""
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-            pm2 list
-            echo ""
-            echo "✅ Deployment done  |  mode: ${DEPLOY_MODE}"
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  deploy-ae:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy AE via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          PROJECT_NAME: ${{ secrets.AE_PROJECT_NAME }}
+          DATABASE_URI: ${{ secrets.AE_DATABASE_URI }}
+          PAYLOAD_SECRET: ${{ secrets.AE_PAYLOAD_SECRET }}
+          ADMIN_EMAIL: ${{ secrets.AE_ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.AE_ADMIN_PASSWORD }}
+          SMTP_HOST: ${{ secrets.AE_SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.AE_SMTP_PORT }}
+          SMTP_SECURE: ${{ secrets.AE_SMTP_SECURE }}
+          SMTP_USER: ${{ secrets.AE_SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.AE_SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.AE_SMTP_FROM }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.AE_NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_GTM_ID: ${{ secrets.AE_NEXT_PUBLIC_GTM_ID }}
+          NEXT_PUBLIC_LANG: ${{ secrets.AE_LANG }}
+          NEXT_PUBLIC_REPLAIN_ID: ${{ secrets.AE_NEXT_PUBLIC_REPLAIN_ID }}
+          NEXT_PUBLIC_CALENDLY_URL: ${{ secrets.AE_NEXT_PUBLIC_CALENDLY_URL }}
+          DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
+        with:
+          host: ${{ secrets.AE_SSH_HOST }}
+          username: ${{ secrets.AE_SSH_USER }}
+          key: ${{ secrets.AE_SSH_KEY }}
+          port: ${{ secrets.AE_SSH_PORT || 22 }}
+          command_timeout: 25m
+          script_path: scripts/github-deploy-remote.sh
+          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL,DEPLOY_MODE
