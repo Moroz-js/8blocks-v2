@@ -12,8 +12,8 @@ function siteUrlWithHttps(raw: string): string {
 export const siteConfig = {
   name: '8Blocks',
   description: t({
-    ru: 'Токен-экономики, которые усиливают бизнес',
-    en: 'Token economies that power the business',
+    ru: '2Токен-экономики, которые усиливают бизнес',
+    en: '2Token economies that power the business',
   }),
   url: siteUrlWithHttps(process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io'),
   email: t({ ru: 'hi@токеномика.рф', en: 'hi@8blocks.io' }),

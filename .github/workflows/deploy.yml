@@ -2,9 +2,9 @@ name: Deploy to Production
 
 on:
   # Автодеплой при пуше в main (режим soft; hard — только вручную)
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
     inputs:
       deploy_mode:
