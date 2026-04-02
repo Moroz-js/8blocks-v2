@@ -136,7 +136,7 @@ export function ConsultingDeliverablesWall({
             return (
               <motion.article
                 key={i}
-                className={`${styles.card} ${item.large ? styles.cardLarge : ''} ${item.wide ? styles.cardWide : ''}`}
+                className={`${styles.card} ${item.large ? styles.cardLarge : ''} ${'wide' in item && item.wide ? styles.cardWide : ''}`}
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-30px' }}

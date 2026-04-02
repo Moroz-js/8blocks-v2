@@ -202,7 +202,13 @@ export default function BlocksPage() {
 
       <VariantLabel label="аудит" />
       <ServiceCtaBlock
-        headline={audit.cta.headline}
+        headline={
+          <>
+            {audit.cta.headlineLine1}
+            <br />
+            {audit.cta.headlineLine2}
+          </>
+        }
         ctaLabel={audit.cta.ctaLabel}
         ctaHref={audit.cta.ctaHref}
       />

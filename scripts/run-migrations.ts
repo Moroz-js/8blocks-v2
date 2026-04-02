@@ -1,21 +1,22 @@
-const path = require('path')
+import { getPayload } from 'payload'
+import type { SanitizedConfig } from 'payload'
+import configFromFile from '@payload-config'
 
 async function main() {
-  const { getPayload } = require('payload')
-  const configPath = path.resolve(__dirname, '../payload.config.ts')
-  const mod = require(configPath)
-  const config = await (mod.default || mod)
+  const config = await Promise.resolve(
+    configFromFile as SanitizedConfig | Promise<SanitizedConfig>,
+  )
 
   const payload = await getPayload({ config })
 
   console.log('Running pending migrations...')
-  await payload.db.migrate({ payload })
+  await payload.db.migrate()
   console.log('✅ Migrations complete')
 
   process.exit(0)
 }
 
-main().catch((e) => {
+main().catch((e: Error) => {
   console.error('❌ Migration error:', e.message)
   process.exit(1)
 })

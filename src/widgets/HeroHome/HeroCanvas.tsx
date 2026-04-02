@@ -40,7 +40,9 @@ function project(
   rotX: number, rotY: number,
   scale: number, ox: number, oy: number,
 ): Pt {
-  let x = gx - CX, y = elev, z = gz - CZ
+  const x = gx - CX
+  const y = elev
+  const z = gz - CZ
 
   const cosY = Math.cos(rotY), sinY = Math.sin(rotY)
   const rx = x * cosY - z * sinY
