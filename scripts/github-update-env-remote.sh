@@ -78,7 +78,7 @@ chmod 600 .env
 echo "✓ .env written"
 
 echo "👤 Recreate admin from .env: удаление всех users, создание одного (остальная БД без изменений)"
-./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
+./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_SKIP_EMAIL_INIT=true PAYLOAD_CONFIG_PATH=payload.config.ts \
   node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs \
   scripts/sync-admin-from-env.ts
 

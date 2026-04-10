@@ -45,7 +45,10 @@ export default buildConfig({
   },
 
   // ── Email (production only — SMTP not available in local dev) ────
-  ...(process.env.NODE_ENV === 'production' && process.env.SMTP_HOST
+  // PAYLOAD_SKIP_EMAIL_INIT=true — для CLI (sync-admin и т.п.), без verify SMTP
+  ...(process.env.NODE_ENV === 'production' &&
+  process.env.SMTP_HOST &&
+  process.env.PAYLOAD_SKIP_EMAIL_INIT !== 'true'
     ? {
         email: nodemailerAdapter({
           defaultFromAddress: process.env.SMTP_FROM || 'hi@токеномика.рф',
