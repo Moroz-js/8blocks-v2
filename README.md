@@ -60,8 +60,6 @@ npm run seed
 # EN-данные
 npm run seed:en
 
-# Расширенный seed блога
-npm run seed:blog
 ```
 
 > ⚠️ Seed рассчитан на `NODE_ENV=development`. На production не запускайте без `SEED_ALLOWED=true`.
@@ -111,7 +109,8 @@ payload/
   collections/            # Коллекции Payload (Users, Articles, Categories, Leads, Media…)
 
 migrations/               # SQL-миграции БД (Payload)
-scripts/                  # seed.ts, seed-en.ts, seed-blog.ts и др.
+scripts/                  # seed.ts, seed-en.ts, migrate-legacy-blog.ts и др.
+migration/                # migrate-sites.json (секреты), data/uploads + дамп
 docs/                     # Документация: переводы, styleguide
 public/
   uploads/                # Загруженные медиа (не в git)
@@ -133,7 +132,7 @@ public/
 | `npm run payload:migrate:create` | Создать новую миграцию |
 | `npm run seed` | Seed БД — RU-данные |
 | `npm run seed:en` | Seed БД — EN-данные |
-| `npm run seed:blog` | Расширенный seed блога |
+| `npm run migrate:legacy` | Миграция старого Prisma-блога → Payload по `migration/migrate-sites.json` |
 
 ---
 
@@ -156,15 +155,10 @@ public/
 
 ## CI/CD
 
-Деплой настроен через GitHub Actions (`.github/workflows/deploy.yml`).
+- **Deploy to Production** (`.github/workflows/deploy.yml`) — `workflow_dispatch`, SSH на RU / EN / AE, на сервере выполняется `scripts/github-deploy-remote.sh`: `git reset` к `main`, запись `.env`, `npm ci`, миграции Payload, `npm run build`, PM2. Режим **hard** дополнительно запускает `npm run seed` (для EN-сайта при необходимости лучше править скрипт под `seed:en`).
+- **Update .env** (`.github/workflows/update-env.yml`) — только перезапись `.env` и `pm2 reload`, без сборки и без смены пользователя в БД Payload.
 
-Поддерживает несколько серверов одновременно (RU, EN и др.). Список деплоев задаётся секретом `DEPLOY_TARGETS`. Каждый сервер имеет свой набор секретов с языковым префиксом (`RU_*`, `EN_*`).
-
-Подробнее — см. `.env-github.example`.
-
-**Режимы деплоя** (выбираются вручную через `workflow_dispatch`):
-- `soft` — pull + build + restart (по умолчанию)
-- `hard` — pull + build + restart + seed
+Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (см. переменные в workflow-файлах).
 
 ---
 

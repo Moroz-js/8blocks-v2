@@ -27,7 +27,7 @@ import {
   Articles,
   Leads,
   NewsletterSubscriptions,
-} from './payload/collections'
+} from './payload/collections/index.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -106,6 +106,8 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
+      // Явный UTF-8 на канале клиента ↔ Postgres (иначе кириллица может стать «?» при несовпадении кодировок).
+      options: '-c client_encoding=UTF8',
     },
     migrationDir: path.resolve(dirname, 'migrations'),
     push: false,

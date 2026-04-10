@@ -99,10 +99,18 @@ export const aboutContent = {
   quote:
     'A token should generate value for the project over its entire lifetime. And that only happens when you clearly understand why it exists and who needs it.',
   stats: [
-    { value: '20+', label: 'token economies designed for products across multiple industries' },
-    { value: '$500M+', label: 'combined capitalization of client projects' },
-    { value: '6 weeks', label: 'average time to design a complete token economy model' },
-    { value: '12', label: 'backed projects built on our economic models' },
+    { value: '6 weeks', label: 'average time to build a working tokenomics model' },
+    { value: '$180M+', label: 'raised by client projects before TGE' },
+    {
+      value: 'Since 2017',
+      label:
+        "we've been developing tokenomics for projects across different market segments",
+    },
+    {
+      value: '100% of projects',
+      label:
+        'on our models have tokens built into the product, not existing just for trading',
+    },
   ],
 } as const
 

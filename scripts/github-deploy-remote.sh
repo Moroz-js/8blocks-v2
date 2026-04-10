@@ -66,7 +66,7 @@ echo "✓ Dependencies installed"
 # ── run migrations ────────────────────────────
 echo "🗄️  Running Payload migrations"
 ./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
-  node --env-file=.env -r ./scripts/patch-next-env.cjs -r tsx/cjs \
+  node --env-file=.env -r tsx/cjs \
   scripts/run-migrations.ts
 echo "✓ Migrations applied"
 

@@ -1,7 +1,7 @@
-name: Update .env and admin (no deploy)
+name: Update .env (no deploy)
 
-# Перезаписывает .env на трёх серверах и пересоздаёт единственного админа (все записи users удаляются, затем create).
-# Не выполняет seed, миграции, сборку и git pull — только env + sync-admin + pm2 reload.
+# Перезаписывает .env на трёх серверах и перезагружает PM2. Скрипт не трогает пользователей Payload.
+# Не выполняет seed, миграции, сборку и git pull.
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: RU — .env + admin sync
+      - name: RU — .env + PM2 reload
         uses: appleboy/ssh-action@v1.2.5
         env:
           PROJECT_NAME: ${{ secrets.RU_PROJECT_NAME }}
@@ -45,7 +45,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: EN — .env + admin sync
+      - name: EN — .env + PM2 reload
         uses: appleboy/ssh-action@v1.2.5
         env:
           PROJECT_NAME: ${{ secrets.EN_PROJECT_NAME }}
@@ -78,7 +78,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - name: AE — .env + admin sync
+      - name: AE — .env + PM2 reload
         uses: appleboy/ssh-action@v1.2.5
         env:
           PROJECT_NAME: ${{ secrets.AE_PROJECT_NAME }}

@@ -1,3 +1,5 @@
+import { slugifyHeadingId } from '@/shared/lib/slugifyHeadingId'
+
 export interface TocItem {
   id: string
   text: string
@@ -17,17 +19,6 @@ function extractText(node: LexNode): string {
   return ''
 }
 
-function slugify(text: string): string {
-  return (
-    text
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^a-z0-9-]/g, '')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '') || 'heading'
-  )
-}
-
 export function buildToc(content: unknown): TocItem[] {
   if (!content || typeof content !== 'object') return []
   const root = (content as Record<string, unknown>).root as { children?: LexNode[] } | undefined
@@ -44,7 +35,7 @@ export function buildToc(content: unknown): TocItem[] {
     const text = extractText(node)
     if (!text.trim()) continue
 
-    const base = slugify(text)
+    const base = slugifyHeadingId(text)
     const count = idCount.get(base) ?? 0
     const id = count === 0 ? base : `${base}-${count}`
     idCount.set(base, count + 1)

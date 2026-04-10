@@ -49,3 +49,4 @@ payload-types.ts
 
 # env files
 .env.local
+migration

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { slugifyHeadingId } from '@/shared/lib/slugifyHeadingId'
 import styles from './RichText.module.scss'
 
 // Text format bitmask (Lexical)
@@ -35,17 +36,6 @@ type LexNode = {
   indent?: number
 }
 
-function slugify(text: string): string {
-  return (
-    text
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^a-z0-9-]/g, '')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '') || 'heading'
-  )
-}
-
 function extractPlainText(node: LexNode): string {
   if (node.type === 'text') return node.text ?? ''
   if (node.children) return node.children.map(extractPlainText).join('')
@@ -78,7 +68,7 @@ function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
     case 'heading': {
       const Tag = (node.tag ?? 'h2') as 'h2' | 'h3'
       const text = extractPlainText(node)
-      const base = slugify(text)
+      const base = slugifyHeadingId(text)
       const count = idMap.get(base) ?? 0
       const id = count === 0 ? base : `${base}-${count}`
       idMap.set(base, count + 1)
