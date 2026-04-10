@@ -915,8 +915,64 @@ function tryRecoverUtf8MisreadAsLatin1(s: string): string {
   }
 }
 
+/**
+ * В legacy часто UTF-8 (апостроф U+2019 и т.д.) превратили в три ASCII «?» → isn???t, ???фраза???.
+ * Восстанавливаем типичные случаи (латиница).
+ */
+function repairTripleQuestionMarkUtf8Loss(s: string): string {
+  const f = '\uFFFD'
+  if (!s.includes('???') && !s.includes(f)) return s
+  let t = s
+
+  const wrapQuoted = (inner: string, after: string): string => {
+    const q = inner.includes('"') ? "'" : '"'
+    return `${q}${inner}${q}${after}`
+  }
+
+  const afterQuote = '(\\s|[.,;:!?\\n]|$)'
+
+  // Сначала «кавычки» из ???…???, иначе a???bad → ошибочно a'bad при правиле апострофа
+  // U+FFFD
+  t = t.replace(
+    new RegExp(`(^|\\s)${f}{1,3}([^${f}\\n]+?)${f}{1,3}${afterQuote}`, 'g'),
+    (_m, pre: string, inner: string, after: string) => `${pre}${wrapQuoted(String(inner), after)}`,
+  )
+  t = t.replace(
+    new RegExp(
+      `([A-Za-z])${f}{1,3}([^${f}\\n]*\\s[^${f}\\n]*?)${f}{1,3}${afterQuote}`,
+      'g',
+    ),
+    (_m, letter: string, inner: string, after: string) =>
+      `${letter} ${wrapQuoted(String(inner), after)}`,
+  )
+  t = t.replace(
+    new RegExp(`${f}{1,3}([^${f}\\n]{2,}?)${f}{1,3}(?=[A-Za-z]|$)`, 'g'),
+    (_m, inner: string) => wrapQuoted(String(inner), ' '),
+  )
+  t = t.replace(new RegExp(`([A-Za-z]+)${f}{1,3}([A-Za-z]+)`, 'g'), "$1'$2")
+
+  // Три ASCII «?»
+  t = t.replace(
+    new RegExp(`(^|\\s)\\?\\?\\?([^?\\n]+?)\\?\\?\\?${afterQuote}`, 'g'),
+    (_m, pre: string, inner: string, after: string) => `${pre}${wrapQuoted(inner, after)}`,
+  )
+  t = t.replace(
+    new RegExp(`([A-Za-z])\\?\\?\\?([^?\\n]*\\s[^?\\n]*?)\\?\\?\\?${afterQuote}`, 'g'),
+    (_m, letter: string, inner: string, after: string) =>
+      `${letter} ${wrapQuoted(inner, after)}`,
+  )
+  t = t.replace(/\?\?\?([^?\n]{2,}?)\?\?\?(?=[A-Za-z]|$)/g, (_m, inner: string) =>
+    wrapQuoted(inner, ' '),
+  )
+  t = t.replace(/([A-Za-z]+)\?\?\?([A-Za-z]+)/g, "$1'$2")
+
+  return t
+}
+
 function normalizeLegacyTextField(s: string): string {
-  return tryRecoverUtf8MisreadAsLatin1(normalizeTypographicText(s))
+  return repairTripleQuestionMarkUtf8Loss(
+    tryRecoverUtf8MisreadAsLatin1(normalizeTypographicText(s)),
+  )
 }
 
 /** Как в Articles.slug beforeValidate + лимит длины под индекс/уникальность. */
