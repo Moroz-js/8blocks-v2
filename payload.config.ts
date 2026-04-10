@@ -27,7 +27,7 @@ import {
   Articles,
   Leads,
   NewsletterSubscriptions,
-} from './payload/collections/index.ts'
+} from './payload/collections/index'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
