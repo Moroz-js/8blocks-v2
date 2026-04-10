@@ -1,6 +1,6 @@
 /**
- * Синхронизирует первого пользователя Payload с ADMIN_EMAIL / ADMIN_PASSWORD из .env.
- * Не трогает остальные данные БД. Запуск на сервере: NODE_ENV=production npm run sync-admin
+ * Удаляет всех пользователей Payload и создаёт одного админа из ADMIN_EMAIL / ADMIN_PASSWORD.
+ * Остальные данные БД не трогаются. Запуск: NODE_ENV=production npm run sync-admin
  */
 import { getPayload } from 'payload'
 import type { SanitizedConfig } from 'payload'
@@ -20,49 +20,36 @@ async function main() {
   )
   const payload = await getPayload({ config })
 
-  const existingByEmail = await payload.find({
-    collection: 'users',
-    where: { email: { equals: adminEmail } },
-    limit: 1,
-  })
-
-  if (existingByEmail.docs.length > 0) {
-    await payload.update({
+  let removed = 0
+  for (;;) {
+    const batch = await payload.find({
       collection: 'users',
-      id: existingByEmail.docs[0].id,
-      data: { password: adminPassword },
+      limit: 100,
+      page: 1,
+      depth: 0,
     })
-    console.log(`✅ Пароль обновлён для пользователя ${adminEmail}`)
-    process.exit(0)
+    if (batch.docs.length === 0) break
+    for (const doc of batch.docs) {
+      await payload.delete({
+        collection: 'users',
+        id: doc.id,
+      })
+      removed += 1
+    }
   }
 
-  const oldest = await payload.find({
-    collection: 'users',
-    limit: 1,
-    sort: 'createdAt',
-  })
-
-  if (oldest.docs.length === 0) {
-    await payload.create({
-      collection: 'users',
-      data: {
-        email: adminEmail,
-        password: adminPassword,
-      },
-    })
-    console.log(`✅ Создан админ: ${adminEmail} (пользователей не было)`)
-    process.exit(0)
+  if (removed > 0) {
+    console.log(`🗑️  Удалено пользователей: ${removed}`)
   }
 
-  await payload.update({
+  await payload.create({
     collection: 'users',
-    id: oldest.docs[0].id,
     data: {
       email: adminEmail,
       password: adminPassword,
     },
   })
-  console.log(`✅ Обновлены email и пароль у самого раннего пользователя → ${adminEmail}`)
+  console.log(`✅ Создан новый админ: ${adminEmail}`)
   process.exit(0)
 }
 

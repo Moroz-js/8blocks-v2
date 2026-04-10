@@ -1,6 +1,6 @@
 name: Update .env and admin (no deploy)
 
-# Перезаписывает .env на трёх серверах и применяет ADMIN_EMAIL / ADMIN_PASSWORD в Payload.
+# Перезаписывает .env на трёх серверах и пересоздаёт единственного админа (все записи users удаляются, затем create).
 # Не выполняет seed, миграции, сборку и git pull — только env + sync-admin + pm2 reload.
 
 on:
