@@ -3,11 +3,13 @@
  *
  *   npm run migrate:legacy -- --mapping=migration/migrate-sites.json
  *
+ *   --lang=ru|en — только с --internal-site: язык полей legacy (title/content Ru vs EN), перекрывает site.lang в mapping.
+ *
  * Данные читаются только из PostgreSQL (SELECT), не из текста .sql. sourceDatabaseUrl — БД, где лежит
  * legacy после импорта дампа (часто localhost). importSqlDump:true — перед миграцией: psql -f dumpFile в эту БД.
  * `--dry-run` — без psql-импорта.
  *
- * После миграции (если не `--dry-run` и не `--skip-remote-uploads` / `--skip-upload-ssh`) `public/uploads` → `remoteUploadsPath`: сначала `rsync`, иначе `tar | ssh` (те же `ssh.*`, что в mapping).
+ * После миграции (если не `--dry-run` и не `--skip-remote-uploads` / `--skip-upload-ssh`) `public/uploads` → `remoteUploadsPath`: сначала `rsync`, иначе `tar | ssh` (те же `ssh.*`, что в mapping). Перед rsync выполняется `rsync -n --stats`: если передавать нечего, выгрузка пропускается.
  * При `ssh.tunnel: true` дополнительно поднимается `ssh -L` к Postgres; uploads идут отдельным SSH-каналом.
  *
  * Файлы-источник обложек: dataDir/uploads/; Payload пишет в public/uploads.
@@ -15,6 +17,7 @@
  * В development Payload по умолчанию открывает WebSocket к Next HMR — без отключения процесс не завершается.
  * Скрипт выставляет DISABLE_PAYLOAD_HMR=true, если вы сами не задали переменную.
  */
+import { randomBytes } from 'node:crypto'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
@@ -399,8 +402,19 @@ function assertPlainUnixPathForRemote(label: string, p: string): string {
   process.exit(1)
 }
 
-/** rsync localDir/ → user@host:remoteDir/ (без --delete — не трогаем лишние файлы на сервере). */
-function tryRsyncUploads(localUploadsAbs: string, site: SiteMapping): 'ok' | 'not_found' | 'error' {
+type RsyncUploadsConfig = {
+  env: NodeJS.ProcessEnv
+  src: string
+  dest: string
+  remoteDir: string
+  label: string
+}
+
+/** Общий RSYNC_RSH + пути для rsync uploads (локальный каталог со слэшем → user@host:remoteDir/). */
+function getRsyncUploadsConfig(
+  localUploadsAbs: string,
+  site: SiteMapping,
+): RsyncUploadsConfig | null {
   const ssh = site.ssh!
   const port = ssh.port ?? 22
   const remoteDir = site.remoteUploadsPath.replace(/\\/g, '/').replace(/\/?$/, '/')
@@ -416,19 +430,46 @@ function tryRsyncUploads(localUploadsAbs: string, site: SiteMapping): 'ok' | 'no
   }
   if (ssh.passwordEnv && !ssh.keyPath) {
     const p = process.env[ssh.passwordEnv]
-    if (!p) {
-      console.error(`rsync: переменная ${ssh.passwordEnv} пуста`)
-      return 'error'
-    }
+    if (!p) return null
     env.SSHPASS = p
     rsh = `sshpass -e ${rsh}`
     rsh += ` -o PubkeyAuthentication=no -o PreferredAuthentications=password,keyboard-interactive`
   }
   env.RSYNC_RSH = rsh
+  const label = `${ssh.user}@${ssh.host}:${remoteDir}`
+  return { env, src, dest, remoteDir, label }
+}
 
-  console.log(`→ rsync uploads → ${ssh.user}@${ssh.host}:${remoteDir}`)
-  const r = spawnSync('rsync', ['-avz', src, dest], {
-    env,
+/**
+ * true — по rsync -n на сервере уже всё совпадает с локальным public/uploads, реальную выгрузку можно не делать.
+ * false — есть отличия или не удалось надёжно проверить (тогда делаем обычный rsync).
+ */
+function rsyncUploadsRemoteAlreadyUpToDate(cfg: RsyncUploadsConfig): boolean {
+  const r = spawnSync('rsync', ['-avzn', '--stats', cfg.src, cfg.dest], {
+    env: cfg.env,
+    encoding: 'utf8',
+    cwd: ROOT,
+  })
+  if (r.error && (r.error as NodeJS.ErrnoException).code === 'ENOENT') return false
+  if (r.status !== 0) return false
+  const out = `${r.stdout || ''}\n${r.stderr || ''}`
+  const m = out.match(/Number of regular files transferred:\s*(\d+)/i)
+  if (!m) return false
+  return m[1] === '0'
+}
+
+/** rsync localDir/ → user@host:remoteDir/ (без --delete — не трогаем лишние файлы на сервере). */
+function tryRsyncUploads(localUploadsAbs: string, site: SiteMapping): 'ok' | 'not_found' | 'error' {
+  const cfg = getRsyncUploadsConfig(localUploadsAbs, site)
+  if (!cfg) {
+    const ssh = site.ssh!
+    console.error(`rsync: переменная ${ssh.passwordEnv} пуста`)
+    return 'error'
+  }
+
+  console.log(`→ rsync uploads → ${cfg.label}`)
+  const r = spawnSync('rsync', ['-avz', cfg.src, cfg.dest], {
+    env: cfg.env,
     stdio: 'inherit',
     cwd: ROOT,
   })
@@ -586,6 +627,14 @@ async function syncPayloadUploadsToRemote(localUploadsAbs: string, site: SiteMap
     return
   }
 
+  const rsyncCfg = getRsyncUploadsConfig(localUploadsAbs, site)
+  if (rsyncCfg && rsyncUploadsRemoteAlreadyUpToDate(rsyncCfg)) {
+    console.log(
+      `→ выгрузка uploads пропущена: на ${rsyncCfg.label} уже есть те же файлы (проверка rsync --dry-run).`,
+    )
+    return
+  }
+
   const rs = tryRsyncUploads(localUploadsAbs, site)
   if (rs === 'ok') {
     console.log('✓ uploads выгружены (rsync)')
@@ -726,26 +775,49 @@ function horizontalRule(): object {
   return { type: 'horizontalrule', version: 1 }
 }
 
+/** Lexical upload node (Payload richtext-lexical v3, см. UploadServerNode.exportJSON). */
+function lexicalUploadNode(mediaId: string, alt: string): object {
+  const safeAlt = (alt || 'image').slice(0, 500)
+  return {
+    type: 'upload',
+    format: '',
+    version: 3,
+    id: randomBytes(12).toString('hex'),
+    relationTo: 'media',
+    value: mediaId,
+    fields: { alt: safeAlt },
+  }
+}
+
+/** Предпочитает primary после trim; если пусто — fallback (иначе пробелы в *Ru ломали выбор EN-поля). */
+function pickLocalizedText(
+  primary: string | null | undefined,
+  fallback: string | null | undefined,
+): string {
+  const a = primary?.trim()
+  if (a) return a
+  return fallback?.trim() ?? ''
+}
+
 function pickTitle(row: Record<string, unknown>, useRu: boolean): string {
   const ru = row.titleRu as string | null | undefined
   const en = row.title as string | null | undefined
-  if (useRu) return (ru || en || '').trim() || 'Untitled'
-  return (en || ru || '').trim() || 'Untitled'
+  const t = useRu ? pickLocalizedText(ru, en) : pickLocalizedText(en, ru)
+  return t || 'Untitled'
 }
 
 function pickExcerpt(row: Record<string, unknown>, useRu: boolean): string | undefined {
   const ru = row.excerptRu as string | null | undefined
   const en = row.excerpt as string | null | undefined
-  const v = useRu ? ru || en : en || ru
-  const s = v?.trim()
+  const s = useRu ? pickLocalizedText(ru, en) : pickLocalizedText(en, ru)
   return s || undefined
 }
 
 function pickContentHtml(row: Record<string, unknown>, useRu: boolean): string {
   const ru = row.contentRu as string | null | undefined
   const en = row.content as string | null | undefined
-  const html = useRu ? ru || en || '' : en || ru || ''
-  return String(html)
+  const html = useRu ? pickLocalizedText(ru, en) : pickLocalizedText(en, ru)
+  return html
 }
 
 // ── категории: локаль из legacy Category ──
@@ -753,15 +825,14 @@ function pickContentHtml(row: Record<string, unknown>, useRu: boolean): string {
 function pickCategoryName(row: Record<string, unknown>, useRu: boolean): string {
   const ru = row.nameRu as string | null | undefined
   const en = row.name as string | null | undefined
-  if (useRu) return (ru || en || '').trim() || 'Category'
-  return (en || ru || '').trim() || 'Category'
+  const t = useRu ? pickLocalizedText(ru, en) : pickLocalizedText(en, ru)
+  return t || 'Category'
 }
 
 function pickCategoryDesc(row: Record<string, unknown>, useRu: boolean): string | undefined {
   const ru = row.descriptionRu as string | null | undefined
   const en = row.description as string | null | undefined
-  const v = useRu ? ru || en : en || ru
-  const s = v?.trim()
+  const s = useRu ? pickLocalizedText(ru, en) : pickLocalizedText(en, ru)
   return s || undefined
 }
 
@@ -783,7 +854,7 @@ function normalizeFeaturedPath(raw: string | null | undefined): string | null {
   return base || null
 }
 
-function htmlToLexical(html: string): object {
+function htmlToLexical(html: string, mediaByBasename: Map<string, string> = new Map()): object {
   const trimmed = html.trim()
   if (!trimmed) return makeRichText([paragraphText(' ')])
 
@@ -863,7 +934,14 @@ function htmlToLexical(html: string): object {
       }
       if (name === 'img') {
         const alt = $el.attr('alt')?.trim() || 'image'
-        blocks.push(paragraphText(`[image: ${alt}]`))
+        const src = $el.attr('src') || ''
+        const basename = normalizeFeaturedPath(src)
+        const mediaId = basename ? mediaByBasename.get(basename) : undefined
+        if (mediaId) {
+          blocks.push(lexicalUploadNode(mediaId, alt))
+        } else {
+          blocks.push(paragraphText(`[image: ${alt}]`))
+        }
         return
       }
       const t = $el.text().replace(/\s+/g, ' ').trim()
@@ -890,6 +968,29 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 }
 
+/** Создаёт записи media для всех <img> в HTML; карта basename → Payload media id. */
+async function ensureImagesFromHtml(
+  html: string,
+  ensureMedia: (basename: string, alt: string) => Promise<string | undefined>,
+): Promise<Map<string, string>> {
+  const map = new Map<string, string>()
+  const trimmed = html.trim()
+  if (!trimmed) return map
+  const wrapped = trimmed.startsWith('<') ? trimmed : `<p>${escapeHtml(trimmed)}</p>`
+  const $ = cheerio.load(wrapped, null, false)
+  const imgs = $('img').toArray()
+  for (const el of imgs) {
+    const $el = $(el)
+    const src = $el.attr('src') || ''
+    const alt = $el.attr('alt')?.trim() || 'image'
+    const basename = normalizeFeaturedPath(src)
+    if (!basename || map.has(basename)) continue
+    const id = await ensureMedia(basename, alt)
+    if (id) map.set(basename, id)
+  }
+  return map
+}
+
 /** Типографские кавычки/тире → ASCII; NBSP → пробел (Lexical/браузер). */
 function normalizeTypographicText(s: string): string {
   if (!s) return s
@@ -900,11 +1001,17 @@ function normalizeTypographicText(s: string): string {
     .replace(/[\u2013\u2014\u2212]/g, '-')
 }
 
+/** Уже нормальная кириллица в UTF-16 — не трогаем latin1-буфером (иначе каждый символ режется до младшего байта → мусор и «?»). */
+function hasCyrillicScript(s: string): boolean {
+  return /\p{Script=Cyrillic}/u.test(s)
+}
+
 /**
  * UTF-8, ошибочно интерпретированный как Latin-1 (часто даёт «â€™» вместо апострофа).
- * Трогаем строку только если есть характерные префиксы байтов UTF-8, видимые как Latin-1.
+ * Только для текста **без** нормальной кириллицы: иначе Buffer.from(s,'latin1') портит всю строку целиком.
  */
 function tryRecoverUtf8MisreadAsLatin1(s: string): string {
+  if (hasCyrillicScript(s)) return s
   if (!/[\u00C2\u00C3\u00E2]|â€/.test(s)) return s
   try {
     const out = Buffer.from(s, 'latin1').toString('utf8')
@@ -917,7 +1024,7 @@ function tryRecoverUtf8MisreadAsLatin1(s: string): string {
 
 /**
  * В legacy часто UTF-8 (апостроф U+2019 и т.д.) превратили в три ASCII «?» → isn???t, ???фраза???.
- * Восстанавливаем типичные случаи (латиница).
+ * Восстанавливаем только безопасные случаи, чтобы не превращать апострофы внутри слов в кавычки.
  */
 function repairTripleQuestionMarkUtf8Loss(s: string): string {
   const f = '\uFFFD'
@@ -937,32 +1044,12 @@ function repairTripleQuestionMarkUtf8Loss(s: string): string {
     new RegExp(`(^|\\s)${f}{1,3}([^${f}\\n]+?)${f}{1,3}${afterQuote}`, 'g'),
     (_m, pre: string, inner: string, after: string) => `${pre}${wrapQuoted(String(inner), after)}`,
   )
-  t = t.replace(
-    new RegExp(
-      `([A-Za-z])${f}{1,3}([^${f}\\n]*\\s[^${f}\\n]*?)${f}{1,3}${afterQuote}`,
-      'g',
-    ),
-    (_m, letter: string, inner: string, after: string) =>
-      `${letter} ${wrapQuoted(String(inner), after)}`,
-  )
-  t = t.replace(
-    new RegExp(`${f}{1,3}([^${f}\\n]{2,}?)${f}{1,3}(?=[A-Za-z]|$)`, 'g'),
-    (_m, inner: string) => wrapQuoted(String(inner), ' '),
-  )
   t = t.replace(new RegExp(`([A-Za-z]+)${f}{1,3}([A-Za-z]+)`, 'g'), "$1'$2")
 
   // Три ASCII «?»
   t = t.replace(
     new RegExp(`(^|\\s)\\?\\?\\?([^?\\n]+?)\\?\\?\\?${afterQuote}`, 'g'),
     (_m, pre: string, inner: string, after: string) => `${pre}${wrapQuoted(inner, after)}`,
-  )
-  t = t.replace(
-    new RegExp(`([A-Za-z])\\?\\?\\?([^?\\n]*\\s[^?\\n]*?)\\?\\?\\?${afterQuote}`, 'g'),
-    (_m, letter: string, inner: string, after: string) =>
-      `${letter} ${wrapQuoted(inner, after)}`,
-  )
-  t = t.replace(/\?\?\?([^?\n]{2,}?)\?\?\?(?=[A-Za-z]|$)/g, (_m, inner: string) =>
-    wrapQuoted(inner, ' '),
   )
   t = t.replace(/([A-Za-z]+)\?\?\?([A-Za-z]+)/g, "$1'$2")
 
@@ -1263,7 +1350,8 @@ async function runMigrateForSite(
       coverId = await ensureMedia(feat, title)
     }
 
-    const rich = htmlToLexical(contentHtml)
+    const contentMediaMap = await ensureImagesFromHtml(contentHtml, ensureMedia)
+    const rich = htmlToLexical(contentHtml, contentMediaMap)
 
     if (dryRun) {
       console.log(`[dry-run] article ${slug}${slug !== normalized ? ` (legacy «${normalized}»)` : ''} published=${published}`)
@@ -1380,10 +1468,20 @@ async function internalSiteRun(mappingPath: string, siteId: string) {
 
     clearLocalUploads()
 
+    const langFlag = argValue('--lang')?.toLowerCase()
+    let migrateLocale = String(site.lang ?? 'en').toLowerCase()
+    if (langFlag === 'ru' || langFlag === 'en') {
+      migrateLocale = langFlag
+      console.log(`→ язык контента миграции: --lang=${langFlag} (в mapping site.lang=${site.lang})`)
+    } else if (migrateLocale !== 'ru' && migrateLocale !== 'en') {
+      console.warn(`site.lang="${site.lang}" не ru/en — используем en`)
+      migrateLocale = 'en'
+    }
+
     await runMigrateForSite(
       map.sourceDatabaseUrl,
       uploadsSourceAbs,
-      site.lang,
+      migrateLocale,
       `migrate-legacy-${site.id}`,
     )
 
@@ -1439,6 +1537,17 @@ function passThroughFlagsForChild(): string[] {
     if (a.startsWith('--only=')) continue
     if (a === '--internal-site') {
       i++
+      continue
+    }
+    if (a === '--lang') {
+      i++
+      if (process.argv[i] && !process.argv[i].startsWith('-')) {
+        out.push('--lang', process.argv[i])
+      }
+      continue
+    }
+    if (a.startsWith('--lang=')) {
+      out.push(a)
       continue
     }
     if (

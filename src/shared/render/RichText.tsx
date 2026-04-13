@@ -131,8 +131,17 @@ function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
     }
 
     case 'upload': {
-      if (node.relationTo !== 'media' || !node.value) return null
-      const { url, alt, width, height, caption, filename } = node.value
+      if (node.relationTo !== 'media' || node.value == null) return null
+      const raw = node.value
+      if (typeof raw !== 'object') return null
+      const { url, alt, width, height, caption, filename } = raw as {
+        url?: string
+        alt?: string
+        width?: number
+        height?: number
+        caption?: string
+        filename?: string
+      }
       const src = url ?? (filename ? `/uploads/${filename}` : null)
       if (!src) return null
       return (

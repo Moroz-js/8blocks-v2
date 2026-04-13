@@ -69,6 +69,18 @@ export function Footer() {
               </ul>
             </nav>
 
+            {/* Products nav */}
+            <nav aria-label="Products">
+              <p className={styles.navHeading}>{footerContent.productsHeading}</p>
+              <ul className={styles.navList}>
+                {footerContent.productLinks.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className={styles.navLink}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
             {/* Map */}
             <div className={styles.mapCol}>
               <div className={styles.mapWrap} data-lenis-prevent>

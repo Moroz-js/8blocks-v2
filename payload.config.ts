@@ -1,4 +1,6 @@
 import { buildConfig } from 'payload'
+import { en } from '@payloadcms/translations/languages/en'
+import { ru } from '@payloadcms/translations/languages/ru'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import {
   lexicalEditor,
@@ -27,12 +29,18 @@ import {
   Articles,
   Leads,
   NewsletterSubscriptions,
-} from './payload/collections/index'
+} from './payload/collections/index.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  // ── Admin UI language (Payload), не путать с NEXT_PUBLIC_LANG на фронте ──
+  i18n: {
+    supportedLanguages: { en, ru },
+    fallbackLanguage: 'ru',
+  },
+
   // ── Admin ───────────────────────────────────────────────────────
   admin: {
     user: 'users',
@@ -80,7 +88,7 @@ export default buildConfig({
       InlineCodeFeature(),
       HorizontalRuleFeature(),
       LinkFeature(),
-      UploadFeature(),
+      UploadFeature({ maxDepth: 2 }),
     ],
   }),
 

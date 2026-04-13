@@ -5,6 +5,7 @@ export const footerContent = {
   subscribeNote: 'Подписка для тех, кто хочет разбираться глубже.',
   navHeading: 'Навигация',
   servicesHeading: 'Услуги',
+  productsHeading: 'Продукты',
   mapTitle: 'Карта',
   copyright: 'Все права защищены.',
   privacyPolicy: 'Политика конфиденциальности',
@@ -18,5 +19,11 @@ export const footerContent = {
     { label: 'Стратегический консалтинг', href: '/services/strategic-consulting' },
     { label: 'Базовая токеномика', href: '/services/tokenomics' },
     { label: 'Аудит токеномики', href: '/services/audit' },
+  ],
+  productLinks: [
+    {
+      label: 'Калькулятор токеномики',
+      href: '/product/calculator',
+    },
   ],
 } as const

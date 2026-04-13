@@ -141,6 +141,7 @@ export const Articles: CollectionConfig = {
             enabledCollections: ['articles'],
           }),
           UploadFeature({
+            maxDepth: 2,
             collections: {
               media: {
                 fields: [

@@ -1,4 +1,7 @@
 import nodemailer from 'nodemailer'
+import { lang } from '@/shared/i18n'
+
+const isRu = lang === 'ru'
 
 // ── Transporter ────────────────────────────────────────────────────
 
@@ -42,7 +45,7 @@ async function send(options: {
 
 function wrap(body: string): string {
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="${lang}">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -69,7 +72,7 @@ function wrap(body: string): string {
           <tr>
             <td style="padding:20px 36px 28px;border-top:1px solid rgba(255,255,255,0.07);">
               <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">
-                8Blocks · Token Economy Design<br />
+                8Blocks · ${isRu ? 'Дизайн токен-экономики' : 'Token Economy Design'}<br />
                 <a href="https://8blocks.io" style="color:rgba(194,78,136,0.8);text-decoration:none;">8blocks.io</a>
               </p>
             </td>
@@ -118,24 +121,34 @@ export async function sendContactUser(to: string, data: {
   message: string
 }) {
   const html = wrap(
-    h1('We received your message') +
-    p(`Hi ${escHtml(data.name)}, thanks for reaching out! We'll review your request and get back to you within one business day.`) +
+    h1(isRu ? 'Мы получили ваше сообщение' : 'We received your message') +
+    p(isRu
+      ? `${escHtml(data.name)}, спасибо за обращение! Мы рассмотрим ваш запрос и ответим в течение одного рабочего дня.`
+      : `Hi ${escHtml(data.name)}, thanks for reaching out! We'll review your request and get back to you within one business day.`
+    ) +
     divider() +
-    field('Your message', data.message) +
+    field(isRu ? 'Ваше сообщение' : 'Your message', data.message) +
     divider() +
-    p('If you have any questions in the meantime, you can reply to this email or contact us at <a href="mailto:hi@токеномика.рф" style="color:#C24E88;text-decoration:none;">hi@токеномика.рф</a>.')
+    p(isRu
+      ? 'Если у вас есть вопросы, вы можете ответить на это письмо или написать нам на <a href="mailto:hi@8blocks.io" style="color:#C24E88;text-decoration:none;">hi@8blocks.io</a>.'
+      : 'If you have any questions in the meantime, you can reply to this email or contact us at <a href="mailto:hi@8blocks.io" style="color:#C24E88;text-decoration:none;">hi@8blocks.io</a>.'
+    )
   )
 
-  await send({ to, subject: 'We received your message — 8Blocks', html })
+  await send({
+    to,
+    subject: isRu ? 'Мы получили ваше сообщение — 8Blocks' : 'We received your message — 8Blocks',
+    html,
+  })
 }
 
-// 2. Contact → admin notification
+// 2. Contact → admin notification (always English)
 export async function sendContactAdmin(data: {
   name: string
   email: string
   message: string
 }) {
-  const adminEmail = process.env.ADMIN_EMAIL ?? process.env.SMTP_FROM ?? ''
+  const adminEmail = process.env.SMTP_FROM ?? ''
   if (!adminEmail) return
 
   const html = wrap(
@@ -151,18 +164,28 @@ export async function sendContactAdmin(data: {
 // 3. Newsletter → user confirmation
 export async function sendNewsletterUser(to: string) {
   const html = wrap(
-    h1("You're subscribed!") +
-    p("You've successfully subscribed to the 8Blocks newsletter. We'll send you insights on token economics, Web3 design patterns, and practical tokenomics — no fluff, just substance.") +
+    h1(isRu ? 'Вы подписаны!' : "You're subscribed!") +
+    p(isRu
+      ? 'Вы успешно подписались на рассылку 8Blocks. Мы будем присылать аналитику по токен-экономике, паттерны Web3-проектирования и практические инсайты — без воды, только суть.'
+      : "You've successfully subscribed to the 8Blocks newsletter. We'll send you insights on token economics, Web3 design patterns, and practical tokenomics — no fluff, just substance."
+    ) +
     divider() +
-    p('To unsubscribe or manage your preferences, reply to this email with "unsubscribe" in the subject.')
+    p(isRu
+      ? 'Чтобы отписаться, ответьте на это письмо со словом «отписаться» в теме.'
+      : 'To unsubscribe or manage your preferences, reply to this email with "unsubscribe" in the subject.'
+    )
   )
 
-  await send({ to, subject: "You're subscribed to 8Blocks newsletter", html })
+  await send({
+    to,
+    subject: isRu ? 'Вы подписаны на рассылку 8Blocks' : "You're subscribed to 8Blocks newsletter",
+    html,
+  })
 }
 
-// 4. Newsletter → admin notification
+// 4. Newsletter → admin notification (always English)
 export async function sendNewsletterAdmin(email: string) {
-  const adminEmail = process.env.ADMIN_EMAIL ?? process.env.SMTP_FROM ?? ''
+  const adminEmail = process.env.SMTP_FROM ?? ''
   if (!adminEmail) return
 
   const html = wrap(

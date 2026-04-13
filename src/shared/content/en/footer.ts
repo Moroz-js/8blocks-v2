@@ -5,6 +5,7 @@ export const footerContent = {
   subscribeNote: 'A newsletter for those who want to go deeper.',
   navHeading: 'Navigation',
   servicesHeading: 'Services',
+  productsHeading: 'Products',
   mapTitle: 'Map',
   copyright: 'All rights reserved.',
   privacyPolicy: 'Privacy Policy',
@@ -18,5 +19,11 @@ export const footerContent = {
     { label: 'Strategic consulting', href: '/services/strategic-consulting' },
     { label: 'Tokenomics', href: '/services/tokenomics' },
     { label: 'Tokenomics audit', href: '/services/audit' },
+  ],
+  productLinks: [
+    {
+      label: 'Tokenomics Calculator',
+      href: '/product/calculator',
+    },
   ],
 } as const
