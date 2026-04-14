@@ -5,7 +5,7 @@ export const tokenLabContent = {
     description:
       'Model allocations across up to 8 buckets, configure vesting schedules, and get an instant A\u2013D structural risk grade. Export a PDF report or connect with 8Blocks for a full audit.',
     ctas: [
-      { label: 'Open in Base App', href: 'https://base.org/build/miniapps' },
+      { label: 'Open in Base App', href: 'https://base.app/app/8blocks-token-lab.vercel.app' },
       { label: 'Open in Telegram', href: 'https://t.me/eightblocks_tokenlab_bot/tokenlab' },
     ],
   },

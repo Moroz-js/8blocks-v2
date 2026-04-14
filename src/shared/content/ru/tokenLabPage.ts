@@ -5,7 +5,7 @@ export const tokenLabContent = {
     description:
       'Распределите аллокации по 8 пулам, настройте вестинг и получите мгновенный структурный рейтинг A\u2013D. Экспортируйте PDF-отчёт или свяжитесь с 8Blocks для полного аудита.',
     ctas: [
-      { label: 'Открыть в Base App', href: 'https://base.org/build/miniapps' },
+      { label: 'Открыть в Base App', href: 'https://base.app/app/8blocks-token-lab.vercel.app' },
       { label: 'Открыть в Telegram', href: 'https://t.me/eightblocks_tokenlab_bot/tokenlab' },
     ],
   },
