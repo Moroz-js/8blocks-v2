@@ -82,6 +82,7 @@ prompt        SMTP_SECURE     "SMTP_SECURE (true/false)"            "false"
 prompt        SMTP_USER       "SMTP_USER"                           "hello@${DOMAIN}"
 prompt_secret SMTP_PASSWORD   "SMTP_PASSWORD"
 prompt        SMTP_FROM       "SMTP_FROM"                           "hello@${DOMAIN}"
+prompt        ADMIN_NOTIFY_EMAIL "ADMIN_NOTIFY_EMAIL (уведомления; пусто = SMTP_FROM)" ""
 prompt        SITE_URL        "NEXT_PUBLIC_SITE_URL"                "https://${DOMAIN}"
 prompt        GTM_ID          "NEXT_PUBLIC_GTM_ID (пусто = выкл)"  ""
 prompt        REPLAIN_ID      "NEXT_PUBLIC_REPLAIN_ID (пусто = выкл)" ""
@@ -272,6 +273,7 @@ SMTP_SECURE=${SMTP_SECURE}
 SMTP_USER=${SMTP_USER}
 SMTP_PASSWORD=${SMTP_PASSWORD}
 SMTP_FROM=${SMTP_FROM}
+ADMIN_NOTIFY_EMAIL=${ADMIN_NOTIFY_EMAIL}
 NEXT_PUBLIC_SITE_URL=${SITE_URL}
 NEXT_PUBLIC_LANG=${SITE_LANG}
 NEXT_PUBLIC_GTM_ID=${GTM_ID}

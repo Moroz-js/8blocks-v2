@@ -144,7 +144,8 @@ public/
 | `PAYLOAD_SECRET` | Секрет Payload CMS |
 | `ADMIN_EMAIL` | Email администратора (вход в /admin и seed) |
 | `ADMIN_PASSWORD` | Пароль администратора (seed) |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Отправка писем |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Отправка писем (SMTP, адрес отправителя) |
+| `ADMIN_NOTIFY_EMAIL` | Ящик для админских уведомлений (заявки, подписки); один на все инстансы. Если не задан — используется `SMTP_FROM` |
 | `NEXT_PUBLIC_SITE_URL` | Базовый URL сайта (canonical, OG) |
 | `NEXT_PUBLIC_LANG` | Язык сборки: `ru` или `en` |
 | `NEXT_PUBLIC_GTM_ID` | ID контейнера Google Tag Manager (опционально) |
@@ -158,7 +159,7 @@ public/
 - **Deploy to Production** (`.github/workflows/deploy.yml`) — `workflow_dispatch`, SSH на RU / EN / AE, на сервере выполняется `scripts/github-deploy-remote.sh`: `git reset` к `main`, запись `.env`, `npm ci`, миграции Payload, `npm run build`, PM2. Режим **hard** дополнительно запускает `npm run seed` (для EN-сайта при необходимости лучше править скрипт под `seed:en`).
 - **Update .env** (`.github/workflows/update-env.yml`) — только перезапись `.env` и `pm2 reload`, без сборки и без смены пользователя в БД Payload.
 
-Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (см. переменные в workflow-файлах).
+Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (см. переменные в workflow-файлах). Дополнительно репозиторный секрет **`ADMIN_NOTIFY_EMAIL`** (без префикса): общий получатель админских писем для RU, EN и AE; добавьте его в GitHub → Settings → Secrets and variables → Actions.
 
 ---
 

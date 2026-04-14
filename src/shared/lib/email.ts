@@ -1,10 +1,18 @@
 import nodemailer from 'nodemailer'
+import { siteConfig } from '@/shared/config/site'
 import { lang } from '@/shared/i18n'
 import {
   escHtml,
   sanitizeEmailSubject,
   stripEmailHeaderInjection,
 } from '@/shared/lib/form-sanitize'
+
+/** Куда слать админские уведомления (единый ящик для всех инстансов). Fallback: SMTP_FROM. */
+function resolveAdminNotifyInbox(): string {
+  const inbox = process.env.ADMIN_NOTIFY_EMAIL?.trim()
+  if (inbox) return inbox
+  return process.env.SMTP_FROM?.trim() ?? ''
+}
 
 const isRu = lang === 'ru'
 
@@ -153,11 +161,12 @@ export async function sendContactAdmin(data: {
   email: string
   message: string
 }) {
-  const adminEmail = process.env.SMTP_FROM ?? ''
+  const adminEmail = resolveAdminNotifyInbox()
   if (!adminEmail) return
 
   const html = wrap(
     h1('New contact form submission') +
+    field('Site', siteConfig.url) +
     field('Name', data.name) +
     field('Email', data.email) +
     field('Message', data.message)
@@ -196,11 +205,12 @@ export async function sendNewsletterUser(to: string) {
 
 // 4. Newsletter → admin notification (always English)
 export async function sendNewsletterAdmin(email: string) {
-  const adminEmail = process.env.SMTP_FROM ?? ''
+  const adminEmail = resolveAdminNotifyInbox()
   if (!adminEmail) return
 
   const html = wrap(
     h1('New newsletter subscriber') +
+    field('Site', siteConfig.url) +
     field('Email', email)
   )
 
