@@ -1,5 +1,10 @@
 import nodemailer from 'nodemailer'
 import { lang } from '@/shared/i18n'
+import {
+  escHtml,
+  sanitizeEmailSubject,
+  stripEmailHeaderInjection,
+} from '@/shared/lib/form-sanitize'
 
 const isRu = lang === 'ru'
 
@@ -33,10 +38,16 @@ async function send(options: {
 
   const from = process.env.SMTP_FROM ?? 'hello@8blocks.io'
 
+  const to = stripEmailHeaderInjection(options.to).replace(/\s/g, '')
+  if (!to) {
+    console.warn('[email] empty recipient after sanitization — skip')
+    return
+  }
+
   await transporter.sendMail({
-    from: `"8Blocks" <${from}>`,
-    to: options.to,
-    subject: options.subject,
+    from: `"8Blocks" <${stripEmailHeaderInjection(from).replace(/\s/g, '') || from}>`,
+    to,
+    subject: sanitizeEmailSubject(options.subject),
     html: options.html,
   })
 }
@@ -86,7 +97,7 @@ function wrap(body: string): string {
 }
 
 function h1(text: string): string {
-  return `<h1 style="margin:0 0 16px;font-size:24px;font-weight:600;color:#ffffff;letter-spacing:-0.02em;line-height:1.25;">${text}</h1>`
+  return `<h1 style="margin:0 0 16px;font-size:24px;font-weight:600;color:#ffffff;letter-spacing:-0.02em;line-height:1.25;">${escHtml(text)}</h1>`
 }
 
 function p(text: string): string {
@@ -95,21 +106,13 @@ function p(text: string): string {
 
 function field(label: string, value: string): string {
   return `<div style="margin-bottom:16px;">
-    <p style="margin:0 0 4px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);">${label}</p>
-    <p style="margin:0;font-size:14px;color:rgba(255,255,255,0.8);word-break:break-word;">${escHtml(value)}</p>
+    <p style="margin:0 0 4px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);">${escHtml(label)}</p>
+    <p style="margin:0;font-size:14px;color:rgba(255,255,255,0.8);word-break:break-word;white-space:pre-wrap;">${escHtml(value)}</p>
   </div>`
 }
 
 function divider(): string {
   return `<hr style="border:none;border-top:1px solid rgba(255,255,255,0.07);margin:24px 0;" />`
-}
-
-function escHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
 }
 
 // ── Templates ──────────────────────────────────────────────────────
@@ -137,7 +140,9 @@ export async function sendContactUser(to: string, data: {
 
   await send({
     to,
-    subject: isRu ? 'Мы получили ваше сообщение — 8Blocks' : 'We received your message — 8Blocks',
+    subject: sanitizeEmailSubject(
+      isRu ? 'Мы получили ваше сообщение — 8Blocks' : 'We received your message — 8Blocks',
+    ),
     html,
   })
 }
@@ -158,7 +163,11 @@ export async function sendContactAdmin(data: {
     field('Message', data.message)
   )
 
-  await send({ to: adminEmail, subject: `New lead: ${data.name} — 8Blocks`, html })
+  await send({
+    to: adminEmail,
+    subject: sanitizeEmailSubject(`New lead: ${data.name} — 8Blocks`),
+    html,
+  })
 }
 
 // 3. Newsletter → user confirmation
@@ -178,7 +187,9 @@ export async function sendNewsletterUser(to: string) {
 
   await send({
     to,
-    subject: isRu ? 'Вы подписаны на рассылку 8Blocks' : "You're subscribed to 8Blocks newsletter",
+    subject: sanitizeEmailSubject(
+      isRu ? 'Вы подписаны на рассылку 8Blocks' : "You're subscribed to 8Blocks newsletter",
+    ),
     html,
   })
 }
@@ -193,5 +204,9 @@ export async function sendNewsletterAdmin(email: string) {
     field('Email', email)
   )
 
-  await send({ to: adminEmail, subject: `New subscriber: ${email} — 8Blocks`, html })
+  await send({
+    to: adminEmail,
+    subject: sanitizeEmailSubject(`New subscriber: ${email} — 8Blocks`),
+    html,
+  })
 }
