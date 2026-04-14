@@ -6,7 +6,12 @@ import { sanitizeContactForm } from '@/shared/lib/form-sanitize'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    let body: unknown
+    try {
+      body = await req.json()
+    } catch {
+      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
+    }
     const parsed = sanitizeContactForm(body)
     if (!parsed.ok) {
       return NextResponse.json({ error: parsed.error }, { status: 400 })
@@ -26,15 +31,13 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    // Send emails — log failures but don't fail the request
-    try {
-      await Promise.all([
-        sendContactUser(email, { name, email, message }),
-        sendContactAdmin({ name, email, message }),
-      ])
-    } catch (emailErr) {
+    // Письма в фоне: не ждём SMTP — иначе таймаут прокси отдаёт HTML, клиент ломается на res.json()
+    void Promise.all([
+      sendContactUser(email, { name, email, message }),
+      sendContactAdmin({ name, email, message }),
+    ]).catch((emailErr) => {
       console.error('[contact] email send failed:', emailErr)
-    }
+    })
 
     return NextResponse.json({ success: true })
   } catch (error) {

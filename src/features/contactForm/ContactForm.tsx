@@ -28,7 +28,13 @@ export function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
-      const data = await res.json() as { success?: boolean; error?: string }
+      const raw = await res.text()
+      let data: { success?: boolean; error?: string } = {}
+      try {
+        data = JSON.parse(raw) as { success?: boolean; error?: string }
+      } catch {
+        throw new Error(contactFormContent.failedError)
+      }
 
       if (!res.ok || !data.success) {
         throw new Error(data.error || contactFormContent.failedError)

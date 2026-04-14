@@ -37,14 +37,12 @@ export async function POST(req: NextRequest) {
       data: { email: normalizedEmail },
     })
 
-    try {
-      await Promise.all([
-        sendNewsletterUser(normalizedEmail),
-        sendNewsletterAdmin(normalizedEmail),
-      ])
-    } catch (emailErr) {
+    void Promise.all([
+      sendNewsletterUser(normalizedEmail),
+      sendNewsletterAdmin(normalizedEmail),
+    ]).catch((emailErr) => {
       console.error('[newsletter] email send failed:', emailErr)
-    }
+    })
 
     return NextResponse.json({ success: true })
   } catch (error) {

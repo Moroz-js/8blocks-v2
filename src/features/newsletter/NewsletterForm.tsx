@@ -23,7 +23,13 @@ export function NewsletterForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       })
-      const data = await res.json() as { success?: boolean; error?: string }
+      const raw = await res.text()
+      let data: { success?: boolean; error?: string } = {}
+      try {
+        data = JSON.parse(raw) as { success?: boolean; error?: string }
+      } catch {
+        throw new Error('Failed to subscribe')
+      }
 
       if (!res.ok || !data.success) {
         throw new Error(data.error || 'Failed to subscribe')
