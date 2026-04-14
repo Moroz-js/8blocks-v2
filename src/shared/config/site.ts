@@ -38,6 +38,7 @@ export const navLinks = [
   { label: t({ ru: 'Услуги', en: 'Services' }), href: '/services' },
   { label: t({ ru: 'Кейсы', en: 'Cases' }), href: '/cases' },
   { label: t({ ru: 'Блог', en: 'Blog' }), href: '/blog' },
+  { label: t({ ru: 'Калькулятор токеномики', en: 'Tokenomics Calculator' }), href: '/product/calculator' },
   { label: t({ ru: 'Контакты', en: 'Contact' }), href: '/contact' },
 ] as const
 
