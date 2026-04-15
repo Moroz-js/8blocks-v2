@@ -35,14 +35,16 @@ export async function POST(req: NextRequest) {
     // Ответ сразу (без долгого await SMTP), но отправка дожимается через after() —
     // иначе void Promise без after часто обрывается вместе с завершением запроса Next.js.
     after(async () => {
-      try {
-        await Promise.all([
-          sendContactUser(email, { name, email, message }),
-          sendContactAdmin({ name, email, message }),
-        ])
-      } catch (emailErr) {
-        console.error('[contact] email send failed:', emailErr)
-      }
+      const results = await Promise.allSettled([
+        sendContactUser(email, { name, email, message }),
+        sendContactAdmin({ name, email, message }),
+      ])
+      const labels = ['user confirmation', 'admin notify'] as const
+      results.forEach((r, i) => {
+        if (r.status === 'rejected') {
+          console.error(`[contact] email (${labels[i]}) failed:`, r.reason)
+        }
+      })
     })
 
     return NextResponse.json({ success: true })

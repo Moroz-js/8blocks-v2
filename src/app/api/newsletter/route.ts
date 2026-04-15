@@ -39,14 +39,16 @@ export async function POST(req: NextRequest) {
     })
 
     after(async () => {
-      try {
-        await Promise.all([
-          sendNewsletterUser(normalizedEmail),
-          sendNewsletterAdmin(normalizedEmail),
-        ])
-      } catch (emailErr) {
-        console.error('[newsletter] email send failed:', emailErr)
-      }
+      const results = await Promise.allSettled([
+        sendNewsletterUser(normalizedEmail),
+        sendNewsletterAdmin(normalizedEmail),
+      ])
+      const labels = ['user confirmation', 'admin notify'] as const
+      results.forEach((r, i) => {
+        if (r.status === 'rejected') {
+          console.error(`[newsletter] email (${labels[i]}) failed:`, r.reason)
+        }
+      })
     })
 
     return NextResponse.json({ success: true })
