@@ -162,7 +162,12 @@ export async function sendContactAdmin(data: {
   message: string
 }) {
   const adminEmail = resolveAdminNotifyInbox()
-  if (!adminEmail) return
+  if (!adminEmail) {
+    console.warn(
+      '[email] skip admin contact notify: set ADMIN_NOTIFY_EMAIL or SMTP_FROM in env',
+    )
+    return
+  }
 
   const html = wrap(
     h1('New contact form submission') +
@@ -206,7 +211,12 @@ export async function sendNewsletterUser(to: string) {
 // 4. Newsletter → admin notification (always English)
 export async function sendNewsletterAdmin(email: string) {
   const adminEmail = resolveAdminNotifyInbox()
-  if (!adminEmail) return
+  if (!adminEmail) {
+    console.warn(
+      '[email] skip admin newsletter notify: set ADMIN_NOTIFY_EMAIL or SMTP_FROM in env',
+    )
+    return
+  }
 
   const html = wrap(
     h1('New newsletter subscriber') +

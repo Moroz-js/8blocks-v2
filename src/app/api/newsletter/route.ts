@@ -1,3 +1,4 @@
+import { after } from 'next/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
@@ -37,11 +38,15 @@ export async function POST(req: NextRequest) {
       data: { email: normalizedEmail },
     })
 
-    void Promise.all([
-      sendNewsletterUser(normalizedEmail),
-      sendNewsletterAdmin(normalizedEmail),
-    ]).catch((emailErr) => {
-      console.error('[newsletter] email send failed:', emailErr)
+    after(async () => {
+      try {
+        await Promise.all([
+          sendNewsletterUser(normalizedEmail),
+          sendNewsletterAdmin(normalizedEmail),
+        ])
+      } catch (emailErr) {
+        console.error('[newsletter] email send failed:', emailErr)
+      }
     })
 
     return NextResponse.json({ success: true })

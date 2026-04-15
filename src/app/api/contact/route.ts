@@ -1,3 +1,4 @@
+import { after } from 'next/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
@@ -31,12 +32,17 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    // Письма в фоне: не ждём SMTP — иначе таймаут прокси отдаёт HTML, клиент ломается на res.json()
-    void Promise.all([
-      sendContactUser(email, { name, email, message }),
-      sendContactAdmin({ name, email, message }),
-    ]).catch((emailErr) => {
-      console.error('[contact] email send failed:', emailErr)
+    // Ответ сразу (без долгого await SMTP), но отправка дожимается через after() —
+    // иначе void Promise без after часто обрывается вместе с завершением запроса Next.js.
+    after(async () => {
+      try {
+        await Promise.all([
+          sendContactUser(email, { name, email, message }),
+          sendContactAdmin({ name, email, message }),
+        ])
+      } catch (emailErr) {
+        console.error('[contact] email send failed:', emailErr)
+      }
     })
 
     return NextResponse.json({ success: true })
