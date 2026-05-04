@@ -8,16 +8,24 @@ import { sql } from '@payloadcms/db-postgres'
  */
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TYPE "public"."enum_articles_status" AS ENUM('draft', 'published');
-  CREATE TABLE "users_sessions" (
+  DO $idempotent_up$
+  BEGIN
+
+  -- ENUM
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enum_articles_status' AND typnamespace = 'public'::regnamespace) THEN
+    CREATE TYPE "public"."enum_articles_status" AS ENUM('draft', 'published');
+  END IF;
+
+  -- TABLES
+  CREATE TABLE IF NOT EXISTS "users_sessions" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"created_at" timestamp(3) with time zone,
   	"expires_at" timestamp(3) with time zone NOT NULL
   );
-  
-  CREATE TABLE "users" (
+
+  CREATE TABLE IF NOT EXISTS "users" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -30,8 +38,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"login_attempts" numeric DEFAULT 0,
   	"lock_until" timestamp(3) with time zone
   );
-  
-  CREATE TABLE "media" (
+
+  CREATE TABLE IF NOT EXISTS "media" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"alt" varchar NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
@@ -64,8 +72,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"sizes_hero_filesize" numeric,
   	"sizes_hero_filename" varchar
   );
-  
-  CREATE TABLE "categories" (
+
+  CREATE TABLE IF NOT EXISTS "categories" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
   	"slug" varchar NOT NULL,
@@ -75,8 +83,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
-  CREATE TABLE "articles" (
+
+  CREATE TABLE IF NOT EXISTS "articles" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"title" varchar NOT NULL,
   	"slug" varchar NOT NULL,
@@ -93,16 +101,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
-  CREATE TABLE "articles_rels" (
+
+  CREATE TABLE IF NOT EXISTS "articles_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"articles_id" integer
   );
-  
-  CREATE TABLE "leads" (
+
+  CREATE TABLE IF NOT EXISTS "leads" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar NOT NULL,
   	"email" varchar NOT NULL,
@@ -110,8 +118,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
-  CREATE TABLE "newsletter_subscriptions" (
+
+  CREATE TABLE IF NOT EXISTS "newsletter_subscriptions" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"email" varchar NOT NULL,
   	"source" varchar,
@@ -119,21 +127,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
-  CREATE TABLE "payload_kv" (
+
+  CREATE TABLE IF NOT EXISTS "payload_kv" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"key" varchar NOT NULL,
   	"data" jsonb NOT NULL
   );
-  
-  CREATE TABLE "payload_locked_documents" (
+
+  CREATE TABLE IF NOT EXISTS "payload_locked_documents" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"global_slug" varchar,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
-  CREATE TABLE "payload_locked_documents_rels" (
+
+  CREATE TABLE IF NOT EXISTS "payload_locked_documents_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
@@ -145,96 +153,130 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"leads_id" integer,
   	"newsletter_subscriptions_id" integer
   );
-  
-  CREATE TABLE "payload_preferences" (
+
+  CREATE TABLE IF NOT EXISTS "payload_preferences" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"key" varchar,
   	"value" jsonb,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
-  CREATE TABLE "payload_preferences_rels" (
+
+  CREATE TABLE IF NOT EXISTS "payload_preferences_rels" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"order" integer,
   	"parent_id" integer NOT NULL,
   	"path" varchar NOT NULL,
   	"users_id" integer
   );
-  
-  CREATE TABLE "payload_migrations" (
+
+  CREATE TABLE IF NOT EXISTS "payload_migrations" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"name" varchar,
   	"batch" numeric,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
-  
-  ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "articles" ADD CONSTRAINT "articles_category_id_categories_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "articles" ADD CONSTRAINT "articles_cover_id_media_id_fk" FOREIGN KEY ("cover_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "articles_rels" ADD CONSTRAINT "articles_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."articles"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "articles_rels" ADD CONSTRAINT "articles_rels_articles_fk" FOREIGN KEY ("articles_id") REFERENCES "public"."articles"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_articles_fk" FOREIGN KEY ("articles_id") REFERENCES "public"."articles"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_leads_fk" FOREIGN KEY ("leads_id") REFERENCES "public"."leads"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_newsletter_subscriptions_fk" FOREIGN KEY ("newsletter_subscriptions_id") REFERENCES "public"."newsletter_subscriptions"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
-  CREATE INDEX "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
-  CREATE INDEX "users_sessions_parent_id_idx" ON "users_sessions" USING btree ("_parent_id");
-  CREATE INDEX "users_updated_at_idx" ON "users" USING btree ("updated_at");
-  CREATE INDEX "users_created_at_idx" ON "users" USING btree ("created_at");
-  CREATE UNIQUE INDEX "users_email_idx" ON "users" USING btree ("email");
-  CREATE INDEX "media_updated_at_idx" ON "media" USING btree ("updated_at");
-  CREATE INDEX "media_created_at_idx" ON "media" USING btree ("created_at");
-  CREATE UNIQUE INDEX "media_filename_idx" ON "media" USING btree ("filename");
-  CREATE INDEX "media_sizes_thumbnail_sizes_thumbnail_filename_idx" ON "media" USING btree ("sizes_thumbnail_filename");
-  CREATE INDEX "media_sizes_card_sizes_card_filename_idx" ON "media" USING btree ("sizes_card_filename");
-  CREATE INDEX "media_sizes_hero_sizes_hero_filename_idx" ON "media" USING btree ("sizes_hero_filename");
-  CREATE UNIQUE INDEX "categories_slug_idx" ON "categories" USING btree ("slug");
-  CREATE INDEX "categories_updated_at_idx" ON "categories" USING btree ("updated_at");
-  CREATE INDEX "categories_created_at_idx" ON "categories" USING btree ("created_at");
-  CREATE UNIQUE INDEX "articles_slug_idx" ON "articles" USING btree ("slug");
-  CREATE INDEX "articles_category_idx" ON "articles" USING btree ("category_id");
-  CREATE INDEX "articles_cover_idx" ON "articles" USING btree ("cover_id");
-  CREATE INDEX "articles_updated_at_idx" ON "articles" USING btree ("updated_at");
-  CREATE INDEX "articles_created_at_idx" ON "articles" USING btree ("created_at");
-  CREATE INDEX "articles_rels_order_idx" ON "articles_rels" USING btree ("order");
-  CREATE INDEX "articles_rels_parent_idx" ON "articles_rels" USING btree ("parent_id");
-  CREATE INDEX "articles_rels_path_idx" ON "articles_rels" USING btree ("path");
-  CREATE INDEX "articles_rels_articles_id_idx" ON "articles_rels" USING btree ("articles_id");
-  CREATE INDEX "leads_updated_at_idx" ON "leads" USING btree ("updated_at");
-  CREATE INDEX "leads_created_at_idx" ON "leads" USING btree ("created_at");
-  CREATE UNIQUE INDEX "newsletter_subscriptions_email_idx" ON "newsletter_subscriptions" USING btree ("email");
-  CREATE INDEX "newsletter_subscriptions_updated_at_idx" ON "newsletter_subscriptions" USING btree ("updated_at");
-  CREATE INDEX "newsletter_subscriptions_created_at_idx" ON "newsletter_subscriptions" USING btree ("created_at");
-  CREATE UNIQUE INDEX "payload_kv_key_idx" ON "payload_kv" USING btree ("key");
-  CREATE INDEX "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
-  CREATE INDEX "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
-  CREATE INDEX "payload_locked_documents_created_at_idx" ON "payload_locked_documents" USING btree ("created_at");
-  CREATE INDEX "payload_locked_documents_rels_order_idx" ON "payload_locked_documents_rels" USING btree ("order");
-  CREATE INDEX "payload_locked_documents_rels_parent_idx" ON "payload_locked_documents_rels" USING btree ("parent_id");
-  CREATE INDEX "payload_locked_documents_rels_path_idx" ON "payload_locked_documents_rels" USING btree ("path");
-  CREATE INDEX "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
-  CREATE INDEX "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
-  CREATE INDEX "payload_locked_documents_rels_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("categories_id");
-  CREATE INDEX "payload_locked_documents_rels_articles_id_idx" ON "payload_locked_documents_rels" USING btree ("articles_id");
-  CREATE INDEX "payload_locked_documents_rels_leads_id_idx" ON "payload_locked_documents_rels" USING btree ("leads_id");
-  CREATE INDEX "payload_locked_documents_rels_newsletter_subscriptions_i_idx" ON "payload_locked_documents_rels" USING btree ("newsletter_subscriptions_id");
-  CREATE INDEX "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
-  CREATE INDEX "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
-  CREATE INDEX "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
-  CREATE INDEX "payload_preferences_rels_order_idx" ON "payload_preferences_rels" USING btree ("order");
-  CREATE INDEX "payload_preferences_rels_parent_idx" ON "payload_preferences_rels" USING btree ("parent_id");
-  CREATE INDEX "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
-  CREATE INDEX "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
-  CREATE INDEX "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
-  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");
 
+  -- FOREIGN KEYS (idempotent via DO block)
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'users_sessions_parent_id_fk') THEN
+    ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'articles_category_id_categories_id_fk') THEN
+    ALTER TABLE "articles" ADD CONSTRAINT "articles_category_id_categories_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."categories"("id") ON DELETE set null ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'articles_cover_id_media_id_fk') THEN
+    ALTER TABLE "articles" ADD CONSTRAINT "articles_cover_id_media_id_fk" FOREIGN KEY ("cover_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'articles_rels_parent_fk') THEN
+    ALTER TABLE "articles_rels" ADD CONSTRAINT "articles_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."articles"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'articles_rels_articles_fk') THEN
+    ALTER TABLE "articles_rels" ADD CONSTRAINT "articles_rels_articles_fk" FOREIGN KEY ("articles_id") REFERENCES "public"."articles"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_parent_fk') THEN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_users_fk') THEN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_media_fk') THEN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_categories_fk') THEN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_categories_fk" FOREIGN KEY ("categories_id") REFERENCES "public"."categories"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_articles_fk') THEN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_articles_fk" FOREIGN KEY ("articles_id") REFERENCES "public"."articles"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_leads_fk') THEN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_leads_fk" FOREIGN KEY ("leads_id") REFERENCES "public"."leads"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_locked_documents_rels_newsletter_subscriptions_fk') THEN
+    ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_newsletter_subscriptions_fk" FOREIGN KEY ("newsletter_subscriptions_id") REFERENCES "public"."newsletter_subscriptions"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_preferences_rels_parent_fk') THEN
+    ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'payload_preferences_rels_users_fk') THEN
+    ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  END IF;
+
+  -- INDEXES
+  CREATE INDEX IF NOT EXISTS "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "users_sessions_parent_id_idx" ON "users_sessions" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "users_updated_at_idx" ON "users" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "users_created_at_idx" ON "users" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "users_email_idx" ON "users" USING btree ("email");
+  CREATE INDEX IF NOT EXISTS "media_updated_at_idx" ON "media" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "media_created_at_idx" ON "media" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "media_filename_idx" ON "media" USING btree ("filename");
+  CREATE INDEX IF NOT EXISTS "media_sizes_thumbnail_sizes_thumbnail_filename_idx" ON "media" USING btree ("sizes_thumbnail_filename");
+  CREATE INDEX IF NOT EXISTS "media_sizes_card_sizes_card_filename_idx" ON "media" USING btree ("sizes_card_filename");
+  CREATE INDEX IF NOT EXISTS "media_sizes_hero_sizes_hero_filename_idx" ON "media" USING btree ("sizes_hero_filename");
+  CREATE UNIQUE INDEX IF NOT EXISTS "categories_slug_idx" ON "categories" USING btree ("slug");
+  CREATE INDEX IF NOT EXISTS "categories_updated_at_idx" ON "categories" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "categories_created_at_idx" ON "categories" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "articles_slug_idx" ON "articles" USING btree ("slug");
+  CREATE INDEX IF NOT EXISTS "articles_category_idx" ON "articles" USING btree ("category_id");
+  CREATE INDEX IF NOT EXISTS "articles_cover_idx" ON "articles" USING btree ("cover_id");
+  CREATE INDEX IF NOT EXISTS "articles_updated_at_idx" ON "articles" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "articles_created_at_idx" ON "articles" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "articles_rels_order_idx" ON "articles_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "articles_rels_parent_idx" ON "articles_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "articles_rels_path_idx" ON "articles_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "articles_rels_articles_id_idx" ON "articles_rels" USING btree ("articles_id");
+  CREATE INDEX IF NOT EXISTS "leads_updated_at_idx" ON "leads" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "leads_created_at_idx" ON "leads" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "newsletter_subscriptions_email_idx" ON "newsletter_subscriptions" USING btree ("email");
+  CREATE INDEX IF NOT EXISTS "newsletter_subscriptions_updated_at_idx" ON "newsletter_subscriptions" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "newsletter_subscriptions_created_at_idx" ON "newsletter_subscriptions" USING btree ("created_at");
+  CREATE UNIQUE INDEX IF NOT EXISTS "payload_kv_key_idx" ON "payload_kv" USING btree ("key");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_created_at_idx" ON "payload_locked_documents" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_order_idx" ON "payload_locked_documents_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_parent_idx" ON "payload_locked_documents_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_path_idx" ON "payload_locked_documents_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_users_id_idx" ON "payload_locked_documents_rels" USING btree ("users_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_media_id_idx" ON "payload_locked_documents_rels" USING btree ("media_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_categories_id_idx" ON "payload_locked_documents_rels" USING btree ("categories_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_articles_id_idx" ON "payload_locked_documents_rels" USING btree ("articles_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_leads_id_idx" ON "payload_locked_documents_rels" USING btree ("leads_id");
+  CREATE INDEX IF NOT EXISTS "payload_locked_documents_rels_newsletter_subscriptions_i_idx" ON "payload_locked_documents_rels" USING btree ("newsletter_subscriptions_id");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_key_idx" ON "payload_preferences" USING btree ("key");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_updated_at_idx" ON "payload_preferences" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_created_at_idx" ON "payload_preferences" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_order_idx" ON "payload_preferences_rels" USING btree ("order");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_parent_idx" ON "payload_preferences_rels" USING btree ("parent_id");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
+  CREATE INDEX IF NOT EXISTS "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
+  CREATE INDEX IF NOT EXISTS "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");
+
+  END $idempotent_up$;
+
+  -- Drop legacy split globals tables if any
   DO $drop_split_globals$ DECLARE
     r RECORD;
   BEGIN
@@ -246,14 +288,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
     END LOOP;
   END $drop_split_globals$;
 
-  CREATE TABLE "site_seo" (
+  CREATE TABLE IF NOT EXISTS "site_seo" (
     "id" serial PRIMARY KEY NOT NULL,
     "global_head_markup" varchar,
     "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
     "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
 
-  CREATE TABLE "site_seo_page_overrides" (
+  CREATE TABLE IF NOT EXISTS "site_seo_page_overrides" (
     "_order" integer NOT NULL,
     "_parent_id" integer NOT NULL,
     "id" varchar PRIMARY KEY NOT NULL,
@@ -271,32 +313,46 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
     "page_head_markup" varchar
   );
 
-  ALTER TABLE "site_seo_page_overrides" ADD CONSTRAINT "site_seo_page_overrides_parent_id_fk"
-    FOREIGN KEY ("_parent_id") REFERENCES "public"."site_seo"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "site_seo_page_overrides" ADD CONSTRAINT "site_seo_page_overrides_og_image_id_media_id_fk"
-    FOREIGN KEY ("og_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  DO $site_seo_fk$
+  BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'site_seo_page_overrides_parent_id_fk') THEN
+      ALTER TABLE "site_seo_page_overrides" ADD CONSTRAINT "site_seo_page_overrides_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "public"."site_seo"("id") ON DELETE cascade ON UPDATE no action;
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'site_seo_page_overrides_og_image_id_media_id_fk') THEN
+      ALTER TABLE "site_seo_page_overrides" ADD CONSTRAINT "site_seo_page_overrides_og_image_id_media_id_fk"
+        FOREIGN KEY ("og_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+    END IF;
+  END $site_seo_fk$;
 
-  CREATE INDEX "site_seo_updated_at_idx" ON "site_seo" USING btree ("updated_at");
-  CREATE INDEX "site_seo_created_at_idx" ON "site_seo" USING btree ("created_at");
-  CREATE INDEX "site_seo_page_overrides_order_idx" ON "site_seo_page_overrides" USING btree ("_order");
-  CREATE INDEX "site_seo_page_overrides_parent_id_idx" ON "site_seo_page_overrides" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "site_seo_updated_at_idx" ON "site_seo" USING btree ("updated_at");
+  CREATE INDEX IF NOT EXISTS "site_seo_created_at_idx" ON "site_seo" USING btree ("created_at");
+  CREATE INDEX IF NOT EXISTS "site_seo_page_overrides_order_idx" ON "site_seo_page_overrides" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "site_seo_page_overrides_parent_id_idx" ON "site_seo_page_overrides" USING btree ("_parent_id");
 
-  ALTER TABLE "articles" ADD COLUMN "seo_og_title" varchar;
-  ALTER TABLE "articles" ADD COLUMN "seo_og_description" varchar;
-  ALTER TABLE "articles" ADD COLUMN "seo_og_image_id" integer;
-  ALTER TABLE "articles" ADD COLUMN "seo_twitter_title" varchar;
-  ALTER TABLE "articles" ADD COLUMN "seo_twitter_description" varchar;
-  ALTER TABLE "articles" ADD COLUMN "seo_head_markup" varchar;
+  -- SEO columns on articles (idempotent)
+  ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "seo_og_title" varchar;
+  ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "seo_og_description" varchar;
+  ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "seo_og_image_id" integer;
+  ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "seo_twitter_title" varchar;
+  ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "seo_twitter_description" varchar;
+  ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "seo_head_markup" varchar;
 
-  ALTER TABLE "articles" ADD CONSTRAINT "articles_seo_og_image_id_media_id_fk"
-    FOREIGN KEY ("seo_og_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  CREATE INDEX "articles_seo_og_image_idx" ON "articles" USING btree ("seo_og_image_id");
+  DO $articles_seo_fk$
+  BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'articles_seo_og_image_id_media_id_fk') THEN
+      ALTER TABLE "articles" ADD CONSTRAINT "articles_seo_og_image_id_media_id_fk"
+        FOREIGN KEY ("seo_og_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+    END IF;
+  END $articles_seo_fk$;
+  CREATE INDEX IF NOT EXISTS "articles_seo_og_image_idx" ON "articles" USING btree ("seo_og_image_id");
 
-  ALTER TABLE "categories" ADD COLUMN "seo_og_title" varchar;
-  ALTER TABLE "categories" ADD COLUMN "seo_og_description" varchar;
-  ALTER TABLE "categories" ADD COLUMN "seo_twitter_title" varchar;
-  ALTER TABLE "categories" ADD COLUMN "seo_twitter_description" varchar;
-  ALTER TABLE "categories" ADD COLUMN "seo_head_markup" varchar;
+  -- SEO columns on categories (idempotent)
+  ALTER TABLE "categories" ADD COLUMN IF NOT EXISTS "seo_og_title" varchar;
+  ALTER TABLE "categories" ADD COLUMN IF NOT EXISTS "seo_og_description" varchar;
+  ALTER TABLE "categories" ADD COLUMN IF NOT EXISTS "seo_twitter_title" varchar;
+  ALTER TABLE "categories" ADD COLUMN IF NOT EXISTS "seo_twitter_description" varchar;
+  ALTER TABLE "categories" ADD COLUMN IF NOT EXISTS "seo_head_markup" varchar;
   `)
 }
 
