@@ -1,6 +1,11 @@
-import type { MigrateUpArgs, MigrateDownArgs } from '@payloadcms/db-postgres'
+import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 import { sql } from '@payloadcms/db-postgres'
 
+/**
+ * Одна миграция на пустую БД: схема Payload + site-seo + SEO статей/категорий.
+ * Перед SEO удаляются возможные таблицы `site_seo_p_%` от старых экспериментов.
+ * На проде позже можно разнести на несколько файлов по тому же SQL.
+ */
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
    CREATE TYPE "public"."enum_articles_status" AS ENUM('draft', 'published');
@@ -228,11 +233,93 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
   CREATE INDEX "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
   CREATE INDEX "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
-  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`)
+  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");
+
+  DO $drop_split_globals$ DECLARE
+    r RECORD;
+  BEGIN
+    FOR r IN
+      SELECT tablename FROM pg_tables
+      WHERE schemaname = 'public' AND tablename LIKE 'site_seo_p_%'
+    LOOP
+      EXECUTE format('DROP TABLE IF EXISTS %I CASCADE', r.tablename);
+    END LOOP;
+  END $drop_split_globals$;
+
+  CREATE TABLE "site_seo" (
+    "id" serial PRIMARY KEY NOT NULL,
+    "global_head_markup" varchar,
+    "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+    "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+  );
+
+  CREATE TABLE "site_seo_page_overrides" (
+    "_order" integer NOT NULL,
+    "_parent_id" integer NOT NULL,
+    "id" varchar PRIMARY KEY NOT NULL,
+    "path" varchar NOT NULL,
+    "title" varchar,
+    "seo_title" varchar,
+    "meta_description" varchar,
+    "og_title" varchar,
+    "og_description" varchar,
+    "og_image_id" integer,
+    "twitter_title" varchar,
+    "twitter_description" varchar,
+    "canonical_url" varchar,
+    "robots_noindex" boolean DEFAULT false,
+    "page_head_markup" varchar
+  );
+
+  ALTER TABLE "site_seo_page_overrides" ADD CONSTRAINT "site_seo_page_overrides_parent_id_fk"
+    FOREIGN KEY ("_parent_id") REFERENCES "public"."site_seo"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "site_seo_page_overrides" ADD CONSTRAINT "site_seo_page_overrides_og_image_id_media_id_fk"
+    FOREIGN KEY ("og_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+
+  CREATE INDEX "site_seo_updated_at_idx" ON "site_seo" USING btree ("updated_at");
+  CREATE INDEX "site_seo_created_at_idx" ON "site_seo" USING btree ("created_at");
+  CREATE INDEX "site_seo_page_overrides_order_idx" ON "site_seo_page_overrides" USING btree ("_order");
+  CREATE INDEX "site_seo_page_overrides_parent_id_idx" ON "site_seo_page_overrides" USING btree ("_parent_id");
+
+  ALTER TABLE "articles" ADD COLUMN "seo_og_title" varchar;
+  ALTER TABLE "articles" ADD COLUMN "seo_og_description" varchar;
+  ALTER TABLE "articles" ADD COLUMN "seo_og_image_id" integer;
+  ALTER TABLE "articles" ADD COLUMN "seo_twitter_title" varchar;
+  ALTER TABLE "articles" ADD COLUMN "seo_twitter_description" varchar;
+  ALTER TABLE "articles" ADD COLUMN "seo_head_markup" varchar;
+
+  ALTER TABLE "articles" ADD CONSTRAINT "articles_seo_og_image_id_media_id_fk"
+    FOREIGN KEY ("seo_og_image_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  CREATE INDEX "articles_seo_og_image_idx" ON "articles" USING btree ("seo_og_image_id");
+
+  ALTER TABLE "categories" ADD COLUMN "seo_og_title" varchar;
+  ALTER TABLE "categories" ADD COLUMN "seo_og_description" varchar;
+  ALTER TABLE "categories" ADD COLUMN "seo_twitter_title" varchar;
+  ALTER TABLE "categories" ADD COLUMN "seo_twitter_description" varchar;
+  ALTER TABLE "categories" ADD COLUMN "seo_head_markup" varchar;
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
+  ALTER TABLE "categories" DROP COLUMN IF EXISTS "seo_head_markup";
+  ALTER TABLE "categories" DROP COLUMN IF EXISTS "seo_twitter_description";
+  ALTER TABLE "categories" DROP COLUMN IF EXISTS "seo_twitter_title";
+  ALTER TABLE "categories" DROP COLUMN IF EXISTS "seo_og_description";
+  ALTER TABLE "categories" DROP COLUMN IF EXISTS "seo_og_title";
+
+  DROP INDEX IF EXISTS "articles_seo_og_image_idx";
+  ALTER TABLE "articles" DROP CONSTRAINT IF EXISTS "articles_seo_og_image_id_media_id_fk";
+  ALTER TABLE "articles" DROP COLUMN IF EXISTS "seo_head_markup";
+  ALTER TABLE "articles" DROP COLUMN IF EXISTS "seo_twitter_description";
+  ALTER TABLE "articles" DROP COLUMN IF EXISTS "seo_twitter_title";
+  ALTER TABLE "articles" DROP COLUMN IF EXISTS "seo_og_image_id";
+  ALTER TABLE "articles" DROP COLUMN IF EXISTS "seo_og_description";
+  ALTER TABLE "articles" DROP COLUMN IF EXISTS "seo_og_title";
+
+  DROP TABLE IF EXISTS "site_seo_page_overrides" CASCADE;
+  DROP TABLE IF EXISTS "site_seo" CASCADE;
+
    DROP TABLE "users_sessions" CASCADE;
   DROP TABLE "users" CASCADE;
   DROP TABLE "media" CASCADE;

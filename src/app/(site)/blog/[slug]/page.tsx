@@ -2,9 +2,15 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { Article as ArticleType, ArticleCard as ArticleCardType, CategoryRef } from '@/entities/article'
+import type {
+  Article as ArticleType,
+  ArticleCard as ArticleCardType,
+  ArticleSeo,
+  CategoryRef,
+} from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
+import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
 
@@ -93,27 +99,45 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const articleDoc = await getPublishedArticleBySlug(slug)
   if (articleDoc) {
-    const seo = (articleDoc.seo as { seoTitle?: string; seoDescription?: string; noindex?: boolean } | undefined) ?? {}
+    const seo =
+      (articleDoc.seo as {
+        seoTitle?: string
+        seoDescription?: string
+        noindex?: boolean
+        ogTitle?: string
+        ogDescription?: string
+        ogImage?: unknown
+        twitterTitle?: string
+        twitterDescription?: string
+      } | undefined) ?? {}
     const title = seo.seoTitle ?? articleDoc.title
-    const description = seo.seoDescription ?? articleDoc.excerpt ?? siteConfig.description
+    const description = seo.seoDescription ?? (typeof articleDoc.excerpt === 'string' ? articleDoc.excerpt : undefined) ?? siteConfig.description
+    const ogTitle = seo.ogTitle ?? seo.seoTitle ?? title
+    const ogDescription = seo.ogDescription ?? description
+    const twitterTitle = seo.twitterTitle ?? ogTitle
+    const twitterDescription = seo.twitterDescription ?? ogDescription
+    const ogImageUrl = mediaToAbsoluteUrl(seo.ogImage) ?? mediaToAbsoluteUrl(articleDoc.cover)
 
-    return {
+    const base: Metadata = {
       title,
       description,
       alternates: { canonical: `/blog/${slug}` },
       robots: seo.noindex ? { index: false, follow: false } : undefined,
       openGraph: {
-        title,
-        description,
+        title: ogTitle,
+        description: ogDescription,
         url: `/blog/${slug}`,
         type: 'article',
+        ...(ogImageUrl ? { images: [{ url: ogImageUrl }] } : {}),
       },
       twitter: {
         card: 'summary_large_image',
-        title,
-        description,
+        title: twitterTitle,
+        description: twitterDescription,
+        ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
       },
     }
+    return withPayloadPageMetadata(`/blog/${slug}`, base)
   }
 
   const categoryResult = await payload.find({
@@ -130,25 +154,38 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  const seo = (category.seo as { seoTitle?: string; seoDescription?: string } | undefined) ?? {}
+  const seo =
+    (category.seo as {
+      seoTitle?: string
+      seoDescription?: string
+      ogTitle?: string
+      ogDescription?: string
+      twitterTitle?: string
+      twitterDescription?: string
+    } | undefined) ?? {}
   const title = seo.seoTitle ?? `${category.title} — Blog`
-  const description = seo.seoDescription ?? category.description ?? siteConfig.description
+  const description = seo.seoDescription ?? (typeof category.description === 'string' ? category.description : undefined) ?? siteConfig.description
+  const ogTitle = seo.ogTitle ?? seo.seoTitle ?? title
+  const ogDescription = seo.ogDescription ?? description
+  const twitterTitle = seo.twitterTitle ?? ogTitle
+  const twitterDescription = seo.twitterDescription ?? ogDescription
 
-  return {
+  const base: Metadata = {
     title,
     description,
     alternates: { canonical: `/blog/${slug}` },
     openGraph: {
-      title,
-      description,
+      title: ogTitle,
+      description: ogDescription,
       url: `/blog/${slug}`,
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: twitterTitle,
+      description: twitterDescription,
     },
   }
+  return withPayloadPageMetadata(`/blog/${slug}`, base)
 }
 
 export default async function BlogSlugPage({ params, searchParams }: PageProps) {
@@ -175,7 +212,7 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
       relatedArticles,
       status: articleDoc.status as 'draft' | 'published',
       views: typeof articleDoc.views === 'number' ? articleDoc.views : 0,
-      seo: (articleDoc.seo as { seoTitle?: string; seoDescription?: string; noindex?: boolean } | undefined) ?? {},
+      seo: (articleDoc.seo as ArticleSeo | undefined) ?? {},
       createdAt: articleDoc.createdAt,
       updatedAt: articleDoc.updatedAt,
     }

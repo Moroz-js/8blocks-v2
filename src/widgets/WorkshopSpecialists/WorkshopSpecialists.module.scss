@@ -1,0 +1,170 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-10;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+.header {
+  max-width: 640px;
+  margin-bottom: $space-8;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp($text-2xl, 3.5vw, $text-3xl);
+  line-height: $leading-tight;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0 0 $space-4;
+}
+
+.description {
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $space-5;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  position: relative;
+  padding: $space-7 $space-6;
+  background: $bg-secondary;
+  display: flex;
+  gap: $space-5;
+  align-items: flex-start;
+
+  @media (max-width: #{$bp-mobile}) {
+    flex-direction: column;
+    padding: $space-5 $space-4;
+  }
+}
+
+.cardTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: $gradient-card-border;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  background: rgba(194, 78, 136, 0.15);
+  border: 1px solid rgba(194, 78, 136, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarInitials {
+  font-family: $font-base;
+  font-size: $text-md;
+  font-weight: 600;
+  color: $accent-pink-deep;
+  letter-spacing: 0.04em;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-size: $text-md;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: $leading-snug;
+}
+
+.role {
+  font-size: $text-sm;
+  color: $text-secondary;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.tag {
+  display: inline-block;
+  padding: $space-1 $space-3;
+  background: rgba(194, 78, 136, 0.1);
+  border: 1px solid rgba(194, 78, 136, 0.2);
+  font-size: $text-xs;
+  font-weight: 500;
+  color: $accent-pink-deep;
+  letter-spacing: 0.03em;
+}
+
+.bio {
+  margin: 0;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+.links {
+  display: flex;
+  gap: $space-4;
+  margin-top: $space-1;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $text-secondary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+/** Те же SVG, что в футере (`/icons/ln-icon.svg`, `/icons/x-icon.svg`) */
+.linkIcon {
+  flex-shrink: 0;
+  display: block;
+}

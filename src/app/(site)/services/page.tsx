@@ -8,21 +8,24 @@ import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
 import { Container } from '@/shared/ui'
 import { servicesPageContent, servicesFaqContent, servicesMeta } from '@/shared/content/homePage'
+import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
-export const metadata: Metadata = {
-  title: servicesMeta.title,
-  description: servicesMeta.description,
-  alternates: { canonical: '/services' },
-  openGraph: {
-    title: `${servicesMeta.title} | 8Blocks`,
-    description: servicesMeta.ogDescription,
-    url: '/services',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: `${servicesMeta.title} | 8Blocks`,
-    description: servicesMeta.ogDescription,
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  return withPayloadPageMetadata('/services', {
+    title: servicesMeta.title,
+    description: servicesMeta.description,
+    alternates: { canonical: '/services' },
+    openGraph: {
+      title: `${servicesMeta.title} | 8Blocks`,
+      description: servicesMeta.ogDescription,
+      url: '/services',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${servicesMeta.title} | 8Blocks`,
+      description: servicesMeta.ogDescription,
+    },
+  })
 }
 
 export default function ServicesPage() {

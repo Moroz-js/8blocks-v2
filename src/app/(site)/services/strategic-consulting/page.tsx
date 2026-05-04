@@ -9,23 +9,26 @@ import { ProcessHorizontalSlider } from '@/widgets/ProcessHorizontalSlider'
 import { UseCasesTabs } from '@/widgets/UseCasesTabs'
 import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
+import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 const { hero, problem, solution, midCta, faq, results, deliverables, process, useCases } = strategicConsultingContent
 
-export const metadata: Metadata = {
-  title: consultingMeta.title,
-  description: consultingMeta.description,
-  alternates: { canonical: `${siteConfig.url.replace(/\/$/, '')}/services/strategic-consulting` },
-  openGraph: {
-    title: consultingMeta.ogTitle,
-    description: consultingMeta.ogDescription,
-    url: '/services/strategic-consulting',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: consultingMeta.twitterTitle,
-    description: consultingMeta.twitterDescription,
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  return withPayloadPageMetadata('/services/strategic-consulting', {
+    title: consultingMeta.title,
+    description: consultingMeta.description,
+    alternates: { canonical: `${siteConfig.url.replace(/\/$/, '')}/services/strategic-consulting` },
+    openGraph: {
+      title: consultingMeta.ogTitle,
+      description: consultingMeta.ogDescription,
+      url: '/services/strategic-consulting',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: consultingMeta.twitterTitle,
+      description: consultingMeta.twitterDescription,
+    },
+  })
 }
 
 export default function StrategicConsultingPage() {

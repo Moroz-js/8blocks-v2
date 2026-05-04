@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
-import { siteConfig, socialLinks } from '@/shared/config/site'
+import { siteConfig } from '@/shared/config/site'
 import { homeMeta } from '@/shared/content/homePage'
+import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { HeroHome } from '@/widgets/HeroHome'
 import { ServicesSection } from '@/widgets/ServicesSection'
 import { AboutSection } from '@/widgets/AboutSection'
@@ -10,47 +10,33 @@ import { BenefitsSection } from '@/widgets/BenefitsSection'
 import { BlogPreview } from '@/widgets/BlogPreview'
 import { CtaSection } from '@/widgets/CtaSection'
 
-export const metadata: Metadata = {
-  title: homeMeta.title,
-  description: homeMeta.description,
-  openGraph: {
-    title: homeMeta.ogTitle,
-    description: homeMeta.ogDescription,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: homeMeta.ogTitle,
-    description: homeMeta.ogDescription,
-    images: [siteConfig.ogImage],
-  },
-  alternates: {
-    canonical: siteConfig.url,
-  },
-}
-
-const organizationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: siteConfig.name,
-  url: siteConfig.url,
-  description: siteConfig.description,
-  email: siteConfig.email,
-  logo: `${siteConfig.url}/og-image.png`,
-  sameAs: socialLinks.map((s) => s.href),
+export async function generateMetadata(): Promise<Metadata> {
+  return withPayloadPageMetadata('/', {
+    title: homeMeta.title,
+    description: homeMeta.description,
+    openGraph: {
+      title: homeMeta.ogTitle,
+      description: homeMeta.ogDescription,
+      url: siteConfig.url,
+      siteName: siteConfig.name,
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: homeMeta.ogTitle,
+      description: homeMeta.ogDescription,
+      images: [siteConfig.ogImage],
+    },
+    alternates: {
+      canonical: siteConfig.url,
+    },
+  })
 }
 
 export default function HomePage() {
   return (
     <main>
-      <Script
-        id="org-jsonld"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-      />
       <HeroHome />
       <ServicesSection />
       <AboutSection />

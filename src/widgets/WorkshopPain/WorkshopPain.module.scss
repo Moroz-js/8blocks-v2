@@ -1,0 +1,201 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+.header {
+  max-width: 760px;
+  margin-bottom: $space-9;
+
+  @media (max-width: #{$bp-tablet}) {
+    margin-bottom: $space-7;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp($text-2xl, 4vw, $text-4xl);
+  line-height: $leading-tight;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0 0 $space-5;
+}
+
+.description {
+  font-size: clamp($text-base, 1.8vw, $text-md);
+  line-height: $leading-normal;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.personas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-5;
+  margin-bottom: $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+    margin-bottom: $space-8;
+  }
+}
+
+.persona {
+  position: relative;
+  padding: $space-7 $space-6;
+  background: $bg-secondary;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5 $space-4;
+  }
+}
+
+.personaTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: $gradient-card-border;
+}
+
+.personaRole {
+  font-size: $text-sm;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.personaQuote {
+  margin: 0;
+  padding: 0;
+  border: none;
+
+  p {
+    margin: 0;
+    font-size: clamp($text-base, 1.8vw, $text-md);
+    font-weight: 500;
+    line-height: $leading-snug;
+    color: $text-primary;
+    font-style: italic;
+  }
+}
+
+.personaStory {
+  margin: 0;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+.timelineBlock {
+  margin-bottom: $space-8;
+}
+
+.timelineHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp($text-xl, 2.5vw, $text-2xl);
+  line-height: $leading-snug;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0 0 $space-7;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.stage {
+  display: flex;
+  gap: $space-6;
+  align-items: flex-start;
+
+  @media (max-width: #{$bp-mobile}) {
+    gap: $space-4;
+  }
+}
+
+.stageLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+}
+
+.stageNum {
+  font-family: $font-mono;
+  font-size: $text-sm;
+  color: $accent-pink-deep;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.stageLine {
+  width: 1px;
+  flex: 1;
+  min-height: 32px;
+  background: $border-secondary;
+  margin-block: $space-2;
+}
+
+.stageRight {
+  padding-bottom: $space-7;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  .stage:last-child & {
+    padding-bottom: 0;
+  }
+}
+
+.stageLabel {
+  font-size: $text-base;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.stageDesc {
+  margin: 0;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+.closingNote {
+  margin: 0;
+  padding: $space-5 $space-6;
+  border-left: 2px solid rgba(194, 78, 136, 0.4);
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  max-width: 760px;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-4 $space-4;
+  }
+}

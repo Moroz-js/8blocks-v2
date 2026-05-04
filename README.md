@@ -109,8 +109,7 @@ payload/
   collections/            # Коллекции Payload (Users, Articles, Categories, Leads, Media…)
 
 migrations/               # SQL-миграции БД (Payload)
-scripts/                  # seed.ts, seed-en.ts, migrate-legacy-blog.ts и др.
-migration/                # migrate-sites.json (секреты), data/uploads + дамп
+scripts/                  # seed.ts, seed-en.ts, run-migrations.ts, payload-next-env-shim.cjs
 docs/                     # Документация: переводы, styleguide
 public/
   uploads/                # Загруженные медиа (не в git)
@@ -132,7 +131,7 @@ public/
 | `npm run payload:migrate:create` | Создать новую миграцию |
 | `npm run seed` | Seed БД — RU-данные |
 | `npm run seed:en` | Seed БД — EN-данные |
-| `npm run migrate:legacy` | Миграция старого Prisma-блога → Payload по `migration/migrate-sites.json` |
+| `npm run payload:migrate:run` | Миграции через `run-migrations.ts` (без интерактива CLI) |
 
 ---
 

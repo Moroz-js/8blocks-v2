@@ -73,6 +73,44 @@ export const Categories: CollectionConfig = {
             description: 'Если не заполнено, используется описание категории',
           },
         },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'ogTitle',
+              type: 'text',
+              label: 'OG title',
+            },
+            {
+              name: 'ogDescription',
+              type: 'textarea',
+              label: 'OG description',
+              admin: { rows: 2 },
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'twitterTitle',
+              type: 'text',
+              label: 'Twitter title',
+            },
+            {
+              name: 'twitterDescription',
+              type: 'textarea',
+              label: 'Twitter description',
+              admin: { rows: 2 },
+            },
+          ],
+        },
+        {
+          name: 'headMarkup',
+          type: 'textarea',
+          label: 'Доп. код в head',
+          admin: { rows: 6 },
+        },
       ],
     },
   ],

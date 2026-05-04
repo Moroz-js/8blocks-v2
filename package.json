@@ -14,8 +14,7 @@
     "payload:migrate:create": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate:create",
     "payload:migrate:run": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/run-migrations.ts",
     "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed.ts",
-    "seed:en": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed-en.ts",
-    "migrate:legacy": "cross-env NODE_ENV=development DISABLE_PAYLOAD_HMR=true PAYLOAD_SKIP_EMAIL_INIT=true PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/migrate-legacy-blog.ts"
+    "seed:en": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed-en.ts"
   },
   "dependencies": {
     "@mantine/core": "^7.17.1",
@@ -25,6 +24,7 @@
     "@payloadcms/next": "^3.79.0",
     "@payloadcms/richtext-lexical": "^3.79.0",
     "@payloadcms/ui": "^3.79.0",
+    "cheerio": "^1.2.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.5.0",
     "lenis": "^1.3.4",
@@ -44,7 +44,6 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
-    "cheerio": "^1.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",

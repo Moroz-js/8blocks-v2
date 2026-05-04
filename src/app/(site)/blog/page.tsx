@@ -5,21 +5,24 @@ import { BlogArchive } from '@/widgets/BlogArchive'
 import type { ArticleCard as ArticleCardType, CategoryRef } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { blogMeta } from '@/shared/content/blogPage'
+import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
-export const metadata: Metadata = {
-  title: blogMeta.title,
-  description: blogMeta.description,
-  alternates: { canonical: '/blog' },
-  openGraph: {
-    title: blogMeta.ogTitle,
-    description: blogMeta.ogDescription,
-    url: '/blog',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: blogMeta.ogTitle,
-    description: blogMeta.ogDescription,
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  return withPayloadPageMetadata('/blog', {
+    title: blogMeta.title,
+    description: blogMeta.description,
+    alternates: { canonical: '/blog' },
+    openGraph: {
+      title: blogMeta.ogTitle,
+      description: blogMeta.ogDescription,
+      url: '/blog',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: blogMeta.ogTitle,
+      description: blogMeta.ogDescription,
+    },
+  })
 }
 
 const ARTICLES_PER_PAGE = 9

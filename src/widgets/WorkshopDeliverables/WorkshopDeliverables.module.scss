@@ -1,0 +1,184 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-10;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+.header {
+  max-width: 640px;
+  margin-bottom: $space-8;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp($text-2xl, 3.5vw, $text-3xl);
+  line-height: $leading-tight;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0 0 $space-4;
+}
+
+.description {
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-5;
+  margin-bottom: $space-8;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  position: relative;
+  padding: $space-6;
+  background: $bg-secondary;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.cardTopBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: $gradient-card-border;
+}
+
+.cardNum {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  color: $accent-pink-deep;
+  font-weight: 500;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: $text-md;
+  font-weight: 600;
+  color: $text-primary;
+  line-height: $leading-snug;
+}
+
+.cardDesc {
+  margin: 0;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  flex: 1;
+}
+
+.upsellWrapper {
+  display: block;
+}
+
+.upsell {
+  position: relative;
+  padding: $space-7 $space-8;
+  background: rgba(194, 78, 136, 0.07);
+  border: 1px solid rgba(194, 78, 136, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  overflow: hidden;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5 $space-5;
+  }
+}
+
+.upsellGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(194, 78, 136, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-60px, -60px);
+  transition: transform 0.08s linear;
+  will-change: transform;
+}
+
+.upsellHeadline {
+  margin: 0;
+  font-size: clamp($text-xl, 2.5vw, $text-2xl);
+  font-weight: 600;
+  color: $text-primary;
+  letter-spacing: -0.02em;
+}
+
+.upsellDesc {
+  margin: 0;
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  max-width: 560px;
+}
+
+.upsellCta {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  width: fit-content;
+  height: 48px;
+  padding: 0 $space-6;
+  background: transparent;
+  color: $text-primary;
+  border: 1px solid $border-primary;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  text-decoration: none;
+  transition: border-color $transition-base, transform $transition-fast;
+  margin-top: $space-2;
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.upsellCtaArrow {
+  display: inline-flex;
+  align-items: center;
+  transition: transform $transition-fast;
+
+  .upsellCta:hover & {
+    transform: translateX(3px);
+  }
+}

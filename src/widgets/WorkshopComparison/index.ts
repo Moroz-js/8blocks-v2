@@ -1,0 +1,1 @@
+export { WorkshopComparison } from './WorkshopComparison'

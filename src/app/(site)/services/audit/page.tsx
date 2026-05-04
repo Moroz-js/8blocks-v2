@@ -10,23 +10,26 @@ import { AuditOutputBlock } from '@/widgets/AuditOutputBlock'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
+import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 const { hero, problem, solution, faq, whatWeAnalyze, falseAssumptions, whatYouGet, cta } = auditContent
 
-export const metadata: Metadata = {
-  title: auditMeta.title,
-  description: auditMeta.description,
-  alternates: { canonical: `${siteConfig.url.replace(/\/$/, '')}/services/audit` },
-  openGraph: {
-    title: auditMeta.ogTitle,
-    description: auditMeta.ogDescription,
-    url: '/services/audit',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: auditMeta.twitterTitle,
-    description: auditMeta.twitterDescription,
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  return withPayloadPageMetadata('/services/audit', {
+    title: auditMeta.title,
+    description: auditMeta.description,
+    alternates: { canonical: `${siteConfig.url.replace(/\/$/, '')}/services/audit` },
+    openGraph: {
+      title: auditMeta.ogTitle,
+      description: auditMeta.ogDescription,
+      url: '/services/audit',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: auditMeta.twitterTitle,
+      description: auditMeta.twitterDescription,
+    },
+  })
 }
 
 export default function AuditPage() {

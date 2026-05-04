@@ -1,0 +1,1 @@
+export { WorkshopHero } from './WorkshopHero'

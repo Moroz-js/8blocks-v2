@@ -30,6 +30,11 @@ export interface ArticleSeo {
   seoTitle?: string
   seoDescription?: string
   noindex?: boolean
+  ogTitle?: string
+  ogDescription?: string
+  twitterTitle?: string
+  twitterDescription?: string
+  headMarkup?: string
 }
 
 export interface Article {

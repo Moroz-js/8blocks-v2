@@ -181,7 +181,7 @@ export const teamContent = {
 } as const
 
 export const tokenEconomyContent = {
-  headline: 'Мы не добавляем токен к бизнесу.\nМы встраиваем его в экономику',
+  headline: 'Мы не добавляем токен к бизнесу.\nМы встраиваем его в экономику.',
   accentWords: ['добавляем', 'встраиваем'],
   description:
     'Сильная модель делает токен частью системы: он усиливает экономику проекта, работает на вовлечение пользователей и ясно отвечает на вопрос, зачем он нужен бизнесу.',
@@ -252,7 +252,7 @@ export const tokenomicsTestContent = {
 } as const
 
 export const servicesFaqContent = {
-  headline: 'Частые вопросы',
+  headline: 'FAQ',
   items: [
     {
       question: 'Как понять, какая услуга нужна именно нам?',

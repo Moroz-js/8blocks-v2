@@ -30,9 +30,9 @@ import {
   Leads,
   NewsletterSubscriptions,
 } from './payload/collections/index.ts'
+import { SiteSeo } from './payload/globals/index.ts'
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default buildConfig({
   // ── Admin UI language (Payload), не путать с NEXT_PUBLIC_LANG на фронте ──
@@ -53,7 +53,7 @@ export default buildConfig({
   },
 
   // ── Email (production only — SMTP not available in local dev) ────
-  // PAYLOAD_SKIP_EMAIL_INIT=true — для CLI (sync-admin и т.п.), без verify SMTP
+  // PAYLOAD_SKIP_EMAIL_INIT=true — для CLI (seed, migrate), без verify SMTP
   ...(process.env.NODE_ENV === 'production' &&
   process.env.SMTP_HOST &&
   process.env.PAYLOAD_SKIP_EMAIL_INIT !== 'true'
@@ -101,6 +101,8 @@ export default buildConfig({
     Leads,
     NewsletterSubscriptions,
   ],
+
+  globals: [SiteSeo],
 
   // ── Secret & Security ───────────────────────────────────────────
   secret: process.env.PAYLOAD_SECRET || 'fallback-secret-change-in-production',

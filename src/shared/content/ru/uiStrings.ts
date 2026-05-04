@@ -40,8 +40,8 @@ export const uiStrings = {
   tokenEconomyAriaLabel: 'Токен-экономика',
   tokenFilterAriaLabel: 'Фильтр токенов',
   ctaAriaLabel: 'Призыв к действию',
-  ctaTelegramHref: 'https://t.me/eightblocksio8',
-  ctaTelegramLabel: 'Напишите нам в Telegram',
+  ctaTelegramHref: 'https://t.me/eightblocks',
+  ctaTelegramLabel: 'Канал в Telegram',
   servicesAriaLabel: 'Услуги',
   aboutAriaLabel: 'О компании',
 } as const

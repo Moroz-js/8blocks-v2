@@ -22,8 +22,14 @@ export function ServiceHero({
   description,
   ctaLabel,
   ctaHref,
+  variant,
 }: ServiceHeroProps) {
   const headlineParts = accentWord ? headline.split(accentWord) : [headline]
+
+  const renderWithBreaks = (text: string) =>
+    text.split('\n').map((line, i, arr) => (
+      <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+    ))
 
   return (
     <section className={styles.hero} aria-label="Hero">
@@ -42,14 +48,12 @@ export function ServiceHero({
           >
             {headlineParts.length === 2 ? (
               <>
-                {headlineParts[0]}
+                {renderWithBreaks(headlineParts[0])}
                 <span className={styles.headlineAccent}>{accentWord}</span>
-                {headlineParts[1]}
+                {renderWithBreaks(headlineParts[1])}
               </>
             ) : (
-              headline.split('\n').map((line, i, arr) => (
-                <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
-              ))
+              renderWithBreaks(headline)
             )}
           </motion.h1>
 

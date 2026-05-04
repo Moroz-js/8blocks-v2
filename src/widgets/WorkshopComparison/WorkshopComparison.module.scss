@@ -1,0 +1,103 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-10;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp($text-2xl, 3.5vw, $text-3xl);
+  line-height: $leading-tight;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0 0 $space-8;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.thParam {
+  width: 140px;
+  padding: $space-3 $space-4 $space-3 0;
+  text-align: left;
+  font-size: $text-xs;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  border-bottom: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-mobile}) {
+    width: 100px;
+  }
+}
+
+.th {
+  padding: $space-3 $space-4;
+  text-align: left;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: $text-secondary;
+  border-bottom: 1px solid $border-secondary;
+
+  &Accent {
+    color: $text-primary;
+    background: rgba(194, 78, 136, 0.06);
+    border-bottom-color: $accent-pink-deep;
+  }
+}
+
+.tr {
+  &:hover .td,
+  &:hover .tdParam {
+    background: rgba(255, 255, 255, 0.02);
+  }
+}
+
+.tdParam {
+  padding: $space-4 $space-4 $space-4 0;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: $text-secondary;
+  border-bottom: 1px solid $border-secondary;
+  white-space: nowrap;
+}
+
+.td {
+  padding: $space-4;
+  font-size: $text-sm;
+  color: $text-secondary;
+  border-bottom: 1px solid $border-secondary;
+  transition: background $transition-fast;
+
+  &Accent {
+    color: $text-primary;
+    background: rgba(194, 78, 136, 0.04);
+    font-weight: 500;
+  }
+}

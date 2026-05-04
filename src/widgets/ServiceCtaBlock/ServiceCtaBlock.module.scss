@@ -35,19 +35,20 @@
 
 .glow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width:  min(600px, 90%);
+  top: 0;
+  left: 0;
+  width: 600px;
   height: 200px;
-  border-radius: 0;
   background: radial-gradient(
     ellipse,
-    rgba(194, 78, 136, 0.12) 0%,
-    rgba(142, 74, 189, 0.06) 50%,
+    rgba(194, 78, 136, 0.18) 0%,
+    rgba(142, 74, 189, 0.08) 50%,
     transparent 70%
   );
   pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s linear;
+  will-change: transform;
 }
 
 .headline {

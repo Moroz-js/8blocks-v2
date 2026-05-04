@@ -10,16 +10,24 @@ const ease = 'easeOut' as const
 
 function AccentHeadline({ text, accents }: { text: string; accents: readonly string[] }) {
   const regex = new RegExp(`(${accents.join('|')})`, 'gi')
-  const parts = text.split(regex)
+  const lines = text.split('\n')
   return (
     <>
-      {parts.map((part, i) =>
-        accents.some((a) => a.toLowerCase() === part.toLowerCase()) ? (
-          <span key={i} className={styles.accent}>{part}</span>
-        ) : (
-          <React.Fragment key={i}>{part}</React.Fragment>
-        ),
-      )}
+      {lines.map((line, lineIdx) => {
+        const parts = line.split(regex)
+        return (
+          <React.Fragment key={lineIdx}>
+            {lineIdx > 0 && <br />}
+            {parts.map((part, i) =>
+              accents.some((a) => a.toLowerCase() === part.toLowerCase()) ? (
+                <span key={i} className={styles.accent}>{part}</span>
+              ) : (
+                <React.Fragment key={i}>{part}</React.Fragment>
+              ),
+            )}
+          </React.Fragment>
+        )
+      })}
     </>
   )
 }

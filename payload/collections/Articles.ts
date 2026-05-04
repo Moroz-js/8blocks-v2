@@ -184,6 +184,54 @@ export const Articles: CollectionConfig = {
           },
         },
         {
+          type: 'row',
+          fields: [
+            {
+              name: 'ogTitle',
+              type: 'text',
+              label: 'OG title',
+            },
+            {
+              name: 'ogDescription',
+              type: 'textarea',
+              label: 'OG description',
+              admin: { rows: 2 },
+            },
+          ],
+        },
+        {
+          name: 'ogImage',
+          type: 'upload',
+          label: 'OG изображение',
+          relationTo: 'media',
+          admin: { description: 'Если пусто — может использоваться обложка статьи' },
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'twitterTitle',
+              type: 'text',
+              label: 'Twitter title',
+            },
+            {
+              name: 'twitterDescription',
+              type: 'textarea',
+              label: 'Twitter description',
+              admin: { rows: 2 },
+            },
+          ],
+        },
+        {
+          name: 'headMarkup',
+          type: 'textarea',
+          label: 'Доп. код в head',
+          admin: {
+            rows: 8,
+            description: 'JSON-LD, meta — только для этой статьи',
+          },
+        },
+        {
           name: 'noindex',
           type: 'checkbox',
           label: 'Скрыть от поисковиков (noindex)',

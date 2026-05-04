@@ -153,7 +153,7 @@ export const tokenLabContent = {
   },
 
   faq: {
-    headline: 'Частые вопросы.',
+    headline: 'FAQ',
     items: [
       {
         question: 'Где открыть Token Lab?',

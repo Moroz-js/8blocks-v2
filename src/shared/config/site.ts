@@ -43,19 +43,20 @@ export const navLinks = [
 ] as const
 
 const ruSocialLinks = [
-  { id: 'telegram', label: 'Telegram', href: 'https://t.me/eightblocksio8', icon: '/icons/tg-icon.svg' },
+  { id: 'telegram', label: 'Telegram', href: 'https://t.me/eightblocks', icon: '/icons/tg-icon.svg' },
   { id: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@8BlocksLabs', icon: '/icons/yt-icon.svg' },
   { id: 'vc', label: 'VC.ru', href: 'https://vc.ru/id4926495', icon: '/icons/vc-icon.svg' },
   { id: 'dzen', label: 'Дзен', href: 'https://dzen.ru/eightblocks', icon: '/icons/dzen-icon.svg' },
+  { id: 'clutch', label: 'Clutch', href: 'https://clutch.co/profile/8blocks-fzco', icon: '/icons/clutch-icon.svg' },
 ] as const
 
 const enSocialLinks = [
   { id: 'x', label: 'X (Twitter)', href: 'https://x.com/8BlocksLabs', icon: '/icons/x-icon.svg' },
   { id: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/company/8blocksio', icon: '/icons/ln-icon.svg' },
-  { id: 'telegram', label: 'Telegram', href: 'https://t.me/Eight_Blocks', icon: '/icons/tg-icon.svg' },
+  { id: 'telegram', label: 'Telegram', href: 'https://t.me/eightblocks', icon: '/icons/tg-icon.svg' },
   { id: 'base', label: 'Base', href: 'https://base.app/profile/8blocks', icon: '/icons/base-icon.svg' },
+  { id: 'clutch', label: 'Clutch', href: 'https://clutch.co/profile/8blocks-fzco', icon: '/icons/clutch-icon.svg' },
   // { id: 'medium', label: 'Medium', href: 'https://medium.com/@8blocks', icon: '/icons/yt-icon.svg' },
-  // { id: 'clutch', label: 'Clutch', href: 'https://clutch.co/profile/8blocks-fzco', icon: '/icons/vc-icon.svg' },
 ] as const
 
 export const socialLinks = lang === 'ru' ? ruSocialLinks : enSocialLinks

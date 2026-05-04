@@ -5,17 +5,42 @@ import { importMap } from '../importMap'
 
 type Args = {
   params: Promise<{
-    segments: string[]
+    segments?: string[]
   }>
   searchParams: Promise<{
     [key: string]: string | string[]
   }>
 }
 
-export const generateMetadata = ({ params, searchParams }: Args) =>
-  generatePageMetadata({ config, params, searchParams })
+/** Для `/admin` без хвоста Next даёт `segments` undefined. Нельзя подставлять `[]`: в Payload тогда path «/» → currentRoute `/admin/` ≠ `/admin` → 404. */
+function payloadAdminParams(segments: string[] | undefined) {
+  if (segments?.length) {
+    return { segments }
+  }
+  return {}
+}
 
-const Page = ({ params, searchParams }: Args) =>
-  RootPage({ config, params, searchParams, importMap })
+export const generateMetadata = async ({ params, searchParams }: Args) => {
+  const p = await params
+  return generatePageMetadata({
+    config,
+    params: Promise.resolve(
+      payloadAdminParams(p.segments) as { [key: string]: string | string[] },
+    ),
+    searchParams,
+  })
+}
+
+const Page = async ({ params, searchParams }: Args) => {
+  const p = await params
+  return RootPage({
+    config,
+    params: Promise.resolve(
+      payloadAdminParams(p.segments) as { segments: string[] },
+    ),
+    searchParams,
+    importMap,
+  })
+}
 
 export default Page

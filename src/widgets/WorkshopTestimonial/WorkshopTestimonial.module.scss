@@ -1,0 +1,153 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  padding-block: $space-10;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-8;
+  }
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-5;
+  align-items: start;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.testimonial {
+  margin: 0;
+  padding: $space-8;
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  position: relative;
+  height: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.quoteIcon {
+  font-family: Georgia, serif;
+  font-size: 80px;
+  line-height: 0.6;
+  color: $accent-pink-deep;
+  margin-bottom: $space-5;
+  opacity: 0.6;
+}
+
+.quoteText {
+  margin: 0 0 $space-6;
+  font-size: clamp($text-md, 2.2vw, $text-xl);
+  line-height: $leading-relaxed;
+  color: $text-primary;
+  font-style: normal;
+}
+
+.quoteFooter {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.quoteAuthor {
+  font-style: normal;
+  font-size: $text-base;
+  font-weight: 500;
+  color: $text-primary;
+}
+
+.quoteMeta {
+  font-size: $text-sm;
+  color: $text-tertiary;
+}
+
+.trustBlock {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.slots {}
+
+.slotsHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp($text-xl, 2.5vw, $text-2xl);
+  line-height: $leading-snug;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0 0 $space-3;
+}
+
+.slotsDesc {
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: $border-secondary;
+}
+
+.stat {
+  padding: $space-6 $space-5;
+  background: #0a0810;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5 $space-4;
+  }
+}
+
+.statValue {
+  font-family: $font-base;
+  font-size: clamp($text-2xl, 3.5vw, $text-3xl);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  background: $gradient-accent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+}
+
+.geo {
+  margin: 0;
+  font-size: $text-sm;
+  color: $text-tertiary;
+}
+

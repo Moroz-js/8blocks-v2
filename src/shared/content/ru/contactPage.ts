@@ -18,8 +18,8 @@ export const contactPageContent = {
     person: {
       name: 'Оксана',
       role: 'COO',
-      tgHref: 'https://t.me/Eight_Blocks',
-      tgLabel: 'Telegram →',
+      tgHref: 'https://t.me/eightblocks',
+      tgLabel: 'Канал в Telegram →',
     },
     preferEmailLabel: 'Предпочитаете почту?',
   },

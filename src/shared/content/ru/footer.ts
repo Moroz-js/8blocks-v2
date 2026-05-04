@@ -25,5 +25,9 @@ export const footerContent = {
       label: 'Калькулятор токеномики',
       href: '/product/calculator',
     },
+    {
+      label: 'Воркшоп по токеномике',
+      href: '/product/workshop',
+    },
   ],
 } as const

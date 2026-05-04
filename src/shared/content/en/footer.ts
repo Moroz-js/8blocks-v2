@@ -25,5 +25,9 @@ export const footerContent = {
       label: 'Tokenomics Calculator',
       href: '/product/calculator',
     },
+    {
+      label: 'Tokenomics Workshop',
+      href: '/product/workshop',
+    },
   ],
 } as const
