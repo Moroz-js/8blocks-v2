@@ -222,7 +222,7 @@ const enObject = {
       'Real practitioners who have designed token economies for DeFi, GameFi, RWA, and infrastructure projects across three continents.',
     items: [
       {
-        name: 'Alex Morozov',
+        name: 'Daniel Hartmann',
         role: 'Token Design Lead',
         tags: ['Token Design', 'DeFi', 'Mechanism Design'],
         bio: 'Over 7 years in crypto economics. Has led token model development for more than 30 projects, including multiple top-50 DeFi protocols. Regular speaker at Token2049, Consensus, and DMCC events.',
@@ -230,7 +230,7 @@ const enObject = {
         twitter: 'https://twitter.com',
       },
       {
-        name: 'Maria Volkova',
+        name: 'Claire Bennett',
         role: 'Product Economics',
         tags: ['GameFi', 'Token Design', 'RWA'],
         bio: 'Former product lead at a $200M GameFi protocol. Specialises in integrating token mechanics into product loops and user journeys. Co-authored the 8Blocks tokenomics research methodology.',
