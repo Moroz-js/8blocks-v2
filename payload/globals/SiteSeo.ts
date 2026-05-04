@@ -16,6 +16,18 @@ export const SiteSeo: GlobalConfig = {
     read: () => true,
   },
   hooks: {
+    afterRead: [
+      async ({ doc }) => {
+        const routes = discoverStaticSiteRoutePaths()
+        if (routes.length === 0) return doc
+        doc.pageOverrides = syncSiteSeoPageOverrides(
+          routes,
+          doc.pageOverrides as Record<string, unknown>[],
+          doc.pageOverrides as Record<string, unknown>[],
+        )
+        return doc
+      },
+    ],
     beforeChange: [
       async ({ data, originalDoc }) => {
         if (!data || !('pageOverrides' in data)) return
