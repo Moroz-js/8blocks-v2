@@ -114,11 +114,11 @@ export default function WorkshopPage() {
         rows={comparison.rows}
       />
 
-      <WorkshopSpecialists
+      {/* <WorkshopSpecialists
         headline={specialists.headline}
         description={specialists.description}
         items={specialists.items}
-      />
+      /> */}
 
       <FaqAccordion headline={faq.headline} items={faq.items as unknown as import('@/widgets/FaqAccordion').FaqItem[]} />
 
