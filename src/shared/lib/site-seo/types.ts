@@ -15,5 +15,7 @@ export type SiteSeoPageOverride = {
 
 export type SiteSeoGlobalDoc = {
   globalHeadMarkup?: string | null
+  workshopTrustSlotsNoteRu?: string | null
+  workshopTrustSlotsNoteEn?: string | null
   pageOverrides?: SiteSeoPageOverride[] | null
 }

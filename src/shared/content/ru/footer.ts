@@ -13,6 +13,7 @@ export const footerContent = {
   pageLinks: [
     { label: 'Услуги', href: '/services' },
     { label: 'Блог', href: '/blog' },
+    { label: 'Мы в медиа', href: '/media' },
     { label: 'Контакты', href: '/contact' },
   ],
   serviceLinks: [

@@ -25,7 +25,7 @@ export const siteConfig = {
   }),
   addressUrl:
     lang === 'en'
-      ? 'https://maps.google.com/?q=DMCC+Business+Centre+Uptown+Tower+Dubai'
+      ? 'https://www.google.com/maps/search/?api=1&query=25.0606875%2C55.1415625'
       : 'https://yandex.ru/maps/-/CHeBrV0g',
   ogImage: '/og-image.png',
   /** When false, /services and /services/* return 404 (links stay visible). */

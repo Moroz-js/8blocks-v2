@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { workshopContent, workshopMeta } from '@/shared/content/workshop'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { getSiteSeoGlobal } from '@/shared/lib/site-seo/get-site-seo'
+import { resolveWorkshopTrustSlotsNote } from '@/shared/lib/site-seo/workshop-trust-slots'
+import { lang } from '@/shared/i18n'
 
 import { WorkshopHero } from '@/widgets/WorkshopHero'
 import { WorkshopPain } from '@/widgets/WorkshopPain'
@@ -53,7 +56,17 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-export default function WorkshopPage() {
+export default async function WorkshopPage() {
+  const siteSeo = await getSiteSeoGlobal()
+  const slotsNote = resolveWorkshopTrustSlotsNote(lang, siteSeo)
+  const trustForTestimonial = {
+    ...trust,
+    slots: {
+      ...trust.slots,
+      description: `${trust.slots.descriptionPrefix} ${slotsNote}`.trim(),
+    },
+  }
+
   return (
     <>
       <WorkshopHero
@@ -77,7 +90,6 @@ export default function WorkshopPage() {
         description={pain.description}
         personas={pain.personas}
         timeline={pain.timeline}
-        closingNote={pain.closingNote}
       />
 
       <WorkshopExplainer
@@ -120,12 +132,12 @@ export default function WorkshopPage() {
         items={specialists.items}
       /> */}
 
-      <FaqAccordion headline={faq.headline} items={faq.items as unknown as import('@/widgets/FaqAccordion').FaqItem[]} />
-
       <WorkshopTestimonial
         testimonial={testimonial}
-        trust={trust}
+        trust={trustForTestimonial}
       />
+
+      <FaqAccordion headline={faq.headline} items={faq.items as unknown as import('@/widgets/FaqAccordion').FaqItem[]} />
 
       <ServiceCtaBlock
         headline={cta.headline}

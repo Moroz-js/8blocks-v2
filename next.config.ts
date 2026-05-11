@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import { withPayload } from "@payloadcms/next/withPayload";
 
 /**
- * CSP: GTM/GA, Replain (widget, app, ws, медиа), Calendly, Google Maps embed.
+ * CSP: GTM/GA, Yandex Metrika, Replain (widget, app, ws, медиа), Calendly, Google Maps embed.
  * В dev для React/Next (Turbopack) добавляется 'unsafe-eval' — в production его нет.
  */
 function buildContentSecurityPolicy(): string {
@@ -13,6 +13,8 @@ function buildContentSecurityPolicy(): string {
     "'unsafe-inline'",
     ...(isDev ? ["'unsafe-eval'"] : []),
     "https://www.googletagmanager.com",
+    "https://mc.yandex.ru",
+    "https://yastatic.net",
     "https://widget.replain.cc",
     "https://assets.calendly.com",
   ].join(" ");
@@ -25,8 +27,8 @@ function buildContentSecurityPolicy(): string {
     "img-src 'self' data: https: blob:",
     "font-src 'self' https://fonts.gstatic.com data:",
     "media-src 'self' https://widget.replain.cc",
-    "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://widget.replain.cc wss://widget.replain.cc wss://ws.replain.cc https://app.replain.cc wss://app.replain.cc https://calendly.com https://*.calendly.com",
-    "frame-src https://www.googletagmanager.com https://www.google.com https://maps.google.com https://calendly.com https://*.calendly.com https://widget.replain.cc",
+    "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://mc.yandex.ru https://metrika.yandex.ru wss://mc.yandex.ru https://widget.replain.cc wss://widget.replain.cc wss://ws.replain.cc https://app.replain.cc wss://app.replain.cc https://calendly.com https://*.calendly.com",
+    "frame-src https://www.googletagmanager.com https://www.google.com https://maps.google.com https://calendly.com https://*.calendly.com https://widget.replain.cc https://mc.yandex.ru https://metrika.yandex.ru",
     "worker-src 'self' blob:",
   ].join("; ");
 }

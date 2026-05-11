@@ -54,6 +54,26 @@ export const SiteSeo: GlobalConfig = {
       },
     },
     {
+      name: 'workshopTrustSlotsNoteRu',
+      type: 'textarea',
+      label: 'Воркшоп: текст про слоты (RU)',
+      admin: {
+        description:
+          'Хвост абзаца в блоке «слоты» на /product/workshop (справа от отзыва). Первая часть («Под каждый мы готовим…») в коде; сюда — например: «Сейчас доступно 2 слота на май.»',
+        rows: 3,
+      },
+    },
+    {
+      name: 'workshopTrustSlotsNoteEn',
+      type: 'textarea',
+      label: 'Workshop: slots note (EN)',
+      admin: {
+        description:
+          'Tail of the slots paragraph on /product/workshop. The first sentence is fixed in code; put e.g. “Currently 2 slots available in May.”',
+        rows: 3,
+      },
+    },
+    {
       name: 'pageOverrides',
       type: 'array',
       labels: { singular: 'Страница', plural: 'SEO по страницам' },

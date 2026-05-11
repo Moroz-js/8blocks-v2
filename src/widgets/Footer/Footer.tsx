@@ -7,7 +7,14 @@ import { Logo } from '@/shared/ui'
 import { FooterWatermark } from './FooterWatermark'
 import styles from './Footer.module.scss'
 
-export function Footer() {
+interface FooterProps {
+  mediaEnabled?: boolean
+}
+
+export function Footer({ mediaEnabled = false }: FooterProps) {
+  const pageLinks = footerContent.pageLinks.filter(
+    (link) => link.href !== '/media' || mediaEnabled,
+  )
   return (
     <footer className={styles.footer}>
       {/* ── Brand watermark ──────────────────────────────────────── */}
@@ -49,7 +56,7 @@ export function Footer() {
             <nav aria-label="Pages">
               <p className={styles.navHeading}>{footerContent.navHeading}</p>
               <ul className={styles.navList}>
-                {footerContent.pageLinks.map((link) => (
+                {pageLinks.map((link) => (
                   <li key={link.href}>
                     <Link href={link.href} className={styles.navLink}>{link.label}</Link>
                   </li>

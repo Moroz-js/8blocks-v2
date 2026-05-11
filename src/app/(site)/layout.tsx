@@ -12,6 +12,7 @@ import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
 import { HeadMarkupInjector } from '@/widgets/HeadMarkupInjector'
 import { getBlogExtraHeadMarkup, getSiteSeoGlobal, getSiteSeoPageOverride } from '@/shared/lib/site-seo'
+import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
 
 export const metadata: Metadata = {
   title: {
@@ -36,14 +37,18 @@ export const metadata: Metadata = {
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get('x-pathname') ?? '/'
-  const siteSeo = await getSiteSeoGlobal()
-  const pageRow = await getSiteSeoPageOverride(pathname)
-  const blogExtra = await getBlogExtraHeadMarkup(pathname)
+  const [siteSeo, pageRow, blogExtra, mediaEnabled] = await Promise.all([
+    getSiteSeoGlobal(),
+    getSiteSeoPageOverride(pathname),
+    getBlogExtraHeadMarkup(pathname),
+    getMediaMentionsEnabled(),
+  ])
 
   const headCombined = [siteSeo?.globalHeadMarkup, pageRow?.pageHeadMarkup, blogExtra]
     .map((s) => (typeof s === 'string' ? s.trim() : ''))
     .filter(Boolean)
     .join('\n')
+
 
   return (
     <html lang={htmlLang} suppressHydrationWarning>
@@ -104,9 +109,9 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             </>
           )}
           <LenisProvider>
-            <Header />
+            <Header mediaEnabled={mediaEnabled} />
             <main>{children}</main>
-            <Footer />
+            <Footer mediaEnabled={mediaEnabled} />
           </LenisProvider>
         </MantineProvider>
       </body>

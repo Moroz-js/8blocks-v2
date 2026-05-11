@@ -8,7 +8,11 @@ import { uiStrings } from '@/shared/content/uiStrings'
 import { Button, Logo } from '@/shared/ui'
 import styles from './Header.module.scss'
 
-export function Header() {
+interface HeaderProps {
+  mediaEnabled?: boolean
+}
+
+export function Header({ mediaEnabled: _mediaEnabled }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 

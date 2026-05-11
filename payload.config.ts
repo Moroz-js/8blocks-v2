@@ -29,6 +29,8 @@ import {
   Articles,
   Leads,
   NewsletterSubscriptions,
+  MediaMentions,
+  MediaCategories,
 } from './payload/collections/index.ts'
 import { SiteSeo } from './payload/globals/index.ts'
 
@@ -100,6 +102,8 @@ export default buildConfig({
     Articles,
     Leads,
     NewsletterSubscriptions,
+    MediaMentions,
+    MediaCategories,
   ],
 
   globals: [SiteSeo],

@@ -185,17 +185,3 @@
   line-height: $leading-relaxed;
   color: $text-secondary;
 }
-
-.closingNote {
-  margin: 0;
-  padding: $space-5 $space-6;
-  border-left: 2px solid rgba(194, 78, 136, 0.4);
-  font-size: $text-base;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-  max-width: 760px;
-
-  @media (max-width: #{$bp-mobile}) {
-    padding: $space-4 $space-4;
-  }
-}

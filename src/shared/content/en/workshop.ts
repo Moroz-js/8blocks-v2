@@ -3,9 +3,9 @@
 const enObject = {
   hero: {
     label: 'Workshop',
-    stat: '95% of tokens trade below their TGE price within 3 months.',
-    statSource: '8Blocks Internal Research, 2024',
-    statSourceUrl: '/research',
+    stat: '85% of tokens trade below their TGE price',
+    statSource: 'Memento Research, State of 2025 Token Launches',
+    statSourceUrl: 'https://mementoresearch.com/state-of-2025-token-launches-year-in-review',
     headline: 'Who needs your token?\nAnd why should anyone buy it?',
     description:
       'An interactive workshop with an individual scenario. Leave with concrete tokenomics concepts — not theory, but a foundation for real design.',
@@ -58,8 +58,6 @@ const enObject = {
         },
       ],
     },
-    closingNote:
-      'By our data, 95% of teams that skip this step return to it within 2–4 months after TGE — with lost time and broken community trust.',
   },
   explainer: {
     headline: 'What is a tokenomics workshop',
@@ -177,14 +175,7 @@ const enObject = {
         workshop: '$2,500',
         consulting: '$30,000–$150,000',
         templates: '$0–$5,000',
-        solo: '',
-      },
-      {
-        param: 'Team time',
-        workshop: 'Low',
-        consulting: 'High',
-        templates: 'None',
-        solo: 'Very high',
+        solo: 'Team time',
       },
       {
         param: 'Customization',
@@ -241,15 +232,19 @@ const enObject = {
   },
   testimonial: {
     quote:
-      '"After the workshop we rethought the entire staking mechanic — it turned out we were building incentives for speculators, not real product users. It saved us two months of development and changed our pitch for the next round."',
-    author: 'Co-founder, DeFi infrastructure project',
-    meta: 'Raised $4.2M before TGE · client since 2023',
+      '"Their suggestions were practical and actionable, not just theoretical observations."',
+    date: 'Apr 28, 2026',
+    dateIso: '2026-04-28',
+    roleLead: 'Brand & Communications Lead',
+    clientName: 'EarnPark',
+    clientUrl: 'https://earnpark.com/',
+    author: 'Vera Yurkova',
   },
   trust: {
     slots: {
       headline: 'Maximum 6 workshops per month.',
-      description:
-        'Each one requires a custom scenario — that takes real time. Currently 2 slots available in May.',
+      descriptionPrefix:
+        'Each one requires a custom scenario — that takes real time.',
     },
     stats: [
       { value: '2017', label: 'Building token economies' },
@@ -329,5 +324,5 @@ export const workshopMeta = {
     'Find out who needs your token and why. Interactive workshop with an individual scenario. $2,500 · 1–3 hours · full team.',
   twitterTitle: 'Tokenomics Workshop — 8Blocks',
   twitterDescription:
-    '95% of tokens trade below TGE price within 3 months. Find out why — and fix it before launch. Workshop from $2,500.',
+    '85% of tokens trade below their TGE price. Find out why — and fix it before launch. Workshop from $2,500.',
 } as const

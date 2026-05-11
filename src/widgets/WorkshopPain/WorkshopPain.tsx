@@ -25,7 +25,6 @@ interface WorkshopPainProps {
     headline: string
     stages: readonly TimelineStage[]
   }
-  closingNote: string
 }
 
 export function WorkshopPain({
@@ -33,7 +32,6 @@ export function WorkshopPain({
   description,
   personas,
   timeline,
-  closingNote,
 }: WorkshopPainProps) {
   return (
     <section className={styles.section} id="pain" aria-label="Problem">
@@ -89,16 +87,6 @@ export function WorkshopPain({
             ))}
           </div>
         </div>
-
-        <motion.p
-          className={styles.closingNote}
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-30px' }}
-          transition={{ duration: 0.5, ease, delay: 0.1 }}
-        >
-          {closingNote}
-        </motion.p>
       </div>
     </section>
   )

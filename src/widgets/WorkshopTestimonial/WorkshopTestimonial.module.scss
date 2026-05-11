@@ -68,7 +68,30 @@
 .quoteFooter {
   display: flex;
   flex-direction: column;
-  gap: $space-1;
+  gap: $space-2;
+}
+
+.quoteDate {
+  font-size: $text-sm;
+  color: $text-tertiary;
+}
+
+.quoteRole {
+  margin: 0;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+.quoteClientLink {
+  color: $text-primary;
+  text-decoration: underline;
+  text-decoration-color: rgba(194, 78, 136, 0.45);
+  text-underline-offset: 3px;
+
+  &:hover {
+    text-decoration-color: $accent-pink-deep;
+  }
 }
 
 .quoteAuthor {
@@ -76,11 +99,6 @@
   font-size: $text-base;
   font-weight: 500;
   color: $text-primary;
-}
-
-.quoteMeta {
-  font-size: $text-sm;
-  color: $text-tertiary;
 }
 
 .trustBlock {

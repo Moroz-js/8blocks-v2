@@ -15,8 +15,12 @@ interface TrustStat {
 interface WorkshopTestimonialProps {
   testimonial: {
     quote: string
+    date: string
+    dateIso: string
+    roleLead: string
+    clientName: string
+    clientUrl: string
     author: string
-    meta: string
   }
   trust: {
     slots: {
@@ -45,8 +49,21 @@ export function WorkshopTestimonial({ testimonial, trust }: WorkshopTestimonialP
             <div className={styles.quoteIcon} aria-hidden="true">"</div>
             <p className={styles.quoteText}>{testimonial.quote}</p>
             <footer className={styles.quoteFooter}>
+              <time className={styles.quoteDate} dateTime={testimonial.dateIso}>
+                {testimonial.date}
+              </time>
+              <p className={styles.quoteRole}>
+                {testimonial.roleLead},{' '}
+                <a
+                  href={testimonial.clientUrl}
+                  className={styles.quoteClientLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {testimonial.clientName}
+                </a>
+              </p>
               <cite className={styles.quoteAuthor}>{testimonial.author}</cite>
-              <span className={styles.quoteMeta}>{testimonial.meta}</span>
             </footer>
           </motion.blockquote>
 

@@ -55,7 +55,12 @@ export function WorkshopHero({
           <blockquote className={styles.statQuote} cite={statSourceUrl}>
             <p className={styles.stat}>{stat}</p>
             <cite className={styles.statCite}>
-              <a href={statSourceUrl} className={styles.statCiteLink}>
+              <a
+                href={statSourceUrl}
+                className={styles.statCiteLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {statSource}
               </a>
             </cite>
