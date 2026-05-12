@@ -3,7 +3,7 @@
 
 export const heroContent = {
   label: 'Токеномика',
-  headlineLine1: 'Токен-экономики',
+  headlineLine1: 'Токен-экономики,',
   headlineLine2: 'которые усиливают',
   headlineLine3: 'бизнес',
   description:
