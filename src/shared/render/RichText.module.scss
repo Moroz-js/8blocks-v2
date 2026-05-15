@@ -1,4 +1,3 @@
-@use 'sass:color';
 @use '@/shared/styles/variables' as *;
 
 .richText {
@@ -29,6 +28,15 @@
     letter-spacing: -0.01em;
     color: $text-primary;
     margin: $space-7 0 $space-4;
+    scroll-margin-top: 100px;
+  }
+
+  .h4 {
+    font-size: $text-lg;
+    font-weight: 500;
+    line-height: $leading-snug;
+    color: $text-primary;
+    margin: $space-6 0 $space-3;
     scroll-margin-top: 100px;
   }
 
@@ -121,15 +129,14 @@
 
   // ── Links ────────────────────────────────────────────────────────
   .a {
-    color: $accent-purple;
+    color: $accent-pink-deep;
     text-decoration: underline;
     text-underline-offset: 3px;
-    text-decoration-color: rgba(194, 78, 136, 0.4);
+    text-decoration-color: rgba(194, 78, 136, 0.5);
     transition: color $transition-fast, text-decoration-color $transition-fast;
 
     &:hover {
-      color: color.adjust($accent-purple, $lightness: 15%);
-      text-decoration-color: rgba(194, 78, 136, 0.8);
+      text-decoration-color: $accent-pink-deep;
     }
   }
 
@@ -147,6 +154,7 @@
 
   // ── Images ───────────────────────────────────────────────────────
   .figure {
+    position: relative;
     margin: $space-7 0;
     display: flex;
     flex-direction: column;
@@ -167,6 +175,139 @@
     color: $text-tertiary;
     text-align: center;
     font-style: italic;
+  }
+
+  .figcaptionSrOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .callout {
+    position: relative;
+    margin: $space-7 0;
+    padding: $space-6 $space-7;
+    border-radius: 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(
+      135deg,
+      rgba(142, 74, 189, 0.28) 0%,
+      rgba(194, 78, 136, 0.14) 42%,
+      rgba(12, 10, 18, 0.72) 100%
+    );
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 90% 80% at 12% 0%,
+        rgba(194, 78, 136, 0.35) 0%,
+        rgba(142, 74, 189, 0.12) 45%,
+        transparent 72%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+  }
+
+  .calloutLabel {
+    position: relative;
+    z-index: 1;
+    display: block;
+    font-family: $font-base;
+    font-size: $text-md;
+    font-weight: 500;
+    font-style: normal;
+    color: $text-primary;
+    margin: 0 0 $space-3;
+  }
+
+  .calloutText {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    font-family: $font-base;
+    font-size: $text-md;
+    font-weight: 400;
+    font-style: normal;
+    line-height: $leading-relaxed;
+    color: $text-primary;
+  }
+
+  .tableWrap {
+    margin: $space-7 0;
+    overflow-x: auto;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: $text-sm;
+
+    th,
+    td {
+      border: 1px solid $border-secondary;
+      padding: $space-3 $space-4;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-weight: 500;
+      color: $text-primary;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    td {
+      color: $text-secondary;
+    }
+  }
+
+  .formula {
+    margin: $space-7 0;
+    padding: $space-5 $space-6;
+    border-radius: 0;
+    border: 1px solid $border-secondary;
+    background: $bg-secondary;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    overflow-x: auto;
+    text-align: center;
+  }
+
+  .formulaBody {
+    display: flex;
+    justify-content: center;
+    min-width: min(100%, max-content);
+    margin-inline: auto;
+
+    :global(.katex) {
+      font-size: 1.2em;
+      color: $text-primary;
+    }
+
+    :global(.katex-display) {
+      margin: 0;
+    }
+  }
+
+  .formulaCaption {
+    margin-top: $space-4;
+    font-size: $text-sm;
+    color: $text-tertiary;
+    font-style: italic;
+    text-align: center;
   }
 }
 

@@ -42,7 +42,16 @@ export function ArticleToc({ items }: Props) {
       <p className={styles.tocTitle}>{uiStrings.tableOfContents}</p>
       <ol className={styles.tocList}>
         {items.map(({ id, text, level }) => (
-          <li key={id} className={`${styles.tocItem} ${level === 3 ? styles.tocItemL3 : ''}`}>
+          <li
+            key={id}
+            className={[
+              styles.tocItem,
+              level === 3 ? styles.tocItemL3 : '',
+              level === 4 ? styles.tocItemL4 : '',
+            ]
+              .filter(Boolean)
+              .join(' ')}
+          >
             <a
               href={`#${id}`}
               className={`${styles.tocLink} ${activeId === id ? styles.tocLinkActive : ''}`}

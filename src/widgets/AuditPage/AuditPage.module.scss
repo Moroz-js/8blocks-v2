@@ -1,0 +1,30 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/auditPageLayout' as layout;
+
+.root {
+  @include layout.contentContainer;
+  padding-top: $space-9;
+  padding-bottom: $space-12;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-top: $space-7;
+    padding-bottom: $space-10;
+  }
+}
+
+.coverWrap {
+  margin-bottom: $space-9;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.coverImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.content {
+  min-width: 0;
+}

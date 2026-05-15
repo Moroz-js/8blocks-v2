@@ -14,6 +14,7 @@ export const footerContent = {
     { label: 'Услуги', href: '/services' },
     { label: 'Блог', href: '/blog' },
     { label: 'Мы в медиа', href: '/media' },
+    { label: 'Публичные аудиты', href: '/audits' },
     { label: 'Контакты', href: '/contact' },
   ],
   serviceLinks: [

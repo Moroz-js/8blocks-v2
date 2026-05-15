@@ -1,0 +1,88 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/auditPageLayout' as layout;
+
+.toc {
+  width: 100%;
+  border-bottom: 1px solid $border-secondary;
+  padding-block: $space-8;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-6;
+  }
+}
+
+.inner {
+  @include layout.contentContainer;
+}
+
+.title {
+  font-family: $font-base;
+  font-size: $text-xs;
+  font-weight: 500;
+  color: $text-tertiary;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 $space-5;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.item {
+  margin: 0;
+  padding: 0;
+}
+
+.itemLink {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+  width: 100%;
+  padding: $space-2 0;
+  text-decoration: none;
+  color: inherit;
+  transition: color $transition-fast;
+
+  &:hover .linkText {
+    color: $text-primary;
+  }
+}
+
+.itemLinkL3 {
+  padding-left: $space-3;
+}
+
+.itemLinkL4 {
+  padding-left: $space-5;
+}
+
+.number {
+  flex-shrink: 0;
+  font-family: $font-mono;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  min-width: 1.25em;
+}
+
+.dots {
+  flex: 1;
+  border-bottom: 1px dotted $border-secondary;
+  min-width: $space-4;
+  transform: translateY(-0.35em);
+}
+
+.linkText {
+  flex-shrink: 0;
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  line-height: $leading-normal;
+  color: $text-secondary;
+  transition: color $transition-fast;
+}

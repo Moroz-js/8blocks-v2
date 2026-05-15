@@ -9,11 +9,14 @@ import styles from './Footer.module.scss'
 
 interface FooterProps {
   mediaEnabled?: boolean
+  auditsEnabled?: boolean
 }
 
-export function Footer({ mediaEnabled = false }: FooterProps) {
+export function Footer({ mediaEnabled = false, auditsEnabled = false }: FooterProps) {
   const pageLinks = footerContent.pageLinks.filter(
-    (link) => link.href !== '/media' || mediaEnabled,
+    (link) =>
+      (link.href !== '/media' || mediaEnabled) &&
+      (link.href !== '/audits' || auditsEnabled),
   )
   return (
     <footer className={styles.footer}>

@@ -1,0 +1,15 @@
+@use '@/shared/styles/variables' as *;
+
+$audit-content-max: 860px;
+
+@mixin contentContainer {
+  max-width: $audit-content-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+  }
+}

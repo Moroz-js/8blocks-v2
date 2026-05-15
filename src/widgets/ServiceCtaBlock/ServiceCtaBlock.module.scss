@@ -37,17 +37,18 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 600px;
-  height: 200px;
+  width: 900px;
+  height: 400px;
   background: radial-gradient(
     ellipse,
-    rgba(194, 78, 136, 0.18) 0%,
-    rgba(142, 74, 189, 0.08) 50%,
+    rgba(194, 78, 136, 0.14) 0%,
+    rgba(142, 74, 189, 0.06) 40%,
     transparent 70%
   );
+  filter: blur(40px);
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s linear;
+  transition: transform 0.3s ease-out;
   will-change: transform;
 }
 

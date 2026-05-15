@@ -6,6 +6,7 @@ import '@mantine/core/styles.css'
 import '../globals.scss'
 import { Header } from '@/widgets/Header'
 import { Footer } from '@/widgets/Footer'
+import { ScrollToTop } from '@/shared/ui/ScrollToTop'
 import { siteConfig } from '@/shared/config/site'
 import { htmlLang, locale } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
@@ -13,6 +14,7 @@ import { GTMScript } from '@/shared/lib/GTMScript'
 import { HeadMarkupInjector } from '@/widgets/HeadMarkupInjector'
 import { getBlogExtraHeadMarkup, getSiteSeoGlobal, getSiteSeoPageOverride } from '@/shared/lib/site-seo'
 import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
+import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
 
 export const metadata: Metadata = {
   title: {
@@ -37,11 +39,12 @@ export const metadata: Metadata = {
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get('x-pathname') ?? '/'
-  const [siteSeo, pageRow, blogExtra, mediaEnabled] = await Promise.all([
+  const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled] = await Promise.all([
     getSiteSeoGlobal(),
     getSiteSeoPageOverride(pathname),
     getBlogExtraHeadMarkup(pathname),
     getMediaMentionsEnabled(),
+    getPublicAuditsEnabled(),
   ])
 
   const headCombined = [siteSeo?.globalHeadMarkup, pageRow?.pageHeadMarkup, blogExtra]
@@ -111,7 +114,8 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <LenisProvider>
             <Header mediaEnabled={mediaEnabled} />
             <main>{children}</main>
-            <Footer mediaEnabled={mediaEnabled} />
+            <Footer mediaEnabled={mediaEnabled} auditsEnabled={auditsEnabled} />
+            <ScrollToTop />
           </LenisProvider>
         </MantineProvider>
       </body>

@@ -1,0 +1,172 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/auditPageLayout' as layout;
+
+.hero {
+  width: 100%;
+  padding-block: $space-10;
+  border-bottom: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  @include layout.contentContainer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-6;
+}
+
+.backLink {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  color: $text-tertiary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.logo {
+  color: $text-primary;
+  width: fit-content;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  width: 100%;
+}
+
+.title {
+  font-family: $font-base;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 500;
+  line-height: $leading-tight;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0;
+  max-width: 100%;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-3xl;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.date {
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  color: $text-tertiary;
+  letter-spacing: 0.03em;
+}
+
+.metaSep {
+  color: $text-tertiary;
+  opacity: 0.5;
+  user-select: none;
+}
+
+.articleLink {
+  font-family: $font-base;
+  font-size: $text-sm;
+  font-weight: 400;
+  color: $text-secondary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.excerpt {
+  font-family: $font-base;
+  font-size: $text-md;
+  font-weight: 400;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 100%;
+}
+
+.metricsGridLogo {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: $space-3;
+  aspect-ratio: 1;
+  width: 100%;
+  margin-top: $space-2;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    aspect-ratio: unset;
+
+    .metricCard {
+      grid-area: auto !important;
+    }
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.metricsGridExtra {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: $space-3;
+  width: 100%;
+}
+
+.metricCard {
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: 0;
+  padding: $space-4 $space-5;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-height: 72px;
+  text-align: left;
+}
+
+.metricLabel {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: $text-tertiary;
+  text-transform: uppercase;
+}
+
+.metricValue {
+  font-family: $font-base;
+  font-size: $text-md;
+  font-weight: 500;
+  line-height: $leading-snug;
+  color: $text-primary;
+  word-break: break-word;
+}

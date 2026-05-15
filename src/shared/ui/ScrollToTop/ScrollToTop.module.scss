@@ -1,0 +1,42 @@
+@use '@/shared/styles/variables' as *;
+
+.button {
+  position: fixed;
+  bottom: 110px;
+  right: 20px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid $border-secondary;
+  border-radius: 0;
+  background: rgba(10, 8, 16, 0.92);
+  color: $text-secondary;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity $transition-base,
+    transform $transition-base,
+    border-color $transition-fast,
+    color $transition-fast;
+
+  &:hover {
+    border-color: $border-primary;
+    color: $text-primary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}

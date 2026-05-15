@@ -24,7 +24,7 @@ export function ServiceCtaBlock({ headline, ctaLabel, ctaHref }: ServiceCtaBlock
     const rect = el.getBoundingClientRect()
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
-    glow.style.transform = `translate(${x - 300}px, ${y - 100}px)`
+    glow.style.transform = `translate(${x - 450}px, ${y - 200}px)`
   }, [])
 
   const handleMouseLeave = useCallback(() => {

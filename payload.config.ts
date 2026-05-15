@@ -31,6 +31,7 @@ import {
   NewsletterSubscriptions,
   MediaMentions,
   MediaCategories,
+  PublicAudits,
 } from './payload/collections/index.ts'
 import { SiteSeo } from './payload/globals/index.ts'
 
@@ -104,6 +105,7 @@ export default buildConfig({
     NewsletterSubscriptions,
     MediaMentions,
     MediaCategories,
+    PublicAudits,
   ],
 
   globals: [SiteSeo],

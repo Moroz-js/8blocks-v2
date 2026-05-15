@@ -15,6 +15,7 @@ export const footerContent = {
     { label: 'Services', href: '/services' },
     { label: 'Blog', href: '/blog' },
     { label: 'In the media', href: '/media' },
+    { label: 'Public Audits', href: '/audits' },
     { label: 'Contact', href: '/contact' },
   ],
   serviceLinks: [

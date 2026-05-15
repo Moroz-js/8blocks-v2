@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { slugifyHeadingId } from '@/shared/lib/slugifyHeadingId'
+import { FormulaView } from './FormulaView'
 import styles from './RichText.module.scss'
 
 // Text format bitmask (Lexical)
@@ -19,6 +20,14 @@ type LexNode = {
   listType?: 'bullet' | 'number' | 'check'
   checked?: boolean
   fields?: {
+    blockType?: string
+    label?: string
+    text?: string
+    formula?: string
+    caption?: string
+    headers?: { cell?: string | null; id?: string }[]
+    rows?: { cells?: { cell?: string | null; id?: string }[]; id?: string }[]
+    aiDescription?: string
     url?: string
     newTab?: boolean
     linkType?: string
@@ -30,6 +39,7 @@ type LexNode = {
     height?: number
     caption?: string
     filename?: string
+    aiDescription?: string
   }
   relationTo?: string
   language?: string
@@ -57,6 +67,58 @@ function renderText(node: LexNode, key: string): React.ReactNode {
 
 type IdMap = Map<string, number>
 
+function renderBlock(node: LexNode, key: string): React.ReactNode {
+  const fields = node.fields
+  if (!fields?.blockType) return null
+
+  switch (fields.blockType) {
+    case 'callout':
+      return (
+        <div key={key} className={styles.callout}>
+          {fields.label && <strong className={styles.calloutLabel}>{fields.label}</strong>}
+          <p className={styles.calloutText}>{fields.text}</p>
+        </div>
+      )
+
+    case 'auditTable': {
+      const headers = fields.headers ?? []
+      const rows = fields.rows ?? []
+      return (
+        <div key={key} className={styles.tableWrap}>
+          <table className={styles.table}>
+            {headers.length > 0 && (
+              <thead>
+                <tr>
+                  {headers.map((header, i) => (
+                    <th key={`${key}-h-${i}`}>{header.cell}</th>
+                  ))}
+                </tr>
+              </thead>
+            )}
+            <tbody>
+              {rows.map((row, rowIndex) => (
+                <tr key={`${key}-r-${rowIndex}`}>
+                  {(row.cells ?? []).map((cell, cellIndex) => (
+                    <td key={`${key}-c-${rowIndex}-${cellIndex}`}>{cell.cell}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+
+    case 'formula':
+      return fields.formula ? (
+        <FormulaView key={key} formula={fields.formula} caption={fields.caption} />
+      ) : null
+
+    default:
+      return null
+  }
+}
+
 function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
   switch (node.type) {
     case 'text':
@@ -65,8 +127,11 @@ function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
     case 'linebreak':
       return <br key={key} />
 
+    case 'block':
+      return renderBlock(node, key)
+
     case 'heading': {
-      const Tag = (node.tag ?? 'h2') as 'h2' | 'h3'
+      const Tag = (node.tag ?? 'h2') as 'h2' | 'h3' | 'h4'
       const text = extractPlainText(node)
       const base = slugifyHeadingId(text)
       const count = idMap.get(base) ?? 0
@@ -134,14 +199,16 @@ function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
       if (node.relationTo !== 'media' || node.value == null) return null
       const raw = node.value
       if (typeof raw !== 'object') return null
-      const { url, alt, width, height, caption, filename } = raw as {
+      const { url, alt, width, height, caption, filename, aiDescription: aiFromValue } = raw as {
         url?: string
         alt?: string
         width?: number
         height?: number
         caption?: string
         filename?: string
+        aiDescription?: string
       }
+      const aiDescription = aiFromValue ?? node.fields?.aiDescription
       const src = url ?? (filename ? `/uploads/${filename}` : null)
       if (!src) return null
       return (
@@ -154,6 +221,9 @@ function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
             className={styles.img}
           />
           {caption && <figcaption className={styles.figcaption}>{caption}</figcaption>}
+          {aiDescription && (
+            <figcaption className={styles.figcaptionSrOnly}>{aiDescription}</figcaption>
+          )}
         </figure>
       )
     }

@@ -3,7 +3,7 @@ import { slugifyHeadingId } from '@/shared/lib/slugifyHeadingId'
 export interface TocItem {
   id: string
   text: string
-  level: 2 | 3
+  level: 2 | 3 | 4
 }
 
 type LexNode = {
@@ -30,7 +30,7 @@ export function buildToc(content: unknown): TocItem[] {
   for (const node of root.children) {
     if (node.type !== 'heading') continue
     const tag = node.tag
-    if (tag !== 'h2' && tag !== 'h3') continue
+    if (tag !== 'h2' && tag !== 'h3' && tag !== 'h4') continue
 
     const text = extractText(node)
     if (!text.trim()) continue
@@ -40,7 +40,8 @@ export function buildToc(content: unknown): TocItem[] {
     const id = count === 0 ? base : `${base}-${count}`
     idCount.set(base, count + 1)
 
-    items.push({ id, text, level: tag === 'h2' ? 2 : 3 })
+    const level = tag === 'h2' ? 2 : tag === 'h3' ? 3 : 4
+    items.push({ id, text, level })
   }
 
   return items
