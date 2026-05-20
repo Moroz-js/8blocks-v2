@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { visiblePublishedArticleConditions } from '@/shared/lib/visible-article-where'
 
 export async function POST(
   _req: Request,
@@ -14,10 +15,7 @@ export async function POST(
     const result = await payload.find({
       collection: 'articles',
       where: {
-        and: [
-          { slug: { equals: slug } },
-          { status: { equals: 'published' } },
-        ],
+        and: [{ slug: { equals: slug } }, ...visiblePublishedArticleConditions],
       },
       limit: 1,
     })

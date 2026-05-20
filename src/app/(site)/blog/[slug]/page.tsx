@@ -10,7 +10,10 @@ import type {
 } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
-import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
+import {
+  visiblePublishedArticleConditions,
+  visiblePublishedArticleWhere,
+} from '@/shared/lib/visible-article-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
@@ -82,7 +85,7 @@ async function getPublishedArticleBySlug(slug: string) {
   const result = await payload.find({
     collection: 'articles',
     where: {
-      and: [{ slug: { equals: slug } }, ...visiblePublishedArticleWhere.and],
+      and: [{ slug: { equals: slug } }, ...visiblePublishedArticleConditions],
     },
     limit: 1,
     depth: 2,
@@ -234,7 +237,7 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
     collection: 'articles',
     where: {
       and: [
-        ...visiblePublishedArticleWhere.and,
+        ...visiblePublishedArticleConditions,
         { category: { equals: category.id } },
       ],
     },

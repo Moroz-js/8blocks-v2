@@ -10,9 +10,11 @@ import styles from './Header.module.scss'
 
 interface HeaderProps {
   mediaEnabled?: boolean
+  blogEnabled?: boolean
 }
 
-export function Header({ mediaEnabled: _mediaEnabled }: HeaderProps) {
+export function Header({ mediaEnabled: _mediaEnabled, blogEnabled = false }: HeaderProps) {
+  const links = navLinks.filter((link) => link.href !== '/blog' || blogEnabled)
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -36,7 +38,7 @@ export function Header({ mediaEnabled: _mediaEnabled }: HeaderProps) {
 
           <nav className={styles.nav} aria-label="Main navigation">
             <ul className={styles.navList}>
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={styles.navLink}>
                     {link.label}
@@ -78,7 +80,7 @@ export function Header({ mediaEnabled: _mediaEnabled }: HeaderProps) {
       >
         <nav aria-label="Mobile navigation">
           <ul className={styles.mobileNavList}>
-            {navLinks.map((link, i) => (
+            {links.map((link, i) => (
               <li key={link.href} style={{ '--i': i } as React.CSSProperties}>
                 <Link
                   href={link.href}

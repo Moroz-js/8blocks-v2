@@ -14,6 +14,7 @@ import { GTMScript } from '@/shared/lib/GTMScript'
 import { HeadMarkupInjector } from '@/widgets/HeadMarkupInjector'
 import { getBlogExtraHeadMarkup, getSiteSeoGlobal, getSiteSeoPageOverride } from '@/shared/lib/site-seo'
 import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
+import { getBlogEnabled } from '@/shared/lib/getBlogEnabled'
 import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
 
 export const metadata: Metadata = {
@@ -39,12 +40,13 @@ export const metadata: Metadata = {
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get('x-pathname') ?? '/'
-  const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled] = await Promise.all([
+  const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled, blogNavEnabled] = await Promise.all([
     getSiteSeoGlobal(),
     getSiteSeoPageOverride(pathname),
     getBlogExtraHeadMarkup(pathname),
     getMediaMentionsEnabled(),
     getPublicAuditsEnabled(),
+    getBlogEnabled(),
   ])
 
   const headCombined = [siteSeo?.globalHeadMarkup, pageRow?.pageHeadMarkup, blogExtra]
@@ -112,9 +114,13 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             </>
           )}
           <LenisProvider>
-            <Header mediaEnabled={mediaEnabled} />
+            <Header mediaEnabled={mediaEnabled} blogEnabled={blogNavEnabled} />
             <main>{children}</main>
-            <Footer mediaEnabled={mediaEnabled} auditsEnabled={auditsEnabled} />
+            <Footer
+              mediaEnabled={mediaEnabled}
+              auditsEnabled={auditsEnabled}
+              blogEnabled={blogNavEnabled}
+            />
             <ScrollToTop />
           </LenisProvider>
         </MantineProvider>

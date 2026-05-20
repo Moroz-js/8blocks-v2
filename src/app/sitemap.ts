@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { siteConfig } from '@/shared/config/site'
+import { getBlogEnabled } from '@/shared/lib/getBlogEnabled'
+import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
 
 const BASE = siteConfig.url.replace(/\/$/, '')
 
@@ -17,7 +19,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ]
     : []
 
-  const blogStaticPage: MetadataRoute.Sitemap = siteConfig.blogEnabled
+  const hasVisibleBlog = siteConfig.blogEnabled && (await getBlogEnabled())
+
+  const blogStaticPage: MetadataRoute.Sitemap = hasVisibleBlog
     ? [{ url: `${BASE}/blog`, lastModified: now, priority: 0.8 }]
     : []
 
@@ -28,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/privacy-policy`, lastModified: now, priority: 0.3 },
   ]
 
-  if (!siteConfig.blogEnabled) {
+  if (!hasVisibleBlog) {
     return staticPages
   }
 
@@ -49,7 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const articlesResult = await payload.find({
       collection: 'articles',
-      where: { status: { equals: 'published' } },
+      where: visiblePublishedArticleWhere,
       limit: 1000,
       sort: '-publishedAt',
     })

@@ -1,7 +1,7 @@
 import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
+import { visiblePublishedArticleConditions } from '@/shared/lib/visible-article-where'
 
 /** Доп. разметка из Payload для /blog/:slug (статья или категория). Дедуп с страницей через React.cache. */
 export const getBlogExtraHeadMarkup = cache(async (pathname: string): Promise<string | undefined> => {
@@ -14,7 +14,7 @@ export const getBlogExtraHeadMarkup = cache(async (pathname: string): Promise<st
   const published = await payload.find({
     collection: 'articles',
     where: {
-      and: [{ slug: { equals: slug } }, { status: { equals: 'published' } }],
+      and: [{ slug: { equals: slug } }, ...visiblePublishedArticleConditions],
     },
     limit: 1,
     depth: 0,
