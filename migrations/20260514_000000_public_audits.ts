@@ -22,6 +22,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     "seo_noindex" boolean DEFAULT false,
     "published_at" timestamp(3) with time zone NOT NULL,
     "featured" boolean DEFAULT false,
+    "hidden" boolean DEFAULT false,
     "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
     "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );

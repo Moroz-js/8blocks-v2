@@ -4,6 +4,7 @@ import config from '@payload-config'
 import { AuditsArchive } from '@/widgets/AuditsArchive'
 import type { PublicAuditCard } from '@/entities/public-audit'
 import { auditsMeta } from '@/shared/content/auditsPage'
+import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -38,6 +39,7 @@ export default async function AuditsPage({ searchParams }: PageProps) {
 
   const auditsResult = await payload.find({
     collection: 'public-audits',
+    where: visiblePublicAuditWhere,
     sort: '-featured,-publishedAt',
     limit: AUDITS_PER_PAGE,
     page: currentPage,

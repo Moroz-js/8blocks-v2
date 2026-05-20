@@ -18,7 +18,7 @@ export const siteConfig = {
   url: siteUrlWithHttps(process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io'),
   email: t({ ru: 'hi@токеномика.рф', en: 'hi@8blocks.io' }),
   legalName: '8BLOCKS FZCO',
-  phone: '+971 56 286 5188',
+  phone: t({ ru: '8 918 253 79 69', en: '+971 56 286 5188' }),
   address: t({
     ru: 'Москва, Ленинский проспект, 15а',
     en: 'UT-12-CO-372, DMCC Business Centre, Level No 12, Uptown Tower, Dubai, United Arab Emirates',

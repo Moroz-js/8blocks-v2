@@ -25,7 +25,7 @@ export const PublicAudits: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Аудиты',
-    defaultColumns: ['title', 'slug', 'publishedAt'],
+    defaultColumns: ['title', 'slug', 'hidden', 'publishedAt'],
     description: 'Публичные аудиты токенов',
     listSearchableFields: ['title', 'slug', 'excerpt'],
   },
@@ -239,6 +239,16 @@ export const PublicAudits: CollectionConfig = {
       type: 'checkbox',
       label: 'Закрепить в начале',
       defaultValue: false,
+    },
+    {
+      name: 'hidden',
+      type: 'checkbox',
+      label: 'Скрыто',
+      defaultValue: false,
+      admin: {
+        description: 'Не показывать в списке аудитов и скрыть ссылку, если нет видимых аудитов',
+        position: 'sidebar',
+      },
     },
   ],
 }

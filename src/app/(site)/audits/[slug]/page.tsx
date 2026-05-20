@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { siteConfig } from '@/shared/config/site'
+import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { AuditPage } from '@/widgets/AuditPage'
 
@@ -14,7 +15,9 @@ async function getAuditBySlug(slug: string) {
   const payload = await getPayload({ config })
   const result = await payload.find({
     collection: 'public-audits',
-    where: { slug: { equals: slug } },
+    where: {
+      and: [{ slug: { equals: slug } }, visiblePublicAuditWhere],
+    },
     limit: 1,
     depth: 1,
   })
