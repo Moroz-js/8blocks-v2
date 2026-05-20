@@ -16,7 +16,7 @@ export const siteConfig = {
     en: 'Token economies that power the business',
   }),
   url: siteUrlWithHttps(process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io'),
-  email: t({ ru: 'hi@токеномика.рф', en: 'hi@8blocks.io' }),
+  email: t({ ru: 'hi@токеномика.рф', en: 'hello@8blocks.io' }),
   legalName: '8BLOCKS FZCO',
   phone: t({ ru: '8 918 253 79 69', en: '+971 56 286 5188' }),
   address: t({

@@ -5,6 +5,7 @@ import { BlogArchive } from '@/widgets/BlogArchive'
 import type { ArticleCard as ArticleCardType, CategoryRef } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { blogMeta } from '@/shared/content/blogPage'
+import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -40,7 +41,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
   // Fetch published articles (paginated)
   const articlesResult = await payload.find({
     collection: 'articles',
-    where: { status: { equals: 'published' } },
+    where: visiblePublishedArticleWhere,
     sort: '-publishedAt',
     limit: ARTICLES_PER_PAGE,
     page: currentPage,

@@ -10,6 +10,7 @@ import type {
 } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
+import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
@@ -81,10 +82,7 @@ async function getPublishedArticleBySlug(slug: string) {
   const result = await payload.find({
     collection: 'articles',
     where: {
-      and: [
-        { slug: { equals: slug } },
-        { status: { equals: 'published' } },
-      ],
+      and: [{ slug: { equals: slug } }, ...visiblePublishedArticleWhere.and],
     },
     limit: 1,
     depth: 2,
@@ -202,6 +200,10 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
 
     const relatedRaw = Array.isArray(articleDoc.relatedArticles) ? articleDoc.relatedArticles : []
     const relatedArticles = relatedRaw
+      .filter((item) => {
+        if (!item || typeof item !== 'object') return false
+        return (item as { hidden?: boolean }).hidden !== true
+      })
       .map((item) => mapArticleCard(item))
       .filter((item): item is ArticleCardType => item !== null)
 
@@ -232,7 +234,7 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
     collection: 'articles',
     where: {
       and: [
-        { status: { equals: 'published' } },
+        ...visiblePublishedArticleWhere.and,
         { category: { equals: category.id } },
       ],
     },

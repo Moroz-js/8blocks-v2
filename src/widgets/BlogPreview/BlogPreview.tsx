@@ -5,6 +5,7 @@ import type { ArticleCard } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { ArticleCardUI } from '@/entities/article'
 import { blogPreviewContent } from '@/shared/content/blogPage'
+import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
 import styles from './BlogPreview.module.scss'
 
 async function getLatestArticles(): Promise<ArticleCard[]> {
@@ -12,7 +13,7 @@ async function getLatestArticles(): Promise<ArticleCard[]> {
     const payload = await getPayload({ config })
     const result = await payload.find({
       collection: 'articles',
-      where: { status: { equals: 'published' } },
+      where: visiblePublishedArticleWhere,
       sort: '-publishedAt',
       limit: 3,
       depth: 1,

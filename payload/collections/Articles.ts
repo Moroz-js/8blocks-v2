@@ -24,7 +24,7 @@ export const Articles: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     group: 'Блог',
-    defaultColumns: ['title', 'category', 'status', 'publishedAt'],
+    defaultColumns: ['title', 'category', 'status', 'hidden', 'publishedAt'],
     description: 'Статьи блога',
     listSearchableFields: ['title', 'slug', 'excerpt'],
   },
@@ -116,6 +116,7 @@ export const Articles: CollectionConfig = {
       filterOptions: ({ id }) => ({
         id: { not_in: [id] },
         status: { equals: 'published' },
+        hidden: { not_equals: true },
       }),
     },
 
@@ -270,6 +271,16 @@ export const Articles: CollectionConfig = {
       admin: {
         readOnly: true,
         description: 'Обновляется через API при просмотре статьи',
+      },
+    },
+    {
+      name: 'hidden',
+      type: 'checkbox',
+      label: 'Скрыто',
+      defaultValue: false,
+      admin: {
+        description: 'Не показывать в блоге; ссылка на блог скрывается, если нет видимых статей',
+        position: 'sidebar',
       },
     },
   ],

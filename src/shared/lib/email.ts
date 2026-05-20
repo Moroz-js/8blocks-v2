@@ -141,8 +141,8 @@ export async function sendContactUser(to: string, data: {
     field(isRu ? 'Ваше сообщение' : 'Your message', data.message) +
     divider() +
     p(isRu
-      ? 'Если у вас есть вопросы, вы можете ответить на это письмо или написать нам на <a href="mailto:hi@8blocks.io" style="color:#C24E88;text-decoration:none;">hi@8blocks.io</a>.'
-      : 'If you have any questions in the meantime, you can reply to this email or contact us at <a href="mailto:hi@8blocks.io" style="color:#C24E88;text-decoration:none;">hi@8blocks.io</a>.'
+      ? 'Если у вас есть вопросы, вы можете ответить на это письмо или написать нам на <a href="mailto:hello@8blocks.io" style="color:#C24E88;text-decoration:none;">hello@8blocks.io</a>.'
+      : 'If you have any questions in the meantime, you can reply to this email or contact us at <a href="mailto:hello@8blocks.io" style="color:#C24E88;text-decoration:none;">hello@8blocks.io</a>.'
     )
   )
 

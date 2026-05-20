@@ -1,6 +1,7 @@
 import { cache } from 'react'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
 
 /** Доп. разметка из Payload для /blog/:slug (статья или категория). Дедуп с страницей через React.cache. */
 export const getBlogExtraHeadMarkup = cache(async (pathname: string): Promise<string | undefined> => {
