@@ -1,3 +1,5 @@
+@use '@/shared/styles/variables' as *;
+
 .top,
 .bottom {
   position: fixed !important;
@@ -7,7 +9,7 @@
   z-index: 9999 !important;
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  background: rgba(5, 3, 8, 0.35);
+  background: $overlay-scrim;
 }
 
 .top {

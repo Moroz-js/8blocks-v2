@@ -1,6 +1,25 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
+import { useTheme } from 'next-themes'
+import { readCssVar } from '@/shared/lib/readCssVar'
+
+type CanvasThemeColors = {
+  shadow: string
+  faceLeft: string
+  faceRight: string
+  faceTop: string
+  hl0: string
+  hl1: string
+  hl2: string
+  strokeLeft: string
+  strokeRight: string
+  strokeTop: string
+  baseFill1: string
+  baseFill2: string
+  baseFill3: string
+  baseStroke: string
+}
 
 interface Block {
   x: number
@@ -94,6 +113,7 @@ function drawGlassBlock(
   baseElev: number, height: number,
   rotX: number, rotY: number,
   scale: number, ox: number, oy: number,
+  colors: CanvasThemeColors,
 ) {
   const p = (x: number, z: number, e: number) =>
     project(x, z, e, rotX, rotY, scale, ox, oy)
@@ -113,25 +133,25 @@ function drawGlassBlock(
 
   ctx.save()
 
-  ctx.shadowColor = 'rgba(255, 255, 255, 0.6)'
+  ctx.shadowColor = colors.shadow
   ctx.shadowBlur = 120
 
-  fillPoly(ctx, leftPts,  'rgb(200, 200, 205)')
-  fillPoly(ctx, rightPts, 'rgb(180, 180, 186)')
-  fillPoly(ctx, topPts,   'rgb(235, 235, 240)')
+  fillPoly(ctx, leftPts, colors.faceLeft)
+  fillPoly(ctx, rightPts, colors.faceRight)
+  fillPoly(ctx, topPts, colors.faceTop)
 
   ctx.shadowBlur = 0
   ctx.shadowColor = 'transparent'
 
   const hlGrad = ctx.createLinearGradient(tBack.x, tBack.y, tFront.x, tFront.y)
-  hlGrad.addColorStop(0,   'rgba(255,255,255,0.35)')
-  hlGrad.addColorStop(0.5, 'rgba(255,255,255,0.08)')
-  hlGrad.addColorStop(1,   'rgba(255,255,255,0)')
+  hlGrad.addColorStop(0, colors.hl0)
+  hlGrad.addColorStop(0.5, colors.hl1)
+  hlGrad.addColorStop(1, colors.hl2)
   fillPoly(ctx, topPts, hlGrad)
 
-  strokePoly(ctx, leftPts,  'rgba(255, 255, 255, 0.5)', 0.8)
-  strokePoly(ctx, rightPts, 'rgba(255, 255, 255, 0.4)', 0.8)
-  strokePoly(ctx, topPts,   'rgba(255, 255, 255, 0.6)', 0.8)
+  strokePoly(ctx, leftPts, colors.strokeLeft, 0.8)
+  strokePoly(ctx, rightPts, colors.strokeRight, 0.8)
+  strokePoly(ctx, topPts, colors.strokeTop, 0.8)
 
   ctx.restore()
 }
@@ -140,6 +160,7 @@ function drawBase(
   ctx: CanvasRenderingContext2D,
   rotX: number, rotY: number,
   scale: number, ox: number, oy: number,
+  colors: CanvasThemeColors,
 ) {
   const p = (x: number, z: number, e: number) =>
     project(x, z, e, rotX, rotY, scale, ox, oy)
@@ -152,10 +173,29 @@ function drawBase(
   const bFront = p(GRID, GRID, 0)
   const bLeft  = p(0, GRID, 0)
 
-  fillPoly(ctx, [tLeft, tFront, bFront, bLeft], 'rgba(255,255,255,0.08)')
-  fillPoly(ctx, [tRight, tFront, bFront, bRight], 'rgba(255,255,255,0.06)')
-  fillPoly(ctx, [tBack, tRight, tFront, tLeft], 'rgba(255,255,255,0.07)')
-  strokePoly(ctx, [tBack, tRight, tFront, tLeft], 'rgba(255,255,255,0.12)', 0.5)
+  fillPoly(ctx, [tLeft, tFront, bFront, bLeft], colors.baseFill1)
+  fillPoly(ctx, [tRight, tFront, bFront, bRight], colors.baseFill2)
+  fillPoly(ctx, [tBack, tRight, tFront, tLeft], colors.baseFill3)
+  strokePoly(ctx, [tBack, tRight, tFront, tLeft], colors.baseStroke, 0.5)
+}
+
+function loadCanvasColors(): CanvasThemeColors {
+  return {
+    shadow: readCssVar('canvas-shadow', 'rgba(255, 255, 255, 0.6)'),
+    faceLeft: readCssVar('canvas-face-left', 'rgb(200, 200, 205)'),
+    faceRight: readCssVar('canvas-face-right', 'rgb(180, 180, 186)'),
+    faceTop: readCssVar('canvas-face-top', 'rgb(235, 235, 240)'),
+    hl0: 'rgba(255,255,255,0.35)',
+    hl1: 'rgba(255,255,255,0.08)',
+    hl2: 'rgba(255,255,255,0)',
+    strokeLeft: 'rgba(255, 255, 255, 0.5)',
+    strokeRight: 'rgba(255, 255, 255, 0.4)',
+    strokeTop: 'rgba(255, 255, 255, 0.6)',
+    baseFill1: readCssVar('bg-secondary', 'rgba(255,255,255,0.08)'),
+    baseFill2: readCssVar('bg-tertiary', 'rgba(255,255,255,0.06)'),
+    baseStroke: readCssVar('border-primary', 'rgba(255,255,255,0.12)'),
+    baseFill3: readCssVar('border-secondary', 'rgba(255,255,255,0.07)'),
+  }
 }
 
 export function HeroCanvas({ className }: { className?: string }) {
@@ -163,6 +203,16 @@ export function HeroCanvas({ className }: { className?: string }) {
   const rafRef    = useRef(0)
   const mouseTarget = useRef({ x: 0, y: 0 })
   const mouseCurrent = useRef({ x: 0, y: 0 })
+  const colorsRef = useRef<CanvasThemeColors>(loadCanvasColors())
+  const { resolvedTheme } = useTheme()
+
+  const refreshColors = useCallback(() => {
+    colorsRef.current = loadCanvasColors()
+  }, [])
+
+  useEffect(() => {
+    refreshColors()
+  }, [resolvedTheme, refreshColors])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -229,11 +279,16 @@ export function HeroCanvas({ className }: { className?: string }) {
         (a, b) => blockDepth(a, rX, rY) - blockDepth(b, rX, rY),
       )
 
+      const colors = colorsRef.current
+
+      drawBase(ctx, rX, rY, scale, ox, oy, colors)
+
       for (const b of sorted) {
         drawGlassBlock(
           ctx, b.x, b.z, b.w, b.d,
           BASE_H, BLOCK_H,
           rX, rY, scale, ox, oy,
+          colors,
         )
       }
 

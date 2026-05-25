@@ -1,16 +1,13 @@
-﻿import Link from 'next/link'
+﻿'use client'
+
+import Link from 'next/link'
 import Image from 'next/image'
 import { lang } from '@/shared/i18n'
 import { uiStrings } from '@/shared/content/uiStrings'
 import type { ArticleCard as ArticleCardType } from './types'
+import { CardCoverPattern } from '@/shared/ui/CardCoverPattern'
+import { usePlaceholderGradients } from '@/shared/lib/useThemeColors'
 import styles from './ArticleCard.module.scss'
-
-// Deterministic cover placeholder gradient per-article
-const PLACEHOLDERS = [
-  'linear-gradient(135deg, rgba(197,61,255,0.18) 0%, rgba(99,62,220,0.10) 100%)',
-  'linear-gradient(135deg, rgba(99,142,251,0.18) 0%, rgba(197,61,255,0.10) 100%)',
-  'linear-gradient(135deg, rgba(117,251,99,0.12) 0%, rgba(99,142,251,0.12) 100%)',
-]
 
 function formatDate(iso?: string | null): string {
   if (!iso) return ''
@@ -29,7 +26,8 @@ interface Props {
 
 export function ArticleCard({ article, index = 0, priority = false }: Props) {
   const href = `/blog/${article.slug}`
-  const placeholder = PLACEHOLDERS[index % PLACEHOLDERS.length]
+  const coverGradients = usePlaceholderGradients()
+  const placeholder = coverGradients[index % coverGradients.length]
   const date = formatDate(article.publishedAt)
 
   return (
@@ -48,7 +46,7 @@ export function ArticleCard({ article, index = 0, priority = false }: Props) {
             />
           ) : (
             <div className={styles.coverPlaceholder} style={{ background: placeholder }}>
-              <CoverPattern />
+              <CardCoverPattern className={styles.patternSvg} />
             </div>
           )}
           {/* Overlay for readability */}
@@ -91,26 +89,5 @@ export function ArticleCard({ article, index = 0, priority = false }: Props) {
         </Link>
       </div>
     </article>
-  )
-}
-
-// Subtle abstract lines for the cover placeholder
-function CoverPattern() {
-  return (
-    <svg
-      viewBox="0 0 420 236"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={styles.patternSvg}
-      aria-hidden="true"
-    >
-      <line x1="0" y1="118" x2="420" y2="118" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-      <line x1="210" y1="0" x2="210" y2="236" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-      <circle cx="210" cy="118" r="60" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
-      <circle cx="210" cy="118" r="32" stroke="rgba(255,255,255,0.09)" strokeWidth="1" />
-      <circle cx="210" cy="118" r="10" fill="rgba(255,255,255,0.12)" />
-      <line x1="80" y1="40" x2="340" y2="196" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-      <line x1="340" y1="40" x2="80" y2="196" stroke="rgba(255,255,255,0.04)" strokeWidth="1" />
-    </svg>
   )
 }

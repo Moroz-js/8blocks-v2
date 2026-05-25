@@ -99,9 +99,9 @@
 }
 
 .catChipActive {
-  border-color: rgba(197, 61, 255, 0.45);
+  border-color: $focus-accent;
   color: rgba(197, 61, 255, 0.9);
-  background: rgba(197, 61, 255, 0.06);
+  background: $focus-accent-bg;
 
   &:hover {
     border-color: $accent-purple;
@@ -206,7 +206,7 @@
 .pageNumActive {
   border-color: $border-primary;
   color: $text-primary;
-  background: rgba(255, 255, 255, 0.04);
+  background: $bg-secondary;
   pointer-events: none;
 }
 

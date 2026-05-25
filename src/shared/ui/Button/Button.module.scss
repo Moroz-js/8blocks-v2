@@ -25,18 +25,17 @@
   }
 }
 
-// Variants
 .variant-primary {
-  background: $text-primary;
-  color: #050308;
+  background: $button-primary-bg;
+  color: $button-primary-fg;
   border: 1px solid transparent;
 
   &:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.88);
+    background: $button-primary-hover;
   }
 
   &:active:not(:disabled) {
-    background: rgba(255, 255, 255, 0.75);
+    opacity: 0.92;
   }
 }
 
@@ -46,8 +45,8 @@
   border: 1px solid $border-primary;
 
   &:hover:not(:disabled) {
-    border-color: rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.05);
+    border-color: $button-secondary-hover-border;
+    background: $button-ghost-hover-bg;
   }
 }
 
@@ -58,11 +57,10 @@
 
   &:hover:not(:disabled) {
     color: $text-primary;
-    background: rgba(255, 255, 255, 0.05);
+    background: $button-ghost-hover-bg;
   }
 }
 
-// Sizes
 .size-sm {
   height: 36px;
   padding: 0 $space-4;
@@ -82,7 +80,6 @@
   font-size: $text-md;
 }
 
-// Modifiers
 .fullWidth {
   width: 100%;
 }
@@ -93,7 +90,6 @@
   }
 }
 
-// Inner elements
 .text {
   flex-shrink: 0;
 }
@@ -116,4 +112,3 @@
 .iconRight {
   margin-left: -2px;
 }
-

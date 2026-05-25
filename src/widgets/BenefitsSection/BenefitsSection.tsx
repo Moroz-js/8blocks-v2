@@ -50,7 +50,6 @@ function StackCard({ item, index }: {
           <ScrollRevealText
             text={item.description}
             className={styles.cardDescription}
-            dark
             progress={textProgress}
           />
         </div>

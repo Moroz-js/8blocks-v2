@@ -54,7 +54,7 @@
 .coverOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.35) 100%);
+  background: linear-gradient(to bottom, transparent 50%, $cover-scrim 100%);
 }
 
 // ── Meta ──────────────────────────────────────────────────────────
@@ -96,7 +96,7 @@
   transition: color $transition-fast;
 
   .titleLink:hover & {
-    color: rgba(255, 255, 255, 0.75);
+    color: $text-on-media;
   }
 }
 

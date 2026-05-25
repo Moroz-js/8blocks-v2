@@ -166,7 +166,7 @@
 .pageNumActive {
   border-color: $border-primary;
   color: $text-primary;
-  background: rgba(255, 255, 255, 0.04);
+  background: $bg-secondary;
   pointer-events: none;
 }
 

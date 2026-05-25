@@ -1,7 +1,9 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useMemo } from 'react'
 import { motion, useScroll, useTransform, useSpring, type MotionValue } from 'framer-motion'
+import { useTheme } from 'next-themes'
+import { readCssVar } from '@/shared/lib/readCssVar'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ProcessHorizontalSlider.module.scss'
 
@@ -36,10 +38,17 @@ function StepCard({
   const fadeIn = Math.max(0, center - segmentSize * 0.8)
   const fadeOut = Math.min(1, center + segmentSize * 0.8)
 
+  const { resolvedTheme } = useTheme()
   const off = 0.35
   const on = 1
-  const dimNum = 'rgba(255,255,255,0.08)'
-  const activeNum = 'rgba(194,78,136,0.5)'
+  const dimNum = useMemo(
+    () => readCssVar('process-step-dim', 'rgba(255,255,255,0.08)'),
+    [resolvedTheme],
+  )
+  const activeNum = useMemo(
+    () => readCssVar('process-step-active', 'rgba(194,78,136,0.5)'),
+    [resolvedTheme],
+  )
   const noGlow = '0 0 0 0 transparent, inset 0 0 0 0 transparent'
   const activeGlow = '0 0 28px 0 rgba(194,78,136,0.12), inset 0 1px 0 0 rgba(194,78,136,0.25)'
 

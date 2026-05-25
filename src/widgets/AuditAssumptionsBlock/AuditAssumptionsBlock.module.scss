@@ -83,7 +83,7 @@
   line-height: $leading-relaxed;
   color: $text-tertiary;
   text-decoration: line-through;
-  text-decoration-color: rgba(255, 255, 255, 0.2);
+  text-decoration-color: $border-primary;
   margin: 0;
 }
 

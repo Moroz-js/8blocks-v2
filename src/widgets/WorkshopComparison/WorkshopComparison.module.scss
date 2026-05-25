@@ -75,7 +75,7 @@
 .tr {
   &:hover .td,
   &:hover .tdParam {
-    background: rgba(255, 255, 255, 0.02);
+    background: $bg-secondary;
   }
 }
 

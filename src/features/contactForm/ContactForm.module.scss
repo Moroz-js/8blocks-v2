@@ -40,7 +40,7 @@
   font-family: $font-base;
   font-size: $text-base;
   color: $text-primary;
-  background: rgba(255, 255, 255, 0.04);
+  background: $bg-secondary;
   border: 1px solid $border-secondary;
   border-radius: 0;
   padding: $space-3 $space-4;
@@ -51,18 +51,18 @@
   appearance: none;
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    color: $input-placeholder;
   }
 
   &:hover {
     border-color: $border-primary;
-    background: rgba(255, 255, 255, 0.06);
+    background: $border-secondary;
   }
 
   &:focus {
-    border-color: rgba(197, 61, 255, 0.5);
-    background: rgba(197, 61, 255, 0.04);
-    box-shadow: 0 0 0 3px rgba(197, 61, 255, 0.1);
+    border-color: $focus-accent;
+    background: $focus-accent-bg;
+    box-shadow: 0 0 0 3px $focus-accent-glow;
   }
 
   &:focus-visible {
@@ -86,10 +86,10 @@
 .errorMsg {
   font-family: $font-base;
   font-size: $text-sm;
-  color: #ff6b6b;
+  color: $error-fg;
   padding: $space-3 $space-4;
-  background: rgba(255, 107, 107, 0.08);
-  border: 1px solid rgba(255, 107, 107, 0.2);
+  background: $error-bg;
+  border: 1px solid $error-border;
   border-radius: 0;
 }
 
@@ -102,7 +102,7 @@
   height: 52px;
   padding: 0 $space-7;
   background: $text-primary;
-  color: #050308;
+  color: $button-primary-fg;
   border: none;
   border-radius: 0;
   font-family: $font-base;
@@ -112,7 +112,7 @@
   transition: background $transition-base, transform $transition-fast, opacity $transition-fast;
 
   &:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.88);
+    background: $button-primary-hover;
     transform: translateY(-1px);
   }
 
@@ -150,8 +150,8 @@
   display: inline-block;
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  border-top-color: #050308;
+  border: 2px solid $border-primary;
+  border-top-color: $button-primary-fg;
   border-radius: 0;
   animation: spin 0.7s linear infinite;
 }
@@ -167,17 +167,17 @@
   align-items: flex-start;
   gap: $space-3;
   padding: $space-6;
-  border: 1px solid rgba(117, 251, 99, 0.25);
+  border: 1px solid $success-border;
   border-radius: 0;
-  background: rgba(117, 251, 99, 0.04);
+  background: $success-bg;
 }
 
 .successIcon {
   width: 40px;
   height: 40px;
   border-radius: 0;
-  background: rgba(117, 251, 99, 0.15);
-  border: 1px solid rgba(117, 251, 99, 0.3);
+  background: $success-bg-strong;
+  border: 1px solid $success-border;
   display: flex;
   align-items: center;
   justify-content: center;

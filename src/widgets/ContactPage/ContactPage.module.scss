@@ -362,7 +362,7 @@
   border: 1px solid $border-secondary;
   border-radius: 0;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.01);
+  background: $bg-secondary;
 
   :global(.calendly-inline-widget) {
     margin-top: -44px;

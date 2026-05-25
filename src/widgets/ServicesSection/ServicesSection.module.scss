@@ -64,6 +64,7 @@
   font-size: clamp(30px, 3.8vw, 52px);
   line-height: 1.2;
   letter-spacing: -0.02em;
+  color: $text-primary;
   margin: 0;
 }
 
@@ -111,17 +112,17 @@
   flex-direction: column;
   padding: $space-6 $space-7 $space-7;
   border-radius: 0;
-  background: rgba(12, 10, 18, 0.55);
+  background: $card-panel-bg;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   text-decoration: none;
   overflow: hidden;
   transition: background 0.4s ease;
 
-  @include card-corner-border(rgba(255, 255, 255, 0.2));
+  @include card-corner-border($border-primary);
 
   &:hover {
-    background: rgba(18, 14, 28, 0.7);
+    background: $card-panel-bg-hover;
 
     .cardBorderGlow {
       opacity: 1;
@@ -132,7 +133,7 @@
     }
 
     .cardFooter {
-      border-color: rgba(255, 255, 255, 0.15);
+      border-color: $border-primary;
     }
   }
 
@@ -154,10 +155,10 @@
   border: 1px solid transparent;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.15) 0%,
+    $border-primary 0%,
     transparent 40%,
     transparent 60%,
-    rgba(255, 255, 255, 0.08) 100%
+    $bg-tertiary 100%
   ) border-box;
   mask:
     linear-gradient(#fff 0 0) padding-box,
@@ -217,7 +218,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: $space-5;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid $border-secondary;
   transition: border-color 0.4s ease;
 }
 

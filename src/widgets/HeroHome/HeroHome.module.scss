@@ -101,7 +101,7 @@
 }
 
 .headlineLine2 {
-  color: rgba(255, 255, 255, 0.45);
+  color: $text-secondary;
   display: block;
 }
 
@@ -142,13 +142,13 @@
   height: 54px;
   padding: 0 $space-8;
   background: $text-primary;
-  color: #050308;
+  color: $button-primary-fg;
   border-radius: 0;
   font-family: $font-base;
   font-weight: 500;
   font-size: $text-base;
   text-decoration: none;
-  transition: background $transition-base, transform $transition-fast, box-shadow $transition-base;
+  transition: background $transition-base, color $transition-base, transform $transition-fast, box-shadow $transition-base;
   box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
 
   white-space: nowrap;
@@ -166,9 +166,10 @@
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: $glass-highlight;
+    color: $cta-solid-hover-fg;
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 32px $border-primary;
   }
 
   &:active {
@@ -214,7 +215,7 @@
   transition: border-color $transition-base, color $transition-base;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: $border-primary;
     color: $text-primary;
   }
 

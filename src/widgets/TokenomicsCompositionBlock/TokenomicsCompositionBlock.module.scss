@@ -127,10 +127,10 @@
   cursor: default;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: $border-primary;
 
     .cardTitle {
-      color: #0a0a0f;
+      color: $button-primary-fg;
     }
 
     .cardDesc {

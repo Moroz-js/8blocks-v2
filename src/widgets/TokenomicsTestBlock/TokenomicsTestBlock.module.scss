@@ -175,13 +175,13 @@
   height: 54px;
   padding: 0 $space-8;
   background: $text-primary;
-  color: #050308;
+  color: $button-primary-fg;
   font-family: $font-base;
   font-weight: 500;
   font-size: $text-base;
   text-decoration: none;
   white-space: nowrap;
-  transition: background $transition-base, transform $transition-fast, box-shadow $transition-base;
+  transition: background $transition-base, color $transition-base, transform $transition-fast, box-shadow $transition-base;
 
   @media (max-width: #{$bp-mobile}) {
     font-size: $text-sm;
@@ -191,9 +191,10 @@
   }
 
   &:hover {
-    background: rgba(255, 255, 255, 0.9);
+    background: $glass-highlight;
+    color: $cta-solid-hover-fg;
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 12px 32px $border-primary;
   }
 
   &:active {

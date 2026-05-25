@@ -1,0 +1,29 @@
+@use '@/shared/styles/variables' as *;
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid $border-secondary;
+  background: transparent;
+  color: $text-secondary;
+  cursor: pointer;
+  transition:
+    color $transition-fast,
+    border-color $transition-fast,
+    background $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+    border-color: $border-primary;
+    background: $button-ghost-hover-bg;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}

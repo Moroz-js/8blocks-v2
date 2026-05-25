@@ -35,14 +35,14 @@
   transition: border-color $transition-fast, color $transition-fast, background $transition-fast;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.25);
+    border-color: $border-primary;
     color: $text-primary;
-    background: rgba(255, 255, 255, 0.04);
+    background: $bg-secondary;
   }
 }
 
 .copied {
-  border-color: rgba(80, 220, 140, 0.4) !important;
-  color: rgb(80, 220, 140) !important;
+  border-color: $success-border !important;
+  color: $success-fg-alt !important;
 }
 

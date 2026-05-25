@@ -2,35 +2,32 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
+import { useTheme } from 'next-themes'
+
+const OPACITY_MIN = 0.18
+const OPACITY_MAX = 1
 
 interface CharProps {
   char: string
   progress: MotionValue<number>
   index: number
   total: number
-  dark?: boolean
 }
 
-function Char({ char, progress, index, total, dark }: CharProps) {
+function Char({ char, progress, index, total }: CharProps) {
   const windowSize = 2.2 / total
   const center = (index + 0.5) / total
   const start = Math.max(0, center - windowSize / 2)
   const end = Math.min(1, center + windowSize / 2)
 
-  const color = useTransform(
-    progress,
-    [start, end],
-    dark
-      ? ['rgba(0,0,0,0.18)', 'rgba(0,0,0,0.9)']
-      : ['rgba(255,255,255,0.18)', 'rgba(255,255,255,1)'],
-  )
+  const opacity = useTransform(progress, [start, end], [OPACITY_MIN, OPACITY_MAX])
 
   if (char === ' ') {
     return <span style={{ display: 'inline' }}>{' '}</span>
   }
 
   return (
-    <motion.span style={{ color, display: 'inline' }}>
+    <motion.span style={{ opacity, display: 'inline' }}>
       {char}
     </motion.span>
   )
@@ -41,6 +38,7 @@ interface Props {
   className?: string
   startOffset?: string
   endOffset?: string
+  /** @deprecated Цвет берётся из className; оставлено для совместимости */
   dark?: boolean
   progress?: MotionValue<number>
 }
@@ -50,11 +48,11 @@ export function ScrollRevealText({
   className,
   startOffset = 'start 0.88',
   endOffset = 'end 0.35',
-  dark,
   progress: progressProp,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const [isMobile, setIsMobile] = useState(false)
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth <= 768)
@@ -62,6 +60,14 @@ export function ScrollRevealText({
     window.addEventListener('resize', check)
     return () => window.removeEventListener('resize', check)
   }, [])
+
+  useEffect(() => {
+    if (!resolvedTheme) return
+    const id = requestAnimationFrame(() => {
+      window.dispatchEvent(new Event('resize'))
+    })
+    return () => cancelAnimationFrame(id)
+  }, [resolvedTheme])
 
   const resolvedStart = isMobile ? 'start 0.98' : startOffset
   const resolvedEnd = isMobile ? 'end 0.55' : endOffset
@@ -82,7 +88,6 @@ export function ScrollRevealText({
           progress={progress}
           index={i}
           total={chars.length}
-          dark={dark}
         />
       ))}
     </div>

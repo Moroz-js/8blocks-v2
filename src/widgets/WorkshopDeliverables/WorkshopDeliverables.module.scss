@@ -163,7 +163,7 @@
   margin-top: $space-2;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: $text-tertiary;
     transform: translateY(-1px);
   }
 

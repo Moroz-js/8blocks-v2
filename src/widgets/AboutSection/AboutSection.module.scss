@@ -173,11 +173,11 @@
   flex-direction: column;
   gap: $space-3;
   padding: $space-7;
-  background: #1a1a1f;
+  background: $about-media-bg;
   transition: background $transition-base;
 
   &:hover {
-    background: #222228;
+    background: $about-media-bg-hover;
   }
 
   @media (max-width: #{$bp-mobile}) {
@@ -192,7 +192,7 @@
   line-height: 1;
   letter-spacing: -0.02em;
   color: $text-primary;
-  background: linear-gradient(135deg, $text-primary 0%, rgba(255, 255, 255, 0.7) 100%);
+  background: linear-gradient(135deg, $text-primary 0%, $text-secondary 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

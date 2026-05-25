@@ -28,7 +28,7 @@
   font-size: clamp(40px, 13.5vw, 160px);
   letter-spacing: -0.04em;
   line-height: 0.85;
-  color: rgba(255, 255, 255, 1);
+  color: $text-primary;
   white-space: nowrap;
   padding-inline: $container-padding;
   padding-block: clamp(16px, 3vw, 40px);
@@ -157,8 +157,8 @@
   border-radius: 0;
   overflow: hidden;
   border: 1px solid $border-secondary;
-  // Filter on wrapper, not on iframe — avoids compositor blur artifact
-  filter: grayscale(100%) invert(90%);
+  // Wrapper filter (not iframe) — theme via --map-filter in globals.scss
+  filter: var(--map-filter);
 }
 
 .mapIframe {
@@ -225,7 +225,7 @@
 
 .logo {
   text-decoration: none;
-  color: white;
+  color: $text-primary;
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;

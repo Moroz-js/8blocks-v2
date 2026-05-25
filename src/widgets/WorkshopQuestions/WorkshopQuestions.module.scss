@@ -65,7 +65,7 @@
   flex-direction: column;
   gap: $space-3;
   padding: $space-5;
-  background: #0a0810;
+  background: $section-inset-bg;
   transition: background $transition-base;
 
   &:hover {

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { navLinks } from '@/shared/config/site'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { Button, Logo } from '@/shared/ui'
+import { ThemeToggle } from '@/shared/ui/ThemeToggle'
 import styles from './Header.module.scss'
 
 interface HeaderProps {
@@ -49,6 +50,7 @@ export function Header({ mediaEnabled: _mediaEnabled, blogEnabled = false }: Hea
           </nav>
 
           <div className={styles.actions}>
+            <ThemeToggle />
             <Link href="/contact" className={styles.ctaLink}>
               <Button variant="primary" size="sm" type="button">
                 {uiStrings.contactUs}
@@ -56,20 +58,23 @@ export function Header({ mediaEnabled: _mediaEnabled, blogEnabled = false }: Hea
             </Link>
           </div>
 
-          <button
-            className={`${styles.burger} ${isOpen ? styles.burgerOpen : ''}`}
-            onClick={() => setIsOpen((v) => !v)}
-            aria-label={isOpen ? uiStrings.menuClose : uiStrings.menuOpen}
-            aria-expanded={isOpen}
-          >
-            <span className={styles.burgerLabel}>
-              {isOpen ? uiStrings.menuCloseLabel : uiStrings.menuLabel}
-            </span>
-            <span className={styles.burgerLines} aria-hidden="true">
-              <span />
-              <span />
-            </span>
-          </button>
+          <div className={styles.mobileHeaderActions}>
+            <ThemeToggle />
+            <button
+              className={`${styles.burger} ${isOpen ? styles.burgerOpen : ''}`}
+              onClick={() => setIsOpen((v) => !v)}
+              aria-label={isOpen ? uiStrings.menuClose : uiStrings.menuOpen}
+              aria-expanded={isOpen}
+            >
+              <span className={styles.burgerLabel}>
+                {isOpen ? uiStrings.menuCloseLabel : uiStrings.menuLabel}
+              </span>
+              <span className={styles.burgerLines} aria-hidden="true">
+                <span />
+                <span />
+              </span>
+            </button>
+          </div>
         </div>
       </header>
 

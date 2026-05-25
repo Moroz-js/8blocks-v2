@@ -16,6 +16,8 @@ export const uiStrings = {
   tableOfContents: 'Table of contents',
   logoAriaLabel: '8Blocks — go to homepage',
   contactUs: 'Contact us',
+  themeSwitchToLight: 'Switch to light theme',
+  themeSwitchToDark: 'Switch to dark theme',
   menuOpen: 'Open menu',
   menuClose: 'Close menu',
   menuLabel: 'Menu',

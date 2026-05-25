@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
 import { headers } from 'next/headers'
-import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
 import '../globals.scss'
 import { Header } from '@/widgets/Header'
@@ -11,6 +10,8 @@ import { siteConfig } from '@/shared/config/site'
 import { htmlLang, locale } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
+import { ThemeProvider } from '@/shared/lib/ThemeProvider'
+import { MantineThemeBridge } from '@/shared/lib/MantineThemeBridge'
 import { HeadMarkupInjector } from '@/widgets/HeadMarkupInjector'
 import { getBlogExtraHeadMarkup, getSiteSeoGlobal, getSiteSeoPageOverride } from '@/shared/lib/site-seo'
 import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
@@ -54,14 +55,12 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     .filter(Boolean)
     .join('\n')
 
-
   return (
     <html lang={htmlLang} suppressHydrationWarning>
       <head>
         {headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}
       </head>
       <body suppressHydrationWarning>
-        {/* Top edge blur */}
         <div
           aria-hidden="true"
           style={{
@@ -78,52 +77,36 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
           }}
         />
-        {/* Bottom edge blur — закомментировано
-        <div
-          aria-hidden="true"
-          style={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 44,
-            pointerEvents: 'none',
-            zIndex: 99,
-            backdropFilter: 'blur(18px)',
-            WebkitBackdropFilter: 'blur(18px)',
-            maskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)',
-            WebkitMaskImage: 'linear-gradient(to top, black 0%, black 40%, transparent 100%)',
-          }}
-        />
-        */}
-        <MantineProvider defaultColorScheme="dark">
-          <GTMScript />
-          {process.env.NEXT_PUBLIC_REPLAIN_ID && (
-            <>
-              <Script
-                id="replain-settings"
-                strategy="afterInteractive"
-                dangerouslySetInnerHTML={{
-                  __html: `window.replainSettings = { id: '${process.env.NEXT_PUBLIC_REPLAIN_ID}' };`,
-                }}
+        <ThemeProvider>
+          <MantineThemeBridge>
+            <GTMScript />
+            {process.env.NEXT_PUBLIC_REPLAIN_ID && (
+              <>
+                <Script
+                  id="replain-settings"
+                  strategy="afterInteractive"
+                  dangerouslySetInnerHTML={{
+                    __html: `window.replainSettings = { id: '${process.env.NEXT_PUBLIC_REPLAIN_ID}' };`,
+                  }}
+                />
+                <Script
+                  src="https://widget.replain.cc/dist/client.js"
+                  strategy="afterInteractive"
+                />
+              </>
+            )}
+            <LenisProvider>
+              <Header mediaEnabled={mediaEnabled} blogEnabled={blogNavEnabled} />
+              <main>{children}</main>
+              <Footer
+                mediaEnabled={mediaEnabled}
+                auditsEnabled={auditsEnabled}
+                blogEnabled={blogNavEnabled}
               />
-              <Script
-                src="https://widget.replain.cc/dist/client.js"
-                strategy="afterInteractive"
-              />
-            </>
-          )}
-          <LenisProvider>
-            <Header mediaEnabled={mediaEnabled} blogEnabled={blogNavEnabled} />
-            <main>{children}</main>
-            <Footer
-              mediaEnabled={mediaEnabled}
-              auditsEnabled={auditsEnabled}
-              blogEnabled={blogNavEnabled}
-            />
-            <ScrollToTop />
-          </LenisProvider>
-        </MantineProvider>
+              <ScrollToTop />
+            </LenisProvider>
+          </MantineThemeBridge>
+        </ThemeProvider>
       </body>
     </html>
   )

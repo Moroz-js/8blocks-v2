@@ -50,6 +50,7 @@
   font-size: clamp(26px, 3.2vw, 42px);
   line-height: 1.18;
   letter-spacing: -0.02em;
+  color: $text-primary;
   display: block;
   max-width: 960px;
 
@@ -92,7 +93,7 @@
 
 .card {
   border-radius: 0;
-  background: #f5f3f0;
+  background: $benefits-card-bg;
   transform-origin: top center;
   will-change: transform;
   box-shadow:
@@ -129,7 +130,7 @@
   font-family: $font-base;
   font-weight: 500;
   font-size: clamp(40px, 5vw, 64px);
-  color: rgba(0, 0, 0, 0.08);
+  color: $benefits-card-number;
   letter-spacing: -0.02em;
   line-height: 1;
 
@@ -149,7 +150,7 @@
   font-weight: 500;
   font-size: clamp(28px, 3.2vw, 44px);
   line-height: 1.15;
-  color: rgba(0, 0, 0, 0.88);
+  color: $benefits-card-text;
   margin: 0;
   letter-spacing: -0.02em;
   max-width: 80%;
@@ -164,6 +165,7 @@
   font-weight: 400;
   font-size: clamp(17px, 1.6vw, 22px);
   line-height: 1.55;
+  color: $benefits-card-text;
   margin: 0;
   max-width: 680px;
 

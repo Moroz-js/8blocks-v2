@@ -1,6 +1,9 @@
 ﻿'use client'
 
 import { motion } from 'framer-motion'
+import { useTheme } from 'next-themes'
+import { useMemo } from 'react'
+import { readCssVar } from '@/shared/lib/readCssVar'
 import { consultingMapLabels } from '@/shared/content/strategicConsulting'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
@@ -172,6 +175,18 @@ const mainPaths = [
 ]
 
 function ConsultingMap() {
+  const { resolvedTheme } = useTheme()
+  const diagram = useMemo(
+    () => ({
+      arrow: readCssVar('diagram-fill-strong', 'rgba(255,255,255,0.9)'),
+      stroke: readCssVar('diagram-stroke', 'rgba(255,255,255,0.35)'),
+      fillMuted: readCssVar('diagram-fill-muted', 'rgba(255,255,255,0.05)'),
+      strokeMuted: readCssVar('diagram-stroke-muted', 'rgba(255,255,255,0.14)'),
+      fillStrong: readCssVar('diagram-fill-strong', 'rgba(255,255,255,0.9)'),
+    }),
+    [resolvedTheme],
+  )
+
   return (
     <svg
       className={styles.consultingMap}
@@ -182,7 +197,7 @@ function ConsultingMap() {
     >
       <defs>
         <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-          <path d="M 0 0 L 6 3 L 0 6 Z" fill="rgba(255,255,255,0.45)" />
+          <path d="M 0 0 L 6 3 L 0 6 Z" fill={diagram.arrow} />
         </marker>
       </defs>
 
@@ -191,7 +206,7 @@ function ConsultingMap() {
         <path
           key={i}
           d={d}
-          stroke="rgba(255,255,255,0.35)"
+          stroke={diagram.stroke}
           strokeWidth="1.5"
           strokeLinecap="round"
           markerEnd="url(#arrow)"
@@ -213,8 +228,8 @@ function ConsultingMap() {
               width={node.w}
               height={node.h}
               rx={node.h / 2}
-              fill="rgba(255,255,255,0.05)"
-              stroke="rgba(255,255,255,0.14)"
+              fill={diagram.fillMuted}
+              stroke={diagram.strokeMuted}
               strokeWidth="1"
             />
             {node.lines.length === 1 ? (
@@ -223,7 +238,7 @@ function ConsultingMap() {
                 y={node.cy}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fill="rgba(255,255,255,0.9)"
+                fill={diagram.fillStrong}
                 fontSize="13"
                 fontFamily="Manrope, sans-serif"
                 fontWeight="500"
@@ -238,7 +253,7 @@ function ConsultingMap() {
                   y={midY}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill="rgba(255,255,255,0.9)"
+                  fill={diagram.fillStrong}
                   fontSize="13"
                   fontFamily="Manrope, sans-serif"
                   fontWeight="500"
@@ -251,7 +266,7 @@ function ConsultingMap() {
                   y={midY + 16}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fill="rgba(255,255,255,0.9)"
+                  fill={diagram.fillStrong}
                   fontSize="13"
                   fontFamily="Manrope, sans-serif"
                   fontWeight="500"

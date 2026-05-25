@@ -1,61 +1,94 @@
-// Design tokens as SCSS variables
-// Use these in SCSS modules via @use '@/shared/styles/variables' as *
+// Design tokens — semantic colors map to CSS custom properties (see globals.scss)
 
-// Background colors — transparent so global grid/gradient shows through everywhere
-$bg-primary:   transparent;
-$bg-secondary: rgba(255, 255, 255, 0.055);
-$bg-tertiary:  rgba(255, 255, 255, 0.08);
+$bg-primary: var(--bg-primary);
+$bg-secondary: var(--bg-secondary);
+$bg-tertiary: var(--bg-tertiary);
 
-// Text colors
-$text-primary: #ffffff;
-$text-secondary: rgba(255, 255, 255, 0.5);
-$text-tertiary: rgba(255, 255, 255, 0.4);
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-tertiary: var(--text-tertiary);
 
-// Border colors
-$border-primary: rgba(255, 255, 255, 0.2);
-$border-secondary: rgba(255, 255, 255, 0.07);
+$border-primary: var(--border-primary);
+$border-secondary: var(--border-secondary);
+$border-subtle: var(--border-subtle);
+$surface: var(--surface);
 
-// ─────────────────────────────────────────────────────────────────
-// Gradient palette — rose-magenta-purple (ref: hero-bg-test.svg)
-// Edit these base colors to retheme the entire site at once.
-// ─────────────────────────────────────────────────────────────────
+$body-bg: var(--body-bg);
+$header-bg: var(--header-bg);
+$header-bg-solid: var(--header-bg-solid);
+$overlay-scrim: var(--overlay-scrim);
+$fab-bg: var(--fab-bg);
+$card-panel-bg: var(--card-panel-bg);
+$card-panel-bg-hover: var(--card-panel-bg-hover);
+$section-inset-bg: var(--section-inset-bg);
 
-// Base palette colors
-$pal-rose:         #D9ADD0;   // dusty rose / light pinkish-lilac
-$pal-magenta:      #C24E88;   // deep magenta-pink (primary accent)
-$pal-purple:       #8E4ABD;   // medium purple (edge/shadow tone)
-$pal-warm-white:   #E3D0D5;   // very light pinkish white (highlight/glint)
+$button-primary-bg: var(--button-primary-bg);
+$button-primary-fg: var(--button-primary-fg);
+$button-primary-hover: var(--button-primary-hover);
+$button-secondary-hover-border: var(--button-secondary-hover-border);
+$button-ghost-hover-bg: var(--button-ghost-hover-bg);
 
-// Background bloom opacities (tweak to control global glow intensity)
-$bloom-top-left:   0.07;      // top-left primary bloom
-$bloom-top-center: 0.10;      // center-top warm bloom
-$bloom-right:      0.06;      // right counter-bloom
-$bloom-bottom:     0.04;      // bottom-right fade
+$input-bg: var(--input-bg);
+$input-bg-focus: var(--input-bg-focus);
+$input-placeholder: var(--input-placeholder);
+$focus-accent: var(--focus-accent);
+$focus-accent-glow: var(--focus-accent-glow);
+$focus-accent-bg: var(--focus-accent-bg);
 
-// Semantic accent aliases
-$accent-purple:      $pal-magenta;
-$accent-pink-light:  $pal-rose;
-$accent-pink-deep:   $pal-magenta;
+$error-fg: var(--error-fg);
+$error-bg: var(--error-bg);
+$error-border: var(--error-border);
+
+$success-fg: var(--success-fg);
+$success-fg-alt: var(--success-fg-alt);
+$success-bg: var(--success-bg);
+$success-bg-strong: var(--success-bg-strong);
+$success-border: var(--success-border);
+
+$cover-scrim: var(--cover-scrim);
+$text-on-media: var(--text-on-media);
+$muted-strong: var(--muted-strong);
+$glass-highlight: var(--glass-highlight);
+$glass-shadow: var(--glass-shadow);
+$cta-solid-hover-fg: var(--cta-solid-hover-fg);
+
+$benefits-card-bg: var(--benefits-card-bg);
+$benefits-card-text: var(--benefits-card-text);
+$benefits-card-number: var(--benefits-card-number);
+
+$about-media-bg: var(--about-media-bg);
+$about-media-bg-hover: var(--about-media-bg-hover);
+
+$newsletter-input-bg: var(--newsletter-input-bg);
+$newsletter-input-fg: var(--newsletter-input-fg);
+
+// Gradient palette — brand (theme-independent)
+$pal-rose: #D9ADD0;
+$pal-magenta: #C24E88;
+$pal-purple: #8E4ABD;
+$pal-warm-white: #E3D0D5;
+
+$bloom-top-left: 0.07;
+$bloom-top-center: 0.10;
+$bloom-right: 0.06;
+$bloom-bottom: 0.04;
+
+$accent-purple: $pal-magenta;
+$accent: var(--accent);
+$accent-pink-light: $pal-rose;
+$accent-pink-deep: $pal-magenta;
 $accent-purple-deep: $pal-purple;
 $accent-green: #75fb63;
-$accent-blue:  #638efb;
+$accent-blue: #638efb;
 
-// ── Composed gradients ────────────────────────────────────────────
+$gradient-accent: linear-gradient(135deg, #{$pal-rose} 0%, #{$pal-magenta} 55%, #{$pal-purple} 100%);
+$gradient-accent-h: linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
+$gradient-card-border: linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
+$gradient-accent-wide: linear-gradient(90deg, #{$pal-rose} 0%, #{$pal-magenta} 40%, #{$pal-purple} 100%);
 
-// Primary text gradient — used on accent words (hero, footer headline)
-$gradient-accent:       linear-gradient(135deg, #{$pal-rose} 0%, #{$pal-magenta} 55%, #{$pal-purple} 100%);
-// Horizontal version — for decorative lines and card borders
-$gradient-accent-h:     linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
-// Card top border
-$gradient-card-border:  linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
-// Full horizontal span — logo or wide decorative elements
-$gradient-accent-wide:  linear-gradient(90deg, #{$pal-rose} 0%, #{$pal-magenta} 40%, #{$pal-purple} 100%);
-
-// Typography
 $font-base: 'Manrope', sans-serif;
 $font-mono: 'JetBrains Mono', 'Fira Mono', monospace;
 
-// Spacing scale (8px base)
 $space-1: 4px;
 $space-2: 8px;
 $space-3: 12px;
@@ -69,24 +102,20 @@ $space-10: 96px;
 $space-11: 128px;
 $space-12: 160px;
 
-// Container
 $container-max: 1280px;
 $container-padding: 24px;
 $container-padding-mobile: 16px;
 
-// Breakpoints
 $bp-mobile: 640px;
 $bp-tablet: 768px;
 $bp-desktop: 1024px;
 $bp-wide: 1280px;
 
-// Border radius
 $radius-sm: 0;
 $radius-md: 0;
 $radius-lg: 0;
 $radius-xl: 0;
 
-// Typography scale
 $text-xs: 12px;
 $text-sm: 14px;
 $text-base: 16px;
@@ -98,13 +127,11 @@ $text-3xl: 40px;
 $text-4xl: 56px;
 $text-5xl: 72px;
 
-// Line heights
 $leading-tight: 1.1;
 $leading-snug: 1.25;
 $leading-normal: 1.5;
 $leading-relaxed: 1.6;
 
-// Transitions
 $transition-fast: 150ms ease;
 $transition-base: 250ms ease;
 $transition-slow: 400ms ease;

@@ -94,7 +94,7 @@
 
   &:hover {
     background: $bg-tertiary;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: $border-primary;
   }
 }
 
@@ -106,7 +106,7 @@
 .panelIcon {
   width: 48px;
   height: 48px;
-  color: rgba(255, 255, 255, 0.5);
+  color: $text-secondary;
   flex-shrink: 0;
 }
 
@@ -175,8 +175,8 @@
 .staggerPanel {
   position: relative;
   padding: $space-4 $space-5;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: $bg-secondary;
+  border: 1px solid $border-secondary;
   border-radius: 0;
   transition:
     background $transition-base,
@@ -186,8 +186,8 @@
   flex-shrink: 0;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.055);
-    border-color: rgba(255, 255, 255, 0.13);
+    background: $bg-secondary;
+    border-color: $border-primary;
     transform: translateY(-2px);
   }
 
@@ -203,7 +203,7 @@
   font-weight: 400;
   font-size: $text-base;
   line-height: $leading-normal;
-  color: rgba(255, 255, 255, 0.75);
+  color: $text-on-media;
   display: block;
 }
 

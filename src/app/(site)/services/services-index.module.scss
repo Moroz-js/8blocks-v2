@@ -80,7 +80,7 @@
   transition: border-color $transition-base, background $transition-base, box-shadow $transition-base;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.12);
+    border-color: $border-primary;
     background: $bg-tertiary;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
 
@@ -135,7 +135,7 @@
   font-size: $text-xs;
   color: $text-tertiary;
   letter-spacing: 0.05em;
-  background: rgba(255, 255, 255, 0.06);
+  background: $border-secondary;
 }
 
 .cardTitle {

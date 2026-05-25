@@ -1,0 +1,1 @@
+export { CardCoverPattern } from './CardCoverPattern'

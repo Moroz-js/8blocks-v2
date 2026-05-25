@@ -1,31 +1,121 @@
 @use '../shared/styles/variables' as *;
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap');
 
-// CSS custom properties (design tokens)
-:root {
-  // Backgrounds
-  --bg-primary:   transparent;
+// ── Design tokens (CSS custom properties) ─────────────────────────
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg-primary: transparent;
   --bg-secondary: rgba(255, 255, 255, 0.055);
-  --bg-tertiary:  rgba(255, 255, 255, 0.08);
+  --bg-tertiary: rgba(255, 255, 255, 0.08);
 
-  // Text
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.5);
-  --text-tertiary: rgba(255, 255, 255, 0.4);
+  --text-secondary: rgba(255, 255, 255, 0.66);
+  --text-tertiary: rgba(255, 255, 255, 0.56);
 
-  // Borders
   --border-primary: rgba(255, 255, 255, 0.2);
   --border-secondary: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --surface: rgba(255, 255, 255, 0.055);
 
-  // Accents
   --accent-purple: #C24E88;
+  --accent: #C24E88;
   --accent-green: #75fb63;
   --accent-blue: #638efb;
 
-  // Typography
+  --body-bg: #050308;
+  --grid-line: rgba(255, 255, 255, 0.02);
+
+  --header-bg: rgba(4, 2, 8, 0.2);
+  --header-bg-solid: rgba(4, 2, 8, 0.97);
+  --overlay-scrim: rgba(5, 3, 8, 0.35);
+  --fab-bg: rgba(10, 8, 16, 0.92);
+
+  --card-panel-bg: rgba(12, 10, 18, 0.55);
+  --card-panel-bg-hover: rgba(18, 14, 28, 0.7);
+  --section-inset-bg: #0a0810;
+
+  --button-primary-bg: #ffffff;
+  --button-primary-fg: #050308;
+  --button-primary-hover: rgba(255, 255, 255, 0.88);
+  --button-secondary-hover-border: rgba(255, 255, 255, 0.5);
+  --button-ghost-hover-bg: rgba(255, 255, 255, 0.05);
+
+  --input-bg: rgba(255, 255, 255, 0.04);
+  --input-bg-focus: rgba(255, 255, 255, 0.06);
+  --input-placeholder: rgba(255, 255, 255, 0.2);
+  --focus-accent: rgba(197, 61, 255, 0.5);
+  --focus-accent-glow: rgba(197, 61, 255, 0.1);
+  --focus-accent-bg: rgba(197, 61, 255, 0.04);
+
+  --error-fg: #ff6b6b;
+  --error-bg: rgba(255, 107, 107, 0.08);
+  --error-border: rgba(255, 107, 107, 0.2);
+
+  --success-fg: #75fb63;
+  --success-fg-alt: rgb(80, 220, 140);
+  --success-bg: rgba(117, 251, 99, 0.04);
+  --success-bg-strong: rgba(117, 251, 99, 0.15);
+  --success-border: rgba(117, 251, 99, 0.25);
+
+  --cover-scrim: rgba(0, 0, 0, 0.35);
+  --text-on-media: rgba(255, 255, 255, 0.75);
+  --muted-strong: rgba(255, 255, 255, 0.85);
+
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 12px 32px rgba(255, 255, 255, 0.1);
+  --cta-solid-hover-fg: #050308;
+
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.35);
+  --selection-bg: rgba(197, 61, 255, 0.3);
+
+  --bloom-top-center: #{$bloom-top-center};
+  --bloom-top-left: #{$bloom-top-left};
+  --bloom-right: #{$bloom-right};
+  --bloom-bottom: #{$bloom-bottom};
+
+  --benefits-card-bg: #f5f3f0;
+  --benefits-card-text: rgba(0, 0, 0, 0.88);
+  --benefits-card-number: rgba(0, 0, 0, 0.08);
+
+  --about-media-bg: #1a1a1f;
+  --about-media-bg-hover: #222228;
+
+  --newsletter-input-bg: #fff;
+  --newsletter-input-fg: #0e0e12;
+
+  --placeholder-stroke-weak: rgba(255, 255, 255, 0.04);
+  --placeholder-stroke: rgba(255, 255, 255, 0.06);
+  --placeholder-stroke-mid: rgba(255, 255, 255, 0.07);
+  --placeholder-stroke-strong: rgba(255, 255, 255, 0.09);
+  --placeholder-fill: rgba(255, 255, 255, 0.12);
+
+  --placeholder-cover-1: linear-gradient(135deg, rgba(197, 61, 255, 0.18) 0%, rgba(99, 62, 220, 0.1) 100%);
+  --placeholder-cover-2: linear-gradient(135deg, rgba(99, 142, 251, 0.18) 0%, rgba(197, 61, 255, 0.1) 100%);
+  --placeholder-cover-3: linear-gradient(135deg, rgba(117, 251, 99, 0.12) 0%, rgba(99, 142, 251, 0.12) 100%);
+
+  --scroll-reveal-from: rgba(255, 255, 255, 0.18);
+  --scroll-reveal-to: rgba(255, 255, 255, 1);
+  --scroll-reveal-dark-from: rgba(0, 0, 0, 0.18);
+  --scroll-reveal-dark-to: rgba(0, 0, 0, 0.9);
+
+  --process-step-dim: rgba(255, 255, 255, 0.08);
+  --process-step-active: rgba(194, 78, 136, 0.5);
+  --diagram-stroke: rgba(255, 255, 255, 0.35);
+  --diagram-fill-muted: rgba(255, 255, 255, 0.05);
+  --diagram-stroke-muted: rgba(255, 255, 255, 0.14);
+  --diagram-fill-strong: rgba(255, 255, 255, 0.9);
+
+  --map-filter: grayscale(100%) invert(90%);
+
+  --canvas-shadow: rgba(255, 255, 255, 0.6);
+  --canvas-face-left: rgb(200, 200, 205);
+  --canvas-face-right: rgb(180, 180, 186);
+  --canvas-face-top: rgb(235, 235, 240);
+
   --font-base: 'Manrope', sans-serif;
 
-  // Spacing
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -39,18 +129,102 @@
   --space-11: 128px;
   --space-12: 160px;
 
-  // Container
   --container-max: 1280px;
   --container-padding: 24px;
 
-  // Radius
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-xl: 28px;
 }
 
-// Global reset
+[data-theme='light'] {
+  color-scheme: light;
+
+  --bg-secondary: rgba(0, 0, 0, 0.04);
+  --bg-tertiary: rgba(0, 0, 0, 0.06);
+
+  --text-primary: #0d0a12;
+  --text-secondary: rgba(13, 10, 18, 0.86);
+  --text-tertiary: rgba(13, 10, 18, 0.72);
+
+  --border-primary: rgba(0, 0, 0, 0.14);
+  --border-secondary: rgba(0, 0, 0, 0.06);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --surface: rgba(0, 0, 0, 0.04);
+
+  --body-bg: #ebe7ee;
+  --grid-line: rgba(0, 0, 0, 0.055);
+
+  --header-bg: rgba(235, 231, 238, 0.78);
+  --header-bg-solid: rgba(235, 231, 238, 0.97);
+  --overlay-scrim: rgba(235, 231, 238, 0.55);
+  --fab-bg: rgba(255, 255, 255, 0.92);
+
+  --card-panel-bg: rgba(255, 255, 255, 0.72);
+  --card-panel-bg-hover: rgba(255, 255, 255, 0.88);
+  --section-inset-bg: #e3dfe6;
+
+  --button-primary-bg: #0d0a12;
+  --button-primary-fg: #ebe7ee;
+  --button-primary-hover: rgba(13, 10, 18, 0.88);
+  --button-secondary-hover-border: rgba(0, 0, 0, 0.35);
+  --button-ghost-hover-bg: rgba(0, 0, 0, 0.04);
+
+  --input-bg: rgba(0, 0, 0, 0.03);
+  --input-bg-focus: rgba(0, 0, 0, 0.05);
+  --input-placeholder: rgba(0, 0, 0, 0.52);
+  --focus-accent: rgba(194, 78, 136, 0.45);
+  --focus-accent-glow: rgba(194, 78, 136, 0.12);
+  --focus-accent-bg: rgba(194, 78, 136, 0.06);
+
+  --cover-scrim: rgba(0, 0, 0, 0.25);
+  --text-on-media: rgba(255, 255, 255, 0.9);
+  --muted-strong: rgba(13, 10, 18, 0.85);
+
+  --glass-highlight: rgba(255, 255, 255, 0.95);
+  --glass-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  --cta-solid-hover-fg: #0d0a12;
+
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.25);
+  --selection-bg: rgba(194, 78, 136, 0.25);
+
+  --bloom-top-center: #{ $bloom-top-center * 1.4 };
+  --bloom-top-left: #{ $bloom-top-left * 1.35 };
+  --bloom-right: #{ $bloom-right * 1.4 };
+  --bloom-bottom: #{ $bloom-bottom * 1.5 };
+
+  --about-media-bg: #e8e4ec;
+  --about-media-bg-hover: #ddd8e2;
+
+  --placeholder-stroke-weak: rgba(0, 0, 0, 0.1);
+  --placeholder-stroke: rgba(0, 0, 0, 0.15);
+  --placeholder-stroke-mid: rgba(0, 0, 0, 0.18);
+  --placeholder-stroke-strong: rgba(0, 0, 0, 0.22);
+  --placeholder-fill: rgba(0, 0, 0, 0.16);
+
+  --placeholder-cover-1: linear-gradient(135deg, rgba(197, 61, 255, 0.34) 0%, rgba(99, 62, 220, 0.2) 100%);
+  --placeholder-cover-2: linear-gradient(135deg, rgba(99, 142, 251, 0.34) 0%, rgba(197, 61, 255, 0.2) 100%);
+  --placeholder-cover-3: linear-gradient(135deg, rgba(117, 251, 99, 0.26) 0%, rgba(99, 142, 251, 0.2) 100%);
+
+  --scroll-reveal-from: rgba(13, 10, 18, 0.18);
+  --scroll-reveal-to: rgba(13, 10, 18, 1);
+
+  --process-step-dim: rgba(13, 10, 18, 0.12);
+  --process-step-active: rgba(194, 78, 136, 0.55);
+  --diagram-stroke: rgba(13, 10, 18, 0.35);
+  --diagram-fill-muted: rgba(13, 10, 18, 0.05);
+  --diagram-stroke-muted: rgba(13, 10, 18, 0.14);
+  --diagram-fill-strong: rgba(13, 10, 18, 0.9);
+
+  --map-filter: none;
+
+  --canvas-shadow: rgba(194, 78, 136, 0.25);
+  --canvas-face-left: rgb(225, 215, 230);
+  --canvas-face-right: rgb(210, 200, 218);
+  --canvas-face-top: rgb(245, 240, 248);
+}
+
 *,
 *::before,
 *::after {
@@ -68,7 +242,7 @@ html {
 body {
   font-family: var(--font-base);
   font-weight: 400;
-  background-color: #050308;
+  background-color: var(--body-bg);
   color: var(--text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -77,9 +251,6 @@ body {
   position: relative;
 }
 
-// ── Global background layer ──────────────────────────────────────
-// Fixed, z-index 0 — grid + purple atmosphere.
-// Sections have rgba backgrounds so this bleeds through on scroll (parallax depth).
 body::before {
   content: '';
   position: fixed;
@@ -88,52 +259,40 @@ body::before {
   z-index: -1;
 
   background:
-    // Grid lines — horizontal
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    // Grid lines — vertical
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-
-    // Center-top: warm pinkish-rose bloom
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
     radial-gradient(
       ellipse 110vw 60vh at 50vw -5vh,
-      rgba($pal-rose,    $bloom-top-center) 0%,
-      rgba($pal-magenta, $bloom-top-left)   40%,
+      rgba($pal-rose, var(--bloom-top-center)) 0%,
+      rgba($pal-magenta, var(--bloom-top-left)) 40%,
       transparent 68%
     ),
-    // Top-left: purple anchor
     radial-gradient(
       ellipse 80vw 70vh at -15vw -5vh,
-      rgba($pal-purple, $bloom-top-left + 0.01)  0%,
-      rgba($pal-purple, $bloom-top-left * 0.35)  50%,
+      rgba($pal-purple, calc(var(--bloom-top-left) + 0.01)) 0%,
+      rgba($pal-purple, calc(var(--bloom-top-left) * 0.35)) 50%,
       transparent 70%
     ),
-    // Right: pinkish counter-bloom
     radial-gradient(
       ellipse 55vw 55vh at 108vw 30vh,
-      rgba($pal-magenta, $bloom-right)        0%,
-      rgba($pal-purple,  $bloom-right * 0.33) 50%,
+      rgba($pal-magenta, var(--bloom-right)) 0%,
+      rgba($pal-purple, calc(var(--bloom-right) * 0.33)) 50%,
       transparent 70%
     ),
-    // Bottom-right: soft fade
     radial-gradient(
       ellipse 55vw 45vh at 110vw 110vh,
-      rgba($pal-purple, $bloom-bottom) 0%,
+      rgba($pal-purple, var(--bloom-bottom)) 0%,
       transparent 60%
     );
 
   background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
 }
 
-// Content naturally sits above body::before (z-index: -1)
-// No stacking context created — allows backdrop-filter to work
-
-// Remove default list styles
 ul,
 ol {
   list-style: none;
 }
 
-// Images
 img,
 video {
   max-width: 100%;
@@ -141,13 +300,11 @@ video {
   display: block;
 }
 
-// Links
 a {
   color: inherit;
   text-decoration: none;
 }
 
-// Buttons
 button {
   cursor: pointer;
   border: none;
@@ -155,7 +312,6 @@ button {
   font-family: inherit;
 }
 
-// Headings
 h1,
 h2,
 h3,
@@ -166,14 +322,12 @@ h6 {
   line-height: 1.15;
 }
 
-// Inputs
 input,
 textarea,
 select {
   font-family: inherit;
 }
 
-// Scrollbar styling
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -188,29 +342,23 @@ select {
   border-radius: 0;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.35);
+    background: var(--scrollbar-thumb-hover);
   }
 }
 
-// Selection
 ::selection {
-  background: rgba(197, 61, 255, 0.3);
+  background: var(--selection-bg);
   color: var(--text-primary);
 }
 
-// Focus ring global fallback
 :focus-visible {
   outline: 2px solid var(--accent-purple);
   outline-offset: 2px;
 }
 
-// re:plain chat widget — dark theme override
 #__replain_widget,
-[id*="replain"],
-div[class*="replain"] {
+[id*='replain'],
+div[class*='replain'] {
   background: transparent !important;
   box-shadow: none !important;
-
-  
 }
-

@@ -54,7 +54,7 @@
 .coverOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.35) 100%);
+  background: linear-gradient(to bottom, transparent 50%, $cover-scrim 100%);
 }
 
 // ── Meta ──────────────────────────────────────────────────────────
@@ -70,11 +70,11 @@
   align-items: center;
   height: 24px;
   padding: 0 $space-3;
-  border: 1px solid rgba(197, 61, 255, 0.3);
+  border: 1px solid $border-primary;
   font-family: $font-base;
   font-weight: 400;
   font-size: $text-xs;
-  color: rgba(197, 61, 255, 0.85);
+  color: rgba($pal-magenta, 0.85);
   letter-spacing: 0.04em;
 }
 
@@ -109,7 +109,7 @@
   transition: color $transition-fast;
 
   .titleLink:hover & {
-    color: rgba(255, 255, 255, 0.75);
+    color: $text-on-media;
   }
 }
 

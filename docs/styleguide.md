@@ -1,10 +1,23 @@
 # Стайлгайд — 8blocks / токеномика.рф
 
-> Источник истины: `src/shared/styles/_variables.scss`, `_mixins.scss`, `src/app/globals.scss`
+> Источник истины: `src/app/globals.scss` (CSS custom properties), `src/shared/styles/_variables.scss` (SCSS-алиасы → `var(--*)`)
 
 ---
 
-## Цвета
+## Темы
+
+Переключение: `data-theme="dark" | "light"` на `<html>`, хранение в `localStorage` (`8blocks-theme`), компонент `ThemeToggle` в хедере.
+
+| Режим | `body` | `text-primary` |
+|-------|--------|----------------|
+| dark (default) | `#050308` | `#ffffff` |
+| light | `#F7F4F8` | `#0D0A12` |
+
+Семантические токены (`--bg-secondary`, `--border-primary`, `--button-primary-bg`, …) переопределяются в `[data-theme='light']`. Бренд (`$pal-*`, статусные бейджи) не меняется.
+
+---
+
+## Цвета (dark)
 
 ### Фон
 
@@ -13,7 +26,7 @@
 | `bg-primary` | `transparent` | Основной фон секций (сквозь него виден глобальный градиент) |
 | `bg-secondary` | `rgba(255,255,255, 0.055)` | Карточки, поверхности |
 | `bg-tertiary` | `rgba(255,255,255, 0.08)` | Выделенные карточки |
-| `body` | `#050308` | Цвет страницы |
+| `body-bg` | `#050308` | Цвет страницы |
 
 ### Текст
 
@@ -29,6 +42,7 @@
 |-------|----------|------------|
 | `border-primary` | `rgba(255,255,255, 0.2)` | Активные/hover границы |
 | `border-secondary` | `rgba(255,255,255, 0.07)` | Тихие границы карточек |
+| `border-subtle` | alias → `border-secondary` | Privacy, RelatedArticles |
 
 ### Акценты
 

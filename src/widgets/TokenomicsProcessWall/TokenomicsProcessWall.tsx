@@ -104,7 +104,7 @@ function IconTokenFlow() {
       <circle cx="36" cy="36" r="4"  fill="currentColor" fillOpacity="0.7" />
       <defs>
         <marker id="arrFlow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
-          <path d="M 0 0 L 5 2.5 L 0 5 Z" fill="rgba(255,255,255,0.55)" />
+          <path d="M 0 0 L 5 2.5 L 0 5 Z" fill="currentColor" fillOpacity="0.55" />
         </marker>
       </defs>
     </svg>

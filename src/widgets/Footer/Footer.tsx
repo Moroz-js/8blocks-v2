@@ -5,6 +5,7 @@ import { NewsletterForm } from '@/features/newsletter'
 import { footerContent } from '@/shared/content/footer'
 import { Logo } from '@/shared/ui'
 import { FooterWatermark } from './FooterWatermark'
+import { FooterMap } from './FooterMap'
 import styles from './Footer.module.scss'
 
 interface FooterProps {
@@ -99,16 +100,7 @@ export function Footer({
 
             {/* Map */}
             <div className={styles.mapCol}>
-              <div className={styles.mapWrap} data-lenis-prevent>
-                <iframe
-                  title={footerContent.mapTitle}
-                  src={footerContent.mapEmbedSrc}
-                  className={styles.mapIframe}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                />
-              </div>
+              <FooterMap />
             </div>
 
           </div>
