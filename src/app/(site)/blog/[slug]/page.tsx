@@ -17,6 +17,7 @@ import {
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
+import { ThemeScopeMarker } from '@/shared/lib/ThemeScope'
 
 const ARTICLES_PER_PAGE = 9
 
@@ -222,7 +223,12 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
       updatedAt: articleDoc.updatedAt,
     }
 
-    return <ArticlePage article={articleFull} relatedArticles={relatedArticles} />
+    return (
+      <>
+        <ThemeScopeMarker />
+        <ArticlePage article={articleFull} relatedArticles={relatedArticles} />
+      </>
+    )
   }
 
   const categoryResult = await payload.find({

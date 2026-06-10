@@ -19,7 +19,7 @@
   height: 64px;
   display: flex;
   align-items: center;
-  gap: $space-8;
+  gap: $space-5;
   position: relative;
 
   @media (max-width: #{$bp-mobile}) {
@@ -39,9 +39,10 @@
 
 // ── Desktop nav ───────────────────────────────────────────────────
 .nav {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
 
   @media (max-width: #{$bp-tablet}) {
     display: none;
@@ -53,6 +54,10 @@
   align-items: center;
   gap: $space-6;
   list-style: none;
+
+  @media (max-width: #{$bp-desktop}) {
+    gap: $space-4;
+  }
 }
 
 .navLink {
@@ -61,7 +66,12 @@
   font-size: $text-base;
   color: $text-secondary;
   text-decoration: none;
+  white-space: nowrap;
   transition: color $transition-fast;
+
+  @media (max-width: #{$bp-desktop}) {
+    font-size: $text-sm;
+  }
 
   &:hover {
     color: $text-primary;
@@ -76,7 +86,6 @@
 
 // ── Desktop CTA ───────────────────────────────────────────────────
 .actions {
-  margin-left: auto;
   flex-shrink: 0;
   display: flex;
   align-items: center;

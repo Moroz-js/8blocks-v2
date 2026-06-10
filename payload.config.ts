@@ -32,6 +32,7 @@ import {
   MediaMentions,
   MediaCategories,
   PublicAudits,
+  Research,
 } from './payload/collections/index.ts'
 import { SiteSeo } from './payload/globals/index.ts'
 
@@ -106,6 +107,7 @@ export default buildConfig({
     MediaMentions,
     MediaCategories,
     PublicAudits,
+    Research,
   ],
 
   globals: [SiteSeo],

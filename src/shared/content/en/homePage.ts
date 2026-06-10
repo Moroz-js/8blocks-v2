@@ -171,6 +171,63 @@ export const benefitsContent = {
   ],
 } as const
 
+export const methodologyContent = {
+  ariaLabel: '8Blocks methodology',
+  label: 'Rating methodology',
+  headlineSegments: [
+    { text: 'When the ' },
+    { text: 'product', accent: true },
+    { text: ' grows,\nthe ' },
+    { text: 'token', accent: true },
+    { text: ' has to follow' },
+  ],
+  product: {
+    label: 'Product',
+    caption: 'Users · volume · revenue',
+  },
+  token: {
+    label: 'Token',
+    caption: 'Demand pulled up by design',
+    topNote: 'Token ↑ -->',
+  },
+  linkage: {
+    title: 'Token Product Linkage',
+  },
+  bodyLead: 'Token Product Linkage (TPL)',
+  bodyRest:
+    " is the core of our rating. High linkage — the token wins as the product wins. Low linkage — it gets left behind while the business grows. That's where most tokens quietly break after TGE.",
+  marquee: [
+    'Value capture',
+    'Token necessity',
+    'Demand elasticity',
+    'Supply sinks',
+    'On-chain proof',
+    'Rule durability',
+  ],
+  signals: [
+    { id: 'value-capture', title: 'Value capture', line: 'Does revenue actually reach the token?' },
+    { id: 'token-necessity', title: 'Token necessity', line: 'Required in the core loop, or optional?' },
+    { id: 'demand-elasticity', title: 'Demand elasticity', line: 'Activity up → token demand up.' },
+    { id: 'supply-sinks', title: 'Supply sinks', line: 'Burns & locks that scale with usage.' },
+    { id: 'on-chain-proof', title: 'On-chain proof', line: 'Verifiable flows, not "trust me".' },
+    { id: 'rule-durability', title: 'Rule durability', line: 'How hard to switch the linkage off?' },
+  ],
+  footnote:
+    '+ tokenomics sustainability · fundamentals · governance & control · security · market layer — scored the same way, combined into one result.',
+  faq: [
+    {
+      question: 'What is Token Product Linkage?',
+      answer:
+        'Token Product Linkage shows whether product growth creates real economic value for the token. It answers a simple question: if users, revenue, volume, or activity grow, does the token also gain demand, utility, fees, buybacks, burns, or stronger value capture? A strong token is not only traded — it is connected to the system that creates value.',
+    },
+    {
+      question: 'How does the 8Blocks rating actually work?',
+      answer:
+        'We review a token economy across a fixed set of blocks — Token Product Linkage at the core, plus tokenomics sustainability, fundamentals, governance and control, security, and the market layer — each scored against the same rubric, then combined into one score with a color band and a short read on the key risks. We publish what we measure and why, and show it in our [public audits](/audits).',
+    },
+  ],
+} as const
+
 export const teamContent = {
   members: [
     { photo: '/team/team-1.png' },

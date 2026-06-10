@@ -1,0 +1,316 @@
+@use '@/shared/styles/variables' as *;
+
+.section {
+  position: relative;
+  padding-block: $space-10;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-block: $space-7;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-7;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-6;
+  }
+}
+
+// ── Header ────────────────────────────────────────────────────────
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-mono;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.labelBracket {
+  opacity: 0.5;
+}
+
+.headline {
+  font-family: $font-base;
+  font-weight: 600;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.accent {
+  color: $accent-pink-deep;
+}
+
+// ── Equation ──────────────────────────────────────────────────────
+.equation {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.tokenNote {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.04em;
+}
+
+.equationGrid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  gap: $space-5;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+    gap: $space-4;
+  }
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  min-height: 220px;
+  padding: $space-5;
+  background: $card-panel-bg;
+  border: 1px solid $border-secondary;
+}
+
+.panelToken {
+  background:
+    linear-gradient(180deg, rgba(194, 78, 136, 0.08) 0%, rgba(194, 78, 136, 0) 60%),
+    $card-panel-bg;
+  border-color: rgba(194, 78, 136, 0.28);
+}
+
+.panelLabel {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.panelLabelAccent {
+  color: $accent-pink-deep;
+}
+
+.panelCaption {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-secondary;
+  margin-top: auto;
+}
+
+// ── Bars ──────────────────────────────────────────────────────────
+.bars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: $space-3;
+  min-height: 120px;
+}
+
+.bar,
+.barAccent {
+  flex: 1;
+  min-height: 8px;
+  border-radius: 2px 2px 0 0;
+}
+
+.bar {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+.barAccent {
+  background: linear-gradient(180deg, #{$pal-magenta} 0%, #{$pal-purple} 100%);
+}
+
+// ── Linkage node ──────────────────────────────────────────────────
+.linkage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $space-3;
+  padding-inline: $space-3;
+
+  @media (max-width: #{$bp-tablet}) {
+    flex-direction: row;
+    padding-block: $space-2;
+  }
+}
+
+.linkageBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  color: $accent-pink-deep;
+  border: 1px solid rgba(194, 78, 136, 0.4);
+  background: rgba(194, 78, 136, 0.08);
+  box-shadow: 0 0 0 6px rgba(194, 78, 136, 0.05);
+}
+
+.linkageLabel {
+  font-family: $font-mono;
+  font-size: $text-xs;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $text-secondary;
+  text-align: center;
+  max-width: 110px;
+  line-height: 1.4;
+
+  @media (max-width: #{$bp-tablet}) {
+    max-width: none;
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────
+.body {
+  font-family: $font-base;
+  font-size: $text-md;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 760px;
+}
+
+.bodyLead {
+  color: $text-primary;
+  font-weight: 600;
+}
+
+// ── Marquee ───────────────────────────────────────────────────────
+.marquee {
+  position: relative;
+  overflow: hidden;
+  border-block: 1px solid $border-secondary;
+  padding-block: $space-4;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.marqueeTrack {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+  animation: methodology-marquee 28s linear infinite;
+}
+
+.marqueeItem {
+  display: inline-flex;
+  align-items: center;
+  font-family: $font-base;
+  font-size: $text-md;
+  color: $accent-pink-deep;
+  letter-spacing: 0.01em;
+}
+
+.marqueeDot {
+  margin-inline: $space-5;
+  color: $text-tertiary;
+}
+
+@keyframes methodology-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+  }
+}
+
+// ── Signals grid ──────────────────────────────────────────────────
+.signals {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.signal {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-5;
+  background: $card-panel-bg;
+  border: 1px solid $border-secondary;
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &:hover {
+    border-color: rgba(194, 78, 136, 0.32);
+    background: $card-panel-bg-hover;
+  }
+}
+
+.signalIcon {
+  display: inline-flex;
+  align-items: center;
+  color: $accent-pink-deep;
+}
+
+.signalTitle {
+  font-family: $font-base;
+  font-weight: 600;
+  font-size: $text-md;
+  color: $text-primary;
+  margin: 0;
+}
+
+.signalLine {
+  font-family: $font-base;
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ── Footnote ──────────────────────────────────────────────────────
+.footnote {
+  font-family: $font-mono;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+// ── FAQ (embedded, no heading) ────────────────────────────────────
+.faq {
+  margin-top: $space-2;
+}

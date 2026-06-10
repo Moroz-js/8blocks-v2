@@ -1,0 +1,154 @@
+@use '@/shared/styles/variables' as *;
+
+.card {
+  --research-card-bg: #141414;
+  --research-card-fg: #ffffff;
+
+  display: flex;
+  height: 100%;
+  min-height: clamp(260px, 20vw, 340px);
+  background: var(--research-card-bg);
+  border: 1px solid $border-secondary;
+  overflow: hidden;
+  transition: transform $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    min-height: clamp(220px, 50vw, 300px);
+  }
+}
+
+.fill {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-decoration: none;
+  color: var(--research-card-fg);
+
+  &:hover .coverImg {
+    transform: scale(1.04);
+  }
+
+  &:hover .readArrow {
+    transform: translateX(3px);
+  }
+}
+
+// ── Cover ─────────────────────────────────────────────────────────
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.coverImg {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+// ── Content ───────────────────────────────────────────────────────
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  padding: $space-8;
+  flex: 1;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-6;
+    gap: $space-4;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  flex-wrap: wrap;
+}
+
+.category {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.date {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  letter-spacing: 0.04em;
+}
+
+.title {
+  font-family: $font-base;
+  font-weight: 600;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: $leading-snug;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--research-card-fg);
+}
+
+// Visually hidden but available to screen readers / SEO
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-4;
+}
+
+.readLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  letter-spacing: 0.02em;
+  color: var(--research-card-fg);
+}
+
+.readArrow {
+  display: flex;
+  align-items: center;
+  transition: transform $transition-fast;
+}
+
+.views {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-2 $space-3;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  letter-spacing: 0.02em;
+  color: var(--research-card-fg);
+  opacity: 0.85;
+
+  svg {
+    flex-shrink: 0;
+  }
+}

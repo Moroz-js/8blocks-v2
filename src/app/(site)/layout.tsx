@@ -11,12 +11,14 @@ import { htmlLang, locale } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
 import { ThemeProvider } from '@/shared/lib/ThemeProvider'
+import { ThemeController } from '@/shared/lib/ThemeController'
 import { MantineThemeBridge } from '@/shared/lib/MantineThemeBridge'
 import { HeadMarkupInjector } from '@/widgets/HeadMarkupInjector'
 import { getBlogExtraHeadMarkup, getSiteSeoGlobal, getSiteSeoPageOverride } from '@/shared/lib/site-seo'
 import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
 import { getBlogEnabled } from '@/shared/lib/getBlogEnabled'
 import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
+import { getResearchEnabled } from '@/shared/lib/getResearchEnabled'
 
 export const metadata: Metadata = {
   title: {
@@ -41,13 +43,14 @@ export const metadata: Metadata = {
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get('x-pathname') ?? '/'
-  const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled, blogNavEnabled] = await Promise.all([
+  const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled, blogNavEnabled, researchEnabled] = await Promise.all([
     getSiteSeoGlobal(),
     getSiteSeoPageOverride(pathname),
     getBlogExtraHeadMarkup(pathname),
     getMediaMentionsEnabled(),
     getPublicAuditsEnabled(),
     getBlogEnabled(),
+    getResearchEnabled(),
   ])
 
   const headCombined = [siteSeo?.globalHeadMarkup, pageRow?.pageHeadMarkup, blogExtra]
@@ -58,6 +61,12 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
   return (
     <html lang={htmlLang} suppressHydrationWarning>
       <head>
+        {/* Scope theme to article/research detail pages before next-themes hydrates to avoid a flash on reload. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=location.pathname.split('/').filter(Boolean);var themeable=(s[0]==='blog'||s[0]==='research')&&s.length>=2;var k='8blocks-theme';if(themeable){var pref=localStorage.getItem('8blocks-blog-theme');localStorage.setItem(k,pref==='light'?'light':'dark');}else{localStorage.setItem(k,'dark');}}catch(e){}})();`,
+          }}
+        />
         {headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}
       </head>
       <body suppressHydrationWarning>
@@ -78,6 +87,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           }}
         />
         <ThemeProvider>
+          <ThemeController />
           <MantineThemeBridge>
             <GTMScript />
             {process.env.NEXT_PUBLIC_REPLAIN_ID && (
@@ -96,12 +106,17 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
               </>
             )}
             <LenisProvider>
-              <Header mediaEnabled={mediaEnabled} blogEnabled={blogNavEnabled} />
+              <Header
+                mediaEnabled={mediaEnabled}
+                blogEnabled={blogNavEnabled}
+                researchEnabled={researchEnabled}
+              />
               <main>{children}</main>
               <Footer
                 mediaEnabled={mediaEnabled}
                 auditsEnabled={auditsEnabled}
                 blogEnabled={blogNavEnabled}
+                researchEnabled={researchEnabled}
               />
               <ScrollToTop />
             </LenisProvider>

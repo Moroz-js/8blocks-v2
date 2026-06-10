@@ -12,18 +12,21 @@ interface FooterProps {
   mediaEnabled?: boolean
   auditsEnabled?: boolean
   blogEnabled?: boolean
+  researchEnabled?: boolean
 }
 
 export function Footer({
   mediaEnabled = false,
   auditsEnabled = false,
   blogEnabled = false,
+  researchEnabled = false,
 }: FooterProps) {
   const pageLinks = footerContent.pageLinks.filter(
     (link) =>
       (link.href !== '/media' || mediaEnabled) &&
       (link.href !== '/audits' || auditsEnabled) &&
-      (link.href !== '/blog' || blogEnabled),
+      (link.href !== '/blog' || blogEnabled) &&
+      (link.href !== '/research' || researchEnabled),
   )
   return (
     <footer className={styles.footer}>

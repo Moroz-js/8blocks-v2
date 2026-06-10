@@ -130,3 +130,14 @@
   color: $text-secondary !important;
 }
 
+.link {
+  color: $accent-purple;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity $transition-fast;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+

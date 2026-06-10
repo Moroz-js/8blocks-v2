@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -7,17 +7,28 @@ import { navLinks } from '@/shared/config/site'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { Button, Logo } from '@/shared/ui'
 import { ThemeToggle } from '@/shared/ui/ThemeToggle'
+import { useThemeScopeActive } from '@/shared/lib/ThemeScope'
 import styles from './Header.module.scss'
 
 interface HeaderProps {
   mediaEnabled?: boolean
   blogEnabled?: boolean
+  researchEnabled?: boolean
 }
 
-export function Header({ mediaEnabled: _mediaEnabled, blogEnabled = false }: HeaderProps) {
-  const links = navLinks.filter((link) => link.href !== '/blog' || blogEnabled)
+export function Header({
+  mediaEnabled: _mediaEnabled,
+  blogEnabled = false,
+  researchEnabled = false,
+}: HeaderProps) {
+  const links = navLinks.filter(
+    (link) =>
+      (link.href !== '/blog' || blogEnabled) &&
+      (link.href !== '/research' || researchEnabled),
+  )
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const showThemeToggle = useThemeScopeActive()
 
   // Close menu on route change
   useEffect(() => {
@@ -50,7 +61,7 @@ export function Header({ mediaEnabled: _mediaEnabled, blogEnabled = false }: Hea
           </nav>
 
           <div className={styles.actions}>
-            <ThemeToggle />
+            {showThemeToggle && <ThemeToggle />}
             <Link href="/contact" className={styles.ctaLink}>
               <Button variant="primary" size="sm" type="button">
                 {uiStrings.contactUs}
@@ -59,7 +70,7 @@ export function Header({ mediaEnabled: _mediaEnabled, blogEnabled = false }: Hea
           </div>
 
           <div className={styles.mobileHeaderActions}>
-            <ThemeToggle />
+            {showThemeToggle && <ThemeToggle />}
             <button
               className={`${styles.burger} ${isOpen ? styles.burgerOpen : ''}`}
               onClick={() => setIsOpen((v) => !v)}

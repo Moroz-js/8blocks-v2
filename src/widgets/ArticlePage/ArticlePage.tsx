@@ -1,4 +1,4 @@
-﻿import Image from 'next/image'
+import Image from 'next/image'
 import type { Article, ArticleCard } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
@@ -24,23 +24,32 @@ function formatDate(iso?: string | null): string {
 interface Props {
   article: Article
   relatedArticles?: ArticleCard[]
+  /** URL prefix for category/share links, e.g. /blog or /research. */
+  basePath?: string
+  /** Whether to track views via the articles API (blog only). */
+  trackViews?: boolean
 }
 
-export function ArticlePage({ article, relatedArticles = [] }: Props) {
+export function ArticlePage({
+  article,
+  relatedArticles = [],
+  basePath = '/blog',
+  trackViews = true,
+}: Props) {
   const tocItems = buildToc(article.content)
   const readingTime = estimateReadingTime(article.content)
   const date = formatDate(article.publishedAt)
   const hasToc = tocItems.length >= 2
-  const articleUrl = `${siteConfig.url.replace(/\/$/, '')}/blog/${article.slug}`
+  const articleUrl = `${siteConfig.url.replace(/\/$/, '')}${basePath}/${article.slug}`
 
   return (
     <article className={styles.root}>
-      <ArticleViewTracker slug={article.slug} />
+      {trackViews && <ArticleViewTracker slug={article.slug} />}
 
       {/* ── Header ──────────────────────────────────────────────── */}
       <header className={styles.header}>
         {article.category && (
-          <a href={`/blog/${article.category.slug}`} className={styles.category}>
+          <a href={`${basePath}/${article.category.slug}`} className={styles.category}>
             {article.category.title}
           </a>
         )}

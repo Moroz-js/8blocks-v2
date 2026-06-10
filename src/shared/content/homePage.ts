@@ -11,6 +11,7 @@ export const servicesShowcaseContent = locale.servicesShowcaseContent
 export const aboutContent = locale.aboutContent
 export const partnersContent = locale.partnersContent
 export const benefitsContent = locale.benefitsContent
+export const methodologyContent = locale.methodologyContent
 export const teamContent = locale.teamContent
 export const tokenEconomyContent = locale.tokenEconomyContent
 export const tokenFilterContent = locale.tokenFilterContent

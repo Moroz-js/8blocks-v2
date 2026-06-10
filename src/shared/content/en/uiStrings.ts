@@ -3,6 +3,7 @@
 export const uiStrings = {
   learnMore: 'Learn more',
   read: 'Read',
+  views: 'views',
   allServices: 'All services',
   allArticles: 'All articles',
   readMore: 'Read more',
