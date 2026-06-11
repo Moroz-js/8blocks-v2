@@ -7,7 +7,7 @@ export const researchMeta = {
 
 export const researchArchiveContent = {
   labelSection: 'Исследования',
-  headline: 'Исследования',
+  headline: 'Разборы и аналитика',
   emptyState: 'Исследования появятся здесь.',
   emptyHint: 'Загляните позже.',
   paginationAriaLabel: 'Навигация по страницам',

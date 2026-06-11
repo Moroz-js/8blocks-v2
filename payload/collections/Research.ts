@@ -70,7 +70,16 @@ export const Research: CollectionConfig = {
       type: 'textarea',
       label: 'Краткое описание (excerpt)',
       admin: {
-        description: 'Краткое описание для карточки исследования и SEO',
+        description: 'Краткое описание для SEO и скрытого текста на карточке',
+      },
+    },
+    {
+      name: 'cardText',
+      type: 'text',
+      label: 'Текст карточки',
+      required: true,
+      admin: {
+        description: 'Заголовок на карточке в архиве. Не путать с заголовком статьи на странице исследования.',
       },
     },
 

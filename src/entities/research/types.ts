@@ -3,6 +3,7 @@ import type { CategoryRef, MediaItem } from '@/entities/article'
 export interface ResearchCard {
   id: string
   title: string
+  cardText: string
   slug: string
   excerpt?: string | null
   cover?: MediaItem | null

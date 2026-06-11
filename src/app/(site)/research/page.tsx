@@ -53,6 +53,7 @@ export default async function ResearchPage({ searchParams }: PageProps) {
     return {
       id: String(doc.id),
       title: doc.title,
+      cardText: typeof doc.cardText === 'string' ? doc.cardText : '',
       slug: doc.slug,
       excerpt: doc.excerpt ?? null,
       cover: cover

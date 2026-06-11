@@ -55,6 +55,7 @@ export function ResearchCard({ research, priority = false }: Props) {
   const date = formatDate(research.publishedAt)
   const cardColor = research.cardColor || '#141414'
   const textColor = research.textColor || '#FFFFFF'
+  const cardHeading = research.cardText?.trim() ?? ''
 
   return (
     <article
@@ -66,7 +67,7 @@ export function ResearchCard({ research, priority = false }: Props) {
         } as React.CSSProperties
       }
     >
-      <Link href={href} className={styles.fill} aria-label={research.title}>
+      <Link href={href} className={styles.fill} aria-label={cardHeading}>
         {research.cover?.url && (
           <div className={styles.cover}>
             <Image
@@ -92,7 +93,7 @@ export function ResearchCard({ research, priority = false }: Props) {
             )}
           </div>
 
-          <h3 className={styles.title}>{research.title}</h3>
+          <h3 className={styles.title}>{cardHeading}</h3>
 
           {research.excerpt && <p className={styles.srOnly}>{research.excerpt}</p>}
 
