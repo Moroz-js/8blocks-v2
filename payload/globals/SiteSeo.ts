@@ -54,6 +54,16 @@ export const SiteSeo: GlobalConfig = {
       },
     },
     {
+      name: 'robotsTxt',
+      type: 'textarea',
+      label: 'robots.txt',
+      admin: {
+        description:
+          'Содержимое /robots.txt. Если пусто — используются правила по умолчанию (Allow /, Disallow /admin и /api, Sitemap).',
+        rows: 10,
+      },
+    },
+    {
       name: 'workshopTrustSlotsNoteRu',
       type: 'textarea',
       label: 'Воркшоп: текст про слоты (RU)',

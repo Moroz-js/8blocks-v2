@@ -7,6 +7,7 @@ import * as migration_20260520_000000_public_audits_hidden from './20260520_0000
 import * as migration_20260521_000000_articles_hidden from './20260521_000000_articles_hidden'
 import * as migration_20260610_000000_research from './20260610_000000_research'
 import * as migration_20260611_000000_research_card_text from './20260611_000000_research_card_text'
+import * as migration_20260615_000000_site_seo_robots_txt from './20260615_000000_site_seo_robots_txt'
 
 export const migrations = [
   {
@@ -53,5 +54,10 @@ export const migrations = [
     up: migration_20260611_000000_research_card_text.up,
     down: migration_20260611_000000_research_card_text.down,
     name: '20260611_000000_research_card_text',
+  },
+  {
+    up: migration_20260615_000000_site_seo_robots_txt.up,
+    down: migration_20260615_000000_site_seo_robots_txt.down,
+    name: '20260615_000000_site_seo_robots_txt',
   },
 ]
