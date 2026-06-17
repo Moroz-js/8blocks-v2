@@ -68,18 +68,6 @@ export function ResearchCard({ research, priority = false }: Props) {
       }
     >
       <Link href={href} className={styles.fill} aria-label={cardHeading}>
-        {research.cover?.url && (
-          <div className={styles.cover}>
-            <Image
-              src={research.cover.url}
-              alt={research.cover.alt || research.title}
-              fill
-              className={styles.coverImg}
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority={priority}
-            />
-          </div>
-        )}
 
         <div className={styles.content}>
           <div className={styles.meta}>
