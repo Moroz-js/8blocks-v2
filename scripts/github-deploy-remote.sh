@@ -60,19 +60,22 @@ chmod 600 .env
 echo "✓ .env written"
 
 # ── install dependencies ──────────────────────
+# PUPPETEER_SKIP_DOWNLOAD: не качаем Chrome в postinstall (хрупко: нужен unzip,
+# сеть и т.д.). Браузер ставим отдельным управляемым шагом ниже.
 echo "📦 Installing dependencies"
-npm ci --prefer-offline
+PUPPETEER_SKIP_DOWNLOAD=true npm ci --prefer-offline
 echo "✓ Dependencies installed"
 
 # ── Chromium system libs for Puppeteer (PDF export) ──
 # Идемпотентно: ставим один раз (маркер-файл), чтобы не гонять apt на каждом деплое.
-CHROMIUM_DEPS_MARKER="/var/lib/8blocks-chromium-deps.installed"
+# v2: добавлен unzip (нужен @puppeteer/browsers для распаковки архива Chrome).
+CHROMIUM_DEPS_MARKER="/var/lib/8blocks-chromium-deps-v2.installed"
 if [ ! -f "${CHROMIUM_DEPS_MARKER}" ]; then
   echo "🧩 Installing Chromium system libraries for Puppeteer"
   if command -v apt-get &>/dev/null; then
     apt-get update -qq || true
     apt-get install -y -qq \
-      ca-certificates fonts-liberation fonts-noto-core fonts-noto-cjk \
+      ca-certificates unzip fonts-liberation fonts-noto-core fonts-noto-cjk \
       libasound2t64 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
       libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libglib2.0-0 libgtk-3-0 \
       libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 \
@@ -80,7 +83,7 @@ if [ ! -f "${CHROMIUM_DEPS_MARKER}" ]; then
       libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
       2>/dev/null \
       || apt-get install -y -qq \
-        ca-certificates fonts-liberation fonts-noto-core fonts-noto-cjk \
+        ca-certificates unzip fonts-liberation fonts-noto-core fonts-noto-cjk \
         libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
         libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libglib2.0-0 libgtk-3-0 \
         libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 \
@@ -96,6 +99,14 @@ if [ ! -f "${CHROMIUM_DEPS_MARKER}" ]; then
 else
   echo "✓ Chromium libraries already installed"
 fi
+
+# ── Puppeteer browser (Chrome) ────────────────
+# Ставим управляемый Puppeteer Chrome в общий кэш (~/.cache/puppeteer).
+# Идемпотентно: если нужная версия уже есть — быстрый no-op. Не валим деплой,
+# если скачать не удалось (сайт поднимется, не сработает только экспорт PDF).
+echo "🌐 Ensuring Puppeteer Chrome is installed"
+npx --yes puppeteer browsers install chrome \
+  || echo "⚠️  Puppeteer Chrome install failed (PDF export may not work)"
 
 # ── run migrations ────────────────────────────
 echo "🗄️  Running Payload migrations"
