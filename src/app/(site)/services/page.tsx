@@ -16,13 +16,13 @@ export async function generateMetadata(): Promise<Metadata> {
     description: servicesMeta.description,
     alternates: { canonical: '/services' },
     openGraph: {
-      title: `${servicesMeta.title} | 8Blocks`,
+      title: `${servicesMeta.title} | А8А9 токеномика.рф`,
       description: servicesMeta.ogDescription,
       url: '/services',
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${servicesMeta.title} | 8Blocks`,
+      title: `${servicesMeta.title} | А8А9 токеномика.рф`,
       description: servicesMeta.ogDescription,
     },
   })

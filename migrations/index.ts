@@ -8,6 +8,7 @@ import * as migration_20260521_000000_articles_hidden from './20260521_000000_ar
 import * as migration_20260610_000000_research from './20260610_000000_research'
 import * as migration_20260611_000000_research_card_text from './20260611_000000_research_card_text'
 import * as migration_20260615_000000_site_seo_robots_txt from './20260615_000000_site_seo_robots_txt'
+import * as migration_20260621_000000_public_audits_redesign from './20260621_000000_public_audits_redesign'
 
 export const migrations = [
   {
@@ -59,5 +60,10 @@ export const migrations = [
     up: migration_20260615_000000_site_seo_robots_txt.up,
     down: migration_20260615_000000_site_seo_robots_txt.down,
     name: '20260615_000000_site_seo_robots_txt',
+  },
+  {
+    up: migration_20260621_000000_public_audits_redesign.up,
+    down: migration_20260621_000000_public_audits_redesign.down,
+    name: '20260621_000000_public_audits_redesign',
   },
 ]

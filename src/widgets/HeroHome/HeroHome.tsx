@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { heroContent, heroMarqueeItems } from '@/shared/content/homePage'
+import { lang } from '@/shared/i18n'
 import { HeroCanvas } from './HeroCanvas'
+import { HeroLetters } from '@/widgets/HeroLetters'
 import styles from './HeroHome.module.scss'
 
 const ease = 'easeOut' as const
@@ -82,7 +84,11 @@ export function HeroHome() {
           transition={{ duration: 1.2, ease, delay: 0.3 }}
           aria-hidden="true"
         >
-          <HeroCanvas className={styles.canvas} />
+          {lang === 'ru' ? (
+            <HeroLetters />
+          ) : (
+            <HeroCanvas className={styles.canvas} />
+          )}
         </motion.div>
       </div>
 

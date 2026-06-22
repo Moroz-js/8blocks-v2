@@ -24,6 +24,12 @@
   --accent-green: #75fb63;
   --accent-blue: #638efb;
 
+  // Brand heading gradient — overridable per scope (see /home-redesign)
+  --gradient-accent: linear-gradient(135deg, #D9ADD0 0%, #C24E88 55%, #8E4ABD 100%);
+
+  // Card / button corner radius — overridable per scope (see /home-redesign)
+  --card-radius: 0;
+
   --body-bg: #050308;
   --grid-line: rgba(255, 255, 255, 0.02);
 
@@ -288,6 +294,26 @@ body::before {
   background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
 }
 
+// ── Audit detail page: flat Figma document (no grid/bloom stripes) ──
+html.audit-doc {
+  &[data-theme='light'],
+  &:not([data-theme='dark']) {
+    --body-bg: #f3f3f5;
+    --card-panel-bg: #ffffff;
+    --bg-secondary: rgba(13, 10, 18, 0.035);
+    --border-secondary: rgba(13, 10, 18, 0.1);
+  }
+
+  &[data-theme='dark'] {
+    --body-bg: #0a070f;
+    --card-panel-bg: rgba(255, 255, 255, 0.04);
+  }
+
+  body::before {
+    display: none !important;
+  }
+}
+
 ul,
 ol {
   list-style: none;
@@ -361,4 +387,44 @@ select {
 div[class*='replain'] {
   background: transparent !important;
   box-shadow: none !important;
+}
+
+// ── Print / PDF export ───────────────────────────────────────────
+// Force a clean light document and hide interactive chrome. Used by the
+// Puppeteer-based audit PDF export (which renders /audits/[slug]?print=1
+// with print media emulation).
+@media print {
+  // Force light tokens regardless of active theme (beats [data-theme='dark']).
+  html[data-theme] {
+    color-scheme: light;
+    --bg-secondary: rgba(0, 0, 0, 0.04);
+    --bg-tertiary: rgba(0, 0, 0, 0.06);
+    --text-primary: #0d0a12;
+    --text-secondary: rgba(13, 10, 18, 0.86);
+    --text-tertiary: rgba(13, 10, 18, 0.72);
+    --border-primary: rgba(0, 0, 0, 0.14);
+    --border-secondary: rgba(0, 0, 0, 0.12);
+    --surface: rgba(0, 0, 0, 0.04);
+    --body-bg: #ffffff;
+    --muted-strong: rgba(13, 10, 18, 0.85);
+  }
+
+  body {
+    background: #ffffff !important;
+  }
+
+  // Remove decorative full-page gradients/grid for print.
+  body::before {
+    display: none !important;
+  }
+
+  // Hide site chrome and interactive-only UI.
+  header,
+  footer,
+  #__replain_widget,
+  [id*='replain'],
+  [data-no-print],
+  body > div[aria-hidden='true'] {
+    display: none !important;
+  }
 }

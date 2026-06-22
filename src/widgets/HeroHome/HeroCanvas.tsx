@@ -3,6 +3,7 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { useTheme } from 'next-themes'
 import { readCssVar } from '@/shared/lib/readCssVar'
+import { lang } from '@/shared/i18n'
 
 type CanvasThemeColors = {
   shadow: string
@@ -37,6 +38,50 @@ const BLOCKS: Block[] = [
   { x: 4.5, z: 1.5, w: 1,   d: 4 },
   { x: 6,   z: 0,   w: 1,   d: 5.5 },
   { x: 0,   z: 6,   w: 7,   d: 1 },
+]
+
+// Helper: shift a group of blocks by (dx, dz)
+function off(dx: number, dz: number, blocks: Block[]): Block[] {
+  return blocks.map(b => ({ x: b.x + dx, z: b.z + dz, w: b.w, d: b.d }))
+}
+
+// Cyrillic А — two legs + top + crossbar (6 blocks, ~2.35 × 3.65 units)
+const LETTER_A: Block[] = [
+  { x: 0.25, z: 3.1,  w: 2.1,  d: 0.55 }, // top bar
+  { x: 0,    z: 1.6,  w: 0.55, d: 1.5  }, // left leg upper
+  { x: 1.8,  z: 1.6,  w: 0.55, d: 1.5  }, // right leg upper
+  { x: 0.1,  z: 1.1,  w: 2.15, d: 0.5  }, // crossbar
+  { x: 0,    z: 0,    w: 0.55, d: 1.1  }, // left leg lower
+  { x: 1.8,  z: 0,    w: 0.55, d: 1.1  }, // right leg lower
+]
+
+// Digit 8 — three bars + four corner pillars (7 blocks, ~3 × 3.7 units)
+const DIGIT_8: Block[] = [
+  { x: 0.3, z: 3.2, w: 1.9, d: 0.5  }, // top bar
+  { x: 0.3, z: 1.7, w: 1.9, d: 0.5  }, // mid bar
+  { x: 0.3, z: 0.2, w: 1.9, d: 0.5  }, // bot bar
+  { x: 0,   z: 2.2, w: 0.5, d: 1.0  }, // TL pillar
+  { x: 2.5, z: 2.2, w: 0.5, d: 1.0  }, // TR pillar
+  { x: 0,   z: 0.7, w: 0.5, d: 1.0  }, // BL pillar
+  { x: 2.5, z: 0.7, w: 0.5, d: 1.0  }, // BR pillar
+]
+
+// Digit 9 — top loop + right tail (6 blocks, ~3 × 3.8 units)
+const DIGIT_9: Block[] = [
+  { x: 0.3, z: 3.2, w: 1.9, d: 0.5  }, // top bar
+  { x: 0.3, z: 1.7, w: 1.9, d: 0.5  }, // mid bar
+  { x: 0,   z: 2.2, w: 0.5, d: 1.0  }, // TL pillar
+  { x: 2.5, z: 2.2, w: 0.5, d: 1.0  }, // TR pillar
+  { x: 2.5, z: 0,   w: 0.5, d: 2.7  }, // right tail (going down)
+  { x: 0.3, z: 0.1, w: 1.8, d: 0.6  }, // bot stub
+]
+
+// А, 8, А, 9 — scattered across the 7×7 grid
+const RU_BLOCKS: Block[] = [
+  ...off(0,   0,   LETTER_A), // А — front-left
+  ...off(4.0, 0.8, DIGIT_8),  // 8 — front-right, slightly deeper
+  ...off(0.2, 3.3, LETTER_A), // А — back-left
+  ...off(4.0, 2.8, DIGIT_9),  // 9 — back-right
 ]
 
 const GRID = 7
@@ -275,7 +320,7 @@ export function HeroCanvas({ className }: { className?: string }) {
       const ox = W / 2
       const oy = H / 2 + floatY - scrollY * 0.12
 
-      const sorted = [...BLOCKS].sort(
+      const sorted = [...(lang === 'ru' ? RU_BLOCKS : BLOCKS)].sort(
         (a, b) => blockDepth(a, rX, rY) - blockDepth(b, rX, rY),
       )
 

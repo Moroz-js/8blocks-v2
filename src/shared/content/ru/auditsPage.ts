@@ -1,8 +1,8 @@
 export const auditsMeta = {
-  title: 'Публичные аудиты — 8Blocks',
-  description: 'Публичные аудиты токенов от команды 8Blocks.',
-  ogTitle: 'Публичные аудиты — 8Blocks',
-  ogDescription: 'Публичные аудиты токенов от команды 8Blocks.',
+  title: 'Публичные аудиты — А8А9 токеномика.рф',
+  description: 'Публичные аудиты токенов от команды А8А9.',
+  ogTitle: 'Публичные аудиты — А8А9 токеномика.рф',
+  ogDescription: 'Публичные аудиты токенов от команды А8А9.',
 } as const
 
 export const auditsArchiveContent = {
@@ -15,6 +15,10 @@ export const auditsArchiveContent = {
   nextPage: 'Следующая страница',
   readLink: 'Смотреть',
   blogArticleLink: 'Читать статью в блоге',
+  downloadPdf: 'Скачать Аудит в PDF',
+  expertLabel: 'Эксперт',
+  auditLabel: 'Аудит токена',
+  finalRating: 'Итоговый рейтинг',
   countSingular: 'аудит',
   countFew: 'аудита',
   countMany: 'аудитов',

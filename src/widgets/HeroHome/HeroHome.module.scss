@@ -143,7 +143,7 @@
   padding: 0 $space-8;
   background: $text-primary;
   color: $button-primary-fg;
-  border-radius: 0;
+  border-radius: var(--card-radius);
   font-family: $font-base;
   font-weight: 500;
   font-size: $text-base;
@@ -206,7 +206,7 @@
   height: 34px;
   padding: 0 $space-3;
   border: 1px solid $border-secondary;
-  border-radius: 0;
+  border-radius: var(--card-radius);
   font-family: $font-base;
   font-weight: 400;
   font-size: $text-sm;

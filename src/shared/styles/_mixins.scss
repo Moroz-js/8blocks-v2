@@ -137,62 +137,46 @@
   }
 }
 
-// Corner border effect: corners only by default, full border on hover
+// Corner border effect: corners only by default, full border on hover.
+// Рамка рисуется настоящим `border` + `border-radius`, а видимость уголков
+// (и раскрытие в полную рамку на ховере) управляется маской — поэтому
+// скругление углов всегда совпадает с --card-radius.
 @mixin card-corner-border($color: $border-primary, $corner: 32px, $width: 1px) {
   position: relative;
   border: #{$width} solid transparent;
+  border-radius: var(--card-radius);
 
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
+    border: #{$width} solid #{$color};
+    border-radius: var(--card-radius);
 
-    background-image:
-      linear-gradient($color, $color),
-      linear-gradient($color, $color),
-      linear-gradient($color, $color),
-      linear-gradient($color, $color),
-      linear-gradient($color, $color),
-      linear-gradient($color, $color),
-      linear-gradient($color, $color),
-      linear-gradient($color, $color);
+    // По одному квадратному пятну маски на каждый угол: оно открывает
+    // скруглённую дугу угла + плечи длиной $corner вдоль обеих сторон.
+    $g: linear-gradient(#000, #000);
+    -webkit-mask: $g, $g, $g, $g;
+    mask: $g, $g, $g, $g;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
 
-    background-position:
-      0 0,
-      0 0,
-      100% 0,
-      100% 0,
-      0 100%,
-      0 100%,
-      100% 100%,
-      100% 100%;
+    -webkit-mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
+    mask-position: 0 0, 100% 0, 0 100%, 100% 100%;
 
-    background-repeat: no-repeat;
+    $sz: var(--card-corner, #{$corner});
+    -webkit-mask-size: #{$sz} #{$sz}, #{$sz} #{$sz}, #{$sz} #{$sz}, #{$sz} #{$sz};
+    mask-size: #{$sz} #{$sz}, #{$sz} #{$sz}, #{$sz} #{$sz}, #{$sz} #{$sz};
 
-    background-size:
-      #{$corner} #{$width},
-      #{$width} #{$corner},
-      #{$corner} #{$width},
-      #{$width} #{$corner},
-      #{$corner} #{$width},
-      #{$width} #{$corner},
-      #{$corner} #{$width},
-      #{$width} #{$corner};
-
-    transition: background-size 0.4s ease;
+    transition: -webkit-mask-size 0.4s ease, mask-size 0.4s ease;
   }
 
+  // На ховере квадраты разрастаются до >50% и перекрываются — открывая
+  // всю рамку целиком (со скруглёнными углами).
   &:hover::before {
-    background-size:
-      50% #{$width},
-      #{$width} 50%,
-      50% #{$width},
-      #{$width} 50%,
-      50% #{$width},
-      #{$width} 50%,
-      50% #{$width},
-      #{$width} 50%;
+    -webkit-mask-size: 55% 55%, 55% 55%, 55% 55%, 55% 55%;
+    mask-size: 55% 55%, 55% 55%, 55% 55%, 55% 55%;
   }
 }
 

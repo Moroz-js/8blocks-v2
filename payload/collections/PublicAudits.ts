@@ -15,7 +15,19 @@ import {
   UploadFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { AuditTableBlock, CalloutBlock, FormulaBlock } from '../blocks/index.ts'
+import {
+  AuditTableBlock,
+  CalloutBlock,
+  ChartBlock,
+  ChartRowBlock,
+  ChecklistBlock,
+  FormulaBlock,
+  InfoColumnsBlock,
+  MetricStripBlock,
+  NumberedNotesBlock,
+  RiskProfileBlock,
+  StatColumnsBlock,
+} from '../blocks/index.ts'
 export const PublicAudits: CollectionConfig = {
   slug: 'public-audits',
   labels: {
@@ -87,24 +99,154 @@ export const PublicAudits: CollectionConfig = {
     },
     {
       type: 'group',
-      name: 'metrics',
-      label: 'Метрики (Hero)',
+      name: 'hero',
+      label: 'Шапка (Hero)',
       admin: {
-        description: 'Карточки на обложке аудита',
+        description: 'Тёмная обложка аудита: проект, метрики, рейтинг, вердикт',
       },
       fields: [
-        { name: 'companyName', type: 'text', label: 'Компания' },
-        { name: 'tokenName', type: 'text', label: 'Токен' },
-        { name: 'tokenStandard', type: 'text', label: 'Стандарт (ERC-20...)' },
-        { name: 'fdv', type: 'text', label: 'FDV' },
-        { name: 'mc', type: 'text', label: 'MC' },
-        { name: 'tvl', type: 'text', label: 'TVL' },
-        { name: 'fees', type: 'text', label: 'Комиссии' },
-        { name: 'users', type: 'text', label: 'Пользователи' },
-        { name: 'unlock', type: 'text', label: 'UNLOCK (цена)' },
-        { name: 'retail', type: 'text', label: 'RETAIL (цена)' },
-        { name: 'rating', type: 'text', label: 'Рейтинг (BB-, A...)' },
-        { name: 'ratingScore', type: 'text', label: 'Балл (74/100)' },
+        {
+          type: 'row',
+          fields: [
+            { name: 'company', type: 'text', label: 'Компания (Кому)', admin: { width: '50%' } },
+            { name: 'tokenName', type: 'text', label: 'Токен ($TICKER)', admin: { width: '25%' } },
+            {
+              name: 'tokenStandard',
+              type: 'text',
+              label: 'Стандарт',
+              admin: { width: '25%', description: 'ERC-20, TON...' },
+            },
+          ],
+        },
+        {
+          name: 'projectDescription',
+          type: 'textarea',
+          label: 'Описание проекта',
+          admin: { description: 'Короткое описание проекта в hero' },
+        },
+        { name: 'site', type: 'text', label: 'Сайт' },
+        {
+          name: 'verdict',
+          type: 'text',
+          label: 'Короткий вердикт',
+          admin: { description: 'Напр.: «Этот токен нужен» / «Токен не обязателен…»' },
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'strength',
+              type: 'textarea',
+              label: 'Сильная сторона (+)',
+              admin: { width: '50%' },
+            },
+            {
+              name: 'weakness',
+              type: 'textarea',
+              label: 'Слабая сторона (−)',
+              admin: { width: '50%' },
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'letterRating',
+              type: 'text',
+              label: 'Буквенный рейтинг',
+              admin: { width: '50%', description: 'BB / A / BBB...' },
+            },
+            {
+              name: 'score',
+              type: 'number',
+              label: 'Балл (0–100)',
+              min: 0,
+              max: 100,
+              admin: { width: '50%' },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'heroMetrics',
+      type: 'array',
+      label: 'Метрики (Hero)',
+      labels: { singular: 'Метрика', plural: 'Метрики' },
+      admin: { description: 'Карточки-метрики в hero (FDV, MC, TVL, ...)' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'label', type: 'text', label: 'Название', required: true, admin: { width: '50%' } },
+            { name: 'value', type: 'text', label: 'Значение', required: true, admin: { width: '50%' } },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'ratingBlocks',
+      type: 'array',
+      label: 'Рейтинг по методологии 8Blocks',
+      labels: { singular: 'Блок', plural: 'Блоки' },
+      admin: {
+        description: 'Из этих строк строятся таблица и radar-диаграмма рейтинга, и считается итог',
+      },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'block', type: 'text', label: 'Блок', required: true, admin: { width: '50%' } },
+            {
+              name: 'weight',
+              type: 'number',
+              label: 'Вес (%)',
+              required: true,
+              admin: { width: '25%', description: 'Напр. 40' },
+            },
+            {
+              name: 'scoreFive',
+              type: 'number',
+              label: 'Score (0–5)',
+              required: true,
+              admin: { width: '25%' },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'group',
+      name: 'expert',
+      label: 'Эксперт',
+      admin: { description: 'Автор/эксперт аудита (карточка внизу страницы)' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'name', type: 'text', label: 'Имя', admin: { width: '50%' } },
+            { name: 'role', type: 'text', label: 'Роль', admin: { width: '50%' } },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'photo',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Фото',
+              admin: { width: '50%' },
+            },
+            {
+              name: 'rating',
+              type: 'text',
+              label: 'Рейтинг эксперта',
+              admin: { width: '50%', description: 'Опционально' },
+            },
+          ],
+        },
       ],
     },
     {
@@ -125,7 +267,19 @@ export const PublicAudits: CollectionConfig = {
           HorizontalRuleFeature(),
           LinkFeature(),
           BlocksFeature({
-            blocks: [CalloutBlock, AuditTableBlock, FormulaBlock],
+            blocks: [
+              CalloutBlock,
+              AuditTableBlock,
+              FormulaBlock,
+              ChartBlock,
+              ChartRowBlock,
+              MetricStripBlock,
+              ChecklistBlock,
+              StatColumnsBlock,
+              InfoColumnsBlock,
+              NumberedNotesBlock,
+              RiskProfileBlock,
+            ],
           }),
           UploadFeature({
             maxDepth: 2,

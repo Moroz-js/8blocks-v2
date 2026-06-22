@@ -4,7 +4,7 @@ import styles from './PrivacyPolicy.module.scss'
 
 const LAST_UPDATED = '9 февраля 2026'
 const COMPANY_ADDRESS =
-  '8BLOCKS FZCO, Unit No: UT-12-CO-372, DMCC Business Centre, Level 12, Uptown Tower, Dubai, United Arab Emirates'
+  'ООО «Инерция Мысли», Москва, Ленинский проспект, 15а'
 
 export function PrivacyPolicyRu() {
   return (

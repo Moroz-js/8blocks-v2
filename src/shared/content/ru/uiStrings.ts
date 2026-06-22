@@ -15,7 +15,7 @@ export const uiStrings = {
   shareOnTelegram: 'Поделиться в Telegram',
   shareOnLinkedIn: 'Поделиться в LinkedIn',
   tableOfContents: 'Содержание',
-  logoAriaLabel: '8Blocks — на главную',
+  logoAriaLabel: 'А8А9 токеномика.рф — на главную',
   contactUs: 'Связаться с нами',
   themeSwitchToLight: 'Включить светлую тему',
   themeSwitchToDark: 'Включить тёмную тему',

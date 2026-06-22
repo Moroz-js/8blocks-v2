@@ -1,9 +1,7 @@
-import { after } from 'next/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
 import { BANNED_EMAILS } from '@/shared/config/banned-emails'
-import { sendNewsletterUser, sendNewsletterAdmin } from '@/shared/lib/email'
 import { PUBLIC_FORM_ERRORS, sanitizeNewsletterEmail } from '@/shared/lib/form-sanitize'
 
 export async function POST(req: NextRequest) {
@@ -36,19 +34,6 @@ export async function POST(req: NextRequest) {
     await payload.create({
       collection: 'newsletter-subscriptions',
       data: { email: normalizedEmail },
-    })
-
-    after(async () => {
-      const results = await Promise.allSettled([
-        sendNewsletterUser(normalizedEmail),
-        sendNewsletterAdmin(normalizedEmail),
-      ])
-      const labels = ['user confirmation', 'admin notify'] as const
-      results.forEach((r, i) => {
-        if (r.status === 'rejected') {
-          console.error(`[newsletter] email (${labels[i]}) failed:`, r.reason)
-        }
-      })
     })
 
     return NextResponse.json({ success: true })

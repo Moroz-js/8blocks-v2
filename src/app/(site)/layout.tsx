@@ -7,7 +7,7 @@ import { Header } from '@/widgets/Header'
 import { Footer } from '@/widgets/Footer'
 import { ScrollToTop } from '@/shared/ui/ScrollToTop'
 import { siteConfig } from '@/shared/config/site'
-import { htmlLang, locale } from '@/shared/i18n'
+import { htmlLang, locale, lang } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
 import { ThemeProvider } from '@/shared/lib/ThemeProvider'
@@ -27,10 +27,16 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-  },
+  icons: lang === 'ru'
+    ? {
+        icon: [{ url: '/icons/favicon-ru.svg', type: 'image/svg+xml' }],
+        shortcut: '/icons/favicon-ru.svg',
+        apple: '/icons/favicon-ru.svg',
+      }
+    : {
+        icon: '/favicon.ico',
+        shortcut: '/favicon.ico',
+      },
   openGraph: {
     type: 'website',
     siteName: siteConfig.name,
@@ -64,7 +70,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         {/* Scope theme to article/research detail pages before next-themes hydrates to avoid a flash on reload. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=location.pathname.split('/').filter(Boolean);var themeable=(s[0]==='blog'||s[0]==='research')&&s.length>=2;var k='8blocks-theme';if(themeable){var pref=localStorage.getItem('8blocks-blog-theme');localStorage.setItem(k,pref==='light'?'light':'dark');}else{localStorage.setItem(k,'dark');}}catch(e){}})();`,
+            __html: `(function(){try{var s=location.pathname.split('/').filter(Boolean);var themeable=(s[0]==='blog'||s[0]==='research'||s[0]==='audits')&&s.length>=2;var k='8blocks-theme';if(themeable){var pref=localStorage.getItem('8blocks-blog-theme');localStorage.setItem(k,pref==='light'?'light':'dark');}else{localStorage.setItem(k,'dark');}}catch(e){}})();`,
           }}
         />
         {headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}

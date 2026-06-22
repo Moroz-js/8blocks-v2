@@ -1,8 +1,8 @@
 export const mediaMeta = {
-  title: 'Мы в медиа — 8Blocks',
-  description: 'Публикации, интервью и упоминания команды 8Blocks в медиа.',
-  ogTitle: 'Мы в медиа — 8Blocks',
-  ogDescription: 'Публикации, интервью и упоминания команды 8Blocks в медиа.',
+  title: 'Мы в медиа — А8А9 токеномика.рф',
+  description: 'Публикации, интервью и упоминания команды А8А9 в медиа.',
+  ogTitle: 'Мы в медиа — А8А9 токеномика.рф',
+  ogDescription: 'Публикации, интервью и упоминания команды А8А9 в медиа.',
 } as const
 
 export const mediaArchiveContent = {

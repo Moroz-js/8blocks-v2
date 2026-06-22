@@ -67,6 +67,7 @@ const nextConfig: NextConfig = {
       { pathname: "/api/media/file/**" },
     ],
   },
+  serverExternalPackages: ["puppeteer"],
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",

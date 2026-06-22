@@ -38,6 +38,28 @@
   font-size: clamp(60px, 20.25vw, 240px);
 }
 
+.watermarkRu {
+  white-space: normal;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 0.9;
+  gap: 0.05em;
+  padding-block: clamp(12px, 2vw, 32px) clamp(20px, 3vw, 48px);
+}
+
+.watermarkRuLine1 {
+  display: block;
+  font-size: clamp(56px, 27vw, 300px);
+  line-height: 0.9;
+}
+
+.watermarkRuLine2 {
+  display: block;
+  font-size: clamp(20px, 9vw, 100px);
+  line-height: 0.9;
+}
+
 // Contact page variant: email fills the same watermark space
 .watermarkEmail {
   font-size: clamp(36px, 10vw, 140px);

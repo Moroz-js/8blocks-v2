@@ -64,6 +64,39 @@ echo "📦 Installing dependencies"
 npm ci --prefer-offline
 echo "✓ Dependencies installed"
 
+# ── Chromium system libs for Puppeteer (PDF export) ──
+# Идемпотентно: ставим один раз (маркер-файл), чтобы не гонять apt на каждом деплое.
+CHROMIUM_DEPS_MARKER="/var/lib/8blocks-chromium-deps.installed"
+if [ ! -f "${CHROMIUM_DEPS_MARKER}" ]; then
+  echo "🧩 Installing Chromium system libraries for Puppeteer"
+  if command -v apt-get &>/dev/null; then
+    apt-get update -qq || true
+    apt-get install -y -qq \
+      ca-certificates fonts-liberation fonts-noto-core fonts-noto-cjk \
+      libasound2t64 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
+      libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libglib2.0-0 libgtk-3-0 \
+      libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 \
+      libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 \
+      libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
+      2>/dev/null \
+      || apt-get install -y -qq \
+        ca-certificates fonts-liberation fonts-noto-core fonts-noto-cjk \
+        libasound2 libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 \
+        libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libglib2.0-0 libgtk-3-0 \
+        libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 \
+        libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 \
+        libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
+        2>/dev/null \
+      || echo "⚠️  Could not install some Chromium libs (PDF may need manual deps)"
+    mkdir -p /var/lib && touch "${CHROMIUM_DEPS_MARKER}" 2>/dev/null || true
+    echo "✓ Chromium libraries ready"
+  else
+    echo "⚠️  apt-get not found — skip Chromium libs (install manually for PDF export)"
+  fi
+else
+  echo "✓ Chromium libraries already installed"
+fi
+
 # ── run migrations ────────────────────────────
 echo "🗄️  Running Payload migrations"
 ./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \

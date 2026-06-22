@@ -17,7 +17,11 @@ export function FooterWatermark() {
     offset: ['start end', 'start 0.3'],
   })
 
-  const yRaw = useTransform(scrollYProgress, [0, 1], [120, 0])
+  const ruWatermark = lang === 'ru' && !isContact
+
+  // Меньший ход параллакса для двухстрочной русской версии, чтобы
+  // overflow:hidden секции не обрезал вторую строку «токеномика.рф».
+  const yRaw = useTransform(scrollYProgress, [0, 1], [ruWatermark ? 48 : 120, 0])
   const y = useSpring(yRaw, { stiffness: 60, damping: 20, mass: 0.8 })
 
   const handleClick = useCallback(() => {
@@ -28,11 +32,20 @@ export function FooterWatermark() {
   return (
     <div ref={ref} className={styles.watermarkSection} aria-hidden={!isContact}>
       <motion.div
-        className={`${styles.watermarkText} ${isContact ? styles.watermarkEmail : ''} ${lang === 'en' && !isContact ? styles.watermarkEnglish : ''}`}
+        className={`${styles.watermarkText} ${isContact ? styles.watermarkEmail : ''} ${lang === 'en' && !isContact ? styles.watermarkEnglish : ''} ${ruWatermark ? styles.watermarkRu : ''}`}
         style={{ y, cursor: isContact ? 'pointer' : undefined, userSelect: isContact ? 'text' : 'none' }}
         onClick={handleClick}
       >
-        {isContact ? siteConfig.email : '8BLOCKS'}
+        {isContact ? (
+          siteConfig.email
+        ) : ruWatermark ? (
+          <>
+            <span className={styles.watermarkRuLine1}>А8А9</span>
+            <span className={styles.watermarkRuLine2}>токеномика.рф</span>
+          </>
+        ) : (
+          '8BLOCKS'
+        )}
       </motion.div>
     </div>
   )

@@ -1,8 +1,8 @@
 export const researchMeta = {
-  title: 'Исследования — 8Blocks',
-  description: 'Исследования рынка и токеномики от команды 8Blocks.',
-  ogTitle: 'Исследования — 8Blocks',
-  ogDescription: 'Исследования рынка и токеномики от команды 8Blocks.',
+  title: 'Исследования — А8А9 токеномика.рф',
+  description: 'Исследования рынка и токеномики от команды А8А9.',
+  ogTitle: 'Исследования — А8А9 токеномика.рф',
+  ogDescription: 'Исследования рынка и токеномики от команды А8А9.',
 } as const
 
 export const researchArchiveContent = {

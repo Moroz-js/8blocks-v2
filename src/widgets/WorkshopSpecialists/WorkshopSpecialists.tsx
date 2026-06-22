@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
+import { siteConfig } from '@/shared/config/site'
 import styles from './WorkshopSpecialists.module.scss'
 
 const ease = 'easeOut' as const
@@ -119,7 +120,7 @@ export function WorkshopSpecialists({ headline, description, items }: WorkshopSp
                 </div>
               </div>
 
-              <meta itemProp="worksFor" content="8Blocks" />
+              <meta itemProp="worksFor" content={siteConfig.name} />
             </motion.article>
           ))}
         </div>

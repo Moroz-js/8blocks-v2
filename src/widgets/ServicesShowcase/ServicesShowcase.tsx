@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { servicesShowcaseContent } from '@/shared/content/homePage'
 import { uiStrings } from '@/shared/content/uiStrings'
+import { lang } from '@/shared/i18n'
 import styles from './ServicesShowcase.module.scss'
 
 const ease = 'easeOut' as const
@@ -174,13 +175,25 @@ function TokenAnimation({ visible }: { visible: boolean }) {
         <circle cx={CX} cy={CY} r={60} fill="#C24E88" opacity={0.08} filter="url(#ta-blur-lg)" />
         <circle cx={CX} cy={CY} r={44} fill="none" stroke="url(#ta-coin)" strokeWidth={2} opacity={0.6} />
         <circle cx={CX} cy={CY} r={38} fill="none" stroke="url(#ta-coin)" strokeWidth={1} opacity={0.3} />
-        <motion.path
-          d="M25.789 27.31H0V23.69H25.789V27.31ZM14.736 21.887H11.052V12.847H14.736V21.887ZM20.263 21.887H16.579V7.424H20.263V21.887ZM25.789 2V21.887H22.105V2H25.789ZM9.211 21.887H0V18.271H9.211V21.887ZM9.211 16.463H0V12.847H9.211V16.463ZM14.736 11.039H0V7.424H14.736V11.039ZM20.263 5.616H0V2H20.263V5.616Z"
-          fill="url(#ta-coin)"
-          transform={`translate(${CX - 18}, ${CY - 18}) scale(1.4)`}
-          animate={visible ? { opacity: [0.6, 1, 0.6] } : { opacity: 0 }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        {lang === 'ru' ? (
+          <motion.image
+            href="/icons/ru-logo.svg"
+            x={CX - 40}
+            y={CY - 14}
+            width={80}
+            height={27}
+            animate={visible ? { opacity: [0.6, 1, 0.6] } : { opacity: 0 }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        ) : (
+          <motion.path
+            d="M25.789 27.31H0V23.69H25.789V27.31ZM14.736 21.887H11.052V12.847H14.736V21.887ZM20.263 21.887H16.579V7.424H20.263V21.887ZM25.789 2V21.887H22.105V2H25.789ZM9.211 21.887H0V18.271H9.211V21.887ZM9.211 16.463H0V12.847H9.211V16.463ZM14.736 11.039H0V7.424H14.736V11.039ZM20.263 5.616H0V2H20.263V5.616Z"
+            fill="url(#ta-coin)"
+            transform={`translate(${CX - 18}, ${CY - 18}) scale(1.4)`}
+            animate={visible ? { opacity: [0.6, 1, 0.6] } : { opacity: 0 }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        )}
       </motion.g>
 
       {/* orbiting dots */}

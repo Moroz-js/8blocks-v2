@@ -58,7 +58,7 @@ export function ArticlePage({
           <p className={styles.excerpt}>{article.excerpt}</p>
         )}
         <div className={styles.meta}>
-          <span className={styles.author}>8Blocks</span>
+          <span className={styles.author}>{siteConfig.name}</span>
           <span className={styles.metaSep}>·</span>
           {date && (
             <>

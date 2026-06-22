@@ -1,13 +1,17 @@
-import Image from 'next/image'
 import { RichText } from '@/shared/render'
-import { buildToc } from '@/shared/lib/buildToc'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import { lang } from '@/shared/i18n'
 import { auditsArchiveContent } from '@/shared/content/auditsPage'
-import type { AuditMetrics } from './auditMetrics'
+import type { AuditHeroData } from './auditMetrics'
 import { AuditHero } from './AuditHero'
-import { AuditToc } from './AuditToc'
+import { AuditTakeaways } from './AuditTakeaways'
+import { AuditRating, type RatingBlock } from './AuditRating'
+import { type AuditExpertData } from './AuditExpert'
+import { AuditDocMarker } from './AuditDocMarker'
 import styles from './AuditPage.module.scss'
+
+const AUDIT_DISCLAIMER =
+  'Аудит не является инвестиционной рекомендацией. Используйте его как часть собственного анализа.'
 
 function formatDate(iso?: string | null): string {
   if (!iso) return ''
@@ -18,11 +22,21 @@ function formatDate(iso?: string | null): string {
   })
 }
 
+function formatEyebrowDate(iso?: string | null): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
+  const yy = String(d.getFullYear()).slice(-2)
+  return `${mm}.${yy}`
+}
+
 interface AuditData {
   title: string
   slug: string
   excerpt?: string | null
-  metrics?: AuditMetrics | null
+  hero?: AuditHeroData | null
+  ratingBlocks?: RatingBlock[] | null
+  expert?: AuditExpertData | null
   cover?: { url: string; alt: string } | null
   content?: unknown
   relatedArticleSlug?: string | null
@@ -32,52 +46,62 @@ interface AuditData {
 
 interface Props {
   audit: AuditData
+  print?: boolean
 }
 
-export function AuditPage({ audit }: Props) {
+export function AuditPage({ audit, print = false }: Props) {
   const dateLabel = formatDate(audit.publishedAt)
-  const tocItems = buildToc(audit.content)
+  const eyebrowDate = formatEyebrowDate(audit.publishedAt)
+  const ratingBlocks = audit.ratingBlocks ?? []
+  const conclusionParas = (audit.excerpt ?? '')
+    .split(/\n{2,}/)
+    .map((p) => p.trim())
+    .filter(Boolean)
 
   return (
     <>
+      <AuditDocMarker />
       <AuditHero
         title={audit.title}
-        excerpt={audit.excerpt}
-        metrics={audit.metrics}
+        slug={audit.slug}
+        hero={audit.hero}
         dateLabel={dateLabel || null}
-        publishedAt={audit.publishedAt}
-        relatedArticleSlug={audit.relatedArticleSlug}
+        eyebrowDate={eyebrowDate || null}
+        print={print}
       />
-      {tocItems.length >= 2 && <AuditToc items={tocItems} />}
+
+      <AuditTakeaways
+        verdict={audit.hero?.verdict}
+        strength={audit.hero?.strength}
+        weakness={audit.hero?.weakness}
+      />
 
       <article className={styles.root}>
-        {audit.cover?.url && (
-          <div className={styles.coverWrap}>
-            <Image
-              src={audit.cover.url}
-              alt={audit.cover.alt || audit.title}
-              width={1200}
-              height={630}
-              className={styles.coverImg}
-              priority
-            />
-          </div>
-        )}
-
         {audit.content != null ? (
           <div className={styles.content}>
             <RichText content={audit.content} />
           </div>
         ) : null}
-
-        {audit.relatedArticleSlug && audit.ctaText && (
-          <ServiceCtaBlock
-            headline={audit.ctaText}
-            ctaLabel={auditsArchiveContent.blogArticleLink}
-            ctaHref={`/blog/${audit.relatedArticleSlug}`}
-          />
-        )}
       </article>
+
+      {ratingBlocks.length > 0 && (
+        <AuditRating
+          blocks={ratingBlocks}
+          letterRating={audit.hero?.letterRating}
+          totalScore={audit.hero?.score}
+          conclusion={conclusionParas}
+          disclaimer={AUDIT_DISCLAIMER}
+          expert={audit.expert}
+        />
+      )}
+
+      {!print && audit.relatedArticleSlug && audit.ctaText && (
+        <ServiceCtaBlock
+          headline={audit.ctaText}
+          ctaLabel={auditsArchiveContent.blogArticleLink}
+          ctaHref={`/blog/${audit.relatedArticleSlug}`}
+        />
+      )}
     </>
   )
 }

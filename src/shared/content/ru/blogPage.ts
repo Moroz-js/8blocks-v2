@@ -1,10 +1,10 @@
 // Blog page — single source of truth
 
 export const blogMeta = {
-  title: 'Блог — 8Blocks',
-  description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
-  ogTitle: 'Блог — 8Blocks',
-  ogDescription: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды 8Blocks.',
+  title: 'Блог — А8А9 токеномика.рф',
+  description: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды А8А9.',
+  ogTitle: 'Блог — А8А9 токеномика.рф',
+  ogDescription: 'Статьи о токеномике, экономике Web3 и дизайне токенов от команды А8А9.',
 } as const
 
 export const blogArchiveContent = {

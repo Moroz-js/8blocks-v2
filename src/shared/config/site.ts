@@ -10,14 +10,14 @@ function siteUrlWithHttps(raw: string): string {
 }
 
 export const siteConfig = {
-  name: '8Blocks',
+  name: t({ ru: 'А8А9 токеномика.рф', en: '8Blocks' }),
   description: t({
     ru: 'Токен-экономики, которые усиливают бизнес',
     en: 'Token economies that power the business',
   }),
   url: siteUrlWithHttps(process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io'),
   email: t({ ru: 'hi@токеномика.рф', en: 'hello@8blocks.io' }),
-  legalName: '8BLOCKS FZCO',
+  legalName: t({ ru: 'ООО «Инерция Мысли»', en: '8BLOCKS FZCO' }),
   phone: t({ ru: '8 918 253 79 69', en: '+971 56 286 5188' }),
   address: t({
     ru: 'Москва, Ленинский проспект, 15а',

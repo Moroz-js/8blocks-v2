@@ -27,6 +27,7 @@ export function Header({
       (link.href !== '/research' || researchEnabled),
   )
   const [isOpen, setIsOpen] = useState(false)
+  const [overHero, setOverHero] = useState(false)
   const pathname = usePathname()
   const showThemeToggle = useThemeScopeActive()
 
@@ -34,6 +35,26 @@ export function Header({
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- close mobile menu when navigating
     setIsOpen(false)
+  }, [pathname])
+
+  // Transparent header with light text while overlapping a dark audit hero.
+  useEffect(() => {
+    const update = () => {
+      const hero = document.querySelector('[data-audit-hero]')
+      if (!hero) {
+        setOverHero(false)
+        return
+      }
+      const headerH = window.innerWidth <= 640 ? 56 : 64
+      setOverHero(hero.getBoundingClientRect().bottom > headerH)
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
   }, [pathname])
 
   // Lock body scroll when menu is open
@@ -44,7 +65,7 @@ export function Header({
 
   return (
     <>
-      <header className={styles.header}>
+      <header className={`${styles.header} ${overHero ? styles.overHero : ''}`}>
         <div className={styles.inner}>
           <Logo className={styles.logo} />
 

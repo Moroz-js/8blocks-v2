@@ -1,0 +1,325 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/auditPageLayout' as layout;
+
+.root {
+  @include layout.contentContainer;
+  padding-block: $space-9;
+  color: $text-secondary;
+}
+
+.heading {
+  font-size: $text-2xl;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0 0 $space-6;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-5;
+  margin-bottom: $space-5;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  border: 1px solid $border-secondary;
+  background: $card-panel-bg;
+  padding: $space-6;
+}
+
+.cardTitle {
+  margin: 0 0 $space-4;
+  font-size: $text-xs;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.radarWrap {
+  width: 100%;
+  color: $text-secondary;
+}
+
+// ── Horizontal score bars ──────────────────────────────────────────
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding-top: $space-2;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: $space-2 $space-3;
+}
+
+.barLabel {
+  font-size: $text-sm;
+  color: $text-secondary;
+}
+
+.barValue {
+  font-size: $text-sm;
+  font-weight: 600;
+  color: $text-primary;
+  text-align: right;
+}
+
+.barTrack {
+  grid-column: 1 / -1;
+  height: 7px;
+  background: $bg-secondary;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background: linear-gradient(90deg, #{$pal-magenta} 0%, #{$pal-purple} 100%);
+}
+
+// ── Summary panel: conclusion + black rating box (expert inside) ────
+.summaryPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
+  gap: 0;
+  align-items: stretch;
+  margin-bottom: 0;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.conclusion {
+  padding: $space-7;
+  background: $card-panel-bg;
+  border: 1px solid $border-secondary;
+  border-right: none;
+
+  @media (max-width: #{$bp-tablet}) {
+    border-right: 1px solid $border-secondary;
+    border-bottom: none;
+  }
+}
+
+.panelLabel {
+  margin: 0 0 $space-5;
+  font-size: $text-xs;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.conclusionText {
+  margin: 0 0 $space-4;
+  font-size: $text-md;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.disclaimer {
+  margin: $space-5 0 0;
+  font-size: $text-sm;
+  color: $text-tertiary;
+}
+
+// Black rating box on the right
+.ratingBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: $space-2 $space-6 $space-6;
+  background: #08070a;
+  color: #fff;
+}
+
+.ratingBoxLabel {
+  margin: 0 0 $space-3;
+  font-size: $text-xs;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.scoreLine {
+  display: flex;
+  align-items: baseline;
+  gap: $space-2;
+}
+
+.scoreNum {
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ad0b58;
+}
+
+.scoreMax {
+  font-size: $text-xl;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ratingLetter {
+  margin: $space-3 0 0;
+  font-size: $text-sm;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+// Expert pinned to the bottom of the black box
+.expertRow {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  margin-top: auto;
+  padding-top: $space-6;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+
+  @media (max-width: #{$bp-tablet}) {
+    margin-top: $space-6;
+  }
+}
+
+.expertAvatar {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.expertImg {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.expertFallback {
+  font-size: $text-sm;
+  font-weight: 600;
+  color: #fff;
+}
+
+.expertInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.expertLabel {
+  font-size: $text-xs;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.expertName {
+  font-size: $text-md;
+  font-weight: 600;
+  color: #fff;
+}
+
+// ── Detail table (flush under the summary panel) ────────────────────
+.tableWrap {
+  overflow-x: auto;
+  margin-top: 0;
+  background: $card-panel-bg;
+  border: 1px solid $border-secondary;
+  border-top: none;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $text-sm;
+
+  th,
+  td {
+    padding: $space-4;
+    text-align: left;
+    border-bottom: 1px solid $border-secondary;
+  }
+
+  th {
+    font-weight: 500;
+    color: $text-tertiary;
+    border-top: 1px solid $border-secondary;
+  }
+
+  td {
+    color: $text-secondary;
+  }
+
+  // last column right-aligned (Вклад)
+  th:last-child,
+  td:last-child {
+    text-align: right;
+  }
+
+  .scoreCell {
+    color: #ad0b58;
+    font-weight: 600;
+  }
+
+  .contribCell {
+    color: $text-primary;
+    font-weight: 600;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  // ИТОГО — black row, all columns filled
+  tfoot td {
+    font-weight: 700;
+    font-size: $text-md;
+    color: #fff;
+    background: #08070a;
+    border-bottom: none;
+  }
+
+  tfoot .totalContrib {
+    color: #ad0b58;
+  }
+}
+
+@media print {
+  .card,
+  .barRow,
+  .summaryPanel,
+  .ratingBox {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .table tr,
+  .table thead,
+  .table tfoot {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .heading {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+}

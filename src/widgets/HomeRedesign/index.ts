@@ -1,0 +1,1 @@
+export { HomeRedesign } from './HomeRedesign'

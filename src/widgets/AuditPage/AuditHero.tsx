@@ -1,123 +1,92 @@
-import Link from 'next/link'
-import { Logo } from '@/shared/ui'
+import { Download } from 'lucide-react'
 import { auditsArchiveContent } from '@/shared/content/auditsPage'
-import type { AuditMetrics } from './auditMetrics'
+import type { AuditHeroData } from './auditMetrics'
 import styles from './AuditHero.module.scss'
-
-interface MetricSlot {
-  key: keyof AuditMetrics
-  label: string
-}
-
-const METRIC_SLOTS: MetricSlot[] = [
-  { key: 'companyName', label: 'COMPANY NAME' },
-  { key: 'tokenName', label: 'TOKEN NAME' },
-  { key: 'tokenStandard', label: 'TOKEN STANDARD' },
-  { key: 'fdv', label: 'FDV' },
-  { key: 'mc', label: 'MC' },
-  { key: 'tvl', label: 'TVL' },
-  { key: 'fees', label: 'FEES' },
-  { key: 'users', label: 'USERS' },
-  { key: 'unlock', label: 'UNLOCK' },
-  { key: 'retail', label: 'RETAIL' },
-  { key: 'rating', label: 'RATING' },
-  { key: 'ratingScore', label: 'SCORE' },
-]
-
-const LOGO_GRID_AREAS = [
-  '1 / 1 / 2 / 5',
-  '5 / 1 / 6 / 6',
-  '1 / 5 / 5 / 6',
-  '4 / 1 / 5 / 3',
-  '3 / 1 / 4 / 3',
-  '3 / 3 / 5 / 4',
-  '2 / 4 / 5 / 5',
-  '2 / 1 / 3 / 4',
-] as const
 
 interface Props {
   title: string
-  excerpt?: string | null
-  metrics?: AuditMetrics | null
+  slug: string
+  hero?: AuditHeroData | null
   dateLabel?: string | null
-  publishedAt?: string | null
-  relatedArticleSlug?: string | null
+  eyebrowDate?: string | null
+  print?: boolean
 }
 
-export function AuditHero({
-  title,
-  excerpt,
-  metrics,
-  dateLabel,
-  publishedAt,
-  relatedArticleSlug,
-}: Props) {
-  const filled = METRIC_SLOTS.filter((slot) => {
-    const value = metrics?.[slot.key]
-    return typeof value === 'string' && value.trim().length > 0
-  })
+export function AuditHero({ title, slug, hero, eyebrowDate, print = false }: Props) {
+  const metrics = (hero?.metrics ?? []).filter(
+    (m) => m && m.label && m.value != null && String(m.value).trim().length > 0,
+  )
+  const hasRating = Boolean(hero?.letterRating || hero?.score != null)
+  const ticker = hero?.tokenName || title
+  const siteLabel = hero?.site ? hero.site.replace(/^https?:\/\//, '') : null
+  const siteHref = hero?.site
+    ? /^https?:\/\//.test(hero.site)
+      ? hero.site
+      : `https://${hero.site}`
+    : null
 
-  const primary = filled.slice(0, 8)
-  const overflow = filled.slice(8)
-  const showMeta = Boolean(dateLabel || relatedArticleSlug)
+  const eyebrow = [auditsArchiveContent.auditLabel, eyebrowDate]
+    .filter(Boolean)
+    .join(' · ')
 
   return (
-    <section className={styles.hero} aria-label={title}>
+    <section className={styles.hero} aria-label={title} data-audit-hero>
       <div className={styles.inner}>
-        <Link href="/audits" className={styles.backLink}>
-          ← {auditsArchiveContent.headline}
-        </Link>
+        <div className={styles.head}>
+          <div className={styles.titleBlock}>
+            <span className={styles.eyebrow}>{eyebrow}</span>
+            <h1 className={styles.ticker}>
+              {ticker}
+              {ticker !== title && <span className={styles.srOnly}>{title}</span>}
+            </h1>
+            {siteLabel &&
+              (siteHref ? (
+                <a
+                  href={siteHref}
+                  className={styles.siteLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {siteLabel}
+                </a>
+              ) : (
+                <span className={styles.siteLink}>{siteLabel}</span>
+              ))}
+          </div>
 
-        <Logo className={styles.logo} href="/" />
-
-        <div className={styles.titleBlock}>
-          <h1 className={styles.title}>{title}</h1>
-
-          {showMeta && (
-            <div className={styles.meta}>
-              {dateLabel && (
-                <time className={styles.date} dateTime={publishedAt ?? undefined}>
-                  {dateLabel}
-                </time>
-              )}
-              {relatedArticleSlug && (
-                <>
-                  {dateLabel && <span className={styles.metaSep}>·</span>}
-                  <Link
-                    href={`/blog/${relatedArticleSlug}`}
-                    className={styles.articleLink}
-                  >
-                    {auditsArchiveContent.blogArticleLink}
-                  </Link>
-                </>
+          {hasRating && (
+            <div className={styles.rating}>
+              <span className={styles.ratingLabel}>
+                {auditsArchiveContent.finalRating}
+                {hero?.letterRating ? ` – ${hero.letterRating}` : ''}
+              </span>
+              {hero?.score != null && (
+                <span className={styles.ratingScore}>
+                  {hero.score}
+                  <span className={styles.ratingMax}>/100</span>
+                </span>
               )}
             </div>
           )}
         </div>
 
-        {excerpt && <p className={styles.excerpt}>{excerpt}</p>}
-
-        {primary.length > 0 && (
-          <div className={styles.metricsGridLogo}>
-            {primary.map((slot, index) => (
-              <div
-                key={slot.key}
-                className={styles.metricCard}
-                style={{ gridArea: LOGO_GRID_AREAS[index] }}
-              >
-                <span className={styles.metricLabel}>{slot.label}</span>
-                <span className={styles.metricValue}>{metrics?.[slot.key]}</span>
-              </div>
-            ))}
-          </div>
+        {hero?.projectDescription && (
+          <p className={styles.description}>{hero.projectDescription}</p>
         )}
 
-        {overflow.length > 0 && (
-          <div className={styles.metricsGridExtra}>
-            {overflow.map((slot) => (
-              <div key={slot.key} className={styles.metricCard}>
-                <span className={styles.metricLabel}>{slot.label}</span>
-                <span className={styles.metricValue}>{metrics?.[slot.key]}</span>
+        {!print && (
+          <a href={`/api/audits/${slug}/pdf`} className={styles.pdfButton} data-no-print>
+            {auditsArchiveContent.downloadPdf}
+            <Download size={18} />
+          </a>
+        )}
+
+        {metrics.length > 0 && (
+          <div className={styles.metricsBand}>
+            {metrics.map((m, i) => (
+              <div key={`${m.label}-${i}`} className={styles.metric}>
+                <span className={styles.metricLabel}>{m.label}</span>
+                <span className={styles.metricValue}>{m.value}</span>
               </div>
             ))}
           </div>

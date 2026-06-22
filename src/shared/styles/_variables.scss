@@ -81,7 +81,7 @@ $accent-purple-deep: $pal-purple;
 $accent-green: #75fb63;
 $accent-blue: #638efb;
 
-$gradient-accent: linear-gradient(135deg, #{$pal-rose} 0%, #{$pal-magenta} 55%, #{$pal-purple} 100%);
+$gradient-accent: var(--gradient-accent);
 $gradient-accent-h: linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
 $gradient-card-border: linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
 $gradient-accent-wide: linear-gradient(90deg, #{$pal-rose} 0%, #{$pal-magenta} 40%, #{$pal-purple} 100%);

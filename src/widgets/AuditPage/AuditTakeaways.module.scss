@@ -1,0 +1,53 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/auditPageLayout' as layout;
+
+.root {
+  @include layout.contentContainer;
+  padding-top: $space-8;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-7;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+    gap: $space-5;
+  }
+}
+
+.item {
+  padding-left: $space-5;
+  border-left: 3px solid #ad0b58;
+}
+
+.text {
+  margin: 0;
+  font-family: $font-base;
+  font-size: $text-md;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+.mark {
+  font-family: $font-mono;
+  font-weight: 700;
+  margin-right: $space-2;
+}
+
+.plus {
+  color: #3ecf8e;
+}
+
+.minus {
+  color: #e5484d;
+}
+
+@media print {
+  .grid,
+  .item {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

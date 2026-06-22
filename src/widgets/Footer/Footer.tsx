@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { socialLinks } from '@/shared/config/site'
+import { socialLinks, siteConfig } from '@/shared/config/site'
 import { NewsletterForm } from '@/features/newsletter'
 import { footerContent } from '@/shared/content/footer'
 import { Logo } from '@/shared/ui'
@@ -112,7 +112,7 @@ export function Footer({
           <div className={styles.copyright}>
             <Logo className={styles.logo} />
             <p className={styles.copyrightText}>
-              © {new Date().getFullYear()} 8BLOCKS FZCO. {footerContent.copyright}
+              © {new Date().getFullYear()} {siteConfig.legalName}. {footerContent.copyright}
             </p>
             <Link href="/privacy-policy" className={styles.privacyLink}>
               {footerContent.privacyPolicy}

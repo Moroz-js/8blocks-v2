@@ -1,6 +1,6 @@
 @use '@/shared/styles/variables' as *;
 
-$audit-content-max: 860px;
+$audit-content-max: 1240px;
 
 @mixin contentContainer {
   max-width: $audit-content-max;

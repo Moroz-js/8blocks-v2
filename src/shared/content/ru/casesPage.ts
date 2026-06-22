@@ -232,8 +232,8 @@ export const allTags: CaseTag[] = ['DeFi', 'GameFi', 'RWA', 'Finance']
 export const casesMeta = {
   title: 'Портфолио',
   description:
-    'Кейсы 8Blocks: токеномики, DeFi, GameFi, RWA и международные финансы. Реальные проекты с результатами.',
-  ogTitle: 'Портфолио | 8Blocks',
+    'Кейсы А8А9: токеномики, DeFi, GameFi, RWA и международные финансы. Реальные проекты с результатами.',
+  ogTitle: 'Портфолио | А8А9 токеномика.рф',
   ogDescription: 'Кейсы наших клиентов — от DeFi до токенизации реальных активов.',
 } as const
 

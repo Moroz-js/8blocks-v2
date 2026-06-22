@@ -11,5 +11,8 @@ export const DEFAULT_THEME = 'dark'
 export function isThemeablePath(pathname: string | null | undefined): boolean {
   if (!pathname) return false
   const segments = pathname.split('/').filter(Boolean)
-  return (segments[0] === 'blog' || segments[0] === 'research') && segments.length >= 2
+  return (
+    (segments[0] === 'blog' || segments[0] === 'research' || segments[0] === 'audits') &&
+    segments.length >= 2
+  )
 }

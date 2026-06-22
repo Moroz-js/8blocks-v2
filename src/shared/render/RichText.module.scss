@@ -195,6 +195,8 @@
     padding: $space-6 $space-7;
     border-radius: 0;
     border: 1px solid $border-primary;
+    border-left-width: 3px;
+    border-left-color: $accent-purple;
     background: linear-gradient(
       135deg,
       rgba(142, 74, 189, 0.28) 0%,
@@ -218,6 +220,31 @@
       );
       pointer-events: none;
       z-index: 0;
+    }
+  }
+
+  // Important — default purple/pink (inherits .callout look)
+  .callout_important {
+    border-left-color: $accent-purple;
+  }
+
+  // Critical — red-tinted, stronger emphasis
+  .callout_critical {
+    border-left-color: #e5484d;
+    background: linear-gradient(
+      135deg,
+      rgba(229, 72, 77, 0.26) 0%,
+      rgba(229, 72, 77, 0.12) 42%,
+      rgba(18, 10, 12, 0.72) 100%
+    );
+
+    &::before {
+      background: radial-gradient(
+        ellipse 90% 80% at 12% 0%,
+        rgba(229, 72, 77, 0.34) 0%,
+        rgba(229, 72, 77, 0.1) 45%,
+        transparent 72%
+      );
     }
   }
 
@@ -294,7 +321,7 @@
 
     :global(.katex) {
       font-size: 1.2em;
-      color: $text-primary;
+      color: #ad0b58;
     }
 
     :global(.katex-display) {
@@ -308,6 +335,404 @@
     color: $text-tertiary;
     font-style: italic;
     text-align: center;
+  }
+
+  // ── Risk profile block ───────────────────────────────────────────
+  .riskProfile {
+    margin: $space-7 0;
+  }
+
+  .riskTitle {
+    font-size: $text-xl;
+    font-weight: 500;
+    color: $text-primary;
+    margin: 0 0 $space-4;
+  }
+
+  .riskTotal {
+    margin: $space-4 0 0;
+    font-size: $text-md;
+    color: $text-primary;
+
+    strong {
+      color: $accent-pink-deep;
+    }
+  }
+
+  .riskInterpretation {
+    margin: $space-3 0 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+  }
+
+  // ── Chart row (side-by-side charts) ──────────────────────────────
+  .chartRow {
+    margin: $space-5 0;
+    display: grid;
+    gap: $space-5;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    &[data-count='1'] {
+      grid-template-columns: 1fr;
+    }
+    &[data-count='3'] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: #{$bp-tablet}) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // ── Metric strip (sub-metric cards) ──────────────────────────────
+  .metricStrip {
+    margin: $space-5 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    border: 1px solid $border-secondary;
+    background: $card-panel-bg;
+  }
+
+  .metricItem {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    padding: $space-5;
+    border-left: 1px solid $border-secondary;
+
+    &:first-child {
+      border-left: none;
+    }
+
+    @media (max-width: #{$bp-mobile}) {
+      border-left: none;
+      border-top: 1px solid $border-secondary;
+
+      &:first-child {
+        border-top: none;
+      }
+    }
+  }
+
+  .metricLabel {
+    font-size: $text-sm;
+    color: $text-tertiary;
+  }
+
+  .metricValue {
+    font-size: $text-2xl;
+    font-weight: 500;
+    line-height: 1.1;
+    color: $text-primary;
+    margin-top: $space-2;
+  }
+
+  // ── Checklist (check / cross / warn) ─────────────────────────────
+  .checklistCard {
+    margin: $space-5 0;
+    border: 1px solid $border-secondary;
+    background: $card-panel-bg;
+    padding: $space-6;
+  }
+
+  .checklistTitle {
+    margin: 0 0 $space-4;
+    font-size: $text-xs;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $text-tertiary;
+  }
+
+  .checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  .checkItem {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-3;
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+    padding-left: 0;
+
+    &::before {
+      content: none;
+    }
+  }
+
+  .checkMark {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    color: #fff;
+  }
+
+  .mark_check {
+    background: #1f9d63;
+  }
+
+  // Negative (minus) — solid red circle with white glyph
+  .mark_cross {
+    background: #b70003;
+  }
+
+  // Risk — amber warning triangle (no circle background)
+  .mark_warn {
+    background: transparent;
+    overflow: visible;
+  }
+
+  .warnIcon {
+    width: 22px;
+    height: 22px;
+    display: block;
+  }
+
+  .checkText {
+    flex: 1 1 auto;
+    color: $text-secondary;
+  }
+
+  // ── Stat columns (combined card, flow lists) ─────────────────────
+  .statColumns {
+    margin: $space-5 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border: 1px solid $border-secondary;
+    background: $card-panel-bg;
+
+    &[data-count='1'] {
+      grid-template-columns: 1fr;
+    }
+    &[data-count='3'] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: #{$bp-tablet}) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .statCol {
+    padding: $space-5 $space-6;
+    border-left: 1px solid $border-secondary;
+
+    &:first-child {
+      border-left: none;
+    }
+
+    @media (max-width: #{$bp-tablet}) {
+      border-left: none;
+      border-top: 1px solid $border-secondary;
+
+      &:first-child {
+        border-top: none;
+      }
+    }
+  }
+
+  .statColTitle {
+    margin: 0 0 $space-3;
+    font-size: $text-xs;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $text-tertiary;
+  }
+
+  .statRow {
+    padding: $space-3 0;
+    border-top: 1px solid rgba(194, 78, 136, 0.22);
+    font-size: $text-sm;
+
+    &:first-of-type {
+      border-top: none;
+    }
+  }
+
+  .statRowHead {
+    display: flex;
+    justify-content: space-between;
+    gap: $space-4;
+  }
+
+  .statRowLabel {
+    color: $text-secondary;
+  }
+
+  .statRowValue {
+    color: #ad0b58;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .statBarTrack {
+    margin-top: $space-3;
+    height: 6px;
+    background: $bg-secondary;
+    overflow: hidden;
+  }
+
+  .statBarFill {
+    height: 100%;
+    background: linear-gradient(90deg, #{$pal-magenta} 0%, #{$pal-purple} 100%);
+  }
+
+  .statColNote {
+    margin: $space-4 0 0;
+    font-size: $text-sm;
+    color: $text-tertiary;
+    line-height: $leading-relaxed;
+  }
+
+  // ── Info columns (utility / formula cards) ───────────────────────
+  .infoColumns {
+    margin: $space-5 0;
+    display: grid;
+    gap: $space-5;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    // 3 cards → single row; 4 cards → 2×2 grid
+    &[data-count='3'] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media (max-width: #{$bp-tablet}) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .infoCard {
+    border: 1px solid $border-secondary;
+    background: $card-panel-bg;
+    padding: $space-6;
+
+    .formula {
+      margin: $space-3 0;
+      padding: $space-3 $space-4;
+    }
+  }
+
+  .infoTitle {
+    margin: 0 0 $space-3;
+    font-size: $text-xs;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ad0b58;
+  }
+
+  .infoBody {
+    margin: $space-2 0 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+  }
+
+  // ── Numbered notes (critical) ────────────────────────────────────
+  .numberedNotes {
+    list-style: none;
+    margin: $space-5 0;
+    padding: 0;
+    border: 1px solid $border-secondary;
+    background: $card-panel-bg;
+  }
+
+  .numberedItem {
+    display: flex;
+    align-items: flex-start;
+    gap: $space-5;
+    padding: $space-6;
+    border-top: 1px solid $border-secondary;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &::before {
+      content: none;
+    }
+  }
+
+  .numberedIndex {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    font-family: $font-mono;
+    font-size: $text-md;
+    font-weight: 600;
+    color: #fff;
+    background: #b70003;
+    border: none;
+  }
+
+  .numberedBody {
+    flex: 1 1 auto;
+  }
+
+  .numberedTitle {
+    margin: 0 0 $space-2;
+    font-size: $text-md;
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  .numberedText {
+    margin: 0;
+    font-size: $text-sm;
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+  }
+}
+
+// ── PDF / print: keep blocks from splitting across pages ─────────────
+@media print {
+  .chartRow,
+  .metricStrip,
+  .statColumns,
+  .statCol,
+  .infoCard,
+  .checklistCard,
+  .checkItem,
+  .numberedItem,
+  .callout,
+  .formula,
+  .figure,
+  .blockquote {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  // Keep table rows intact and headers attached to their content.
+  .table tr,
+  .table thead {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  // Don't leave a heading stranded at the bottom of a page.
+  .h2,
+  .h3,
+  .h4 {
+    break-after: avoid;
+    page-break-after: avoid;
   }
 }
 

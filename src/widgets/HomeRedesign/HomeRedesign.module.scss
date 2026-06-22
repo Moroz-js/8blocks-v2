@@ -1,0 +1,86 @@
+// Scoped token overrides for the home redesign sandbox (/home-redesign).
+// Recolors the brand gradient, pink accent, background bloom and the А8А9 letters
+// to the new pink/red theme — everything is scoped via CSS variables so the rest
+// of the site is untouched.
+.scope {
+  position: relative;
+
+  // Brand heading gradient (Figma)
+  --gradient-accent: radial-gradient(
+    172.5% 252.2% at -30.73% 20%,
+    #ffbadd 27.63%,
+    #9f174d 55.61%,
+    rgba(159, 23, 77, 0.45) 80.71%,
+    rgba(159, 23, 77, 0.15) 100%
+  );
+
+  // Pink accent
+  --accent: #9f174d;
+  --accent-purple: #9f174d;
+
+  // Скругление карточек/кнопок (наглядное «до-после»: 0 → 15px как в Figma)
+  --card-radius: 15px;
+
+  // А8А9 floating letters (HeroLetters)
+  --rdletter-face: #ffbadd;
+  --rdletter-extrude: #9f174d;
+  --rdletter-glow: radial-gradient(
+    circle at 50% 45%,
+    rgba(159, 23, 77, 0.32) 0%,
+    rgba(141, 9, 60, 0.14) 38%,
+    transparent 72%
+  );
+
+  // ── Pink background bloom (replaces the global purple bloom on this page) ──
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: var(--body-bg);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      radial-gradient(
+        ellipse 110vw 60vh at 50vw -5vh,
+        rgba(255, 186, 221, 0.1) 0%,
+        rgba(159, 23, 77, 0.1) 40%,
+        transparent 68%
+      ),
+      radial-gradient(
+        ellipse 80vw 70vh at -15vw -5vh,
+        rgba(159, 23, 77, 0.12) 0%,
+        rgba(159, 23, 77, 0.04) 50%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 55vw 55vh at 108vw 30vh,
+        rgba(141, 9, 60, 0.1) 0%,
+        rgba(159, 23, 77, 0.04) 50%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 55vw 45vh at 110vw 110vh,
+        rgba(159, 23, 77, 0.08) 0%,
+        transparent 60%
+      );
+    background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  }
+
+  // ── Headings: font-weight 500 ──
+  :global(h1),
+  :global(h2),
+  :global(h3),
+  :global(h4) {
+    font-weight: 500;
+  }
+
+  // ── Apply the red/pink gradient to more headings ──
+  :global(h2) {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

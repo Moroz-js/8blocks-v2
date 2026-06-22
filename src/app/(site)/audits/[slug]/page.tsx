@@ -6,9 +6,19 @@ import { siteConfig } from '@/shared/config/site'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { AuditPage } from '@/widgets/AuditPage'
+import { ThemeScopeMarker } from '@/shared/lib/ThemeScope'
 
 interface PageProps {
   params: Promise<{ slug: string }>
+  searchParams?: Promise<{ print?: string }>
+}
+
+function mapMedia(raw: unknown, fallbackAlt: string): { url: string; alt: string } | null {
+  if (!raw || typeof raw !== 'object') return null
+  const m = raw as { url?: unknown; filename?: unknown; alt?: unknown }
+  const url =
+    typeof m.url === 'string' ? m.url : `/uploads/${String(m.filename ?? '')}`
+  return { url, alt: typeof m.alt === 'string' ? m.alt : fallbackAlt }
 }
 
 async function getAuditBySlug(slug: string) {
@@ -72,50 +82,85 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   })
 }
 
-export default async function AuditSlugPage({ params }: PageProps) {
+export default async function AuditSlugPage({ params, searchParams }: PageProps) {
   const { slug } = await params
+  const sp = searchParams ? await searchParams : {}
+  const print = sp.print === '1' || sp.print === 'true'
+
   const doc = await getAuditBySlug(slug)
   if (!doc) notFound()
 
   const cover = doc.cover && typeof doc.cover === 'object' ? doc.cover : null
-  const metrics = doc.metrics && typeof doc.metrics === 'object' ? doc.metrics : null
+  const heroRaw = (doc.hero && typeof doc.hero === 'object' ? doc.hero : {}) as Record<
+    string,
+    unknown
+  >
+  const heroMetrics = Array.isArray(doc.heroMetrics)
+    ? (doc.heroMetrics as { label?: unknown; value?: unknown }[]).map((m) => ({
+        label: String(m.label ?? ''),
+        value: String(m.value ?? ''),
+      }))
+    : []
+
+  const ratingBlocks = Array.isArray(doc.ratingBlocks)
+    ? (doc.ratingBlocks as { block?: unknown; weight?: unknown; scoreFive?: unknown }[]).map(
+        (b) => ({
+          block: String(b.block ?? ''),
+          weight: Number(b.weight ?? 0),
+          scoreFive: Number(b.scoreFive ?? 0),
+        }),
+      )
+    : []
+
+  const expertRaw = (doc.expert && typeof doc.expert === 'object' ? doc.expert : {}) as Record<
+    string,
+    unknown
+  >
 
   return (
-    <AuditPage
-      audit={{
-        title: doc.title,
-        slug: doc.slug,
-        excerpt: doc.excerpt ?? null,
-        metrics: metrics
-          ? {
-              companyName: metrics.companyName ?? null,
-              tokenName: metrics.tokenName ?? null,
-              tokenStandard: metrics.tokenStandard ?? null,
-              fdv: metrics.fdv ?? null,
-              mc: metrics.mc ?? null,
-              tvl: metrics.tvl ?? null,
-              fees: metrics.fees ?? null,
-              users: metrics.users ?? null,
-              unlock: metrics.unlock ?? null,
-              retail: metrics.retail ?? null,
-              rating: metrics.rating ?? null,
-              ratingScore: metrics.ratingScore ?? null,
-            }
-          : null,
-        cover: cover
-          ? {
-              url: cover.url ?? `/uploads/${cover.filename}`,
-              alt: (cover.alt as string) || doc.title,
-            }
-          : null,
-        content: doc.content,
-        relatedArticleSlug:
-          doc.relatedArticle && typeof doc.relatedArticle === 'object'
-            ? (doc.relatedArticle as { slug?: string }).slug ?? null
+    <>
+      <ThemeScopeMarker />
+      <AuditPage
+        print={print}
+        audit={{
+          title: doc.title,
+          slug: doc.slug,
+          excerpt: typeof doc.excerpt === 'string' ? doc.excerpt : null,
+          hero: {
+            company: (heroRaw.company as string) ?? null,
+            tokenName: (heroRaw.tokenName as string) ?? null,
+            tokenStandard: (heroRaw.tokenStandard as string) ?? null,
+            projectDescription: (heroRaw.projectDescription as string) ?? null,
+            site: (heroRaw.site as string) ?? null,
+            metrics: heroMetrics,
+            verdict: (heroRaw.verdict as string) ?? null,
+            strength: (heroRaw.strength as string) ?? null,
+            weakness: (heroRaw.weakness as string) ?? null,
+            letterRating: (heroRaw.letterRating as string) ?? null,
+            score: typeof heroRaw.score === 'number' ? heroRaw.score : null,
+          },
+          ratingBlocks,
+          expert: {
+            name: (expertRaw.name as string) ?? null,
+            role: (expertRaw.role as string) ?? null,
+            rating: (expertRaw.rating as string) ?? null,
+            photo: mapMedia(expertRaw.photo, (expertRaw.name as string) ?? doc.title),
+          },
+          cover: cover
+            ? {
+                url: cover.url ?? `/uploads/${cover.filename}`,
+                alt: (cover.alt as string) || doc.title,
+              }
             : null,
-        ctaText: doc.ctaText ?? null,
-        publishedAt: doc.publishedAt ? String(doc.publishedAt) : null,
-      }}
-    />
+          content: doc.content,
+          relatedArticleSlug:
+            doc.relatedArticle && typeof doc.relatedArticle === 'object'
+              ? (doc.relatedArticle as { slug?: string }).slug ?? null
+              : null,
+          ctaText: doc.ctaText ?? null,
+          publishedAt: doc.publishedAt ? String(doc.publishedAt) : null,
+        }}
+      />
+    </>
   )
 }
