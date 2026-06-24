@@ -22,6 +22,7 @@ import {
   ChartRowBlock,
   ChecklistBlock,
   FormulaBlock,
+  IframeBlock,
   InfoColumnsBlock,
   MetricStripBlock,
   NumberedNotesBlock,
@@ -279,6 +280,7 @@ export const PublicAudits: CollectionConfig = {
               InfoColumnsBlock,
               NumberedNotesBlock,
               RiskProfileBlock,
+              IframeBlock,
             ],
           }),
           UploadFeature({

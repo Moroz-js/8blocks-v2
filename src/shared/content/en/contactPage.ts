@@ -18,7 +18,7 @@ export const contactPageContent = {
     person: {
       name: 'Oksana',
       role: 'COO',
-      tgHref: 'https://t.me/eightblocks',
+      tgHref: 'https://t.me/Eight_Blocks',
       tgLabel: 'Telegram channel →',
     },
     preferEmailLabel: 'Prefer email?',

@@ -44,7 +44,7 @@ export const navLinks = [
 ] as const
 
 const ruSocialLinks = [
-  { id: 'telegram', label: 'Telegram', href: 'https://t.me/eightblocks', icon: '/icons/tg-icon.svg' },
+  { id: 'telegram', label: 'Telegram', href: 'https://t.me/eightblocksio8', icon: '/icons/tg-icon.svg' },
   { id: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@8BlocksLabs', icon: '/icons/yt-icon.svg' },
   { id: 'vc', label: 'VC.ru', href: 'https://vc.ru/id4926495', icon: '/icons/vc-icon.svg' },
   { id: 'dzen', label: 'Дзен', href: 'https://dzen.ru/eightblocks', icon: '/icons/dzen-icon.svg' },

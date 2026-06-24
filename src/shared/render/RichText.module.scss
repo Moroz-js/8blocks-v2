@@ -189,6 +189,33 @@
     border: 0;
   }
 
+  // ── Iframe embed block ───────────────────────────────────────────
+  .iframeWrap {
+    margin: $space-7 0;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  .iframeFrame {
+    position: relative;
+    width: 100%;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: 1px solid $border-secondary;
+    }
+  }
+
+  .iframeCaption {
+    font-size: $text-sm;
+    color: $text-tertiary;
+    text-align: center;
+    font-style: italic;
+  }
+
   .callout {
     position: relative;
     margin: $space-7 0;
@@ -715,7 +742,8 @@
   .callout,
   .formula,
   .figure,
-  .blockquote {
+  .blockquote,
+  .iframeWrap {
     break-inside: avoid;
     page-break-inside: avoid;
   }

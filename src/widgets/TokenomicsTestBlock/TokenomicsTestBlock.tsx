@@ -5,14 +5,24 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import { tokenomicsTestContent, tokenomicsTestScreens, tokenomicsTestAriaLabel } from '@/shared/content/homePage'
+import { tokenLabContent } from '@/shared/content/tokenLabPage'
 import styles from './TokenomicsTestBlock.module.scss'
 
 const ease = 'easeOut' as const
 
+const arrow = (
+  <span className={styles.ctaArrow} aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  </span>
+)
+
 const SCREENS = [...tokenomicsTestScreens]
 
 export function TokenomicsTestBlock() {
-  const { headline, description, ctaLabel, ctaHref } = tokenomicsTestContent
+  const { headline, description } = tokenomicsTestContent
+  const heroCtas = tokenLabContent.hero.ctas
 
   return (
     <section className={styles.section} aria-label={tokenomicsTestAriaLabel}>
@@ -72,19 +82,16 @@ export function TokenomicsTestBlock() {
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.5, ease, delay: 0.2 }}
         >
-          <Link
-            href={ctaHref}
-            className={styles.cta}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {ctaLabel}
-            <span className={styles.ctaArrow} aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </span>
-          </Link>
+          {heroCtas.map((c, i) => (
+            <Link
+              key={c.href}
+              href={c.href}
+              className={`${styles.heroCta} ${i === 0 ? styles.heroCtaPrimary : ''}`}
+            >
+              {c.label}
+              {arrow}
+            </Link>
+          ))}
         </motion.div>
       </div>
     </section>

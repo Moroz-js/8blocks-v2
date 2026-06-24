@@ -33,6 +33,8 @@ type LexNode = {
     url?: string
     newTab?: boolean
     linkType?: string
+    // iframe
+    height?: number | null
     // chart
     type?: string
     seriesLabel?: string
@@ -199,6 +201,29 @@ function renderBlock(node: LexNode, key: string): React.ReactNode {
       return fields.formula ? (
         <FormulaView key={key} formula={fields.formula} caption={fields.caption} />
       ) : null
+
+    case 'iframe': {
+      if (!fields.url) return null
+      const frameHeight =
+        typeof fields.height === 'number' && fields.height > 0 ? fields.height : 480
+      return (
+        <figure key={key} className={styles.iframeWrap}>
+          <div className={styles.iframeFrame} style={{ height: frameHeight }}>
+            <iframe
+              src={fields.url}
+              title={fields.title || fields.caption || 'Встраивание'}
+              loading="lazy"
+              allow="fullscreen; clipboard-write"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          {fields.caption && (
+            <figcaption className={styles.iframeCaption}>{fields.caption}</figcaption>
+          )}
+        </figure>
+      )
+    }
 
     case 'chart': {
       return renderSingleChart(

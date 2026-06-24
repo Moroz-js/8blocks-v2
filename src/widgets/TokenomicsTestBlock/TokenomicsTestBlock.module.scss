@@ -166,6 +166,33 @@
 .ctaWrap {
   display: flex;
   justify-content: center;
+  gap: $space-4;
+  flex-wrap: wrap;
+}
+
+// Кнопки 1:1 как в hero страницы /product/calculator (TokenLabPage)
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  color: $text-primary;
+  text-decoration: none;
+  padding: $space-3 $space-5;
+  border: 1px solid $border-primary;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &:hover {
+    background: $bg-secondary;
+    border-color: $border-primary;
+  }
+}
+
+.heroCtaPrimary {
+  background: $bg-secondary;
+  border-color: $border-primary;
 }
 
 .cta {
@@ -214,7 +241,8 @@
   align-items: center;
   transition: transform $transition-fast;
 
-  .cta:hover & {
+  .cta:hover &,
+  .heroCta:hover & {
     transform: translateX(3px);
   }
 }
