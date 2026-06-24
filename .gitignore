@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# puppeteer browser cache (installed on server at deploy)
+/.puppeteer
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

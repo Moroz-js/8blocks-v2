@@ -15,6 +15,11 @@ trap 'error_exit $LINENO' ERR
 DEPLOY_MODE="${DEPLOY_MODE:-soft}"
 PROJECT_DIR="/var/www/${PROJECT_NAME}"
 
+# Детерминированная кэш-директория Chrome для Puppeteer. Один и тот же путь
+# используется при установке браузера и в рантайме (через .env), чтобы не
+# зависеть от $HOME пользователя ssh-сессии vs процесса pm2.
+export PUPPETEER_CACHE_DIR="${PROJECT_DIR}/.puppeteer"
+
 # ── pre-flight ────────────────────────────────
 [ -n "${PROJECT_NAME:-}" ] || { echo "❌ PROJECT_NAME not set"; exit 1; }
 [ -d "${PROJECT_DIR}" ]    || { echo "❌ Project dir not found: ${PROJECT_DIR}"; exit 1; }
@@ -55,6 +60,7 @@ printf '%s\n' \
   "NEXT_PUBLIC_LANG=${NEXT_PUBLIC_LANG}" \
   "NEXT_PUBLIC_REPLAIN_ID=${NEXT_PUBLIC_REPLAIN_ID}" \
   "NEXT_PUBLIC_CALENDLY_URL=${NEXT_PUBLIC_CALENDLY_URL}" \
+  "PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR}" \
   > .env
 chmod 600 .env
 echo "✓ .env written"
@@ -101,12 +107,18 @@ else
 fi
 
 # ── Puppeteer browser (Chrome) ────────────────
-# Ставим управляемый Puppeteer Chrome в общий кэш (~/.cache/puppeteer).
+# Ставим управляемый Puppeteer Chrome в фиксированный кэш ${PUPPETEER_CACHE_DIR}.
 # Идемпотентно: если нужная версия уже есть — быстрый no-op. Не валим деплой,
 # если скачать не удалось (сайт поднимется, не сработает только экспорт PDF).
-echo "🌐 Ensuring Puppeteer Chrome is installed"
+echo "🌐 Ensuring Puppeteer Chrome is installed (cache: ${PUPPETEER_CACHE_DIR})"
+mkdir -p "${PUPPETEER_CACHE_DIR}"
 npx --yes puppeteer browsers install chrome \
   || echo "⚠️  Puppeteer Chrome install failed (PDF export may not work)"
+if [ -d "${PUPPETEER_CACHE_DIR}/chrome" ]; then
+  echo "✓ Chrome present: $(find "${PUPPETEER_CACHE_DIR}/chrome" -maxdepth 1 -mindepth 1 -type d 2>/dev/null | head -n1)"
+else
+  echo "⚠️  Chrome not found in ${PUPPETEER_CACHE_DIR} (PDF export may not work)"
+fi
 
 # ── run migrations ────────────────────────────
 echo "🗄️  Running Payload migrations"
@@ -114,6 +126,18 @@ echo "🗄️  Running Payload migrations"
   node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs \
   scripts/run-migrations.ts
 echo "✓ Migrations applied"
+
+# ── regenerate Payload import map ─────────────
+# Гарантируем, что src/app/(payload)/admin/importMap.js соответствует текущим
+# блокам/кастомным компонентам редактора. Иначе новые виджеты могут не
+# подхватываться в админке без полного рефреша. Не валим деплой при ошибке —
+# в репозитории уже есть закоммиченный importMap.js.
+echo "🧭 Regenerating Payload import map"
+./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
+  node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs \
+  node_modules/payload/dist/bin/index.js generate:importmap \
+  || echo "⚠️  Import map generation failed (using committed importMap.js)"
+echo "✓ Import map ready"
 
 # ── build ─────────────────────────────────────
 echo "🏗️  Building application"
