@@ -22,7 +22,11 @@ const enObject = {
     secondaryLabel: 'Send a request without the calculator',
     secondaryHref: '#contact',
     partnersLead: 'Track partners',
-    partners: ['8Blocks', 'Fibonacci', 'BingX'],
+    partners: [
+      { name: '8Blocks', logo: '/icons/en-logo.svg' },
+      { name: 'Fibonacci', logo: '/partners/7.svg' },
+      { name: 'BingX', logo: '/partners/bingx-logo.svg' },
+    ],
   },
   gaps: {
     label: 'where launches break',
@@ -69,7 +73,7 @@ const enObject = {
         lead: 'One failed round can cost a project up to a year of runway.',
         data: 'The average Web3 seed round in 2025 was $4M; pre-seed — $2.6M. Deal count fell 34% versus Q4 2024: investors committed less often but with bigger checks.',
         sourceLabel: 'Outlier Ventures · Web3 Fundraising Q1 2025',
-        sourceHref: 'https://outlierventures.io/',
+        sourceHref: 'https://outlierventures.io/article/web3-fundraising-in-q1-2025-what-founders-investors-need-to-know/',
         external: true,
       },
       {
@@ -78,7 +82,7 @@ const enObject = {
         lead: 'More than half — and the problem is almost always the same.',
         data: '53.2% of crypto projects launched since 2021 have been declared dead (11.6 million projects). Leading causes include weak tokenomics and unpreparedness for exchange due diligence.',
         sourceLabel: 'CoinGecko · Dead Coins Report 2025',
-        sourceHref: 'https://www.coingecko.com/research',
+        sourceHref: 'https://www.coingecko.com/research/publications/how-many-cryptocurrencies-failed',
         external: true,
       },
       {
@@ -285,6 +289,7 @@ const enObject = {
     ],
     geographyTitle: 'Geography and clients',
     geographyText: 'Offices in Dubai and Berlin. Clients across the US, Europe, MENA and LatAm.',
+    networkLabel: 'partner network',
     networkTitle: 'Our partner network',
     network: [
       { label: 'BingX', href: 'https://bingx.com' },

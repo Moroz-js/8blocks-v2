@@ -51,20 +51,7 @@ npm run payload:migrate:create
 npm run payload:migrate
 ```
 
-### 5. Seed (опционально)
-
-```bash
-# RU-данные (категории, статьи, лиды)
-npm run seed
-
-# EN-данные
-npm run seed:en
-
-```
-
-> ⚠️ Seed рассчитан на `NODE_ENV=development`. На production не запускайте без `SEED_ALLOWED=true`.
-
-### 6. Запуск
+### 5. Запуск
 
 ```bash
 npm run dev
@@ -109,7 +96,7 @@ payload/
   collections/            # Коллекции Payload (Users, Articles, Categories, Leads, Media…)
 
 migrations/               # SQL-миграции БД (Payload)
-scripts/                  # seed.ts, seed-en.ts, run-migrations.ts, payload-next-env-shim.cjs
+scripts/                  # run-migrations.ts, github-deploy-remote.sh, payload-next-env-shim.cjs
 docs/                     # Документация: переводы, styleguide
 public/
   uploads/                # Загруженные медиа (не в git)
@@ -129,8 +116,6 @@ public/
 | `npm run validate` | typecheck + lint + build |
 | `npm run payload:migrate` | Применить миграции |
 | `npm run payload:migrate:create` | Создать новую миграцию |
-| `npm run seed` | Seed БД — RU-данные |
-| `npm run seed:en` | Seed БД — EN-данные |
 | `npm run payload:migrate:run` | Миграции через `run-migrations.ts` (без интерактива CLI) |
 
 ---
@@ -141,8 +126,8 @@ public/
 |------------|----------|
 | `DATABASE_URI` | Строка подключения PostgreSQL |
 | `PAYLOAD_SECRET` | Секрет Payload CMS |
-| `ADMIN_EMAIL` | Email администратора (вход в /admin и seed) |
-| `ADMIN_PASSWORD` | Пароль администратора (seed) |
+| `ADMIN_EMAIL` | Email администратора (вход в /admin) |
+| `ADMIN_PASSWORD` | Пароль администратора |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Отправка писем (SMTP, адрес отправителя) |
 | `ADMIN_NOTIFY_EMAIL` | Ящик для админских уведомлений (заявки, подписки); один на все инстансы. Если не задан — используется `SMTP_FROM` |
 | `NEXT_PUBLIC_SITE_URL` | Базовый URL сайта (canonical, OG) |
@@ -155,7 +140,7 @@ public/
 
 ## CI/CD
 
-- **Deploy to Production** (`.github/workflows/deploy.yml`) — `workflow_dispatch`, SSH на RU / EN / AE, на сервере выполняется `scripts/github-deploy-remote.sh`: `git reset` к `main`, запись `.env`, `npm ci`, миграции Payload, `npm run build`, PM2. Режим **hard** дополнительно запускает `npm run seed` (для EN-сайта при необходимости лучше править скрипт под `seed:en`).
+- **Deploy to Production** (`.github/workflows/deploy.yml`) — `workflow_dispatch`, SSH на RU / EN / AE (можно выбрать один сайт через `deploy_target`), на сервере выполняется `scripts/github-deploy-remote.sh`: `git reset` к `main`, запись `.env`, `npm ci`, миграции Payload, `npm run build`, PM2.
 - **Update .env** (`.github/workflows/update-env.yml`) — только перезапись `.env` и `pm2 reload`, без сборки и без смены пользователя в БД Payload.
 
 Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (см. переменные в workflow-файлах). Дополнительно репозиторный секрет **`ADMIN_NOTIFY_EMAIL`** (без префикса): общий получатель админских писем для RU, EN и AE; добавьте его в GitHub → Settings → Secrets and variables → Actions.

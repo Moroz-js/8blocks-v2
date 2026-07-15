@@ -28,7 +28,7 @@ export const footerContent = {
   ],
   productLinks: [
     {
-      label: 'Project with partners',
+      label: 'Token launch with Fibonacci & BingX',
       href: '/product/token-launch',
     },
     {

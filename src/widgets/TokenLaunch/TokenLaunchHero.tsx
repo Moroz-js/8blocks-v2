@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { tokenLaunchContent } from '@/shared/content/tokenLaunch'
@@ -7,6 +8,7 @@ import styles from './TokenLaunch.module.scss'
 
 const ease = 'easeOut' as const
 const { hero } = tokenLaunchContent
+const statSourceExternal = /^https?:\/\//.test(hero.statSourceHref)
 
 export function TokenLaunchHero() {
   return (
@@ -80,9 +82,20 @@ export function TokenLaunchHero() {
             <span className={styles.heroStatValue}>{hero.statValue}</span>
             <p className={styles.heroStatCaption}>{hero.statCaption}</p>
             <figcaption>
-              <Link href={hero.statSourceHref} className={styles.heroStatSource}>
-                {hero.statSourceLabel}
-              </Link>
+              {statSourceExternal ? (
+                <a
+                  href={hero.statSourceHref}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  className={styles.heroStatSource}
+                >
+                  {hero.statSourceLabel} ↗
+                </a>
+              ) : (
+                <Link href={hero.statSourceHref} className={styles.heroStatSource}>
+                  {hero.statSourceLabel}
+                </Link>
+              )}
             </figcaption>
           </motion.figure>
         </div>
@@ -94,11 +107,18 @@ export function TokenLaunchHero() {
           transition={{ duration: 0.5, ease, delay: 0.5 }}
         >
           <span className={styles.heroPartnersLead}>{hero.partnersLead}</span>
-          {hero.partners.map((partner) => (
-            <span key={partner} className={styles.heroPartnerMark}>
-              {partner}
-            </span>
-          ))}
+          <div className={styles.heroPartnerLogos}>
+            {hero.partners.map((partner) => (
+              <Image
+                key={partner.name}
+                src={partner.logo}
+                alt={partner.name}
+                width={120}
+                height={32}
+                className={styles.heroPartnerLogo}
+              />
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

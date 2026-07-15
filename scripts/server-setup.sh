@@ -304,18 +304,6 @@ npm run build
 success "Сборка завершена"
 
 # ─────────────────────────────────────────────────────────────
-section "Seed базы данных"
-if [ "${SITE_LANG}" = "ru" ]; then
-  SEED_CMD="seed"
-else
-  SEED_CMD="seed:en"
-fi
-info "Запускаю npm run ${SEED_CMD}..."
-SEED_ALLOWED=true npm run "${SEED_CMD}" \
-  && success "Seed выполнен (${SEED_CMD})" \
-  || warn "Seed не выполнен — запусти вручную: npm run ${SEED_CMD}"
-
-# ─────────────────────────────────────────────────────────────
 section "PM2 — запуск приложения"
 if pm2 describe "${PM2_APP_NAME}" &>/dev/null; then
   pm2 reload "${PM2_APP_NAME}" --update-env

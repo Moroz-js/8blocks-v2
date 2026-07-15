@@ -1,20 +1,12 @@
 name: Deploy to Production
 
 on:
-  # Автодеплой при пуше в main (режим soft; hard — только вручную)
+  # Автодеплой при пуше в main отключён — только вручную
   # push:
   #   branches:
   #     - main
   workflow_dispatch:
     inputs:
-      deploy_mode:
-        description: 'Deploy mode: soft (rebuild only) or hard (rebuild + seed)'
-        required: false
-        default: 'soft'
-        type: choice
-        options:
-          - soft
-          - hard
       deploy_target:
         description: 'Target: all or a single site'
         required: false
@@ -54,7 +46,6 @@ jobs:
           NEXT_PUBLIC_LANG: ${{ secrets.RU_LANG }}
           NEXT_PUBLIC_REPLAIN_ID: ${{ secrets.RU_NEXT_PUBLIC_REPLAIN_ID }}
           NEXT_PUBLIC_CALENDLY_URL: ${{ secrets.RU_NEXT_PUBLIC_CALENDLY_URL }}
-          DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
         with:
           host: ${{ secrets.RU_SSH_HOST }}
           username: ${{ secrets.RU_SSH_USER }}
@@ -62,7 +53,7 @@ jobs:
           port: ${{ secrets.RU_SSH_PORT || 22 }}
           command_timeout: 25m
           script_path: scripts/github-deploy-remote.sh
-          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,ADMIN_NOTIFY_EMAIL,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL,DEPLOY_MODE
+          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,ADMIN_NOTIFY_EMAIL,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL
 
   deploy-en:
     if: ${{ github.event.inputs.deploy_target == 'all' || github.event.inputs.deploy_target == 'en' || github.event.inputs.deploy_target == '' }}
@@ -90,7 +81,6 @@ jobs:
           NEXT_PUBLIC_LANG: ${{ secrets.EN_LANG }}
           NEXT_PUBLIC_REPLAIN_ID: ${{ secrets.EN_NEXT_PUBLIC_REPLAIN_ID }}
           NEXT_PUBLIC_CALENDLY_URL: ${{ secrets.EN_NEXT_PUBLIC_CALENDLY_URL }}
-          DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
         with:
           host: ${{ secrets.EN_SSH_HOST }}
           username: ${{ secrets.EN_SSH_USER }}
@@ -98,7 +88,7 @@ jobs:
           port: ${{ secrets.EN_SSH_PORT || 22 }}
           command_timeout: 25m
           script_path: scripts/github-deploy-remote.sh
-          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,ADMIN_NOTIFY_EMAIL,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL,DEPLOY_MODE
+          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,ADMIN_NOTIFY_EMAIL,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL
 
   deploy-ae:
     if: ${{ github.event.inputs.deploy_target == 'all' || github.event.inputs.deploy_target == 'ae' || github.event.inputs.deploy_target == '' }}
@@ -126,7 +116,6 @@ jobs:
           NEXT_PUBLIC_LANG: ${{ secrets.AE_LANG }}
           NEXT_PUBLIC_REPLAIN_ID: ${{ secrets.AE_NEXT_PUBLIC_REPLAIN_ID }}
           NEXT_PUBLIC_CALENDLY_URL: ${{ secrets.AE_NEXT_PUBLIC_CALENDLY_URL }}
-          DEPLOY_MODE: ${{ github.event.inputs.deploy_mode || secrets.DEPLOY_MODE || 'soft' }}
         with:
           host: ${{ secrets.AE_SSH_HOST }}
           username: ${{ secrets.AE_SSH_USER }}
@@ -134,4 +123,4 @@ jobs:
           port: ${{ secrets.AE_SSH_PORT || 22 }}
           command_timeout: 25m
           script_path: scripts/github-deploy-remote.sh
-          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,ADMIN_NOTIFY_EMAIL,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL,DEPLOY_MODE
+          envs: PROJECT_NAME,DATABASE_URI,PAYLOAD_SECRET,ADMIN_EMAIL,ADMIN_PASSWORD,SMTP_HOST,SMTP_PORT,SMTP_SECURE,SMTP_USER,SMTP_PASSWORD,SMTP_FROM,ADMIN_NOTIFY_EMAIL,NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_GTM_ID,NEXT_PUBLIC_LANG,NEXT_PUBLIC_REPLAIN_ID,NEXT_PUBLIC_CALENDLY_URL

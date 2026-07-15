@@ -11,6 +11,7 @@ import {
   TokenLaunchProcess,
   TokenLaunchFit,
   TokenLaunchFaq,
+  TokenLaunchNetwork,
   TokenLaunchFinalCta,
 } from '@/widgets/TokenLaunch'
 import type { LaunchModuleView } from '@/widgets/TokenLaunch'
@@ -160,6 +161,7 @@ export default async function TokenLaunchPage() {
       <TokenLaunchProcess />
       <TokenLaunchFit />
       <TokenLaunchFaq />
+      <TokenLaunchNetwork />
       <TokenLaunchFinalCta />
     </>
   )

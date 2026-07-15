@@ -60,7 +60,7 @@ export const navGroups: NavGroup[] = [
   {
     label: t({ ru: 'Продукты', en: 'Products' }),
     items: [
-      { label: t({ ru: 'Запуск токена с партнёрами', en: 'Project with partners' }), href: '/product/token-launch' },
+      { label: t({ ru: 'Запуск токена с Fibonacci и BingX', en: 'Token launch with Fibonacci & BingX' }), href: '/product/token-launch' },
       { label: t({ ru: 'Калькулятор токеномики', en: 'Calculator' }), href: '/product/calculator' },
       { label: 'Tokenomics AI', href: '/product/tokenomics-ai', soon: true },
     ],

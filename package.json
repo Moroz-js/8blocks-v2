@@ -12,9 +12,7 @@
     "payload": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts payload",
     "payload:migrate": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate",
     "payload:migrate:create": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate:create",
-    "payload:migrate:run": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/run-migrations.ts",
-    "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed.ts",
-    "seed:en": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed-en.ts"
+    "payload:migrate:run": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/run-migrations.ts"
   },
   "dependencies": {
     "@mantine/core": "^7.17.1",

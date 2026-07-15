@@ -27,7 +27,7 @@ export const footerContent = {
   ],
   productLinks: [
     {
-      label: 'Запуск токена с партнёрами',
+      label: 'Запуск токена с Fibonacci и BingX',
       href: '/product/token-launch',
     },
     {

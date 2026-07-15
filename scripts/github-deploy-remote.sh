@@ -12,7 +12,6 @@ error_exit() {
 }
 trap 'error_exit $LINENO' ERR
 
-DEPLOY_MODE="${DEPLOY_MODE:-soft}"
 PROJECT_DIR="/var/www/${PROJECT_NAME}"
 
 # Детерминированная кэш-директория Chrome для Puppeteer. Один и тот же путь
@@ -28,7 +27,7 @@ command -v npm &>/dev/null  || { echo "❌ npm not found"; exit 1; }
 command -v pm2 &>/dev/null  || { echo "❌ PM2 not found (npm install -g pm2)"; exit 1; }
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "🚀 Deploying ${PROJECT_NAME}  |  mode: ${DEPLOY_MODE}"
+echo "🚀 Deploying ${PROJECT_NAME}"
 echo "Node: $(node --version)  |  npm: $(npm --version)"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
@@ -159,12 +158,6 @@ mkdir -p "${PROJECT_DIR}/public/uploads"
 chmod -R 775 "${PROJECT_DIR}/public/uploads" 2>/dev/null || true
 echo "✓ Uploads directory ready"
 
-# ── seed (hard only) ─────────────────────────
-if [ "$DEPLOY_MODE" = "hard" ]; then
-  echo "🌱 Seeding database"
-  npm run seed || echo "⚠️  Seed failed (non-fatal)"
-fi
-
 # ── health check ─────────────────────────────
 sleep 5
 HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/ 2>/dev/null || echo "000")
@@ -180,5 +173,5 @@ echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 pm2 list
 echo ""
-echo "✅ Deployment done  |  mode: ${DEPLOY_MODE}"
+echo "✅ Deployment done"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"

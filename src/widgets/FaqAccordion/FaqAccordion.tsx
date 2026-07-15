@@ -39,13 +39,16 @@ interface FaqAccordionProps {
   items: readonly FaqItem[]
   /** Render only the accordion, without the section wrapper / container / headline. */
   bare?: boolean
+  /** Wrap each question control in a heading of this level for proper semantics/SEO. */
+  headingOrder?: 2 | 3 | 4 | 5 | 6
 }
 
-export function FaqAccordion({ headline, items, bare = false }: FaqAccordionProps) {
+export function FaqAccordion({ headline, items, bare = false, headingOrder }: FaqAccordionProps) {
   const accordion = (
     <Accordion
       variant="separated"
       multiple
+      order={headingOrder}
       className={styles.accordion}
       classNames={{
         root: styles.accordionRoot,

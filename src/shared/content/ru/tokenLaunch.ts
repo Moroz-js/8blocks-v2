@@ -11,7 +11,7 @@ const ruObject = {
     statValue: '79%',
     statCaption: 'токенов падают в первые 90 дней после листинга',
     statSourceLabel: 'А8А9 · High FDV Token Failure Study · анализ 542 листингов на топ-биржах',
-    statSourceHref: '/research',
+    statSourceHref: 'https://tokenomika.ru/research/high-fdv-token-failure-study',
     headline: 'Запуск токена под ключ: от токеномики до листинга — один трек без разрывов',
     description:
       'Единый модульный трек от А8А9, Fibonacci и BingX: аудит и дизайн токеномики, подготовка к работе с инвесторами, маркет-мейкинг и листинг. Выбирайте только те модули, которые нужны вашему проекту.',
@@ -22,7 +22,11 @@ const ruObject = {
     secondaryLabel: 'Оставить заявку без расчёта',
     secondaryHref: '#contact',
     partnersLead: 'Партнёры трека',
-    partners: ['А8А9', 'Fibonacci', 'BingX'],
+    partners: [
+      { name: 'А8А9', logo: '/icons/ru-logo.svg' },
+      { name: 'Fibonacci', logo: '/partners/7.svg' },
+      { name: 'BingX', logo: '/partners/bingx-logo.svg' },
+    ],
   },
   gaps: {
     label: 'где ломается запуск',
@@ -69,7 +73,7 @@ const ruObject = {
         lead: 'Один неудачный раунд может стоить проекту до года runway.',
         data: 'Средний seed-раунд Web3 в 2025 году составил $4M, pre-seed — $2.6M. При этом количество сделок сократилось на 34% по сравнению с Q4 2024: инвесторы заходили реже, но с более крупными чеками.',
         sourceLabel: 'Outlier Ventures · Web3 Fundraising Q1 2025',
-        sourceHref: 'https://outlierventures.io/',
+        sourceHref: 'https://outlierventures.io/article/web3-fundraising-in-q1-2025-what-founders-investors-need-to-know/',
         external: true,
       },
       {
@@ -78,7 +82,7 @@ const ruObject = {
         lead: 'Больше половины — и проблема почти всегда одна.',
         data: '53,2% криптопроектов, запущенных с 2021 года, были признаны мёртвыми (11,6 млн проектов). Среди основных причин — слабая токеномика и неподготовленность к биржевому due diligence.',
         sourceLabel: 'CoinGecko · Dead Coins Report 2025',
-        sourceHref: 'https://www.coingecko.com/research',
+        sourceHref: 'https://www.coingecko.com/research/publications/how-many-cryptocurrencies-failed',
         external: true,
       },
       {
@@ -87,8 +91,8 @@ const ruObject = {
         lead: 'Четыре из пяти токенов падают в первые 90 дней.',
         data: 'Среднее изменение FDV токена через 90 дней после листинга составило −14%. Из 542 листингов в 2025 году 79% ушли в минус, 22% обвалились более чем на 80%. И только 21% сохранили или нарастили капитализацию.',
         sourceLabel: 'А8А9 · High FDV Token Failure Study',
-        sourceHref: '/research',
-        external: false,
+        sourceHref: 'https://tokenomika.ru/research/high-fdv-token-failure-study',
+        external: true,
       },
       {
         number: '04',
@@ -96,8 +100,8 @@ const ruObject = {
         lead: 'Наоборот — чем престижнее биржа, тем выше шанс провала.',
         data: 'На Binance вырос только 1 из 15 токенов. На OKX роста не было ни у одного из них. Только сегмент с FDV до $10M оказался в плюсе (+35%). Правильный прайсинг на старте важнее «престижного» листинга.',
         sourceLabel: 'А8А9 · High FDV Token Failure Study',
-        sourceHref: '/research',
-        external: false,
+        sourceHref: 'https://tokenomika.ru/research/high-fdv-token-failure-study',
+        external: true,
       },
     ],
   },
@@ -285,6 +289,7 @@ const ruObject = {
     ],
     geographyTitle: 'География и клиенты',
     geographyText: 'Офисы в Дубае и Берлине. Клиенты в США, Европе, MENA и LatAm.',
+    networkLabel: 'партнёрская сеть',
     networkTitle: 'Наша партнёрская сеть',
     network: [
       { label: 'BingX', href: 'https://bingx.com' },

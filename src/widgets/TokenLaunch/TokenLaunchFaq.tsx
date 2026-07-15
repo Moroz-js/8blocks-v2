@@ -13,29 +13,13 @@ export function TokenLaunchFaq() {
       <div className={styles.inner}>
         <SectionHead label={faq.label} headline={faq.headline} />
         <div className={styles.faqAccordionWrap}>
-          <FaqAccordion items={faq.items} bare />
+          <FaqAccordion items={faq.items} bare headingOrder={3} />
         </div>
 
         <div className={styles.faqMeta}>
           <div className={styles.faqMetaBlock}>
             <h3 className={styles.faqMetaTitle}>{faq.geographyTitle}</h3>
             <p className={styles.faqMetaText}>{faq.geographyText}</p>
-          </div>
-          <div className={styles.faqMetaBlock}>
-            <h3 className={styles.faqMetaTitle}>{faq.networkTitle}</h3>
-            <div className={styles.faqNetwork}>
-              {faq.network.map((partner) => (
-                <a
-                  key={partner.label}
-                  href={partner.href}
-                  target="_blank"
-                  rel="nofollow noopener noreferrer"
-                  className={styles.faqNetworkLink}
-                >
-                  {partner.label} ↗
-                </a>
-              ))}
-            </div>
           </div>
         </div>
       </div>
