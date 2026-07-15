@@ -80,6 +80,16 @@ export const Articles: CollectionConfig = {
       hasMany: false,
     },
     {
+      name: 'author',
+      type: 'relationship',
+      label: 'Авторы',
+      relationTo: 'authors',
+      hasMany: true,
+      admin: {
+        description: 'Авторы материала. Если не выбраны, отображается имя компании',
+      },
+    },
+    {
       name: 'cover',
       type: 'upload',
       label: 'Обложка',
@@ -157,6 +167,49 @@ export const Articles: CollectionConfig = {
           }),
         ],
       }),
+    },
+
+    // ── Download CTA ──────────────────────────────────────────────
+    {
+      type: 'group',
+      name: 'cta',
+      label: 'Call to action (скачивание файла)',
+      admin: {
+        description: 'Блок с кнопкой скачивания файла в конце статьи. Показывается, если заполнены текст кнопки и файл.',
+      },
+      fields: [
+        {
+          name: 'text',
+          type: 'textarea',
+          label: 'Текст CTA',
+          admin: {
+            description: 'Описание над кнопкой, например «Скачайте полную версию отчёта»',
+          },
+        },
+        {
+          name: 'buttonLabel',
+          type: 'text',
+          label: 'Текст кнопки',
+        },
+        {
+          name: 'file',
+          type: 'upload',
+          label: 'Файл',
+          relationTo: 'media',
+          admin: {
+            description: 'Файл, который скачивает пользователь',
+          },
+        },
+        {
+          name: 'requireEmail',
+          type: 'checkbox',
+          label: 'Скачивание только за email',
+          defaultValue: false,
+          admin: {
+            description: 'При клике откроется попап с полем email. Адреса сохраняются в «Подписки на рассылку»',
+          },
+        },
+      ],
     },
 
     // ── SEO ───────────────────────────────────────────────────────

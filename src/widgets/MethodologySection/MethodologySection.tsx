@@ -1,31 +1,53 @@
 'use client'
 
-import { Fragment } from 'react'
-import { motion } from 'framer-motion'
+import { Fragment, type ReactNode, useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { motion, useReducedMotion } from 'framer-motion'
 import {
-  ArrowLeftRight,
-  CircleCheck,
-  DollarSign,
-  Lock,
+  CircleDollarSign,
+  Flame,
+  Link2,
+  Plug,
   ShieldCheck,
   TrendingUp,
-  Trophy,
   type LucideIcon,
 } from 'lucide-react'
 import { methodologyContent } from '@/shared/content/homePage'
-import { FaqAccordion } from '@/widgets/FaqAccordion'
 import styles from './MethodologySection.module.scss'
 
-const PRODUCT_BARS = [34, 48, 60, 78, 100]
-const TOKEN_BARS = [38, 52, 66, 82, 100]
-
 const SIGNAL_ICONS: Record<string, LucideIcon> = {
-  'value-capture': DollarSign,
-  'token-necessity': CircleCheck,
+  'value-capture': CircleDollarSign,
+  'token-necessity': Plug,
   'demand-elasticity': TrendingUp,
-  'supply-sinks': Trophy,
-  'on-chain-proof': ShieldCheck,
-  'rule-durability': Lock,
+  'supply-sinks': Flame,
+  'on-chain-proof': Link2,
+  'rule-durability': ShieldCheck,
+}
+
+const SIGNAL_TONES = [styles.toneA, styles.toneA, styles.toneB, styles.toneB, styles.toneC, styles.toneC]
+
+const LINK_RE = /\[([^\]]+)\]\(([^)]+)\)/g
+
+function renderRichText(text: string): ReactNode {
+  if (!text.includes('](')) return text
+
+  const nodes: ReactNode[] = []
+  let lastIndex = 0
+  let key = 0
+  for (const match of text.matchAll(LINK_RE)) {
+    const index = match.index ?? 0
+    if (index > lastIndex) nodes.push(text.slice(lastIndex, index))
+    const [, label, href] = match
+    nodes.push(
+      <Link key={key++} href={href} className={styles.closingLink}>
+        {label}
+      </Link>,
+    )
+    lastIndex = index + match[0].length
+  }
+  if (lastIndex < text.length) nodes.push(text.slice(lastIndex))
+  return nodes
 }
 
 function Headline() {
@@ -51,28 +73,120 @@ function Headline() {
   )
 }
 
-function BarChart({ bars, accent }: { bars: number[]; accent?: boolean }) {
+const ANIMATION_ENABLED = true
+// Left spins alone this long before center/right join the same timeline.
+// Must be a multiple of 2000/3 ms: in that time the big gear (18s / 27 teeth)
+// and the center gear (8s / 12 teeth) rotate by a whole number of teeth, so
+// snapping center/right forward by this amount produces no visible jump.
+const MESH_ENGAGE_MS = 4000 / 3 // ≈1333ms = exactly 2 teeth on both gears
+
+// Choreographed linkage:
+//  0. left gear spins idle (alone)
+//  1. center gear fades/scales in from the background
+//  2. mesh engaged → center + right gears start spinning
+type LinkagePhase = 'idle' | 'left' | 'engaged'
+
+function GearsLinkage() {
+  const reduceMotion = useReducedMotion()
+  const [phase, setPhase] = useState<LinkagePhase>('idle')
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([])
+
+  useEffect(() => {
+    return () => {
+      timers.current.forEach(clearTimeout)
+    }
+  }, [])
+
+  const start = () => {
+    if (!ANIMATION_ENABLED) return
+    if (phase !== 'idle') return
+    if (reduceMotion) {
+      setPhase('engaged')
+      return
+    }
+    // Left spins alone for MESH_ENGAGE_MS (a whole number of teeth), then
+    // center/right start their own animations from the matching static pose.
+    setPhase('left')
+    timers.current.push(setTimeout(() => setPhase('engaged'), MESH_ENGAGE_MS))
+  }
+
+  const staticPreview = !ANIMATION_ENABLED
+  const spinning = ANIMATION_ENABLED && !reduceMotion && phase !== 'idle'
+  const meshEngaged = phase === 'engaged'
+  const centerVisible = staticPreview || reduceMotion || meshEngaged
+  const meshSpinning = ANIMATION_ENABLED && !reduceMotion && meshEngaged
+
   return (
-    <div className={styles.bars} aria-hidden="true">
-      {bars.map((h, i) => (
-        <span
-          key={i}
-          className={accent ? styles.barAccent : styles.bar}
-          style={{ height: `${h}%` }}
-        />
-      ))}
+    <div className={styles.gears} aria-hidden="true">
+      <motion.div
+        className={styles.gearsStage}
+        data-phase={phase}
+        onViewportEnter={start}
+        viewport={{ once: true, amount: 0.1 }}
+      >
+        <div className={`${styles.gearHuge} ${styles.gearLeft}`}>
+          <div
+            className={spinning ? styles.spinLeftCw : styles.spinLeftOffset}
+          >
+            <Image
+              src="/img/huge-uniform.png"
+              alt=""
+              width={759}
+              height={748}
+              className={styles.gearImg}
+              priority
+            />
+          </div>
+        </div>
+
+        <div
+          className={`${styles.gearTiny} ${centerVisible ? styles.gearTinyIn : ''}`}
+        >
+          <div className={meshSpinning ? styles.spinInnerCcw : ''}>
+            <Image
+              src="/img/tiny-uniform.png"
+              alt=""
+              width={655}
+              height={632}
+              className={styles.gearImg}
+              priority
+            />
+          </div>
+        </div>
+
+        <div className={`${styles.gearHuge} ${styles.gearRight}`}>
+          <div
+            className={meshSpinning ? styles.spinRightCw : styles.spinRightOffset}
+          >
+            <Image
+              src="/img/huge-uniform.png"
+              alt=""
+              width={759}
+              height={748}
+              className={styles.gearImg}
+            />
+          </div>
+        </div>
+
+        <span className={styles.gearsLabel}>
+          <span>Token</span>
+          <span>Product Linkage</span>
+        </span>
+      </motion.div>
     </div>
   )
 }
 
 export function MethodologySection() {
-  const { product, token, linkage, marquee, signals, footnote, faq } = methodologyContent
-  const marqueeLoop = [...marquee, ...marquee]
+  const { signals, closingLead, closingParagraphs } = methodologyContent
 
   return (
-    <section className={styles.section} aria-label={methodologyContent.ariaLabel}>
+    <section
+      id="methodology"
+      className={styles.section}
+      aria-label={methodologyContent.ariaLabel}
+    >
       <div className={styles.inner}>
-        {/* ── Header ───────────────────────────────────────────── */}
         <motion.span
           className={styles.label}
           initial={{ opacity: 0, y: 12 }}
@@ -87,80 +201,48 @@ export function MethodologySection() {
 
         <Headline />
 
-        {/* ── Equation: Product ↔ Token ────────────────────────── */}
-        <div className={styles.equation}>
-          <span className={styles.tokenNote}>{token.topNote}</span>
+        <GearsLinkage />
 
-          <div className={styles.equationGrid}>
-            {/* Product card */}
-            <div className={styles.panel}>
-              <span className={styles.panelLabel}>{product.label}</span>
-              <BarChart bars={PRODUCT_BARS} />
-              <span className={styles.panelCaption}>{product.caption}</span>
-            </div>
-
-            {/* Linkage node */}
-            <div className={styles.linkage}>
-              <span className={styles.linkageBadge}>
-                <ArrowLeftRight size={18} aria-hidden="true" />
-              </span>
-              <span className={styles.linkageLabel}>{linkage.title}</span>
-            </div>
-
-            {/* Token card */}
-            <div className={`${styles.panel} ${styles.panelToken}`}>
-              <span className={`${styles.panelLabel} ${styles.panelLabelAccent}`}>
-                {token.label}
-              </span>
-              <BarChart bars={TOKEN_BARS} accent />
-              <span className={styles.panelCaption}>{token.caption}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Body ─────────────────────────────────────────────── */}
         <p className={styles.body}>
           <strong className={styles.bodyLead}>{methodologyContent.bodyLead}</strong>
           {methodologyContent.bodyRest}
         </p>
 
-        {/* ── Marquee ──────────────────────────────────────────── */}
-        <div className={styles.marquee} aria-hidden="true">
-          <div className={styles.marqueeTrack}>
-            {marqueeLoop.map((item, i) => (
-              <span key={i} className={styles.marqueeItem}>
-                {item}
-                <span className={styles.marqueeDot}>·</span>
-              </span>
+        <div className={styles.detail}>
+          <ul className={styles.signals}>
+            {signals.map((signal, i) => {
+              const Icon = SIGNAL_ICONS[signal.id] ?? CircleDollarSign
+              const featured = i === 0
+
+              return (
+                <li
+                  key={signal.id}
+                  className={featured ? `${styles.signal} ${styles.signalFeatured}` : styles.signal}
+                >
+                  <span
+                    className={`${styles.signalIcon} ${SIGNAL_TONES[i]}`}
+                    aria-hidden="true"
+                  >
+                    <Icon size={22} strokeWidth={1.75} />
+                  </span>
+                  <div className={styles.signalCopy}>
+                    <h3 className={styles.signalTitle}>{signal.title}</h3>
+                    <p className={styles.signalLine}>{signal.line}</p>
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+
+          <div className={styles.closing}>
+            <p className={styles.closingLead}>{closingLead}</p>
+            {closingParagraphs.map((paragraph, i) => (
+              <p key={i} className={styles.closingParagraph}>
+                {renderRichText(paragraph)}
+              </p>
             ))}
           </div>
         </div>
-
-        {/* ── Signals grid ─────────────────────────────────────── */}
-        <ul className={styles.signals}>
-          {signals.map((signal) => {
-            const Icon = SIGNAL_ICONS[signal.id] ?? CircleCheck
-            return (
-              <li key={signal.id} className={styles.signal}>
-                <span className={styles.signalIcon}>
-                  <Icon size={20} aria-hidden="true" />
-                </span>
-                <h3 className={styles.signalTitle}>{signal.title}</h3>
-                <p className={styles.signalLine}>{signal.line}</p>
-              </li>
-            )
-          })}
-        </ul>
-
-        {/* ── Footnote ─────────────────────────────────────────── */}
-        <p className={styles.footnote}>{footnote}</p>
-
-        {/* ── FAQ (no heading) ─────────────────────────────────── */}
-        {faq.length > 0 && (
-          <div className={styles.faq}>
-            <FaqAccordion items={faq} bare />
-          </div>
-        )}
       </div>
     </section>
   )

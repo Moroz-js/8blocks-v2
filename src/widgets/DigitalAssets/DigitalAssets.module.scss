@@ -1,0 +1,1196 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+// ─── Shared section scaffolding ───────────────────────────────────────────────
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  max-width: 780px;
+}
+
+.sectionLabel {
+  @include section-label;
+}
+
+.sectionHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 46px);
+  line-height: $leading-tight;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.sectionDescription {
+  @include body-text;
+  margin: 0;
+  max-width: 620px;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  height: 54px;
+  padding: 0 $space-7;
+  background: $text-primary;
+  color: $button-primary-fg;
+  border-radius: 0;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background $transition-base,
+    color $transition-base,
+    transform $transition-fast,
+    box-shadow $transition-base;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-sm;
+    height: 46px;
+    padding: 0 $space-5;
+    white-space: normal;
+    text-align: left;
+  }
+
+  &:hover {
+    background: $glass-highlight;
+    color: $cta-solid-hover-fg;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px $border-primary;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @include focus-ring;
+}
+
+.ctaArrow {
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  transition: transform $transition-fast;
+
+  .ctaPrimary:hover & {
+    transform: translateX(3px);
+  }
+}
+
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  height: 54px;
+  padding: 0 $space-6;
+  border: 1px solid $border-primary;
+  border-radius: 0;
+  background: transparent;
+  color: $text-primary;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color $transition-base, color $transition-base;
+
+  @media (max-width: #{$bp-mobile}) {
+    height: 46px;
+    padding: 0 $space-5;
+    white-space: normal;
+    text-align: left;
+  }
+
+  &:hover {
+    border-color: $text-secondary;
+  }
+
+  @include focus-ring;
+}
+
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  font-family: $font-base;
+  font-size: $text-sm;
+  letter-spacing: 0.04em;
+  color: $text-tertiary;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  @include focus-ring;
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+.hero {
+  position: relative;
+  overflow-x: clip;
+  padding-top: $space-10;
+  padding-bottom: $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-top: $space-9;
+    padding-bottom: $space-8;
+  }
+}
+
+.heroBlobLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.heroBlob {
+  position: absolute;
+  filter: blur(80px);
+  pointer-events: none;
+
+  &A {
+    width: 600px;
+    height: 600px;
+    top: -15%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(194, 78, 136, 0.32) 0%, transparent 70%);
+  }
+
+  &B {
+    width: 500px;
+    height: 500px;
+    top: 25%;
+    right: -8%;
+    background: radial-gradient(circle, rgba(142, 74, 189, 0.26) 0%, transparent 70%);
+  }
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-5;
+  max-width: 880px;
+}
+
+.heroLabel {
+  @include section-label;
+}
+
+.heroHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(34px, 4.6vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.heroHeadlineAccent {
+  display: block;
+  background: $gradient-accent-wide;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroDescription {
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  max-width: 640px;
+  margin: 0;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-4;
+  margin-top: $space-2;
+}
+
+.heroPoints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2 $space-5;
+  margin: $space-2 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.heroPoint {
+  display: inline-flex;
+  align-items: baseline;
+  gap: $space-2;
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-tertiary;
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    background: $accent-pink-deep;
+    transform: translateY(-1px);
+  }
+}
+
+.heroArtifact {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.heroPhotoWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  border: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+.heroPhoto {
+  object-fit: cover;
+}
+
+.heroChip {
+  position: absolute;
+  z-index: 2;
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.04em;
+  color: $text-primary;
+  background: $card-panel-bg;
+  backdrop-filter: blur(8px);
+  border: 1px solid $border-primary;
+  padding: $space-2 $space-3;
+
+  &Left {
+    left: $space-4;
+    bottom: $space-4;
+  }
+
+  &Right {
+    right: $space-4;
+    top: $space-4;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: 10px;
+
+    &Left {
+      left: $space-2;
+      bottom: $space-2;
+    }
+
+    &Right {
+      right: $space-2;
+      top: $space-2;
+    }
+  }
+}
+
+.heroCaption {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  max-width: 880px;
+  margin: 0;
+
+  b {
+    color: $text-secondary;
+    font-weight: 600;
+  }
+}
+
+.heroCaptionLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+// ─── 01 Paths ─────────────────────────────────────────────────────────────────
+
+.pathsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pathCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  padding: $space-6;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.pathOwn {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.pathTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(19px, 1.8vw, 23px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.pathResult {
+  font-family: $font-base;
+  font-size: $text-sm;
+  letter-spacing: 0.02em;
+  color: $accent-pink-deep;
+  margin: 0;
+}
+
+.pathRows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.pathRow {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: $space-3;
+  padding-block: $space-3;
+  border-top: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+    gap: $space-1;
+  }
+}
+
+.pathRowLabel {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  margin: 0;
+  padding-top: 3px;
+}
+
+.pathRowValue {
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ─── 02 Journey ───────────────────────────────────────────────────────────────
+
+.journeyList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.journeyStep {
+  display: grid;
+  grid-template-columns: 72px 1.1fr 1fr;
+  gap: $space-5;
+  padding-block: $space-6;
+  border-top: 1px solid $border-secondary;
+
+  &:last-child {
+    border-bottom: 1px solid $border-secondary;
+  }
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 48px 1fr;
+    grid-template-areas:
+      'num main'
+      'num leave';
+    gap: $space-3 $space-4;
+    padding-block: $space-5;
+  }
+}
+
+.journeyNumber {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(20px, 2vw, 28px);
+  color: $accent-pink-deep;
+  line-height: 1.2;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-area: num;
+  }
+}
+
+.journeyMain {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-area: main;
+  }
+}
+
+.journeyTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(19px, 1.9vw, 24px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.journeyDescription {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 460px;
+}
+
+.journeyLeave {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-area: leave;
+  }
+}
+
+.journeyLeaveLabel {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.journeyLeaveText {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 460px;
+}
+
+// ─── 03 Market context ────────────────────────────────────────────────────────
+
+.contextGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contextCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-6;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.contextDate {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.contextTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(19px, 1.8vw, 23px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.contextDescription {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0 0 $space-2;
+  flex: 1 1 auto;
+}
+
+// ─── 04 Packages ──────────────────────────────────────────────────────────────
+
+.workshopCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-7;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.workshopBadge {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.workshopTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.workshopDescription {
+  font-size: $text-base;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 720px;
+}
+
+.workshopFooter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-4 $space-5;
+  margin-top: $space-2;
+}
+
+.workshopPrice {
+  font-family: $font-base;
+  font-size: $text-sm;
+  letter-spacing: 0.02em;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.tiersGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tierCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-6;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.tierName {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.tierTagline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(19px, 1.9vw, 24px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.tierRows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.tierRow {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  padding-block: $space-3;
+  border-top: 1px solid $border-secondary;
+}
+
+.tierRowLabel {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.tierRowValue {
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.tierLink {
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.packagesNote {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: 0;
+  max-width: 720px;
+}
+
+// ─── 05 Risks ─────────────────────────────────────────────────────────────────
+
+.risksList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.riskRow {
+  display: grid;
+  grid-template-columns: 72px 260px 1fr;
+  gap: $space-5;
+  padding-block: $space-5;
+  border-top: 1px solid $border-secondary;
+
+  &:last-child {
+    border-bottom: 1px solid $border-secondary;
+  }
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 48px 1fr;
+    grid-template-areas:
+      'num title'
+      'num body';
+    gap: $space-2 $space-4;
+  }
+}
+
+.riskNumber {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(18px, 1.8vw, 24px);
+  color: $accent-pink-deep;
+  line-height: 1.3;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-area: num;
+  }
+}
+
+.riskTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-area: title;
+  }
+}
+
+.riskBody {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-area: body;
+  }
+}
+
+.riskDescription {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 560px;
+}
+
+.risksCtaRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-5;
+  text-align: center;
+  padding-top: $space-3;
+}
+
+.risksCtaHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(18px, 2vw, 24px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+  max-width: 580px;
+}
+
+// ─── 06 About ─────────────────────────────────────────────────────────────────
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $space-4;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.aboutBlock {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-5;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+}
+
+.aboutBlockTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-md;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.aboutBlockDescription {
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.aboutNote {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: 0;
+  max-width: 720px;
+}
+
+.caseworkHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-4;
+  margin-top: $space-4;
+}
+
+.caseworkLabel {
+  @include section-label;
+}
+
+.casesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.caseCell {
+  display: flex;
+}
+
+.caseCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  height: 100%;
+  gap: $space-3;
+  padding: $space-6;
+  text-decoration: none;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.caseTag {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.caseTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.caseDescription {
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ─── 07 Next step ─────────────────────────────────────────────────────────────
+
+.nextLayout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: $space-8;
+  align-items: stretch;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: 1fr;
+    gap: $space-7;
+  }
+}
+
+.nextMain {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+}
+
+.nextPoints {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nextPoint {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    background: $accent-pink-deep;
+    transform: translateY(-1px);
+  }
+}
+
+.nextNote {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: 0;
+  max-width: 560px;
+}
+
+.nextActions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-4;
+  margin-top: $space-2;
+}
+
+.nextEmailLine {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.nextEmailLink {
+  color: $text-primary;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $accent-pink-deep;
+  }
+}
+
+.nextCards {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  height: 100%;
+}
+
+.nextCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  gap: $space-3;
+  padding: $space-6;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.nextCardTag {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.nextCardTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.nextCardDescription {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0 0 $space-2;
+}
+
+// ─── 08 FAQ wrapper ───────────────────────────────────────────────────────────
+
+.faqAccordionWrap {
+  width: 100%;
+}
+
+// ─── Final CTA ────────────────────────────────────────────────────────────────
+
+.finalSection {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.finalInner {
+  position: relative;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding: $space-10 $container-padding;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-5;
+  overflow: hidden;
+  border-block: 1px solid $border-secondary;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    // Fades out well before the section edges so nothing gets clipped
+    background: radial-gradient(
+      ellipse 45% 45% at 50% 55%,
+      rgba(194, 78, 136, 0.14) 0%,
+      transparent 68%
+    );
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-8 $container-padding-mobile;
+  }
+}
+
+.finalLabel {
+  @include section-label;
+}
+
+.finalHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 54px);
+  line-height: $leading-tight;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.finalDescription {
+  @include body-text;
+  margin: 0;
+  max-width: 620px;
+}
+
+.finalActions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-4;
+  margin-top: $space-2;
+}
+
+.finalSecondary {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  @include focus-ring;
+}

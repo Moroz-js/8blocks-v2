@@ -61,20 +61,22 @@ export function AuditPage({ audit, print = false }: Props) {
   return (
     <>
       <AuditDocMarker />
-      <AuditHero
-        title={audit.title}
-        slug={audit.slug}
-        hero={audit.hero}
-        dateLabel={dateLabel || null}
-        eyebrowDate={eyebrowDate || null}
-        print={print}
-      />
+      <div className={styles.printCover} data-pdf-cover>
+        <AuditHero
+          title={audit.title}
+          slug={audit.slug}
+          hero={audit.hero}
+          dateLabel={dateLabel || null}
+          eyebrowDate={eyebrowDate || null}
+          print={print}
+        />
 
-      <AuditTakeaways
-        verdict={audit.hero?.verdict}
-        strength={audit.hero?.strength}
-        weakness={audit.hero?.weakness}
-      />
+        <AuditTakeaways
+          verdict={audit.hero?.verdict}
+          strength={audit.hero?.strength}
+          weakness={audit.hero?.weakness}
+        />
+      </div>
 
       <article className={styles.root}>
         {audit.content != null ? (

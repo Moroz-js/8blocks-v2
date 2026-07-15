@@ -15,6 +15,7 @@ import { HeadingFeatureClient as HeadingFeatureClient_e70f5e05f09f93e00b997edb1e
 import { ParagraphFeatureClient as ParagraphFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ColorPickerField as ColorPickerField_bbd2c92e8f36ad3553b48baa368d9b65 } from '../../../../src/shared/admin/ColorPickerField'
+import { ChartPointValuesField as ChartPointValuesField_e1068afac84976f7589589fbf10df501 } from '../../../../src/shared/admin/ChartPointValuesField'
 import { ChartPreviewField as ChartPreviewField_c481e7a32ded7452ca6713c6ad868049 } from '../../../../src/shared/admin/ChartPreviewField'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -36,6 +37,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ParagraphFeatureClient": ParagraphFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "/src/shared/admin/ColorPickerField#ColorPickerField": ColorPickerField_bbd2c92e8f36ad3553b48baa368d9b65,
+  "/src/shared/admin/ChartPointValuesField#ChartPointValuesField": ChartPointValuesField_e1068afac84976f7589589fbf10df501,
   "/src/shared/admin/ChartPreviewField#ChartPreviewField": ChartPreviewField_c481e7a32ded7452ca6713c6ad868049,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

@@ -1,7 +1,15 @@
 import type { CollectionConfig } from 'payload'
 import path from 'path'
 
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/svg+xml']
+const ALLOWED_MIME_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/svg+xml',
+  'application/pdf',
+  'application/zip',
+]
 
 export const Media: CollectionConfig = {
   slug: 'media',

@@ -8,30 +8,32 @@ export const footerContent = {
   productsHeading: 'Products',
   mapTitle: 'Map',
   copyright: 'All rights reserved.',
-  privacyPolicy: 'Privacy Policy',
+  privacyPolicy: 'Privacy policy',
   mapEmbedSrc:
-    'https://www.google.com/maps?q=25.0606875%2C55.1415625&ll=25.0606875%2C55.1415625&hl=en&z=14&output=embed',
+    'https://www.google.com/maps?q=8BLOCKS+FZCO&ll=25.0607775%2C55.1412167&hl=en&z=15&output=embed',
   pageLinks: [
-    { label: 'Services', href: '/services' },
+    { label: 'Cases', href: '/cases' },
     { label: 'Blog', href: '/blog' },
     { label: 'Research', href: '/research' },
     { label: 'In the media', href: '/media' },
-    { label: 'Public Audits', href: '/audits' },
+    { label: 'Public audits', href: '/audits' },
     { label: 'Contact', href: '/contact' },
   ],
   serviceLinks: [
+    { label: 'Digital assets', href: '/product/digital-assets' },
     { label: 'Strategic consulting', href: '/services/strategic-consulting' },
     { label: 'Tokenomics', href: '/services/tokenomics' },
     { label: 'Tokenomics audit', href: '/services/audit' },
+    { label: 'Tokenomics workshop', href: '/product/workshop' },
   ],
   productLinks: [
     {
-      label: 'Tokenomics Calculator',
-      href: '/product/calculator',
+      label: 'Project with partners',
+      href: '/product/token-launch',
     },
     {
-      label: 'Tokenomics Workshop',
-      href: '/product/workshop',
+      label: 'Tokenomics calculator',
+      href: '/product/calculator',
     },
   ],
 } as const

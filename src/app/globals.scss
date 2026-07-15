@@ -1,5 +1,5 @@
 @use '../shared/styles/variables' as *;
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;800&display=swap');
 
 // ── Design tokens (CSS custom properties) ─────────────────────────
 :root,
@@ -390,35 +390,29 @@ div[class*='replain'] {
 }
 
 // ── Print / PDF export ───────────────────────────────────────────
-// Force a clean light document and hide interactive chrome. Used by the
-// Puppeteer-based audit PDF export (which renders /audits/[slug]?print=1
-// with print media emulation).
+// Puppeteer: desktop viewport + print media. First page = A4 landscape
+// (hero), rest = A4 portrait. Keep live theme colors.
 @media print {
-  // Force light tokens regardless of active theme (beats [data-theme='dark']).
-  html[data-theme] {
-    color-scheme: light;
-    --bg-secondary: rgba(0, 0, 0, 0.04);
-    --bg-tertiary: rgba(0, 0, 0, 0.06);
-    --text-primary: #0d0a12;
-    --text-secondary: rgba(13, 10, 18, 0.86);
-    --text-tertiary: rgba(13, 10, 18, 0.72);
-    --border-primary: rgba(0, 0, 0, 0.14);
-    --border-secondary: rgba(0, 0, 0, 0.12);
-    --surface: rgba(0, 0, 0, 0.04);
-    --body-bg: #ffffff;
-    --muted-strong: rgba(13, 10, 18, 0.85);
+  @page {
+    size: A4 portrait;
+    margin: 0;
   }
 
-  body {
-    background: #ffffff !important;
+  // Hero + takeaways cover: landscape A4 (wide desktop composition).
+  @page :first {
+    size: A4 landscape;
+    margin: 0;
   }
 
-  // Remove decorative full-page gradients/grid for print.
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   body::before {
     display: none !important;
   }
 
-  // Hide site chrome and interactive-only UI.
   header,
   footer,
   #__replain_widget,

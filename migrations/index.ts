@@ -9,6 +9,10 @@ import * as migration_20260610_000000_research from './20260610_000000_research'
 import * as migration_20260611_000000_research_card_text from './20260611_000000_research_card_text'
 import * as migration_20260615_000000_site_seo_robots_txt from './20260615_000000_site_seo_robots_txt'
 import * as migration_20260621_000000_public_audits_redesign from './20260621_000000_public_audits_redesign'
+import * as migration_20260713_000000_authors from './20260713_000000_authors'
+import * as migration_20260713_000001_launch_modules from './20260713_000001_launch_modules'
+import * as migration_20260714_000000_multiple_authors from './20260714_000000_multiple_authors'
+import * as migration_20260714_000001_download_cta from './20260714_000001_download_cta'
 
 export const migrations = [
   {
@@ -65,5 +69,25 @@ export const migrations = [
     up: migration_20260621_000000_public_audits_redesign.up,
     down: migration_20260621_000000_public_audits_redesign.down,
     name: '20260621_000000_public_audits_redesign',
+  },
+  {
+    up: migration_20260713_000000_authors.up,
+    down: migration_20260713_000000_authors.down,
+    name: '20260713_000000_authors',
+  },
+  {
+    up: migration_20260713_000001_launch_modules.up,
+    down: migration_20260713_000001_launch_modules.down,
+    name: '20260713_000001_launch_modules',
+  },
+  {
+    up: migration_20260714_000000_multiple_authors.up,
+    down: migration_20260714_000000_multiple_authors.down,
+    name: '20260714_000000_multiple_authors',
+  },
+  {
+    up: migration_20260714_000001_download_cta.up,
+    down: migration_20260714_000001_download_cta.down,
+    name: '20260714_000001_download_cta',
   },
 ]

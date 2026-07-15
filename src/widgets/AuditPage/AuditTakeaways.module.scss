@@ -45,7 +45,26 @@
 }
 
 @media print {
-  .grid,
+  .root {
+    // Fill space under hero; center the three columns vertically.
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .grid {
+    // Keep 3-column desktop layout in PDF (viewport is desktop-width).
+    grid-template-columns: repeat(3, 1fr) !important;
+    width: 100%;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
   .item {
     break-inside: avoid;
     page-break-inside: avoid;

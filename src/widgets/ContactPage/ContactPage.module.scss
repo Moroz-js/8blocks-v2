@@ -3,7 +3,8 @@
 // ── 1. Hero: avatar left + form right ─────────────────────────────
 
 .hero {
-  padding-block: $space-11 $space-10;
+  padding-block: $space-10;
+  border-top: 1px solid $border-secondary;
 
   @media (max-width: #{$bp-tablet}) {
     padding-block: $space-8 $space-7;
@@ -266,8 +267,7 @@
 // ── 4. Calendly ───────────────────────────────────────────────────
 
 .calendlySection {
-  padding-block: $space-10;
-  border-top: 1px solid $border-secondary;
+  padding-block: $space-11 $space-10;
 
   @media (max-width: #{$bp-tablet}) {
     padding-block: $space-8;

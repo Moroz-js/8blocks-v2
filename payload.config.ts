@@ -25,6 +25,7 @@ import { fileURLToPath } from 'url'
 import {
   Users,
   Media,
+  Authors,
   Categories,
   Articles,
   Leads,
@@ -33,6 +34,7 @@ import {
   MediaCategories,
   PublicAudits,
   Research,
+  LaunchModules,
 } from './payload/collections/index.ts'
 import { SiteSeo } from './payload/globals/index.ts'
 
@@ -100,6 +102,7 @@ export default buildConfig({
   collections: [
     Users,
     Media,
+    Authors,
     Categories,
     Articles,
     Leads,
@@ -108,6 +111,7 @@ export default buildConfig({
     MediaCategories,
     PublicAudits,
     Research,
+    LaunchModules,
   ],
 
   globals: [SiteSeo],

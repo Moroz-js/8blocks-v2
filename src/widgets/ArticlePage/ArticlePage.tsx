@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import Image from 'next/image'
 import type { Article, ArticleCard } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
@@ -10,6 +11,7 @@ import { ArticleViewTracker } from '@/features/articleView'
 import { ShareBlock } from '@/features/shareBlock'
 import { RelatedArticles } from '@/widgets/RelatedArticles'
 import { ArticleToc } from './ArticleToc'
+import { ArticleDownloadCta } from './ArticleDownloadCta'
 import styles from './ArticlePage.module.scss'
 
 function formatDate(iso?: string | null): string {
@@ -58,7 +60,31 @@ export function ArticlePage({
           <p className={styles.excerpt}>{article.excerpt}</p>
         )}
         <div className={styles.meta}>
-          <span className={styles.author}>{siteConfig.name}</span>
+          {article.authors && article.authors.length > 0 ? (
+            article.authors.map((author, i) => (
+              <Fragment key={author.id}>
+                {i > 0 && <span className={styles.metaSep} aria-hidden="true">·</span>}
+                {author.linkedIn ? (
+                  <a
+                    href={author.linkedIn}
+                    className={`${styles.author} ${styles.authorLink}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {author.name}
+                    {author.position ? `, ${author.position}` : ''}
+                  </a>
+                ) : (
+                  <span className={styles.author}>
+                    {author.name}
+                    {author.position ? `, ${author.position}` : ''}
+                  </span>
+                )}
+              </Fragment>
+            ))
+          ) : (
+            <span className={styles.author}>{siteConfig.name}</span>
+          )}
           <span className={styles.metaSep}>·</span>
           {date && (
             <>
@@ -90,6 +116,12 @@ export function ArticlePage({
       <div className={`${styles.body} ${hasToc ? styles.bodyWithToc : ''}`}>
         <div className={styles.content}>
           <RichText content={article.content} />
+          {article.cta && (
+            <ArticleDownloadCta
+              cta={article.cta}
+              source={`${basePath.replace(/^\//, '')}:${article.slug}`}
+            />
+          )}
         </div>
 
         {hasToc && (

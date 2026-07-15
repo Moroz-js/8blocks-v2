@@ -28,3 +28,17 @@
 .content {
   min-width: 0;
 }
+
+// Hero + takeaways — first PDF page (A4 landscape).
+.printCover {
+  @media print {
+    break-after: page;
+    page-break-after: always;
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    // Hero flush to top (no gap / hard line above bloom).
+    justify-content: flex-start;
+  }
+}

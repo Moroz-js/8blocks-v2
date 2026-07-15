@@ -6,9 +6,10 @@ import type {
   Article as ArticleType,
   ArticleCard as ArticleCardType,
   ArticleSeo,
+  AuthorRef,
   CategoryRef,
 } from '@/entities/article'
-import { estimateReadingTime } from '@/entities/article'
+import { estimateReadingTime, mapArticleCta } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
 import {
   visiblePublishedArticleConditions,
@@ -38,6 +39,25 @@ function mapCategoryRef(raw: unknown): CategoryRef | null {
     title: item.title,
     slug: item.slug,
   }
+}
+
+function mapAuthorRef(raw: unknown): AuthorRef | null {
+  if (!raw || typeof raw !== 'object') return null
+  const item = raw as { id?: unknown; name?: unknown; position?: unknown; linkedIn?: unknown }
+  if (typeof item.name !== 'string') return null
+  return {
+    id: String(item.id),
+    name: item.name,
+    position: typeof item.position === 'string' ? item.position : null,
+    linkedIn: typeof item.linkedIn === 'string' ? item.linkedIn : null,
+  }
+}
+
+function mapAuthorRefs(raw: unknown): AuthorRef[] {
+  const list = Array.isArray(raw) ? raw : [raw]
+  return list
+    .map((item) => mapAuthorRef(item))
+    .filter((item): item is AuthorRef => item !== null)
 }
 
 function mapArticleCard(raw: unknown): ArticleCardType | null {
@@ -214,10 +234,12 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
     const articleFull: ArticleType = {
       ...article,
       content: articleDoc.content,
+      authors: mapAuthorRefs(articleDoc.author),
       tags: [],
       relatedArticles,
       status: articleDoc.status as 'draft' | 'published',
       views: typeof articleDoc.views === 'number' ? articleDoc.views : 0,
+      cta: mapArticleCta(articleDoc.cta),
       seo: (articleDoc.seo as ArticleSeo | undefined) ?? {},
       createdAt: articleDoc.createdAt,
       updatedAt: articleDoc.updatedAt,

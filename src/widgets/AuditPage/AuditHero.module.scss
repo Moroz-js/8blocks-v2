@@ -210,10 +210,31 @@
 }
 
 @media print {
+  .hero {
+    // Header is hidden in print — undo the negative pull-under-header offset.
+    // Keep bloom flush to the top of the landscape cover (no gap / seam above).
+    margin-top: 0 !important;
+    padding-top: $space-6;
+    flex-shrink: 0;
+  }
+
   .pdfButton {
     display: none !important;
   }
+
+  .metricsBand,
+  .head,
+  .inner {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 }
+
+
+
+
+
+
 
 
 

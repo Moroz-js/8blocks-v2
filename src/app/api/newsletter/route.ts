@@ -16,6 +16,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'This email address cannot be used.' }, { status: 400 })
     }
 
+    const rawSource = (body as Record<string, unknown>).source
+    const source =
+      typeof rawSource === 'string' && rawSource.trim()
+        ? rawSource.replace(/\0/g, '').replace(/[\r\n]+/g, ' ').trim().slice(0, 200)
+        : undefined
+
     const payload = await getPayload({ config })
 
     const existing = await payload.find({
@@ -25,6 +31,11 @@ export async function POST(req: NextRequest) {
     })
 
     if (existing.docs.length > 0) {
+      // Для email-гейта (source задан) повторная подписка — не ошибка:
+      // пользователь должен получить файл, адрес уже сохранён.
+      if (source) {
+        return NextResponse.json({ success: true, already: true })
+      }
       return NextResponse.json(
         { error: PUBLIC_FORM_ERRORS.newsletterDuplicateEmail },
         { status: 400 },
@@ -33,7 +44,7 @@ export async function POST(req: NextRequest) {
 
     await payload.create({
       collection: 'newsletter-subscriptions',
-      data: { email: normalizedEmail },
+      data: { email: normalizedEmail, ...(source ? { source } : {}) },
     })
 
     return NextResponse.json({ success: true })

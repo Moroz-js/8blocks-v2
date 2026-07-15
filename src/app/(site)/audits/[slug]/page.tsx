@@ -29,7 +29,8 @@ async function getAuditBySlug(slug: string) {
       and: [{ slug: { equals: slug } }, visiblePublicAuditWhere],
     },
     limit: 1,
-    depth: 1,
+    // depth 2: populate expert.author relationship together with the author's photo
+    depth: 2,
   })
   return result.docs[0] ?? null
 }
@@ -116,6 +117,9 @@ export default async function AuditSlugPage({ params, searchParams }: PageProps)
     string,
     unknown
   >
+  const expertAuthor = (
+    expertRaw.author && typeof expertRaw.author === 'object' ? expertRaw.author : {}
+  ) as Record<string, unknown>
 
   return (
     <>
@@ -141,10 +145,11 @@ export default async function AuditSlugPage({ params, searchParams }: PageProps)
           },
           ratingBlocks,
           expert: {
-            name: (expertRaw.name as string) ?? null,
-            role: (expertRaw.role as string) ?? null,
+            name: (expertAuthor.name as string) ?? null,
+            role: (expertAuthor.position as string) ?? null,
+            linkedIn: (expertAuthor.linkedIn as string) ?? null,
             rating: (expertRaw.rating as string) ?? null,
-            photo: mapMedia(expertRaw.photo, (expertRaw.name as string) ?? doc.title),
+            photo: mapMedia(expertAuthor.photo, (expertAuthor.name as string) ?? doc.title),
           },
           cover: cover
             ? {

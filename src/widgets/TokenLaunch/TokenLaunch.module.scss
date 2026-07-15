@@ -1,0 +1,1429 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+// ─── Shared section scaffolding ───────────────────────────────────────────────
+
+.section {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.inner {
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  max-width: 780px;
+}
+
+.sectionLabel {
+  @include section-label;
+  text-transform: uppercase;
+}
+
+.sectionHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 46px);
+  line-height: $leading-tight;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.sectionDescription {
+  @include body-text;
+  margin: 0;
+  max-width: 640px;
+}
+
+// ─── Buttons ──────────────────────────────────────────────────────────────────
+
+.ctaPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  height: 54px;
+  padding: 0 $space-7;
+  background: $text-primary;
+  color: $button-primary-fg;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background $transition-base,
+    color $transition-base,
+    transform $transition-fast,
+    box-shadow $transition-base;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-sm;
+    height: 46px;
+    padding: 0 $space-5;
+    white-space: normal;
+    text-align: left;
+  }
+
+  &:hover {
+    background: $glass-highlight;
+    color: $cta-solid-hover-fg;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px $border-primary;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @include focus-ring;
+}
+
+.ctaArrow {
+  font-size: 16px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  transition: transform $transition-fast;
+
+  .ctaPrimary:hover & {
+    transform: translateX(3px);
+  }
+}
+
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  height: 54px;
+  padding: 0 $space-6;
+  border: 1px solid $border-primary;
+  border-radius: 0;
+  background: transparent;
+  color: $text-primary;
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-sm;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color $transition-base, color $transition-base;
+
+  @media (max-width: #{$bp-mobile}) {
+    height: 46px;
+    padding: 0 $space-5;
+    white-space: normal;
+    text-align: left;
+  }
+
+  &:hover {
+    border-color: $text-secondary;
+  }
+
+  @include focus-ring;
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+.hero {
+  position: relative;
+  overflow-x: clip;
+  padding-top: $space-10;
+  padding-bottom: $space-10;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-top: $space-9;
+    padding-bottom: $space-8;
+  }
+}
+
+.heroBlobLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.heroBlob {
+  position: absolute;
+  filter: blur(80px);
+  pointer-events: none;
+
+  &A {
+    width: 600px;
+    height: 600px;
+    top: -15%;
+    left: -10%;
+    background: radial-gradient(circle, rgba(194, 78, 136, 0.32) 0%, transparent 70%);
+  }
+
+  &B {
+    width: 500px;
+    height: 500px;
+    top: 25%;
+    right: -8%;
+    background: radial-gradient(circle, rgba(142, 74, 189, 0.26) 0%, transparent 70%);
+  }
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  display: flex;
+  flex-direction: column;
+  gap: $space-8;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
+    gap: $space-7;
+  }
+}
+
+.heroLayout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: $space-8;
+  align-items: center;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: 1fr;
+    gap: $space-7;
+  }
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-5;
+}
+
+.heroLabel {
+  @include section-label;
+  text-transform: uppercase;
+}
+
+.heroHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(30px, 3.8vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+}
+
+.heroDescription {
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  max-width: 640px;
+  margin: 0;
+}
+
+.heroStatsParagraph {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  max-width: 640px;
+  margin: 0;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-4;
+  margin-top: $space-2;
+}
+
+.heroStat {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-7;
+  text-align: left;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.heroStatValue {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(72px, 9vw, 128px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  background: $gradient-accent-wide;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroStatCaption {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.heroStatSource {
+  font-size: $text-xs;
+  letter-spacing: 0.04em;
+  color: $text-tertiary;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  @include focus-ring;
+}
+
+.heroPartners {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-3 $space-4;
+  padding-top: $space-5;
+  border-top: 1px solid $border-secondary;
+}
+
+.heroPartnersLead {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  margin-right: $space-2;
+}
+
+.heroPartnerMark {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $text-secondary;
+  border: 1px solid $border-secondary;
+  padding: $space-2 $space-4;
+}
+
+// ─── Gaps ─────────────────────────────────────────────────────────────────────
+
+.gapsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gapCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-6;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.gapTag {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.gapQuestion {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(19px, 1.8vw, 23px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.gapText {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.gapResult {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  padding-top: $space-3;
+  border-top: 1px solid $border-secondary;
+
+  b {
+    color: $accent-pink-deep;
+    font-weight: 600;
+  }
+}
+
+// ─── Costs ────────────────────────────────────────────────────────────────────
+
+.costsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.costFigure {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-6;
+  margin: 0;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.costNumber {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.2;
+  color: $accent-pink-deep;
+}
+
+.costQuestion {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(19px, 1.8vw, 23px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.costLead {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-base;
+  line-height: $leading-normal;
+  color: $text-primary;
+  margin: 0;
+}
+
+.costData {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.costSource {
+  margin: 0;
+  padding-top: $space-3;
+  border-top: 1px solid $border-secondary;
+
+  cite {
+    font-style: normal;
+    font-family: $font-base;
+    font-size: $text-xs;
+    letter-spacing: 0.04em;
+    color: $text-tertiary;
+  }
+}
+
+.costSourceLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  @include focus-ring;
+}
+
+// ─── Partners ─────────────────────────────────────────────────────────────────
+
+.partnersGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: $space-4;
+
+  @media (max-width: #{$bp-desktop}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.partnerCard {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  padding: $space-6;
+  transition: transform $transition-base, background $transition-base;
+
+  &:hover {
+    transform: translateY(-3px);
+    background: $bg-tertiary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.partnerRole {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $accent-pink-deep;
+}
+
+.partnerName {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(21px, 2vw, 26px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.partnerSubtitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.partnerDescription {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ─── Calculator ───────────────────────────────────────────────────────────────
+
+.calcLayout {
+  display: flex;
+  flex-direction: column;
+  gap: $space-6;
+}
+
+.calcStepTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(19px, 1.9vw, 24px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.calcModules {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.moduleCard {
+  @include card-surface;
+  transition: border-color $transition-base, background $transition-base;
+
+  &[data-checked='true'] {
+    border-color: $accent-pink-deep;
+    background: $bg-tertiary;
+  }
+}
+
+.moduleMain {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: $space-4;
+  padding: $space-5 $space-6;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 24px 1fr;
+    padding: $space-4 $space-5;
+  }
+}
+
+.moduleCheckbox {
+  position: absolute;
+  opacity: 0;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  cursor: pointer;
+
+  &:focus-visible + .moduleCheckboxBox {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.moduleCheckboxBox {
+  width: 24px;
+  height: 24px;
+  border: 1px solid $border-primary;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  color: transparent;
+  cursor: pointer;
+  transition: background $transition-fast, border-color $transition-fast, color $transition-fast;
+
+  .moduleCard[data-checked='true'] & {
+    background: $accent-pink-deep;
+    border-color: $accent-pink-deep;
+    color: #fff;
+  }
+}
+
+.moduleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.moduleName {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+
+  label {
+    cursor: pointer;
+
+    // Растягиваем кликабельную зону чекбокса на всю строку модуля
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+    }
+  }
+}
+
+.moduleDuration {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.modulePrice {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(16px, 1.5vw, 19px);
+  color: $text-primary;
+  white-space: nowrap;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-column: 2;
+    font-size: $text-sm;
+  }
+}
+
+.moduleDetails {
+  border-top: 1px solid $border-secondary;
+
+  &[open] .moduleDetailsChevron {
+    transform: rotate(180deg);
+  }
+}
+
+.moduleSummary {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-6;
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  cursor: pointer;
+  list-style: none;
+  transition: color $transition-base;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $space-5;
+  }
+}
+
+.moduleDetailsChevron {
+  font-size: 10px;
+  line-height: 1;
+  transition: transform $transition-fast;
+}
+
+.moduleDescription {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+  padding: 0 $space-6 $space-5;
+  max-width: 860px;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: 0 $space-5 $space-4;
+  }
+}
+
+.modulePackages {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  margin: 0;
+  padding: 0 $space-6 $space-5;
+  border: none;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: 0 $space-5 $space-4;
+  }
+}
+
+.modulePackagesLegend {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  padding: 0;
+  margin-bottom: $space-2;
+}
+
+.packageOption {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  border: 1px solid $border-secondary;
+  cursor: pointer;
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &[data-active='true'] {
+    border-color: $accent-pink-deep;
+    background: $bg-tertiary;
+  }
+
+  &:hover {
+    border-color: $border-primary;
+  }
+}
+
+.packageRadio {
+  position: absolute;
+  opacity: 0;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+
+  &:focus-visible + .packageRadioDot {
+    outline: 2px solid $accent-purple;
+    outline-offset: 2px;
+  }
+}
+
+.packageRadioDot {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  border: 1px solid $border-primary;
+  border-radius: 50%;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+
+  .packageOption[data-active='true'] & {
+    border-color: $accent-pink-deep;
+    box-shadow: inset 0 0 0 3.5px $accent-pink-deep;
+  }
+}
+
+.packageLabel {
+  flex: 1 1 auto;
+  font-size: $text-sm;
+  line-height: $leading-normal;
+  color: $text-secondary;
+}
+
+.packagePrice {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  color: $text-primary;
+  white-space: nowrap;
+}
+
+.calcTotal {
+  @include card-surface-elevated;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $space-3 $space-7;
+  padding: $space-5 $space-6;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-4 $space-5;
+    gap: $space-2 $space-5;
+  }
+}
+
+.calcTotalItem {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+}
+
+.calcTotalLabel {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
+.calcTotalValue {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(20px, 2.2vw, 30px);
+  line-height: 1.2;
+  color: $text-primary;
+}
+
+.calcTotalNote {
+  font-size: $text-sm;
+  color: $text-tertiary;
+  margin-left: auto;
+
+  @media (max-width: #{$bp-tablet}) {
+    margin-left: 0;
+    flex-basis: 100%;
+  }
+}
+
+.calcDisclaimer {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: 0;
+  max-width: 720px;
+}
+
+.calcBypass {
+  font-size: $text-sm;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.calcBypassLink {
+  color: $text-secondary;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+
+  @include focus-ring;
+}
+
+.calcFormBlock {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
+  padding: $space-6;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+// ─── Lead form ────────────────────────────────────────────────────────────────
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.fieldLabel {
+  font-family: $font-base;
+  font-weight: 400;
+  font-size: $text-xs;
+  color: $text-tertiary;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fieldOptional {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: $text-tertiary;
+  opacity: 0.7;
+}
+
+%input-base {
+  font-family: $font-base;
+  font-size: $text-base;
+  color: $text-primary;
+  background-color: $bg-secondary;
+  border: 1px solid $border-secondary;
+  border-radius: 0;
+  padding: $space-3 $space-4;
+  width: 100%;
+  transition: border-color $transition-fast, background-color $transition-fast;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  // background-color (не шорткат background), иначе у .select сбрасывается
+  // background-image/position стрелки и она «улетает» влево при ховере
+  &:hover {
+    border-color: $border-primary;
+    background-color: $border-secondary;
+  }
+
+  &:focus {
+    border-color: $focus-accent;
+    background-color: $focus-accent-bg;
+    box-shadow: 0 0 0 3px $focus-accent-glow;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.input {
+  @extend %input-base;
+  height: 48px;
+}
+
+.select {
+  @extend %input-base;
+  height: 48px;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 20px) 22px, calc(100% - 15px) 22px;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+
+  option {
+    background: #111;
+    color: #fff;
+  }
+}
+
+.textarea {
+  @extend %input-base;
+  resize: none;
+  min-height: 120px;
+  line-height: $leading-relaxed;
+}
+
+.formError {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $error-fg;
+  padding: $space-3 $space-4;
+  background: $error-bg;
+  border: 1px solid $error-border;
+  margin: 0;
+}
+
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid $border-primary;
+  border-top-color: $button-primary-fg;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.formSuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-3;
+  padding: $space-6;
+  border: 1px solid $success-border;
+  background: $success-bg;
+}
+
+.formSuccessIcon {
+  width: 40px;
+  height: 40px;
+  background: $success-bg-strong;
+  border: 1px solid $success-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: $accent-green;
+}
+
+.formSuccessTitle {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-lg;
+  color: $text-primary;
+  margin: 0;
+}
+
+.formSuccessBody {
+  font-family: $font-base;
+  font-size: $text-base;
+  color: $text-secondary;
+  margin: 0;
+}
+
+// ─── Process ──────────────────────────────────────────────────────────────────
+
+.processTableWrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.processTable {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead th {
+    font-family: $font-base;
+    font-weight: 400;
+    font-size: $text-xs;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $text-tertiary;
+    text-align: left;
+    padding: $space-3 $space-4 $space-3 0;
+    border-bottom: 1px solid $border-primary;
+  }
+
+  td {
+    vertical-align: top;
+    padding: $space-5 $space-4 $space-5 0;
+    border-bottom: 1px solid $border-secondary;
+  }
+
+  @media (max-width: #{$bp-tablet}) {
+    thead {
+      display: none;
+    }
+
+    tbody,
+    tr,
+    td {
+      display: block;
+    }
+
+    tr {
+      border: 1px solid $border-secondary;
+      background: $bg-secondary;
+      padding: $space-5;
+      margin-bottom: $space-3;
+    }
+
+    td {
+      border: none;
+      padding: 0 0 $space-2;
+    }
+  }
+}
+
+.processNumber {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(18px, 1.8vw, 24px);
+  color: $accent-pink-deep;
+  line-height: 1.3;
+  width: 56px;
+
+  @media (max-width: #{$bp-tablet}) {
+    width: auto;
+  }
+}
+
+.processStage {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: $leading-snug;
+  color: $text-primary;
+  width: 28%;
+
+  @media (max-width: #{$bp-tablet}) {
+    width: auto;
+  }
+}
+
+.processDuration {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-tertiary;
+  white-space: nowrap;
+  width: 15%;
+
+  @media (max-width: #{$bp-tablet}) {
+    width: auto;
+    white-space: normal;
+
+    &::before {
+      content: attr(data-label) ' · ';
+      text-transform: uppercase;
+      font-size: $text-xs;
+      letter-spacing: 0.08em;
+    }
+  }
+}
+
+.processText {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+}
+
+// ─── Fit ──────────────────────────────────────────────────────────────────────
+
+.fitGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-4;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fitCol {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  padding: $space-6;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.fitColTitle {
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(17px, 1.6vw, 21px);
+  color: $text-primary;
+  margin: 0;
+}
+
+.fitMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid $border-primary;
+  font-size: 14px;
+  line-height: 1;
+
+  &Yes {
+    color: $accent-green;
+  }
+
+  &No {
+    color: $accent-pink-deep;
+  }
+}
+
+.fitList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fitItem {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  padding-block: $space-3;
+  border-top: 1px solid $border-secondary;
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    transform: translateY(-1px);
+  }
+}
+
+.fitItemYes::before {
+  background: $accent-green;
+}
+
+.fitItemNo::before {
+  background: $accent-pink-deep;
+}
+
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+
+.faqAccordionWrap {
+  width: 100%;
+}
+
+.faqMeta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $space-6;
+  padding-top: $space-4;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.faqMetaBlock {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.faqMetaTitle {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  margin: 0;
+}
+
+.faqMetaText {
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+  color: $text-secondary;
+  margin: 0;
+}
+
+.faqNetwork {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+}
+
+.faqNetworkLink {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $text-secondary;
+  text-decoration: none;
+  border: 1px solid $border-secondary;
+  padding: $space-2 $space-3;
+  transition: border-color $transition-base, color $transition-base;
+
+  &:hover {
+    border-color: $text-secondary;
+    color: $text-primary;
+  }
+
+  @include focus-ring;
+}
+
+// ─── Final CTA ────────────────────────────────────────────────────────────────
+
+.finalSection {
+  padding-block: $space-11;
+
+  @media (max-width: #{$bp-tablet}) {
+    padding-block: $space-8;
+  }
+}
+
+.finalInner {
+  position: relative;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding: $space-10 $container-padding;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $space-5;
+  overflow: hidden;
+  border-block: 1px solid $border-secondary;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 45% 45% at 50% 45%,
+      rgba(194, 78, 136, 0.14) 0%,
+      transparent 68%
+    );
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-8 $container-padding-mobile;
+  }
+}
+
+.finalLabel {
+  @include section-label;
+  text-transform: uppercase;
+}
+
+.finalHeadline {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 54px);
+  line-height: $leading-tight;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.finalDescription {
+  @include body-text;
+  margin: 0;
+  max-width: 620px;
+}
+
+.finalActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: $space-4;
+  margin-top: $space-2;
+}
+
+.finalFormWrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 720px;
+  margin-top: $space-5;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+}
+
+.finalFormTitle {
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+  margin: 0;
+}

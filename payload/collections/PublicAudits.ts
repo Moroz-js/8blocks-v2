@@ -226,19 +226,16 @@ export const PublicAudits: CollectionConfig = {
         {
           type: 'row',
           fields: [
-            { name: 'name', type: 'text', label: 'Имя', admin: { width: '50%' } },
-            { name: 'role', type: 'text', label: 'Роль', admin: { width: '50%' } },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
             {
-              name: 'photo',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Фото',
-              admin: { width: '50%' },
+              name: 'author',
+              type: 'relationship',
+              relationTo: 'authors',
+              label: 'Автор',
+              hasMany: false,
+              admin: {
+                width: '50%',
+                description: 'Имя, должность, фото и LinkedIn берутся из карточки автора',
+              },
             },
             {
               name: 'rating',

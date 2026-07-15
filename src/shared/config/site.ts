@@ -34,14 +34,54 @@ export const siteConfig = {
   blogEnabled: true,
 } as const
 
-export const navLinks = [
-  { label: t({ ru: 'Услуги', en: 'Services' }), href: '/services' },
-  { label: t({ ru: 'Кейсы', en: 'Cases' }), href: '/cases' },
-  { label: t({ ru: 'Блог', en: 'Blog' }), href: '/blog' },
-  { label: t({ ru: 'Исследования', en: 'Research' }), href: '/research' },
-  { label: t({ ru: 'Калькулятор токеномики', en: 'Tokenomics Calculator' }), href: '/product/calculator' },
-  { label: t({ ru: 'Контакты', en: 'Contact' }), href: '/contact' },
-] as const
+export interface NavItem {
+  label: string
+  href: string
+  /** Пункт ещё не готов — рендерится как неактивный с бейджем «скоро». */
+  soon?: boolean
+}
+
+export interface NavGroup {
+  label: string
+  items: NavItem[]
+}
+
+export const navGroups: NavGroup[] = [
+  {
+    label: t({ ru: 'Услуги', en: 'Services' }),
+    items: [
+      { label: t({ ru: 'Цифровые активы', en: 'Digital assets' }), href: '/product/digital-assets' },
+      { label: t({ ru: 'Стратегический консалтинг', en: 'Consulting' }), href: '/services/strategic-consulting' },
+      { label: t({ ru: 'Базовая токеномика', en: 'Tokenomics' }), href: '/services/tokenomics' },
+      { label: t({ ru: 'Аудит токеномики', en: 'Audit' }), href: '/services/audit' },
+      { label: t({ ru: 'Воркшоп по токеномике', en: 'Workshop' }), href: '/product/workshop' },
+    ],
+  },
+  {
+    label: t({ ru: 'Продукты', en: 'Products' }),
+    items: [
+      { label: t({ ru: 'Запуск токена с партнёрами', en: 'Project with partners' }), href: '/product/token-launch' },
+      { label: t({ ru: 'Калькулятор токеномики', en: 'Calculator' }), href: '/product/calculator' },
+      { label: 'Tokenomics AI', href: '/product/tokenomics-ai', soon: true },
+    ],
+  },
+  {
+    label: t({ ru: 'Медиа', en: 'Media' }),
+    items: [
+      { label: t({ ru: 'Блог', en: 'Blog' }), href: '/blog' },
+      { label: t({ ru: 'Исследования', en: 'Research' }), href: '/research' },
+      { label: t({ ru: 'Публичные аудиты', en: 'Public audits' }), href: '/audits' },
+    ],
+  },
+  {
+    label: t({ ru: 'О нас', en: 'About us' }),
+    items: [
+      { label: t({ ru: 'Кейсы', en: 'Cases' }), href: '/cases' },
+      { label: t({ ru: 'Мы в медиа', en: 'We in media' }), href: '/media' },
+      { label: t({ ru: 'Контакты', en: 'Contacts' }), href: '/contact' },
+    ],
+  },
+]
 
 const ruSocialLinks = [
   { id: 'telegram', label: 'Telegram', href: 'https://t.me/eightblocksio8', icon: '/icons/tg-icon.svg' },

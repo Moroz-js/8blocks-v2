@@ -11,7 +11,7 @@ export function AuditTakeaways({ verdict, strength, weakness }: Props) {
   if (items.length === 0) return null
 
   return (
-    <section className={styles.root} aria-label="Ключевые выводы">
+    <section className={styles.root} aria-label="Ключевые выводы" data-pdf-takeaways>
       <div className={styles.grid}>
         {items.map((text, i) => (
           <div key={i} className={styles.item}>

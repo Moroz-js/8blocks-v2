@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { Article as ArticleType, ArticleCard as ArticleCardType, ArticleSeo, CategoryRef } from '@/entities/article'
+import type { Article as ArticleType, ArticleCard as ArticleCardType, ArticleSeo, AuthorRef, CategoryRef } from '@/entities/article'
+import { mapArticleCta } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
 import {
   visiblePublishedResearchConditions,
@@ -20,6 +21,25 @@ function mapCategoryRef(raw: unknown): CategoryRef | null {
   const item = raw as { id?: unknown; title?: unknown; slug?: unknown }
   if (typeof item.title !== 'string' || typeof item.slug !== 'string') return null
   return { id: String(item.id), title: item.title, slug: item.slug }
+}
+
+function mapAuthorRef(raw: unknown): AuthorRef | null {
+  if (!raw || typeof raw !== 'object') return null
+  const item = raw as { id?: unknown; name?: unknown; position?: unknown; linkedIn?: unknown }
+  if (typeof item.name !== 'string') return null
+  return {
+    id: String(item.id),
+    name: item.name,
+    position: typeof item.position === 'string' ? item.position : null,
+    linkedIn: typeof item.linkedIn === 'string' ? item.linkedIn : null,
+  }
+}
+
+function mapAuthorRefs(raw: unknown): AuthorRef[] {
+  const list = Array.isArray(raw) ? raw : [raw]
+  return list
+    .map((item) => mapAuthorRef(item))
+    .filter((item): item is AuthorRef => item !== null)
 }
 
 function mapResearchCard(raw: unknown): ArticleCardType | null {
@@ -125,10 +145,12 @@ export default async function ResearchSlugPage({ params }: PageProps) {
   const articleFull: ArticleType = {
     ...card,
     content: doc.content,
+    authors: mapAuthorRefs(doc.author),
     tags: [],
     relatedArticles: [],
     status: doc.status as 'draft' | 'published',
     views: typeof doc.views === 'number' ? doc.views : 0,
+    cta: mapArticleCta(doc.cta),
     seo: (doc.seo as ArticleSeo | undefined) ?? {},
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,

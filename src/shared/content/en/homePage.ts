@@ -212,19 +212,10 @@ export const methodologyContent = {
     { id: 'on-chain-proof', title: 'On-chain proof', line: 'Verifiable flows, not "trust me".' },
     { id: 'rule-durability', title: 'Rule durability', line: 'How hard to switch the linkage off?' },
   ],
-  footnote:
-    '+ tokenomics sustainability · fundamentals · governance & control · security · market layer — scored the same way, combined into one result.',
-  faq: [
-    {
-      question: 'What is Token Product Linkage?',
-      answer:
-        'Token Product Linkage shows whether product growth creates real economic value for the token. It answers a simple question: if users, revenue, volume, or activity grow, does the token also gain demand, utility, fees, buybacks, burns, or stronger value capture? A strong token is not only traded — it is connected to the system that creates value.',
-    },
-    {
-      question: 'How does the 8Blocks rating actually work?',
-      answer:
-        'We review a token economy across a fixed set of blocks — Token Product Linkage at the core, plus tokenomics sustainability, fundamentals, governance and control, security, and the market layer — each scored against the same rubric, then combined into one score with a color band and a short read on the key risks. We publish what we measure and why, and show it in our [public audits](/audits).',
-    },
+  closingLead: 'That is the core of the linkage. Here is how it becomes a rating.',
+  closingParagraphs: [
+    'Token Product Linkage shows whether product growth creates real economic value for the token. If users, revenue, volume, or activity grow — does the token also gain demand, utility, fees, buybacks, burns, or stronger value capture? A strong token is not only traded — it is connected to the system that creates value.',
+    'We review a token economy across a fixed set of blocks — Token Product Linkage at the core, plus tokenomics sustainability, fundamentals, governance and control, security, and the market layer — each scored against the same rubric, then combined into one score with a color band and a short read on the key risks. We publish what we measure and why, and show it in our [public audits](/audits).',
   ],
 } as const
 

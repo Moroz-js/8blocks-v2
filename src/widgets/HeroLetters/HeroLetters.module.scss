@@ -1,73 +1,35 @@
 @use '@/shared/styles/variables' as *;
-@use 'sass:math';
 
 .stage {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 460px;
-  overflow: visible;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-// Soft radial glow behind the letters
-.glow {
-  position: absolute;
-  inset: 5% 0 0 0;
-  background: var(
-    --rdletter-glow,
-    radial-gradient(
-      circle at 50% 45%,
-      rgba($pal-magenta, 0.28) 0%,
-      rgba($pal-purple, 0.12) 38%,
-      transparent 72%
-    )
-  );
-  filter: blur(24px);
-  pointer-events: none;
-}
-
-// Faint perspective grid
 .grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(to right, $border-secondary 1px, transparent 1px),
-    linear-gradient(to bottom, $border-secondary 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(circle at 50% 45%, black 0%, transparent 74%);
-  -webkit-mask-image: radial-gradient(circle at 50% 45%, black 0%, transparent 74%);
-  opacity: 0.45;
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 65% at 55% 45%, black 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 55% 45%, black 0%, transparent 75%);
   pointer-events: none;
 }
 
-// Build the isometric extrusion as a long stacked shadow going down-left.
-// Step ~0.8 keeps it close to a 30° isometric edge.
-$iso-depth: 22;
-$iso-step: 0.8;
-
-@function iso-extrude($color) {
-  $shadow: ();
-  @for $i from 1 through $iso-depth {
-    $off: $i * $iso-step;
-    $shadow: append($shadow, -#{$off}px #{$off}px 0 $color, comma);
-  }
-  @return $shadow;
-}
-
-.glyph {
-  position: absolute;
-  font-family: $font-base;
-  font-weight: 700;
-  line-height: 0.8;
-  letter-spacing: -0.04em;
+.icon {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  height: auto;
+  max-height: min(560px, 72vh);
+  object-fit: contain;
   user-select: none;
-  will-change: transform;
-  transform-origin: center;
-
-  // Light top face (overridable per scope)
-  color: var(--rdletter-face, #{$pal-rose});
-  // Deep extruded body (isometric volume, overridable per scope)
-  text-shadow: iso-extrude(var(--rdletter-extrude, #{$pal-magenta}));
-  // Lift the whole block off the background
-  filter: drop-shadow(-14px 18px 26px rgba($pal-purple, 0.45));
+  pointer-events: none;
 }

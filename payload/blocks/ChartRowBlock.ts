@@ -1,4 +1,12 @@
 import type { Block } from 'payload'
+import { chartSeriesFields } from './ChartBlock.ts'
+
+type ChartSibling = { type?: string } | undefined
+
+const isSingleSeriesType = (_: unknown, siblingData: ChartSibling) => {
+  const t = siblingData?.type
+  return t === 'bar' || t === 'hbar'
+}
 
 export const ChartRowBlock: Block = {
   slug: 'chartRow',
@@ -13,22 +21,34 @@ export const ChartRowBlock: Block = {
       labels: { singular: 'График', plural: 'Графики' },
       fields: [
         {
+          name: 'type',
+          type: 'select',
+          label: 'Тип',
+          required: true,
+          defaultValue: 'line',
+          options: [
+            { label: 'Линия', value: 'line' },
+            { label: 'Область', value: 'area' },
+            { label: 'Столбцы', value: 'bar' },
+            { label: 'Гор. столбцы', value: 'hbar' },
+            { label: 'Кольцо (donut)', value: 'donut' },
+          ],
+        },
+        { name: 'caption', type: 'text', label: 'Подпись' },
+        ...chartSeriesFields,
+        {
           type: 'row',
+          admin: { condition: isSingleSeriesType },
           fields: [
             {
-              name: 'type',
-              type: 'select',
-              label: 'Тип',
-              required: true,
-              defaultValue: 'line',
-              admin: { width: '50%' },
-              options: [
-                { label: 'Линия', value: 'line' },
-                { label: 'Область', value: 'area' },
-                { label: 'Столбцы', value: 'bar' },
-                { label: 'Гор. столбцы', value: 'hbar' },
-                { label: 'Кольцо (donut)', value: 'donut' },
-              ],
+              name: 'seriesLabel',
+              type: 'text',
+              label: 'Название серии',
+              defaultValue: 'Значение',
+              admin: {
+                width: '50%',
+                condition: (_: unknown, siblingData: ChartSibling) => siblingData?.type !== 'donut',
+              },
             },
             {
               name: 'color',
@@ -37,35 +57,61 @@ export const ChartRowBlock: Block = {
               defaultValue: '#C24E88',
               admin: {
                 width: '50%',
+                condition: (_: unknown, siblingData: ChartSibling) => siblingData?.type !== 'donut',
                 components: { Field: '/src/shared/admin/ColorPickerField#ColorPickerField' },
               },
             },
           ],
         },
-        { name: 'caption', type: 'text', label: 'Подпись' },
-        { name: 'seriesLabel', type: 'text', label: 'Название серии', defaultValue: 'Значение' },
         {
           name: 'dataPoints',
           type: 'array',
           label: 'Данные',
           minRows: 1,
           labels: { singular: 'Точка', plural: 'Точки' },
+          admin: {
+            description:
+              'Линия/область: подпись + значения по сериям. Столбцы/кольцо: поле «Значение».',
+            initCollapsed: false,
+          },
           fields: [
             {
-              type: 'row',
+              name: 'label',
+              type: 'text',
+              label: 'Подпись (ось X)',
+              required: true,
+            },
+            {
+              name: 'values',
+              type: 'array',
+              label: 'Значения по сериям',
+              labels: { singular: 'Значение серии', plural: 'Значения серий' },
+              admin: {
+                description: 'По одному числу на каждую серию.',
+                components: {
+                  Field: '/src/shared/admin/ChartPointValuesField#ChartPointValuesField',
+                },
+              },
               fields: [
-                { name: 'label', type: 'text', label: 'Подпись', required: true, admin: { width: '45%' } },
-                { name: 'value', type: 'number', label: 'Значение', required: true, admin: { width: '30%' } },
                 {
-                  name: 'color',
-                  type: 'text',
-                  label: 'Цвет',
-                  admin: {
-                    width: '25%',
-                    components: { Field: '/src/shared/admin/ColorPickerField#ColorPickerField' },
-                  },
+                  name: 'value',
+                  type: 'number',
+                  label: 'Число',
                 },
               ],
+            },
+            {
+              name: 'value',
+              type: 'number',
+              label: 'Значение (столбцы / кольцо)',
+            },
+            {
+              name: 'color',
+              type: 'text',
+              label: 'Цвет сегмента (кольцо)',
+              admin: {
+                components: { Field: '/src/shared/admin/ColorPickerField#ColorPickerField' },
+              },
             },
           ],
         },

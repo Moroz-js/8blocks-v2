@@ -20,10 +20,26 @@ export interface CategoryRef {
   slug: string
 }
 
+export interface AuthorRef {
+  id: string
+  name: string
+  position?: string | null
+  linkedIn?: string | null
+  photo?: MediaItem | null
+}
+
 export interface TagRef {
   id: string
   name: string
   slug: string
+}
+
+export interface ArticleCta {
+  text?: string | null
+  buttonLabel: string
+  fileUrl: string
+  fileName?: string | null
+  requireEmail: boolean
 }
 
 export interface ArticleSeo {
@@ -45,11 +61,13 @@ export interface Article {
   content: unknown // Lexical rich text — rendered by shared/render
   cover?: MediaItem | null
   category?: CategoryRef | null
+  authors?: AuthorRef[]
   tags?: TagRef[]
   relatedArticles?: ArticleCard[]
   status: ArticleStatus
   publishedAt?: string | null
   views: number
+  cta?: ArticleCta | null
   seo?: ArticleSeo
   createdAt: string
   updatedAt: string

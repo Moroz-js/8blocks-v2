@@ -61,6 +61,28 @@
   color: $text-primary;
 }
 
+.nameLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  text-decoration: none;
+  width: fit-content;
+
+  &:hover {
+    color: $accent-pink-deep;
+  }
+}
+
+.linkedInIcon {
+  flex-shrink: 0;
+  color: $text-tertiary;
+  transition: color 0.15s ease;
+
+  .nameLink:hover & {
+    color: $accent-pink-deep;
+  }
+}
+
 .role {
   font-family: $font-base;
   font-size: $text-sm;

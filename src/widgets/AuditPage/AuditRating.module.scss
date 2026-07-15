@@ -17,13 +17,9 @@
 
 .topGrid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   gap: $space-5;
   margin-bottom: $space-5;
-
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr;
-  }
 }
 
 .card {
@@ -43,7 +39,26 @@
 
 .radarWrap {
   width: 100%;
+  height: 440px;
+  min-width: 0;
   color: $text-secondary;
+
+  :global(.recharts-wrapper) {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  :global(.recharts-wrapper > .recharts-surface) {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+}
+
+.ratingTail {
+  display: flex;
+  flex-direction: column;
+  gap: $space-5;
 }
 
 // ── Horizontal score bars ──────────────────────────────────────────
@@ -52,6 +67,7 @@
   flex-direction: column;
   gap: $space-4;
   padding-top: $space-2;
+  padding-right: $space-2;
 }
 
 .barRow {
@@ -71,6 +87,8 @@
   font-weight: 600;
   color: $text-primary;
   text-align: right;
+  min-width: 2.5ch;
+  padding-right: $space-1;
 }
 
 .barTrack {
@@ -141,13 +159,13 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: $space-2 $space-6 $space-6;
+  padding: $space-6 $space-7 $space-6 $space-6;
   background: #08070a;
   color: #fff;
 }
 
 .ratingBoxLabel {
-  margin: 0 0 $space-3;
+  margin: 0 0 $space-4;
   font-size: $text-xs;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -159,6 +177,7 @@
   display: flex;
   align-items: baseline;
   gap: $space-2;
+  padding-right: $space-2;
 }
 
 .scoreNum {
@@ -303,19 +322,51 @@
 }
 
 @media print {
-  .card,
-  .barRow,
+  .root {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .ratingTail {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .topGrid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .radarWrap {
+    height: 300px;
+  }
+
+  .topGrid .card {
+    padding: $space-4 $space-5;
+  }
+
+  .bars {
+    gap: $space-3;
+  }
+
+  .topGrid,
   .summaryPanel,
-  .ratingBox {
-    break-inside: avoid;
-    page-break-inside: avoid;
+  .card,
+  .bars,
+  .barRow,
+  .ratingBox,
+  .tableWrap,
+  .table {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   .table tr,
   .table thead,
+  .table tbody,
   .table tfoot {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   .heading {

@@ -39,14 +39,38 @@ type LexNode = {
     type?: string
     seriesLabel?: string
     color?: string
-    dataPoints?: { label?: string | null; value?: number | null; color?: string | null; id?: string }[]
+    series?: {
+      label?: string | null
+      color?: string | null
+      yAxis?: 'left' | 'right' | null
+      id?: string
+    }[]
+    dataPoints?: {
+      label?: string | null
+      value?: number | null
+      values?: { value?: number | null; id?: string }[] | null
+      color?: string | null
+      id?: string
+    }[]
     // chartRow
     charts?: {
       type?: string
       seriesLabel?: string
       color?: string
       caption?: string
-      dataPoints?: { label?: string | null; value?: number | null; color?: string | null; id?: string }[]
+      series?: {
+        label?: string | null
+        color?: string | null
+        yAxis?: 'left' | 'right' | null
+        id?: string
+      }[]
+      dataPoints?: {
+        label?: string | null
+        value?: number | null
+        values?: { value?: number | null; id?: string }[] | null
+        color?: string | null
+        id?: string
+      }[]
       id?: string
     }[]
     // metricStrip / checklist / infoColumns / numberedNotes
@@ -126,23 +150,37 @@ interface ChartFieldValue {
   seriesLabel?: string | null
   color?: string | null
   caption?: string | null
-  dataPoints?: { label?: string | null; value?: number | null; color?: string | null }[]
+  series?: {
+    label?: string | null
+    color?: string | null
+    yAxis?: 'left' | 'right' | null
+  }[] | null
+  dataPoints?: {
+    label?: string | null
+    value?: number | null
+    values?: { value?: number | null }[] | null
+    color?: string | null
+  }[]
 }
 
 function renderSingleChart(c: ChartFieldValue, key: string): React.ReactNode {
-  const points = (c.dataPoints ?? [])
-    .filter((p) => p && p.label != null && p.value != null)
-    .map((p) => ({
-      label: String(p.label),
-      value: Number(p.value),
-      color: p.color ?? null,
-    }))
+  const points = (c.dataPoints ?? []).filter((p) => p && p.label != null)
   if (points.length === 0) return null
   return (
     <ChartView
       key={key}
       type={(c.type as ChartType) ?? 'line'}
-      dataPoints={points}
+      dataPoints={points.map((p) => ({
+        label: String(p.label),
+        value: p.value ?? null,
+        values: p.values ?? null,
+        color: p.color ?? null,
+      }))}
+      series={c.series?.map((s) => ({
+        label: String(s.label ?? ''),
+        color: s.color ?? null,
+        yAxis: s.yAxis === 'right' ? 'right' : 'left',
+      }))}
       seriesLabel={c.seriesLabel}
       color={c.color}
       caption={c.caption}
@@ -232,6 +270,7 @@ function renderBlock(node: LexNode, key: string): React.ReactNode {
           seriesLabel: fields.seriesLabel,
           color: fields.color,
           caption: fields.caption,
+          series: fields.series,
           dataPoints: fields.dataPoints,
         },
         key,

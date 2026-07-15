@@ -1,0 +1,128 @@
+@use '@/shared/styles/variables' as *;
+
+.root {
+  margin-top: $space-8;
+  padding: $space-6;
+  background: $card-panel-bg;
+  border: 1px solid $border-subtle;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $space-5;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+    margin-top: $space-7;
+  }
+}
+
+.text {
+  font-family: $font-base;
+  font-size: $text-md;
+  font-weight: 500;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+  white-space: pre-line;
+}
+
+// ── Modal ────────────────────────────────────────────────────────────
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: $overlay-scrim;
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $container-padding;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: $body-bg;
+  border: 1px solid $border-primary;
+  padding: $space-6;
+
+  @media (max-width: #{$bp-mobile}) {
+    padding: $space-5;
+  }
+}
+
+.close {
+  position: absolute;
+  top: $space-3;
+  right: $space-3;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: $text-xl;
+  line-height: 1;
+  color: $text-tertiary;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.modalTitle {
+  font-family: $font-base;
+  font-size: $text-lg;
+  font-weight: 500;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0 0 $space-5;
+  padding-right: $space-6;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+}
+
+.input {
+  width: 100%;
+  height: 44px;
+  padding: 0 $space-4;
+  background: $input-bg;
+  border: 1px solid $border-subtle;
+  font-family: $font-base;
+  font-size: $text-base;
+  color: $text-primary;
+  transition: border-color $transition-fast, background-color $transition-fast;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $focus-accent;
+    background: $input-bg-focus;
+  }
+}
+
+.error {
+  font-family: $font-base;
+  font-size: $text-sm;
+  color: $error-fg;
+  margin: $space-3 0 0;
+}
+
+.hint {
+  font-family: $font-base;
+  font-size: $text-xs;
+  line-height: $leading-normal;
+  color: $text-tertiary;
+  margin: $space-4 0 0;
+}

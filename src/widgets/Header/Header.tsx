@@ -3,12 +3,15 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { navLinks } from '@/shared/config/site'
+import { navGroups } from '@/shared/config/site'
+import { t } from '@/shared/i18n'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { Button, Logo } from '@/shared/ui'
 import { ThemeToggle } from '@/shared/ui/ThemeToggle'
 import { useThemeScopeActive } from '@/shared/lib/ThemeScope'
 import styles from './Header.module.scss'
+
+const soonLabel = t({ ru: 'скоро', en: 'soon' })
 
 interface HeaderProps {
   mediaEnabled?: boolean
@@ -21,11 +24,17 @@ export function Header({
   blogEnabled = false,
   researchEnabled = false,
 }: HeaderProps) {
-  const links = navLinks.filter(
-    (link) =>
-      (link.href !== '/blog' || blogEnabled) &&
-      (link.href !== '/research' || researchEnabled),
-  )
+  const groups = navGroups
+    .map((group) => ({
+      ...group,
+      items: group.items.filter(
+        (item) =>
+          (item.href !== '/blog' || blogEnabled) &&
+          (item.href !== '/research' || researchEnabled),
+      ),
+    }))
+    .filter((group) => group.items.length > 0)
+
   const [isOpen, setIsOpen] = useState(false)
   const [overHero, setOverHero] = useState(false)
   const pathname = usePathname()
@@ -71,11 +80,32 @@ export function Header({
 
           <nav className={styles.nav} aria-label="Main navigation">
             <ul className={styles.navList}>
-              {links.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className={styles.navLink}>
-                    {link.label}
-                  </Link>
+              {groups.map((group) => (
+                <li key={group.label} className={styles.navGroup}>
+                  <button type="button" className={styles.navLink} aria-haspopup="true">
+                    {group.label}
+                    <span className={styles.navChevron} aria-hidden="true">▾</span>
+                  </button>
+                  <div className={styles.dropdown}>
+                    <ul className={styles.dropdownList}>
+                      {group.items.map((item) =>
+                        item.soon ? (
+                          <li key={item.label}>
+                            <span className={styles.dropdownSoon}>
+                              {item.label}
+                              <span className={styles.soonBadge}>{soonLabel}</span>
+                            </span>
+                          </li>
+                        ) : (
+                          <li key={item.href}>
+                            <Link href={item.href} className={styles.dropdownLink}>
+                              {item.label}
+                            </Link>
+                          </li>
+                        ),
+                      )}
+                    </ul>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -116,22 +146,39 @@ export function Header({
         aria-hidden={!isOpen}
       >
         <nav aria-label="Mobile navigation">
-          <ul className={styles.mobileNavList}>
-            {links.map((link, i) => (
-              <li key={link.href} style={{ '--i': i } as React.CSSProperties}>
-                <Link
-                  href={link.href}
-                  className={styles.mobileNavLink}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span className={styles.mobileNavIndex}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  {link.label}
-                </Link>
-              </li>
+          <div className={styles.mobileNavGroups}>
+            {groups.map((group, gi) => (
+              <div
+                key={group.label}
+                className={styles.mobileNavGroup}
+                style={{ '--i': gi } as React.CSSProperties}
+              >
+                <p className={styles.mobileNavGroupLabel}>{group.label}</p>
+                <ul className={styles.mobileNavList}>
+                  {group.items.map((item) =>
+                    item.soon ? (
+                      <li key={item.label}>
+                        <span className={`${styles.mobileNavLink} ${styles.mobileNavSoon}`}>
+                          {item.label}
+                          <span className={styles.soonBadge}>{soonLabel}</span>
+                        </span>
+                      </li>
+                    ) : (
+                      <li key={item.href}>
+                        <Link
+                          href={item.href}
+                          className={styles.mobileNavLink}
+                          onClick={() => setIsOpen(false)}
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
 
           <div className={styles.mobileActions}>
             <Link

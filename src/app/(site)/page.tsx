@@ -43,7 +43,7 @@ export default function HomePage() {
       <AboutSection />
       <PartnersSection />
       <BenefitsSection />
-      {/* <MethodologySection /> */}
+      <MethodologySection />
       {siteConfig.blogEnabled && <BlogPreview />}
       <CtaSection />
     </main>

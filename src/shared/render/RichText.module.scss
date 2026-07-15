@@ -410,6 +410,17 @@
     @media (max-width: #{$bp-tablet}) {
       grid-template-columns: 1fr;
     }
+
+    @media print {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+      &[data-count='1'] {
+        grid-template-columns: 1fr !important;
+      }
+      &[data-count='3'] {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      }
+    }
   }
 
   // ── Metric strip (sub-metric cards) ──────────────────────────────
@@ -744,15 +755,34 @@
   .figure,
   .blockquote,
   .iframeWrap {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
-  // Keep table rows intact and headers attached to their content.
+  // Charts: never split a chart (or a chart row) across pages —
+  // if it doesn't fit, the whole block moves to the next page.
+  .chartRow {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  // Tables: keep wrapper + rows together when possible.
+  .tableWrap {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .table {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
   .table tr,
-  .table thead {
-    break-inside: avoid;
-    page-break-inside: avoid;
+  .table thead,
+  .table tbody,
+  .table tfoot {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   // Don't leave a heading stranded at the bottom of a page.

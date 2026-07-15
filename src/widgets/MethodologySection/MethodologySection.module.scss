@@ -28,6 +28,7 @@
   display: inline-flex;
   align-items: center;
   gap: $space-2;
+  align-self: flex-start;
   font-family: $font-mono;
   font-weight: 400;
   font-size: $text-xs;
@@ -48,139 +49,199 @@
   letter-spacing: -0.02em;
   color: $text-primary;
   margin: 0;
+  text-align: left;
+  max-width: 28ch;
 }
 
 .accent {
   color: $accent-pink-deep;
 }
 
-// ── Equation ──────────────────────────────────────────────────────
-.equation {
+// ── Gears linkage ─────────────────────────────────────────────────
+.gears {
   display: flex;
   flex-direction: column;
-  gap: $space-2;
+  align-items: center;
+  width: 100%;
+  padding-block: $space-2 0;
 }
 
-.tokenNote {
-  font-family: $font-mono;
-  font-size: $text-xs;
-  color: $text-tertiary;
-  letter-spacing: 0.04em;
-}
-
-.equationGrid {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: stretch;
-  gap: $space-5;
-
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr;
-    gap: $space-4;
-  }
-}
-
-.panel {
+.gearsStage {
   position: relative;
   display: flex;
-  flex-direction: column;
-  gap: $space-5;
-  min-height: 220px;
-  padding: $space-5;
-  background: $card-panel-bg;
-  border: 1px solid $border-secondary;
-}
-
-.panelToken {
-  background:
-    linear-gradient(180deg, rgba(194, 78, 136, 0.08) 0%, rgba(194, 78, 136, 0) 60%),
-    $card-panel-bg;
-  border-color: rgba(194, 78, 136, 0.28);
-}
-
-.panelLabel {
-  font-family: $font-mono;
-  font-size: $text-xs;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: $text-tertiary;
-}
-
-.panelLabelAccent {
-  color: $accent-pink-deep;
-}
-
-.panelCaption {
-  font-family: $font-base;
-  font-size: $text-sm;
-  color: $text-secondary;
-  margin-top: auto;
-}
-
-// ── Bars ──────────────────────────────────────────────────────────
-.bars {
-  flex: 1;
-  display: flex;
-  align-items: flex-end;
-  gap: $space-3;
-  min-height: 120px;
-}
-
-.bar,
-.barAccent {
-  flex: 1;
-  min-height: 8px;
-  border-radius: 2px 2px 0 0;
-}
-
-.bar {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%);
-}
-
-.barAccent {
-  background: linear-gradient(180deg, #{$pal-magenta} 0%, #{$pal-purple} 100%);
-}
-
-// ── Linkage node ──────────────────────────────────────────────────
-.linkage {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: $space-3;
-  padding-inline: $space-3;
+  width: 100%;
+  height: clamp(280px, 48vw, 560px);
+}
 
-  @media (max-width: #{$bp-tablet}) {
-    flex-direction: row;
-    padding-block: $space-2;
+.gearHuge,
+.gearTiny {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.gearHuge {
+  /* full-bleed art: sides, almost to center */
+  width: 42.5%;
+  aspect-ratio: 1;
+  height: auto;
+}
+
+.gearLeft {
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.gearRight {
+  right: 0;
+  transform: translateY(-50%);
+  margin-top: 0.32%;
+  z-index: 1;
+}
+
+.gearLeft > div,
+.gearRight > div {
+  width: 100%;
+  height: 100%;
+}
+
+// 27 teeth is odd: mesh points on big gears sit 180° (= 13.5 pitches) apart,
+// so left needs a half-pitch offset baked into its rotation keyframes.
+.spinLeftOffset {
+  transform: rotate(5deg); // ~half pitch (360/27/2), trimmed visually
+}
+
+.spinLeftCw {
+  animation: gear-spin-cw-left-inner 18s linear infinite;
+}
+
+// Right gear rests in the exact pose its animation starts from (26.667° =
+// exactly 2 teeth, visually identical to 0°), so engagement starts seamlessly.
+.spinRightOffset {
+  transform: rotate(26.667deg);
+}
+
+.spinRightCw {
+  animation: gear-spin-cw-right-inner 18s linear infinite;
+}
+
+@keyframes gear-spin-cw-left-inner {
+  from {
+    transform: rotate(5deg);
+  }
+  to {
+    transform: rotate(365deg);
   }
 }
 
-.linkageBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  color: $accent-pink-deep;
-  border: 1px solid rgba(194, 78, 136, 0.4);
-  background: rgba(194, 78, 136, 0.08);
-  box-shadow: 0 0 0 6px rgba(194, 78, 136, 0.05);
+@keyframes gear-spin-cw-right-inner {
+  from {
+    transform: rotate(26.667deg);
+  }
+  to {
+    transform: rotate(386.667deg);
+  }
 }
 
-.linkageLabel {
-  font-family: $font-mono;
-  font-size: $text-xs;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: $text-secondary;
-  text-align: center;
-  max-width: 110px;
-  line-height: 1.4;
+.gearTiny {
+  left: 50%;
+  // 19.8% keeps the center tooth pitch matching the big gears (27:12 teeth)
+  width: 19.8%;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  margin-top: -0.41%; // was -5px at 1232px stage width, must scale with the art
+  z-index: 2;
+  // emerges from the background: sits deep, small, blurred, transparent
+  opacity: 0;
+  filter: blur(10px);
+  transform: translate(-50%, -50%) scale(0.55);
+  transition:
+    opacity 0.9s ease,
+    filter 0.9s ease,
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-  @media (max-width: #{$bp-tablet}) {
-    max-width: none;
+.gearTinyIn {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.gearTiny > div {
+  width: 100%;
+  height: 100%;
+}
+
+// Meshing sync: 27:12 teeth (measured from the art) → 18s * 12/27 = 8s exactly.
+// Any other period accumulates drift; residual wobble comes from uneven tooth
+// spacing in the 3D-rendered art (12.5°–14.5° vs ideal 13.33°), not from timing.
+.spinInnerCcw {
+  will-change: transform;
+  animation: gear-spin-ccw 8s linear infinite;
+}
+
+// colored glow matching the center gear's neon pink
+.gearTiny .gearImg {
+  filter:
+    drop-shadow(0 0 14px rgba(255, 40, 120, 0.65))
+    drop-shadow(0 0 34px rgba(233, 54, 79, 0.4));
+}
+
+.gearImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  user-select: none;
+  pointer-events: none;
+}
+
+@keyframes gear-spin-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.gearsLabel {
+  position: absolute;
+  left: 50%;
+  top: 77%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  transform: translateX(-50%);
+  font-family: $font-base;
+  font-weight: 800;
+  font-size: clamp(16px, 2.2vw, 26px);
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ff2050; // center gear neon, shifted redder
+  text-align: center;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinLeftCw,
+  .spinRightCw,
+  .spinInnerCcw {
+    animation: none;
+  }
+
+  .gearTiny {
+    opacity: 1;
+    filter: none;
+    transform: translate(-50%, -50%) scale(1);
+    transition: none;
   }
 }
 
@@ -188,10 +249,11 @@
 .body {
   font-family: $font-base;
   font-size: $text-md;
-  line-height: $leading-relaxed;
+  line-height: 1.75;
   color: $text-secondary;
-  margin: 0;
-  max-width: 760px;
+  margin: 0 auto;
+  max-width: 58ch;
+  text-align: center;
 }
 
 .bodyLead {
@@ -199,118 +261,135 @@
   font-weight: 600;
 }
 
-// ── Marquee ───────────────────────────────────────────────────────
-.marquee {
-  position: relative;
-  overflow: hidden;
-  border-block: 1px solid $border-secondary;
-  padding-block: $space-4;
-  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
-}
+// ── Detail: signals left, prose right ─────────────────────────────
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: $space-7 $space-8;
+  align-items: stretch;
 
-.marqueeTrack {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  will-change: transform;
-  animation: methodology-marquee 28s linear infinite;
-}
-
-.marqueeItem {
-  display: inline-flex;
-  align-items: center;
-  font-family: $font-base;
-  font-size: $text-md;
-  color: $accent-pink-deep;
-  letter-spacing: 0.01em;
-}
-
-.marqueeDot {
-  margin-inline: $space-5;
-  color: $text-tertiary;
-}
-
-@keyframes methodology-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: 1fr;
+    gap: $space-6;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .marqueeTrack {
-    animation: none;
-  }
-}
-
-// ── Signals grid ──────────────────────────────────────────────────
+// ── Signals list (icon stack) ─────────────────────────────────────
 .signals {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $space-4;
-
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    grid-template-columns: 1fr;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 100%;
+  gap: 0;
 }
 
 .signal {
-  display: flex;
-  flex-direction: column;
-  gap: $space-3;
-  padding: $space-5;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: $space-4;
+  align-items: center;
+  padding: $space-3 $space-4 $space-3 $space-3;
+}
+
+.signalFeatured {
+  position: relative;
   background: $card-panel-bg;
   border: 1px solid $border-secondary;
-  transition: border-color $transition-fast, background $transition-fast;
 
-  &:hover {
-    border-color: rgba(194, 78, 136, 0.32);
-    background: $card-panel-bg-hover;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background: $accent-pink-deep;
   }
 }
 
 .signalIcon {
   display: inline-flex;
   align-items: center;
-  color: $accent-pink-deep;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+}
+
+.toneA {
+  color: $pal-magenta;
+}
+
+.toneB {
+  color: $pal-purple;
+}
+
+.toneC {
+  color: $pal-rose;
+}
+
+.signalCopy {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  min-width: 0;
 }
 
 .signalTitle {
   font-family: $font-base;
   font-weight: 600;
-  font-size: $text-md;
+  font-size: $text-lg;
+  letter-spacing: -0.01em;
   color: $text-primary;
   margin: 0;
+  line-height: 1.3;
 }
 
 .signalLine {
   font-family: $font-base;
-  font-size: $text-sm;
-  line-height: $leading-normal;
+  font-size: $text-md;
+  line-height: 1.45;
   color: $text-secondary;
   margin: 0;
 }
 
-// ── Footnote ──────────────────────────────────────────────────────
-.footnote {
-  font-family: $font-mono;
-  font-size: $text-sm;
-  line-height: $leading-relaxed;
-  color: $text-tertiary;
-  margin: 0;
+// ── Closing prose ─────────────────────────────────────────────────
+.closing {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $space-5;
+  height: 100%;
 }
 
-// ── FAQ (embedded, no heading) ────────────────────────────────────
-.faq {
-  margin-top: $space-2;
+.closingLead {
+  font-family: $font-base;
+  font-weight: 600;
+  font-size: $text-lg;
+  letter-spacing: -0.01em;
+  line-height: 1.45;
+  color: $text-primary;
+  margin: 0;
+  max-width: 36ch;
+}
+
+.closingParagraph {
+  font-family: $font-base;
+  font-size: $text-md;
+  line-height: 1.75;
+  color: $text-secondary;
+  margin: 0;
+  max-width: 48ch;
+}
+
+.closingLink {
+  color: $accent-pink-deep;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: $text-primary;
+  }
 }

@@ -47,4 +47,10 @@ export const uiStrings = {
   ctaTelegramLabel: 'Our Telegram channel',
   servicesAriaLabel: 'Services',
   aboutAriaLabel: 'About the company',
+  downloadGateTitle: 'Enter your email to download the file',
+  downloadGateHint: 'By submitting your email you agree to receive our newsletter.',
+  downloadGateSubmit: 'Download',
+  downloadGateSending: 'Sending…',
+  downloadGateError: 'Something went wrong. Please try again.',
+  downloadGateEmailPlaceholder: 'your@email.io',
 } as const
