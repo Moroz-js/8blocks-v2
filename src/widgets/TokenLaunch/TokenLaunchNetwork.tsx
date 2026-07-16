@@ -11,7 +11,7 @@ export function TokenLaunchNetwork() {
   return (
     <section className={styles.section} aria-label={faq.networkTitle}>
       <div className={styles.inner}>
-        <SectionHead label={faq.networkLabel} headline={faq.networkTitle} />
+        <SectionHead headline={faq.networkTitle} />
       </div>
       <PartnersSection />
     </section>

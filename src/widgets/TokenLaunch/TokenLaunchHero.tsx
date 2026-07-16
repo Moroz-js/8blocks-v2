@@ -108,16 +108,34 @@ export function TokenLaunchHero() {
         >
           <span className={styles.heroPartnersLead}>{hero.partnersLead}</span>
           <div className={styles.heroPartnerLogos}>
-            {hero.partners.map((partner) => (
-              <Image
-                key={partner.name}
-                src={partner.logo}
-                alt={partner.name}
-                width={120}
-                height={32}
-                className={styles.heroPartnerLogo}
-              />
-            ))}
+            {hero.partners.map((partner) => {
+              const isStack = partner.name === 'Fibonacci'
+              const logo = (
+                <Image
+                  src={partner.logo}
+                  alt={partner.name}
+                  width={isStack ? 96 : 160}
+                  height={isStack ? 78 : 44}
+                  className={`${styles.heroPartnerLogo}${isStack ? ` ${styles.heroPartnerLogoStack}` : ''}`}
+                />
+              )
+              return partner.href ? (
+                <a
+                  key={partner.name}
+                  href={partner.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.heroPartnerLink}
+                  aria-label={partner.name}
+                >
+                  {logo}
+                </a>
+              ) : (
+                <span key={partner.name} className={styles.heroPartnerLink}>
+                  {logo}
+                </span>
+              )
+            })}
           </div>
         </motion.div>
       </div>

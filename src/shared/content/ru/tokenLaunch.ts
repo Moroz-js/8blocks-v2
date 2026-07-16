@@ -23,9 +23,9 @@ const ruObject = {
     secondaryHref: '#contact',
     partnersLead: 'Партнёры трека',
     partners: [
-      { name: 'А8А9', logo: '/icons/ru-logo.svg' },
-      { name: 'Fibonacci', logo: '/partners/7.svg' },
-      { name: 'BingX', logo: '/partners/bingx-logo.svg' },
+      { name: 'А8А9', logo: '/icons/ru-logo.svg', href: '' },
+      { name: 'Fibonacci', logo: '/partners/fibonacci-white.png', href: 'https://fibonacci.market' },
+      { name: 'BingX', logo: '/partners/bingx-logo.svg', href: 'https://bingx.com' },
     ],
   },
   gaps: {

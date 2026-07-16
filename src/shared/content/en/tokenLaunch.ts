@@ -23,9 +23,9 @@ const enObject = {
     secondaryHref: '#contact',
     partnersLead: 'Track partners',
     partners: [
-      { name: '8Blocks', logo: '/icons/en-logo.svg' },
-      { name: 'Fibonacci', logo: '/partners/7.svg' },
-      { name: 'BingX', logo: '/partners/bingx-logo.svg' },
+      { name: '8Blocks', logo: '/icons/en-logo.svg', href: '' },
+      { name: 'Fibonacci', logo: '/partners/fibonacci-white.png', href: 'https://fibonacci.market' },
+      { name: 'BingX', logo: '/partners/bingx-logo.svg', href: 'https://bingx.com' },
     ],
   },
   gaps: {

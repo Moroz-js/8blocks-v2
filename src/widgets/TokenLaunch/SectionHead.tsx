@@ -6,7 +6,7 @@ import styles from './TokenLaunch.module.scss'
 const ease = 'easeOut' as const
 
 interface SectionHeadProps {
-  label: string
+  label?: string
   headline: string
   description?: string
 }
@@ -20,7 +20,7 @@ export function SectionHead({ label, headline, description }: SectionHeadProps) 
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.55, ease }}
     >
-      <span className={styles.sectionLabel}>[{label}]</span>
+      {label && <span className={styles.sectionLabel}>[{label}]</span>}
       <h2 className={styles.sectionHeadline}>{headline}</h2>
       {description && <p className={styles.sectionDescription}>{description}</p>}
     </motion.div>
