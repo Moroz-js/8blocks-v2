@@ -1,3 +1,4 @@
+import { t } from '@/shared/i18n'
 import styles from './AuditTakeaways.module.scss'
 
 interface Props {
@@ -11,7 +12,7 @@ export function AuditTakeaways({ verdict, strength, weakness }: Props) {
   if (items.length === 0) return null
 
   return (
-    <section className={styles.root} aria-label="Ключевые выводы" data-pdf-takeaways>
+    <section className={styles.root} aria-label={t({ ru: 'Ключевые выводы', en: 'Key takeaways' })} data-pdf-takeaways>
       <div className={styles.grid}>
         {items.map((text, i) => (
           <div key={i} className={styles.item}>

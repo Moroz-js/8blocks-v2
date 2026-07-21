@@ -1,6 +1,6 @@
 import { RichText } from '@/shared/render'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
-import { lang } from '@/shared/i18n'
+import { lang, t } from '@/shared/i18n'
 import { auditsArchiveContent } from '@/shared/content/auditsPage'
 import type { AuditHeroData } from './auditMetrics'
 import { AuditHero } from './AuditHero'
@@ -10,8 +10,10 @@ import { type AuditExpertData } from './AuditExpert'
 import { AuditDocMarker } from './AuditDocMarker'
 import styles from './AuditPage.module.scss'
 
-const AUDIT_DISCLAIMER =
-  'Аудит не является инвестиционной рекомендацией. Используйте его как часть собственного анализа.'
+const AUDIT_DISCLAIMER = t({
+  ru: 'Аудит не является инвестиционной рекомендацией. Используйте его как часть собственного анализа.',
+  en: 'This audit is not investment advice. Use it as part of your own analysis.',
+})
 
 function formatDate(iso?: string | null): string {
   if (!iso) return ''

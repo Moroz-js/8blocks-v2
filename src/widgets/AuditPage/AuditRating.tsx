@@ -10,8 +10,21 @@ import {
   RadarChart,
   Tooltip,
 } from 'recharts'
+import { t } from '@/shared/i18n'
 import type { AuditExpertData } from './AuditExpert'
 import styles from './AuditRating.module.scss'
+
+const L = {
+  ratingTitle: t({ ru: 'Итоговый рейтинг', en: 'Final rating' }),
+  profile: t({ ru: 'Профиль по блокам', en: 'Block profile' }),
+  breakdown: t({ ru: 'Детализация (0–100)', en: 'Breakdown (0–100)' }),
+  conclusion: t({ ru: 'Итоговое заключение', en: 'Summary' }),
+  ratingWord: t({ ru: 'Рейтинг', en: 'Rating' }),
+  leadExpert: t({ ru: 'Главный эксперт', en: 'Lead expert' }),
+  colBlock: t({ ru: 'Блок', en: 'Block' }),
+  colWeight: t({ ru: 'Вес', en: 'Weight' }),
+  colTotal: t({ ru: 'Итого', en: 'Total' }),
+}
 
 export interface RatingBlock {
   block: string
@@ -93,14 +106,14 @@ export function AuditRating({
   return (
     <section
       className={styles.root}
-      aria-label={title ?? 'Итоговый рейтинг'}
+      aria-label={title ?? L.ratingTitle}
       data-pdf-rating
     >
-      <h2 className={styles.heading}>{title ?? 'Итоговый рейтинг'}</h2>
+      <h2 className={styles.heading}>{title ?? L.ratingTitle}</h2>
 
       <div className={styles.topGrid} data-pdf-rating-profile>
         <div className={styles.card}>
-          <p className={styles.cardTitle}>Профиль по блокам</p>
+          <p className={styles.cardTitle}>{L.profile}</p>
           <div ref={radarRef} className={styles.radarWrap}>
             <RadarChart width={radarWidth} height={440} data={radarData} outerRadius="82%">
               <PolarGrid stroke="currentColor" strokeOpacity={0.18} />
@@ -123,7 +136,7 @@ export function AuditRating({
         </div>
 
         <div className={styles.card} data-pdf-detail-bars>
-          <p className={styles.cardTitle}>Детализация (0–100)</p>
+          <p className={styles.cardTitle}>{L.breakdown}</p>
           <div className={styles.bars}>
             {computed.map((r, i) => (
               <div key={`${r.block}-${i}`} className={styles.barRow}>
@@ -144,7 +157,7 @@ export function AuditRating({
       <div className={styles.ratingTail} data-pdf-rating-tail>
         <div className={styles.summaryPanel}>
           <div className={styles.conclusion}>
-            <p className={styles.panelLabel}>Итоговое заключение</p>
+            <p className={styles.panelLabel}>{L.conclusion}</p>
             {conclusionParas.map((p, i) => (
               <p key={`concl-${i}`} className={styles.conclusionText}>
                 {p}
@@ -155,12 +168,12 @@ export function AuditRating({
 
           <div className={styles.ratingBox}>
             <div className={styles.ratingTop}>
-              <p className={styles.ratingBoxLabel}>Итоговый рейтинг</p>
+              <p className={styles.ratingBoxLabel}>{L.ratingTitle}</p>
               <div className={styles.scoreLine}>
                 <span className={styles.scoreNum}>{displayTotal}</span>
                 <span className={styles.scoreMax}>/100</span>
               </div>
-              {letterRating && <p className={styles.ratingLetter}>Рейтинг {letterRating}</p>}
+              {letterRating && <p className={styles.ratingLetter}>{L.ratingWord} {letterRating}</p>}
             </div>
 
             {(expert?.name || expert?.photo) && (
@@ -179,7 +192,7 @@ export function AuditRating({
                   )}
                 </div>
                 <div className={styles.expertInfo}>
-                  <span className={styles.expertLabel}>Главный эксперт</span>
+                  <span className={styles.expertLabel}>{L.leadExpert}</span>
                   {expert?.name && <span className={styles.expertName}>{expert.name}</span>}
                 </div>
               </div>
@@ -191,11 +204,11 @@ export function AuditRating({
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Блок</th>
-                <th>Вес</th>
+                <th>{L.colBlock}</th>
+                <th>{L.colWeight}</th>
                 <th>Score (0–5)</th>
                 <th>Score (0–100)</th>
-                <th>Вклад</th>
+                <th>{t({ ru: 'Вклад', en: 'Contribution' })}</th>
               </tr>
             </thead>
             <tbody>
@@ -211,7 +224,7 @@ export function AuditRating({
             </tbody>
             <tfoot>
               <tr>
-                <td>Итого</td>
+                <td>{L.colTotal}</td>
                 <td>{totalWeight}%</td>
                 <td>{avgFive}</td>
                 <td>{avgScore100}</td>
