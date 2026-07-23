@@ -1,7 +1,6 @@
 import { RichText } from '@/shared/render'
 import { buildToc } from '@/shared/lib/buildToc'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
-import { ArticleToc } from '@/widgets/ArticlePage/ArticleToc'
 import { lang, t } from '@/shared/i18n'
 import { auditsArchiveContent } from '@/shared/content/auditsPage'
 import type { AuditHeroData } from './auditMetrics'
@@ -10,6 +9,7 @@ import { AuditTakeaways } from './AuditTakeaways'
 import { AuditRating, type RatingBlock } from './AuditRating'
 import { type AuditExpertData } from './AuditExpert'
 import { AuditDocMarker } from './AuditDocMarker'
+import { AuditToc } from './AuditToc'
 import styles from './AuditPage.module.scss'
 
 const AUDIT_DISCLAIMER = t({
@@ -87,7 +87,7 @@ export function AuditPage({ audit, print = false }: Props) {
       <article className={styles.root}>
         {audit.content != null ? (
           <div className={styles.content}>
-            {showToc && <ArticleToc items={tocItems} />}
+            {showToc && <AuditToc items={tocItems} />}
             <RichText content={audit.content} />
           </div>
         ) : null}
