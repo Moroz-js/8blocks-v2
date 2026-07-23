@@ -9,14 +9,19 @@ function siteUrlWithHttps(raw: string): string {
   return trimmed
 }
 
+const siteUrl = siteUrlWithHttps(process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io')
+const isAe = /8blocks\.ae/i.test(siteUrl)
+
 export const siteConfig = {
   name: t({ ru: 'А8А9 токеномика.рф', en: '8Blocks' }),
   description: t({
     ru: 'Токен-экономики, которые усиливают бизнес',
     en: 'Token economies that power the business',
   }),
-  url: siteUrlWithHttps(process.env.NEXT_PUBLIC_SITE_URL || 'https://8blocks.io'),
-  email: t({ ru: 'hi@токеномика.рф', en: 'hello@8blocks.io' }),
+  url: siteUrl,
+  email: isAe
+    ? 'hello@8blocks.ae'
+    : t({ ru: 'hi@токеномика.рф', en: 'hello@8blocks.io' }),
   legalName: t({ ru: 'ООО «Инерция Мысли»', en: '8BLOCKS FZCO' }),
   phone: t({ ru: '8 918 253 79 69', en: '+971 56 286 5188' }),
   address: t({
@@ -32,6 +37,8 @@ export const siteConfig = {
   servicesEnabled: true,
   /** When false, /blog and /blog/* return 404 (links stay visible). */
   blogEnabled: true,
+  /** When false, /product/digital-assets returns 404 and nav links are hidden. */
+  digitalAssetsEnabled: false,
 } as const
 
 export interface NavItem {
@@ -50,7 +57,6 @@ export const navGroups: NavGroup[] = [
   {
     label: t({ ru: 'Услуги', en: 'Services' }),
     items: [
-      { label: t({ ru: 'Цифровые активы', en: 'Digital assets' }), href: '/product/digital-assets' },
       { label: t({ ru: 'Стратегический консалтинг', en: 'Consulting' }), href: '/services/strategic-consulting' },
       { label: t({ ru: 'Базовая токеномика', en: 'Tokenomics' }), href: '/services/tokenomics' },
       { label: t({ ru: 'Аудит токеномики', en: 'Audit' }), href: '/services/audit' },
@@ -62,7 +68,6 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: t({ ru: 'Запуск токена с Fibonacci и BingX', en: 'Token launch with Fibonacci & BingX' }), href: '/product/token-launch' },
       { label: t({ ru: 'Калькулятор токеномики', en: 'Calculator' }), href: '/product/calculator' },
-      { label: 'Tokenomics AI', href: '/product/tokenomics-ai', soon: true },
     ],
   },
   {
@@ -77,7 +82,7 @@ export const navGroups: NavGroup[] = [
     label: t({ ru: 'О нас', en: 'About us' }),
     items: [
       { label: t({ ru: 'Кейсы', en: 'Cases' }), href: '/cases' },
-      { label: t({ ru: 'Мы в медиа', en: 'We in media' }), href: '/media' },
+      { label: t({ ru: 'Пресса', en: 'Press' }), href: '/press' },
       { label: t({ ru: 'Контакты', en: 'Contacts' }), href: '/contact' },
     ],
   },

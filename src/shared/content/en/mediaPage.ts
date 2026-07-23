@@ -1,13 +1,13 @@
 export const mediaMeta = {
-  title: 'In the media — 8Blocks',
+  title: 'Press — 8Blocks',
   description: 'Publications, interviews and mentions of the 8Blocks team in the media.',
-  ogTitle: 'In the media — 8Blocks',
+  ogTitle: 'Press — 8Blocks',
   ogDescription: 'Publications, interviews and mentions of the 8Blocks team in the media.',
 } as const
 
 export const mediaArchiveContent = {
-  labelSection: 'Media',
-  headline: 'In the media',
+  labelSection: 'Press',
+  headline: 'Press',
   filterAll: 'All',
   filterByCategory: 'Filter by category',
   emptyState: 'Publications will appear here.',

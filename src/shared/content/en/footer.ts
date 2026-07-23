@@ -15,12 +15,11 @@ export const footerContent = {
     { label: 'Cases', href: '/cases' },
     { label: 'Blog', href: '/blog' },
     { label: 'Research', href: '/research' },
-    { label: 'In the media', href: '/media' },
+    { label: 'Press', href: '/press' },
     { label: 'Public audits', href: '/audits' },
     { label: 'Contact', href: '/contact' },
   ],
   serviceLinks: [
-    { label: 'Digital assets', href: '/product/digital-assets' },
     { label: 'Strategic consulting', href: '/services/strategic-consulting' },
     { label: 'Tokenomics', href: '/services/tokenomics' },
     { label: 'Tokenomics audit', href: '/services/audit' },

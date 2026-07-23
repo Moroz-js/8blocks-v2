@@ -14,12 +14,11 @@ export const footerContent = {
     { label: 'Кейсы', href: '/cases' },
     { label: 'Блог', href: '/blog' },
     { label: 'Исследования', href: '/research' },
-    { label: 'Мы в медиа', href: '/media' },
+    { label: 'Пресса', href: '/press' },
     { label: 'Публичные аудиты', href: '/audits' },
     { label: 'Контакты', href: '/contact' },
   ],
   serviceLinks: [
-    { label: 'Цифровые активы', href: '/product/digital-assets' },
     { label: 'Стратегический консалтинг', href: '/services/strategic-consulting' },
     { label: 'Базовая токеномика', href: '/services/tokenomics' },
     { label: 'Аудит токеномики', href: '/services/audit' },

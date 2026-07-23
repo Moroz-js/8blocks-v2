@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { digitalAssetsMeta } from '@/shared/content/digitalAssets'
 import {
   DigitalAssetsHero,
@@ -16,6 +17,9 @@ import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 export async function generateMetadata(): Promise<Metadata> {
+  if (!siteConfig.digitalAssetsEnabled) {
+    return { title: 'Not Found', robots: { index: false, follow: false } }
+  }
   return withPayloadPageMetadata('/product/digital-assets', {
     title: digitalAssetsMeta.title,
     description: digitalAssetsMeta.description,
@@ -34,6 +38,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function DigitalAssetsPage() {
+  if (!siteConfig.digitalAssetsEnabled) notFound()
+
   return (
     <>
       <DigitalAssetsHero />

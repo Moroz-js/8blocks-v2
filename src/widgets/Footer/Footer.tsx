@@ -23,7 +23,7 @@ export function Footer({
 }: FooterProps) {
   const pageLinks = footerContent.pageLinks.filter(
     (link) =>
-      (link.href !== '/media' || mediaEnabled) &&
+      (link.href !== '/press' || mediaEnabled) &&
       (link.href !== '/audits' || auditsEnabled) &&
       (link.href !== '/blog' || blogEnabled) &&
       (link.href !== '/research' || researchEnabled),

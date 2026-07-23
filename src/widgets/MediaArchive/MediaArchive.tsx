@@ -40,7 +40,7 @@ export function MediaArchive({
   activeCategory = null,
 }: Props) {
   function pageHref(page: number) {
-    const base = activeCategory ? `/media?cat=${activeCategory}` : '/media'
+    const base = activeCategory ? `/press?cat=${activeCategory}` : '/press'
     if (page <= 1) return base
     return `${base}${activeCategory ? '&' : '?'}page=${page}`
   }
@@ -76,7 +76,7 @@ export function MediaArchive({
         {categories.length > 0 && (
           <nav className={styles.categoryNav} aria-label={mediaArchiveContent.filterByCategory}>
             <Link
-              href="/media"
+              href="/press"
               className={`${styles.catChip} ${!activeCategory ? styles.catChipActive : ''}`}
             >
               {mediaArchiveContent.filterAll}
@@ -84,7 +84,7 @@ export function MediaArchive({
             {categories.map((cat) => (
               <Link
                 key={cat.id}
-                href={`/media?cat=${cat.slug}`}
+                href={`/press?cat=${cat.slug}`}
                 className={`${styles.catChip} ${activeCategory === cat.slug ? styles.catChipActive : ''}`}
               >
                 {cat.title}

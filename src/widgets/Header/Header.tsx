@@ -82,7 +82,12 @@ export function Header({
             <ul className={styles.navList}>
               {groups.map((group) => (
                 <li key={group.label} className={styles.navGroup}>
-                  <button type="button" className={styles.navLink} aria-haspopup="true">
+                  <button
+                    type="button"
+                    className={styles.navLink}
+                    aria-haspopup="true"
+                    onClick={(e) => e.currentTarget.blur()}
+                  >
                     {group.label}
                     <span className={styles.navChevron} aria-hidden="true">▾</span>
                   </button>

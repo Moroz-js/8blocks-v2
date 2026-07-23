@@ -1,5 +1,7 @@
 import { RichText } from '@/shared/render'
+import { buildToc } from '@/shared/lib/buildToc'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
+import { ArticleToc } from '@/widgets/ArticlePage/ArticleToc'
 import { lang, t } from '@/shared/i18n'
 import { auditsArchiveContent } from '@/shared/content/auditsPage'
 import type { AuditHeroData } from './auditMetrics'
@@ -59,6 +61,8 @@ export function AuditPage({ audit, print = false }: Props) {
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean)
+  const tocItems = buildToc(audit.content)
+  const showToc = !print && tocItems.length >= 2
 
   return (
     <>
@@ -83,6 +87,7 @@ export function AuditPage({ audit, print = false }: Props) {
       <article className={styles.root}>
         {audit.content != null ? (
           <div className={styles.content}>
+            {showToc && <ArticleToc items={tocItems} />}
             <RichText content={audit.content} />
           </div>
         ) : null}

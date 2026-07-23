@@ -1,7 +1,9 @@
+import { after } from 'next/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
 import { BANNED_EMAILS } from '@/shared/config/banned-emails'
+import { sendNewsletterAdmin } from '@/shared/lib/email'
 import { PUBLIC_FORM_ERRORS, sanitizeNewsletterEmail } from '@/shared/lib/form-sanitize'
 
 export async function POST(req: NextRequest) {
@@ -45,6 +47,14 @@ export async function POST(req: NextRequest) {
     await payload.create({
       collection: 'newsletter-subscriptions',
       data: { email: normalizedEmail, ...(source ? { source } : {}) },
+    })
+
+    after(async () => {
+      try {
+        await sendNewsletterAdmin(normalizedEmail)
+      } catch (err) {
+        console.error('[newsletter] email (admin notify) failed:', err)
+      }
     })
 
     return NextResponse.json({ success: true })

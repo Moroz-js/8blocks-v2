@@ -7,7 +7,6 @@ import { ServicesSection } from '@/widgets/ServicesSection'
 import { AboutSection } from '@/widgets/AboutSection'
 import { PartnersSection } from '@/widgets/PartnersSection'
 import { BenefitsSection } from '@/widgets/BenefitsSection'
-import { MethodologySection } from '@/widgets/MethodologySection'
 import { BlogPreview } from '@/widgets/BlogPreview'
 import { CtaSection } from '@/widgets/CtaSection'
 
@@ -43,7 +42,6 @@ export default function HomePage() {
       <AboutSection />
       <PartnersSection />
       <BenefitsSection />
-      <MethodologySection />
       {siteConfig.blogEnabled && <BlogPreview />}
       <CtaSection />
     </main>

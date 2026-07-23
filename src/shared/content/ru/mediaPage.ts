@@ -1,13 +1,13 @@
 export const mediaMeta = {
-  title: 'Мы в медиа — А8А9 токеномика.рф',
+  title: 'Пресса — А8А9 токеномика.рф',
   description: 'Публикации, интервью и упоминания команды А8А9 в медиа.',
-  ogTitle: 'Мы в медиа — А8А9 токеномика.рф',
+  ogTitle: 'Пресса — А8А9 токеномика.рф',
   ogDescription: 'Публикации, интервью и упоминания команды А8А9 в медиа.',
 } as const
 
 export const mediaArchiveContent = {
-  labelSection: 'Медиа',
-  headline: 'Мы в медиа',
+  labelSection: 'Пресса',
+  headline: 'Пресса',
   filterAll: 'Все',
   filterByCategory: 'Фильтр по категории',
   emptyState: 'Публикации появятся здесь.',

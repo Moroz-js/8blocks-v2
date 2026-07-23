@@ -8,14 +8,14 @@ import { mediaMeta } from '@/shared/content/mediaPage'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 export async function generateMetadata(): Promise<Metadata> {
-  return withPayloadPageMetadata('/media', {
+  return withPayloadPageMetadata('/press', {
     title: mediaMeta.title,
     description: mediaMeta.description,
-    alternates: { canonical: '/media' },
+    alternates: { canonical: '/press' },
     openGraph: {
       title: mediaMeta.ogTitle,
       description: mediaMeta.ogDescription,
-      url: '/media',
+      url: '/press',
     },
     twitter: {
       card: 'summary_large_image',
@@ -31,7 +31,7 @@ interface PageProps {
   searchParams: Promise<{ page?: string; cat?: string }>
 }
 
-export default async function MediaPage({ searchParams }: PageProps) {
+export default async function PressPage({ searchParams }: PageProps) {
   const { page: pageParam, cat } = await searchParams
   const currentPage = Math.max(1, parseInt(pageParam ?? '1', 10) || 1)
 

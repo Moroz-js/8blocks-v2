@@ -36,6 +36,13 @@ function buildContentSecurityPolicy(): string {
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy();
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: '/media', destination: '/press', permanent: true },
+      { source: '/media/:path*', destination: '/press/:path*', permanent: true },
+    ]
+  },
+
   async headers() {
     return [
       {

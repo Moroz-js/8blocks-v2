@@ -129,7 +129,7 @@ public/
 | `ADMIN_EMAIL` | Email администратора (вход в /admin) |
 | `ADMIN_PASSWORD` | Пароль администратора |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Отправка писем (SMTP, адрес отправителя) |
-| `ADMIN_NOTIFY_EMAIL` | Ящик для админских уведомлений (заявки, подписки); один на все инстансы. Если не задан — используется `SMTP_FROM` |
+| `ADMIN_NOTIFY_EMAIL` | Ящик для админских уведомлений (заявки, подписки); один на все инстансы. Если не задан — используется `SMTP_FROM`. В проде: `noreply@8blocks.io` |
 | `NEXT_PUBLIC_SITE_URL` | Базовый URL сайта (canonical, OG) |
 | `NEXT_PUBLIC_LANG` | Язык сборки: `ru` или `en` |
 | `NEXT_PUBLIC_GTM_ID` | ID контейнера Google Tag Manager (опционально) |
@@ -143,7 +143,7 @@ public/
 - **Deploy to Production** (`.github/workflows/deploy.yml`) — `workflow_dispatch`, SSH на RU / EN / AE (можно выбрать один сайт через `deploy_target`), на сервере выполняется `scripts/github-deploy-remote.sh`: `git reset` к `main`, запись `.env`, `npm ci`, миграции Payload, `npm run build`, PM2.
 - **Update .env** (`.github/workflows/update-env.yml`) — только перезапись `.env` и `pm2 reload`, без сборки и без смены пользователя в БД Payload.
 
-Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (см. переменные в workflow-файлах). Дополнительно репозиторный секрет **`ADMIN_NOTIFY_EMAIL`** (без префикса): общий получатель админских писем для RU, EN и AE; добавьте его в GitHub → Settings → Secrets and variables → Actions.
+Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (см. переменные в workflow-файлах). Дополнительно репозиторный секрет **`ADMIN_NOTIFY_EMAIL`** (без префикса): общий получатель админских писем для RU, EN и AE — задайте `noreply@8blocks.io` в GitHub → Settings → Secrets and variables → Actions, затем прогоните workflow **Update .env** (или полный деплой).
 
 ---
 
