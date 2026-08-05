@@ -13,6 +13,7 @@ error_exit() {
 trap 'error_exit $LINENO' ERR
 
 PROJECT_DIR="/var/www/${PROJECT_NAME}"
+BUILD_ARCHIVE="${BUILD_ARCHIVE:-}"
 
 # Детерминированная кэш-директория Chrome для Puppeteer. Один и тот же путь
 # используется при установке браузера и в рантайме (через .env), чтобы не
@@ -22,6 +23,8 @@ export PUPPETEER_CACHE_DIR="${PROJECT_DIR}/.puppeteer"
 # ── pre-flight ────────────────────────────────
 [ -n "${PROJECT_NAME:-}" ] || { echo "❌ PROJECT_NAME not set"; exit 1; }
 [ -d "${PROJECT_DIR}" ]    || { echo "❌ Project dir not found: ${PROJECT_DIR}"; exit 1; }
+[ -n "${BUILD_ARCHIVE}" ]  || { echo "❌ BUILD_ARCHIVE not set"; exit 1; }
+[ -f "${BUILD_ARCHIVE}" ]  || { echo "❌ Build archive not found: ${BUILD_ARCHIVE}"; exit 1; }
 command -v node &>/dev/null || { echo "❌ Node.js not found"; exit 1; }
 command -v npm &>/dev/null  || { echo "❌ npm not found"; exit 1; }
 command -v pm2 &>/dev/null  || { echo "❌ PM2 not found (npm install -g pm2)"; exit 1; }
@@ -146,10 +149,21 @@ echo "🧭 Regenerating Payload import map"
   || echo "⚠️  Import map generation failed (using committed importMap.js)"
 echo "✓ Import map ready"
 
-# ── build ─────────────────────────────────────
-echo "🏗️  Building application"
-npm run build
-echo "✓ Build complete"
+# ── install GitHub-built application ──────────
+echo "📦 Installing application build from GitHub Actions"
+BUILD_STAGING_DIR=$(mktemp -d "${PROJECT_DIR}/.next-staging.XXXXXX")
+tar -xzf "${BUILD_ARCHIVE}" -C "${BUILD_STAGING_DIR}"
+[ -f "${BUILD_STAGING_DIR}/.next/BUILD_ID" ] \
+  || { echo "❌ Invalid build archive: missing .next/BUILD_ID"; exit 1; }
+
+rm -rf "${PROJECT_DIR}/.next.previous"
+if [ -d "${PROJECT_DIR}/.next" ]; then
+  mv "${PROJECT_DIR}/.next" "${PROJECT_DIR}/.next.previous"
+fi
+mv "${BUILD_STAGING_DIR}/.next" "${PROJECT_DIR}/.next"
+rm -rf "${BUILD_STAGING_DIR}" "${PROJECT_DIR}/.next.previous"
+rm -f "${BUILD_ARCHIVE}"
+echo "✓ GitHub build installed"
 
 # ── restart via PM2 ───────────────────────────
 echo "🔄 Restarting with PM2"
