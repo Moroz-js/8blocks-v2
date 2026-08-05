@@ -11,6 +11,7 @@ import {
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { ThemeScopeMarker } from '@/shared/lib/ThemeScope'
+import { buildResearchGraph } from '@/shared/lib/content-schema'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -156,9 +157,19 @@ export default async function ResearchSlugPage({ params }: PageProps) {
     updatedAt: doc.updatedAt,
   }
 
+  const researchJsonLd = buildResearchGraph({
+    slug: card.slug,
+    title: card.title,
+    description: card.excerpt ?? null,
+    imageUrl: mediaToAbsoluteUrl(doc.cover) ?? null,
+    publishedAt: card.publishedAt ?? null,
+    updatedAt: doc.updatedAt ? String(doc.updatedAt) : null,
+  })
+
   return (
     <>
       <ThemeScopeMarker />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(researchJsonLd) }} />
       <ArticlePage
         article={articleFull}
         relatedArticles={[]}

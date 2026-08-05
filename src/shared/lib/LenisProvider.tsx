@@ -70,18 +70,35 @@ export function LenisProvider({ children }: LenisProviderProps) {
 
   // ── Init ───────────────────────────────────────────────────────────────────
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
     const lenis = new Lenis({
-      duration:    1.2,
-      easing:      (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     })
 
     lenisRef.current = lenis
-    startLoop(lenis)
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopLoop()
+      } else {
+        startLoop(lenis)
+      }
+    }
+
+    const startTimeout = window.setTimeout(() => {
+      if (!document.hidden) startLoop(lenis)
+    }, 0)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
 
     return () => {
+      window.clearTimeout(startTimeout)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
       stopLoop()
       lenis.destroy()
+      lenisRef.current = null
     }
   }, [])
 

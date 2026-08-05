@@ -13,6 +13,11 @@ import * as migration_20260713_000000_authors from './20260713_000000_authors'
 import * as migration_20260713_000001_launch_modules from './20260713_000001_launch_modules'
 import * as migration_20260714_000000_multiple_authors from './20260714_000000_multiple_authors'
 import * as migration_20260714_000001_download_cta from './20260714_000001_download_cta'
+import * as migration_20260803_000000_token_launch_copy from './20260803_000000_token_launch_copy'
+import * as migration_20260804_000000_cases from './20260804_000000_cases'
+import * as migration_20260805_000000_case_categories from './20260805_000000_case_categories'
+import * as migration_20260806_000000_case_sort_order from './20260806_000000_case_sort_order'
+import * as migration_20260807_000000_remove_case_category from './20260807_000000_remove_case_category'
 
 export const migrations = [
   {
@@ -89,5 +94,30 @@ export const migrations = [
     up: migration_20260714_000001_download_cta.up,
     down: migration_20260714_000001_download_cta.down,
     name: '20260714_000001_download_cta',
+  },
+  {
+    up: migration_20260803_000000_token_launch_copy.up,
+    down: migration_20260803_000000_token_launch_copy.down,
+    name: '20260803_000000_token_launch_copy',
+  },
+  {
+    up: migration_20260804_000000_cases.up,
+    down: migration_20260804_000000_cases.down,
+    name: '20260804_000000_cases',
+  },
+  {
+    up: migration_20260805_000000_case_categories.up,
+    down: migration_20260805_000000_case_categories.down,
+    name: '20260805_000000_case_categories',
+  },
+  {
+    up: migration_20260806_000000_case_sort_order.up,
+    down: migration_20260806_000000_case_sort_order.down,
+    name: '20260806_000000_case_sort_order',
+  },
+  {
+    up: migration_20260807_000000_remove_case_category.up,
+    down: migration_20260807_000000_remove_case_category.down,
+    name: '20260807_000000_remove_case_category',
   },
 ]

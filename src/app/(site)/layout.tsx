@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
+import { Manrope } from 'next/font/google'
 import { headers } from 'next/headers'
+import { Suspense } from 'react'
 import '@mantine/core/styles.css'
 import '../globals.scss'
 import { Header } from '@/widgets/Header'
@@ -10,15 +11,24 @@ import { siteConfig } from '@/shared/config/site'
 import { htmlLang, locale, lang } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
+import { PlatformAnalyticsProvider } from '@/shared/lib/PlatformAnalyticsProvider'
 import { ThemeProvider } from '@/shared/lib/ThemeProvider'
 import { ThemeController } from '@/shared/lib/ThemeController'
 import { MantineThemeBridge } from '@/shared/lib/MantineThemeBridge'
+import { ReplainWidget } from '@/shared/lib/ReplainWidget'
 import { HeadMarkupInjector } from '@/widgets/HeadMarkupInjector'
 import { getBlogExtraHeadMarkup, getSiteSeoGlobal, getSiteSeoPageOverride } from '@/shared/lib/site-seo'
 import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
 import { getBlogEnabled } from '@/shared/lib/getBlogEnabled'
 import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
 import { getResearchEnabled } from '@/shared/lib/getResearchEnabled'
+
+const manrope = Manrope({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '800'],
+  display: 'swap',
+  variable: '--font-manrope',
+})
 
 export const metadata: Metadata = {
   title: {
@@ -65,16 +75,8 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     .join('\n')
 
   return (
-    <html lang={htmlLang} suppressHydrationWarning>
-      <head>
-        {/* Scope theme to article/research detail pages before next-themes hydrates to avoid a flash on reload. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=location.pathname.split('/').filter(Boolean);var themeable=(s[0]==='blog'||s[0]==='research'||s[0]==='audits')&&s.length>=2;var k='8blocks-theme';if(themeable){var pref=localStorage.getItem('8blocks-blog-theme');localStorage.setItem(k,pref==='light'?'light':'dark');}else{localStorage.setItem(k,'dark');}}catch(e){}})();`,
-          }}
-        />
-        {headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}
-      </head>
+    <html lang={htmlLang} className={manrope.variable} suppressHydrationWarning>
+      <head>{headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}</head>
       <body suppressHydrationWarning>
         <div
           aria-hidden="true"
@@ -96,20 +98,11 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
           <ThemeController />
           <MantineThemeBridge>
             <GTMScript />
+            <Suspense fallback={null}>
+              <PlatformAnalyticsProvider />
+            </Suspense>
             {process.env.NEXT_PUBLIC_REPLAIN_ID && (
-              <>
-                <Script
-                  id="replain-settings"
-                  strategy="afterInteractive"
-                  dangerouslySetInnerHTML={{
-                    __html: `window.replainSettings = { id: '${process.env.NEXT_PUBLIC_REPLAIN_ID}' };`,
-                  }}
-                />
-                <Script
-                  src="https://widget.replain.cc/dist/client.js"
-                  strategy="afterInteractive"
-                />
-              </>
+              <ReplainWidget id={process.env.NEXT_PUBLIC_REPLAIN_ID} />
             )}
             <LenisProvider>
               <Header

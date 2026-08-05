@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { useTheme } from 'next-themes'
+import { useTheme } from './ThemeProvider'
 import { BLOG_THEME_STORAGE_KEY, DEFAULT_THEME } from './theme'
 import { useThemeScopeActive } from './ThemeScope'
 

@@ -1,0 +1,273 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+.root {
+  min-height: 100vh;
+}
+
+.hero {
+  padding: $space-10 0 $space-9;
+  border-bottom: 1px solid $border-secondary;
+}
+
+.heroInner,
+.body,
+.cta {
+  width: min(100%, $container-max);
+  margin: 0 auto;
+  padding-inline: $container-padding;
+
+  @include mobile {
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+.backLink {
+  display: inline-flex;
+  margin-bottom: $space-8;
+  color: $text-tertiary;
+  font-size: $text-sm;
+  text-decoration: none;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-primary;
+  }
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-bottom: $space-5;
+}
+
+.badge,
+.badgeMuted {
+  padding: 5px $space-3;
+  border: 1px solid rgba($pal-magenta, 0.32);
+  background: rgba($pal-magenta, 0.08);
+  color: $text-primary;
+  font-family: $font-mono;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.badgeMuted {
+  border-color: $border-secondary;
+  background: transparent;
+  color: $text-tertiary;
+}
+
+.title {
+  @include heading-hero;
+  max-width: 920px;
+}
+
+.lead {
+  max-width: 760px;
+  margin-top: $space-5;
+  color: $text-secondary;
+  font-size: $text-lg;
+  line-height: $leading-relaxed;
+}
+
+.cover {
+  margin-top: $space-8;
+  overflow: hidden;
+  border: 1px solid $border-secondary;
+  background: $bg-secondary;
+}
+
+.coverImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 660px;
+  object-fit: cover;
+}
+
+.body {
+  padding-top: $space-9;
+  padding-bottom: $space-10;
+}
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.3fr) minmax(0, 1fr);
+  gap: $space-7;
+  padding: $space-8 0;
+  border-bottom: 1px solid $border-secondary;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $space-4;
+  }
+}
+
+.sectionLabel {
+  @include section-label;
+  color: $text-tertiary;
+}
+
+.sectionText,
+.resultText {
+  max-width: 760px;
+  color: $text-secondary;
+  font-size: $text-lg;
+  line-height: $leading-relaxed;
+}
+
+.overviewGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $space-4;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.overviewItem {
+  padding: $space-5;
+  border: 1px solid $border-secondary;
+  background: $bg-secondary;
+
+  span {
+    display: block;
+    margin-bottom: $space-3;
+    color: $text-tertiary;
+    font-size: $text-xs;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  strong,
+  p {
+    color: $text-primary;
+    font-size: $text-base;
+    line-height: $leading-relaxed;
+  }
+}
+
+.actions {
+  display: grid;
+  gap: $space-3;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: $space-4;
+    align-items: start;
+    padding: $space-5;
+    border: 1px solid $border-secondary;
+    background: $bg-secondary;
+  }
+
+  span {
+    font-family: $font-mono;
+    color: $pal-magenta;
+  }
+
+  p {
+    color: $text-secondary;
+    line-height: $leading-relaxed;
+  }
+}
+
+.resultSection {
+  align-items: start;
+}
+
+.metric {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: $space-3;
+
+  strong {
+    font-size: clamp(36px, 7vw, 72px);
+    font-weight: 500;
+    line-height: 1;
+    color: $accent-green;
+  }
+
+  span {
+    color: $text-tertiary;
+    font-size: $text-sm;
+  }
+}
+
+.resultText {
+  grid-column: 2;
+
+  @include tablet {
+    grid-column: 1;
+  }
+}
+
+.richContent {
+  max-width: 860px;
+  margin: $space-9 auto 0;
+}
+
+.cta {
+  margin-bottom: $space-10;
+  padding-top: $space-8;
+  padding-bottom: $space-8;
+  border: 1px solid $border-primary;
+  background: $bg-secondary;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $space-6;
+
+  h2 {
+    margin-top: $space-3;
+    max-width: 520px;
+    font-size: clamp($text-xl, 4vw, 36px);
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  @include tablet {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-3;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 $space-5;
+  border: 1px solid $pal-magenta;
+  background: $pal-magenta;
+  color: #fff;
+  font-size: $text-sm;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity $transition-base, background $transition-base;
+
+  &:hover {
+    opacity: 0.86;
+  }
+}
+
+.secondaryCta {
+  border-color: $border-primary;
+  background: transparent;
+  color: $text-primary;
+}

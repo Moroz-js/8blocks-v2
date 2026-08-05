@@ -1,7 +1,7 @@
 ﻿'use client'
 
 import { motion } from 'framer-motion'
-import { useTheme } from 'next-themes'
+import { useTheme } from '@/shared/lib/ThemeProvider'
 import { useMemo } from 'react'
 import { readCssVar } from '@/shared/lib/readCssVar'
 import { consultingMapLabels } from '@/shared/content/strategicConsulting'

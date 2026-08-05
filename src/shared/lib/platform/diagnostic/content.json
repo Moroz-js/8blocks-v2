@@ -1,0 +1,686 @@
+{
+  "questions": [
+    {
+      "id": "business_type",
+      "title": "What kind of business do you run?",
+      "help": "Pick the closest match. This shapes which assets are usually available to digitize.",
+      "options": [
+        {
+          "id": "real_estate",
+          "label": "Real estate: development, ownership, or management",
+          "weights": {
+            "asset": 3,
+            "business": 1,
+            "capital": 1,
+            "execution": 0
+          }
+        },
+        {
+          "id": "manufacturing",
+          "label": "Manufacturing or industrial production",
+          "weights": {
+            "asset": 2,
+            "business": 1,
+            "capital": 1,
+            "execution": 0
+          }
+        },
+        {
+          "id": "trade_distribution",
+          "label": "Trade, wholesale, or distribution",
+          "weights": {
+            "asset": 2,
+            "business": 1,
+            "capital": 1,
+            "execution": 0
+          }
+        },
+        {
+          "id": "services",
+          "label": "Services: agencies, hospitality, professional services",
+          "weights": {
+            "asset": 1,
+            "business": 1,
+            "capital": 1,
+            "execution": 0
+          }
+        },
+        {
+          "id": "lending_finance",
+          "label": "Lending or financial services",
+          "weights": {
+            "asset": 2,
+            "business": 1,
+            "capital": 1,
+            "execution": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "leverage",
+      "title": "What could you put to work?",
+      "help": "The asset or right you might digitize to unlock capital or widen your investor base.",
+      "options": [
+        {
+          "id": "property_equipment",
+          "label": "Property or equipment we own",
+          "weights": {
+            "asset": 3,
+            "business": 1,
+            "capital": 0,
+            "execution": 0
+          }
+        },
+        {
+          "id": "receivables_invoices",
+          "label": "Invoices or money owed to us by customers",
+          "weights": {
+            "asset": 3,
+            "business": 1,
+            "capital": 0,
+            "execution": 0
+          }
+        },
+        {
+          "id": "inventory_commodities",
+          "label": "Inventory or commodity stock",
+          "weights": {
+            "asset": 2,
+            "business": 1,
+            "capital": 0,
+            "execution": 0
+          }
+        },
+        {
+          "id": "recurring_revenue",
+          "label": "Recurring revenue and a loyal customer base",
+          "weights": {
+            "asset": 2,
+            "business": 1,
+            "capital": 0,
+            "execution": 0
+          }
+        },
+        {
+          "id": "nothing_specific",
+          "label": "Nothing specific comes to mind",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "goal",
+      "title": "What is your main goal?",
+      "help": "If several apply, pick the one you would act on first.",
+      "options": [
+        {
+          "id": "raise_capital",
+          "label": "Raise capital from a wider pool of investors",
+          "weights": {
+            "asset": 1,
+            "business": 1,
+            "capital": 3,
+            "execution": 1
+          }
+        },
+        {
+          "id": "unlock_liquidity",
+          "label": "Unlock cash tied up in assets we already own",
+          "weights": {
+            "asset": 2,
+            "business": 1,
+            "capital": 3,
+            "execution": 1
+          }
+        },
+        {
+          "id": "settlements_payments",
+          "label": "Make settlements with partners faster or cheaper",
+          "weights": {
+            "asset": 0,
+            "business": 1,
+            "capital": 1,
+            "execution": 1
+          }
+        },
+        {
+          "id": "customer_loyalty",
+          "label": "Reward and retain customers",
+          "weights": {
+            "asset": 0,
+            "business": 1,
+            "capital": 1,
+            "execution": 1
+          }
+        },
+        {
+          "id": "just_exploring",
+          "label": "Just exploring what is possible",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "capital_need",
+      "title": "How much capital do you want to raise or unlock?",
+      "help": "A rough bracket is enough.",
+      "options": [
+        {
+          "id": "under_500k",
+          "label": "Under $500K",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 0
+          }
+        },
+        {
+          "id": "500k_2m",
+          "label": "$500K to $2M",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 1,
+            "execution": 1
+          }
+        },
+        {
+          "id": "2m_10m",
+          "label": "$2M to $10M",
+          "weights": {
+            "asset": 0,
+            "business": 1,
+            "capital": 2,
+            "execution": 2
+          }
+        },
+        {
+          "id": "over_10m",
+          "label": "Over $10M",
+          "weights": {
+            "asset": 0,
+            "business": 1,
+            "capital": 2,
+            "execution": 2
+          }
+        },
+        {
+          "id": "not_capital",
+          "label": "This is not about raising capital",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 1,
+            "execution": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "revenue",
+      "title": "What is your annual revenue?",
+      "help": "Last full year, or a fair estimate for this year.",
+      "options": [
+        {
+          "id": "pre_revenue",
+          "label": "Not generating revenue yet",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 0
+          }
+        },
+        {
+          "id": "under_1m",
+          "label": "Under $1M",
+          "weights": {
+            "asset": 0,
+            "business": 1,
+            "capital": 0,
+            "execution": 0
+          }
+        },
+        {
+          "id": "1m_10m",
+          "label": "$1M to $10M",
+          "weights": {
+            "asset": 0,
+            "business": 2,
+            "capital": 0,
+            "execution": 1
+          }
+        },
+        {
+          "id": "10m_50m",
+          "label": "$10M to $50M",
+          "weights": {
+            "asset": 0,
+            "business": 3,
+            "capital": 0,
+            "execution": 1
+          }
+        },
+        {
+          "id": "over_50m",
+          "label": "Over $50M",
+          "weights": {
+            "asset": 0,
+            "business": 3,
+            "capital": 0,
+            "execution": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "financing",
+      "title": "How is your access to financing today?",
+      "help": "Think of banks, leasing, factoring, private lenders.",
+      "options": [
+        {
+          "id": "easy_access",
+          "label": "Banks lend to us readily on good terms",
+          "weights": {
+            "asset": 0,
+            "business": 1,
+            "capital": 1,
+            "execution": 1
+          }
+        },
+        {
+          "id": "some_access",
+          "label": "We have financing but want more options or better terms",
+          "weights": {
+            "asset": 0,
+            "business": 1,
+            "capital": 2,
+            "execution": 1
+          }
+        },
+        {
+          "id": "limited_access",
+          "label": "Traditional financing is limited or expensive for us",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 2,
+            "execution": 0
+          }
+        },
+        {
+          "id": "no_financing",
+          "label": "We have not used external financing",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 1,
+            "execution": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "timeline",
+      "title": "When would you want to start?",
+      "help": "An honest answer gives a more useful verdict.",
+      "options": [
+        {
+          "id": "within_3m",
+          "label": "Within the next 3 months",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 3
+          }
+        },
+        {
+          "id": "in_3_6m",
+          "label": "In 3 to 6 months",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 2
+          }
+        },
+        {
+          "id": "in_6_12m",
+          "label": "In 6 to 12 months",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 1
+          }
+        },
+        {
+          "id": "no_timeline",
+          "label": "Sometime next year or later, no fixed plans",
+          "weights": {
+            "asset": 0,
+            "business": 0,
+            "capital": 0,
+            "execution": 0
+          }
+        }
+      ]
+    }
+  ],
+  "verdicts": [
+    {
+      "id": "asset_backed",
+      "name": "Asset-Backed Participation",
+      "forWhom": "Businesses that own substantial property or equipment and want to raise capital or unlock cash without selling the whole asset.",
+      "summary": "Your property or equipment can be structured so that a wider circle of investors takes economic participation in a clearly defined slice of it. In business terms: instead of one bank loan against the whole building, you open a defined portion of the asset to many smaller participants through digital instruments, structured within existing securities and financing law to minimise regulatory risk. This can widen your investor base and unlock capital while you keep operating control. Realistic expectation: a first issuance typically takes six to twelve months from decision to funds, and legal structuring is the longest and most demanding phase.",
+      "phases": [
+        {
+          "name": "Feasibility and economic design",
+          "duration": "1-2 months"
+        },
+        {
+          "name": "Legal structuring and documentation",
+          "duration": "2-4 months"
+        },
+        {
+          "name": "Platform setup and asset onboarding",
+          "duration": "1-2 months"
+        },
+        {
+          "name": "Investor outreach and first issuance",
+          "duration": "1-3 months"
+        }
+      ],
+      "firstStep": "Start with a free 30-minute discovery call. If the path holds, a focused Structuring Workshop ($2,500) maps your asset, capital goal and economics before you spend anything on lawyers or platforms.",
+      "watchouts": [
+        "Legal structuring is typically the largest external cost line and the longest phase; budget for specialist counsel in your jurisdiction.",
+        "Fractional participants expect reporting discipline: regular valuations, utilization or occupancy data, and clear communication.",
+        "The ability for participants to resell develops gradually; do not promise an active secondary market from day one."
+      ],
+      "disclaimer": "This is a self-assessment for educational purposes, not investment or legal advice."
+    },
+    {
+      "id": "receivables_inventory",
+      "name": "Receivables and Inventory Financing",
+      "forWhom": "Trading, manufacturing, and lending businesses whose cash is locked in unpaid invoices or stock.",
+      "summary": "Your invoices or inventory represent money that already belongs to you but arrives late; digitizing them turns that stream into a financeable pool. In business terms it works like factoring or inventory finance, but with digital instruments that can widen the circle of funders beyond one bank and make each position transparent and traceable. Done well, it shortens your cash cycle and diversifies funding sources. Realistic expectation: start with a small pilot pool, prove the process for one or two cycles, then scale; the quality of your invoicing and stock records decides how fast this goes.",
+      "phases": [
+        {
+          "name": "Portfolio review and economic design",
+          "duration": "1-2 months"
+        },
+        {
+          "name": "Legal and counterparty framework",
+          "duration": "1-3 months"
+        },
+        {
+          "name": "Pilot with a limited pool",
+          "duration": "1-2 months"
+        },
+        {
+          "name": "Scale-up and routine operations",
+          "duration": "2-3 months"
+        }
+      ],
+      "firstStep": "Start with a free 30-minute discovery call. If the path holds, a Structuring Workshop ($2,500) tests whether your receivables or stock data is clean enough and which pool structure makes economic sense.",
+      "watchouts": [
+        "The quality of your receivables and inventory records drives everything; messy data stalls these projects before legal work even starts.",
+        "Rules on debtor consent and notification vary by jurisdiction and can reshape the structure.",
+        "Scaling before the pilot process settles multiplies operational errors; resist the urge to go big in month one."
+      ],
+      "disclaimer": "This is a self-assessment for educational purposes, not investment or legal advice."
+    },
+    {
+      "id": "utility_loyalty",
+      "name": "Customer Loyalty and Settlements Program",
+      "forWhom": "Businesses with a strong customer or partner network that want faster settlements or deeper customer engagement rather than outside capital.",
+      "summary": "Your leverage is the network itself: customers who come back and partners you settle with regularly. A digital loyalty or settlement instrument lets you reward repeat behavior, pre-sell capacity, or settle with partners faster and cheaper than through conventional rails. This path is not about raising money from investors; it is an operating tool, and it must be designed so it never looks like an investment product. Realistic expectation: a pilot with one customer segment in three to six months, with adoption depending far more on your incentive design than on the technology.",
+      "phases": [
+        {
+          "name": "Program design and incentive economics",
+          "duration": "1-2 months"
+        },
+        {
+          "name": "Compliance review of the program rules",
+          "duration": "1-2 months"
+        },
+        {
+          "name": "Pilot with one customer or partner segment",
+          "duration": "1-2 months"
+        },
+        {
+          "name": "Full rollout and iteration",
+          "duration": "2-3 months"
+        }
+      ],
+      "firstStep": "Start with a free 30-minute discovery call. If the path holds, a Structuring Workshop ($2,500) designs the incentive economics and draws the line that keeps the program a loyalty tool, not an investment product.",
+      "watchouts": [
+        "A loyalty instrument must never resemble an investment product; design and marketing discipline is essential from day one.",
+        "Adoption depends on your customers, not the technology; weak incentive economics kill these programs quietly.",
+        "Ongoing program management is a permanent operating cost, not a one-off project."
+      ],
+      "disclaimer": "This is a self-assessment for educational purposes, not investment or legal advice."
+    },
+    {
+      "id": "explore_first",
+      "name": "Explore First",
+      "forWhom": "Businesses with real potential but mixed signals: the goal, the asset, or the timing does not yet point to one clear path.",
+      "summary": "Your answers show genuine ingredients for digitization, but they pull in different directions, and picking a structure now would mean guessing. The right move is a short, structured conversation to identify which asset or cash flow is actually the strongest candidate and which goal should lead. Many businesses in this position discover their best asset is not the one they first thought of, for example receivables instead of property. Realistic expectation: two to four weeks to reach a clear go or no-go decision, before any legal or technical spend.",
+      "phases": [
+        {
+          "name": "Discovery call and goal mapping",
+          "duration": "1-2 weeks"
+        },
+        {
+          "name": "Readiness workshop on the shortlisted path",
+          "duration": "2-4 weeks"
+        },
+        {
+          "name": "Decision: commit to a path or pause",
+          "duration": "1-2 weeks"
+        }
+      ],
+      "firstStep": "Free discovery call: thirty minutes to identify which path, if any, fits before you spend anything.",
+      "watchouts": [
+        "Mixed signals usually mean the goal needs sharpening, not that the business is weak.",
+        "Resist starting legal or technical work before the economic case is clear; sequencing errors are the most expensive kind."
+      ],
+      "disclaimer": "This is a self-assessment for educational purposes, not investment or legal advice."
+    },
+    {
+      "id": "not_yet",
+      "name": "Not Yet",
+      "forWhom": "Businesses whose current problem is better solved by conventional financing or by growing the fundamentals first.",
+      "summary": "Honest answer: digitization does not solve your problem today. The setup effort, legal costs, and reporting duties only pay off above a certain capital size and business maturity, and right now conventional tools will get you there faster and cheaper. This is not a verdict on your business; it is a verdict on the fit between this instrument class and your current situation. Realistic expectation: revisit in six to twelve months if the triggers below start firing.",
+      "phases": [
+        {
+          "name": "Strengthen revenue and record-keeping",
+          "duration": "3-6 months"
+        },
+        {
+          "name": "Secure conventional financing for the current need",
+          "duration": "1-3 months"
+        },
+        {
+          "name": "Reassess readiness against the triggers below",
+          "duration": "1 month"
+        }
+      ],
+      "firstStep": "No paid engagement recommended today; when one of the recheck triggers fires, start with a free discovery call.",
+      "watchouts": [
+        "Forcing a digitization project at this stage usually burns the budget on setup before any benefit arrives.",
+        "Vendors will happily sell you a project anyway; readiness is your protection, not theirs."
+      ],
+      "insteadOptions": [
+        "A bank facility or asset-backed loan against property or equipment you own",
+        "Revenue-based financing from specialist lenders if your income is recurring",
+        "A classical equity round with a local investor network"
+      ],
+      "recheckWhen": [
+        "Annual revenue passes roughly $1M with twelve months of clean financial records",
+        "You can point to a specific asset or contracted cash flow worth digitizing",
+        "Your capital need grows past roughly $2M and traditional financing cannot cover it"
+      ],
+      "disclaimer": "This is a self-assessment for educational purposes, not investment or legal advice."
+    }
+  ],
+  "verdictRules": {
+    "evaluation": "Evaluate rules in order; the first rule whose conditions all match wins. Each key in 'when' is a question id; the user's answer must be one of the listed option ids (OR within a key, AND across keys). If no rule matches, return fallbackVerdict.",
+    "rules": [
+      {
+        "id": "ny_small_ticket",
+        "verdict": "not_yet",
+        "when": {
+          "capital_need": [
+            "under_500k"
+          ],
+          "goal": [
+            "raise_capital",
+            "unlock_liquidity"
+          ]
+        }
+      },
+      {
+        "id": "ny_no_foundation",
+        "verdict": "not_yet",
+        "when": {
+          "revenue": [
+            "pre_revenue"
+          ],
+          "leverage": [
+            "nothing_specific"
+          ]
+        }
+      },
+      {
+        "id": "ny_no_intent",
+        "verdict": "not_yet",
+        "when": {
+          "goal": [
+            "just_exploring"
+          ],
+          "timeline": [
+            "no_timeline"
+          ]
+        }
+      },
+      {
+        "id": "map_asset_backed",
+        "verdict": "asset_backed",
+        "when": {
+          "leverage": [
+            "property_equipment"
+          ],
+          "goal": [
+            "raise_capital",
+            "unlock_liquidity"
+          ]
+        }
+      },
+      {
+        "id": "map_working_capital",
+        "verdict": "receivables_inventory",
+        "when": {
+          "leverage": [
+            "receivables_invoices",
+            "inventory_commodities"
+          ],
+          "goal": [
+            "raise_capital",
+            "unlock_liquidity"
+          ]
+        }
+      },
+      {
+        "id": "map_utility_loyalty",
+        "verdict": "utility_loyalty",
+        "when": {
+          "goal": [
+            "settlements_payments",
+            "customer_loyalty"
+          ]
+        }
+      }
+    ],
+    "fallbackVerdict": "explore_first"
+  },
+  "pillarThresholds": {
+    "maxPerPillar": 8,
+    "strong": 6,
+    "moderate": 3,
+    "note": "Each pillar's maximum is 8 by design (sum of the per-question maxima: asset 3+3+2, business 1+1+1+1+3+1, capital 1+3+2+2, execution 1+2+1+1+3). Display: score >= 6 strong, 3-5 moderate, 0-2 weak."
+  },
+  "landing": {
+    "seoTitle": "Tokenization Readiness Assessment | Free 3-Min Check",
+    "metaDescription": "Answer 7 questions, no signup, and get an instant verdict: can digitizing your assets widen your investor base, or does other financing fit better today?",
+    "h1": "Can digitizing your assets widen your investor base?",
+    "intro": "Seven multiple-choice questions, under three minutes, no signup. You get an instant verdict: which digitization path fits your business, or an honest recommendation to use conventional financing instead.",
+    "methodology": "The assessment scores your answers across four pillars. Asset: whether you have property, equipment, receivables, inventory, or contracted revenue suitable for digitization. Business: whether the company itself has the revenue history and record-keeping maturity these projects demand. Capital: whether your funding goal and ticket size actually fit this instrument class rather than a bank loan or equity round. Execution: whether your timeline and commitment are realistic for a six-to-twelve-month program. The tool is deliberately built to say no: if conventional financing solves your problem faster and cheaper, the verdict tells you so and lists the triggers for reassessing later. It is a self-assessment for educational purposes, not investment or legal advice.",
+    "faq": [
+      {
+        "q": "What makes a business ready for tokenization?",
+        "a": "Four things together: a specific asset or contracted cash flow worth digitizing, a business with real revenue and clean records, a capital need large enough to justify the setup effort (typically above roughly $2M), and a realistic timeline with committed management. Missing one pillar is workable; missing two or more usually means conventional financing is the better tool today."
+      },
+      {
+        "q": "Is tokenization legal?",
+        "a": "Yes - serious tokenization projects run inside existing securities and financing law, through licensed issuance platforms and specialist counsel in your jurisdiction. Nothing offshore or unregulated is recommended here: the legal wrapper is chosen first, the technology second. That is also why legal structuring is typically the largest cost line."
+      },
+      {
+        "q": "How much does tokenization cost?",
+        "a": "Independent legal guides put a typical first real-estate issuance at roughly EUR 55,000-140,000 all-in (legal structuring, SPV formation, issuance and compliance, banking onboarding - Gofaizen & Sherle, 2026), and legal structuring is usually the largest line. On the 8Blocks side: a Structuring Workshop is $2,500, an audit starts from $5,000, full model design from $18,000. The workshop first is the cheapest way to find out whether the larger spend is justified at all."
+      },
+      {
+        "q": "How long does tokenization take?",
+        "a": "A pilot for receivables, inventory, or a loyalty program typically takes three to six months. A full asset program, such as fractional participation in property, commonly takes six to twelve months from decision to first issuance, with legal structuring as the longest phase. Businesses with clean records move materially faster."
+      },
+      {
+        "q": "Do I need my own token?",
+        "a": "Usually not, and certainly not first. Most businesses issue digital instruments through established platforms and existing infrastructure rather than building anything of their own. A custom instrument only makes sense when the economics of your program demand it, which is exactly what a design workshop establishes before you commit."
+      },
+      {
+        "q": "Is this investment advice?",
+        "a": "No. The assessment is a self-assessment for educational purposes, not investment or legal advice. It helps you decide whether a structured conversation is worth your time. Before making any financing or structuring decision, consult licensed legal and financial advisors in your jurisdiction."
+      }
+    ],
+    "definition": "Tokenization means opening a defined share of an asset you own - a building, invoices, inventory, a revenue stream - to a wider pool of investors through regulated digital instruments. A financing tool, not a cryptocurrency."
+  },
+  "sample": {
+    "assetBacked": {
+      "answers": {
+        "business_type": "real_estate",
+        "leverage": "property_equipment",
+        "goal": "raise_capital",
+        "capital_need": "2m_10m",
+        "revenue": "10m_50m",
+        "financing": "some_access",
+        "timeline": "in_3_6m"
+      },
+      "note": "Fictional regional property developer with roughly $30M in completed and in-progress assets, solid revenue, bank financing in place but wanting a wider investor base. Rule trace: no not-yet rule fires (capital_need is 2m_10m, revenue is 10m_50m, goal is raise_capital); map_asset_backed matches on leverage=property_equipment and goal=raise_capital. Pillar scores: asset 7/8 strong, business 8/8 strong, capital 8/8 strong, execution 7/8 strong."
+    },
+    "notYet": {
+      "answers": {
+        "business_type": "services",
+        "leverage": "nothing_specific",
+        "goal": "raise_capital",
+        "capital_need": "under_500k",
+        "revenue": "under_1m",
+        "financing": "no_financing",
+        "timeline": "in_6_12m"
+      },
+      "note": "Fictional small services agency wanting to raise under $500K with no specific asset to digitize. Rule trace: ny_small_ticket fires first (capital_need=under_500k AND goal=raise_capital), so the verdict is not_yet regardless of later rules. At this ticket size, setup and legal costs outweigh the benefit; the verdict points to revenue-based financing or a classical equity round and gives concrete recheck triggers. Pillar scores for display: asset 2/8 weak, business 3/8 moderate, capital 5/8 moderate, execution 2/8 weak."
+    }
+  }
+}

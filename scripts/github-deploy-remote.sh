@@ -59,6 +59,7 @@ printf '%s\n' \
   "NEXT_PUBLIC_LANG=${NEXT_PUBLIC_LANG}" \
   "NEXT_PUBLIC_REPLAIN_ID=${NEXT_PUBLIC_REPLAIN_ID}" \
   "NEXT_PUBLIC_CALENDLY_URL=${NEXT_PUBLIC_CALENDLY_URL}" \
+  "NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY}" \
   "PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR}" \
   > .env
 chmod 600 .env
@@ -125,6 +126,13 @@ echo "🗄️  Running Payload migrations"
   node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs \
   scripts/run-migrations.ts
 echo "✓ Migrations applied"
+
+# ── seed legacy cases ──────────────────────────
+# The seed is idempotent: it creates missing mini-cases by slug and only fills
+# an empty category on existing legacy mini-cases. It never deletes content.
+echo "🌱 Seeding missing legacy mini-cases"
+npm run seed:cases
+echo "✓ Cases seed complete"
 
 # ── regenerate Payload import map ─────────────
 # Гарантируем, что src/app/(payload)/admin/importMap.js соответствует текущим

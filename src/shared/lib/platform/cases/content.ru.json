@@ -1,0 +1,311 @@
+{
+  "stats": [
+    {
+      "value": 34.67,
+      "prefix": "$",
+      "suffix": " млрд",
+      "label": "токенизированных реальных активов сегодня",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/"
+      }
+    },
+    {
+      "value": 15.86,
+      "prefix": "$",
+      "suffix": " млрд",
+      "label": "токенизированных казначейских облигаций США",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/treasuries"
+      }
+    },
+    {
+      "value": 31,
+      "prefix": "+",
+      "suffix": "%",
+      "label": "рост числа инвесторов с токенизированными активами за 30 дней",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/"
+      }
+    },
+    {
+      "value": 18.9,
+      "prefix": "$",
+      "suffix": " трлн",
+      "label": "прогнозируемый объём рынка к 2033 году",
+      "source": {
+        "title": "BCG / Ripple",
+        "url": "https://www.ledgerinsights.com/bcg-ripple-predict-tokenization-to-reach-18-9-trillion-by-2033/"
+      }
+    }
+  ],
+  "classes": [
+    "Все",
+    "Фонды и казначейские облигации",
+    "Частный кредит",
+    "Акции",
+    "Сырьевые товары",
+    "Платежи",
+    "Недвижимость"
+  ],
+  "cases": [
+    {
+      "name": "BlackRock BUIDL",
+      "monogram": "BR",
+      "class": "Фонды и казначейские облигации",
+      "metric": "$2.5 млрд",
+      "metricLabel": "под управлением · 6 сетей",
+      "line": "Первый токенизированный фонд крупнейшей в мире компании по управлению активами. $1 млрд в первый год; теперь принимается в качестве обеспечения на Binance.",
+      "year": "2024",
+      "source": {
+        "title": "PRNewswire",
+        "url": "https://www.prnewswire.com/news-releases/blackrocks-buidl-tokenized-by-securitize-now-accepted-as-collateral-for-trading-on-binance-and-launches-on-bnb-chain-302613374.html"
+      },
+      "logo": "blackrock"
+    },
+    {
+      "name": "Franklin Templeton BENJI",
+      "monogram": "FT",
+      "class": "Фонды и казначейские облигации",
+      "metric": "$2.5 млрд",
+      "metricLabel": "под управлением · 8 сетей",
+      "line": "Первый зарегистрированный в США взаимный фонд в публичном блокчейне. Рост более чем на 100% с начала 2026 года.",
+      "year": "2021",
+      "source": {
+        "title": "Crypto Briefing",
+        "url": "https://cryptobriefing.com/franklin-templeton-benji-tokenized-treasuries-growth/"
+      }
+    },
+    {
+      "name": "Circle USYC",
+      "monogram": "CI",
+      "class": "Фонды и казначейские облигации",
+      "metric": "$2.96 млрд",
+      "metricLabel": "крупнейший продукт на основе токенизированных казначейских облигаций",
+      "line": "Лидирует в сегменте токенизированных казначейских облигаций объёмом $15.86 млрд с более чем 62 000 держателей.",
+      "year": "2023",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/treasuries"
+      },
+      "logo": "circle"
+    },
+    {
+      "name": "Figure",
+      "monogram": "FG",
+      "class": "Частный кредит",
+      "metric": "$16+ млрд",
+      "metricLabel": "кредитов выдано в блокчейне",
+      "line": "Крупнейший в США небанковский кредитор по линиям под залог жилья (HELOC) работает в собственном публичном блокчейне. Компания вышла на Nasdaq с оценкой $5.3 млрд.",
+      "year": "2018",
+      "source": {
+        "title": "Decrypt",
+        "url": "https://decrypt.co/339024/blockchain-lender-figure-nasdaq-5-3-billion-valuation"
+      }
+    },
+    {
+      "name": "Apollo ACRED",
+      "monogram": "AP",
+      "class": "Частный кредит",
+      "metric": "6 сетей",
+      "metricLabel": "доступ к токенизированному кредитному фонду",
+      "line": "Токенизированный фонд доступа к Diversified Credit Fund компании Apollo — инвестировать в частный кредит можно прямо в блокчейне.",
+      "year": "2025",
+      "source": {
+        "title": "PRNewswire",
+        "url": "https://www.prnewswire.com/news-releases/apollo-and-securitize-announce-partnership-and-launch-tokenized-access-to-credit-fund-on-aptos-avalanche-ethereum-ink-polygon-and-solana-networks-302364212.html"
+      }
+    },
+    {
+      "name": "Securitize",
+      "monogram": "SE",
+      "class": "Фонды и казначейские облигации",
+      "metric": "$3+ млрд",
+      "metricLabel": "токенизировано на платформе",
+      "line": "Партнёр по токенизации фондов доступа BlackRock, Apollo, Hamilton Lane и KKR.",
+      "year": "2019",
+      "source": {
+        "title": "PRNewswire",
+        "url": "https://www.prnewswire.com/news-releases/apollo-and-securitize-announce-partnership-and-launch-tokenized-access-to-credit-fund-on-aptos-avalanche-ethereum-ink-polygon-and-solana-networks-302364212.html"
+      }
+    },
+    {
+      "name": "Ondo Global Markets",
+      "monogram": "ON",
+      "class": "Акции",
+      "metric": "$1 млрд",
+      "metricLabel": "в токенизированных акциях",
+      "line": "Более 260 токенизированных акций и ETF США; первая платформа токенизированных акций, преодолевшая отметку $1 млрд.",
+      "year": "2025",
+      "source": {
+        "title": "Ondo Finance",
+        "url": "https://ondo.finance/blog/global-markets-is-live"
+      }
+    },
+    {
+      "name": "Robinhood Chain",
+      "monogram": "RH",
+      "class": "Акции",
+      "metric": "2 000+",
+      "metricLabel": "токенов акций · более 120 стран",
+      "line": "Розничный брокер превратил свой каталог акций в токены в собственной сети.",
+      "year": "2026",
+      "source": {
+        "title": "Пресс-центр Robinhood",
+        "url": "https://robinhood.com/us/en/newsroom/robinhood-accelerates-global-expansion-robinhood-chain-mainnet-stock-tokens-agentic-trading/"
+      },
+      "logo": "robinhood"
+    },
+    {
+      "name": "Токенизированное золото (XAUT + PAXG)",
+      "monogram": "AU",
+      "class": "Сырьевые товары",
+      "metric": "$6 млрд",
+      "metricLabel": "рыночная капитализация · 1.2 млн унций в хранилищах",
+      "line": "Рекордный объём торгов $90.7 млрд в 1 квартале 2026 года. На двух эмитентов приходится около 97% сегмента.",
+      "year": "2026",
+      "source": {
+        "title": "Coinpaprika",
+        "url": "https://coinpaprika.com/news/tokenized-gold-q1-2026-volume-record/"
+      }
+    },
+    {
+      "name": "JPMorgan Kinexys",
+      "monogram": "JP",
+      "class": "Платежи",
+      "metric": "$1.5 трлн",
+      "metricLabel": "обработано · более $2 млрд в день",
+      "line": "Банковская инфраструктура для токенизированных расчётов — незаметный гигант сегмента.",
+      "year": "2020",
+      "source": {
+        "title": "Ledger Insights",
+        "url": "https://www.ledgerinsights.com/bcg-ripple-predict-tokenization-to-reach-18-9-trillion-by-2033/"
+      },
+      "logo": "jpmorgan"
+    },
+    {
+      "name": "Недвижимость: проверка реальностью",
+      "monogram": "RE",
+      "class": "Недвижимость",
+      "metric": "$69 млн",
+      "metricLabel": "крупнейший действующий токен (GRO)",
+      "line": "Недвижимость в блокчейне всё ещё на ранней стадии. Сегодня проверенная модель в этом секторе — кредитование: Figure выдала в блокчейне кредиты под залог жилья на сумму более $16 млрд.",
+      "year": "2026",
+      "honest": true,
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/"
+      }
+    },
+    {
+      "name": "Золотой токен HSBC",
+      "monogram": "HG",
+      "class": "Сырьевые товары",
+      "metric": "$1+ млрд",
+      "metricLabel": "объём розничных торгов",
+      "line": "HSBC позволяет розничным клиентам в Гонконге покупать доли хранящегося в Лондоне золота через обычное банковское приложение.",
+      "year": "2024",
+      "source": {
+        "title": "Caixin Global: объём торгов золотым токеном HSBC превысил $1 млрд",
+        "url": "https://www.caixinglobal.com/2025-11-11/hsbcs-gold-token-tops-1-billion-in-trades-as-retail-investors-embrace-tokenized-assets-102381287.html"
+      },
+      "logo": "hsbc"
+    },
+    {
+      "name": "Расчёты Visa в USDC",
+      "monogram": "VI",
+      "class": "Платежи",
+      "metric": "$3.5 млрд",
+      "metricLabel": "годовой темп расчётов",
+      "line": "Банки-партнёры теперь рассчитываются с Visa по карточным обязательствам в стейблкоине USDC семь дней в неделю.",
+      "year": "2025",
+      "source": {
+        "title": "Visa: запуск расчётов в стейблкоинах в США",
+        "url": "https://investor.visa.com/news/news-details/2025/Visa-Launches-Stablecoin-Settlement-in-the-United-States-Marking-a-Breakthrough-for-Stablecoin-Integration/default.aspx"
+      },
+      "logo": "visa"
+    },
+    {
+      "name": "Расчёты Mastercard в стейблкоинах",
+      "monogram": "MC",
+      "class": "Платежи",
+      "metric": "8",
+      "metricLabel": "блокчейнов для карточных расчётов",
+      "line": "Mastercard открыла сеть карточных расчётов для шести регулируемых стейблкоинов в восьми блокчейнах, включая выходные.",
+      "year": "2026",
+      "source": {
+        "title": "The Defiant: Mastercard открывает сеть карточных расчётов в восьми блокчейнах",
+        "url": "https://thedefiant.io/converge/tradfi-and-fintech/mastercard-opens-card-settlement-network-on-eight-blockchains-adding-weekend-and-holiday-cycles"
+      },
+      "logo": "mastercard"
+    },
+    {
+      "name": "Maple Finance",
+      "monogram": "MF",
+      "class": "Частный кредит",
+      "metric": "$23.9 млрд",
+      "metricLabel": "кредитов выдано с 2019 года",
+      "line": "Maple объединяет капитал кредиторов в блокчейне и выдаёт его проверенным организациям на условиях, доступных в реальном времени.",
+      "year": "2019",
+      "source": {
+        "title": "Maple Finance: лидер в управлении активами в блокчейне",
+        "url": "https://maple.finance/"
+      }
+    },
+    {
+      "name": "Kraken xStocks",
+      "monogram": "XS",
+      "class": "Акции",
+      "metric": "$25 млрд",
+      "metricLabel": "наторговано за восемь месяцев",
+      "line": "xStocks от Kraken — токенизированные акции США, выпущенные Backed и торгующиеся круглосуточно в публичных блокчейнах.",
+      "year": "2025",
+      "source": {
+        "title": "Kraken: общий объём транзакций xStocks превысил $25 млрд",
+        "url": "https://blog.kraken.com/product/xstocks/25-billion-in-total-transaction-volume"
+      },
+      "logo": "kraken"
+    },
+    {
+      "name": "Hamilton Lane Secondary Fund VI",
+      "monogram": "HL",
+      "class": "Фонды и казначейские облигации",
+      "metric": "$20 тыс.",
+      "metricLabel": "минимум вместо прежних $5 млн",
+      "line": "Токенизированный фонд доступа в сети Polygon открывает фонд частных рынков Hamilton Lane объёмом $5.6 млрд для инвестиций на гораздо меньшие суммы.",
+      "year": "2024",
+      "source": {
+        "title": "PR Newswire: фонд Hamilton Lane Secondary Fund VI объёмом $5.6 млрд на Securitize",
+        "url": "https://www.prnewswire.com/news-releases/hamilton-lanes-5-6b-secondary-fund-vi-exclusively-available-on-securitize-platform-302223040.html"
+      }
+    },
+    {
+      "name": "St. Regis Aspen (Aspen Coin)",
+      "monogram": "SA",
+      "class": "Недвижимость",
+      "metric": "$18 млн",
+      "metricLabel": "привлечено через продажу токенов",
+      "line": "Почти пятая часть роскошного курорта St. Regis Aspen была продана инвесторам в виде цифровых токенов.",
+      "year": "2018",
+      "source": {
+        "title": "CryptoSlate: курорт St. Regis Aspen привлёк $18 млн через размещение токенов",
+        "url": "https://cryptoslate.com/st-regis-aspen-resort-raises-18-million-via-security-token-offering/"
+      }
+    },
+    {
+      "name": "RealT",
+      "monogram": "RT",
+      "class": "Недвижимость",
+      "metric": "$29+ млн",
+      "metricLabel": "арендного дохода распределено среди держателей",
+      "line": "RealT продаёт долевые токены арендных домов в США и перечисляет доход от аренды держателям токенов.",
+      "year": "2019",
+      "source": {
+        "title": "RealT: долевое инвестирование в недвижимость без барьеров",
+        "url": "https://realt.co/"
+      }
+    }
+  ]
+}

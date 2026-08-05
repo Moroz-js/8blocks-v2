@@ -11,11 +11,11 @@ const enObject = {
     headline: 'Turn a real asset into a financing instrument.',
     headlineAccent: 'Without selling control.',
     description:
-      'For owners of established businesses and real assets. We check whether your property, energy asset, or contracted revenue can support fractional investment — and design the structure only if the numbers work.',
+      'For owners of established businesses and real assets. We assess the business case, design the economics and holder rights, and coordinate implementation with specialised legal, technical, and market partners.',
     ctaLabel: 'Book a free 45-min call',
-    ctaHref: '/contact',
-    secondaryLabel: 'See who this is for',
-    secondaryHref: '#paths',
+    ctaHref: 'https://calendly.com/care-8blocks/intro',
+    secondaryLabel: 'Check your readiness in 3 min',
+    secondaryHref: '/product/tokenization-readiness',
     points: [
       'Keep operating control',
       'Test feasibility before any legal spend',
@@ -43,7 +43,7 @@ const enObject = {
     firstWeCheckLabel: 'First we check',
     items: [
       {
-        own: 'Buildings, land, or an energy plant',
+        own: 'Commercial real estate',
         result: 'capital without selling the asset',
         holdersGet:
           'Defined economic rights in the asset — designed to be enforceable and reviewed by your counsel',
@@ -51,25 +51,25 @@ const enObject = {
         firstWeCheck: 'Who buys the fractions, at what minimum ticket',
       },
       {
-        own: 'Contracted revenue — exports, receivables',
-        result: 'financing without new bank debt',
-        holdersGet: 'A defined share of specific, documented revenue flows',
-        youKeep: 'The contracts and the client relationships',
-        firstWeCheck: 'Whether the revenue is documented and assignable',
+        own: 'Securities or fund interests',
+        result: 'liquidity and a wider investor pool',
+        holdersGet: 'The same instrument in digital form, tradable in smaller lots',
+        youKeep: 'The issuance terms and the investor registry',
+        firstWeCheck: 'Which regulated venue and framework fit your jurisdiction',
       },
       {
-        own: 'A brand with loyal customers or partners',
-        result: 'membership people can own and pass on',
-        holdersGet: 'Membership rights they can hold, use, and pass on',
-        youKeep: 'Your brand — no public token attached to it',
-        firstWeCheck: 'Whether the privileges are worth holding',
+        own: 'Debt and collateral on the books',
+        result: 'a secondary market for what sits as dead weight',
+        holdersGet: 'A defined claim on documented debt or its income',
+        youKeep: 'The client relationships and the servicing',
+        firstWeCheck: 'Whether the paper is documented and assignable',
       },
       {
-        own: 'Contracts still settled by hand',
-        result: 'escrow, splits, and payouts that run themselves',
-        holdersGet: 'Verifiable, scheduled settlement',
-        youKeep: 'The agreements — code just executes them',
-        firstWeCheck: 'What the manual process costs you today',
+        own: 'High-value movables people rent',
+        result: 'fractional ownership with rental income',
+        holdersGet: 'A share in the asset and its rental income',
+        youKeep: 'Custody, management, and the rental calendar',
+        firstWeCheck: 'Insurance, custody, and whether rental demand covers the math',
       },
     ],
   },
@@ -80,6 +80,13 @@ const enObject = {
     description:
       'Each step has a defined output. You can stop after any of them — with something useful in hand.',
     leaveLabel: 'You leave with:',
+    selfServe: {
+      title: 'Prefer self-serve first?',
+      readinessLabel: 'Run the 3-minute readiness check',
+      readinessHref: '/product/tokenization-readiness',
+      casesLabel: 'Browse institutional cases',
+      casesHref: '/product/tokenization-cases',
+    },
     steps: [
       {
         title: 'Free 45-minute call',
@@ -156,16 +163,16 @@ const enObject = {
       title: 'The Workshop — your situation, on paper',
       description:
         'Pre-work first: asset facts, ownership, debt, revenue, target raise. Then the working session. The written diagnosis follows after internal review — including the recommendation not to build, when the numbers say so.',
-      ctaLabel: 'Start with the free call',
-      ctaHref: '/contact',
+      ctaLabel: 'Book the Workshop',
+      ctaHref: 'mailto:hello@8blocks.io?subject=The%20Workshop',
       price: '$2,000 · credited in full toward any engagement below.',
     },
     youGetLabel: 'You get',
     youProvideLabel: 'You provide',
     whoExecutesLabel: 'Who executes',
     endsWithLabel: 'Ends with',
-    talkLabel: 'Talk to us',
-    talkHref: '/contact',
+    talkLabel: 'Book a call',
+    talkHref: 'https://calendly.com/care-8blocks/intro',
     tiers: [
       {
         name: 'Essential',
@@ -319,7 +326,7 @@ const enObject = {
         description:
           'A few questions about the asset and the goal — a first read on what might fit, before you talk to anyone. Three minutes, free, no registration.',
         ctaLabel: 'Open Token Lab',
-        href: '/product/calculator',
+        href: '/product/tokenization-readiness',
       },
       {
         tag: 'For the busy owner',
@@ -327,7 +334,7 @@ const enObject = {
         description:
           'Seven questions to ask before tokenizing an asset — the same ones we ask on the call. No email required.',
         ctaLabel: 'Open the guide',
-        href: '/contact',
+        href: '/product/digital-assets/owners-guide',
       },
     ],
   },
@@ -379,9 +386,9 @@ const enObject = {
     description:
       'You talk to the people who design these structures — not a sales rep. You leave with ranges, the realistic path, and a clear next step.',
     ctaLabel: 'Book the free 45-min call',
-    ctaHref: '/contact',
-    secondaryLabel: 'Or start with Token Lab',
-    secondaryHref: '/product/calculator',
+    ctaHref: 'https://calendly.com/care-8blocks/intro',
+    secondaryLabel: 'Or check your readiness first',
+    secondaryHref: '/product/tokenization-readiness',
   },
 }
 

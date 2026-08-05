@@ -18,6 +18,9 @@ export const footerContent = {
     { label: 'Press', href: '/press' },
     { label: 'Public audits', href: '/audits' },
     { label: 'Contact', href: '/contact' },
+    { label: 'About', href: '/about' },
+    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Token vesting benchmarks', href: '/learn/token-vesting-benchmarks' },
   ],
   serviceLinks: [
     { label: 'Strategic consulting', href: '/services/strategic-consulting' },
@@ -33,6 +36,22 @@ export const footerContent = {
     {
       label: 'Tokenomics calculator',
       href: '/product/calculator',
+    },
+    {
+      label: 'Digital Asset Strategy',
+      href: '/product/digital-assets',
+    },
+    {
+      label: 'Tokenization readiness',
+      href: '/product/tokenization-readiness',
+    },
+    {
+      label: 'Tokenization cases',
+      href: '/product/tokenization-cases',
+    },
+    {
+      label: 'Tokenomics AI',
+      href: '/product/tokenomics-ai',
     },
   ],
 } as const

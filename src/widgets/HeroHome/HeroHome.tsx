@@ -1,14 +1,19 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { heroContent, heroMarqueeItems } from '@/shared/content/homePage'
 import { lang } from '@/shared/i18n'
 import { HeroLetters } from '@/widgets/HeroLetters'
-import { HeroCanvas } from './HeroCanvas'
 import styles from './HeroHome.module.scss'
 
 const ease = 'easeOut' as const
+const HeroCanvas = dynamic(
+  () => import('./HeroCanvas').then(({ HeroCanvas: Canvas }) => Canvas),
+  { ssr: false },
+)
 
 const MARQUEE_ITEMS = [
   heroMarqueeItems[0], '·', heroMarqueeItems[1], '·',
@@ -17,6 +22,15 @@ const MARQUEE_ITEMS = [
 ]
 
 export function HeroHome() {
+  const [showCanvas, setShowCanvas] = useState(false)
+
+  useEffect(() => {
+    if (lang === 'ru' || !window.matchMedia('(min-width: 769px)').matches) return
+
+    const timeout = window.setTimeout(() => setShowCanvas(true), 0)
+    return () => window.clearTimeout(timeout)
+  }, [])
+
   return (
     <section className={styles.hero} aria-label="Hero">
       <div className={styles.inner}>
@@ -46,14 +60,9 @@ export function HeroHome() {
             </span>
           </motion.h1>
 
-          <motion.p
-            className={styles.description}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease, delay: 0.22 }}
-          >
+          <p className={styles.description}>
             {heroContent.description}
-          </motion.p>
+          </p>
 
           <motion.div
             className={styles.actions}
@@ -84,7 +93,7 @@ export function HeroHome() {
           transition={{ duration: 1.2, ease, delay: 0.3 }}
           aria-hidden="true"
         >
-          {lang === 'ru' ? <HeroLetters /> : <HeroCanvas className={styles.canvas} />}
+          {lang === 'ru' ? <HeroLetters /> : showCanvas ? <HeroCanvas className={styles.canvas} /> : null}
         </motion.div>
       </div>
 

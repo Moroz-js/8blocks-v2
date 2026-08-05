@@ -7,6 +7,7 @@ import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { AuditPage } from '@/widgets/AuditPage'
 import { ThemeScopeMarker } from '@/shared/lib/ThemeScope'
+import { buildAuditGraph } from '@/shared/lib/content-schema'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -121,9 +122,30 @@ export default async function AuditSlugPage({ params, searchParams }: PageProps)
     expertRaw.author && typeof expertRaw.author === 'object' ? expertRaw.author : {}
   ) as Record<string, unknown>
 
+  const auditJsonLd = buildAuditGraph({
+    slug: doc.slug,
+    title: doc.title,
+    description: typeof doc.excerpt === 'string' ? doc.excerpt : null,
+    imageUrl: mediaToAbsoluteUrl(doc.cover) ?? null,
+    publishedAt: doc.publishedAt ? String(doc.publishedAt) : null,
+    updatedAt: doc.updatedAt ? String(doc.updatedAt) : null,
+    expert: {
+      name: typeof expertRaw.name === 'string' ? expertRaw.name : null,
+      role: typeof expertRaw.role === 'string' ? expertRaw.role : null,
+      photoUrl: mediaToAbsoluteUrl(expertRaw.photo) ?? null,
+    },
+    hero: {
+      company: typeof heroRaw.company === 'string' ? heroRaw.company : null,
+      tokenName: typeof heroRaw.tokenName === 'string' ? heroRaw.tokenName : null,
+      score: typeof heroRaw.score === 'number' ? heroRaw.score : null,
+      letterRating: typeof heroRaw.letterRating === 'string' ? heroRaw.letterRating : null,
+    },
+  })
+
   return (
     <>
       <ThemeScopeMarker />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(auditJsonLd) }} />
       <AuditPage
         print={print}
         audit={{

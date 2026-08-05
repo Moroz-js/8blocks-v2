@@ -954,6 +954,47 @@
   }
 }
 
+.moduleSummaryList {
+  max-width: $container-max;
+  margin: calc(#{$space-6} * -1) auto 0;
+  padding-inline: $container-padding;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid $border-secondary;
+  border-left: 1px solid $border-secondary;
+
+  @media (max-width: #{$bp-tablet}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    grid-template-columns: 1fr;
+    padding-inline: $container-padding-mobile;
+  }
+}
+
+.moduleSummaryItem {
+  padding: $space-4;
+  border-right: 1px solid $border-secondary;
+  border-bottom: 1px solid $border-secondary;
+}
+
+.moduleSummaryName {
+  font-family: $font-base;
+  font-weight: 500;
+  font-size: $text-sm;
+  line-height: $leading-snug;
+  color: $text-primary;
+  margin: 0;
+}
+
+.moduleSummaryMeta {
+  font-size: $text-xs;
+  line-height: $leading-relaxed;
+  color: $text-tertiary;
+  margin: $space-2 0 0;
+}
+
 // ─── Lead form ────────────────────────────────────────────────────────────────
 
 .form {

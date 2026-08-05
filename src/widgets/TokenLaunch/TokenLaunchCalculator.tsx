@@ -61,6 +61,10 @@ export function TokenLaunchCalculator({ modules }: TokenLaunchCalculatorProps) {
   const hasSelection = totals.selected.some((m) => m.includeInTotal) || totals.listingSelected
 
   function modulePriceDisplay(m: LaunchModuleView): string {
+    if (!m.includeInTotal) {
+      return calculator.customPriceLabel
+    }
+
     if (m.packages.length > 0) {
       const prices = m.packages.map((p) => p.price)
       const min = Math.min(...prices)
@@ -123,12 +127,12 @@ export function TokenLaunchCalculator({ modules }: TokenLaunchCalculatorProps) {
                     >
                       ✓
                     </label>
-                    <span className={styles.moduleInfo}>
+                    <div className={styles.moduleInfo}>
                       <h3 className={styles.moduleName}>
                         <label htmlFor={`module-${m.id}`}>{m.name}</label>
                       </h3>
                       <span className={styles.moduleDuration}>{m.durationLabel}</span>
-                    </span>
+                    </div>
                     <span className={styles.modulePrice}>{modulePriceDisplay(m)}</span>
                   </div>
 

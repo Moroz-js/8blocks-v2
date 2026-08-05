@@ -239,11 +239,26 @@ export const casesMeta = {
 
 export const casesUiContent = {
   heroLabel: 'Кейсы',
-  heroHeadline: 'Портфолио',
+  heroHeadline: 'Проекты, которыми мы гордимся',
   heroAriaLabel: 'Портфолио',
   taskLabel: 'Задача',
   actionsLabel: 'Что сделали',
   resultLabel: 'Результат',
   filterAll: 'Все',
+  serviceLabels: {
+    design: 'Дизайн',
+    audit: 'Аудит',
+    advisory: 'Консалтинг',
+  },
+  viewFull: 'Смотреть полный кейс',
+  overviewLabel: 'Обзор',
+  industryLabel: 'Отрасль',
+  goalsLabel: 'Цели клиента',
+  challengesLabel: 'Задачи и вызовы',
+  solutionLabel: 'Решение',
+  bookProject: 'Обсудить похожий проект',
+  relatedArticle: 'Читать статью по теме',
+  backToCases: 'Вернуться ко всем кейсам',
+  snapshotLabel: 'Краткий кейс',
   emptyLabel: 'Кейсов пока нет',
 } as const

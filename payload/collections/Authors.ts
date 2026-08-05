@@ -62,6 +62,26 @@ export const Authors: CollectionConfig = {
       },
     },
     {
+      name: 'x',
+      type: 'text',
+      label: 'X (Twitter)',
+      admin: {
+        description: 'Ссылка на профиль в X. Используется, если LinkedIn не указан.',
+      },
+      validate: (value: string | null | undefined) => {
+        if (!value) return true
+        try {
+          const url = new URL(value)
+          if (url.protocol !== 'https:' && url.protocol !== 'http:') {
+            return 'Ссылка должна начинаться с https://'
+          }
+          return true
+        } catch {
+          return 'Некорректный URL. Пример: https://x.com/username'
+        }
+      },
+    },
+    {
       name: 'photo',
       type: 'upload',
       relationTo: 'media',

@@ -27,8 +27,6 @@ export async function POST(req: NextRequest) {
         name,
         email,
         message,
-        source: 'footer-form',
-        status: 'new',
       },
     })
 

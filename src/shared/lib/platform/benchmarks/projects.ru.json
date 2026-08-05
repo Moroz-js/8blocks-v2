@@ -1,0 +1,907 @@
+{
+  "categories": [
+    {
+      "category": "Уровень 1",
+      "categoryInsight": "Блокчейны первого уровня формируют крупнейшие в криптоиндустрии резервы для сообщества и экосистемы: у этих четырёх проектов 46-66% первоначального предложения приходится на сообщество, экосистему, фонд или казначейство (у Aptos только сообщество получает 51%; у Sui 66% распределено между управляемым фондом резервом, казначейством и программами сообщества), поскольку L1 должны десятилетиями финансировать валидаторов, гранты и экосистемы разработчиков. Доля инсайдеров (команда и инвестиционные раунды) у современных проектов сосредоточена в диапазоне 32-35% (Aptos — 32.5%, Sui — 34%), а у более ранних или активно финансируемых венчурными фондами запусков она выше (Solana — ~48% с учётом всех раундов частной продажи, Celestia — 53%). Культура вестинга здесь строже, чем в любой другой категории: клифф в 1 год для команды и инвесторов стал стандартом, общий срок вестинга составляет 3-4 года (у фонда и сообщества Aptos — до 10 лет), а современные L1 (с 2022 года) запускались с ровно 0% ликвидных токенов инсайдеров на TGE. Обращение на TGE невелико — примерно 13-20%, а доли первоначального распределения со временем размываются, поскольку каждый из этих L1 добавляет к исходному предложению награды за стейкинг или инфляцию.",
+      "projects": [
+        {
+          "name": "Solana",
+          "symbol": "SOL",
+          "launchYear": 2020,
+          "buckets": [
+            {"label": "Резерв сообщества", "percent": 38},
+            {"label": "Seed-раунд", "percent": 15.86},
+            {"label": "Раунд основателей", "percent": 12.63},
+            {"label": "Команда", "percent": 12.5},
+            {"label": "Фонд", "percent": 12.5},
+            {"label": "Раунд валидаторов", "percent": 5.07},
+            {"label": "Стратегический раунд", "percent": 1.84},
+            {"label": "Публичная аукционная продажа", "percent": 1.7}
+          ],
+          "vestingFacts": [
+            "Фиксированного предложения нет: 500M SOL при запуске плюс продолжающаяся инфляция; первоначальные доли со временем размываются.",
+            "Токены раундов продаж полностью разблокированы в январе 2021 года; токены команды линейно разблокировались в течение 22 месяцев до ноября 2022 года.",
+            "Официального документа о распределении нет; данные трекеров расходятся (Seed — 13.3-15.9%, Foundation — 8.6-12.5%, Founding — 9.8-12.9%)."
+          ],
+          "sources": [
+            {"title": "ICO Drops — Solana", "url": "https://icodrops.com/solana/"},
+            {"title": "DropsTab — Вестинг Solana", "url": "https://dropstab.com/coins/solana/vesting"},
+            {"title": "CoinCodeCap — Токеномика Solana", "url": "https://coincodecap.com/solana-sol-tokenomics"},
+            {"title": "Crypto.com Learn — Токеномика Solana", "url": "https://crypto.com/us/crypto/learn/solana-tokenomics"}
+          ],
+          "templateMapping": {
+            "team": 13,
+            "investors": 35,
+            "community": 38,
+            "ecosystem": 0,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 12,
+            "publicSale": 2
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 22},
+            "investors": {"tgePercent": 0, "cliffMonths": 9, "vestingMonths": 0},
+            "community": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 96},
+            "foundation": {"tgePercent": 0, "cliffMonths": 10, "vestingMonths": 0},
+            "publicSale": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0}
+          }
+        },
+        {
+          "name": "Aptos",
+          "symbol": "APT",
+          "launchYear": 2022,
+          "buckets": [
+            {"label": "Сообщество", "percent": 51.02},
+            {"label": "Основные участники", "percent": 19},
+            {"label": "Фонд", "percent": 16.5},
+            {"label": "Инвесторы", "percent": 13.48}
+          ],
+          "tgeFloat": "~13% от начального предложения в 1B (~125M токенов сообщества + ~5M токенов фонда были ликвидны на TGE, согласно данным DropsTab о разблокировке на TGE)",
+          "vestingFacts": [
+            "Участники и инвесторы: 0% на TGE, клифф 12 месяцев, полная разблокировка к 48-му месяцу.",
+            "Токены фонда и сообщества линейно разблокируются в течение 120 месяцев; на TGE ликвидно ~13% от 1B.",
+            "Проценты относятся к первоначальному предложению в 1B; награды за стейкинг увеличивают максимальное предложение примерно до 2.1B."
+          ],
+          "sources": [
+            {"title": "DropsTab — Вестинг Aptos", "url": "https://dropstab.com/coins/aptos/vesting"},
+            {"title": "Tokenomist — Токеномика Aptos", "url": "https://tokenomist.ai/aptos/tokenomics"},
+            {"title": "Aptos Foundation — Обзор токеномики (официальный источник, при получении действовало ограничение частоты запросов)", "url": "https://aptosfoundation.org/currents/aptos-tokenomics-overview"}
+          ],
+          "templateMapping": {
+            "team": 19,
+            "investors": 14,
+            "community": 51,
+            "ecosystem": 0,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 16,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "community": {"tgePercent": 25, "cliffMonths": 0, "vestingMonths": 120},
+            "foundation": {"tgePercent": 3, "cliffMonths": 0, "vestingMonths": 120}
+          }
+        },
+        {
+          "name": "Sui",
+          "symbol": "SUI",
+          "launchYear": 2023,
+          "buckets": [
+            {"label": "Резерв сообщества", "percent": 50},
+            {"label": "Ранние участники", "percent": 20},
+            {"label": "Инвесторы", "percent": 14},
+            {"label": "Казначейство Mysten Labs", "percent": 10},
+            {"label": "Программа доступа сообщества и тестировщики приложений", "percent": 6}
+          ],
+          "vestingFacts": [
+            "Для всех первоначальных инвесторов действовал клифф на перевод токенов сроком 1 год с запуска основной сети (с мая 2023 по май 2024 года).",
+            "При запуске основной сети намеренно не проводился аирдроп — это официальное решение по противодействию мошенничеству и соблюдению регуляторных требований.",
+            "График сильно смещён на поздний период: 52.17% предложения (в основном резерв сообщества, а также остатки ранних участников и казначейства Mysten) запланировано к разблокировке после 2030 года."
+          ],
+          "sources": [
+            {"title": "Блог Sui — Распределение токенов SUI (официальный источник)", "url": "https://blog.sui.io/sui-token-allocation/"},
+            {"title": "Документация Sui — Токеномика (официальный источник)", "url": "https://docs.sui.io/concepts/tokenomics"},
+            {"title": "Tokenomist — Токеномика Sui", "url": "https://tokenomist.ai/sui/tokenomics"},
+            {"title": "Suipiens — Sui Foundation объявляет токеномику Sui", "url": "https://suipiens.com/blog/sui-foundation-announces-sui-tokenomics/"}
+          ],
+          "templateMapping": {
+            "team": 20,
+            "investors": 14,
+            "community": 6,
+            "ecosystem": 50,
+            "treasury": 10,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 84},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 12},
+            "community": {"tgePercent": 50, "cliffMonths": 0, "vestingMonths": 12},
+            "ecosystem": {"tgePercent": 5, "cliffMonths": 0, "vestingMonths": 120},
+            "treasury": {"tgePercent": 0, "cliffMonths": 6, "vestingMonths": 90}
+          }
+        },
+        {
+          "name": "Celestia",
+          "symbol": "TIA",
+          "launchYear": 2023,
+          "buckets": [
+            {"label": "Исследования, разработка и экосистема", "percent": 26.79},
+            {"label": "Публичное распределение", "percent": 20},
+            {"label": "Ранние инвесторы: раунды Series A и B", "percent": 19.67},
+            {"label": "Первоначальные основные участники", "percent": 17.64},
+            {"label": "Ранние инвесторы: Seed", "percent": 15.9}
+          ],
+          "tgeFloat": "Публичное распределение (20%) полностью разблокировано при запуске; ещё ~6.7% (25% от категории исследований, разработки и экосистемы) разблокировано, но ограничено в управлении — официальные документы считают эти токены «доступными», а не обращающимися",
+          "vestingFacts": [
+            "Публичное распределение (20%) полностью разблокировано при запуске; разблокированные токены R&D остаются ограниченными в управлении.",
+            "Основные участники: 33.33% разблокируется после клиффа в 1 год, остаток непрерывно разблокируется до конца 3-го года.",
+            "Ранние инвесторы (в сумме 35.6%): 33.33% после клиффа в 1 год, остаток разблокируется до конца 2-го года."
+          ],
+          "sources": [
+            {"title": "Документация Celestia — Стейкинг, управление и предложение (официальный источник)", "url": "https://docs.celestia.org/learn/staking-governance-supply"},
+            {"title": "ICO Drops — Celestia", "url": "https://icodrops.com/celestia/"}
+          ],
+          "templateMapping": {
+            "team": 18,
+            "investors": 35,
+            "community": 20,
+            "ecosystem": 27,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 24},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 12},
+            "community": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "ecosystem": {"tgePercent": 5, "cliffMonths": 0, "vestingMonths": 48}
+          }
+        }
+      ]
+    },
+    {
+      "category": "Уровень 2 / Масштабирование",
+      "categoryInsight": "Токены L2 запускались без публичных продаж: каждый из четырёх проектов распределял токены через аирдроп, а также среди инсайдеров и казначейства, поэтому аирдроп фактически стал механизмом формирования обращения (12.75% у ARB, 17.5% у ZK, 19% заявлено для OP, 18% на программы сообщества и возвраты у STRK). Совокупная доля команды и инвесторов велика и стабильна — 33-45% (ZK — 33.3%, OP — 36%, STRK — 38.2%, ARB — 44.5%), при этом все четыре проекта сохраняют крупные пулы казначейства DAO или фонда (у OP — 45% на экосистему плюс retroPGF, у ARB — 42.8% на казначейство плюс фонд, у ZK — 49.2% на Token Assembly плюс экосистему). Культура вестинга предполагает клифф в 1 год и затем примерно 3 года ежемесячных разблокировок (ARB и ZK — типичные примеры); заметное исключение — Starknet, где разблокировки инвесторов и ранних участников начались всего через два месяца после запуска программы распределения в феврале 2024 года. Обращение на TGE низкое — примерно 7-17%, поэтому у всех четырёх проектов сохраняется многолетний навес предложения, а полные графики разблокировки продолжаются до 2027-2029 годов.",
+      "projects": [
+        {
+          "name": "Arbitrum",
+          "symbol": "ARB",
+          "launchYear": 2023,
+          "buckets": [
+            {"label": "Казначейство Arbitrum DAO", "percent": 35.28},
+            {"label": "Команда, будущая команда и советники (Offchain Labs)", "percent": 26.94},
+            {"label": "Инвесторы", "percent": 17.53},
+            {"label": "Аирдроп пользователям", "percent": 11.62},
+            {"label": "Arbitrum Foundation", "percent": 7.5},
+            {"label": "DAO в экосистеме Arbitrum", "percent": 1.13}
+          ],
+          "tgeFloat": "~12.75% (аирдропы пользователям и DAO, около 1.275B ARB, были единственными токенами, доступными сразу при запуске в марте 2023 года)",
+          "vestingFacts": [
+            "Команда и инвесторы: блокировка на 4 года, клифф 1 год с TGE в марте 2023 года, затем ежемесячные разблокировки.",
+            "750M ARB фонда разблокируются линейно в течение четырёх лет; график закреплён смарт-контрактом.",
+            "Аирдропы (в сумме 12.75%) были полностью ликвидны при запуске; разблокировки инсайдеров продолжаются до марта 2027 года."
+          ],
+          "sources": [
+            {"title": "Документация управления Arbitrum DAO: критерии и распределение аирдропа $ARB", "url": "https://docs.arbitrum.foundation/airdrop-eligibility-distribution"},
+            {"title": "Tokenomist: токеномика и вестинг Arbitrum (ARB)", "url": "https://tokenomist.ai/arbitrum"},
+            {"title": "CryptoRank: разблокировки и вестинг Arbitrum (ARB)", "url": "https://cryptorank.io/price/arbitrum/vesting"}
+          ],
+          "templateMapping": {
+            "team": 27,
+            "investors": 18,
+            "community": 13,
+            "ecosystem": 0,
+            "treasury": 35,
+            "liquidity": 0,
+            "foundation": 7,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "community": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "treasury": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48},
+            "foundation": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48}
+          }
+        },
+        {
+          "name": "Optimism",
+          "symbol": "OP",
+          "launchYear": 2022,
+          "buckets": [
+            {"label": "Экосистемный фонд (управление 5.4% / партнёры 5.4% / seed 5.4% / не распределено 8.8%)", "percent": 25},
+            {"label": "Ретроактивное финансирование общественных благ", "percent": 20},
+            {"label": "Аирдропы пользователям", "percent": 19},
+            {"label": "Основные участники", "percent": 19},
+            {"label": "Инвесторы (Sugar Xaddies)", "percent": 17}
+          ],
+          "tgeFloat": "Единая цифра не опубликована; официальные документы указывают, что 30% первоначального предложения было предоставлено фонду для распределения в течение первого года",
+          "vestingFacts": [
+            "Блокировки участников и инвесторов существуют, но даты разблокировки оставлены на усмотрение системы управления и никогда не публиковались.",
+            "В аирдропе №1 распределено только 5%; ещё 14% зарезервировано для будущих волн аирдропа.",
+            "К середине 2026 года разблокировано около 53%; график продолжается до 2029 года (Tokenomist)."
+          ],
+          "sources": [
+            {"title": "Optimism Community Hub: обзор токена OP (официальная документация)", "url": "https://github.com/ethereum-optimism/community-hub/blob/main/pages/op-token/op-token-overview.mdx"},
+            {"title": "Форум управления Optimism: разъяснение по предложению токена OP", "url": "https://gov.optimism.io/t/clarification-on-op-token-supply/5589"},
+            {"title": "Tokenomist: токеномика и вестинг Optimism (OP)", "url": "https://tokenomist.ai/optimism"}
+          ],
+          "templateMapping": {
+            "team": 19,
+            "investors": 17,
+            "community": 19,
+            "ecosystem": 45,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 48},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 48},
+            "community": {"tgePercent": 26, "cliffMonths": 0, "vestingMonths": 60},
+            "ecosystem": {"tgePercent": 10, "cliffMonths": 0, "vestingMonths": 72}
+          }
+        },
+        {
+          "name": "Starknet",
+          "symbol": "STRK",
+          "launchYear": 2024,
+          "buckets": [
+            {"label": "Ранние участники", "percent": 20.04},
+            {"label": "Инвесторы", "percent": 18.17},
+            {"label": "Гранты, включая партнёров по разработке", "percent": 12.93},
+            {"label": "StarkWare (операционная деятельность)", "percent": 10.76},
+            {"label": "Стратегические резервы фонда", "percent": 10},
+            {"label": "Распределение сообществу", "percent": 9},
+            {"label": "Возвраты сообществу", "percent": 9},
+            {"label": "Казначейство фонда", "percent": 8.1},
+            {"label": "Пожертвования", "percent": 2}
+          ],
+          "tgeFloat": "Единая цифра не опубликована; первый раунд распределения сообществу (более 700M STRK, ~7% предложения) стал основной ликвидной долей при запуске в феврале 2024 года",
+          "vestingFacts": [
+            "Инсайдеры (38.2%): 64M STRK ежемесячно до марта 2025 года, затем 127M ежемесячно до марта 2027 года.",
+            "Первые разблокировки произошли в апреле 2024 года, через два месяца после запуска, что означает необычно короткий фактический клифф.",
+            "Заблокированные токены можно делегировать для голосования, но нельзя переводить, продавать или передавать в залог."
+          ],
+          "sources": [
+            {"title": "Документация Starknet: токен STRK (распределение и блокировка)", "url": "https://docs.starknet.io/learn/protocol/strk"},
+            {"title": "Tokenomist: токеномика и вестинг Starknet (STRK)", "url": "https://tokenomist.ai/starknet"}
+          ],
+          "templateMapping": {
+            "team": 20,
+            "investors": 18,
+            "community": 18,
+            "ecosystem": 15,
+            "treasury": 19,
+            "liquidity": 0,
+            "foundation": 10,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 2, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 2, "vestingMonths": 36},
+            "community": {"tgePercent": 40, "cliffMonths": 0, "vestingMonths": 36},
+            "ecosystem": {"tgePercent": 10, "cliffMonths": 0, "vestingMonths": 48},
+            "treasury": {"tgePercent": 5, "cliffMonths": 0, "vestingMonths": 60},
+            "foundation": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 60}
+          }
+        },
+        {
+          "name": "ZKsync",
+          "symbol": "ZK",
+          "launchYear": 2024,
+          "buckets": [
+            {"label": "Token Assembly (казначейство управления)", "percent": 29.27},
+            {"label": "Экосистемные инициативы", "percent": 19.9},
+            {"label": "Инвесторы", "percent": 19.78},
+            {"label": "Аирдроп", "percent": 17.5},
+            {"label": "Команда (Matter Labs)", "percent": 13.55}
+          ],
+          "tgeFloat": "~17.5% (аирдроп 3.675B ZK был единовременным распределением без блокировок на TGE в июне 2024 года; для токенов команды и инвесторов действовал клифф 1 год)",
+          "vestingFacts": [
+            "Команда и инвесторы: клифф 1 год, затем ежемесячные разблокировки с июня 2025 по июнь 2028 года.",
+            "Аирдроп (17.5%) был полностью ликвиден на TGE в июне 2024 года.",
+            "Официальные документы указывают 19.78% для инвесторов и 13.55% для команды; агрегаторы всё ещё показывают прежнее распределение."
+          ],
+          "sources": [
+            {"title": "Документация ZK Nation: токен ZK (официальное распределение токенов)", "url": "https://docs.zknation.io/zk-token/zk-token"},
+            {"title": "Tokenomist: токеномика и вестинг ZKsync (ZK)", "url": "https://tokenomist.ai/zksync"},
+            {"title": "CryptoRank: разблокировки и вестинг zkSync (ZK)", "url": "https://cryptorank.io/price/zksync/vesting"}
+          ],
+          "templateMapping": {
+            "team": 14,
+            "investors": 20,
+            "community": 17,
+            "ecosystem": 20,
+            "treasury": 29,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "community": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "ecosystem": {"tgePercent": 5, "cliffMonths": 0, "vestingMonths": 48},
+            "treasury": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48}
+          }
+        }
+      ]
+    },
+    {
+      "category": "DeFi и трейдинг",
+      "categoryInsight": "Ведущие DeFi-протоколы стабильно направляют большую часть предложения сообществу и экосистеме: Uniswap выделил участникам сообщества 60%, dYdX — 50%, а Hyperliquid — около 76% с учётом будущей эмиссии. Характерная черта категории — первоначальные аирдропы на 15-31%, полностью разблокированные в первый день. Доля инсайдеров (команда и инвесторы) находится в диапазоне от 22% до 55%: у Uniswap — ~40%, у dYdX — ~50%, у Ethena — 55%, тогда как Hyperliquid полностью нарушил шаблон, выделив 23.8% участникам и ничего инвесторам. Культура вестинга стандартизирована вокруг 4-летних графиков для инсайдеров, обычно с клиффом около 1 года (у Ethena — разблокировка 25% после клиффа на 12-м месяце, у dYdX — блокировка с первой разблокировкой 30% на 27-м месяце). Обращение на TGE сильно зависит от периода: запуски 2020-2021 годов вводили в обращение мало токенов сверх аирдропа и позднее переживали резкие разблокировки после клиффа (dYdX в декабре 2023 года), а проекты 2024 года, такие как Hyperliquid, распределили 31% при запуске, сместив распределение на ранний этап.",
+      "projects": [
+        {
+          "name": "Uniswap",
+          "symbol": "UNI",
+          "launchYear": 2020,
+          "buckets": [
+            {"label": "Участники сообщества (аирдроп, казначейство, майнинг ликвидности)", "percent": 60},
+            {"label": "Члены команды и будущие сотрудники", "percent": 21.266},
+            {"label": "Инвесторы", "percent": 18.044},
+            {"label": "Советники", "percent": 0.69}
+          ],
+          "tgeFloat": "~15% (аирдроп 150M UNI можно было получить сразу после запуска)",
+          "vestingFacts": [
+            "Токены команды, инвесторов и советников (40%) линейно разблокируются в течение 4 лет с запуска в сентябре 2020 года",
+            "Сообщество — 60%: аирдроп 15% доступен сразу, 43% казначейства распределяется за 4 года, 2% выделено на майнинг ликвидности",
+            "Первоначальное предложение — 1B; постоянная годовая инфляция 2% начинается после 4-го года"
+          ],
+          "sources": [
+            {"title": "Представляем UNI — официальный блог Uniswap", "url": "https://blog.uniswap.org/uni"},
+            {"title": "Uniswap (UNI) — ICO Drops", "url": "https://icodrops.com/uniswap/"}
+          ],
+          "templateMapping": {
+            "team": 22,
+            "investors": 18,
+            "community": 15,
+            "ecosystem": 2,
+            "treasury": 43,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48},
+            "investors": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48},
+            "community": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "ecosystem": {"tgePercent": 20, "cliffMonths": 0, "vestingMonths": 12},
+            "treasury": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48}
+          }
+        },
+        {
+          "name": "dYdX",
+          "symbol": "DYDX",
+          "launchYear": 2021,
+          "buckets": [
+            {"label": "Прошлые инвесторы", "percent": 27.7},
+            {"label": "Казначейство сообщества", "percent": 26.1},
+            {"label": "Основатели, сотрудники, советники и консультанты", "percent": 15.3},
+            {"label": "Награды за торговлю", "percent": 14.5},
+            {"label": "Будущие сотрудники и консультанты", "percent": 7},
+            {"label": "Ретроактивные награды за майнинг", "percent": 5},
+            {"label": "Награды поставщикам ликвидности", "percent": 3.3},
+            {"label": "Пул стейкинга ликвидности", "percent": 0.6},
+            {"label": "Страховой пул стейкинга", "percent": 0.5}
+          ],
+          "vestingFacts": [
+            "В августе 2021 года выпущено 1B: 50% сообществу, 50% инсайдерам; распределение на 5 лет",
+            "Изменённая блокировка инсайдеров: 30% разблокировано в декабре 2023 года, остаток — ежемесячно до июня 2026 года",
+            "Полностью разблокировано; по данным Tokenomist в обращении около 849M (84.9%) из 1B"
+          ],
+          "sources": [
+            {"title": "Распределение токена DYDX — официальная документация сообщества dYdX", "url": "https://docs.dydx.community/dydx/start-here/dydx-token-allocation"},
+            {"title": "Токеномика и вестинг dYdX (DYDX) — Tokenomist", "url": "https://tokenomist.ai/dydx"}
+          ],
+          "templateMapping": {
+            "team": 22,
+            "investors": 28,
+            "community": 5,
+            "ecosystem": 19,
+            "treasury": 26,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 27, "vestingMonths": 30},
+            "investors": {"tgePercent": 0, "cliffMonths": 27, "vestingMonths": 30},
+            "community": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "ecosystem": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 60},
+            "treasury": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 60}
+          }
+        },
+        {
+          "name": "Ethena",
+          "symbol": "ENA",
+          "launchYear": 2024,
+          "buckets": [
+            {"label": "Основные участники", "percent": 30},
+            {"label": "Развитие экосистемы и аирдропы", "percent": 30},
+            {"label": "Инвесторы", "percent": 25},
+            {"label": "Фонд", "percent": 15}
+          ],
+          "vestingFacts": [
+            "Участники (30%) и инвесторы (25%): через клифф 1 год разблокируется 25%, затем линейный ежемесячный вестинг в течение 3 лет",
+            "Фиксированное предложение — 15B; по состоянию на июль 2026 года в обращении около 9.56B (63.7%) (DropsTab)",
+            "DropsTab моделирует разблокировки как линейные в течение 36 месяцев без клиффа; официальные документы указывают наличие клиффа"
+          ],
+          "sources": [
+            {"title": "Токеномика ENA — официальная документация Ethena", "url": "https://docs.ethena.fi/overview/ena/tokenomics.md"},
+            {"title": "Вестинг Ethena (ENA) — DropsTab", "url": "https://dropstab.com/coins/ethena-labs/vesting"}
+          ],
+          "templateMapping": {
+            "team": 30,
+            "investors": 25,
+            "community": 0,
+            "ecosystem": 30,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 15,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "ecosystem": {"tgePercent": 32, "cliffMonths": 0, "vestingMonths": 48},
+            "foundation": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48}
+          }
+        },
+        {
+          "name": "Hyperliquid",
+          "symbol": "HYPE",
+          "launchYear": 2024,
+          "buckets": [
+            {"label": "Будущая эмиссия и награды сообществу", "percent": 38.888},
+            {"label": "Первоначальное распределение (аирдроп)", "percent": 31},
+            {"label": "Текущие и будущие основные участники", "percent": 23.8},
+            {"label": "Бюджет Hyper Foundation", "percent": 6},
+            {"label": "Гранты сообществу", "percent": 0.3},
+            {"label": "HIP-2 (Hyperliquidity)", "percent": 0.012}
+          ],
+          "tgeFloat": "~31% (первоначальный аирдроп 310M был полностью разблокирован при запуске в ноябре 2024 года)",
+          "vestingFacts": [
+            "Венчурным фондам токены не выделялись; 76.2% выделено сообществу; первоначальный аирдроп 310M полностью разблокирован в первый день",
+            "Основные участники (23.8%) заблокированы на 1 год; большая часть разблокируется в 2027-2028 годах; следующая разблокировка — август 2026 года",
+            "Будущая эмиссия (38.888%) ещё не выпущена и зарезервирована для наград сообществу и стимулов валидаторам"
+          ],
+          "sources": [
+            {"title": "Токеномика и вестинг Hyperliquid (HYPE) — Tokenomist", "url": "https://tokenomist.ai/hyperliquid"},
+            {"title": "Материал ChainCatcher об объявлении первоначального распределения Hyperliquid", "url": "https://www.chaincatcher.com/en/article/2154155"}
+          ],
+          "templateMapping": {
+            "team": 24,
+            "investors": 0,
+            "community": 31,
+            "ecosystem": 39,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 6,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "community": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "ecosystem": {"tgePercent": 5, "cliffMonths": 0, "vestingMonths": 96},
+            "foundation": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 48}
+          },
+          "audited": true,
+          "auditUrl": "https://8blocks.io/audits/summary-of-the-hype-token-audit"
+        },
+        {
+          "name": "STON.fi",
+          "symbol": "STON",
+          "launchYear": 2023,
+          "buckets": [
+            {"label": "Инвесторы (Pre-seed + Private)", "percent": 31},
+            {"label": "DAO: стимулы, маркетинг и операционная деятельность", "percent": 30},
+            {"label": "Казначейство DAO", "percent": 20},
+            {"label": "Команда и советники", "percent": 19}
+          ],
+          "tgeFloat": "~6% (2M маркетинговых + 4M операционных токенов были ликвидны на TGE; все остальные категории находились под клиффом или вестингом)",
+          "vestingFacts": [
+            "Казначейство DAO (20%): блокировка и стейкинг на 24 месяца, затем линейная разблокировка; команда и советники: блокировка на 24 месяца + линейная разблокировка на 36 месяцев.",
+            "Инвесторы (31%, pre-seed + private): клифф 12 месяцев + линейный вестинг 24 месяца.",
+            "Пиковое давление предложения приходится на месяцы 24-36, когда совпадают окна разблокировки казначейства, команды и инвесторов."
+          ],
+          "sources": [
+            {"title": "8Blocks — Аудит токеномики STON.fi", "url": "https://8blocks.io/audits/ston-fi-tokenomics-audit"}
+          ],
+          "templateMapping": {
+            "team": 19,
+            "investors": 31,
+            "community": 0,
+            "ecosystem": 30,
+            "treasury": 20,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 24, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 24},
+            "treasury": {"tgePercent": 0, "cliffMonths": 24, "vestingMonths": 36},
+            "ecosystem": {"tgePercent": 20, "cliffMonths": 0, "vestingMonths": 48}
+          },
+          "audited": true,
+          "auditUrl": "https://8blocks.io/audits/ston-fi-tokenomics-audit"
+        }
+      ]
+    },
+    {
+      "category": "Игры и метавселенные",
+      "categoryInsight": "Игровые токены и токены метавселенных направляют необычно большую долю предложения на игровой процесс и эмиссию для сообщества, а не инсайдерам: AXS выделяет 49% на стейкинг и награды play-to-earn, первоначальное распределение BEAM (Merit Circle) — около 44% на стимулы сообществу, ликвидность и ретроактивные награды, а IMX направляет 51.74% на развитие экосистемы. Доля инсайдеров (команда и советники) сосредоточена в диапазоне 20-29%, прямые инвестиционные раунды невелики (4-21%), а публичные продажи малы (4-12%) и обычно проводились через IEO на лаунчпадах (Binance Launchpad для AXS и SAND). Вестинг рассчитан на несколько лет (полная разблокировка за 4-5.5 года), и для этой категории характерно добровольное продление блокировок инсайдеров в середине цикла: Immutable повторно заблокировал транш разработчиков в 125M IMX в 2023 году, а Merit Circle установил для токенов основных участников новый клифф до 4 лет. В категории также есть проекты вообще без фиксированного первоначального распределения: Gala (GALA) был рассмотрен и исключён, поскольку запускался без продажи или предварительного выпуска токенов и распределялся только через ежедневную эмиссию узлам в пропорции 50/50 между операторами узлов и компанией, поэтому проект не публикует диаграмму распределения.",
+      "projects": [
+        {
+          "name": "Axie Infinity",
+          "symbol": "AXS",
+          "launchYear": 2020,
+          "buckets": [
+            {"label": "Награды за стейкинг", "percent": 29},
+            {"label": "Sky Mavis (команда)", "percent": 21},
+            {"label": "Play to Earn", "percent": 20},
+            {"label": "Публичная продажа (Binance Launchpad)", "percent": 11},
+            {"label": "Экосистемный фонд", "percent": 8},
+            {"label": "Советники", "percent": 7},
+            {"label": "Частная продажа", "percent": 4}
+          ],
+          "tgeFloat": "22.22% (59,985,000 из 270M AXS разблокировано при запуске, согласно whitepaper)",
+          "vestingFacts": [
+            "Фиксированное предложение 270M с графиком на 65 месяцев; к 2026 году разблокировано ~100%",
+            "Sky Mavis — 21%: ~19% в день запуска, затем транши раз в полгода с 12-го по 54-й месяц",
+            "Публичная продажа — 11%, ликвидны на TGE; 49% предложения приходится на игровую эмиссию и стейкинг"
+          ],
+          "sources": [
+            {"title": "Whitepaper Axie Infinity — Распределение и разблокировка AXS", "url": "https://whitepaper.axieinfinity.com/axs/allocations-and-unlock"},
+            {"title": "Whitepaper Axie Infinity — Распределение Sky Mavis", "url": "https://whitepaper.axieinfinity.com/axs/allocations-and-unlock/sky-mavis"},
+            {"title": "ICO Drops — Axie Infinity", "url": "https://icodrops.com/axie-infinity/"}
+          ],
+          "templateMapping": {
+            "team": 28,
+            "investors": 4,
+            "community": 49,
+            "ecosystem": 8,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 11
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 15, "cliffMonths": 0, "vestingMonths": 54},
+            "investors": {"tgePercent": 25, "cliffMonths": 0, "vestingMonths": 12},
+            "community": {"tgePercent": 12, "cliffMonths": 0, "vestingMonths": 60},
+            "ecosystem": {"tgePercent": 10, "cliffMonths": 0, "vestingMonths": 48},
+            "publicSale": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0}
+          }
+        },
+        {
+          "name": "The Sandbox",
+          "symbol": "SAND",
+          "launchYear": 2020,
+          "buckets": [
+            {"label": "Резерв компании", "percent": 25.82},
+            {"label": "Команда", "percent": 19},
+            {"label": "Seed-раунд", "percent": 17.18},
+            {"label": "Фонд", "percent": 12},
+            {"label": "Binance Launchpad (публичная продажа)", "percent": 12},
+            {"label": "Советники", "percent": 10},
+            {"label": "Стратегический раунд", "percent": 4}
+          ],
+          "vestingFacts": [
+            "Фиксированное предложение — 3B; продажа на Binance Launchpad (август 2020 года) проводилась без блокировки",
+            "Seed- и стратегический раунды: клифф 12 месяцев, затем по 20% каждые шесть месяцев",
+            "Полностью разблокировано с 2025 года; в обращении около 2.67B (88.9%)"
+          ],
+          "sources": [
+            {"title": "ICO Drops — The Sandbox", "url": "https://icodrops.com/the-sandbox/"},
+            {"title": "Tokenomist — Токеномика и вестинг The Sandbox (SAND)", "url": "https://tokenomist.ai/the-sandbox"}
+          ],
+          "templateMapping": {
+            "team": 29,
+            "investors": 21,
+            "community": 0,
+            "ecosystem": 0,
+            "treasury": 26,
+            "liquidity": 0,
+            "foundation": 12,
+            "publicSale": 12
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 30},
+            "treasury": {"tgePercent": 10, "cliffMonths": 0, "vestingMonths": 60},
+            "foundation": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 60},
+            "publicSale": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0}
+          }
+        },
+        {
+          "name": "Immutable",
+          "symbol": "IMX",
+          "launchYear": 2021,
+          "buckets": [
+            {"label": "Развитие экосистемы", "percent": 51.74},
+            {"label": "Развитие проекта", "percent": 25},
+            {"label": "Частная продажа", "percent": 14.26},
+            {"label": "Публичная продажа", "percent": 5},
+            {"label": "Резерв фонда", "percent": 4}
+          ],
+          "vestingFacts": [
+            "Фиксированное предложение — 2B; по состоянию на ноябрь 2025 года разблокировано 100%",
+            "Частная продажа разблокировалась линейно около 17 месяцев, экосистема — около 47 месяцев (DropsTab)",
+            "В 2023 году транш разработчиков в 125M был добровольно повторно заблокирован до июля 2024 года, после клиффа начался ежемесячный вестинг"
+          ],
+          "sources": [
+            {"title": "Поддержка Immutable — Токеномика IMX (официальный источник)", "url": "http://web.archive.org/web/20250912200534/https://support.immutable.com/hc/en-us/articles/9439179705999-IMX-Tokenomics"},
+            {"title": "DropsTab — Вестинг Immutable (IMX)", "url": "https://dropstab.com/coins/immutable-x/vesting"},
+            {"title": "Tokenomist — Токеномика и вестинг Immutable (IMX)", "url": "https://tokenomist.ai/immutable-x"},
+            {"title": "crypto.news — Immutable продлевает период вестинга токенов", "url": "https://crypto.news/immutable-extends-token-vesting-period-for-another-year/"}
+          ],
+          "templateMapping": {
+            "team": 0,
+            "investors": 14,
+            "community": 0,
+            "ecosystem": 52,
+            "treasury": 25,
+            "liquidity": 0,
+            "foundation": 4,
+            "publicSale": 5
+          },
+          "vestingMapping": {
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 17},
+            "ecosystem": {"tgePercent": 5, "cliffMonths": 0, "vestingMonths": 47},
+            "treasury": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "foundation": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "publicSale": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0}
+          }
+        },
+        {
+          "name": "Beam",
+          "symbol": "BEAM",
+          "launchYear": 2023,
+          "buckets": [
+            {"label": "Стимулы сообществу", "percent": 30.19},
+            {"label": "Команда и советники", "percent": 20},
+            {"label": "Казначейство DAO", "percent": 18.25},
+            {"label": "Ранние инвесторы", "percent": 14.06},
+            {"label": "Награды за ликвидность", "percent": 10},
+            {"label": "Публичное распределение", "percent": 4.1},
+            {"label": "Ретроактивные награды", "percent": 3.4}
+          ],
+          "vestingFacts": [
+            "Первоначальное распределение унаследовано от Merit Circle; в октябре 2023 года MC был конвертирован в соотношении 1:100",
+            "Для токенов основных участников (7.17B) повторно установлен клифф до 4 лет",
+            "Полностью разблокировано; сжигания сократили предложение примерно до 58.5B, из которых около 51.3B находятся в обращении"
+          ],
+          "sources": [
+            {"title": "GitBook Merit Circle DAO — Распределение токена $BEAM (официальный источник)", "url": "http://web.archive.org/web/20240606200519/https://meritcircle.gitbook.io/merit-circle/usdbeam-token/token-distribution"},
+            {"title": "Tokenomist — Токеномика и вестинг Beam (BEAM)", "url": "https://tokenomist.ai/beam-2"},
+            {"title": "CryptoRank — Токеномика Beam (BEAM)", "url": "https://cryptorank.io/ico/onbeam"},
+            {"title": "Казначейство Beam Foundation (официальный источник)", "url": "https://treasury.onbeam.com/beam-token"}
+          ],
+          "templateMapping": {
+            "team": 20,
+            "investors": 14,
+            "community": 34,
+            "ecosystem": 0,
+            "treasury": 18,
+            "liquidity": 10,
+            "foundation": 0,
+            "publicSale": 4
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 6, "vestingMonths": 36},
+            "community": {"tgePercent": 1, "cliffMonths": 0, "vestingMonths": 36},
+            "treasury": {"tgePercent": 20, "cliffMonths": 0, "vestingMonths": 48},
+            "liquidity": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 24},
+            "publicSale": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0}
+          }
+        }
+      ]
+    },
+    {
+      "category": "ИИ и DePIN",
+      "categoryInsight": "Токеномика ИИ- и DePIN-проектов разделяется на две эпохи: старые сети (Render, 2017 год) продавали токены вообще без вестинга и хранили большую часть предложения на контролируемом сетью эскроу-счёте, тогда как современные проекты (Worldcoin, io.net, Grass) следуют венчурной модели с длительными блокировками. Совокупная доля инсайдеров (команда + инвесторы) у современных проектов составляет 25-47% предложения: Worldcoin — 25%, io.net — ~34%, Grass — 47%. Характерная черта категории — крайне низкое обращение на старте: от ~1% у Worldcoin до ~12% у io.net и ~24% у Grass, поскольку 50-75% предложения резервируется для стимулов сообществу и сети с очень длительными графиками эмиссии (15 лет для токенов сообщества WLD, 20 лет для наград поставщикам IO). Для команды типичен клифф 12 месяцев и общий срок вестинга 3-4 года; заметное исключение в культуре запуска — честный запуск Bittensor (TAO), который был исключён именно потому, что 100% предложения добывается через эмиссию и опубликованных категорий распределения нет.",
+      "projects": [
+        {
+          "name": "Worldcoin (World)",
+          "symbol": "WLD",
+          "launchYear": 2023,
+          "buckets": [
+            {"label": "Сообщество World (пользователи, работа сети, экосистемный фонд)", "percent": 75},
+            {"label": "Инвесторы TFH", "percent": 13.6},
+            {"label": "Первоначальная команда разработчиков", "percent": 11.1},
+            {"label": "Резерв TFH", "percent": 0.3}
+          ],
+          "tgeFloat": "~1% (~100M из 10B WLD при запуске в июле 2023 года)",
+          "vestingFacts": [
+            "Команда и инвесторы (24.7%): блокировка на 12 месяцев, затем линейные разблокировки до июля 2028 года",
+            "75% для сообщества разблокируется в течение 15 лет; при запуске доступно 0.5B WLD",
+            "Обращение на TGE — ~1%: при запуске обращалось лишь около 100M из лимита 10B"
+          ],
+          "sources": [
+            {"title": "Whitepaper World — Токеномика (официальный источник)", "url": "https://whitepaper.world.org/tokenomics"},
+            {"title": "Обращающееся предложение Worldcoin (WLD): объяснение (официальный блог World)", "url": "https://world.org/blog/foundational-topics/the-circulating-supply-of-worldcoin-wld-an-explainer"},
+            {"title": "Токеномика Worldcoin (WLD) — Tokenomist", "url": "https://tokenomist.ai/worldcoin-wld"}
+          ],
+          "templateMapping": {
+            "team": 11,
+            "investors": 14,
+            "community": 75,
+            "ecosystem": 0,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 48},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 48},
+            "community": {"tgePercent": 1.3, "cliffMonths": 0, "vestingMonths": 120}
+          }
+        },
+        {
+          "name": "io.net",
+          "symbol": "IO",
+          "launchYear": 2024,
+          "buckets": [
+            {"label": "Экосистема и сообщество (включая 37.5% эмиссии поставщикам и стейкерам за 20 лет)", "percent": 50},
+            {"label": "Исследования и разработка", "percent": 16},
+            {"label": "Seed-инвесторы", "percent": 12.5},
+            {"label": "Основные участники", "percent": 11.3},
+            {"label": "Инвесторы раунда Series A", "percent": 10.2}
+          ],
+          "tgeFloat": "~12% от максимального предложения 800M (около 95M IO на TGE в июне 2024 года, рассчитано по разблокировкам отдельных категорий на TGE в DropsTab)",
+          "vestingFacts": [
+            "Seed-инвесторы и участники: 0% на TGE, клифф 12 месяцев, затем линейный вестинг примерно 24 и 36 месяцев соответственно",
+            "300M из максимального предложения 800M распределяется поставщикам GPU и стейкерам в течение 20 лет",
+            "Обращение на TGE — ~12% (95M IO); у категории R&D на TGE разблокировано 30%"
+          ],
+          "sources": [
+            {"title": "Распределение монеты IO (официальная документация io.net)", "url": "https://io.net/docs/guides/coin/io-coin-allocation"},
+            {"title": "Разблокировки и вестинг io.net (IO) — DropsTab", "url": "https://dropstab.com/coins/io-net/vesting"},
+            {"title": "io.net (IO) — ICO Drops", "url": "https://icodrops.com/io-net/"}
+          ],
+          "templateMapping": {
+            "team": 11,
+            "investors": 23,
+            "community": 50,
+            "ecosystem": 16,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 24},
+            "community": {"tgePercent": 15, "cliffMonths": 0, "vestingMonths": 120},
+            "ecosystem": {"tgePercent": 30, "cliffMonths": 0, "vestingMonths": 36}
+          }
+        },
+        {
+          "name": "Grass",
+          "symbol": "GRASS",
+          "launchYear": 2024,
+          "buckets": [
+            {"label": "Ранние инвесторы", "percent": 25.2},
+            {"label": "Фонд и рост экосистемы", "percent": 22.8},
+            {"label": "Участники (команда и советники)", "percent": 22},
+            {"label": "Будущие стимулы (сообщество)", "percent": 17},
+            {"label": "Первый аирдроп", "percent": 10},
+            {"label": "Награды маршрутизаторам", "percent": 3}
+          ],
+          "tgeFloat": "~24% на TGE в октябре 2024 года (первый аирдроп 10% полностью разблокирован плюс первоначальные частичные разблокировки фонда ~31% и будущих стимулов ~43%, согласно DropsTab)",
+          "vestingFacts": [
+            "Инвесторы (25.2%): клифф 1 год, затем линейная разблокировка 1 год; заблокированные токены нельзя стейкать",
+            "Участники (22%): клифф 1 год плюс линейный вестинг 3 года",
+            "Первый аирдроп (10%) был полностью ликвиден на TGE; общее обращение — ~24%"
+          ],
+          "sources": [
+            {"title": "Токеномика GRASS (официальная документация Grass Foundation)", "url": "https://grass-foundation.gitbook.io/grass-docs/introduction/grass/grass-tokenomics"},
+            {"title": "Разблокировки и вестинг Grass (GRASS) — DropsTab", "url": "https://dropstab.com/coins/grass/vesting"},
+            {"title": "Токеномика Grass (GRASS) — Tokenomist", "url": "https://tokenomist.ai/grass"}
+          ],
+          "templateMapping": {
+            "team": 22,
+            "investors": 25,
+            "community": 27,
+            "ecosystem": 3,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 23,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 36},
+            "investors": {"tgePercent": 0, "cliffMonths": 12, "vestingMonths": 12},
+            "community": {"tgePercent": 64, "cliffMonths": 0, "vestingMonths": 36},
+            "ecosystem": {"tgePercent": 20, "cliffMonths": 0, "vestingMonths": 24},
+            "foundation": {"tgePercent": 31, "cliffMonths": 0, "vestingMonths": 48}
+          }
+        },
+        {
+          "name": "Render Network",
+          "symbol": "RENDER",
+          "launchYear": 2017,
+          "buckets": [
+            {"label": "Эскроу (возврат потоков спроса и предложения сети)", "percent": 65},
+            {"label": "Продажи токенов (публичное ICO + частная продажа)", "percent": 25},
+            {"label": "Резерв RNDR", "percent": 10}
+          ],
+          "tgeFloat": "Официально не задокументировано как обращение на TGE; в публичном ICO в октябре 2017 года продано лишь около 4.65M RNDR (~0.9% предложения), ещё около 16.1M — в частной продаже 2018 года",
+          "vestingFacts": [
+            "Вестинга нет: токены публичной продажи 2017 года и частной продажи 2018 года были полностью ликвидны",
+            "Из 133M, выделенных на продажу, продано лишь около 20.7M (привлечено около $5.2M)",
+            "65% хранилось на эскроу-счёте для обратного потока в сеть; сегодня в обращении ~96%"
+          ],
+          "sources": [
+            {"title": "Эмиссия RENDER и показатели RNDR (устаревшая версия) — официальная база знаний Render Network", "url": "https://know.rendernetwork.com/basics/token-metrics-summary"},
+            {"title": "Токеномика и информация об ICO Render Token (RENDER) — CoinCarp", "url": "https://www.coincarp.com/currencies/rndrtoken/project-info/"},
+            {"title": "Токеномика Render (RENDER) — Tokenomist", "url": "https://tokenomist.ai/render-token"}
+          ],
+          "templateMapping": {
+            "team": 0,
+            "investors": 0,
+            "community": 0,
+            "ecosystem": 65,
+            "treasury": 10,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 25
+          },
+          "vestingMapping": {
+            "ecosystem": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 120},
+            "treasury": {"tgePercent": 0, "cliffMonths": 6, "vestingMonths": 60},
+            "publicSale": {"tgePercent": 16, "cliffMonths": 0, "vestingMonths": 120}
+          }
+        },
+        {
+          "name": "Virtuals Protocol",
+          "symbol": "VIRTUAL",
+          "launchYear": 2024,
+          "buckets": [
+            {"label": "Публичное обращение", "percent": 60},
+            {"label": "Казначейство DAO", "percent": 35},
+            {"label": "Пулы ликвидности", "percent": 5}
+          ],
+          "tgeFloat": "~65% (публичное обращение и ликвидность полностью ликвидны; график казначейства не опубликован)",
+          "vestingFacts": [
+            "Фиксированное предложение — 1B без запланированных будущих разблокировок: все публичные токены уже выпущены.",
+            "~35% находится в казначействе DAO с неопределёнными правилами распределения.",
+            "Клиффов вестинга команды и инвесторов впереди нет: открытый вопрос связан с управлением казначейством, а не с разблокировками."
+          ],
+          "sources": [
+            {"title": "8Blocks — Аудит токеномики Virtuals Protocol", "url": "https://8blocks.io/audits/virtuals-protocol-tokenomics-audit"}
+          ],
+          "templateMapping": {
+            "team": 0,
+            "investors": 0,
+            "community": 60,
+            "ecosystem": 0,
+            "treasury": 35,
+            "liquidity": 5,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "community": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0},
+            "treasury": {"tgePercent": 0, "cliffMonths": 0, "vestingMonths": 120},
+            "liquidity": {"tgePercent": 100, "cliffMonths": 0, "vestingMonths": 0}
+          },
+          "audited": true,
+          "auditUrl": "https://8blocks.io/audits/virtuals-protocol-tokenomics-audit"
+        }
+      ]
+    }
+  ],
+  "verifiedAt": "Июль 2026"
+}

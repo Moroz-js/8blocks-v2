@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function HomePage() {
   return (
-    <main>
+    <>
       <HeroHome />
       <ServicesSection />
       <AboutSection />
@@ -44,6 +44,6 @@ export default function HomePage() {
       <BenefitsSection />
       {siteConfig.blogEnabled && <BlogPreview />}
       <CtaSection />
-    </main>
+    </>
   )
 }

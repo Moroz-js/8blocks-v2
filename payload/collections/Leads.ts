@@ -3,7 +3,6 @@ import { ValidationError } from 'payload'
 import { BANNED_EMAILS } from '@/shared/config/banned-emails'
 import {
   FORM_LIMITS,
-  PUBLIC_FORM_ERRORS,
   sanitizeLeadMessage,
   sanitizeLeadName,
 } from '@/shared/lib/form-sanitize'
@@ -28,7 +27,7 @@ export const Leads: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      async ({ data, operation, originalDoc, req }) => {
+      async ({ data, req }) => {
         if (data.name !== undefined && data.name !== null) {
           const n = sanitizeLeadName(String(data.name))
           if (!n) {
@@ -88,25 +87,6 @@ export const Leads: CollectionConfig = {
               {
                 path: 'email',
                 message: 'This email address cannot be used.',
-              },
-            ],
-            req,
-          })
-        }
-
-        const existing = await req.payload.find({
-          collection: 'leads',
-          where: { email: { equals: normalized } },
-          limit: 2,
-        })
-        const conflict = existing.docs.filter((doc) => doc.id !== originalDoc?.id)
-        if (conflict.length > 0) {
-          throw new ValidationError({
-            collection: 'leads',
-            errors: [
-              {
-                path: 'email',
-                message: PUBLIC_FORM_ERRORS.leadDuplicateEmail,
               },
             ],
             req,

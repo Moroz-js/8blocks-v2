@@ -74,6 +74,10 @@ const TOOLTIP_STYLE = {
   fontSize: 13,
 } as const
 
+const TOOLTIP_TEXT_STYLE = {
+  color: '#fff',
+} as const
+
 function seriesKey(i: number) {
   return `s${i}`
 }
@@ -262,7 +266,11 @@ function renderChart(
     case 'donut':
       return (
         <PieChart width={width} height={height} margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
-          <Tooltip contentStyle={TOOLTIP_STYLE} />
+          <Tooltip
+            contentStyle={TOOLTIP_STYLE}
+            itemStyle={TOOLTIP_TEXT_STYLE}
+            labelStyle={TOOLTIP_TEXT_STYLE}
+          />
           <Pie
             data={data}
             dataKey="value"
@@ -297,7 +305,12 @@ function renderChart(
           <CartesianGrid strokeDasharray="3 3" stroke="currentColor" opacity={0.1} horizontal={false} />
           <XAxis type="number" {...AXIS_PROPS} />
           <YAxis type="category" dataKey="label" width={120} {...AXIS_PROPS} />
-          <Tooltip cursor={{ opacity: 0.06 }} contentStyle={TOOLTIP_STYLE} />
+          <Tooltip
+            cursor={{ opacity: 0.06 }}
+            contentStyle={TOOLTIP_STYLE}
+            itemStyle={TOOLTIP_TEXT_STYLE}
+            labelStyle={TOOLTIP_TEXT_STYLE}
+          />
           <Bar dataKey="value" name={name} radius={[0, 4, 4, 0]} isAnimationActive={false}>
             {data.map((entry, i) => (
               <Cell key={`hb-${i}`} fill={(entry.color as string) || mainColor} />
@@ -317,7 +330,12 @@ function renderChart(
           <CartesianGrid strokeDasharray="3 3" stroke="currentColor" opacity={0.1} vertical={false} />
           <XAxis dataKey="label" {...AXIS_PROPS} />
           <YAxis width={48} {...AXIS_PROPS} />
-          <Tooltip cursor={{ opacity: 0.06 }} contentStyle={TOOLTIP_STYLE} />
+          <Tooltip
+            cursor={{ opacity: 0.06 }}
+            contentStyle={TOOLTIP_STYLE}
+            itemStyle={TOOLTIP_TEXT_STYLE}
+            labelStyle={TOOLTIP_TEXT_STYLE}
+          />
           <Bar dataKey="value" name={name} radius={[4, 4, 0, 0]} isAnimationActive={false}>
             {data.map((entry, i) => (
               <Cell key={`b-${i}`} fill={(entry.color as string) || mainColor} />
@@ -378,7 +396,12 @@ function renderMultiSeriesChart(
       <XAxis dataKey="label" padding={{ left: 8, right: 8 }} {...AXIS_PROPS} />
       {useLeft && <YAxis yAxisId="left" orientation="left" width={48} {...AXIS_PROPS} />}
       {useRight && <YAxis yAxisId="right" orientation="right" width={52} {...AXIS_PROPS} />}
-      <Tooltip cursor={{ opacity: 0.06 }} contentStyle={TOOLTIP_STYLE} />
+      <Tooltip
+        cursor={{ opacity: 0.06 }}
+        contentStyle={TOOLTIP_STYLE}
+        itemStyle={TOOLTIP_TEXT_STYLE}
+        labelStyle={TOOLTIP_TEXT_STYLE}
+      />
       {/* Legend rendered outside SVG when multi-series — avoids axis overlap. */}
       {!externalLegend && multi && (
         <Legend

@@ -1,7 +1,7 @@
 'use client'
 
 import { MantineProvider } from '@mantine/core'
-import { useTheme } from 'next-themes'
+import { useTheme } from './ThemeProvider'
 import { useEffect, useState } from 'react'
 
 export function MantineThemeBridge({ children }: { children: React.ReactNode }) {

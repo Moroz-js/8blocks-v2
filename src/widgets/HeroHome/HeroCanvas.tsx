@@ -40,7 +40,7 @@ function project(
   rotX: number, rotY: number,
   scale: number, ox: number, oy: number,
 ): Pt {
-  let x = gx - CX, y = elev, z = gz - CZ
+  const x = gx - CX, y = elev, z = gz - CZ
 
   const cosY = Math.cos(rotY), sinY = Math.sin(rotY)
   const rx = x * cosY - z * sinY
@@ -145,8 +145,10 @@ export function HeroCanvas({ className }: { className?: string }) {
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     if (!ctx) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     let W = 0, H = 0
+    let isVisible = false
 
     const resize = () => {
       const parent = canvas.parentElement
@@ -164,20 +166,23 @@ export function HeroCanvas({ className }: { className?: string }) {
     const ro = new ResizeObserver(resize)
     ro.observe(canvas.parentElement!)
 
-    const onMouse = (e: MouseEvent) => {
-      const rect = canvas.parentElement?.getBoundingClientRect()
+    const onPointerMove = (e: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect()
       if (!rect) return
       const nx = ((e.clientX - rect.left) / rect.width  - 0.5) * 2
-      const ny = ((e.clientY - rect.top)  / rect.height - 0.5) * 2
+      const ny = ((e.clientY - rect.top) / rect.height - 0.5) * 2
       mouseTarget.current.x = -ny * MAX_ROT
       mouseTarget.current.y =  nx * MAX_ROT
     }
 
-    window.addEventListener('mousemove', onMouse)
-
     const startTime = performance.now()
 
     const draw = () => {
+      if (!isVisible || document.hidden) {
+        rafRef.current = 0
+        return
+      }
+
       const t       = (performance.now() - startTime) / 1000
       const scrollY = window.scrollY
       const floatY  = Math.sin(t * 0.6) * 8
@@ -216,12 +221,37 @@ export function HeroCanvas({ className }: { className?: string }) {
       rafRef.current = requestAnimationFrame(draw)
     }
 
-    draw()
+    const start = () => {
+      if (!rafRef.current && isVisible && !document.hidden) {
+        rafRef.current = requestAnimationFrame(draw)
+      }
+    }
+    const stop = () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+        rafRef.current = 0
+      }
+    }
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting
+      if (isVisible) start()
+      else stop()
+    })
+    const handleVisibilityChange = () => {
+      if (document.hidden) stop()
+      else start()
+    }
+
+    visibilityObserver.observe(canvas)
+    canvas.addEventListener('pointermove', onPointerMove)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
 
     return () => {
-      cancelAnimationFrame(rafRef.current)
+      stop()
       ro.disconnect()
-      window.removeEventListener('mousemove', onMouse)
+      visibilityObserver.disconnect()
+      canvas.removeEventListener('pointermove', onPointerMove)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
     }
   }, [])
 

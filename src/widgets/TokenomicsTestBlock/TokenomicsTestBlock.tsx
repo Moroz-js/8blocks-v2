@@ -59,6 +59,7 @@ export function TokenomicsTestBlock() {
                       height={844}
                       className={styles.phoneScreen}
                       quality={85}
+                      sizes="(max-width: 768px) 260px, 340px"
                     />
                   </div>
                 </div>

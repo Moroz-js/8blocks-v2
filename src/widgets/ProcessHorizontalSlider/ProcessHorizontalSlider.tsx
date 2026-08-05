@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect, useMemo } from 'react'
 import { motion, useScroll, useTransform, useSpring, type MotionValue } from 'framer-motion'
-import { useTheme } from 'next-themes'
+import { useTheme } from '@/shared/lib/ThemeProvider'
 import { readCssVar } from '@/shared/lib/readCssVar'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './ProcessHorizontalSlider.module.scss'

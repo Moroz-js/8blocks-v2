@@ -22,13 +22,24 @@ export function DigitalAssetsFinalCta() {
         <h2 className={styles.finalHeadline}>{finalCta.headline}</h2>
         <p className={styles.finalDescription}>{finalCta.description}</p>
         <div className={styles.finalActions}>
-          <Link href={finalCta.ctaHref} className={styles.ctaPrimary}>
+          <a href={finalCta.ctaHref} target="_blank" rel="noopener noreferrer" className={styles.ctaPrimary}>
             {finalCta.ctaLabel}
             <span className={styles.ctaArrow} aria-hidden="true">→</span>
-          </Link>
-          <Link href={finalCta.secondaryHref} className={styles.finalSecondary}>
-            {finalCta.secondaryLabel}
-          </Link>
+          </a>
+          {finalCta.secondaryHref.startsWith('http') ? (
+            <a
+              href={finalCta.secondaryHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.finalSecondary}
+            >
+              {finalCta.secondaryLabel}
+            </a>
+          ) : (
+            <Link href={finalCta.secondaryHref} className={styles.finalSecondary}>
+              {finalCta.secondaryLabel}
+            </Link>
+          )}
         </div>
       </motion.div>
     </section>

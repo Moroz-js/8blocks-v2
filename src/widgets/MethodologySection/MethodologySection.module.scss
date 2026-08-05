@@ -1,205 +1,199 @@
 @use '@/shared/styles/variables' as *;
 
 .section {
-  position: relative;
   padding-block: $space-10;
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-7;
-  }
 }
 
 .inner {
   max-width: $container-max;
   margin-inline: auto;
   padding-inline: $container-padding;
-  display: flex;
-  flex-direction: column;
-  gap: $space-7;
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-    gap: $space-6;
-  }
 }
 
-// ── Header ────────────────────────────────────────────────────────
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  max-width: 42rem;
+}
+
 .label {
   display: inline-flex;
-  align-items: center;
   gap: $space-2;
   align-self: flex-start;
   font-family: $font-mono;
-  font-weight: 400;
   font-size: $text-xs;
-  color: $text-tertiary;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-
-.labelBracket {
-  opacity: 0.5;
+  color: $text-tertiary;
 }
 
 .headline {
-  font-family: $font-base;
-  font-weight: 600;
-  font-size: clamp(32px, 5vw, 56px);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: $text-primary;
   margin: 0;
-  text-align: left;
-  max-width: 28ch;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: $text-primary;
 }
 
-.accent {
-  color: $accent-pink-deep;
-}
-
-// ── Gears linkage ─────────────────────────────────────────────────
 .gears {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding-block: $space-2 0;
+  margin-top: $space-7;
 }
 
 .gearsStage {
   position: relative;
+  width: 100%;
+  height: clamp(300px, 45vw, 520px);
+  overflow: visible;
+  border: none;
+}
+
+.gear {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: clamp(280px, 48vw, 560px);
+  transition: transform 500ms ease, opacity 350ms ease;
 }
 
-.gearHuge,
-.gearTiny {
+.gearProduct,
+.gearToken {
+  top: 50%;
+  width: 39%;
+}
+
+.gearProduct {
+  left: 4%;
+  transform: translateY(-50%);
+}
+
+.gearToken {
+  right: 4%;
+  transform: translateY(-50%);
+}
+
+.gearTpl {
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  // Сохраняем исходное соотношение размеров 19.8 / 42.5.
+  width: 18.17%;
+  margin-top: -0.41%;
+  transform: translate(-50%, -50%);
+}
+
+.gearImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.gearProduct .gearImage,
+.gearToken .gearImage {
+  filter: grayscale(1) saturate(0.1) brightness(0.9) contrast(0.8);
+  opacity: 0.86;
+}
+
+.gearProduct .gearImage {
+  // 27 зубьев: полшага компенсирует нечётное число зубьев.
+  animation: gear-spin-product 18s linear infinite;
+}
+
+.gearToken .gearImage {
+  // Два полных шага зуба относительно исходной фазы.
+  animation: gear-spin-token 18s linear infinite;
+}
+
+.gearTpl .gearImage {
+  animation: gear-spin-ccw 8s linear infinite;
+}
+
+.gearLabel {
   position: absolute;
   top: 50%;
+  left: 50%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  will-change: transform;
+  gap: $space-1;
+  width: min(75%, 16rem);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+
+  strong {
+    font-family: $font-mono;
+    font-size: clamp(13px, 1.7vw, 20px);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: $text-primary;
+  }
+
+  span {
+    font-size: clamp(10px, 1.2vw, 14px);
+    line-height: 1.35;
+    color: $text-secondary;
+  }
 }
 
-.gearHuge {
-  /* full-bleed art: sides, almost to center */
-  width: 42.5%;
-  aspect-ratio: 1;
-  height: auto;
+.gearProduct .gearLabel,
+.gearToken .gearLabel {
+  top: calc(100% + #{$space-2});
+  bottom: auto;
+  transform: translateX(-50%);
 }
 
-.gearLeft {
-  left: 0;
-  transform: translateY(-50%);
-  z-index: 1;
+.gearTpl .gearLabel {
+  top: calc(100% + #{$space-2});
+  bottom: auto;
+  width: max-content;
+  transform: translateX(-50%);
+
+  strong {
+    color: $accent-pink-deep;
+  }
 }
 
-.gearRight {
-  right: 0;
-  transform: translateY(-50%);
-  margin-top: 0.32%;
-  z-index: 1;
+.gearsStage[data-linkage='none'] {
+  .gearProduct {
+    transform: translate(-5%, -50%);
+  }
+
+  .gearToken {
+    transform: translate(5%, -50%);
+  }
+
+  .gearTpl {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .gearImage {
+    animation-play-state: paused;
+  }
 }
 
-.gearLeft > div,
-.gearRight > div {
-  width: 100%;
-  height: 100%;
-}
-
-// 27 teeth is odd: mesh points on big gears sit 180° (= 13.5 pitches) apart,
-// so left needs a half-pitch offset baked into its rotation keyframes.
-.spinLeftOffset {
-  transform: rotate(5deg); // ~half pitch (360/27/2), trimmed visually
-}
-
-.spinLeftCw {
-  animation: gear-spin-cw-left-inner 18s linear infinite;
-}
-
-// Right gear rests in the exact pose its animation starts from (26.667° =
-// exactly 2 teeth, visually identical to 0°), so engagement starts seamlessly.
-.spinRightOffset {
-  transform: rotate(26.667deg);
-}
-
-.spinRightCw {
-  animation: gear-spin-cw-right-inner 18s linear infinite;
-}
-
-@keyframes gear-spin-cw-left-inner {
+@keyframes gear-spin-product {
   from {
     transform: rotate(5deg);
   }
+
   to {
     transform: rotate(365deg);
   }
 }
 
-@keyframes gear-spin-cw-right-inner {
+@keyframes gear-spin-token {
   from {
     transform: rotate(26.667deg);
   }
+
   to {
     transform: rotate(386.667deg);
   }
-}
-
-.gearTiny {
-  left: 50%;
-  // 19.8% keeps the center tooth pitch matching the big gears (27:12 teeth)
-  width: 19.8%;
-  aspect-ratio: 1 / 1;
-  height: auto;
-  margin-top: -0.41%; // was -5px at 1232px stage width, must scale with the art
-  z-index: 2;
-  // emerges from the background: sits deep, small, blurred, transparent
-  opacity: 0;
-  filter: blur(10px);
-  transform: translate(-50%, -50%) scale(0.55);
-  transition:
-    opacity 0.9s ease,
-    filter 0.9s ease,
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.gearTinyIn {
-  opacity: 1;
-  filter: blur(0);
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.gearTiny > div {
-  width: 100%;
-  height: 100%;
-}
-
-// Meshing sync: 27:12 teeth (measured from the art) → 18s * 12/27 = 8s exactly.
-// Any other period accumulates drift; residual wobble comes from uneven tooth
-// spacing in the 3D-rendered art (12.5°–14.5° vs ideal 13.33°), not from timing.
-.spinInnerCcw {
-  will-change: transform;
-  animation: gear-spin-ccw 8s linear infinite;
-}
-
-// colored glow matching the center gear's neon pink
-.gearTiny .gearImg {
-  filter:
-    drop-shadow(0 0 14px rgba(255, 40, 120, 0.65))
-    drop-shadow(0 0 34px rgba(233, 54, 79, 0.4));
-}
-
-.gearImg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  mix-blend-mode: screen;
-  user-select: none;
-  pointer-events: none;
 }
 
 @keyframes gear-spin-ccw {
@@ -208,188 +202,259 @@
   }
 }
 
-.gearsLabel {
-  position: absolute;
-  left: 50%;
-  top: 77%;
-  z-index: 3;
+.linkageControl {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2px;
-  transform: translateX(-50%);
-  font-family: $font-base;
-  font-weight: 800;
-  font-size: clamp(16px, 2.2vw, 26px);
-  line-height: 1.25;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #ff2050; // center gear neon, shifted redder
-  text-align: center;
-  pointer-events: none;
-  white-space: nowrap;
+  gap: $space-3;
+  width: fit-content;
+  margin: $space-6 auto 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .spinLeftCw,
-  .spinRightCw,
-  .spinInnerCcw {
-    animation: none;
-  }
+.linkageOption {
+  color: $text-tertiary;
+  font-size: $text-sm;
+  transition: color $transition-fast;
 
-  .gearTiny {
-    opacity: 1;
-    filter: none;
-    transform: translate(-50%, -50%) scale(1);
-    transition: none;
+  &[data-active='true'] {
+    color: $text-primary;
+    font-weight: 600;
   }
 }
 
-// ── Body ──────────────────────────────────────────────────────────
-.body {
-  font-family: $font-base;
-  font-size: $text-md;
-  line-height: 1.75;
-  color: $text-secondary;
-  margin: 0 auto;
-  max-width: 58ch;
-  text-align: center;
-}
-
-.bodyLead {
-  color: $text-primary;
-  font-weight: 600;
-}
-
-// ── Detail: signals left, prose right ─────────────────────────────
-.detail {
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: $space-7 $space-8;
-  align-items: stretch;
-
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr;
-    gap: $space-6;
-  }
-}
-
-// ── Signals list (icon stack) ─────────────────────────────────────
-.signals {
-  list-style: none;
-  margin: 0;
+.linkageToggle {
+  position: relative;
+  width: 48px;
+  height: 28px;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  min-height: 100%;
-  gap: 0;
+  border: 1px solid $border-secondary;
+  border-radius: 999px;
+  background: $button-primary-bg;
+  cursor: pointer;
+  transition: background $transition-fast, border-color $transition-fast;
+
+  &[aria-checked='true'] {
+    background: $bg-tertiary;
+    border-color: $text-tertiary;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $focus-accent;
+    outline-offset: 2px;
+  }
+}
+
+.linkageToggleThumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: $button-primary-fg;
+  transition: transform 250ms ease;
+
+  .linkageToggle[aria-checked='true'] & {
+    transform: translateX(20px);
+  }
+}
+
+.linkageDescription {
+  max-width: 42rem;
+  margin: $space-4 auto 0;
+  color: $text-secondary;
+  font-size: $text-md;
+  line-height: $leading-relaxed;
+  text-align: center;
+}
+
+.signals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $space-3;
+  margin: $space-8 0 0;
+  padding: 0;
+  list-style: none;
 }
 
 .signal {
   display: grid;
-  grid-template-columns: 2.5rem minmax(0, 1fr);
-  gap: $space-4;
-  align-items: center;
-  padding: $space-3 $space-4 $space-3 $space-3;
-}
-
-.signalFeatured {
-  position: relative;
-  background: $card-panel-bg;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: $space-2 $space-3;
+  min-height: 152px;
+  padding: $space-5;
   border: 1px solid $border-secondary;
+  background: $card-panel-bg;
+  transition: border-color $transition-fast, background $transition-fast, transform $transition-fast;
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 2px;
-    background: $accent-pink-deep;
+  &:hover,
+  &:focus-visible {
+    border-color: $accent-pink-deep;
+    background: $card-panel-bg-hover;
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px $focus-accent-bg;
   }
 }
 
 .signalIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  flex-shrink: 0;
-}
-
-.toneA {
-  color: $pal-magenta;
-}
-
-.toneB {
-  color: $pal-purple;
-}
-
-.toneC {
-  color: $pal-rose;
-}
-
-.signalCopy {
-  display: flex;
-  flex-direction: column;
-  gap: $space-1;
-  min-width: 0;
+  color: $text-tertiary;
 }
 
 .signalTitle {
-  font-family: $font-base;
-  font-weight: 600;
-  font-size: $text-lg;
-  letter-spacing: -0.01em;
-  color: $text-primary;
   margin: 0;
+  color: $text-primary;
+  font-size: $text-md;
+  font-weight: 600;
   line-height: 1.3;
 }
 
 .signalLine {
-  font-family: $font-base;
-  font-size: $text-md;
-  line-height: 1.45;
-  color: $text-secondary;
+  grid-column: 1 / -1;
   margin: 0;
+  color: $text-secondary;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
 }
 
-// ── Closing prose ─────────────────────────────────────────────────
-.closing {
+.summary {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: $space-5;
-  height: 100%;
+  align-items: center;
+  max-width: 50rem;
+  margin: $space-8 auto 0;
+  text-align: center;
 }
 
-.closingLead {
-  font-family: $font-base;
-  font-weight: 600;
-  font-size: $text-lg;
-  letter-spacing: -0.01em;
-  line-height: 1.45;
+.ratingDescription {
+  margin: 0;
   color: $text-primary;
-  margin: 0;
-  max-width: 36ch;
-}
-
-.closingParagraph {
-  font-family: $font-base;
   font-size: $text-md;
-  line-height: 1.75;
-  color: $text-secondary;
-  margin: 0;
-  max-width: 48ch;
+  line-height: $leading-relaxed;
 }
 
-.closingLink {
+.scoredNote {
+  margin: $space-4 0 0;
   color: $accent-pink-deep;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  font-size: $text-md;
+  font-weight: 600;
+}
+
+.transparency {
+  margin: $space-6 0 0;
+  color: $text-tertiary;
+  font-size: $text-sm;
+  line-height: $leading-relaxed;
+}
+
+.consultationLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-3;
+  margin-top: $space-5;
+  padding: $space-3 $space-5;
+  background: $button-primary-bg;
+  color: $button-primary-fg;
+  font-size: $text-sm;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background $transition-fast, transform $transition-fast;
 
   &:hover {
-    color: $text-primary;
+    background: $button-primary-hover;
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $focus-accent;
+    outline-offset: 3px;
+  }
+}
+
+@media (max-width: #{$bp-tablet}) {
+  .signals {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gearsStage {
+    height: clamp(280px, 62vw, 420px);
+  }
+}
+
+@media (max-width: #{$bp-mobile}) {
+  .section {
+    padding-block: $space-8;
+  }
+
+  .inner {
+    padding-inline: $container-padding-mobile;
+  }
+
+  .gears {
+    margin-top: $space-6;
+  }
+
+  .gearsStage {
+    height: 285px;
+  }
+
+  .gearProduct,
+  .gearToken {
+    width: 39%;
+  }
+
+  .gearProduct {
+    left: 4%;
+  }
+
+  .gearToken {
+    right: 4%;
+  }
+
+  .gearTpl {
+    width: 18.17%;
+  }
+
+  .gearLabel {
+    width: 76%;
+
+    strong {
+      font-size: 11px;
+    }
+
+    span {
+      font-size: 9px;
+    }
+  }
+
+  .gearTpl .gearLabel {
+    top: 124%;
+
+    span {
+      font-size: 10px;
+    }
+  }
+
+  .signals {
+    grid-template-columns: 1fr;
+    margin-top: $space-7;
+  }
+
+  .signal {
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gear,
+  .gearImage,
+  .signal,
+  .linkageToggle,
+  .linkageToggleThumb,
+  .consultationLink {
+    transition: none !important;
+    animation: none !important;
   }
 }

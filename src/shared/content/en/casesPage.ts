@@ -240,11 +240,26 @@ export const casesMeta = {
 
 export const casesUiContent = {
   heroLabel: 'Cases',
-  heroHeadline: 'Portfolio',
+  heroHeadline: 'Projects we are proud of',
   heroAriaLabel: 'Portfolio',
   taskLabel: 'Task',
   actionsLabel: 'What we did',
   resultLabel: 'Result',
   filterAll: 'All',
+  serviceLabels: {
+    design: 'Design',
+    audit: 'Audit',
+    advisory: 'Advisory',
+  },
+  viewFull: 'See full case',
+  overviewLabel: 'Overview',
+  industryLabel: 'Industry',
+  goalsLabel: 'Client goals',
+  challengesLabel: 'Challenges',
+  solutionLabel: 'Solution',
+  bookProject: 'Book a similar project',
+  relatedArticle: 'Read the related article',
+  backToCases: 'Back to all cases',
+  snapshotLabel: 'Project snapshot',
   emptyLabel: 'No cases yet',
 } as const

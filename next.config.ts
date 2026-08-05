@@ -17,6 +17,8 @@ function buildContentSecurityPolicy(): string {
     "https://yastatic.net",
     "https://widget.replain.cc",
     "https://assets.calendly.com",
+    "https://us.i.posthog.com",
+    "https://eu.i.posthog.com",
   ].join(" ");
 
   return [
@@ -27,7 +29,7 @@ function buildContentSecurityPolicy(): string {
     "img-src 'self' data: https: blob:",
     "font-src 'self' https://fonts.gstatic.com data:",
     "media-src 'self' https://widget.replain.cc",
-    "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://mc.yandex.ru https://metrika.yandex.ru wss://mc.yandex.ru https://widget.replain.cc wss://widget.replain.cc wss://ws.replain.cc https://app.replain.cc wss://app.replain.cc https://calendly.com https://*.calendly.com",
+    "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://mc.yandex.ru https://metrika.yandex.ru wss://mc.yandex.ru https://widget.replain.cc wss://widget.replain.cc wss://ws.replain.cc https://app.replain.cc wss://app.replain.cc https://calendly.com https://*.calendly.com https://us.i.posthog.com https://eu.i.posthog.com https://*.posthog.com",
     "frame-src https://www.googletagmanager.com https://www.google.com https://maps.google.com https://calendly.com https://*.calendly.com https://widget.replain.cc https://mc.yandex.ru https://metrika.yandex.ru",
     "worker-src 'self' blob:",
   ].join("; ");

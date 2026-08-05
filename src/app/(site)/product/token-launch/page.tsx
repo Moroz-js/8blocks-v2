@@ -8,6 +8,7 @@ import {
   TokenLaunchCosts,
   TokenLaunchPartners,
   TokenLaunchCalculator,
+  TokenLaunchModuleSummary,
   TokenLaunchProcess,
   TokenLaunchFit,
   TokenLaunchFaq,
@@ -158,6 +159,7 @@ export default async function TokenLaunchPage() {
       <TokenLaunchCosts />
       <TokenLaunchPartners />
       <TokenLaunchCalculator modules={modules} />
+      <TokenLaunchModuleSummary modules={modules} />
       <TokenLaunchProcess />
       <TokenLaunchFit />
       <TokenLaunchFaq />

@@ -1,4 +1,5 @@
 import { slugifyHeadingId } from '@/shared/lib/slugifyHeadingId'
+import { normalizeHeadingText } from '@/shared/lib/normalizeHeadingText'
 
 export interface TocItem {
   id: string
@@ -31,8 +32,8 @@ export function buildToc(content: unknown): TocItem[] {
     if (node.type !== 'heading') continue
     if (node.tag !== 'h2') continue
 
-    const text = extractText(node)
-    if (!text.trim()) continue
+    const text = normalizeHeadingText(extractText(node))
+    if (!text) continue
 
     const base = slugifyHeadingId(text)
     const count = idCount.get(base) ?? 0

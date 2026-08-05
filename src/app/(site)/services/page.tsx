@@ -19,18 +19,20 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${servicesMeta.title} | А8А9 токеномика.рф`,
       description: servicesMeta.ogDescription,
       url: '/services',
+      images: [{ url: '/og-image.png', width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `${servicesMeta.title} | А8А9 токеномика.рф`,
       description: servicesMeta.ogDescription,
+      images: ['/og-image.png'],
     },
   })
 }
 
 export default function ServicesPage() {
   return (
-    <main>
+    <>
       <ServiceHero
         label={servicesPageContent.hero.label}
         headline={servicesPageContent.hero.headline}
@@ -49,6 +51,6 @@ export default function ServicesPage() {
       <TokenFilterBlock />
       <TokenomicsTestBlock />
       <FaqAccordion headline={servicesFaqContent.headline} items={servicesFaqContent.items} />
-    </main>
+    </>
   )
 }

@@ -7,11 +7,11 @@ import {
   DigitalAssetsJourney,
   DigitalAssetsContext,
   DigitalAssetsPackages,
-  DigitalAssetsRisks,
   DigitalAssetsAbout,
-  DigitalAssetsNext,
+  DigitalAssetsSelfServe,
   DigitalAssetsFaq,
   DigitalAssetsFinalCta,
+  DigitalAssetsStickyCta,
 } from '@/widgets/DigitalAssets'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
@@ -28,11 +28,13 @@ export async function generateMetadata(): Promise<Metadata> {
       title: digitalAssetsMeta.title,
       description: digitalAssetsMeta.description,
       url: '/product/digital-assets',
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: digitalAssetsMeta.title,
       description: digitalAssetsMeta.description,
+      images: [siteConfig.ogImage],
     },
   })
 }
@@ -47,11 +49,11 @@ export default function DigitalAssetsPage() {
       <DigitalAssetsJourney />
       <DigitalAssetsContext />
       <DigitalAssetsPackages />
-      <DigitalAssetsRisks />
       <DigitalAssetsAbout />
-      <DigitalAssetsNext />
+      <DigitalAssetsSelfServe />
       <DigitalAssetsFaq />
       <DigitalAssetsFinalCta />
+      <DigitalAssetsStickyCta />
     </>
   )
 }

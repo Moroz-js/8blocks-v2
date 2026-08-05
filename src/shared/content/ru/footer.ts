@@ -17,6 +17,9 @@ export const footerContent = {
     { label: 'Пресса', href: '/press' },
     { label: 'Публичные аудиты', href: '/audits' },
     { label: 'Контакты', href: '/contact' },
+    { label: 'О компании', href: '/about' },
+    { label: 'Условия использования', href: '/terms' },
+    { label: 'Бенчмарки вестинга токенов', href: '/learn/token-vesting-benchmarks' },
   ],
   serviceLinks: [
     { label: 'Стратегический консалтинг', href: '/services/strategic-consulting' },
@@ -32,6 +35,22 @@ export const footerContent = {
     {
       label: 'Калькулятор токеномики',
       href: '/product/calculator',
+    },
+    {
+      label: 'Стратегия цифровых активов',
+      href: '/product/digital-assets',
+    },
+    {
+      label: 'Готовность к токенизации',
+      href: '/product/tokenization-readiness',
+    },
+    {
+      label: 'Кейсы токенизации',
+      href: '/product/tokenization-cases',
+    },
+    {
+      label: 'Tokenomics AI',
+      href: '/product/tokenomics-ai',
     },
   ],
 } as const

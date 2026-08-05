@@ -1,0 +1,311 @@
+{
+  "stats": [
+    {
+      "value": 34.67,
+      "prefix": "$",
+      "suffix": "B",
+      "label": "in tokenized real-world assets today",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/"
+      }
+    },
+    {
+      "value": 15.86,
+      "prefix": "$",
+      "suffix": "B",
+      "label": "tokenized US treasuries",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/treasuries"
+      }
+    },
+    {
+      "value": 31,
+      "prefix": "+",
+      "suffix": "%",
+      "label": "more investors holding tokenized assets, 30 days",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/"
+      }
+    },
+    {
+      "value": 18.9,
+      "prefix": "$",
+      "suffix": "T",
+      "label": "projected market by 2033",
+      "source": {
+        "title": "BCG / Ripple",
+        "url": "https://www.ledgerinsights.com/bcg-ripple-predict-tokenization-to-reach-18-9-trillion-by-2033/"
+      }
+    }
+  ],
+  "classes": [
+    "All",
+    "Funds & Treasuries",
+    "Private Credit",
+    "Stocks",
+    "Commodities",
+    "Payments",
+    "Real Estate"
+  ],
+  "cases": [
+    {
+      "name": "BlackRock BUIDL",
+      "monogram": "BR",
+      "class": "Funds & Treasuries",
+      "metric": "$2.5B",
+      "metricLabel": "under management · 6 networks",
+      "line": "First tokenized fund by the world's largest asset manager. $1B in its first year; now accepted as collateral on Binance.",
+      "year": "2024",
+      "source": {
+        "title": "PRNewswire",
+        "url": "https://www.prnewswire.com/news-releases/blackrocks-buidl-tokenized-by-securitize-now-accepted-as-collateral-for-trading-on-binance-and-launches-on-bnb-chain-302613374.html"
+      },
+      "logo": "blackrock"
+    },
+    {
+      "name": "Franklin Templeton BENJI",
+      "monogram": "FT",
+      "class": "Funds & Treasuries",
+      "metric": "$2.5B",
+      "metricLabel": "under management · 8 networks",
+      "line": "First US-registered mutual fund on a public blockchain. 100%+ growth YTD 2026.",
+      "year": "2021",
+      "source": {
+        "title": "Crypto Briefing",
+        "url": "https://cryptobriefing.com/franklin-templeton-benji-tokenized-treasuries-growth/"
+      }
+    },
+    {
+      "name": "Circle USYC",
+      "monogram": "CI",
+      "class": "Funds & Treasuries",
+      "metric": "$2.96B",
+      "metricLabel": "largest tokenized treasury product",
+      "line": "Leads an $15.86B tokenized treasuries segment with 62,000+ holders.",
+      "year": "2023",
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/treasuries"
+      },
+      "logo": "circle"
+    },
+    {
+      "name": "Figure",
+      "monogram": "FG",
+      "class": "Private Credit",
+      "metric": "$16B+",
+      "metricLabel": "loans originated onchain",
+      "line": "Largest US non-bank HELOC lender runs on its own public blockchain. IPO'd on Nasdaq at a $5.3B valuation.",
+      "year": "2018",
+      "source": {
+        "title": "Decrypt",
+        "url": "https://decrypt.co/339024/blockchain-lender-figure-nasdaq-5-3-billion-valuation"
+      }
+    },
+    {
+      "name": "Apollo ACRED",
+      "monogram": "AP",
+      "class": "Private Credit",
+      "metric": "6 chains",
+      "metricLabel": "tokenized credit fund access",
+      "line": "Tokenized feeder into Apollo's Diversified Credit Fund - private credit made subscribable onchain.",
+      "year": "2025",
+      "source": {
+        "title": "PRNewswire",
+        "url": "https://www.prnewswire.com/news-releases/apollo-and-securitize-announce-partnership-and-launch-tokenized-access-to-credit-fund-on-aptos-avalanche-ethereum-ink-polygon-and-solana-networks-302364212.html"
+      }
+    },
+    {
+      "name": "Securitize",
+      "monogram": "SE",
+      "class": "Funds & Treasuries",
+      "metric": "$3B+",
+      "metricLabel": "tokenized on platform",
+      "line": "The tokenization partner behind BlackRock, Apollo, Hamilton Lane and KKR feeder funds.",
+      "year": "2019",
+      "source": {
+        "title": "PRNewswire",
+        "url": "https://www.prnewswire.com/news-releases/apollo-and-securitize-announce-partnership-and-launch-tokenized-access-to-credit-fund-on-aptos-avalanche-ethereum-ink-polygon-and-solana-networks-302364212.html"
+      }
+    },
+    {
+      "name": "Ondo Global Markets",
+      "monogram": "ON",
+      "class": "Stocks",
+      "metric": "$1B",
+      "metricLabel": "in tokenized stocks",
+      "line": "260+ tokenized US stocks and ETFs; first tokenized-equities platform to cross $1B.",
+      "year": "2025",
+      "source": {
+        "title": "Ondo Finance",
+        "url": "https://ondo.finance/blog/global-markets-is-live"
+      }
+    },
+    {
+      "name": "Robinhood Chain",
+      "monogram": "RH",
+      "class": "Stocks",
+      "metric": "2,000+",
+      "metricLabel": "stock tokens, 120+ countries",
+      "line": "Retail broker turned its stock catalog into tokens on its own chain.",
+      "year": "2026",
+      "source": {
+        "title": "Robinhood Newsroom",
+        "url": "https://robinhood.com/us/en/newsroom/robinhood-accelerates-global-expansion-robinhood-chain-mainnet-stock-tokens-agentic-trading/"
+      },
+      "logo": "robinhood"
+    },
+    {
+      "name": "Tokenized Gold (XAUT + PAXG)",
+      "monogram": "AU",
+      "class": "Commodities",
+      "metric": "$6B",
+      "metricLabel": "market cap, 1.2M oz vaulted",
+      "line": "Record $90.7B trading volume in Q1 2026. Two issuers hold ~97% of the segment.",
+      "year": "2026",
+      "source": {
+        "title": "Coinpaprika",
+        "url": "https://coinpaprika.com/news/tokenized-gold-q1-2026-volume-record/"
+      }
+    },
+    {
+      "name": "JPMorgan Kinexys",
+      "monogram": "JP",
+      "class": "Payments",
+      "metric": "$1.5T",
+      "metricLabel": "processed, $2B+ daily",
+      "line": "Bank-grade tokenized settlement rails - the quiet giant of the segment.",
+      "year": "2020",
+      "source": {
+        "title": "Ledger Insights",
+        "url": "https://www.ledgerinsights.com/bcg-ripple-predict-tokenization-to-reach-18-9-trillion-by-2033/"
+      },
+      "logo": "jpmorgan"
+    },
+    {
+      "name": "Real estate: reality check",
+      "monogram": "RE",
+      "class": "Real Estate",
+      "metric": "$69M",
+      "metricLabel": "largest live token (GRO)",
+      "line": "Onchain real estate is still early - the proven property play today is credit: Figure originated $16B+ in home-equity loans onchain.",
+      "year": "2026",
+      "honest": true,
+      "source": {
+        "title": "rwa.xyz",
+        "url": "https://app.rwa.xyz/"
+      }
+    },
+    {
+      "name": "HSBC Gold Token",
+      "monogram": "HG",
+      "class": "Commodities",
+      "metric": "$1B+",
+      "metricLabel": "retail trading volume",
+      "line": "HSBC lets Hong Kong retail customers buy fractions of vaulted London gold through their regular banking app.",
+      "year": "2024",
+      "source": {
+        "title": "Caixin Global: HSBC's Gold Token Tops $1 Billion in Trades",
+        "url": "https://www.caixinglobal.com/2025-11-11/hsbcs-gold-token-tops-1-billion-in-trades-as-retail-investors-embrace-tokenized-assets-102381287.html"
+      },
+      "logo": "hsbc"
+    },
+    {
+      "name": "Visa USDC Settlement",
+      "monogram": "VI",
+      "class": "Payments",
+      "metric": "$3.5B",
+      "metricLabel": "annualized settlement run rate",
+      "line": "Partner banks now settle their card obligations with Visa in USDC stablecoin, seven days a week.",
+      "year": "2025",
+      "source": {
+        "title": "Visa: Stablecoin Settlement Launches in the United States",
+        "url": "https://investor.visa.com/news/news-details/2025/Visa-Launches-Stablecoin-Settlement-in-the-United-States-Marking-a-Breakthrough-for-Stablecoin-Integration/default.aspx"
+      },
+      "logo": "visa"
+    },
+    {
+      "name": "Mastercard Stablecoin Settlement",
+      "monogram": "MC",
+      "class": "Payments",
+      "metric": "8",
+      "metricLabel": "blockchains for card settlement",
+      "line": "Mastercard opened its card settlement network to six regulated stablecoins across eight blockchains, weekends included.",
+      "year": "2026",
+      "source": {
+        "title": "The Defiant: Mastercard Opens Card-Settlement Network on Eight Blockchains",
+        "url": "https://thedefiant.io/converge/tradfi-and-fintech/mastercard-opens-card-settlement-network-on-eight-blockchains-adding-weekend-and-holiday-cycles"
+      },
+      "logo": "mastercard"
+    },
+    {
+      "name": "Maple Finance",
+      "monogram": "MF",
+      "class": "Private Credit",
+      "metric": "$23.9B",
+      "metricLabel": "loans originated since 2019",
+      "line": "Maple pools lender capital onchain and lends it to vetted institutions with terms visible in real time.",
+      "year": "2019",
+      "source": {
+        "title": "Maple Finance: The Leader in Onchain Asset Management",
+        "url": "https://maple.finance/"
+      }
+    },
+    {
+      "name": "Kraken xStocks",
+      "monogram": "XS",
+      "class": "Stocks",
+      "metric": "$25B",
+      "metricLabel": "traded in eight months",
+      "line": "Kraken's xStocks are tokenized US shares, issued by Backed, that trade around the clock on public blockchains.",
+      "year": "2025",
+      "source": {
+        "title": "Kraken: xStocks Surpass $25 Billion in Total Transaction Volume",
+        "url": "https://blog.kraken.com/product/xstocks/25-billion-in-total-transaction-volume"
+      },
+      "logo": "kraken"
+    },
+    {
+      "name": "Hamilton Lane Secondary Fund VI",
+      "monogram": "HL",
+      "class": "Funds & Treasuries",
+      "metric": "$20K",
+      "metricLabel": "minimum, down from $5M",
+      "line": "A tokenized feeder on Polygon opens Hamilton Lane's $5.6B private markets fund to far smaller checks.",
+      "year": "2024",
+      "source": {
+        "title": "PR Newswire: Hamilton Lane's $5.6B Secondary Fund VI on Securitize",
+        "url": "https://www.prnewswire.com/news-releases/hamilton-lanes-5-6b-secondary-fund-vi-exclusively-available-on-securitize-platform-302223040.html"
+      }
+    },
+    {
+      "name": "St. Regis Aspen (Aspen Coin)",
+      "monogram": "SA",
+      "class": "Real Estate",
+      "metric": "$18M",
+      "metricLabel": "raised in token sale",
+      "line": "Nearly a fifth of the St. Regis Aspen luxury resort was sold to investors as digital tokens.",
+      "year": "2018",
+      "source": {
+        "title": "CryptoSlate: St. Regis Aspen Resort Raises $18 Million via Security Token Offering",
+        "url": "https://cryptoslate.com/st-regis-aspen-resort-raises-18-million-via-security-token-offering/"
+      }
+    },
+    {
+      "name": "RealT",
+      "monogram": "RT",
+      "class": "Real Estate",
+      "metric": "$29M+",
+      "metricLabel": "rent distributed to holders",
+      "line": "RealT sells fractional tokens of US rental homes and streams the rental income to token holders.",
+      "year": "2019",
+      "source": {
+        "title": "RealT: Fractional and Frictionless Real Estate Investing",
+        "url": "https://realt.co/"
+      }
+    }
+  ]
+}

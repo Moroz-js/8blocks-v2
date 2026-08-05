@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import {
+  BlocksFeature,
   BlockquoteFeature,
   BoldFeature,
   HeadingFeature,
@@ -14,6 +15,7 @@ import {
   UploadFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { ExpertQuoteBlock } from '../blocks/index.ts'
 
 export const Research: CollectionConfig = {
   slug: 'research',
@@ -195,6 +197,9 @@ export const Research: CollectionConfig = {
           HorizontalRuleFeature(),
           LinkFeature({
             enabledCollections: ['research', 'articles'],
+          }),
+          BlocksFeature({
+            blocks: [ExpertQuoteBlock],
           }),
           UploadFeature({
             maxDepth: 2,

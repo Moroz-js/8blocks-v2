@@ -118,22 +118,19 @@ export const partnersContent = {
   label: 'Partners',
   headline: 'Our partners',
   partners: [
-    { name: 'Partner 1', logo: '/partners/1.svg' },
-    { name: 'Partner 2', logo: '/partners/2.svg' },
-    { name: 'Partner 3', logo: '/partners/3.svg' },
+    { name: 'Bitmaker', logo: '/partners/2.svg', href: 'https://bitmaker.fi/' },
+    { name: 'CEDRO', logo: '/partners/3.svg' },
     { name: 'Lodes.tech', logo: '/partners/4.svg', href: 'https://lodestech.ru' },
-    { name: 'Partner 5', logo: '/partners/5.svg' },
-    { name: 'Partner 6', logo: '/partners/6.svg' },
+    { name: 'Meta Lamp', logo: '/partners/5.svg', href: 'https://metalamp.io/' },
     { name: 'Fibonacci', logo: '/partners/7.svg', href: 'https://fibonacci.market/' },
-    { name: 'Partner 8', logo: '/partners/8.svg' },
-    { name: 'Partner 9', logo: '/partners/9.svg' },
-    { name: 'Partner 11', logo: '/partners/11.svg' },
-    { name: 'Partner 12', logo: '/partners/12.svg' },
+    { name: 'ICODA', logo: '/partners/8.svg', href: 'https://icoda.io/' },
+    { name: 'Peanut', logo: '/partners/11.svg', href: 'https://peanut.trade/' },
+    { name: 'Generis', logo: '/partners/12.svg', href: 'https://generis.agency/' },
     { name: 'D&A', logo: '/partners/13.svg', href: 'https://dna.partners/' },
-    { name: 'Partner 14', logo: '/partners/14.svg' },
     { name: 'Listing Help', logo: '/partners/15.svg', href: 'https://listing.help/' },
     { name: 'Cicada', logo: '/partners/16.svg', href: 'https://www.cicada-mm.com/' },
     { name: 'Anogem', logo: '/partners/17.svg', href: 'https://anogem.io' },
+    { name: 'CertiK', logo: '/partners/certik.svg', href: 'https://www.certik.com/' },
   ],
 } as const
 
@@ -297,7 +294,7 @@ export const tokenomicsTestContent = {
     },
   ],
   ctaLabel: 'Open the app',
-  ctaHref: 'https://8blocks-token-lab.vercel.app/calculator',
+  ctaHref: '/product/calculator',
 } as const
 
 export const servicesFaqContent = {

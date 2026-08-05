@@ -1,10 +1,5 @@
-'use client'
-
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import styles from './ServiceHero.module.scss'
-
-const ease = 'easeOut' as const
 
 interface ServiceHeroProps {
   label: string
@@ -22,7 +17,6 @@ export function ServiceHero({
   description,
   ctaLabel,
   ctaHref,
-  variant,
 }: ServiceHeroProps) {
   const headlineParts = accentWord ? headline.split(accentWord) : [headline]
 
@@ -40,12 +34,7 @@ export function ServiceHero({
       </div>
       <div className={styles.inner}>
         <div className={styles.content}>
-          <motion.h1
-            className={styles.headline}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease, delay: 0.08 }}
-          >
+          <h1 className={styles.headline}>
             {headlineParts.length === 2 ? (
               <>
                 {renderWithBreaks(headlineParts[0])}
@@ -55,28 +44,18 @@ export function ServiceHero({
             ) : (
               renderWithBreaks(headline)
             )}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className={styles.description}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease, delay: 0.2 }}
-          >
+          <p className={styles.description}>
             {description}
-          </motion.p>
+          </p>
 
-          <motion.div
-            className={styles.actions}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease, delay: 0.32 }}
-          >
+          <div className={styles.actions}>
             <Link href={ctaHref} className={styles.cta}>
               {ctaLabel}
               <span className={styles.ctaArrow} aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

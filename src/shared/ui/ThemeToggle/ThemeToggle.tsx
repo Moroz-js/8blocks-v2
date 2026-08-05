@@ -1,10 +1,10 @@
 'use client'
 
 import { Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { BLOG_THEME_STORAGE_KEY } from '@/shared/lib/theme'
+import { useTheme } from '@/shared/lib/ThemeProvider'
 import styles from './ThemeToggle.module.scss'
 
 export function ThemeToggle() {

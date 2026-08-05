@@ -1,0 +1,225 @@
+{
+  "buckets": [
+    {
+      "key": "team",
+      "label": "Team & Founders",
+      "typicalRange": "15-25%",
+      "median": "~17.5-20%",
+      "note": "Redwood Valuation puts founder/team allocations in the 15-25% range with ~20% as the common starting point. This matches Liquifi's industry benchmarks (17.5-18.6%, per Nadcab's citation) and the Stephanian & Turley study, which found a typical team allocation of 17.5% distributed among 20-40 people.",
+      "source": {
+        "title": "Redwood Valuation - How Token Allocation Impacts Founder Wealth",
+        "url": "https://www.redwoodvaluation.com/blog/token-allocation-founder-value"
+      },
+      "source2": {
+        "title": "Nadcab (citing Liquifi industry benchmarks)",
+        "url": "https://www.nadcab.com/blog/tokenomics-ico-success"
+      }
+    },
+    {
+      "key": "investors",
+      "label": "Investors / VC",
+      "typicalRange": "10-20%",
+      "median": "~15%",
+      "note": "Stephanian & Turley's 60-project dataset shows private-investor allocations falling from 25% in 2013 to ~15% for 2021-era launches. Liquifi's benchmarks put investors at 11.2-17.5% (rising to ~19% when only VC-backed projects are counted); Fortress cites a typical 15-20%.",
+      "source": {
+        "title": "Lauren Stephanian - Optimizing Your Token Distribution",
+        "url": "https://offchaindata.substack.com/p/optimizing-your-token-distribution"
+      },
+      "source2": {
+        "title": "Fortress Accounting - Tokenomics & Financial Modeling for Web3 Startups",
+        "url": "https://fortress-accounting.com/tokenomics-financial-modeling-web3-startups/"
+      }
+    },
+    {
+      "key": "community",
+      "label": "Community & Rewards",
+      "typicalRange": "20-30% (community rewards, grants, airdrops)",
+      "median": "n/a - sources report ranges, not medians; airdrop slices alone averaged ~15% in the 2021 cohort",
+      "note": "Tokenomics.net benchmarks ecosystem-and-community allocations at 20-30% of supply. Liquifi's benchmarks put all community-controlled supply (community + ecosystem + treasury combined) at roughly 65%. Stephanian & Turley found standalone airdrop allocations grew from near 0% in 2019 to ~15% by 2021.",
+      "source": {
+        "title": "Tokenomics.net - The Token Distribution Model",
+        "url": "https://www.tokenomics.net/blog/token-distribution-model/"
+      },
+      "source2": {
+        "title": "Nadcab (citing Liquifi: ~65% community/ecosystem combined)",
+        "url": "https://www.nadcab.com/blog/tokenomics-ico-success"
+      }
+    },
+    {
+      "key": "ecosystem",
+      "label": "Ecosystem",
+      "typicalRange": "30-50% (ecosystem + community combined); ecosystem incentives alone reached 20%+ by 2021",
+      "median": "n/a - reported as ranges",
+      "note": "Fortress benchmarks combined ecosystem/community allocations at 30-50%. Ecosystem incentives are the newest large bucket: Stephanian & Turley show them going from 0% of supply in 2016 to over 20% by 2021 with the rise of liquidity mining and grants programs.",
+      "source": {
+        "title": "Fortress Accounting - Tokenomics & Financial Modeling for Web3 Startups",
+        "url": "https://fortress-accounting.com/tokenomics-financial-modeling-web3-startups/"
+      },
+      "source2": {
+        "title": "Lauren Stephanian - Optimizing Your Token Distribution",
+        "url": "https://offchaindata.substack.com/p/optimizing-your-token-distribution"
+      }
+    },
+    {
+      "key": "treasury",
+      "label": "Treasury / Reserves",
+      "typicalRange": "10-20% (plus 5-10% foundation reserve in institutional designs); 2021-era launches averaged 40%+",
+      "median": "n/a - sources diverge widely",
+      "note": "Consultancy norms (Tokenomics.net, Fortress) put treasury/DAO reserves at 10-20% with a further 5-10% foundation reserve. Measured averages run higher: Stephanian & Turley found treasury allocations rose from ~20% in 2016 to over 40% for 2021-era projects.",
+      "source": {
+        "title": "Tokenomics.net - The Token Distribution Model",
+        "url": "https://www.tokenomics.net/blog/token-distribution-model/"
+      },
+      "source2": {
+        "title": "Lauren Stephanian - Optimizing Your Token Distribution",
+        "url": "https://offchaindata.substack.com/p/optimizing-your-token-distribution"
+      }
+    },
+    {
+      "key": "liquidity",
+      "label": "Liquidity / Market Making",
+      "typicalRange": "10-20% of supply for initial liquidity (DEX-style launches); smaller on CEX-led launches",
+      "median": "n/a - no published median found",
+      "note": "LiquidityFinder's listing guide benchmarks 10-20% of total supply dedicated to initial liquidity paired with stablecoins or ETH/BNB. CEX-led launches typically reserve less, lending inventory to market makers instead; CryptoRank tracks 'Liquidity & Market Making' as one of six standard allocation categories.",
+      "source": {
+        "title": "LiquidityFinder - The Definitive Guide to Token Listing and Liquidity Generation",
+        "url": "https://liquidityfinder.com/insight/crypto/the-definitive-guide-to-token-listing-and-liquidity-generation-a-strategic-roadmap"
+      },
+      "source2": {
+        "title": "CryptoRank - Token Unlock Analytics (allocation taxonomy)",
+        "url": "https://cryptorank.io/token-unlock/analytics"
+      }
+    },
+    {
+      "key": "publicSale",
+      "label": "Public Sale",
+      "typicalRange": "5-15% (frequently 0%)",
+      "median": "n/a - reported as a range; near 0% in the 2021 cohort",
+      "note": "Tokenomics.net calls public sale/IDO 'the smallest bucket in most institutional token designs' at 5-15%. Historically it was the largest: Stephanian & Turley show public sales collapsing from 25% of supply in 2013 to close to 0% by 2021 as airdrops and launchpools replaced ICOs.",
+      "source": {
+        "title": "Tokenomics.net - The Token Distribution Model",
+        "url": "https://www.tokenomics.net/blog/token-distribution-model/"
+      },
+      "source2": {
+        "title": "Lauren Stephanian - Optimizing Your Token Distribution",
+        "url": "https://offchaindata.substack.com/p/optimizing-your-token-distribution"
+      }
+    }
+  ],
+  "vestingNorms": [
+    {
+      "claim": "The most common team vesting structure is a four-year schedule with a one-year cliff, mirroring traditional tech equity; 25% typically vests at the cliff.",
+      "figure": "4 years / 1-year cliff",
+      "source": {
+        "title": "Toku - How Do Token Vesting Schedules Work",
+        "url": "https://www.toku.com/resources/how-do-token-vesting-schedules-work"
+      }
+    },
+    {
+      "claim": "Per Liquifi's vesting benchmarks, 38% of projects use a traditional one-year cliff while 31% use no cliff at all.",
+      "figure": "38% one-year cliff; 31% no cliff",
+      "source": {
+        "title": "Redwood Valuation (citing Liquifi benchmarks)",
+        "url": "https://www.redwoodvaluation.com/blog/token-allocation-founder-value"
+      }
+    },
+    {
+      "claim": "Liquifi's research found four years is the most common vesting duration for core teams.",
+      "figure": "4 years most common for teams",
+      "source": {
+        "title": "Fortress Accounting (citing Liquifi research)",
+        "url": "https://fortress-accounting.com/tokenomics-financial-modeling-web3-startups/"
+      }
+    },
+    {
+      "claim": "Team tokens are expected to unlock 0% at TGE; any team TGE unlock above 5% is treated as a systemic sell-pressure red flag. The institutional minimum team schedule is a 12-month cliff with a 36-month linear vest.",
+      "figure": "Team TGE unlock: 0% (>5% = red flag)",
+      "source": {
+        "title": "Tokenomics.net - The Token Distribution Model",
+        "url": "https://www.tokenomics.net/blog/token-distribution-model/"
+      }
+    },
+    {
+      "claim": "Investor vesting runs shorter than team vesting: seed standard is a 6-month cliff with 24-month linear vest, private rounds a 3-6-month cliff with 18-24-month linear vest; Fortress cites 2-3 years depending on round.",
+      "figure": "Seed: 6mo cliff + 24mo; Private: 3-6mo cliff + 18-24mo",
+      "source": {
+        "title": "Tokenomics.net - The Token Distribution Model",
+        "url": "https://www.tokenomics.net/blog/token-distribution-model/"
+      },
+      "source2": {
+        "title": "Fortress Accounting - Tokenomics & Financial Modeling for Web3 Startups",
+        "url": "https://fortress-accounting.com/tokenomics-financial-modeling-web3-startups/"
+      }
+    },
+    {
+      "claim": "Investor TGE unlocks are small: 0-5% for seed and 0-10% for private investors, with anything above 15% considered a red flag; public sale tokens typically carry no lockup or only a 1-3 month linear vest.",
+      "figure": "Seed TGE 0-5%; private TGE 0-10%; public sale largely unlocked",
+      "source": {
+        "title": "Tokenomics.net - The Token Distribution Model",
+        "url": "https://www.tokenomics.net/blog/token-distribution-model/"
+      }
+    },
+    {
+      "claim": "Tokens launched in 2024 had an average market-cap-to-FDV ratio of just 12.3% at launch, with initial circulating supplies in Binance Research's sample as low as 6% and none exceeding 20%.",
+      "figure": "MC/FDV 12.3%; launch floats 6-20% (2024 cohort)",
+      "source": {
+        "title": "Binance Research - Low Float & High FDV: How Did We Get Here? (May 2024)",
+        "url": "https://www.binance.com/research/analysis/low-float-and-high-fdv-how-did-we-get-here"
+      }
+    },
+    {
+      "claim": "Employee token grants typically vest over 4 years (3-year schedules gaining popularity in recent years), often with a 1-year cliff at which 25% vests; web3 vesting mostly mirrors the web2 equity standard per Pantera Capital's compensation survey.",
+      "figure": "4 years typical, 3 years rising; 25% at 1-year cliff",
+      "source": {
+        "title": "The Lawverse - Read the Fine Print: Token Compensation",
+        "url": "https://www.thelawverse.com/p/read-the-fine-print-token-compensation"
+      },
+      "source2": {
+        "title": "Stackup (citing Pantera Capital survey) - Employee Compensation and Equity in Crypto Startups",
+        "url": "https://www.stackup.fi/resources/the-complete-guide-to-employee-compensation-and-equity-in-crypto-startups"
+      }
+    }
+  ],
+  "trends": [
+    {
+      "claim": "Insider share has risen sharply over crypto's history: team allocations roughly tripled from 5% of supply (2013) to ~20% (2021), treasuries grew from ~20% to 40%+, while public sales collapsed from 25% to near 0% - supply shifted from public buyers to insiders and project-controlled reserves.",
+      "source": {
+        "title": "Lauren Stephanian - Optimizing Your Token Distribution (60-project study)",
+        "url": "https://offchaindata.substack.com/p/optimizing-your-token-distribution"
+      }
+    },
+    {
+      "claim": "The 2024 'low float, high FDV' structure left large overhangs: Binance Research estimated ~US$155B of tokens unlocking from 2024 to 2030, and calculated ~US$80B of new demand would be needed just for 2024-vintage tokens to hold their prices as supply unlocks.",
+      "source": {
+        "title": "Binance Research - Low Float & High FDV: How Did We Get Here? (May 2024)",
+        "url": "https://www.binance.com/research/analysis/low-float-and-high-fdv-how-did-we-get-here"
+      }
+    },
+    {
+      "claim": "The market corrected during 2024: per Tokenomist's 2024 Annual Report (378 tokens tracked), the average circulating-supply-to-FDV ratio at token issuance rose to about 35% by end of 2024, after roughly $82B of unlocks were absorbed during the year.",
+      "source": {
+        "title": "ChainCatcher summary of Tokenomist 2024 Annual Report",
+        "url": "https://www.chaincatcher.com/en/article/2166161"
+      }
+    },
+    {
+      "claim": "Unlocks are almost always bearish: Keyrock's study of 16,000+ unlock events found ~90% resulted in price declines, with ~$600M of new tokens hitting the market weekly, price pressure starting ~30 days before the unlock date, and uncoordinated team unlocks the most disruptive category.",
+      "source": {
+        "title": "crypto.news - Token unlocks 'almost always negative for price,' Keyrock's study reveals",
+        "url": "https://crypto.news/token-unlocks-almost-always-negative-for-price-keyrocks-study-reveals/"
+      },
+      "source2": {
+        "title": "Keyrock - From Locked to Liquidity: What 16,000+ Token Unlocks Teach Us (original report)",
+        "url": "https://keyrock.com/from-locked-to-liquidity-what-16000-token-unlocks-teach-us/"
+      }
+    },
+    {
+      "claim": "New listings underperformed in 2024: Animoca Brands Research analyzed 773 tokens listed on five major CEXs (Jan-Sep 2024) and found average post-listing ROI between -27% and -50%, with the best outcomes among tokens listing in the 0.4-0.6 MC/FDV band - i.e., higher floats performed better.",
+      "source": {
+        "title": "The Cryptonomist - Animoca Brands explores the performance of new tokens listed in 2024",
+        "url": "https://en.cryptonomist.ch/2024/10/30/animoca-brands-explores-the-performance-of-the-new-tokens-listed-on-crypto-exchanges-in-2024/"
+      }
+    }
+  ],
+  "methodologyNote": "Benchmarks on this page are compiled from published industry research: Liquifi's Token Vesting and Allocation Benchmarks (Robin Ji, 2022; original report taken offline after Coinbase's acquisition of Liquifi, figures preserved via secondary citations), Stephanian & Turley's 60-project token distribution study, Binance Research's Low Float & High FDV report (May 2024), Tokenomist's 2024 Annual Report (378 tokens), Keyrock's analysis of 16,000+ unlock events, Animoca Brands Research on 773 CEX listings, and current tokenomics consultancy norms. These datasets use different samples, periods, and definitions (means vs. medians, measured data vs. advised practice), so figures are indicative ranges rather than a single consistent dataset. Allocation and vesting structures vary widely by sector, launch venue, and market cycle; treat these numbers as orientation points, not rules."
+}

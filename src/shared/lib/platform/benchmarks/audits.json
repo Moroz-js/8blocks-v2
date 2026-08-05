@@ -1,0 +1,36 @@
+{
+  "note": "Public audits by 8Blocks - full reports at 8blocks.io/audits",
+  "url": "https://8blocks.io/audits",
+  "projects": [
+    {
+      "name": "STON.fi",
+      "symbol": "STON",
+      "sector": "Decentralized Exchange (AMM DEX) on TON",
+      "facts": [
+        "Peak supply pressure lands in months 24-36, where DAO treasury, team and investor unlock windows overlap."
+      ],
+      "allocation": "Allocation (100M STON): Investors 31% (pre-seed 21 + private 10), DAO 50% (Treasury 20, Incentives 10, Marketing 10, Operations 10), Team & Advisors 19%. Vesting: DAO Treasury locked/staked 24 months then linear; Team 24-mo lock + 36-mo linear; Investors 12-mo cliff + 24-mo linear; Incentives linear over 5 years; Marketing 2M immediate + 8M over 3 years; Operations 4M immediate + 6M over 5 years.",
+      "url": "https://8blocks.io/audits/ston-fi-tokenomics-audit"
+    },
+    {
+      "name": "Virtuals Protocol",
+      "symbol": "VIRTUAL",
+      "sector": "AI-Agent Ecosystem (AI agent tokenization on blockchain)",
+      "facts": [
+        "Fixed 1B supply with no future unlocks - but ~35% sits in a DAO treasury with undefined disbursement rules."
+      ],
+      "allocation": "Total supply 1,000,000,000 VIRTUAL. Distribution: Public Circulation ~60%, DAO Treasury ~35%, Liquidity Pools remainder. Vesting status per audit: no future unlocks scheduled; all public-circulation tokens already released.",
+      "url": "https://8blocks.io/audits/virtuals-protocol-tokenomics-audit"
+    },
+    {
+      "name": "Hyperliquid",
+      "symbol": "HYPE",
+      "sector": "Decentralized derivatives exchange / Layer-1 blockchain",
+      "facts": [
+        "Second unlock phase (from Nov 2025) roughly doubles circulating supply; daily unlock inflow exceeds buyback capacity ~5.5x."
+      ],
+      "allocation": "Total supply 1B HYPE, 415M unlocked at audit. Current allocation: Airdrop 74.9%, Insiders 20.9%, Staking 2.3%, Farming 1.2%, Noncirculating 0.7%. Final post-unlock allocation: Airdrop 47%, Insiders 45.2%, Farming 5.9%, Staking 1.5%, Noncirculating 0.5%. Unlocks: Nov 29, 2024 Genesis Distribution 31%, Foundation Budget 6%, Community Rewards 3.89%; from Nov 29, 2025 Core Contributors 23.8% linear monthly; schedule extends through 2034.",
+      "url": "https://8blocks.io/audits/summary-of-the-hype-token-audit"
+    }
+  ]
+}

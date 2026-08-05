@@ -144,11 +144,12 @@ const ruObject = {
     detailsLabel: 'Подробнее',
     packagesLabel: 'Варианты пакетов',
     fromPrefix: 'от',
+    customPriceLabel: 'По запросу',
     totalCostLabel: 'Стоимость',
     totalDurationLabel: 'Срок',
     weeksTemplate: '~%s нед.',
     emptyTotalNote: 'Отметьте модули, чтобы увидеть стоимость и срок',
-    listingAsideNote: '+ листинг отдельно, от $50,000',
+    listingAsideNote: '+ листинг отдельно, по запросу',
     disclaimer:
       'Расчёт ориентировочный. Финальная стоимость и сроки фиксируются после первичной оценки по материалам. Модуль листинга рассчитывается отдельно по согласованию с биржей.',
     bypassLead: 'Хотите обсудить без расчёта?',

@@ -1,5 +1,4 @@
 @use '../shared/styles/variables' as *;
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;800&display=swap');
 
 // ── Design tokens (CSS custom properties) ─────────────────────────
 :root,
@@ -120,7 +119,7 @@
   --canvas-face-right: rgb(180, 180, 186);
   --canvas-face-top: rgb(235, 235, 240);
 
-  --font-base: 'Manrope', sans-serif;
+  --font-base: var(--font-manrope), sans-serif;
 
   --space-1: 4px;
   --space-2: 8px;
@@ -387,6 +386,17 @@ select {
 div[class*='replain'] {
   background: transparent !important;
   box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 // ── Print / PDF export ───────────────────────────────────────────

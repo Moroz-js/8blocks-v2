@@ -38,7 +38,7 @@ export const siteConfig = {
   /** When false, /blog and /blog/* return 404 (links stay visible). */
   blogEnabled: true,
   /** When false, /product/digital-assets returns 404 and nav links are hidden. */
-  digitalAssetsEnabled: false,
+  digitalAssetsEnabled: true,
 } as const
 
 export interface NavItem {
@@ -68,6 +68,16 @@ export const navGroups: NavGroup[] = [
     items: [
       { label: t({ ru: 'Запуск токена с Fibonacci и BingX', en: 'Token launch with Fibonacci & BingX' }), href: '/product/token-launch' },
       { label: t({ ru: 'Калькулятор токеномики', en: 'Calculator' }), href: '/product/calculator' },
+      { label: t({ ru: 'Стратегия цифровых активов', en: 'Digital Asset Strategy' }), href: '/product/digital-assets' },
+      { label: t({ ru: 'Готовность к токенизации', en: 'Tokenization Readiness' }), href: '/product/tokenization-readiness' },
+      { label: t({ ru: 'Кейсы токенизации', en: 'Tokenization Cases' }), href: '/product/tokenization-cases' },
+      { label: 'Tokenomics AI', href: '/product/tokenomics-ai' },
+    ],
+  },
+  {
+    label: t({ ru: 'Обучение', en: 'Learn' }),
+    items: [
+      { label: t({ ru: 'Бенчмарки вестинга токенов', en: 'Token Vesting Benchmarks' }), href: '/learn/token-vesting-benchmarks' },
     ],
   },
   {

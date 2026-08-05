@@ -35,6 +35,7 @@ import {
   PublicAudits,
   Research,
   LaunchModules,
+  Cases,
 } from './payload/collections/index.ts'
 import { SiteSeo } from './payload/globals/index.ts'
 
@@ -112,6 +113,7 @@ export default buildConfig({
     PublicAudits,
     Research,
     LaunchModules,
+    Cases,
   ],
 
   globals: [SiteSeo],

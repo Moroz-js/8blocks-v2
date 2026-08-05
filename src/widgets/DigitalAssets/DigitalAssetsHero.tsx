@@ -1,12 +1,8 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { digitalAssetsContent } from '@/shared/content/digitalAssets'
 import styles from './DigitalAssets.module.scss'
 
-const ease = 'easeOut' as const
 const { hero } = digitalAssetsContent
 
 export function DigitalAssetsHero() {
@@ -18,69 +14,52 @@ export function DigitalAssetsHero() {
       </div>
       <div className={styles.heroInner}>
         <div className={styles.heroContent}>
-          <motion.span
-            className={styles.heroLabel}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease }}
-          >
+          <span className={styles.heroLabel}>
             [{hero.label}]
-          </motion.span>
+          </span>
 
-          <motion.h1
-            className={styles.heroHeadline}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease, delay: 0.08 }}
-          >
+          <h1 className={styles.heroHeadline}>
             {hero.headline}{' '}
             <span className={styles.heroHeadlineAccent}>{hero.headlineAccent}</span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className={styles.heroDescription}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease, delay: 0.2 }}
-          >
+          <p className={styles.heroDescription}>
             {hero.description}
-          </motion.p>
+          </p>
 
-          <motion.div
-            className={styles.heroActions}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease, delay: 0.3 }}
-          >
-            <Link href={hero.ctaHref} className={styles.ctaPrimary}>
-              {hero.ctaLabel}
-              <span className={styles.ctaArrow} aria-hidden="true">→</span>
-            </Link>
-            <a href={hero.secondaryHref} className={styles.ctaGhost}>
-              {hero.secondaryLabel}
-            </a>
-          </motion.div>
+          <div className={styles.heroActions}>
+            {hero.ctaHref.startsWith('http') ? (
+              <a href={hero.ctaHref} target="_blank" rel="noopener noreferrer" className={styles.ctaPrimary}>
+                {hero.ctaLabel}
+                <span className={styles.ctaArrow} aria-hidden="true">→</span>
+              </a>
+            ) : (
+              <Link href={hero.ctaHref} className={styles.ctaPrimary}>
+                {hero.ctaLabel}
+                <span className={styles.ctaArrow} aria-hidden="true">→</span>
+              </Link>
+            )}
+            {hero.secondaryHref.startsWith('http') ? (
+              <a href={hero.secondaryHref} target="_blank" rel="noopener noreferrer" className={styles.ctaGhost}>
+                {hero.secondaryLabel}
+              </a>
+            ) : (
+              <Link href={hero.secondaryHref} className={styles.ctaGhost}>
+                {hero.secondaryLabel}
+              </Link>
+            )}
+          </div>
 
-          <motion.ul
-            className={styles.heroPoints}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.4 }}
-          >
+          <ul className={styles.heroPoints}>
             {hero.points.map((point) => (
               <li key={point} className={styles.heroPoint}>
                 {point}
               </li>
             ))}
-          </motion.ul>
+          </ul>
         </div>
 
-        <motion.figure
-          className={styles.heroArtifact}
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease, delay: 0.5 }}
-        >
+        <figure className={styles.heroArtifact}>
           <div className={styles.heroPhotoWrap}>
             <Image
               src="/img/digital-assets-hero.jpg"
@@ -88,8 +67,13 @@ export function DigitalAssetsHero() {
               fill
               sizes="(max-width: 1280px) 100vw, 1232px"
               className={styles.heroPhoto}
-              priority
+              preload
             />
+            <span className={styles.heroGrid} aria-hidden="true">
+              {Array.from({ length: 20 }, (_, index) => (
+                <i key={index} className={index === 4 || index === 7 || index === 15 ? styles.heroGridActive : undefined} />
+              ))}
+            </span>
             <span className={`${styles.heroChip} ${styles.heroChipLeft}`}>{hero.chipLeft}</span>
             <span className={`${styles.heroChip} ${styles.heroChipRight}`}>{hero.chipRight}</span>
           </div>
@@ -104,7 +88,7 @@ export function DigitalAssetsHero() {
               {hero.exampleSourceLabel} ↗
             </a>
           </figcaption>
-        </motion.figure>
+        </figure>
       </div>
     </section>
   )

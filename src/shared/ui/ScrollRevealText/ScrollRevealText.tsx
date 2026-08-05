@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion'
-import { useTheme } from 'next-themes'
+import { useTheme } from '@/shared/lib/ThemeProvider'
 
 const OPACITY_MIN = 0.18
 const OPACITY_MAX = 1

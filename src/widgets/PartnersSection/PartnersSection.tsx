@@ -21,7 +21,12 @@ export function PartnersSection() {
                 alt={partner.name}
                 width={120}
                 height={40}
-                className={styles.partnerLogo}
+                className={[
+                  styles.partnerLogo,
+                  partner.name === 'Fibonacci' && styles.partnerLogoFibonacci,
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
               />
             )
             return 'href' in partner && partner.href ? (
@@ -31,6 +36,7 @@ export function PartnersSection() {
                 className={styles.partnerSlot}
                 target="_blank"
                 rel="noopener noreferrer"
+                tabIndex={-1}
               >
                 {img}
               </a>

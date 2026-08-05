@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { digitalAssetsContent } from '@/shared/content/digitalAssets'
 import { SectionHead } from './SectionHead'
@@ -30,10 +29,10 @@ export function DigitalAssetsPackages() {
           <h3 className={styles.workshopTitle}>{packages.workshop.title}</h3>
           <p className={styles.workshopDescription}>{packages.workshop.description}</p>
           <div className={styles.workshopFooter}>
-            <Link href={packages.workshop.ctaHref} className={styles.ctaPrimary}>
+            <a href={packages.workshop.ctaHref} className={styles.ctaPrimary}>
               {packages.workshop.ctaLabel}
               <span className={styles.ctaArrow} aria-hidden="true">→</span>
-            </Link>
+            </a>
             <p className={styles.workshopPrice}>{packages.workshop.price}</p>
           </div>
         </motion.div>
@@ -68,9 +67,14 @@ export function DigitalAssetsPackages() {
                   <dd className={styles.tierRowValue}>{tier.endsWith}</dd>
                 </div>
               </dl>
-              <Link href={packages.talkHref} className={`${styles.ctaGhost} ${styles.tierLink}`}>
+              <a
+                href={packages.talkHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.ctaGhost} ${styles.tierLink}`}
+              >
                 {packages.talkLabel} →
-              </Link>
+              </a>
             </motion.article>
           ))}
         </div>

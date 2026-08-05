@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { slugifyHeadingId } from '@/shared/lib/slugifyHeadingId'
+import { normalizeHeadingText } from '@/shared/lib/normalizeHeadingText'
 import { FormulaView } from './FormulaView'
 import { ChartView, type ChartType } from './ChartView'
 import styles from './RichText.module.scss'
@@ -109,6 +110,19 @@ type LexNode = {
     totalScore?: number | null
     rating?: string | null
     interpretation?: string | null
+    // expertQuote
+    quote?: string
+    author?: {
+      name?: string | null
+      position?: string | null
+      linkedIn?: string | null
+      x?: string | null
+      photo?: {
+        url?: string | null
+        alt?: string | null
+        filename?: string | null
+      } | null
+    } | string | number | null
   }
   value?: {
     url?: string
@@ -203,6 +217,61 @@ function renderBlock(node: LexNode, key: string): React.ReactNode {
           {fields.label && <strong className={styles.calloutLabel}>{fields.label}</strong>}
           <p className={styles.calloutText}>{fields.text}</p>
         </div>
+      )
+    }
+
+    case 'expertQuote': {
+      const author =
+        fields.author && typeof fields.author === 'object' ? fields.author : null
+      const name = author?.name?.trim()
+      const photo = author?.photo?.url
+      const profileUrl = author?.linkedIn || author?.x
+      const initials = name
+        ?.split(/\s+/)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() ?? '')
+        .join('')
+
+      if (!name || !fields.quote) return null
+
+      return (
+        <figure key={key} className={styles.expertQuote}>
+          <figcaption className={styles.expertQuoteLabel}>{fields.label}</figcaption>
+          <div className={styles.expertQuoteAuthor}>
+            <div className={styles.expertQuoteAvatar}>
+              {photo ? (
+                <Image
+                  src={photo}
+                  alt={author?.photo?.alt || name}
+                  width={112}
+                  height={112}
+                  className={styles.expertQuoteAvatarImg}
+                />
+              ) : (
+                <span className={styles.expertQuoteAvatarFallback}>{initials}</span>
+              )}
+            </div>
+            <div className={styles.expertQuoteAuthorInfo}>
+              {profileUrl ? (
+                <a
+                  href={profileUrl}
+                  className={styles.expertQuoteName}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {name}
+                </a>
+              ) : (
+                <span className={styles.expertQuoteName}>{name}</span>
+              )}
+              {author?.position && (
+                <span className={styles.expertQuotePosition}>{author.position}</span>
+              )}
+            </div>
+          </div>
+          <blockquote className={styles.expertQuoteText}>{fields.quote}</blockquote>
+          <p className={styles.expertQuoteSignature}>— {name}</p>
+        </figure>
       )
     }
 
@@ -488,7 +557,7 @@ function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
     case 'heading': {
       const Tag = (node.tag ?? 'h2') as 'h2' | 'h3' | 'h4'
       const text = extractPlainText(node)
-      const base = slugifyHeadingId(text)
+      const base = slugifyHeadingId(normalizeHeadingText(text))
       const count = idMap.get(base) ?? 0
       const id = count === 0 ? base : `${base}-${count}`
       idMap.set(base, count + 1)

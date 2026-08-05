@@ -18,6 +18,27 @@ export function DigitalAssetsJourney() {
           description={journey.description}
         />
 
+        <motion.aside
+          className={styles.journeySelfServe}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-30px' }}
+          transition={{ duration: 0.5, ease }}
+        >
+          <span className={styles.journeySelfServeNumber}>0</span>
+          <div>
+            <h3 className={styles.journeyTitle}>{journey.selfServe.title}</h3>
+            <div className={styles.journeySelfServeLinks}>
+              <a href={journey.selfServe.readinessHref} target="_blank" rel="noopener noreferrer">
+                {journey.selfServe.readinessLabel} →
+              </a>
+              <a href={journey.selfServe.casesHref} target="_blank" rel="noopener noreferrer">
+                {journey.selfServe.casesLabel} →
+              </a>
+            </div>
+          </div>
+        </motion.aside>
+
         <ol className={styles.journeyList}>
           {journey.steps.map((step, i) => (
             <motion.li

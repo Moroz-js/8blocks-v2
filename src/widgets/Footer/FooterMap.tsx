@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useTheme } from 'next-themes'
 import { footerContent } from '@/shared/content/footer'
+import { useTheme } from '@/shared/lib/ThemeProvider'
 import styles from './Footer.module.scss'
 
 export function FooterMap() {

@@ -1,0 +1,1843 @@
+{
+  "categories": [
+    {
+      "category": "Layer 1",
+      "categoryInsight": "Layer 1s carry the largest community and ecosystem war chests in crypto: across these four, 46-66% of genesis supply sits in community, ecosystem, foundation, or treasury buckets (Aptos 51% community alone; Sui 66% across foundation-managed reserve, treasury, and community programs), because L1s must fund validators, grants, and developer ecosystems for a decade. Insider share (team plus investor rounds) clusters at 32-35% for the modern cohort (Aptos 32.5%, Sui 34%), with earlier or heavily VC-funded launches running higher (Solana ~48% including all private sale rounds, Celestia 53%). Vesting culture is the strictest of any category: a 1-year cliff for team and investors is standard, total vests run 3-4 years (Aptos foundation and community stretch to 10 years), and modern L1s (2022+) launched with exactly 0% of insider tokens liquid at TGE. TGE floats are low, roughly 13-20%, and genesis percentages dilute over time because every L1 here adds staking rewards or inflation on top of genesis supply.",
+      "projects": [
+        {
+          "name": "Solana",
+          "symbol": "SOL",
+          "launchYear": 2020,
+          "buckets": [
+            {
+              "label": "Community Reserve",
+              "percent": 38
+            },
+            {
+              "label": "Seed Sale",
+              "percent": 15.86
+            },
+            {
+              "label": "Founding Sale",
+              "percent": 12.63
+            },
+            {
+              "label": "Team",
+              "percent": 12.5
+            },
+            {
+              "label": "Foundation",
+              "percent": 12.5
+            },
+            {
+              "label": "Validator Sale",
+              "percent": 5.07
+            },
+            {
+              "label": "Strategic Sale",
+              "percent": 1.84
+            },
+            {
+              "label": "Public Auction Sale",
+              "percent": 1.7
+            }
+          ],
+          "vestingFacts": [
+            "No fixed supply: 500M genesis SOL plus ongoing inflation; genesis percentages dilute over time.",
+            "Sale rounds fully unlocked Jan 2021; team vested linearly over 22 months to Nov 2022.",
+            "No official allocation doc; trackers disagree (Seed 13.3-15.9%, Foundation 8.6-12.5%, Founding 9.8-12.9%)."
+          ],
+          "sources": [
+            {
+              "title": "ICO Drops - Solana",
+              "url": "https://icodrops.com/solana/"
+            },
+            {
+              "title": "DropsTab - Solana Vesting",
+              "url": "https://dropstab.com/coins/solana/vesting"
+            },
+            {
+              "title": "CoinCodeCap - Solana Tokenomics",
+              "url": "https://coincodecap.com/solana-sol-tokenomics"
+            },
+            {
+              "title": "Crypto.com Learn - Solana Tokenomics",
+              "url": "https://crypto.com/us/crypto/learn/solana-tokenomics"
+            }
+          ],
+          "templateMapping": {
+            "team": 13,
+            "investors": 35,
+            "community": 38,
+            "ecosystem": 0,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 12,
+            "publicSale": 2
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 22
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 9,
+              "vestingMonths": 0
+            },
+            "community": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 96
+            },
+            "foundation": {
+              "tgePercent": 0,
+              "cliffMonths": 10,
+              "vestingMonths": 0
+            },
+            "publicSale": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            }
+          }
+        },
+        {
+          "name": "Aptos",
+          "symbol": "APT",
+          "launchYear": 2022,
+          "buckets": [
+            {
+              "label": "Community",
+              "percent": 51.02
+            },
+            {
+              "label": "Core Contributors",
+              "percent": 19
+            },
+            {
+              "label": "Foundation",
+              "percent": 16.5
+            },
+            {
+              "label": "Investors",
+              "percent": 13.48
+            }
+          ],
+          "tgeFloat": "~13% of the 1B initial supply (~125M community + ~5M foundation tokens liquid at TGE, per DropsTab TGE unlock data)",
+          "vestingFacts": [
+            "Contributors and investors: 0% at TGE, 12-month cliff, fully vested by month 48.",
+            "Foundation and community vest linearly over 120 months; ~13% of 1B liquid at TGE.",
+            "Percentages refer to initial 1B supply; staking rewards push max supply toward ~2.1B."
+          ],
+          "sources": [
+            {
+              "title": "DropsTab - Aptos Vesting",
+              "url": "https://dropstab.com/coins/aptos/vesting"
+            },
+            {
+              "title": "Tokenomist - Aptos Tokenomics",
+              "url": "https://tokenomist.ai/aptos/tokenomics"
+            },
+            {
+              "title": "Aptos Foundation - Tokenomics Overview (canonical, rate-limited during fetch)",
+              "url": "https://aptosfoundation.org/currents/aptos-tokenomics-overview"
+            }
+          ],
+          "templateMapping": {
+            "team": 19,
+            "investors": 14,
+            "community": 51,
+            "ecosystem": 0,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 16,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "community": {
+              "tgePercent": 25,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            },
+            "foundation": {
+              "tgePercent": 3,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            }
+          }
+        },
+        {
+          "name": "Sui",
+          "symbol": "SUI",
+          "launchYear": 2023,
+          "buckets": [
+            {
+              "label": "Community Reserve",
+              "percent": 50
+            },
+            {
+              "label": "Early Contributors",
+              "percent": 20
+            },
+            {
+              "label": "Investors",
+              "percent": 14
+            },
+            {
+              "label": "Mysten Labs Treasury",
+              "percent": 10
+            },
+            {
+              "label": "Community Access Program & App Testers",
+              "percent": 6
+            }
+          ],
+          "vestingFacts": [
+            "All initial investors under 1-year transfer cliff from mainnet (May 2023 to May 2024).",
+            "Deliberately no airdrop at mainnet launch, an official anti-scam and regulatory decision.",
+            "Heavily back-loaded: 52.17% of supply (mostly Community Reserve, plus Early Contributors and Mysten Treasury remainders) is cliff-scheduled for release after 2030."
+          ],
+          "sources": [
+            {
+              "title": "Sui Blog - SUI Token Allocation (official)",
+              "url": "https://blog.sui.io/sui-token-allocation/"
+            },
+            {
+              "title": "Sui Docs - Tokenomics (official)",
+              "url": "https://docs.sui.io/concepts/tokenomics"
+            },
+            {
+              "title": "Tokenomist - Sui Tokenomics",
+              "url": "https://tokenomist.ai/sui/tokenomics"
+            },
+            {
+              "title": "Suipiens - Sui Foundation Announces Sui Tokenomics",
+              "url": "https://suipiens.com/blog/sui-foundation-announces-sui-tokenomics/"
+            }
+          ],
+          "templateMapping": {
+            "team": 20,
+            "investors": 14,
+            "community": 6,
+            "ecosystem": 50,
+            "treasury": 10,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 84
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 12
+            },
+            "community": {
+              "tgePercent": 50,
+              "cliffMonths": 0,
+              "vestingMonths": 12
+            },
+            "ecosystem": {
+              "tgePercent": 5,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 6,
+              "vestingMonths": 90
+            }
+          }
+        },
+        {
+          "name": "Celestia",
+          "symbol": "TIA",
+          "launchYear": 2023,
+          "buckets": [
+            {
+              "label": "R&D & Ecosystem",
+              "percent": 26.79
+            },
+            {
+              "label": "Public Allocation",
+              "percent": 20
+            },
+            {
+              "label": "Early Backers: Series A&B",
+              "percent": 19.67
+            },
+            {
+              "label": "Initial Core Contributors",
+              "percent": 17.64
+            },
+            {
+              "label": "Early Backers: Seed",
+              "percent": 15.9
+            }
+          ],
+          "tgeFloat": "Public allocation (20%) fully unlocked at launch; a further ~6.7% (25% of R&D & Ecosystem) unlocked but governance-restricted, which official docs count as 'available' rather than circulating",
+          "vestingFacts": [
+            "Public allocation (20%) fully unlocked at launch; unlocked R&D tokens stay governance-restricted.",
+            "Core contributors: 33.33% unlocks at year-1 cliff, remainder vests continuously through year 3.",
+            "Early backers (35.6% combined): 33.33% at year-1 cliff, remainder vests through year 2."
+          ],
+          "sources": [
+            {
+              "title": "Celestia Docs - Staking, Governance & Supply (official)",
+              "url": "https://docs.celestia.org/learn/staking-governance-supply"
+            },
+            {
+              "title": "ICO Drops - Celestia",
+              "url": "https://icodrops.com/celestia/"
+            }
+          ],
+          "templateMapping": {
+            "team": 18,
+            "investors": 35,
+            "community": 20,
+            "ecosystem": 27,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 24
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 12
+            },
+            "community": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "ecosystem": {
+              "tgePercent": 5,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "Layer 2 / Scaling",
+      "categoryInsight": "L2 tokens launched with no public sale at all: every one of the four distributed via airdrop plus insider and treasury allocations, making the airdrop the de facto float mechanism (12.75% for ARB, 17.5% for ZK, 19% pledged for OP, 18% community provisions plus rebates for STRK). Combined team-plus-investor share is heavy and consistent, 33-45% (ZK 33.3%, OP 36%, STRK 38.2%, ARB 44.5%), and all four keep large DAO treasury or foundation pools (OP 45% ecosystem plus retroPGF, ARB 42.8% treasury plus foundation, ZK 49.2% Token Assembly plus Ecosystem). The vesting culture is a 1-year cliff then roughly 3 more years of monthly unlocks (ARB, ZK textbook cases); Starknet is the notorious outlier, with investor and early-contributor unlocks starting just two months after the February 2024 provisions launch. TGE floats are low (roughly 7-17%), so all four carry multi-year overhang, with full unlock schedules running into 2027-2029.",
+      "projects": [
+        {
+          "name": "Arbitrum",
+          "symbol": "ARB",
+          "launchYear": 2023,
+          "buckets": [
+            {
+              "label": "Arbitrum DAO Treasury",
+              "percent": 35.28
+            },
+            {
+              "label": "Team, Future Team + Advisors (Offchain Labs)",
+              "percent": 26.94
+            },
+            {
+              "label": "Investors",
+              "percent": 17.53
+            },
+            {
+              "label": "User Airdrop",
+              "percent": 11.62
+            },
+            {
+              "label": "Arbitrum Foundation",
+              "percent": 7.5
+            },
+            {
+              "label": "DAOs in Arbitrum Ecosystem",
+              "percent": 1.13
+            }
+          ],
+          "tgeFloat": "~12.75% (user + DAO airdrops, ~1.275B ARB, were the only tokens immediately available at the March 2023 launch)",
+          "vestingFacts": [
+            "Team and investors: 4-year lockup, 1-year cliff from March 2023 TGE, then monthly.",
+            "Foundation's 750M ARB unlocks linearly over four years, smart-contract enforced.",
+            "Airdrops (12.75% combined) were fully liquid at launch; insider unlocks run to March 2027."
+          ],
+          "sources": [
+            {
+              "title": "Arbitrum DAO governance docs: $ARB airdrop eligibility and distribution",
+              "url": "https://docs.arbitrum.foundation/airdrop-eligibility-distribution"
+            },
+            {
+              "title": "Tokenomist: Arbitrum (ARB) tokenomics and vesting",
+              "url": "https://tokenomist.ai/arbitrum"
+            },
+            {
+              "title": "CryptoRank: Arbitrum (ARB) token unlocks and vesting",
+              "url": "https://cryptorank.io/price/arbitrum/vesting"
+            }
+          ],
+          "templateMapping": {
+            "team": 27,
+            "investors": 18,
+            "community": 13,
+            "ecosystem": 0,
+            "treasury": 35,
+            "liquidity": 0,
+            "foundation": 7,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "community": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "foundation": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          }
+        },
+        {
+          "name": "Optimism",
+          "symbol": "OP",
+          "launchYear": 2022,
+          "buckets": [
+            {
+              "label": "Ecosystem Fund (Governance 5.4% / Partner 5.4% / Seed 5.4% / Unallocated 8.8%)",
+              "percent": 25
+            },
+            {
+              "label": "Retroactive Public Goods Funding",
+              "percent": 20
+            },
+            {
+              "label": "User Airdrops",
+              "percent": 19
+            },
+            {
+              "label": "Core Contributors",
+              "percent": 19
+            },
+            {
+              "label": "Investors (Sugar Xaddies)",
+              "percent": 17
+            }
+          ],
+          "tgeFloat": "Not published as a single figure; official docs state 30% of initial supply was made available to the Foundation for distribution in Year 1",
+          "vestingFacts": [
+            "Contributor and investor lockups exist, but unlock dates were left to governance, never published.",
+            "Only 5% shipped in Airdrop #1; 14% reserved for future airdrop waves.",
+            "About 53% unlocked by mid-2026; schedule extends through 2029 (Tokenomist)."
+          ],
+          "sources": [
+            {
+              "title": "Optimism Community Hub: OP token overview (official docs)",
+              "url": "https://github.com/ethereum-optimism/community-hub/blob/main/pages/op-token/op-token-overview.mdx"
+            },
+            {
+              "title": "Optimism Governance Forum: Clarification on OP Token Supply",
+              "url": "https://gov.optimism.io/t/clarification-on-op-token-supply/5589"
+            },
+            {
+              "title": "Tokenomist: Optimism (OP) tokenomics and vesting",
+              "url": "https://tokenomist.ai/optimism"
+            }
+          ],
+          "templateMapping": {
+            "team": 19,
+            "investors": 17,
+            "community": 19,
+            "ecosystem": 45,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 48
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 48
+            },
+            "community": {
+              "tgePercent": 26,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            },
+            "ecosystem": {
+              "tgePercent": 10,
+              "cliffMonths": 0,
+              "vestingMonths": 72
+            }
+          }
+        },
+        {
+          "name": "Starknet",
+          "symbol": "STRK",
+          "launchYear": 2024,
+          "buckets": [
+            {
+              "label": "Early Contributors",
+              "percent": 20.04
+            },
+            {
+              "label": "Investors",
+              "percent": 18.17
+            },
+            {
+              "label": "Grants incl. Development Partners",
+              "percent": 12.93
+            },
+            {
+              "label": "StarkWare (operations)",
+              "percent": 10.76
+            },
+            {
+              "label": "Foundation Strategic Reserves",
+              "percent": 10
+            },
+            {
+              "label": "Community Provisions",
+              "percent": 9
+            },
+            {
+              "label": "Community Rebates",
+              "percent": 9
+            },
+            {
+              "label": "Foundation Treasury",
+              "percent": 8.1
+            },
+            {
+              "label": "Donations",
+              "percent": 2
+            }
+          ],
+          "tgeFloat": "Not published as a single figure; the first community provisions round (over 700M STRK, ~7% of supply) was the main liquid allocation at the February 2024 launch",
+          "vestingFacts": [
+            "Insiders (38.2%): 64M STRK monthly to March 2025, then 127M monthly to March 2027.",
+            "First unlocks April 2024, two months after launch, an unusually short effective cliff.",
+            "Locked tokens can delegate votes but cannot be transferred, sold, or pledged."
+          ],
+          "sources": [
+            {
+              "title": "Starknet Documentation: STRK token (allocation and lock-up)",
+              "url": "https://docs.starknet.io/learn/protocol/strk"
+            },
+            {
+              "title": "Tokenomist: Starknet (STRK) tokenomics and vesting",
+              "url": "https://tokenomist.ai/starknet"
+            }
+          ],
+          "templateMapping": {
+            "team": 20,
+            "investors": 18,
+            "community": 18,
+            "ecosystem": 15,
+            "treasury": 19,
+            "liquidity": 0,
+            "foundation": 10,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 2,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 2,
+              "vestingMonths": 36
+            },
+            "community": {
+              "tgePercent": 40,
+              "cliffMonths": 0,
+              "vestingMonths": 36
+            },
+            "ecosystem": {
+              "tgePercent": 10,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "treasury": {
+              "tgePercent": 5,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            },
+            "foundation": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            }
+          }
+        },
+        {
+          "name": "ZKsync",
+          "symbol": "ZK",
+          "launchYear": 2024,
+          "buckets": [
+            {
+              "label": "Token Assembly (governance treasury)",
+              "percent": 29.27
+            },
+            {
+              "label": "Ecosystem Initiatives",
+              "percent": 19.9
+            },
+            {
+              "label": "Investors",
+              "percent": 19.78
+            },
+            {
+              "label": "Airdrop",
+              "percent": 17.5
+            },
+            {
+              "label": "Team (Matter Labs)",
+              "percent": 13.55
+            }
+          ],
+          "tgeFloat": "~17.5% (the 3.675B ZK airdrop was a one-time distribution with no lockups at the June 2024 TGE; team/investor tokens were under a 1-year cliff)",
+          "vestingFacts": [
+            "Team and investors: 1-year cliff, then monthly unlocks June 2025 through June 2028.",
+            "Airdrop (17.5%) was fully liquid at the June 2024 TGE.",
+            "Official docs list investors 19.78%, team 13.55%; aggregators still show the older split."
+          ],
+          "sources": [
+            {
+              "title": "ZK Nation docs: ZK Token (official token distribution)",
+              "url": "https://docs.zknation.io/zk-token/zk-token"
+            },
+            {
+              "title": "Tokenomist: ZKsync (ZK) tokenomics and vesting",
+              "url": "https://tokenomist.ai/zksync"
+            },
+            {
+              "title": "CryptoRank: zkSync (ZK) token unlocks and vesting",
+              "url": "https://cryptorank.io/price/zksync/vesting"
+            }
+          ],
+          "templateMapping": {
+            "team": 14,
+            "investors": 20,
+            "community": 17,
+            "ecosystem": 20,
+            "treasury": 29,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "community": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "ecosystem": {
+              "tgePercent": 5,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "DeFi & Trading",
+      "categoryInsight": "Top DeFi protocols consistently commit the majority of supply to community and ecosystem: Uniswap gave 60% to community members, dYdX 50%, and Hyperliquid roughly 76% including future emissions, with genesis airdrops of 15-31% fully unlocked on day one being a category signature. Insider share (team plus investors) clusters between 22% and 55%: Uniswap ~40%, dYdX ~50%, Ethena 55%, while Hyperliquid broke the pattern entirely with 23.8% to contributors and zero investor allocation. Vesting culture is standardized around 4-year schedules for insiders, usually with a ~1-year cliff (Ethena's 25% cliff at month 12, dYdX's lockup that first released 30% at month 27). TGE float varies dramatically by era: 2020-2021 launches floated little beyond the airdrop and produced violent cliff unlocks later (dYdX Dec 2023), while 2024 launches like Hyperliquid floated 31% at genesis to front-load distribution.",
+      "projects": [
+        {
+          "name": "Uniswap",
+          "symbol": "UNI",
+          "launchYear": 2020,
+          "buckets": [
+            {
+              "label": "Community members (airdrop, treasury, liquidity mining)",
+              "percent": 60
+            },
+            {
+              "label": "Team members and future employees",
+              "percent": 21.266
+            },
+            {
+              "label": "Investors",
+              "percent": 18.044
+            },
+            {
+              "label": "Advisors",
+              "percent": 0.69
+            }
+          ],
+          "tgeFloat": "~15% (150M UNI airdrop immediately claimable at launch)",
+          "vestingFacts": [
+            "Team, investors, advisors (40%) vest linearly over 4 years from Sep 2020 launch",
+            "Community 60%: 15% airdrop instantly claimable, 43% treasury over 4 years, 2% liquidity mining",
+            "1B genesis supply; perpetual 2% annual inflation begins after year 4"
+          ],
+          "sources": [
+            {
+              "title": "Introducing UNI - Uniswap official blog",
+              "url": "https://blog.uniswap.org/uni"
+            },
+            {
+              "title": "Uniswap (UNI) - ICO Drops",
+              "url": "https://icodrops.com/uniswap/"
+            }
+          ],
+          "templateMapping": {
+            "team": 22,
+            "investors": 18,
+            "community": 15,
+            "ecosystem": 2,
+            "treasury": 43,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "community": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "ecosystem": {
+              "tgePercent": 20,
+              "cliffMonths": 0,
+              "vestingMonths": 12
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          }
+        },
+        {
+          "name": "dYdX",
+          "symbol": "DYDX",
+          "launchYear": 2021,
+          "buckets": [
+            {
+              "label": "Past investors",
+              "percent": 27.7
+            },
+            {
+              "label": "Community treasury",
+              "percent": 26.1
+            },
+            {
+              "label": "Founders, employees, advisors, consultants",
+              "percent": 15.3
+            },
+            {
+              "label": "Trading rewards",
+              "percent": 14.5
+            },
+            {
+              "label": "Future employees and consultants",
+              "percent": 7
+            },
+            {
+              "label": "Retroactive mining rewards",
+              "percent": 5
+            },
+            {
+              "label": "Liquidity provider rewards",
+              "percent": 3.3
+            },
+            {
+              "label": "Liquidity staking pool",
+              "percent": 0.6
+            },
+            {
+              "label": "Safety staking pool",
+              "percent": 0.5
+            }
+          ],
+          "vestingFacts": [
+            "1B minted Aug 2021; 50% community, 50% insiders; 5-year distribution",
+            "Amended insider lockup: 30% unlocked Dec 2023, remainder monthly through June 2026",
+            "Fully unlocked; ~849M (84.9%) of 1B supply circulating per Tokenomist"
+          ],
+          "sources": [
+            {
+              "title": "DYDX Token Allocation - official dYdX community docs",
+              "url": "https://docs.dydx.community/dydx/start-here/dydx-token-allocation"
+            },
+            {
+              "title": "dYdX (DYDX) Tokenomics & Vesting - Tokenomist",
+              "url": "https://tokenomist.ai/dydx"
+            }
+          ],
+          "templateMapping": {
+            "team": 22,
+            "investors": 28,
+            "community": 5,
+            "ecosystem": 19,
+            "treasury": 26,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 27,
+              "vestingMonths": 30
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 27,
+              "vestingMonths": 30
+            },
+            "community": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "ecosystem": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            }
+          }
+        },
+        {
+          "name": "Ethena",
+          "symbol": "ENA",
+          "launchYear": 2024,
+          "buckets": [
+            {
+              "label": "Core contributors",
+              "percent": 30
+            },
+            {
+              "label": "Ecosystem development and airdrops",
+              "percent": 30
+            },
+            {
+              "label": "Investors",
+              "percent": 25
+            },
+            {
+              "label": "Foundation",
+              "percent": 15
+            }
+          ],
+          "vestingFacts": [
+            "Contributors (30%) and investors (25%): 1-year 25% cliff, then 3-year linear monthly vesting",
+            "Fixed 15B supply; ~9.56B (63.7%) circulating as of July 2026 (DropsTab)",
+            "DropsTab models unlocks as 36-month linear without cliff; official docs specify the cliff"
+          ],
+          "sources": [
+            {
+              "title": "ENA Tokenomics - official Ethena docs",
+              "url": "https://docs.ethena.fi/overview/ena/tokenomics.md"
+            },
+            {
+              "title": "Ethena (ENA) Vesting - DropsTab",
+              "url": "https://dropstab.com/coins/ethena-labs/vesting"
+            }
+          ],
+          "templateMapping": {
+            "team": 30,
+            "investors": 25,
+            "community": 0,
+            "ecosystem": 30,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 15,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "ecosystem": {
+              "tgePercent": 32,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "foundation": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          }
+        },
+        {
+          "name": "Hyperliquid",
+          "symbol": "HYPE",
+          "launchYear": 2024,
+          "buckets": [
+            {
+              "label": "Future emissions and community rewards",
+              "percent": 38.888
+            },
+            {
+              "label": "Genesis distribution (airdrop)",
+              "percent": 31
+            },
+            {
+              "label": "Current and future core contributors",
+              "percent": 23.8
+            },
+            {
+              "label": "Hyper Foundation budget",
+              "percent": 6
+            },
+            {
+              "label": "Community grants",
+              "percent": 0.3
+            },
+            {
+              "label": "HIP-2 (Hyperliquidity)",
+              "percent": 0.012
+            }
+          ],
+          "tgeFloat": "~31% (310M genesis airdrop fully unlocked at the November 2024 genesis event)",
+          "vestingFacts": [
+            "Zero VC allocation; 76.2% to community; 310M genesis airdrop fully unlocked day one",
+            "Core contributors (23.8%) locked 1 year; most vest 2027-2028; next unlock Aug 2026",
+            "Future emissions (38.888%) unminted, reserved for community rewards and validator incentives"
+          ],
+          "sources": [
+            {
+              "title": "Hyperliquid (HYPE) Tokenomics & Vesting - Tokenomist",
+              "url": "https://tokenomist.ai/hyperliquid"
+            },
+            {
+              "title": "Hyperliquid genesis distribution announcement coverage - ChainCatcher",
+              "url": "https://www.chaincatcher.com/en/article/2154155"
+            }
+          ],
+          "templateMapping": {
+            "team": 24,
+            "investors": 0,
+            "community": 31,
+            "ecosystem": 39,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 6,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "community": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "ecosystem": {
+              "tgePercent": 5,
+              "cliffMonths": 0,
+              "vestingMonths": 96
+            },
+            "foundation": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          },
+          "audited": true,
+          "auditUrl": "https://8blocks.io/audits/summary-of-the-hype-token-audit"
+        },
+        {
+          "name": "STON.fi",
+          "symbol": "STON",
+          "launchYear": 2023,
+          "buckets": [
+            {
+              "label": "Investors (Pre-seed + Private)",
+              "percent": 31
+            },
+            {
+              "label": "DAO: Incentives, Marketing, Operations",
+              "percent": 30
+            },
+            {
+              "label": "DAO Treasury",
+              "percent": 20
+            },
+            {
+              "label": "Team & Advisors",
+              "percent": 19
+            }
+          ],
+          "tgeFloat": "~6% (2M marketing + 4M operations tokens liquid at TGE; every other bucket cliffed or vesting)",
+          "vestingFacts": [
+            "DAO Treasury (20%): locked and staked for 24 months, then linear; team & advisors: 24-month lock + 36-month linear.",
+            "Investors (31%, pre-seed + private): 12-month cliff + 24-month linear vesting.",
+            "Peak supply pressure lands in months 24-36, where treasury, team and investor windows overlap."
+          ],
+          "sources": [
+            {
+              "title": "8Blocks - STON.fi Tokenomics Audit",
+              "url": "https://8blocks.io/audits/ston-fi-tokenomics-audit"
+            }
+          ],
+          "templateMapping": {
+            "team": 19,
+            "investors": 31,
+            "community": 0,
+            "ecosystem": 30,
+            "treasury": 20,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 24,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 24
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 24,
+              "vestingMonths": 36
+            },
+            "ecosystem": {
+              "tgePercent": 20,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          },
+          "audited": true,
+          "auditUrl": "https://8blocks.io/audits/ston-fi-tokenomics-audit"
+        }
+      ]
+    },
+    {
+      "category": "Gaming & Metaverse",
+      "categoryInsight": "Gaming and metaverse tokens push an unusually large share of supply into gameplay and community emissions rather than insiders: AXS routes 49% to staking plus play-to-earn rewards, BEAM's genesis (Merit Circle) puts about 44% into community incentives, liquidity and retroactive rewards, and IMX dedicates 51.74% to ecosystem development. Insider share (team plus advisors) clusters at 20-29% and direct investor rounds are modest (4-21%), while public sales are small (4-12%) and typically ran through launchpad IEOs (Binance Launchpad for both AXS and SAND). Vesting culture is multi-year (4-5.5 year full unlock schedules) and this category has a notable habit of voluntarily extending insider lockups mid-cycle: Immutable re-locked a 125M IMX developer tranche in 2023 and Merit Circle re-cliffed core contributor tokens to 4 years. The category also contains projects with no fixed genesis allocation at all: Gala (GALA) was evaluated and excluded because it launched with no token sale or pre-mint, distributing purely via daily node emissions split 50/50 between node operators and the company, so it publishes no allocation chart.",
+      "projects": [
+        {
+          "name": "Axie Infinity",
+          "symbol": "AXS",
+          "launchYear": 2020,
+          "buckets": [
+            {
+              "label": "Staking Rewards",
+              "percent": 29
+            },
+            {
+              "label": "Sky Mavis (Team)",
+              "percent": 21
+            },
+            {
+              "label": "Play to Earn",
+              "percent": 20
+            },
+            {
+              "label": "Public Sale (Binance Launchpad)",
+              "percent": 11
+            },
+            {
+              "label": "Ecosystem Fund",
+              "percent": 8
+            },
+            {
+              "label": "Advisors",
+              "percent": 7
+            },
+            {
+              "label": "Private Sale",
+              "percent": 4
+            }
+          ],
+          "tgeFloat": "22.22% (59,985,000 of 270M AXS unlocked at launch, per whitepaper)",
+          "vestingFacts": [
+            "270M fixed supply on a 65-month schedule; ~100% unlocked by 2026",
+            "Sky Mavis 21%: ~19% at day 0, then biannual tranches months 12-54",
+            "Public sale 11% liquid at TGE; 49% of supply is gameplay/staking emissions"
+          ],
+          "sources": [
+            {
+              "title": "Axie Infinity Whitepaper - AXS Allocations and Unlock",
+              "url": "https://whitepaper.axieinfinity.com/axs/allocations-and-unlock"
+            },
+            {
+              "title": "Axie Infinity Whitepaper - Sky Mavis allocation",
+              "url": "https://whitepaper.axieinfinity.com/axs/allocations-and-unlock/sky-mavis"
+            },
+            {
+              "title": "ICO Drops - Axie Infinity",
+              "url": "https://icodrops.com/axie-infinity/"
+            }
+          ],
+          "templateMapping": {
+            "team": 28,
+            "investors": 4,
+            "community": 49,
+            "ecosystem": 8,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 11
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 15,
+              "cliffMonths": 0,
+              "vestingMonths": 54
+            },
+            "investors": {
+              "tgePercent": 25,
+              "cliffMonths": 0,
+              "vestingMonths": 12
+            },
+            "community": {
+              "tgePercent": 12,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            },
+            "ecosystem": {
+              "tgePercent": 10,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "publicSale": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            }
+          }
+        },
+        {
+          "name": "The Sandbox",
+          "symbol": "SAND",
+          "launchYear": 2020,
+          "buckets": [
+            {
+              "label": "Company Reserve",
+              "percent": 25.82
+            },
+            {
+              "label": "Team",
+              "percent": 19
+            },
+            {
+              "label": "Seed Sale",
+              "percent": 17.18
+            },
+            {
+              "label": "Foundation",
+              "percent": 12
+            },
+            {
+              "label": "Binance Launchpad (Public Sale)",
+              "percent": 12
+            },
+            {
+              "label": "Advisors",
+              "percent": 10
+            },
+            {
+              "label": "Strategic Sale",
+              "percent": 4
+            }
+          ],
+          "vestingFacts": [
+            "3B fixed supply; Binance Launchpad sale (Aug 2020) had no lockup",
+            "Seed and strategic rounds: 12-month cliff, then 20% every six months",
+            "Fully unlocked since 2025; ~2.67B (88.9%) circulating"
+          ],
+          "sources": [
+            {
+              "title": "ICO Drops - The Sandbox",
+              "url": "https://icodrops.com/the-sandbox/"
+            },
+            {
+              "title": "Tokenomist - The Sandbox (SAND) Tokenomics & Vesting",
+              "url": "https://tokenomist.ai/the-sandbox"
+            }
+          ],
+          "templateMapping": {
+            "team": 29,
+            "investors": 21,
+            "community": 0,
+            "ecosystem": 0,
+            "treasury": 26,
+            "liquidity": 0,
+            "foundation": 12,
+            "publicSale": 12
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 30
+            },
+            "treasury": {
+              "tgePercent": 10,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            },
+            "foundation": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 60
+            },
+            "publicSale": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            }
+          }
+        },
+        {
+          "name": "Immutable",
+          "symbol": "IMX",
+          "launchYear": 2021,
+          "buckets": [
+            {
+              "label": "Ecosystem Development",
+              "percent": 51.74
+            },
+            {
+              "label": "Project Development",
+              "percent": 25
+            },
+            {
+              "label": "Private Sale",
+              "percent": 14.26
+            },
+            {
+              "label": "Public Sale",
+              "percent": 5
+            },
+            {
+              "label": "Foundation Reserve",
+              "percent": 4
+            }
+          ],
+          "vestingFacts": [
+            "2B fixed supply; 100% unlocked as of November 2025",
+            "Private sale vested ~17 months linear, ecosystem ~47 months (DropsTab)",
+            "2023: voluntarily re-locked 125M developer tranche to July 2024, cliff became monthly vesting"
+          ],
+          "sources": [
+            {
+              "title": "Immutable Support - IMX Tokenomics (official)",
+              "url": "http://web.archive.org/web/20250912200534/https://support.immutable.com/hc/en-us/articles/9439179705999-IMX-Tokenomics"
+            },
+            {
+              "title": "DropsTab - Immutable (IMX) Vesting",
+              "url": "https://dropstab.com/coins/immutable-x/vesting"
+            },
+            {
+              "title": "Tokenomist - Immutable (IMX) Tokenomics & Vesting",
+              "url": "https://tokenomist.ai/immutable-x"
+            },
+            {
+              "title": "crypto.news - Immutable extends token vesting period",
+              "url": "https://crypto.news/immutable-extends-token-vesting-period-for-another-year/"
+            }
+          ],
+          "templateMapping": {
+            "team": 0,
+            "investors": 14,
+            "community": 0,
+            "ecosystem": 52,
+            "treasury": 25,
+            "liquidity": 0,
+            "foundation": 4,
+            "publicSale": 5
+          },
+          "vestingMapping": {
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 17
+            },
+            "ecosystem": {
+              "tgePercent": 5,
+              "cliffMonths": 0,
+              "vestingMonths": 47
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "foundation": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "publicSale": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            }
+          }
+        },
+        {
+          "name": "Beam",
+          "symbol": "BEAM",
+          "launchYear": 2023,
+          "buckets": [
+            {
+              "label": "Community Incentives",
+              "percent": 30.19
+            },
+            {
+              "label": "Team and Advisors",
+              "percent": 20
+            },
+            {
+              "label": "DAO Treasury",
+              "percent": 18.25
+            },
+            {
+              "label": "Early Investors",
+              "percent": 14.06
+            },
+            {
+              "label": "Liquidity Rewards",
+              "percent": 10
+            },
+            {
+              "label": "Public Distribution",
+              "percent": 4.1
+            },
+            {
+              "label": "Retroactive Rewards",
+              "percent": 3.4
+            }
+          ],
+          "vestingFacts": [
+            "Genesis split inherited from Merit Circle; MC migrated 1:100 in October 2023",
+            "Core contributor tokens (7.17B) re-cliffed to 4 years",
+            "Fully unlocked; burns cut supply to ~58.5B, with ~51.3B circulating"
+          ],
+          "sources": [
+            {
+              "title": "Merit Circle DAO GitBook - $BEAM Token Distribution (official)",
+              "url": "http://web.archive.org/web/20240606200519/https://meritcircle.gitbook.io/merit-circle/usdbeam-token/token-distribution"
+            },
+            {
+              "title": "Tokenomist - Beam (BEAM) Tokenomics & Vesting",
+              "url": "https://tokenomist.ai/beam-2"
+            },
+            {
+              "title": "CryptoRank - Beam (BEAM) Tokenomics",
+              "url": "https://cryptorank.io/ico/onbeam"
+            },
+            {
+              "title": "Beam Foundation Treasury (official)",
+              "url": "https://treasury.onbeam.com/beam-token"
+            }
+          ],
+          "templateMapping": {
+            "team": 20,
+            "investors": 14,
+            "community": 34,
+            "ecosystem": 0,
+            "treasury": 18,
+            "liquidity": 10,
+            "foundation": 0,
+            "publicSale": 4
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 6,
+              "vestingMonths": 36
+            },
+            "community": {
+              "tgePercent": 1,
+              "cliffMonths": 0,
+              "vestingMonths": 36
+            },
+            "treasury": {
+              "tgePercent": 20,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            },
+            "liquidity": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 24
+            },
+            "publicSale": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "category": "AI & DePIN",
+      "categoryInsight": "AI & DePIN tokenomics splits into two eras: legacy networks (Render 2017) sold tokens with no vesting at all and kept most supply in network-controlled escrow, while modern launches (Worldcoin, io.net, Grass) follow the VC playbook with heavy locks. Combined insider share (team + investors) in the modern cohort runs 25-47% of supply: Worldcoin 25%, io.net ~34%, Grass 47%. Ultra-low floats are the category signature, from Worldcoin's ~1% TGE float to io.net's ~12% and Grass's ~24%, because 50-75% of supply is reserved for community/network incentives released via very long emission schedules (15 years for WLD community tokens, 20 years for IO supplier rewards). Team terms cluster around a 12-month cliff with 3-4 year total vesting; the notable outlier culture is fair launch, exemplified by Bittensor (TAO), which was excluded here precisely because 100% mined emission means no published allocation buckets exist.",
+      "projects": [
+        {
+          "name": "Worldcoin (World)",
+          "symbol": "WLD",
+          "launchYear": 2023,
+          "buckets": [
+            {
+              "label": "World Community (users, network operations, ecosystem fund)",
+              "percent": 75
+            },
+            {
+              "label": "TFH Investors",
+              "percent": 13.6
+            },
+            {
+              "label": "Initial Development Team",
+              "percent": 11.1
+            },
+            {
+              "label": "TFH Reserve",
+              "percent": 0.3
+            }
+          ],
+          "tgeFloat": "~1% (~100M of 10B WLD at July 2023 launch)",
+          "vestingFacts": [
+            "Team and investors (24.7%): 12-month lockup, then linear unlocks ending July 2028",
+            "Community 75% unlocks over 15 years; 0.5B WLD available at launch",
+            "TGE float ~1%: only ~100M of the 10B cap circulating at launch"
+          ],
+          "sources": [
+            {
+              "title": "World Whitepaper - Tokenomics (official)",
+              "url": "https://whitepaper.world.org/tokenomics"
+            },
+            {
+              "title": "The Circulating Supply of Worldcoin (WLD): An Explainer (official World blog)",
+              "url": "https://world.org/blog/foundational-topics/the-circulating-supply-of-worldcoin-wld-an-explainer"
+            },
+            {
+              "title": "Worldcoin (WLD) Tokenomics - Tokenomist",
+              "url": "https://tokenomist.ai/worldcoin-wld"
+            }
+          ],
+          "templateMapping": {
+            "team": 11,
+            "investors": 14,
+            "community": 75,
+            "ecosystem": 0,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 48
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 48
+            },
+            "community": {
+              "tgePercent": 1.3,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            }
+          }
+        },
+        {
+          "name": "io.net",
+          "symbol": "IO",
+          "launchYear": 2024,
+          "buckets": [
+            {
+              "label": "Ecosystem & Community (incl. 37.5% supplier/staker emissions over 20 years)",
+              "percent": 50
+            },
+            {
+              "label": "Research & Development",
+              "percent": 16
+            },
+            {
+              "label": "Seed Investors",
+              "percent": 12.5
+            },
+            {
+              "label": "Core Contributors",
+              "percent": 11.3
+            },
+            {
+              "label": "Series A Investors",
+              "percent": 10.2
+            }
+          ],
+          "tgeFloat": "~12% of 800M max supply (~95M IO at June 2024 TGE, computed from per-bucket TGE unlocks on DropsTab)",
+          "vestingFacts": [
+            "Seed and contributors: 0% at TGE, 12-month cliff, then linear vest over ~24 and ~36 months",
+            "300M of 800M max supply emits to GPU suppliers/stakers over 20 years",
+            "TGE float ~12% (95M IO); R&D had 30% unlocked at TGE"
+          ],
+          "sources": [
+            {
+              "title": "IO Coin Allocation (official io.net docs)",
+              "url": "https://io.net/docs/guides/coin/io-coin-allocation"
+            },
+            {
+              "title": "io.net (IO) Token Unlocks & Vesting - DropsTab",
+              "url": "https://dropstab.com/coins/io-net/vesting"
+            },
+            {
+              "title": "io.net (IO) - ICO Drops",
+              "url": "https://icodrops.com/io-net/"
+            }
+          ],
+          "templateMapping": {
+            "team": 11,
+            "investors": 23,
+            "community": 50,
+            "ecosystem": 16,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 24
+            },
+            "community": {
+              "tgePercent": 15,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            },
+            "ecosystem": {
+              "tgePercent": 30,
+              "cliffMonths": 0,
+              "vestingMonths": 36
+            }
+          }
+        },
+        {
+          "name": "Grass",
+          "symbol": "GRASS",
+          "launchYear": 2024,
+          "buckets": [
+            {
+              "label": "Early Investors",
+              "percent": 25.2
+            },
+            {
+              "label": "Foundation & Ecosystem Growth",
+              "percent": 22.8
+            },
+            {
+              "label": "Contributors (team & advisors)",
+              "percent": 22
+            },
+            {
+              "label": "Future Incentives (community)",
+              "percent": 17
+            },
+            {
+              "label": "Airdrop One",
+              "percent": 10
+            },
+            {
+              "label": "Router Rewards",
+              "percent": 3
+            }
+          ],
+          "tgeFloat": "~24% at October 2024 TGE (Airdrop One 10% fully unlocked plus partial Foundation ~31% and Future Incentives ~43% initial unlocks, per DropsTab)",
+          "vestingFacts": [
+            "Investors (25.2%): 1-year cliff then 1-year linear; non-stakeable while locked",
+            "Contributors (22%): 1-year cliff plus 3-year linear vesting",
+            "Airdrop One (10%) fully liquid at TGE; total float ~24%"
+          ],
+          "sources": [
+            {
+              "title": "GRASS Tokenomics (official Grass Foundation docs)",
+              "url": "https://grass-foundation.gitbook.io/grass-docs/introduction/grass/grass-tokenomics"
+            },
+            {
+              "title": "Grass (GRASS) Token Unlocks & Vesting - DropsTab",
+              "url": "https://dropstab.com/coins/grass/vesting"
+            },
+            {
+              "title": "Grass (GRASS) Tokenomics - Tokenomist",
+              "url": "https://tokenomist.ai/grass"
+            }
+          ],
+          "templateMapping": {
+            "team": 22,
+            "investors": 25,
+            "community": 27,
+            "ecosystem": 3,
+            "treasury": 0,
+            "liquidity": 0,
+            "foundation": 23,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "team": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 36
+            },
+            "investors": {
+              "tgePercent": 0,
+              "cliffMonths": 12,
+              "vestingMonths": 12
+            },
+            "community": {
+              "tgePercent": 64,
+              "cliffMonths": 0,
+              "vestingMonths": 36
+            },
+            "ecosystem": {
+              "tgePercent": 20,
+              "cliffMonths": 0,
+              "vestingMonths": 24
+            },
+            "foundation": {
+              "tgePercent": 31,
+              "cliffMonths": 0,
+              "vestingMonths": 48
+            }
+          }
+        },
+        {
+          "name": "Render Network",
+          "symbol": "RENDER",
+          "launchYear": 2017,
+          "buckets": [
+            {
+              "label": "Escrow (network supply/demand flowback)",
+              "percent": 65
+            },
+            {
+              "label": "Token Sales (public ICO + private sale)",
+              "percent": 25
+            },
+            {
+              "label": "RNDR Reserve",
+              "percent": 10
+            }
+          ],
+          "tgeFloat": "Not formally documented as a TGE float; only ~4.65M RNDR (~0.9% of supply) was sold in the October 2017 public ICO, plus ~16.1M in the 2018 private sale",
+          "vestingFacts": [
+            "No vesting: 2017 public and 2018 private sale tokens fully liquid",
+            "Only ~20.7M of the 133M sale allocation sold (~$5.2M raised)",
+            "65% held in escrow for network flowback; ~96% circulating today"
+          ],
+          "sources": [
+            {
+              "title": "RENDER Emissions and RNDR Metrics (Legacy) - official Render Network Knowledge Base",
+              "url": "https://know.rendernetwork.com/basics/token-metrics-summary"
+            },
+            {
+              "title": "Render Token (RENDER) Tokenomics and ICO info - CoinCarp",
+              "url": "https://www.coincarp.com/currencies/rndrtoken/project-info/"
+            },
+            {
+              "title": "Render (RENDER) Tokenomics - Tokenomist",
+              "url": "https://tokenomist.ai/render-token"
+            }
+          ],
+          "templateMapping": {
+            "team": 0,
+            "investors": 0,
+            "community": 0,
+            "ecosystem": 65,
+            "treasury": 10,
+            "liquidity": 0,
+            "foundation": 0,
+            "publicSale": 25
+          },
+          "vestingMapping": {
+            "ecosystem": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 6,
+              "vestingMonths": 60
+            },
+            "publicSale": {
+              "tgePercent": 16,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            }
+          }
+        },
+        {
+          "name": "Virtuals Protocol",
+          "symbol": "VIRTUAL",
+          "launchYear": 2024,
+          "buckets": [
+            {
+              "label": "Public Circulation",
+              "percent": 60
+            },
+            {
+              "label": "DAO Treasury",
+              "percent": 35
+            },
+            {
+              "label": "Liquidity Pools",
+              "percent": 5
+            }
+          ],
+          "tgeFloat": "~65% (public circulation and liquidity fully liquid; treasury has no published schedule)",
+          "vestingFacts": [
+            "Fixed 1B supply with no future unlocks scheduled - all public tokens already released.",
+            "~35% sits in a DAO treasury with undefined disbursement rules.",
+            "No team/investor vesting cliffs ahead - the open question is treasury governance, not unlocks."
+          ],
+          "sources": [
+            {
+              "title": "8Blocks - Virtuals Protocol Tokenomics Audit",
+              "url": "https://8blocks.io/audits/virtuals-protocol-tokenomics-audit"
+            }
+          ],
+          "templateMapping": {
+            "team": 0,
+            "investors": 0,
+            "community": 60,
+            "ecosystem": 0,
+            "treasury": 35,
+            "liquidity": 5,
+            "foundation": 0,
+            "publicSale": 0
+          },
+          "vestingMapping": {
+            "community": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            },
+            "treasury": {
+              "tgePercent": 0,
+              "cliffMonths": 0,
+              "vestingMonths": 120
+            },
+            "liquidity": {
+              "tgePercent": 100,
+              "cliffMonths": 0,
+              "vestingMonths": 0
+            }
+          },
+          "audited": true,
+          "auditUrl": "https://8blocks.io/audits/virtuals-protocol-tokenomics-audit"
+        }
+      ]
+    }
+  ],
+  "verifiedAt": "July 2026"
+}
