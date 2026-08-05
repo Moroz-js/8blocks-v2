@@ -79,7 +79,13 @@ async function main() {
   )
 }
 
-main().catch((error: unknown) => {
-  console.error('Cases seed failed:', error)
-  process.exit(1)
-})
+main()
+  .then(() => {
+    // Payload's Postgres adapter keeps its pg pool alive in standalone scripts.
+    // This is a one-off deployment seed, so terminate after all writes finish.
+    process.exit(0)
+  })
+  .catch((error: unknown) => {
+    console.error('Cases seed failed:', error)
+    process.exit(1)
+  })
