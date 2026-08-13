@@ -15,7 +15,7 @@ import {
   UploadFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { ExpertQuoteBlock } from '../blocks/index.ts'
+import { AuditTableBlock, ExpertQuoteBlock } from '../blocks/index.ts'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -154,7 +154,7 @@ export const Articles: CollectionConfig = {
             enabledCollections: ['articles'],
           }),
           BlocksFeature({
-            blocks: [ExpertQuoteBlock],
+            blocks: [ExpertQuoteBlock, AuditTableBlock],
           }),
           UploadFeature({
             maxDepth: 2,

@@ -14,7 +14,12 @@ import {
   UploadFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { ChartBlock, ChartRowBlock, ExpertQuoteBlock } from '../blocks/index.ts'
+import {
+  AuditTableBlock,
+  ChartBlock,
+  ChartRowBlock,
+  ExpertQuoteBlock,
+} from '../blocks/index.ts'
 
 const publicCaseWhere: Where = {
   and: [
@@ -173,7 +178,9 @@ export const Cases: CollectionConfig = {
           BlockquoteFeature(),
           HorizontalRuleFeature(),
           LinkFeature({ enabledCollections: ['articles'] }),
-          BlocksFeature({ blocks: [ChartBlock, ChartRowBlock, ExpertQuoteBlock] }),
+          BlocksFeature({
+            blocks: [ChartBlock, ChartRowBlock, ExpertQuoteBlock, AuditTableBlock],
+          }),
           UploadFeature({
             maxDepth: 2,
             collections: {
