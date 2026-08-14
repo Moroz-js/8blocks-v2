@@ -23,6 +23,27 @@ import styles from './Platform.module.scss'
 const TOOL = 'da_diagnostic'
 const common = platformPagesContent.common
 
+type PillarLevel = 'strong' | 'moderate' | 'weak'
+
+function getPillarLevel(score: number, max: number): PillarLevel {
+  const ratio = score / max
+  if (ratio >= 0.75) return 'strong'
+  if (ratio >= 0.4) return 'moderate'
+  return 'weak'
+}
+
+const pillarLevelLabel: Record<PillarLevel, string> = {
+  strong: t({ ru: 'сильный', en: 'strong' }),
+  moderate: t({ ru: 'средний', en: 'moderate' }),
+  weak: t({ ru: 'слабый', en: 'weak' }),
+}
+
+const pillarLevelClass: Record<PillarLevel, string> = {
+  strong: styles.pillarStrong,
+  moderate: styles.pillarModerate,
+  weak: styles.pillarWeak,
+}
+
 const pillarByQuestion: Record<string, string> = {
   business_type: t({ ru: 'Бизнес', en: 'Business' }),
   leverage: t({ ru: 'Актив', en: 'Asset' }),
@@ -87,24 +108,27 @@ function Verdict({
       <section className={styles.card}>
         <span className={styles.label}>{common.pillars}</span>
         <div className={styles.pillarGrid}>
-          {pillars.map((pillar) => (
-            <div key={pillar.key}>
-              <div className={styles.spread}>
-                <span>
-                  {PILLARS.find((item) => item.key === pillar.key)?.label}
-                </span>
-                <span className={styles.mono}>
-                  {pillar.score}/{pillar.max}
-                </span>
+          {pillars.map((pillar) => {
+            const level = getPillarLevel(pillar.score, pillar.max)
+            return (
+              <div key={pillar.key}>
+                <div className={styles.spread}>
+                  <span>
+                    {PILLARS.find((item) => item.key === pillar.key)?.label}
+                  </span>
+                  <span className={`${styles.mono} ${pillarLevelClass[level]}`}>
+                    {pillar.score}/{pillar.max} · {pillarLevelLabel[level]}
+                  </span>
+                </div>
+                <div className={styles.bar}>
+                  <div
+                    className={`${styles.barFill} ${pillarLevelClass[level]}`}
+                    style={{ width: `${(pillar.score / pillar.max) * 100}%` }}
+                  />
+                </div>
               </div>
-              <div className={styles.bar}>
-                <div
-                  className={styles.barFill}
-                  style={{ width: `${(pillar.score / pillar.max) * 100}%` }}
-                />
-              </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
         {drivers.length > 0 && (
           <div className={styles.drivers}>

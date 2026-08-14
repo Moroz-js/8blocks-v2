@@ -14,7 +14,7 @@ const enObject = {
       'For owners of established businesses and real assets. We assess the business case, design the economics and holder rights, and coordinate implementation with specialised legal, technical, and market partners.',
     ctaLabel: 'Book a free 45-min call',
     ctaHref: 'https://calendly.com/care-8blocks/intro',
-    secondaryLabel: 'Check your readiness in 3 min',
+    secondaryLabel: 'Check your readiness',
     secondaryHref: '/product/tokenization-readiness',
     points: [
       'Keep operating control',
@@ -31,6 +31,9 @@ const enObject = {
     exampleSourceHref:
       'https://dubailand.gov.ae/en/news-media/dld-launches-the-mena-s-first-tokenized-real-estate-project-through-the-prypco-mint-platform',
   },
+  stickyLead: 'Ready to look at your asset?',
+  legalDisclaimer:
+    'This content is provided for informational and educational purposes only. It does not constitute investment, financial, legal, or tax advice, and is not a recommendation to buy, sell, or hold any token or digital asset. Token design does not guarantee any financial return, token price performance, or regulatory outcome. Crypto assets carry a high risk of loss. The legal classification of a token depends on its specific structure and the applicable jurisdiction. Readers should conduct independent research and consult qualified legal and financial advisors.',
   paths: {
     number: '01',
     label: 'Who this is for',
@@ -44,6 +47,8 @@ const enObject = {
     items: [
       {
         own: 'Commercial real estate',
+        image: '/img/tf-property.jpg',
+        imageAlt: 'Illuminated commercial building at night',
         result: 'capital without selling the asset',
         holdersGet:
           'Defined economic rights in the asset — designed to be enforceable and reviewed by your counsel',
@@ -52,6 +57,8 @@ const enObject = {
       },
       {
         own: 'Securities or fund interests',
+        image: '/img/tf-securities.jpg',
+        imageAlt: 'Financial district office towers',
         result: 'liquidity and a wider investor pool',
         holdersGet: 'The same instrument in digital form, tradable in smaller lots',
         youKeep: 'The issuance terms and the investor registry',
@@ -59,6 +66,8 @@ const enObject = {
       },
       {
         own: 'Debt and collateral on the books',
+        image: '/img/tf-settlement.jpg',
+        imageAlt: 'Archived paper records',
         result: 'a secondary market for what sits as dead weight',
         holdersGet: 'A defined claim on documented debt or its income',
         youKeep: 'The client relationships and the servicing',
@@ -66,6 +75,8 @@ const enObject = {
       },
       {
         own: 'High-value movables people rent',
+        image: '/img/tf-movables.jpg',
+        imageAlt: 'Yacht at sunset',
         result: 'fractional ownership with rental income',
         holdersGet: 'A share in the asset and its rental income',
         youKeep: 'Custody, management, and the rental calendar',

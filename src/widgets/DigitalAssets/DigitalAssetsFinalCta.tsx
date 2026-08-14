@@ -6,7 +6,7 @@ import { digitalAssetsContent } from '@/shared/content/digitalAssets'
 import styles from './DigitalAssets.module.scss'
 
 const ease = 'easeOut' as const
-const { finalCta } = digitalAssetsContent
+const { finalCta, legalDisclaimer } = digitalAssetsContent
 
 export function DigitalAssetsFinalCta() {
   return (
@@ -42,6 +42,7 @@ export function DigitalAssetsFinalCta() {
           )}
         </div>
       </motion.div>
+      <p className={styles.legalDisclaimer}>{legalDisclaimer}</p>
     </section>
   )
 }

@@ -134,12 +134,15 @@ export function PipelineDemo() {
         ))}
       </div>
       <div className={`${styles.card} ${styles.demoPanel}`}>
-        <span className={styles.label}>
-          demo · {content.demoSteps[phase][0]}
-        </span>
+        <div className={styles.spread}>
+          <span className={styles.label}>
+            demo · {content.demoSteps[phase][0]}
+          </span>
+          <span className={styles.simulatedBadge}>{content.simulatedLabel}</span>
+        </div>
         <DemoPanel phase={phase} tick={remaining} />
         <p className={styles.fine}>
-          {content.disclaimer}
+          {content.simulationDisclaimer}
         </p>
       </div>
     </div>

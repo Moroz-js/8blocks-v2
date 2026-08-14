@@ -1,10 +1,11 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { digitalAssetsContent } from '@/shared/content/digitalAssets'
 import styles from './DigitalAssets.module.scss'
 
-const { hero } = digitalAssetsContent
+const { hero, stickyLead } = digitalAssetsContent
 
 export function DigitalAssetsStickyCta() {
   const [visible, setVisible] = useState(false)
@@ -38,11 +39,16 @@ export function DigitalAssetsStickyCta() {
 
   return (
     <div className={`${styles.stickyCta} ${visible ? styles.stickyCtaVisible : ''}`} aria-hidden={!visible}>
-      <span>{hero.ctaLabel}</span>
+      <span>{stickyLead}</span>
       {visible && (
-        <a href={hero.ctaHref} target="_blank" rel="noopener noreferrer" className={styles.stickyCtaButton}>
-          {hero.ctaLabel}
-        </a>
+        <div className={styles.stickyCtaActions}>
+          <a href={hero.ctaHref} target="_blank" rel="noopener noreferrer" className={styles.stickyCtaPrimary}>
+            {hero.ctaLabel}
+          </a>
+          <Link href={hero.secondaryHref} className={styles.stickyCtaSecondary}>
+            {hero.secondaryLabel}
+          </Link>
+        </div>
       )}
     </div>
   )

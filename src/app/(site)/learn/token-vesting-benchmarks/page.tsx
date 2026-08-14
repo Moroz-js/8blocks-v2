@@ -203,7 +203,7 @@ export default function TokenVestingBenchmarksPage() {
                   <p className={styles.fine}>median · {bucket.median}</p>
                 )}
                 <details>
-                  <summary>{copy.contextSources} +</summary>
+                  <summary className={styles.detailsSummary}>{copy.contextSources}</summary>
                   <p className={styles.description}>{bucket.note}</p>
                   <SourceLinks sources={[bucket.source, bucket.source2]} />
                 </details>

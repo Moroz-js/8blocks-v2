@@ -15,6 +15,7 @@ export const tokenLabCalculator = t({
       title: 'Найдите красные флаги токеномики, пока их ещё дёшево исправить.',
       description:
         'Задайте распределение и вестинг. Structure Score покажет, где предложение создаёт давление продаж и какое исправление даст максимальный эффект.',
+      primaryCta: 'Проверить дизайн токена',
     },
     toolLabel: 'Tokenomics Calculator',
     toolNote: 'Бесплатно · без регистрации · данные остаются в браузере',
@@ -138,6 +139,7 @@ export const tokenLabCalculator = t({
       title: 'Catch the red flags in your tokenomics while they are still cheap to fix.',
       description:
         'Map allocations and vesting. Structure Score shows where supply creates sell pressure and which fix matters most.',
+      primaryCta: 'Check my token design',
     },
     toolLabel: 'Tokenomics Calculator',
     toolNote: 'Free · no signup · your data stays in the browser',

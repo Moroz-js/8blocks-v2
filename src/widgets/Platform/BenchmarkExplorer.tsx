@@ -160,7 +160,7 @@ export function BenchmarkExplorer() {
 
       <div className={styles.card}>
         <details>
-          <summary>{copy.categoryDefinition} +</summary>
+          <summary className={styles.detailsSummary}>{copy.categoryDefinition}</summary>
           <p className={styles.description}>{category.categoryInsight}</p>
         </details>
         <p className={styles.fine}>
@@ -207,7 +207,7 @@ export function BenchmarkExplorer() {
                 </li>
               )}
             </ul>
-            <div className={styles.spread}>
+            <div className={`${styles.spread} ${styles.projectActions}`}>
               {project.audited && project.auditUrl ? (
                 <a className={styles.source} href={project.auditUrl}>
                   {copy.readAudit} ↗

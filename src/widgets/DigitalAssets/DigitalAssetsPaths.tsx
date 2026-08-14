@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { digitalAssetsContent } from '@/shared/content/digitalAssets'
 import { SectionHead } from './SectionHead'
@@ -28,6 +29,15 @@ export function DigitalAssetsPaths() {
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.5, ease, delay: i * 0.08 }}
             >
+              <div className={styles.pathImageWrap}>
+                <Image
+                  src={item.image}
+                  alt={item.imageAlt}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  className={styles.pathImage}
+                />
+              </div>
               <div className={styles.pathOwn}>
                 <span className={styles.pathRowLabel}>{paths.youOwnLabel}</span>
                 <h3 className={styles.pathTitle}>{item.own}</h3>

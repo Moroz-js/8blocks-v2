@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { diagnosticContent } from '@/shared/lib/platform/diagnostic/content'
 import { platformPagesContent } from '@/shared/content/platformPages'
 import { siteConfig } from '@/shared/config/site'
+import { t } from '@/shared/i18n'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { DiagnosticTool } from '@/widgets/Platform/DiagnosticTool'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
@@ -9,6 +10,22 @@ import styles from '@/widgets/Platform/Platform.module.scss'
 
 const landing = diagnosticContent.landing
 const copy = platformPagesContent.readiness
+const previewPillars = [
+  { score: 7, max: 8, level: 'strong' as const },
+  { score: 4, max: 8, level: 'moderate' as const },
+  { score: 5, max: 8, level: 'moderate' as const },
+  { score: 3, max: 8, level: 'weak' as const },
+]
+const levelLabels = {
+  strong: t({ ru: 'сильный', en: 'strong' }),
+  moderate: t({ ru: 'средний', en: 'moderate' }),
+  weak: t({ ru: 'слабый', en: 'weak' }),
+}
+const levelClasses = {
+  strong: styles.pillarStrong,
+  moderate: styles.pillarModerate,
+  weak: styles.pillarWeak,
+}
 
 export async function generateMetadata({
   searchParams,
@@ -50,7 +67,7 @@ export default function TokenizationReadinessPage() {
   }
 
   return (
-    <main className={styles.page}>
+    <main className={`${styles.page} ${styles.readinessPage}`}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -89,20 +106,25 @@ export default function TokenizationReadinessPage() {
               {diagnosticContent.verdicts[0].forWhom}
             </p>
             <div className={styles.previewPillars}>
-              {copy.methodologyItems.map(([title], index) => (
-                <div key={title}>
-                  <div className={styles.spread}>
-                    <span>{title}</span>
-                    <span className={styles.mono}>{82 - index * 6}</span>
+              {copy.methodologyItems.map(([title], index) => {
+                const pillar = previewPillars[index]
+                return (
+                  <div key={title}>
+                    <div className={styles.spread}>
+                      <span>{title}</span>
+                      <span className={`${styles.mono} ${levelClasses[pillar.level]}`}>
+                        {pillar.score}/{pillar.max} · {levelLabels[pillar.level]}
+                      </span>
+                    </div>
+                    <div className={styles.bar}>
+                      <div
+                        className={`${styles.barFill} ${levelClasses[pillar.level]}`}
+                        style={{ width: `${(pillar.score / pillar.max) * 100}%` }}
+                      />
+                    </div>
                   </div>
-                  <div className={styles.bar}>
-                    <div
-                      className={styles.barFill}
-                      style={{ width: `${82 - index * 6}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>

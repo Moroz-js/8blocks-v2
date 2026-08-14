@@ -27,9 +27,9 @@ export function TokenLabPage() {
             <span className={styles.eyebrow}>{content.hero.eyebrow}</span>
             <h1 className={styles.title}>{content.hero.title}</h1>
             <p className={styles.lead}>{content.hero.description}</p>
-            <div className={styles.scoreActions}>
+            <div className={`${styles.scoreActions} ${styles.heroActions}`}>
               <a href="#calculator" className={styles.linkButton}>
-                {content.toolLabel} →
+                {content.hero.primaryCta} →
               </a>
               <Link href={sampleUrl} className={styles.ghostButton}>
                 {isRussian ? 'Посмотреть пример' : 'See a sample result'}

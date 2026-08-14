@@ -114,6 +114,9 @@ export const platformPagesContent = t({
       heardPlaceholder: 'How did you hear…',
       disclaimer:
         'Early access request only — no payment now, no delivery promises. Not investment advice.',
+      simulatedLabel: 'simulated',
+      simulationDisclaimer:
+        'Illustration of the planned product flow — not a live model run.',
       goals: [
         'Prepare an investor round',
         'Get an expert check of my design',
@@ -281,6 +284,9 @@ export const platformPagesContent = t({
       heardPlaceholder: 'Как вы о нас узнали…',
       disclaimer:
         'Только заявка на ранний доступ — без оплаты и обещаний срока поставки. Не является инвестиционной рекомендацией.',
+      simulatedLabel: 'симуляция',
+      simulationDisclaimer:
+        'Иллюстрация планируемого процесса продукта — не запуск реальной модели.',
       goals: [
         'Подготовить раунд инвестиций',
         'Получить экспертную проверку дизайна',

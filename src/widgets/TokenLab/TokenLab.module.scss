@@ -658,6 +658,17 @@
   margin-top: 20px;
 }
 
+.heroActions {
+  .linkButton,
+  .ghostButton {
+    min-height: 48px;
+    padding: 0 20px;
+    font-family: $font-base;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
 .emailRow {
   display: flex;
   gap: 8px;
