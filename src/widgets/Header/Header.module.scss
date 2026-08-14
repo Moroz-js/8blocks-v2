@@ -175,6 +175,29 @@
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
 }
 
+.dropdownSection,
+.dropdownSectionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdownSectionSeparated {
+  margin-top: $space-2;
+  padding-top: $space-2;
+  border-top: 1px solid $border-secondary;
+}
+
+.dropdownSectionLabel {
+  margin: 0;
+  padding: $space-3 $space-4 $space-1;
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $text-tertiary;
+}
+
 .dropdownLink {
   display: block;
   padding: $space-3 $space-4;
@@ -367,6 +390,28 @@
   flex-direction: column;
   margin: 0;
   padding: 0;
+}
+
+.mobileNavSection,
+.mobileNavSectionList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobileNavSection + .mobileNavSection {
+  margin-top: $space-3;
+  padding-top: $space-3;
+  border-top: 1px solid $border-secondary;
+}
+
+.mobileNavSectionLabel {
+  margin: 0 0 $space-1;
+  font-family: $font-base;
+  font-size: $text-xs;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $text-tertiary;
 }
 
 .mobileNavLink {

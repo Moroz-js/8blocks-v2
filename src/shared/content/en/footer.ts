@@ -27,6 +27,7 @@ export const footerContent = {
     { label: 'Tokenomics', href: '/services/tokenomics' },
     { label: 'Tokenomics audit', href: '/services/audit' },
     { label: 'Tokenomics workshop', href: '/product/workshop' },
+    { label: 'Digital Assets Strategy', href: '/product/digital-assets' },
   ],
   productLinks: [
     {
@@ -36,10 +37,6 @@ export const footerContent = {
     {
       label: 'Tokenomics calculator',
       href: '/product/calculator',
-    },
-    {
-      label: 'Digital Asset Strategy',
-      href: '/product/digital-assets',
     },
     {
       label: 'Tokenization readiness',

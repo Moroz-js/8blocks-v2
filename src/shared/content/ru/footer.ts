@@ -26,6 +26,7 @@ export const footerContent = {
     { label: 'Базовая токеномика', href: '/services/tokenomics' },
     { label: 'Аудит токеномики', href: '/services/audit' },
     { label: 'Воркшоп по токеномике', href: '/product/workshop' },
+    { label: 'Стратегия цифровых активов', href: '/product/digital-assets' },
   ],
   productLinks: [
     {
@@ -35,10 +36,6 @@ export const footerContent = {
     {
       label: 'Калькулятор токеномики',
       href: '/product/calculator',
-    },
-    {
-      label: 'Стратегия цифровых активов',
-      href: '/product/digital-assets',
     },
     {
       label: 'Готовность к токенизации',

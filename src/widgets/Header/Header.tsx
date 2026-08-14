@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { navGroups } from '@/shared/config/site'
+import { navGroups, type NavItem } from '@/shared/config/site'
 import { t } from '@/shared/i18n'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { Button, Logo } from '@/shared/ui'
@@ -12,6 +12,20 @@ import { useThemeScopeActive } from '@/shared/lib/ThemeScope'
 import styles from './Header.module.scss'
 
 const soonLabel = t({ ru: 'скоро', en: 'soon' })
+
+function getNavSections(items: NavItem[]) {
+  return items.reduce<Array<{ label?: string; items: NavItem[] }>>((sections, item) => {
+    const lastSection = sections.at(-1)
+
+    if (lastSection && lastSection.label === item.section) {
+      lastSection.items.push(item)
+    } else {
+      sections.push({ label: item.section, items: [item] })
+    }
+
+    return sections
+  }, [])
+}
 
 interface HeaderProps {
   mediaEnabled?: boolean
@@ -93,22 +107,32 @@ export function Header({
                   </button>
                   <div className={styles.dropdown}>
                     <ul className={styles.dropdownList}>
-                      {group.items.map((item) =>
-                        item.soon ? (
-                          <li key={item.label}>
-                            <span className={styles.dropdownSoon}>
-                              {item.label}
-                              <span className={styles.soonBadge}>{soonLabel}</span>
-                            </span>
-                          </li>
-                        ) : (
-                          <li key={item.href}>
-                            <Link href={item.href} className={styles.dropdownLink}>
-                              {item.label}
-                            </Link>
-                          </li>
-                        ),
-                      )}
+                      {getNavSections(group.items).map((section, sectionIndex) => (
+                        <li
+                          key={section.label ?? 'default'}
+                          className={`${styles.dropdownSection} ${sectionIndex > 0 ? styles.dropdownSectionSeparated : ''}`}
+                        >
+                          {section.label && <p className={styles.dropdownSectionLabel}>{section.label}</p>}
+                          <ul className={styles.dropdownSectionList}>
+                            {section.items.map((item) =>
+                              item.soon ? (
+                                <li key={item.label}>
+                                  <span className={styles.dropdownSoon}>
+                                    {item.label}
+                                    <span className={styles.soonBadge}>{soonLabel}</span>
+                                  </span>
+                                </li>
+                              ) : (
+                                <li key={item.href}>
+                                  <Link href={item.href} className={styles.dropdownLink}>
+                                    {item.label}
+                                  </Link>
+                                </li>
+                              ),
+                            )}
+                          </ul>
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </li>
@@ -160,26 +184,33 @@ export function Header({
               >
                 <p className={styles.mobileNavGroupLabel}>{group.label}</p>
                 <ul className={styles.mobileNavList}>
-                  {group.items.map((item) =>
-                    item.soon ? (
-                      <li key={item.label}>
-                        <span className={`${styles.mobileNavLink} ${styles.mobileNavSoon}`}>
-                          {item.label}
-                          <span className={styles.soonBadge}>{soonLabel}</span>
-                        </span>
-                      </li>
-                    ) : (
-                      <li key={item.href}>
-                        <Link
-                          href={item.href}
-                          className={styles.mobileNavLink}
-                          onClick={() => setIsOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      </li>
-                    ),
-                  )}
+                  {getNavSections(group.items).map((section) => (
+                    <li key={section.label ?? 'default'} className={styles.mobileNavSection}>
+                      {section.label && <p className={styles.mobileNavSectionLabel}>{section.label}</p>}
+                      <ul className={styles.mobileNavSectionList}>
+                        {section.items.map((item) =>
+                          item.soon ? (
+                            <li key={item.label}>
+                              <span className={`${styles.mobileNavLink} ${styles.mobileNavSoon}`}>
+                                {item.label}
+                                <span className={styles.soonBadge}>{soonLabel}</span>
+                              </span>
+                            </li>
+                          ) : (
+                            <li key={item.href}>
+                              <Link
+                                href={item.href}
+                                className={styles.mobileNavLink}
+                                onClick={() => setIsOpen(false)}
+                              >
+                                {item.label}
+                              </Link>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </li>
+                  ))}
                 </ul>
               </div>
             ))}

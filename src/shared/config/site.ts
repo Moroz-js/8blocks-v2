@@ -44,6 +44,8 @@ export const siteConfig = {
 export interface NavItem {
   label: string
   href: string
+  /** Optional subgroup heading inside a dropdown. */
+  section?: string
   /** Пункт ещё не готов — рендерится как неактивный с бейджем «скоро». */
   soon?: boolean
 }
@@ -61,23 +63,18 @@ export const navGroups: NavGroup[] = [
       { label: t({ ru: 'Базовая токеномика', en: 'Tokenomics' }), href: '/services/tokenomics' },
       { label: t({ ru: 'Аудит токеномики', en: 'Audit' }), href: '/services/audit' },
       { label: t({ ru: 'Воркшоп по токеномике', en: 'Workshop' }), href: '/product/workshop' },
+      { label: t({ ru: 'Стратегия цифровых активов', en: 'Digital Assets Strategy' }), href: '/product/digital-assets' },
     ],
   },
   {
     label: t({ ru: 'Продукты', en: 'Products' }),
     items: [
-      { label: t({ ru: 'Запуск токена с Fibonacci и BingX', en: 'Token launch with Fibonacci & BingX' }), href: '/product/token-launch' },
-      { label: t({ ru: 'Калькулятор токеномики', en: 'Calculator' }), href: '/product/calculator' },
-      { label: t({ ru: 'Стратегия цифровых активов', en: 'Digital Asset Strategy' }), href: '/product/digital-assets' },
-      { label: t({ ru: 'Готовность к токенизации', en: 'Tokenization Readiness' }), href: '/product/tokenization-readiness' },
-      { label: t({ ru: 'Кейсы токенизации', en: 'Tokenization Cases' }), href: '/product/tokenization-cases' },
-      { label: 'Tokenomics AI', href: '/product/tokenomics-ai' },
-    ],
-  },
-  {
-    label: t({ ru: 'Обучение', en: 'Learn' }),
-    items: [
-      { label: t({ ru: 'Бенчмарки вестинга токенов', en: 'Token Vesting Benchmarks' }), href: '/learn/token-vesting-benchmarks' },
+      { label: t({ ru: 'Запуск токена с Fibonacci и BingX', en: 'Token launch with Fibonacci & BingX' }), href: '/product/token-launch', section: t({ ru: 'Токеномика', en: 'Tokenomics' }) },
+      { label: t({ ru: 'Калькулятор токеномики', en: 'Calculator' }), href: '/product/calculator', section: t({ ru: 'Токеномика', en: 'Tokenomics' }) },
+      { label: t({ ru: 'Бенчмарки вестинга токенов', en: 'Token Vesting Benchmarks' }), href: '/learn/token-vesting-benchmarks', section: t({ ru: 'Токеномика', en: 'Tokenomics' }) },
+      { label: 'Tokenomics AI', href: '/product/tokenomics-ai', section: t({ ru: 'Токеномика', en: 'Tokenomics' }) },
+      { label: t({ ru: 'Готовность к токенизации', en: 'Tokenization Readiness' }), href: '/product/tokenization-readiness', section: t({ ru: 'Цифровые активы', en: 'Digital Assets' }) },
+      { label: t({ ru: 'Кейсы токенизации', en: 'Tokenization Cases' }), href: '/product/tokenization-cases', section: t({ ru: 'Цифровые активы', en: 'Digital Assets' }) },
     ],
   },
   {
@@ -91,6 +88,7 @@ export const navGroups: NavGroup[] = [
   {
     label: t({ ru: 'О нас', en: 'About us' }),
     items: [
+      { label: t({ ru: 'О компании', en: 'About' }), href: '/about' },
       { label: t({ ru: 'Кейсы', en: 'Cases' }), href: '/cases' },
       { label: t({ ru: 'Пресса', en: 'Press' }), href: '/press' },
       { label: t({ ru: 'Контакты', en: 'Contacts' }), href: '/contact' },
