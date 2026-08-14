@@ -1395,29 +1395,6 @@
   margin: 0;
 }
 
-.faqNetwork {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-2;
-}
-
-.faqNetworkLink {
-  font-family: $font-base;
-  font-size: $text-sm;
-  color: $text-secondary;
-  text-decoration: none;
-  border: 1px solid $border-secondary;
-  padding: $space-2 $space-3;
-  transition: border-color $transition-base, color $transition-base;
-
-  &:hover {
-    border-color: $text-secondary;
-    color: $text-primary;
-  }
-
-  @include focus-ring;
-}
-
 // ─── Final CTA ────────────────────────────────────────────────────────────────
 
 .finalSection {

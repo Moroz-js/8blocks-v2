@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Container } from '@/shared/ui'
+import { ButtonLink, Container } from '@/shared/ui'
+import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import styles from './AboutPage.module.scss'
 
 type Locale = 'ru' | 'en'
@@ -199,7 +200,7 @@ export function AboutPage({ locale }: AboutPageProps) {
   const copy = content[locale]
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <section className={styles.hero}>
         <Container>
           <div className={styles.heroInner}>
@@ -207,12 +208,12 @@ export function AboutPage({ locale }: AboutPageProps) {
             <h1>{copy.heroTitle}</h1>
             <p className={styles.heroText}>{copy.heroText}</p>
             <div className={styles.actions}>
-              <Link href="/contact" className={styles.primaryAction}>
-                {copy.primaryCta} <span aria-hidden="true">→</span>
-              </Link>
-              <a href="#what-we-do" className={styles.secondaryAction}>
+              <ButtonLink href="/contact" size="lg" icon={<ArrowIcon />}>
+                {copy.primaryCta}
+              </ButtonLink>
+              <ButtonLink href="#what-we-do" variant="secondary" size="lg">
                 {copy.secondaryCta}
-              </a>
+              </ButtonLink>
             </div>
           </div>
         </Container>
@@ -351,20 +352,25 @@ export function AboutPage({ locale }: AboutPageProps) {
         </Container>
       </section>
 
-      <section className={styles.final}>
-        <Container>
-          <div className={styles.finalInner}>
-            <p className={styles.label}>[{copy.nextLabel}]</p>
-            <h2>{copy.finalTitle}</h2>
-            <p>{copy.finalText}</p>
-            <Link href="/contact" className={styles.primaryAction}>
-              {copy.finalCta} <span aria-hidden="true">→</span>
-            </Link>
-          </div>
-        </Container>
-      </section>
+      <ServiceCtaBlock
+        headline={
+          <>
+            {copy.finalTitle}
+            <span className={styles.finalDescription}>{copy.finalText}</span>
+          </>
+        }
+        ctaLabel={copy.finalCta}
+        ctaHref="/contact"
+      />
+    </div>
+  )
+}
 
-    </main>
+function ArrowIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M3 8h10m0 0L9 4m4 4L9 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   )
 }
 

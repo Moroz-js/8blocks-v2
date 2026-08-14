@@ -51,6 +51,10 @@
 }
 
 .partnerLogoFibonacci {
-  height: 46px;
-  max-width: 120px;
+  height: 66px;
+  max-width: none;
+
+  @media (max-width: #{$bp-mobile}) {
+    height: 52px;
+  }
 }

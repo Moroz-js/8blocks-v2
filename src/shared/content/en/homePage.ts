@@ -122,7 +122,7 @@ export const partnersContent = {
     { name: 'CEDRO', logo: '/partners/3.svg' },
     { name: 'Lodes.tech', logo: '/partners/4.svg', href: 'https://lodestech.ru' },
     { name: 'Meta Lamp', logo: '/partners/5.svg', href: 'https://metalamp.io/' },
-    { name: 'Fibonacci', logo: '/partners/7.svg', href: 'https://fibonacci.market/' },
+    { name: 'Fibonacci', logo: '/partners/fibonacci-white.png', href: 'https://fibonacci.market/' },
     { name: 'ICODA', logo: '/partners/8.svg', href: 'https://icoda.io/' },
     { name: 'Peanut', logo: '/partners/11.svg', href: 'https://peanut.trade/' },
     { name: 'Generis', logo: '/partners/12.svg', href: 'https://generis.agency/' },

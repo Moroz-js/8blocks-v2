@@ -1,5 +1,4 @@
 @use '@/shared/styles/variables' as *;
-@use '@/shared/styles/auditPageLayout' as layout;
 
 .toc {
   width: 100%;
@@ -12,7 +11,7 @@
 }
 
 .inner {
-  @include layout.contentContainer;
+  width: 100%;
 }
 
 .title {

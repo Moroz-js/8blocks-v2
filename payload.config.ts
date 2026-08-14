@@ -40,6 +40,11 @@ import {
 import { SiteSeo } from './payload/globals/index.ts'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
+const payloadSecret = process.env.PAYLOAD_SECRET
+
+if (!payloadSecret) {
+  throw new Error('PAYLOAD_SECRET is required')
+}
 
 export default buildConfig({
   // ── Admin UI language (Payload), не путать с NEXT_PUBLIC_LANG на фронте ──
@@ -119,7 +124,7 @@ export default buildConfig({
   globals: [SiteSeo],
 
   // ── Secret & Security ───────────────────────────────────────────
-  secret: process.env.PAYLOAD_SECRET || 'fallback-secret-change-in-production',
+  secret: payloadSecret,
 
   // ── TypeScript output ───────────────────────────────────────────
   typescript: {

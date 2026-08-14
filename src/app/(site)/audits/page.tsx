@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { AuditsArchive } from '@/widgets/AuditsArchive'
+import { MethodologySection } from '@/widgets/MethodologySection'
 import type { PublicAuditCard } from '@/entities/public-audit'
 import { auditsMeta } from '@/shared/content/auditsPage'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
@@ -67,11 +68,14 @@ export default async function AuditsPage({ searchParams }: PageProps) {
   })
 
   return (
-    <AuditsArchive
-      audits={audits}
-      totalPages={auditsResult.totalPages}
-      currentPage={currentPage}
-      totalDocs={auditsResult.totalDocs}
-    />
+    <>
+      <AuditsArchive
+        audits={audits}
+        totalPages={auditsResult.totalPages}
+        currentPage={currentPage}
+        totalDocs={auditsResult.totalDocs}
+      />
+      <MethodologySection />
+    </>
   )
 }

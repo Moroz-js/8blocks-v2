@@ -13,6 +13,7 @@ import * as migration_20260713_000000_authors from './20260713_000000_authors'
 import * as migration_20260713_000001_launch_modules from './20260713_000001_launch_modules'
 import * as migration_20260714_000000_multiple_authors from './20260714_000000_multiple_authors'
 import * as migration_20260714_000001_download_cta from './20260714_000001_download_cta'
+import * as migration_20260803_000000_author_links_and_locked_relations from './20260803_000000_author_links_and_locked_relations'
 import * as migration_20260803_000000_token_launch_copy from './20260803_000000_token_launch_copy'
 import * as migration_20260804_000000_cases from './20260804_000000_cases'
 import * as migration_20260805_000000_case_categories from './20260805_000000_case_categories'
@@ -94,6 +95,11 @@ export const migrations = [
     up: migration_20260714_000001_download_cta.up,
     down: migration_20260714_000001_download_cta.down,
     name: '20260714_000001_download_cta',
+  },
+  {
+    up: migration_20260803_000000_author_links_and_locked_relations.up,
+    down: migration_20260803_000000_author_links_and_locked_relations.down,
+    name: '20260803_000000_author_links_and_locked_relations',
   },
   {
     up: migration_20260803_000000_token_launch_copy.up,

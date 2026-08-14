@@ -1,14 +1,21 @@
 @use '@/shared/styles/variables' as *;
-@use '@/shared/styles/auditPageLayout' as layout;
 
 .root {
-  @include layout.contentContainer;
+  max-width: 860px;
+  margin-inline: auto;
+  padding-inline: $container-padding;
+  width: 100%;
+  box-sizing: border-box;
   padding-top: $space-9;
   padding-bottom: 0;
 
   @media (max-width: #{$bp-tablet}) {
     padding-top: $space-7;
     padding-bottom: 0;
+  }
+
+  @media (max-width: #{$bp-mobile}) {
+    padding-inline: $container-padding-mobile;
   }
 }
 

@@ -7,7 +7,6 @@ import { FaqAccordion } from '@/widgets/FaqAccordion'
 import { AuditZonesBlock } from '@/widgets/AuditZonesBlock'
 import { AuditAssumptionsBlock } from '@/widgets/AuditAssumptionsBlock'
 import { AuditOutputBlock } from '@/widgets/AuditOutputBlock'
-import { MethodologySection } from '@/widgets/MethodologySection'
 import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
 import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { siteConfig } from '@/shared/config/site'
@@ -60,7 +59,6 @@ export default function AuditPage() {
         headline={whatWeAnalyze.headline}
         description={whatWeAnalyze.description}
       />
-      <MethodologySection />
       <AuditOutputBlock
         headline={whatYouGet.headline}
         description={whatYouGet.description}

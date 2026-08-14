@@ -1,4 +1,4 @@
-export { Button } from './Button'
+export { Button, ButtonLink } from './Button'
 export { Container } from './Container'
 export { Section } from './Section'
 export { ScrollRevealText } from './ScrollRevealText'
