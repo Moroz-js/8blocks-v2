@@ -14,7 +14,7 @@ import puppeteer from 'puppeteer'
 const BASE = process.env.DOCS_BASE_URL || 'http://localhost:3000'
 const AUDIT_ID = process.env.DOCS_AUDIT_ID || '3'
 const AUDIT_SLUG = process.env.DOCS_AUDIT_SLUG || 'hype-tokenomics-audit'
-const OUT_DIR = path.resolve('public/staging-docs/audits-guide')
+const OUT_DIR = path.resolve('src/app/(site)/staging-docs/audits-guide/images')
 const MAX_HEIGHT = 1400
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
