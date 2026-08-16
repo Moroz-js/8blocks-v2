@@ -45,6 +45,10 @@ const nextConfig: NextConfig = {
     return [
       { source: '/media', destination: '/press', permanent: true },
       { source: '/media/:path*', destination: '/press/:path*', permanent: true },
+      // Внутренние инструкции со скриншотами админки живут только на стейджинге.
+      ...(IS_STAGING
+        ? []
+        : [{ source: '/staging-docs/:path*', destination: '/', permanent: false }]),
     ]
   },
 

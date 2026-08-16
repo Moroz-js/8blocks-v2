@@ -1,0 +1,86 @@
+@use '@/shared/styles/variables' as *;
+
+.article {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-block: 80px 120px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.label {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.intro {
+  max-width: 720px;
+}
+
+.section {
+  margin-top: 56px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.sectionTitle {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.text {
+  max-width: 720px;
+  margin-block: 20px;
+}
+
+.figure {
+  margin: 0 0 12px;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+}
+
+// Ширина по натуральному размеру: узкие скриншоты не растягиваются и не мылятся.
+.image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.caption {
+  padding: 8px 12px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+@media (max-width: #{$bp-mobile}) {
+  .article {
+    padding-block: 48px 80px;
+  }
+
+  .section {
+    margin-top: 40px;
+    padding-top: 28px;
+  }
+}
