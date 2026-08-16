@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { navGroups, type NavItem } from '@/shared/config/site'
@@ -9,9 +9,11 @@ import { uiStrings } from '@/shared/content/uiStrings'
 import { Button, Logo } from '@/shared/ui'
 import { ThemeToggle } from '@/shared/ui/ThemeToggle'
 import { useThemeScopeActive } from '@/shared/lib/ThemeScope'
+import { StagingBar } from './StagingBar'
 import styles from './Header.module.scss'
 
 const soonLabel = t({ ru: 'скоро', en: 'soon' })
+const isStaging = process.env.NEXT_PUBLIC_STAGING === 'true'
 
 function getNavSections(items: NavItem[]) {
   return items.reduce<Array<{ label?: string; items: NavItem[] }>>((sections, item) => {
@@ -51,6 +53,7 @@ export function Header({
 
   const [isOpen, setIsOpen] = useState(false)
   const [overHero, setOverHero] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
   const showThemeToggle = useThemeScopeActive()
 
@@ -68,8 +71,8 @@ export function Header({
         setOverHero(false)
         return
       }
-      const headerH = window.innerWidth <= 640 ? 56 : 64
-      setOverHero(hero.getBoundingClientRect().bottom > headerH)
+      const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0
+      setOverHero(hero.getBoundingClientRect().bottom > headerBottom)
     }
     update()
     window.addEventListener('scroll', update, { passive: true })
@@ -88,7 +91,11 @@ export function Header({
 
   return (
     <>
-      <header className={`${styles.header} ${overHero ? styles.overHero : ''}`}>
+      {isStaging && <StagingBar />}
+      <header
+        ref={headerRef}
+        className={`${styles.header} ${isStaging ? styles.headerStaging : ''} ${overHero ? styles.overHero : ''}`}
+      >
         <div className={styles.inner}>
           <Logo className={styles.logo} />
 
@@ -171,7 +178,7 @@ export function Header({
 
       {/* Mobile overlay menu */}
       <div
-        className={`${styles.mobileMenu} ${isOpen ? styles.mobileMenuOpen : ''}`}
+        className={`${styles.mobileMenu} ${isStaging ? styles.mobileMenuStaging : ''} ${isOpen ? styles.mobileMenuOpen : ''}`}
         aria-hidden={!isOpen}
       >
         <nav aria-label="Mobile navigation">

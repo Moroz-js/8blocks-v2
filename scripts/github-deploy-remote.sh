@@ -14,6 +14,14 @@ trap 'error_exit $LINENO' ERR
 
 PROJECT_DIR="/var/www/${PROJECT_NAME}"
 BUILD_ARCHIVE="${BUILD_ARCHIVE:-}"
+export PORT="${PORT:-3000}"
+HEALTH_PATH="${HEALTH_PATH:-/}"
+NEXT_PUBLIC_STAGING="${NEXT_PUBLIC_STAGING:-false}"
+NEXT_PUBLIC_BASE_PATH="${NEXT_PUBLIC_BASE_PATH:-}"
+NEXT_PUBLIC_STAGING_EN_URL="${NEXT_PUBLIC_STAGING_EN_URL:-}"
+NEXT_PUBLIC_STAGING_RU_URL="${NEXT_PUBLIC_STAGING_RU_URL:-}"
+NEXT_PUBLIC_BUILD_AT="${NEXT_PUBLIC_BUILD_AT:-}"
+SKIP_DATABASE_MAINTENANCE="${SKIP_DATABASE_MAINTENANCE:-false}"
 
 # Детерминированная кэш-директория Chrome для Puppeteer. Один и тот же путь
 # используется при установке браузера и в рантайме (через .env), чтобы не
@@ -46,6 +54,7 @@ echo "⚙️  Writing .env"
 umask 077
 printf '%s\n' \
   "NODE_ENV=production" \
+  "PORT=${PORT}" \
   "DATABASE_URI=${DATABASE_URI}" \
   "PAYLOAD_SECRET=${PAYLOAD_SECRET}" \
   "ADMIN_EMAIL=${ADMIN_EMAIL}" \
@@ -63,6 +72,11 @@ printf '%s\n' \
   "NEXT_PUBLIC_REPLAIN_ID=${NEXT_PUBLIC_REPLAIN_ID}" \
   "NEXT_PUBLIC_CALENDLY_URL=${NEXT_PUBLIC_CALENDLY_URL}" \
   "NEXT_PUBLIC_POSTHOG_KEY=${NEXT_PUBLIC_POSTHOG_KEY}" \
+  "NEXT_PUBLIC_STAGING=${NEXT_PUBLIC_STAGING}" \
+  "NEXT_PUBLIC_BASE_PATH=${NEXT_PUBLIC_BASE_PATH}" \
+  "NEXT_PUBLIC_STAGING_EN_URL=${NEXT_PUBLIC_STAGING_EN_URL}" \
+  "NEXT_PUBLIC_STAGING_RU_URL=${NEXT_PUBLIC_STAGING_RU_URL}" \
+  "NEXT_PUBLIC_BUILD_AT=${NEXT_PUBLIC_BUILD_AT}" \
   "PUPPETEER_CACHE_DIR=${PUPPETEER_CACHE_DIR}" \
   > .env
 chmod 600 .env
@@ -123,19 +137,23 @@ else
   echo "⚠️  Chrome not found in ${PUPPETEER_CACHE_DIR} (PDF export may not work)"
 fi
 
-# ── run migrations ────────────────────────────
-echo "🗄️  Running Payload migrations"
-./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
-  node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs \
-  scripts/run-migrations.ts
-echo "✓ Migrations applied"
+if [ "${SKIP_DATABASE_MAINTENANCE}" = "true" ]; then
+  echo "⏭️  Skipping migrations and seed (shared staging database)"
+else
+  # ── run migrations ──────────────────────────
+  echo "🗄️  Running Payload migrations"
+  ./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
+    node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs \
+    scripts/run-migrations.ts
+  echo "✓ Migrations applied"
 
-# ── seed legacy cases ──────────────────────────
-# The seed is idempotent: it creates missing mini-cases by slug and only fills
-# an empty category on existing legacy mini-cases. It never deletes content.
-echo "🌱 Seeding missing legacy mini-cases"
-npm run seed:cases
-echo "✓ Cases seed complete"
+  # ── seed legacy cases ────────────────────────
+  # The seed is idempotent: it creates missing mini-cases by slug and only fills
+  # an empty category on existing legacy mini-cases. It never deletes content.
+  echo "🌱 Seeding missing legacy mini-cases"
+  npm run seed:cases
+  echo "✓ Cases seed complete"
+fi
 
 # ── regenerate Payload import map ─────────────
 # Гарантируем, что src/app/(payload)/admin/importMap.js соответствует текущим
@@ -182,7 +200,7 @@ echo "✓ Uploads directory ready"
 
 # ── health check ─────────────────────────────
 sleep 5
-HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/ 2>/dev/null || echo "000")
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:${PORT}${HEALTH_PATH}" 2>/dev/null || echo "000")
 if echo "$HTTP_CODE" | grep -qE "^(200|301|302|307|308)$"; then
   echo "✅ Health check passed (HTTP $HTTP_CODE)"
 else

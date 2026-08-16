@@ -30,6 +30,8 @@ const manrope = Manrope({
   variable: '--font-manrope',
 })
 
+const isStaging = process.env.NEXT_PUBLIC_STAGING === 'true'
+
 export const metadata: Metadata = {
   title: {
     default: `${siteConfig.name} — ${siteConfig.description}`,
@@ -55,6 +57,18 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  robots: isStaging
+    ? {
+        index: false,
+        follow: false,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: false,
+          noimageindex: true,
+        },
+      }
+    : undefined,
 }
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {

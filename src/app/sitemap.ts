@@ -18,6 +18,10 @@ const BASE = siteConfig.url.replace(/\/$/, '')
 export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (process.env.NEXT_PUBLIC_STAGING === 'true') {
+    return []
+  }
+
   const now = new Date()
 
   const servicePages: MetadataRoute.Sitemap = siteConfig.servicesEnabled

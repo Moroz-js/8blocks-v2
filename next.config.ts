@@ -36,8 +36,11 @@ function buildContentSecurityPolicy(): string {
 }
 
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy();
+const IS_STAGING = process.env.NEXT_PUBLIC_STAGING === "true";
 
 const nextConfig: NextConfig = {
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
+
   async redirects() {
     return [
       { source: '/media', destination: '/press', permanent: true },
@@ -61,6 +64,14 @@ const nextConfig: NextConfig = {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
           },
+          ...(IS_STAGING
+            ? [
+                {
+                  key: "X-Robots-Tag",
+                  value: "noindex, nofollow, noarchive, nosnippet",
+                },
+              ]
+            : []),
         ],
       },
     ];

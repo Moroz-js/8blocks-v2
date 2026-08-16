@@ -13,6 +13,10 @@
   transition: background $transition-fast, border-color $transition-fast;
 }
 
+.headerStaging {
+  top: 32px;
+}
+
 // Transparent header with light text while it overlaps a dark audit hero.
 .overHero {
   background: transparent;
@@ -344,6 +348,10 @@
   @media (min-width: calc(#{$bp-tablet} + 1px)) {
     display: none;
   }
+}
+
+.mobileMenuStaging {
+  padding-top: 88px; // staging bar + header
 }
 
 .mobileMenuOpen {
