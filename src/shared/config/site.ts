@@ -1,4 +1,5 @@
 import { lang, t } from '@/shared/i18n'
+import { methodologyContent } from '@/shared/content/methodology'
 
 /** Canonical и metadataBase всегда с https, даже если в env указан http:// */
 function siteUrlWithHttps(raw: string): string {
@@ -89,6 +90,7 @@ export const navGroups: NavGroup[] = [
     label: t({ ru: 'О нас', en: 'About us' }),
     items: [
       { label: t({ ru: 'О компании', en: 'About' }), href: '/about' },
+      { label: t({ ru: 'Методология А8А9', en: '8Blocks Methodology' }), href: `/${methodologyContent.slug}` },
       { label: t({ ru: 'Кейсы', en: 'Cases' }), href: '/cases' },
       { label: t({ ru: 'Пресса', en: 'Press' }), href: '/press' },
       { label: t({ ru: 'Контакты', en: 'Contacts' }), href: '/contact' },

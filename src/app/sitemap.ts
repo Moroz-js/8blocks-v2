@@ -9,6 +9,7 @@ import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where
 import { visiblePublishedResearchWhere } from '@/shared/lib/visible-research-where'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
 import { visibleFullCaseWhere } from '@/shared/lib/visible-case-where'
+import { methodologyContent } from '@/shared/content/methodology'
 
 const BASE = siteConfig.url.replace(/\/$/, '')
 
@@ -53,6 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/product/tokenization-cases`, lastModified: now, priority: 0.7 },
     { url: `${BASE}/product/tokenomics-ai`, lastModified: now, priority: 0.7 },
     { url: `${BASE}/learn/token-vesting-benchmarks`, lastModified: now, priority: 0.7 },
+    { url: `${BASE}/${methodologyContent.slug}`, lastModified: new Date(methodologyContent.updatedAt), priority: 0.8 },
     { url: `${BASE}/cases`,          lastModified: now, priority: 0.7 },
     ...(hasVisibleBlog ? [{ url: `${BASE}/blog`, lastModified: now, priority: 0.8 }] : []),
     ...(hasVisibleResearch ? [{ url: `${BASE}/research`, lastModified: now, priority: 0.8 }] : []),
