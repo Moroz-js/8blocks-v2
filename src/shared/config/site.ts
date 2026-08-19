@@ -32,7 +32,7 @@ export const siteConfig = {
     lang === 'en'
       ? 'https://www.google.com/maps/search/?api=1&query=25.0606875%2C55.1415625'
       : 'https://yandex.ru/maps/-/CHeBrV0g',
-  ogImage: '/og-image.png',
+  ogImage: lang === 'ru' ? '/og-image.png' : '/og-image-en.png',
   /** When false, /services and /services/* return 404 (links stay visible). */
   servicesEnabled: true,
   /** When false, /blog and /blog/* return 404 (links stay visible). */

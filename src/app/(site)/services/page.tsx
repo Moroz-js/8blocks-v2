@@ -8,6 +8,7 @@ import { TokenomicsTestBlock } from '@/widgets/TokenomicsTestBlock'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
 import { Container } from '@/shared/ui'
 import { servicesPageContent, servicesFaqContent, servicesMeta } from '@/shared/content/homePage'
+import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -16,16 +17,16 @@ export async function generateMetadata(): Promise<Metadata> {
     description: servicesMeta.description,
     alternates: { canonical: '/services' },
     openGraph: {
-      title: `${servicesMeta.title} | А8А9 токеномика.рф`,
+      title: `${servicesMeta.title} | ${siteConfig.name}`,
       description: servicesMeta.ogDescription,
       url: '/services',
-      images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${servicesMeta.title} | А8А9 токеномика.рф`,
+      title: `${servicesMeta.title} | ${siteConfig.name}`,
       description: servicesMeta.ogDescription,
-      images: ['/og-image.png'],
+      images: [siteConfig.ogImage],
     },
   })
 }
