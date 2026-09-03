@@ -4,7 +4,7 @@ import styles from './PrivacyPolicy.module.scss'
 
 const LAST_UPDATED = '9 февраля 2026'
 const COMPANY_ADDRESS =
-  'ООО «Инерция Мысли», Москва, Ленинский проспект, 15а'
+  'ООО «Инерция Мысли», г. Москва, Пресненская наб., 8, стр. 1'
 
 export function PrivacyPolicyRu() {
   return (

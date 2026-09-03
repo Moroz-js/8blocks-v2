@@ -26,13 +26,13 @@ export const siteConfig = {
   legalName: t({ ru: 'ООО «Инерция Мысли»', en: '8BLOCKS FZCO' }),
   phone: t({ ru: '8 918 253 79 69', en: '+971 56 286 5188' }),
   address: t({
-    ru: 'Москва, Ленинский проспект, 15а',
+    ru: 'г. Москва, Пресненская наб., 8, стр. 1',
     en: 'UT-12-CO-372, DMCC Business Centre, Level No 12, Uptown Tower, Dubai, United Arab Emirates',
   }),
   addressUrl:
     lang === 'en'
       ? 'https://www.google.com/maps/search/?api=1&query=25.0606875%2C55.1415625'
-      : 'https://yandex.ru/maps/-/CHeBrV0g',
+      : 'https://yandex.ru/maps/?text=%D0%9F%D1%80%D0%B5%D1%81%D0%BD%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%20%D0%BD%D0%B0%D0%B1.%2C%208%2C%20%D1%81%D1%82%D1%80.%201',
   ogImage: lang === 'ru' ? '/og-image.png' : '/og-image-en.png',
   /** When false, /services and /services/* return 404 (links stay visible). */
   servicesEnabled: true,
