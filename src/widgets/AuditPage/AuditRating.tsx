@@ -115,7 +115,13 @@ export function AuditRating({
         <div className={styles.card}>
           <p className={styles.cardTitle}>{L.profile}</p>
           <div ref={radarRef} className={styles.radarWrap}>
-            <RadarChart width={radarWidth} height={440} data={radarData} outerRadius="82%">
+            <RadarChart
+              width={radarWidth}
+              height={440}
+              data={radarData}
+              outerRadius="82%"
+              title={`${L.profile} — ${title ?? L.ratingTitle}`}
+            >
               <PolarGrid stroke="currentColor" strokeOpacity={0.18} />
               <PolarAngleAxis
                 dataKey="subject"
@@ -193,7 +199,30 @@ export function AuditRating({
                 </div>
                 <div className={styles.expertInfo}>
                   <span className={styles.expertLabel}>{L.leadExpert}</span>
-                  {expert?.name && <span className={styles.expertName}>{expert.name}</span>}
+                  {expert?.name &&
+                    (expert.linkedIn ? (
+                      <a
+                        href={expert.linkedIn}
+                        className={`${styles.expertName} ${styles.expertNameLink}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {expert.name}
+                        <svg
+                          className={styles.expertLinkedInIcon}
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          aria-hidden="true"
+                        >
+                          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.55V9h3.57v11.45Z" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <span className={styles.expertName}>{expert.name}</span>
+                    ))}
+                  {expert?.role && <span className={styles.expertRole}>{expert.role}</span>}
                 </div>
               </div>
             )}
@@ -206,8 +235,8 @@ export function AuditRating({
               <tr>
                 <th>{L.colBlock}</th>
                 <th>{L.colWeight}</th>
-                <th>Score (0–5)</th>
-                <th>Score (0–100)</th>
+                <th>{t({ ru: 'Оценка (0–5)', en: 'Score (0–5)' })}</th>
+                <th>{t({ ru: 'Оценка (0–100)', en: 'Score (0–100)' })}</th>
                 <th>{t({ ru: 'Вклад', en: 'Contribution' })}</th>
               </tr>
             </thead>
