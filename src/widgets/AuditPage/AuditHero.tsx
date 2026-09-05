@@ -75,7 +75,7 @@ export function AuditHero({ title, slug, hero, eyebrowDate, print = false }: Pro
         )}
 
         {!print && (
-          <a href={`/api/audits/${slug}/pdf`} className={styles.pdfButton} data-no-print>
+          <a href={`/api/audits/${slug}/pdf`} className={styles.pdfButton} data-no-print rel="nofollow">
             {auditsArchiveContent.downloadPdf}
             <Download size={18} />
           </a>
