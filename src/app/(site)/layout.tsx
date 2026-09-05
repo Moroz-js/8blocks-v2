@@ -34,8 +34,8 @@ const isStaging = process.env.NEXT_PUBLIC_STAGING === 'true'
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} — ${siteConfig.description}`,
-    template: `%s | ${siteConfig.name}`,
+    default: `${siteConfig.brandShort} — ${siteConfig.description}`,
+    template: `%s | ${siteConfig.brandShort}`,
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),

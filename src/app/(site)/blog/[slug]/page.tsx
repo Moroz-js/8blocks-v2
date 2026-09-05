@@ -131,6 +131,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ogImage?: unknown
         twitterTitle?: string
         twitterDescription?: string
+        alternateSlug?: string | null
+        noAlternates?: boolean | null
       } | undefined) ?? {}
     const title = seo.seoTitle ?? articleDoc.title
     const description = seo.seoDescription ?? (typeof articleDoc.excerpt === 'string' ? articleDoc.excerpt : undefined) ?? siteConfig.description
@@ -159,7 +161,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
       },
     }
-    return withPayloadPageMetadata(`/blog/${slug}`, base)
+    return withPayloadPageMetadata(`/blog/${slug}`, base, {
+      otherLangPath: seo.alternateSlug?.trim() ? `/blog/${seo.alternateSlug.trim()}` : null,
+      none: seo.noAlternates === true,
+    })
   }
 
   const categoryResult = await payload.find({

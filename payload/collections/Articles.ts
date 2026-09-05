@@ -299,6 +299,24 @@ export const Articles: CollectionConfig = {
             description: 'Запрещает индексацию страницы',
           },
         },
+        {
+          name: 'alternateSlug',
+          type: 'text',
+          label: 'Slug на сайте другого языка (hreflang)',
+          admin: {
+            description:
+              'Slug этой же статьи на сайте другого языка (EN ↔ RU). Пусто — тот же slug. Используется для hreflang.',
+          },
+        },
+        {
+          name: 'noAlternates',
+          type: 'checkbox',
+          label: 'Нет версии на другом языке',
+          defaultValue: false,
+          admin: {
+            description: 'Статья существует только на этом языке — hreflang не выводить.',
+          },
+        },
       ],
     },
 

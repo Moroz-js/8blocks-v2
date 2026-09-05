@@ -1,6 +1,8 @@
 export { getSiteSeoGlobal, getSiteSeoPageOverride } from './get-site-seo'
 export { mergePageSeoMetadata } from './merge-metadata'
 export { withPayloadPageMetadata } from './with-payload-page-metadata'
+export { buildLanguageAlternates, HREFLANG_HOSTS } from './hreflang'
+export type { HreflangOptions } from './hreflang'
 export { normalizeContentPath } from './normalize-path'
 export { mediaToAbsoluteUrl } from './media-absolute-url'
 export { getBlogExtraHeadMarkup } from './blog-extra-head-markup'
