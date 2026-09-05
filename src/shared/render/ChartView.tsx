@@ -226,6 +226,7 @@ export function ChartView({
           {renderChart(type, data, {
             mainColor,
             name,
+            title: caption || seriesLabel || undefined,
             series: resolvedSeries,
             width,
             height: resolvedHeight,
@@ -254,6 +255,7 @@ function renderChart(
   opts: {
     mainColor: string
     name: string
+    title?: string
     series: ChartSeriesDef[]
     width: number
     height: number
@@ -265,7 +267,12 @@ function renderChart(
   switch (type) {
     case 'donut':
       return (
-        <PieChart width={width} height={height} margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
+        <PieChart
+          width={width}
+          height={height}
+          title={opts.title}
+          margin={{ top: 8, right: 8, left: 8, bottom: 8 }}
+        >
           <Tooltip
             contentStyle={TOOLTIP_STYLE}
             itemStyle={TOOLTIP_TEXT_STYLE}
@@ -298,6 +305,7 @@ function renderChart(
         <BarChart
           width={width}
           height={height}
+          title={opts.title}
           data={data}
           layout="vertical"
           margin={{ left: 12, right: 28, top: 8, bottom: 8 }}
@@ -324,6 +332,7 @@ function renderChart(
         <BarChart
           width={width}
           height={height}
+          title={opts.title}
           data={data}
           margin={{ top: 12, right: 24, left: 8, bottom: 8 }}
         >
@@ -345,11 +354,11 @@ function renderChart(
       )
 
     case 'area':
-      return renderMultiSeriesChart('area', data, series, width, height, externalLegend)
+      return renderMultiSeriesChart('area', data, series, width, height, externalLegend, opts.title)
 
     case 'line':
     default:
-      return renderMultiSeriesChart('line', data, series, width, height, externalLegend)
+      return renderMultiSeriesChart('line', data, series, width, height, externalLegend, opts.title)
   }
 }
 
@@ -360,6 +369,7 @@ function renderMultiSeriesChart(
   width: number,
   height: number,
   externalLegend?: boolean,
+  title?: string,
 ) {
   const useRight = series.some((s) => s.yAxis === 'right')
   const useLeft = series.some((s) => s.yAxis !== 'right')
@@ -370,6 +380,7 @@ function renderMultiSeriesChart(
     <Chart
       width={width}
       height={height}
+      title={title}
       data={data}
       margin={{
         top: 12,

@@ -35,10 +35,16 @@ export function AuditHero({ title, slug, hero, eyebrowDate, print = false }: Pro
         <div className={styles.head}>
           <div className={styles.titleBlock}>
             <span className={styles.eyebrow}>{eyebrow}</span>
-            <h1 className={styles.ticker}>
-              {ticker}
-              {ticker !== title && <span className={styles.srOnly}>{title}</span>}
-            </h1>
+            {ticker !== title ? (
+              <>
+                <p className={styles.tickerBadge} aria-hidden="true">
+                  {ticker}
+                </p>
+                <h1 className={styles.title}>{title}</h1>
+              </>
+            ) : (
+              <h1 className={styles.ticker}>{title}</h1>
+            )}
             {siteLabel &&
               (siteHref ? (
                 <a

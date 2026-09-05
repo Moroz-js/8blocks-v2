@@ -76,6 +76,32 @@
   }
 }
 
+/* Visual ticker badge — not part of the document outline (h1 is the audit title below). */
+.tickerBadge {
+  font-family: $font-base;
+  font-size: clamp(48px, 7vw, 80px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: $space-1 0 0;
+
+  @media (max-width: #{$bp-mobile}) {
+    font-size: $text-4xl;
+  }
+}
+
+.title {
+  font-family: $font-base;
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: rgba(244, 241, 248, 0.85);
+  margin: $space-2 0 0;
+  max-width: 40ch;
+}
+
 .srOnly {
   position: absolute;
   width: 1px;
