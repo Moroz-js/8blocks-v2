@@ -8,6 +8,7 @@ import ruAudits from '@/shared/lib/platform/benchmarks/audits.ru.json'
 import { platformPagesContent } from '@/shared/content/platformPages'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { buildPageGraph, datasetNode } from '@/shared/lib/page-schema'
 import { BenchmarkExplorer } from '@/widgets/Platform/BenchmarkExplorer'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
 import styles from '@/widgets/Platform/Platform.module.scss'
@@ -103,15 +104,29 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function TokenVestingBenchmarksPage() {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faq.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: { '@type': 'Answer', text: item.a },
-    })),
-  }
+  const path = '/learn/token-vesting-benchmarks'
+  const buckets = (content as { buckets: { label: string; source?: { title: string; url: string }; source2?: { title: string; url: string } }[] }).buckets
+  const citations = buckets
+    .flatMap((b) => [b.source, b.source2])
+    .filter((c): c is { title: string; url: string } => Boolean(c && c.url))
+    .filter((c, i, arr) => arr.findIndex((x) => x.url === c.url) === i)
+  const schema = buildPageGraph({
+    path,
+    name: copy.title,
+    description: copy.description,
+    crumbs: [{ name: copy.title, path }],
+    faq: faq.map((item) => ({ question: item.q, answer: item.a })),
+    extra: [
+      datasetNode(path, {
+        name: copy.title,
+        description: copy.description,
+        temporalCoverage: '2024/2026',
+        variableMeasured: buckets.map((b) => b.label),
+        citations,
+        keywords: ['token vesting', 'token allocation', 'tokenomics benchmarks'],
+      }),
+    ],
+  })
 
   return (
     <main className={styles.page}>

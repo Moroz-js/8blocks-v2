@@ -19,6 +19,7 @@ import type { LaunchModuleView } from '@/widgets/TokenLaunch'
 import { lang } from '@/shared/i18n'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { buildPageGraph } from '@/shared/lib/page-schema'
 
 export async function generateMetadata(): Promise<Metadata> {
   return withPayloadPageMetadata('/product/token-launch', {
@@ -144,8 +145,19 @@ export default async function TokenLaunchPage() {
     }),
   }
 
+  const pageJsonLd = buildPageGraph({
+    path: '/product/token-launch',
+    name: tokenLaunchMeta.title,
+    description: tokenLaunchMeta.description,
+    crumbs: [{ name: tokenLaunchMeta.title, path: '/product/token-launch' }],
+  })
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

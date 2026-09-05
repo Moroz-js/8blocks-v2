@@ -13,12 +13,12 @@ import { lang } from '@/shared/i18n'
 
 const BASE = siteConfig.url.replace(/\/$/, '')
 const ORG_NAME = siteConfig.name
-const ORG_ID = `${BASE}/#organization`
-const SITE_ID = `${BASE}/#website`
+export const ORG_ID = `${BASE}/#organization`
+export const SITE_ID = `${BASE}/#website`
 
 type Node = Record<string, unknown>
 
-function organizationNode(): Node {
+export function organizationNode(): Node {
   return {
     '@type': 'Organization',
     '@id': ORG_ID,
@@ -29,7 +29,7 @@ function organizationNode(): Node {
   }
 }
 
-function websiteNode(): Node {
+export function websiteNode(): Node {
   return {
     '@type': 'WebSite',
     '@id': SITE_ID,
@@ -47,7 +47,7 @@ function breadcrumbNode(url: string, sectionLabel: string, sectionPath: string, 
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: lang === 'ru' ? 'Главная' : 'Home', item: `${BASE}/` },
       { '@type': 'ListItem', position: 2, name: sectionLabel, item: `${BASE}${sectionPath}` },
-      { '@type': 'ListItem', position: 3, name: title },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   }
 }
@@ -59,7 +59,7 @@ export interface AuditSchemaInput {
   imageUrl?: string | null
   publishedAt?: string | null
   updatedAt?: string | null
-  expert?: { name?: string | null; role?: string | null; photoUrl?: string | null }
+  expert?: { name?: string | null; role?: string | null; photoUrl?: string | null; sameAs?: string[] | null }
   hero?: { company?: string | null; tokenName?: string | null; score?: number | null; letterRating?: string | null }
 }
 
@@ -109,6 +109,7 @@ export function buildAuditGraph(input: AuditSchemaInput): Node {
       name: expertName,
       ...(input.expert?.role ? { jobTitle: input.expert.role } : {}),
       ...(input.expert?.photoUrl ? { image: input.expert.photoUrl } : {}),
+      ...(input.expert?.sameAs?.length ? { sameAs: input.expert.sameAs } : {}),
       worksFor: { '@id': ORG_ID },
     })
   }

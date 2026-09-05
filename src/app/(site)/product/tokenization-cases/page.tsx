@@ -3,6 +3,10 @@ import Link from 'next/link'
 import { platformPagesContent } from '@/shared/content/platformPages'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { buildPageGraph, itemListNode } from '@/shared/lib/page-schema'
+import { lang } from '@/shared/i18n'
+import enCases from '@/shared/lib/platform/cases/content.json'
+import ruCases from '@/shared/lib/platform/cases/content.ru.json'
 import { CasesShowcase } from '@/widgets/Platform/CasesShowcase'
 import styles from '@/widgets/Platform/Platform.module.scss'
 
@@ -31,6 +35,30 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function TokenizationCasesPage() {
+  const path = '/product/tokenization-cases'
+  const data = (lang === 'ru' ? ruCases : enCases) as {
+    cases: { name: string; line?: string; year?: string; source?: { title: string; url: string } }[]
+  }
+  const jsonLd = buildPageGraph({
+    path,
+    name: copy.title,
+    description: copy.description,
+    pageType: 'CollectionPage',
+    crumbs: [{ name: copy.title, path }],
+    extra: [
+      itemListNode(
+        path,
+        copy.title,
+        data.cases.map((c) => ({
+          name: c.name,
+          description: c.line ?? null,
+          datePublished: c.year ?? null,
+          citation: c.source ?? null,
+        })),
+      ),
+    ],
+  })
+
   const logos = [
     'blackrock',
     'jpmorgan',
@@ -42,6 +70,10 @@ export default function TokenizationCasesPage() {
 
   return (
     <main className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className={styles.hero}>
         <div className={`${styles.container} ${styles.heroCentered}`}>
           <div className={styles.badges}>

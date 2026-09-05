@@ -18,6 +18,7 @@ import { MantineThemeBridge } from '@/shared/lib/MantineThemeBridge'
 import { ReplainWidget } from '@/shared/lib/ReplainWidget'
 import { HeadMarkupInjector } from '@/widgets/HeadMarkupInjector'
 import { getBlogExtraHeadMarkup, getSiteSeoGlobal, getSiteSeoPageOverride } from '@/shared/lib/site-seo'
+import { organizationNode, websiteNode } from '@/shared/lib/content-schema'
 import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
 import { getBlogEnabled } from '@/shared/lib/getBlogEnabled'
 import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
@@ -73,6 +74,8 @@ export const metadata: Metadata = {
     : undefined,
 }
 
+const siteEntityJsonLd = { '@context': 'https://schema.org', '@graph': [organizationNode(), websiteNode()] }
+
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get('x-pathname') ?? '/'
   const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled, blogNavEnabled, researchEnabled] = await Promise.all([
@@ -92,7 +95,14 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={htmlLang} className={manrope.variable} suppressHydrationWarning>
-      <head>{headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}</head>
+      <head>
+        {/* Site-wide entities: every page graph links to #organization / #website by @id. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteEntityJsonLd) }}
+        />
+        {headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}
+      </head>
       <body suppressHydrationWarning>
         <div
           aria-hidden="true"

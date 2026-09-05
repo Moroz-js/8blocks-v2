@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { platformPagesContent } from '@/shared/content/platformPages'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { buildPageGraph, webAppNode } from '@/shared/lib/page-schema'
 import {
   EarlyAccessCta,
   PipelineDemo,
@@ -58,8 +59,29 @@ function ComparisonCard({
 }
 
 export default function TokenomicsAiPage() {
+  const path = '/product/tokenomics-ai'
+  const jsonLd = buildPageGraph({
+    path,
+    name: copy.title,
+    description: copy.description,
+    crumbs: [{ name: 'Tokenomics AI', path }],
+    extra: [
+      webAppNode(path, {
+        type: 'SoftwareApplication',
+        name: 'Tokenomics AI',
+        description: copy.description,
+        price: 299,
+        currency: 'USD',
+        availability: 'PreOrder',
+      }),
+    ],
+  })
   return (
     <main className={styles.page}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className={styles.hero}>
         <div className={`${styles.container} ${styles.heroCentered}`}>
           <div className={styles.badges}>
