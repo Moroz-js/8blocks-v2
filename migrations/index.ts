@@ -133,6 +133,8 @@ export const migrations = [
     up: migration_20260905_000000_articles_alternate_slug.up,
     down: migration_20260905_000000_articles_alternate_slug.down,
     name: '20260905_000000_articles_alternate_slug',
+  },
+  {
     up: migration_20260909_000000_events.up,
     down: migration_20260909_000000_events.down,
     name: '20260909_000000_events',
