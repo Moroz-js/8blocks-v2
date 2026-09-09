@@ -9,6 +9,8 @@ const ALLOWED_MIME_TYPES = [
   'image/svg+xml',
   'application/pdf',
   'application/zip',
+  'video/mp4',
+  'video/webm',
 ]
 
 export const Media: CollectionConfig = {

@@ -40,6 +40,8 @@ export const siteConfig = {
   blogEnabled: true,
   /** When false, /product/digital-assets returns 404 and nav links are hidden. */
   digitalAssetsEnabled: true,
+  /** When false, the events link is hidden from the navigation. */
+  eventsEnabled: true,
 } as const
 
 export interface NavItem {
@@ -92,6 +94,7 @@ export const navGroups: NavGroup[] = [
       { label: t({ ru: 'О компании', en: 'About' }), href: '/about' },
       { label: t({ ru: 'Методология А8А9', en: '8Blocks Methodology' }), href: `/${methodologyContent.slug}` },
       { label: t({ ru: 'Кейсы', en: 'Cases' }), href: '/cases' },
+      { label: t({ ru: 'События', en: 'Events' }), href: '/events' },
       { label: t({ ru: 'Пресса', en: 'Press' }), href: '/press' },
       { label: t({ ru: 'Контакты', en: 'Contacts' }), href: '/contact' },
     ],

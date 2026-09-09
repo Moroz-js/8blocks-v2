@@ -33,12 +33,14 @@ interface HeaderProps {
   mediaEnabled?: boolean
   blogEnabled?: boolean
   researchEnabled?: boolean
+  eventsEnabled?: boolean
 }
 
 export function Header({
   mediaEnabled: _mediaEnabled,
   blogEnabled = false,
   researchEnabled = false,
+  eventsEnabled = false,
 }: HeaderProps) {
   const groups = navGroups
     .map((group) => ({
@@ -46,7 +48,8 @@ export function Header({
       items: group.items.filter(
         (item) =>
           (item.href !== '/blog' || blogEnabled) &&
-          (item.href !== '/research' || researchEnabled),
+          (item.href !== '/research' || researchEnabled) &&
+          (item.href !== '/events' || eventsEnabled),
       ),
     }))
     .filter((group) => group.items.length > 0)

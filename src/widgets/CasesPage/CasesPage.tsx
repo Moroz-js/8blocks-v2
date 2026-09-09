@@ -31,61 +31,64 @@ function CaseCard({ item, index }: { item: CaseCardData; index: number }) {
           <Image
             src={item.cover.url}
             alt={item.cover.alt}
-            fill
+            width={item.cover.width}
+            height={item.cover.height}
             sizes="(max-width: 768px) 100vw, 50vw"
             className={styles.cardCoverImage}
           />
         </div>
       )}
 
-      <div className={styles.cardHeader}>
-        {tag && (
-          <span className={`${styles.cardTag} ${tagClassMap[tag] ?? styles.tagDefault}`}>
-            {tag}
-          </span>
-        )}
-        {item.service && (
-          <span className={styles.serviceTag}>
-            {casesUiContent.serviceLabels[item.service]}
-          </span>
-        )}
-      </div>
-
-      <h3 className={styles.cardTitle}>{item.title}</h3>
-
-      <div className={styles.cardTask}>
-        <p className={styles.cardTaskLabel}>{casesUiContent.taskLabel}</p>
-        <p className={styles.cardTaskText}>{item.task}</p>
-      </div>
-
-      {item.actions.length > 0 && (
-        <div className={styles.cardActions}>
-          <p className={styles.cardActionsLabel}>{casesUiContent.actionsLabel}</p>
-          {item.actions.map((action, actionIndex) => (
-            <div key={`${item.slug}-${actionIndex}`} className={styles.actionItem}>
-              <span className={styles.actionArrow} aria-hidden>→</span>
-              <span>{action}</span>
-            </div>
-          ))}
+      <div className={styles.cardBody}>
+        <div className={styles.cardHeader}>
+          {tag && (
+            <span className={`${styles.cardTag} ${tagClassMap[tag] ?? styles.tagDefault}`}>
+              {tag}
+            </span>
+          )}
+          {item.service && (
+            <span className={styles.serviceTag}>
+              {casesUiContent.serviceLabels[item.service]}
+            </span>
+          )}
         </div>
-      )}
 
-      <div className={styles.cardResult}>
-        <p className={styles.resultLabel}>{casesUiContent.resultLabel}</p>
-        {item.metricValue && (
-          <p className={styles.resultMetric}>
-            {item.metricValue}
-            {item.metricLabel && <span>{item.metricLabel}</span>}
-          </p>
+        <h3 className={styles.cardTitle}>{item.title}</h3>
+
+        <div className={styles.cardTask}>
+          <p className={styles.cardTaskLabel}>{casesUiContent.taskLabel}</p>
+          <p className={styles.cardTaskText}>{item.task}</p>
+        </div>
+
+        {item.actions.length > 0 && (
+          <div className={styles.cardActions}>
+            <p className={styles.cardActionsLabel}>{casesUiContent.actionsLabel}</p>
+            {item.actions.map((action, actionIndex) => (
+              <div key={`${item.slug}-${actionIndex}`} className={styles.actionItem}>
+                <span className={styles.actionArrow} aria-hidden>→</span>
+                <span>{action}</span>
+              </div>
+            ))}
+          </div>
         )}
-        <p className={styles.resultText}>{item.result}</p>
-      </div>
 
-      {isFull && (
-        <span className={styles.cardCta}>
-          {casesUiContent.viewFull} <span aria-hidden>→</span>
-        </span>
-      )}
+        <div className={styles.cardResult}>
+          <p className={styles.resultLabel}>{casesUiContent.resultLabel}</p>
+          {item.metricValue && (
+            <p className={styles.resultMetric}>
+              {item.metricValue}
+              {item.metricLabel && <span>{item.metricLabel}</span>}
+            </p>
+          )}
+          <p className={styles.resultText}>{item.result}</p>
+        </div>
+
+        {isFull && (
+          <span className={styles.cardCta}>
+            {casesUiContent.viewFull} <span aria-hidden>→</span>
+          </span>
+        )}
+      </div>
     </>
   )
 

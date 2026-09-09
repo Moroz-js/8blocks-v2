@@ -10,6 +10,8 @@ import { visiblePublishedResearchWhere } from '@/shared/lib/visible-research-whe
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
 import { visibleFullCaseWhere } from '@/shared/lib/visible-case-where'
 import { methodologyContent } from '@/shared/content/methodology'
+import { getEventsEnabled } from '@/shared/lib/getEventsEnabled'
+import { visibleEventWhere } from '@/shared/lib/visible-event-where'
 
 const BASE = siteConfig.url.replace(/\/$/, '')
 
@@ -34,10 +36,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ]
     : []
 
-  const [blogEnabledRaw, hasVisibleResearch, hasVisibleAudits] = await Promise.all([
+  const [blogEnabledRaw, hasVisibleResearch, hasVisibleAudits, hasVisibleEvents] = await Promise.all([
     getBlogEnabled(),
     getResearchEnabled(),
     getPublicAuditsEnabled(),
+    getEventsEnabled(),
   ])
   const hasVisibleBlog = siteConfig.blogEnabled && blogEnabledRaw
 
@@ -59,6 +62,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(hasVisibleBlog ? [{ url: `${BASE}/blog`, lastModified: now, priority: 0.8 }] : []),
     ...(hasVisibleResearch ? [{ url: `${BASE}/research`, lastModified: now, priority: 0.8 }] : []),
     ...(hasVisibleAudits ? [{ url: `${BASE}/audits`, lastModified: now, priority: 0.8 }] : []),
+    ...(hasVisibleEvents ? [{ url: `${BASE}/events`, lastModified: now, priority: 0.7 }] : []),
     { url: `${BASE}/about`,          lastModified: now, priority: 0.6 },
     { url: `${BASE}/contact`,        lastModified: now, priority: 0.5 },
     { url: `${BASE}/privacy-policy`, lastModified: now, priority: 0.3 },
@@ -117,6 +121,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       }))
 
+    const eventPages: MetadataRoute.Sitemap = hasVisibleEvents
+      ? (
+          await payload.find({
+            collection: 'events',
+            where: visibleEventWhere,
+            limit: 1000,
+            sort: 'startsAt',
+          })
+        ).docs
+          .filter((doc) => !(doc.seo as { noindex?: boolean } | undefined)?.noindex)
+          .map((doc) => ({
+            url: `${BASE}/events/${doc.slug}`,
+            lastModified: new Date(doc.updatedAt),
+            priority: 0.6,
+          }))
+      : []
+
     let categoryPages: MetadataRoute.Sitemap = []
     let articlePages: MetadataRoute.Sitemap = []
     if (hasVisibleBlog) {
@@ -149,6 +170,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...categoryPages,
       ...articlePages,
       ...researchPages,
+      ...eventPages,
     ]
   } catch {
     return staticPages

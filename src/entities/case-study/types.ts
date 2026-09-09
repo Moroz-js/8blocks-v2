@@ -5,6 +5,8 @@ export type CaseCategory = 'DeFi' | 'GameFi' | 'RWA' | 'Finance'
 export interface CaseMedia {
   url: string
   alt: string
+  width: number
+  height: number
 }
 
 export interface CaseCardData {

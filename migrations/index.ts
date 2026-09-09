@@ -19,6 +19,7 @@ import * as migration_20260804_000000_cases from './20260804_000000_cases'
 import * as migration_20260805_000000_case_categories from './20260805_000000_case_categories'
 import * as migration_20260806_000000_case_sort_order from './20260806_000000_case_sort_order'
 import * as migration_20260807_000000_remove_case_category from './20260807_000000_remove_case_category'
+import * as migration_20260909_000000_events from './20260909_000000_events'
 
 export const migrations = [
   {
@@ -125,5 +126,10 @@ export const migrations = [
     up: migration_20260807_000000_remove_case_category.up,
     down: migration_20260807_000000_remove_case_category.down,
     name: '20260807_000000_remove_case_category',
+  },
+  {
+    up: migration_20260909_000000_events.up,
+    down: migration_20260909_000000_events.down,
+    name: '20260909_000000_events',
   },
 ]

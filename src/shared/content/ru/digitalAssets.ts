@@ -13,7 +13,7 @@ const ruObject = {
     description:
       'Для владельцев устоявшегося бизнеса и реальных активов. Мы оцениваем бизнес-кейс, проектируем экономику и права держателей, а затем координируем реализацию с профильными юридическими, техническими и рыночными партнёрами.',
     ctaLabel: 'Записаться на бесплатный 45-минутный созвон',
-    ctaHref: 'https://calendly.com/care-8blocks/intro',
+    ctaHref: '/contact',
     secondaryLabel: 'Проверить готовность',
     secondaryHref: '/product/tokenization-readiness',
     points: [
@@ -184,7 +184,7 @@ const ruObject = {
     whoExecutesLabel: 'Кто исполняет',
     endsWithLabel: 'Итог',
     talkLabel: 'Записаться на созвон',
-    talkHref: 'https://calendly.com/care-8blocks/intro',
+    talkHref: '/contact',
     tiers: [
       {
         name: 'Essential',
@@ -400,7 +400,7 @@ const ruObject = {
     description:
       'Вы говорите с людьми, которые проектируют такие структуры, а не с менеджером по продажам. Вы уходите с диапазонами, реалистичным путём и понятным следующим шагом.',
     ctaLabel: 'Записаться на бесплатный 45-минутный созвон',
-    ctaHref: 'https://calendly.com/care-8blocks/intro',
+    ctaHref: '/contact',
     secondaryLabel: 'Или сначала проверьте готовность',
     secondaryHref: '/product/tokenization-readiness',
   },

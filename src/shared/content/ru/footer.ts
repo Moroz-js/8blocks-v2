@@ -9,11 +9,12 @@ export const footerContent = {
   mapTitle: 'Карта',
   copyright: 'Все права защищены.',
   privacyPolicy: 'Политика конфиденциальности',
-  mapEmbedSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2246.4!2d37.6082!3d55.7271!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54bca36edce63%3A0x5b0e4d43e4f5d2a0!2z0JvQtdC90LjQvdGB0LrQuNC5INC_0YDQvtGB0L_QtdC60YIsIDE10LAsINCc0L7RgdC60LLQsA!5e0!3m2!1sru!2sru',
+  mapEmbedSrc: 'https://yandex.ru/map-widget/v1/?ll=37.539021%2C55.747187&z=16&pt=37.539021%2C55.747187%2Cpm2rdm',
   pageLinks: [
     { label: 'Кейсы', href: '/cases' },
     { label: 'Блог', href: '/blog' },
     { label: 'Исследования', href: '/research' },
+    { label: 'События', href: '/events' },
     { label: 'Пресса', href: '/press' },
     { label: 'Публичные аудиты', href: '/audits' },
     { label: 'Контакты', href: '/contact' },

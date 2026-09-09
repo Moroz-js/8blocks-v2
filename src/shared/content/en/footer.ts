@@ -15,6 +15,7 @@ export const footerContent = {
     { label: 'Cases', href: '/cases' },
     { label: 'Blog', href: '/blog' },
     { label: 'Research', href: '/research' },
+    { label: 'Events', href: '/events' },
     { label: 'Press', href: '/press' },
     { label: 'Public audits', href: '/audits' },
     { label: 'Contact', href: '/contact' },

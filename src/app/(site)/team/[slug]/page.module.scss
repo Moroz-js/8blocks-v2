@@ -1,0 +1,34 @@
+@use '@/shared/styles/variables' as *;
+
+.root { padding-bottom: $space-12; }
+.profile {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: $space-11 $container-padding 0;
+  display: grid;
+  grid-template-columns: 256px minmax(0, 1fr);
+  align-items: start;
+  gap: $space-6;
+}
+.profile > img { width: 256px; height: 256px; object-fit: cover; }
+.profileInfo { max-width: 640px; }
+.profile h1 { margin: 0; font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl}); font-weight: 500; line-height: $leading-tight; color: $text-primary; }
+.position { margin: $space-2 0 0; font-size: $text-md; color: $text-secondary; }
+.bio { max-width: 640px; margin: $space-4 0 0; font-size: $text-base; line-height: $leading-relaxed; color: $text-secondary; }
+.socials { display: flex; gap: $space-4; margin-top: $space-5; padding-top: $space-5; border-top: 1px solid $border-secondary; }
+.socials a { width: 32px; height: 32px; display: grid; place-items: center; color: $text-secondary; }
+.socials a:hover { color: $text-primary; }
+.socials img { width: 32px; height: 32px; object-fit: contain; }
+.articles { max-width: $container-max; margin: 0 auto; padding: $space-10 $container-padding 0; }
+.articles h2 { margin: 0 0 $space-6; color: $text-primary; font-size: $text-2xl; font-weight: 500; }
+.articles > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: $space-6; }
+
+@media (max-width: #{$bp-tablet}) {
+  .articles > div { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: #{$bp-mobile}) {
+  .profile { padding: $space-10 $space-5 0; grid-template-columns: 1fr; }
+  .profile > img { width: 160px; height: 160px; }
+  .articles { padding: $space-10 $space-5 0; }
+  .articles > div { grid-template-columns: 1fr; }
+}
