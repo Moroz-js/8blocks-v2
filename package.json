@@ -15,7 +15,8 @@
     "payload:migrate": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate",
     "payload:migrate:create": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs node_modules/payload/dist/bin/index.js migrate:create",
     "payload:migrate:run": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/run-migrations.ts",
-    "seed:cases": "cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed-cases.ts"
+    "seed:cases": "cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed-cases.ts",
+    "seed:events": "cross-env NODE_ENV=development PAYLOAD_SKIP_EMAIL_INIT=true PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/seed-events.ts"
   },
   "dependencies": {
     "@mantine/core": "^7.17.1",

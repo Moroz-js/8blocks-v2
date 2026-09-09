@@ -33,12 +33,14 @@ interface HeaderProps {
   mediaEnabled?: boolean
   blogEnabled?: boolean
   researchEnabled?: boolean
+  eventsEnabled?: boolean
 }
 
 export function Header({
   mediaEnabled: _mediaEnabled,
   blogEnabled = false,
   researchEnabled = false,
+  eventsEnabled = false,
 }: HeaderProps) {
   const groups = navGroups
     .map((group) => ({
@@ -46,13 +48,15 @@ export function Header({
       items: group.items.filter(
         (item) =>
           (item.href !== '/blog' || blogEnabled) &&
-          (item.href !== '/research' || researchEnabled),
+          (item.href !== '/research' || researchEnabled) &&
+          (item.href !== '/events' || eventsEnabled),
       ),
     }))
     .filter((group) => group.items.length > 0)
 
   const [isOpen, setIsOpen] = useState(false)
   const [overHero, setOverHero] = useState(false)
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const headerRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
   const showThemeToggle = useThemeScopeActive()
@@ -102,12 +106,28 @@ export function Header({
           <nav className={styles.nav} aria-label="Main navigation">
             <ul className={styles.navList}>
               {groups.map((group) => (
-                <li key={group.label} className={styles.navGroup}>
+                <li
+                  key={group.label}
+                  className={`${styles.navGroup} ${openDropdown === group.label ? styles.navGroupOpen : ''}`}
+                  onMouseEnter={() => setOpenDropdown(group.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                  onFocus={() => setOpenDropdown(group.label)}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) {
+                      setOpenDropdown(null)
+                    }
+                  }}
+                >
                   <button
                     type="button"
                     className={styles.navLink}
                     aria-haspopup="true"
-                    onClick={(e) => e.currentTarget.blur()}
+                    aria-expanded={openDropdown === group.label}
+                    onClick={() => {
+                      setOpenDropdown((current) =>
+                        current === group.label ? null : group.label,
+                      )
+                    }}
                   >
                     {group.label}
                     <span className={styles.navChevron} aria-hidden="true">▾</span>
@@ -131,7 +151,11 @@ export function Header({
                                 </li>
                               ) : (
                                 <li key={item.href}>
-                                  <Link href={item.href} className={styles.dropdownLink}>
+                                  <Link
+                                    href={item.href}
+                                    className={styles.dropdownLink}
+                                    onClick={() => setOpenDropdown(null)}
+                                  >
                                     {item.label}
                                   </Link>
                                 </li>
@@ -181,8 +205,8 @@ export function Header({
         className={`${styles.mobileMenu} ${isStaging ? styles.mobileMenuStaging : ''} ${isOpen ? styles.mobileMenuOpen : ''}`}
         aria-hidden={!isOpen}
       >
-        <nav aria-label="Mobile navigation">
-          <div className={styles.mobileNavGroups}>
+        <nav className={styles.mobileNav} aria-label="Mobile navigation">
+          <div className={styles.mobileNavGroups} data-lenis-prevent>
             {groups.map((group, gi) => (
               <div
                 key={group.label}

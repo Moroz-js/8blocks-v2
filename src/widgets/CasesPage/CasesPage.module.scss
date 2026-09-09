@@ -115,12 +115,19 @@
 .cardLink,
 .cardStatic {
   min-height: 100%;
-  padding: $space-7;
   display: flex;
   flex-direction: column;
-  gap: $space-5;
   color: inherit;
   text-decoration: none;
+}
+
+.cardBody {
+  min-height: 100%;
+  padding: $space-7;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-5;
 
   @include tablet {
     padding: $space-6;
@@ -130,7 +137,6 @@
     padding: $space-5;
     gap: $space-4;
   }
-
 }
 
 .cardLink {
@@ -141,20 +147,14 @@
 }
 
 .cardCover {
-  position: relative;
-  aspect-ratio: 16 / 8;
-  overflow: hidden;
-  border: 1px solid $border-secondary;
   background: $bg-secondary;
+  line-height: 0;
 }
 
 .cardCoverImage {
-  object-fit: cover;
-  transition: transform 300ms ease;
-
-  .card:hover & {
-    transform: scale(1.025);
-  }
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .cardHeader {

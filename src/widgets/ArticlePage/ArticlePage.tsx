@@ -30,6 +30,8 @@ interface Props {
   basePath?: string
   /** Whether to track views via the articles API (blog only). */
   trackViews?: boolean
+  /** Expand the article layout to include the table of contents. */
+  wide?: boolean
 }
 
 export function ArticlePage({
@@ -37,6 +39,7 @@ export function ArticlePage({
   relatedArticles = [],
   basePath = '/blog',
   trackViews = true,
+  wide = false,
 }: Props) {
   const tocItems = buildToc(article.content)
   const readingTime = estimateReadingTime(article.content)
@@ -45,7 +48,7 @@ export function ArticlePage({
   const articleUrl = `${siteConfig.url.replace(/\/$/, '')}${basePath}/${article.slug}`
 
   return (
-    <article className={styles.root}>
+    <article className={`${styles.root} ${wide ? styles.rootWide : ''}`}>
       {trackViews && <ArticleViewTracker slug={article.slug} />}
 
       {/* ── Header ──────────────────────────────────────────────── */}

@@ -255,7 +255,7 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
     return (
       <>
         <ThemeScopeMarker />
-        <ArticlePage article={articleFull} relatedArticles={relatedArticles} />
+        <ArticlePage article={articleFull} relatedArticles={relatedArticles} wide />
       </>
     )
   }

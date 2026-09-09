@@ -1,9 +1,10 @@
 import Script from 'next/script'
+import { lang } from '@/shared/i18n'
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID
 
 export function GTMScript() {
-  if (!GTM_ID) return null
+  if (lang === 'ru' || !GTM_ID) return null
 
   return (
     <>

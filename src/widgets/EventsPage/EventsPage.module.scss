@@ -1,0 +1,202 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+.root {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: $space-11 $container-padding $space-12;
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  align-items: start;
+  gap: $space-6;
+}
+
+.timingNav {
+  position: sticky;
+  top: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.timingLink,
+.timingActive,
+.formatLink,
+.formatActive,
+.cityLink,
+.cityActive {
+  @include focus-ring;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  text-decoration: none;
+  transition: color $transition-fast, background $transition-fast, border-color $transition-fast;
+}
+
+.timingLink,
+.timingActive {
+  min-height: 56px;
+  padding: $space-3;
+  border: 1px solid transparent;
+  color: $text-secondary;
+  font-size: $text-sm;
+  font-weight: 500;
+}
+
+.timingLink:hover { color: $text-primary; border-color: $border-secondary; }
+.timingActive { color: $text-primary; border-color: $focus-accent; background: $focus-accent-bg; }
+
+.main { min-width: 0; }
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: $space-4;
+}
+
+.pageHeader h1 {
+  margin: 0;
+  font-family: $font-base;
+  font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl});
+  font-weight: 500;
+  line-height: $leading-tight;
+  letter-spacing: -0.02em;
+  color: $text-primary;
+}
+
+.formatNav { display: flex; border: 1px solid $border-secondary; }
+.formatLink,
+.formatActive {
+  min-height: 40px;
+  padding: 0 $space-4;
+  color: $text-secondary;
+  font-size: $text-sm;
+  font-weight: 500;
+  border-right: 1px solid $border-secondary;
+}
+.formatNav a:last-child { border-right: 0; }
+.formatLink:hover { color: $text-primary; background: $bg-secondary; }
+.formatActive { color: $text-primary; background: $focus-accent-bg; }
+
+.cityNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $space-2;
+  margin-top: $space-5;
+}
+
+.cityLink,
+.cityActive {
+  height: 32px;
+  padding: 0 $space-3;
+  border: 1px solid $border-secondary;
+  color: $text-secondary;
+  font-size: $text-sm;
+}
+.cityLink:hover { color: $text-primary; border-color: $border-primary; }
+.cityActive { color: $text-primary; border-color: $focus-accent; background: $focus-accent-bg; }
+.cityLink em,
+.cityActive em { color: $text-tertiary; font-style: normal; }
+.cityFlag { display: none; }
+
+.timeline { margin-top: $space-8; }
+.month { position: relative; padding-left: $space-5; margin-bottom: $space-7; }
+.month::before { content: ''; position: absolute; left: 3px; top: 10px; bottom: -$space-7; border-left: 1px dashed $border-secondary; }
+.month:last-child::before { bottom: 0; }
+.month > h2 { position: relative; margin: 0 0 $space-4; font-size: $text-sm; letter-spacing: .08em; text-transform: uppercase; color: $text-tertiary; }
+.month > h2::before { content: ''; position: absolute; width: 8px; height: 8px; left: -$space-5 + 0px; top: 4px; background: $focus-accent; }
+.month > div { display: flex; flex-direction: column; gap: $space-4; }
+
+.card {
+  @include card-surface;
+  @include card-corner-border($border-primary, 28px, 1px);
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  gap: $space-4;
+  padding: $space-4;
+}
+.cover { width: 96px; height: 96px; object-fit: cover; }
+.coverPlaceholder { width: 96px; height: 96px; background: $bg-tertiary; }
+.cardBody { min-width: 0; }
+.cardHeading { display: flex; gap: $space-3; justify-content: space-between; align-items: flex-start; }
+.cardHeading h2 { margin: 0; font-size: $text-xl; line-height: $leading-snug; font-weight: 500; min-width: 0; }
+.cardHeading h2 a { color: $text-primary; text-decoration: none; }
+.cardHeading h2 a:hover { color: $accent-purple; }
+.badges { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: $space-2; }
+.badges span { padding: 4px $space-2; border: 1px solid $border-secondary; color: $text-secondary; font-size: $text-xs; white-space: nowrap; }
+
+.eventMetaRow { display: flex; align-items: center; gap: $space-6; margin-top: $space-3; }
+.dateMeta,
+.locationMeta { display: flex; align-items: center; gap: $space-3; color: $text-secondary; }
+.dateMeta > span:last-child,
+.locationMeta > span:last-child { display: flex; flex-direction: column; gap: 2px; }
+.dateMeta strong,
+.locationMeta strong { color: $text-primary; font-size: $text-sm; font-weight: 500; }
+.dateMeta small,
+.locationMeta small { font-size: $text-xs; color: $text-secondary; }
+.dateTile { display: flex; flex: 0 0 40px; height: 40px; flex-direction: column; align-items: center; justify-content: center; border: 1px solid $border-secondary; }
+.dateTile small { font-size: 9px; text-transform: uppercase; }
+.dateTile strong { font-size: $text-sm; }
+.platformIcon { display: grid; place-items: center; flex: 0 0 40px; height: 40px; border: 1px solid $border-secondary; color: $text-primary; }
+
+.cardFooter { display: flex; align-items: center; justify-content: space-between; gap: $space-3; margin-top: $space-4; }
+.details { display: inline-flex; align-items: center; gap: 4px; font-size: $text-sm; font-weight: 500; color: $text-secondary; text-decoration: none; }
+.details:hover { color: $text-primary; }
+.cardActions { display: flex; align-items: center; gap: $space-3; }
+.recordingAfter { font-size: $text-xs; color: $text-tertiary; }
+.galleryStack,
+.galleryImages { display: flex; align-items: center; }
+.galleryImages img { width: 32px; height: 32px; object-fit: cover; border: 1px solid $body-bg; margin-left: -8px; }
+.galleryImages img:first-child { margin-left: 0; }
+.galleryStack > span { height: 32px; min-width: 32px; padding: 0 $space-2; display: grid; place-items: center; border: 1px solid $border-secondary; background: $bg-tertiary; font-size: $text-sm; color: $text-primary; }
+
+.featured {
+  @include card-corner-border($border-primary, 28px, 1px);
+  aspect-ratio: 545 / 293;
+  overflow: hidden;
+  isolation: isolate;
+}
+.featuredImage { object-fit: cover; z-index: -2; }
+.featuredScrim { position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--body-bg) 64%, transparent); }
+.featuredContent { max-width: 720px; margin: 0 auto; padding: $space-6; text-align: center; }
+.featuredContent h2 { margin: 0; font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl}); font-weight: 500; }
+.featuredContent h2 a { color: $text-primary; text-decoration: none; }
+.featuredContent p { color: $text-secondary; font-size: $text-sm; }
+.featuredMeta { display: flex; align-items: center; justify-content: center; gap: $space-5; margin: $space-5 0; color: $text-primary; font-size: $text-sm; }
+.featuredMeta > span { display: inline-flex; align-items: center; gap: $space-2; }
+.featured .details { position: absolute; left: 50%; bottom: $space-5; transform: translateX(-50%); white-space: nowrap; }
+
+.empty { margin: $space-8 0; color: $text-secondary; }
+
+@media (max-width: #{$bp-desktop}) {
+  .root { grid-template-columns: 1fr; padding-top: $space-10; }
+  .timingNav { position: static; flex-direction: row; }
+  .timingLink, .timingActive { flex: 1; }
+}
+
+@media (max-width: #{$bp-mobile}) {
+  .root { padding: $space-10 $space-5 $space-8; gap: $space-6; }
+  .pageHeader { align-items: stretch; flex-direction: column; }
+  .formatNav a { flex: 1; }
+  .cityNav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: $space-2; }
+  .cityLink, .cityActive { flex: 0 0 auto; }
+  .cityFlag { display: inline-flex; }
+  .month { padding-left: 0; margin-bottom: $space-8; }
+  .month::before { display: none; }
+  .month > h2 { padding-left: $space-5; margin-bottom: $space-5; }
+  .month > h2::before { left: 0; }
+  .card { grid-template-columns: 1fr; padding: $space-5; gap: $space-5; }
+  .cover, .coverPlaceholder { width: 100%; height: auto; aspect-ratio: 16 / 7; object-fit: cover; }
+  .cardBody { display: flex; flex-direction: column; gap: $space-5; }
+  .cardHeading { flex-direction: column; gap: $space-4; }
+  .badges { justify-content: flex-start; }
+  .eventMetaRow { align-items: flex-start; flex-direction: column; gap: $space-5; margin-top: 0; }
+  .cardFooter, .cardActions { align-items: flex-start; flex-direction: column; gap: $space-4; margin-top: 0; }
+  .featured { aspect-ratio: auto; min-height: 360px; }
+  .featuredContent { padding: $space-6 $space-5; }
+  .featuredContent h2 { font-size: $text-xl; }
+  .featuredMeta { align-items: center; flex-direction: column; gap: $space-4; margin: $space-6 0; }
+  .featured .details { bottom: $space-5; }
+}

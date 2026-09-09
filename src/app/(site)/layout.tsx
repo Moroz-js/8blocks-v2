@@ -23,6 +23,7 @@ import { getMediaMentionsEnabled } from '@/shared/lib/getMediaMentionsCount'
 import { getBlogEnabled } from '@/shared/lib/getBlogEnabled'
 import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
 import { getResearchEnabled } from '@/shared/lib/getResearchEnabled'
+import { getEventsEnabled } from '@/shared/lib/getEventsEnabled'
 
 const manrope = Manrope({
   subsets: ['latin', 'cyrillic'],
@@ -78,7 +79,7 @@ const siteEntityJsonLd = { '@context': 'https://schema.org', '@graph': [organiza
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const pathname = (await headers()).get('x-pathname') ?? '/'
-  const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled, blogNavEnabled, researchEnabled] = await Promise.all([
+  const [siteSeo, pageRow, blogExtra, mediaEnabled, auditsEnabled, blogNavEnabled, researchEnabled, eventsEnabled] = await Promise.all([
     getSiteSeoGlobal(),
     getSiteSeoPageOverride(pathname),
     getBlogExtraHeadMarkup(pathname),
@@ -86,6 +87,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     getPublicAuditsEnabled(),
     getBlogEnabled(),
     getResearchEnabled(),
+    getEventsEnabled(),
   ])
 
   const headCombined = [siteSeo?.globalHeadMarkup, pageRow?.pageHeadMarkup, blogExtra]
@@ -135,6 +137,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
                 mediaEnabled={mediaEnabled}
                 blogEnabled={blogNavEnabled}
                 researchEnabled={researchEnabled}
+                eventsEnabled={eventsEnabled}
               />
               <main>{children}</main>
               <Footer
@@ -142,6 +145,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
                 auditsEnabled={auditsEnabled}
                 blogEnabled={blogNavEnabled}
                 researchEnabled={researchEnabled}
+                eventsEnabled={eventsEnabled}
               />
               <ScrollToTop />
             </LenisProvider>

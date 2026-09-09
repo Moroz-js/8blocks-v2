@@ -57,43 +57,44 @@ function CalendlyEmbed() {
 export function ContactPage() {
   return (
     <>
-      {/* ── 1. Calendly ───────────────────────────────────────────── */}
-      <section id="calendly" className={styles.calendlySection} aria-label={contactPageContent.calendly.ariaLabel}>
-        <div className={styles.calendlyInner}>
-          <motion.div
-            className={styles.calendlyLeft}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.55, ease }}
-          >
-            <ScrollRevealText text={contactPageContent.calendly.headline} className={styles.calendlyHeadline} />
-            <ScrollRevealText
-              text={contactPageContent.calendly.description}
-              className={styles.calendlyDescription}
-            />
-            <ul className={styles.calendlyList}>
-              {contactPageContent.calendly.services.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-          </motion.div>
+      {lang === 'en' && (
+        <section id="calendly" className={styles.calendlySection} aria-label={contactPageContent.calendly.ariaLabel}>
+          <div className={styles.calendlyInner}>
+            <motion.div
+              className={styles.calendlyLeft}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.55, ease }}
+            >
+              <ScrollRevealText text={contactPageContent.calendly.headline} className={styles.calendlyHeadline} />
+              <ScrollRevealText
+                text={contactPageContent.calendly.description}
+                className={styles.calendlyDescription}
+              />
+              <ul className={styles.calendlyList}>
+                {contactPageContent.calendly.services.map((s) => (
+                  <li key={s}>{s}</li>
+                ))}
+              </ul>
+            </motion.div>
 
-          <motion.div
-            className={styles.calendlyRight}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.55, ease, delay: 0.1 }}
-          >
-            <div className={styles.calendlyEmbed}>
-              <CalendlyEmbed />
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            <motion.div
+              className={styles.calendlyRight}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.55, ease, delay: 0.1 }}
+            >
+              <div className={styles.calendlyEmbed}>
+                <CalendlyEmbed />
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
-      {/* ── 2. Hero: avatar + form ────────────────────────────────── */}
+      {/* ── Hero: avatar + form ───────────────────────────────────── */}
       <section className={styles.hero} aria-label={contactPageContent.hero.ariaLabel}>
         <div className={styles.heroInner}>
           <div className={styles.heroGrid}>

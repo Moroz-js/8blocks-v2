@@ -36,6 +36,9 @@ import {
   Research,
   LaunchModules,
   Cases,
+  EventCities,
+  EventOrganizers,
+  Events,
 } from './payload/collections/index.ts'
 import { SiteSeo } from './payload/globals/index.ts'
 
@@ -119,6 +122,9 @@ export default buildConfig({
     Research,
     LaunchModules,
     Cases,
+    EventCities,
+    EventOrganizers,
+    Events,
   ],
 
   globals: [SiteSeo],
@@ -148,7 +154,7 @@ export default buildConfig({
   // ── Uploads ──────────────────────────────────────────────────────
   upload: {
     limits: {
-      fileSize: 10_000_000, // 10 MB
+      fileSize: 100_000_000, // 100 MB: записи событий и презентации
     },
   },
 

@@ -1,0 +1,94 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+.root {
+  max-width: $container-max;
+  margin: 0 auto;
+  padding: $space-11 $container-padding $space-12;
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: start;
+  gap: $space-8;
+}
+.aside { min-width: 0; }
+.poster { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.organizerSection { margin-top: $space-6; }
+.mainOrganizer { padding-bottom: $space-5; border-bottom: 1px solid $border-secondary; }
+.organizerSection > p,
+.sectionLabel { margin: 0 0 $space-3; font-size: $text-sm; letter-spacing: .08em; text-transform: uppercase; color: $text-tertiary; }
+.organizerSection > div { display: flex; flex-direction: column; gap: $space-3; }
+.organizerRow { display: flex; align-items: center; gap: $space-2; min-width: 0; font-size: $text-sm; font-weight: 500; color: $text-primary; }
+.organizerRow > img,
+.organizerFallback { width: 32px; height: 32px; object-fit: cover; }
+.organizerFallback { display: grid; place-items: center; border: 1px solid $border-secondary; color: $text-secondary; }
+.organizerLinks { display: flex; gap: $space-2; margin-left: auto; }
+.organizerLinks a { color: $text-tertiary; }
+.organizerLinks a:hover { color: $text-primary; }
+
+.main { min-width: 0; }
+.eventHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: $space-4; margin-bottom: $space-5; }
+.eventHeading h1 { margin: 0; font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl}); font-weight: 500; line-height: $leading-tight; letter-spacing: -0.02em; color: $text-primary; }
+.eventHeading .badges { justify-content: flex-end; padding-top: $space-2; }
+.metaGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-top: 1px solid $border-secondary; border-bottom: 1px solid $border-secondary; }
+.metaGridOnlinePast { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.infoSlot,
+.actionSlot { @include focus-ring; min-height: 76px; padding: $space-3; display: flex; align-items: center; gap: $space-3; color: $text-primary; text-decoration: none; border-right: 1px solid $border-secondary; border-bottom: 1px solid $border-secondary; }
+.metaGrid > :nth-last-child(-n + 2) { border-bottom: 0; }
+.infoSlot:hover,
+.actionSlot:hover { background: $bg-secondary; }
+.infoSlot > span { display: flex; flex-direction: column; gap: 3px; }
+.infoSlot strong,
+.actionSlot span { font-size: $text-sm; font-weight: 500; }
+.infoSlot small { font-size: $text-xs; color: $text-secondary; }
+.actionSlot > svg:last-child { margin-left: auto; color: $text-tertiary; }
+
+.representatives,
+.textSection,
+.location { margin-top: $space-8; border-top: 1px solid $border-secondary; padding-top: $space-5; }
+.representatives > div { display: flex; flex-direction: column; gap: $space-6; }
+.person { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: $space-5; }
+.personPhoto,
+.personFallback { width: 120px; height: 120px; object-fit: cover; }
+.personFallback { display: grid; place-items: center; background: $bg-secondary; color: $text-secondary; }
+.personContent { min-width: 0; }
+.personHeading { display: flex; flex-wrap: wrap; align-items: center; gap: $space-3; }
+.personHeading h3,
+.personHeading a { margin: 0; color: $text-primary; font-size: $text-lg; font-weight: 500; text-decoration: none; }
+.personHeading a:hover { color: $accent-purple; }
+.badges { display: flex; flex-wrap: wrap; gap: $space-2; }
+.badges span { padding: 4px $space-2; border: 1px solid $border-secondary; color: $text-secondary; font-size: $text-xs; }
+.personContent > p { margin: $space-3 0; color: $text-secondary; font-size: $text-sm; line-height: $leading-relaxed; }
+.personLinks { display: flex; flex-wrap: wrap; gap: $space-3; }
+.personLinks a { width: 32px; height: 32px; display: grid; place-items: center; color: $text-secondary; text-decoration: none; }
+.personLinks a:hover { color: $text-primary; }
+.personLinks img { width: 32px; height: 32px; object-fit: contain; }
+
+.textSection h2,
+.location h2 { margin: 0 0 $space-4; color: $text-primary; font-size: $text-xl; font-weight: 500; }
+.recap { display: block; width: 100%; height: auto; max-height: 640px; margin-top: $space-6; object-fit: cover; border: 1px solid $border-secondary; }
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: $space-3; margin-top: $space-6; }
+.gallery img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.location > p:not(.sectionLabel) { margin: 0 0 $space-4; color: $text-secondary; white-space: pre-line; }
+.location iframe { display: block; width: 100%; height: 240px; border: 0; }
+
+@media (max-width: #{$bp-desktop}) {
+  .root { grid-template-columns: 1fr; padding-top: $space-10; }
+  .aside { display: contents; }
+  .poster { width: min(360px, 100%); }
+  .organizerSection { order: 2; }
+}
+
+@media (max-width: #{$bp-mobile}) {
+  .root { padding: $space-10 $space-5 $space-12; gap: $space-7; }
+  .metaGrid,
+  .metaGridOnlinePast { grid-template-columns: 1fr; }
+  .metaGrid > * { border-right: 0; border-bottom: 1px solid $border-secondary; }
+  .metaGrid > :last-child { border-bottom: 0; }
+  .eventHeading { flex-direction: column; }
+  .eventHeading .badges { justify-content: flex-start; padding-top: 0; }
+  .person { grid-template-columns: 1fr; }
+  .personPhoto,
+  .personFallback { width: 160px; height: 160px; }
+  .gallery { grid-template-columns: 1fr; }
+  .location iframe { height: 200px; }
+}

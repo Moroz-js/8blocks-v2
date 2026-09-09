@@ -33,6 +33,8 @@ function mapCover(raw: unknown, fallbackAlt: string) {
     url?: unknown
     filename?: unknown
     alt?: unknown
+    width?: unknown
+    height?: unknown
   }
   const url =
     typeof media.url === 'string'
@@ -44,6 +46,8 @@ function mapCover(raw: unknown, fallbackAlt: string) {
   return {
     url,
     alt: typeof media.alt === 'string' ? media.alt : fallbackAlt,
+    width: typeof media.width === 'number' && media.width > 0 ? media.width : 1280,
+    height: typeof media.height === 'number' && media.height > 0 ? media.height : 720,
   }
 }
 
