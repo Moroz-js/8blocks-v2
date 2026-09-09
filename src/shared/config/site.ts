@@ -15,6 +15,7 @@ const isAe = /8blocks\.ae/i.test(siteUrl)
 
 export const siteConfig = {
   name: t({ ru: 'А8А9 токеномика.рф', en: '8Blocks' }),
+  brandShort: t({ ru: 'А8А9', en: '8Blocks' }),
   description: t({
     ru: 'Токен-экономики, которые усиливают бизнес',
     en: 'Token economies that power the business',

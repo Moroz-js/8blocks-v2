@@ -22,6 +22,11 @@ function mapMedia(raw: unknown, fallbackAlt: string): { url: string; alt: string
   return { url, alt: typeof m.alt === 'string' ? m.alt : fallbackAlt }
 }
 
+/** Personal profile URLs only — company pages must not be a Person's sameAs. */
+function personalProfile(u: unknown): u is string {
+  return typeof u === 'string' && (/linkedin\.com\/in\//i.test(u) || /(^https?:\/\/)?(x|twitter)\.com\/[^/]+\/?$/i.test(u))
+}
+
 async function getAuditBySlug(slug: string) {
   const payload = await getPayload({ config })
   const result = await payload.find({
@@ -130,9 +135,10 @@ export default async function AuditSlugPage({ params, searchParams }: PageProps)
     publishedAt: doc.publishedAt ? String(doc.publishedAt) : null,
     updatedAt: doc.updatedAt ? String(doc.updatedAt) : null,
     expert: {
-      name: typeof expertRaw.name === 'string' ? expertRaw.name : null,
-      role: typeof expertRaw.role === 'string' ? expertRaw.role : null,
-      photoUrl: mediaToAbsoluteUrl(expertRaw.photo) ?? null,
+      name: typeof expertAuthor.name === 'string' ? expertAuthor.name : null,
+      role: typeof expertAuthor.position === 'string' ? expertAuthor.position : null,
+      photoUrl: mediaToAbsoluteUrl(expertAuthor.photo) ?? null,
+      sameAs: [expertAuthor.linkedIn, expertAuthor.x].filter(personalProfile),
     },
     hero: {
       company: typeof heroRaw.company === 'string' ? heroRaw.company : null,

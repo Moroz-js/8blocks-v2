@@ -256,6 +256,33 @@
   color: #fff;
 }
 
+.expertNameLink {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-2;
+  text-decoration: none;
+  width: fit-content;
+
+  &:hover {
+    color: $accent-pink-deep;
+  }
+}
+
+.expertLinkedInIcon {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.15s ease;
+
+  .expertNameLink:hover & {
+    color: $accent-pink-deep;
+  }
+}
+
+.expertRole {
+  font-size: $text-xs;
+  color: rgba(255, 255, 255, 0.65);
+}
+
 // ── Detail table (flush under the summary panel) ────────────────────
 .tableWrap {
   overflow-x: auto;

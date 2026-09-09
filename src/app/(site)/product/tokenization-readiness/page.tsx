@@ -4,6 +4,7 @@ import { platformPagesContent } from '@/shared/content/platformPages'
 import { siteConfig } from '@/shared/config/site'
 import { t } from '@/shared/i18n'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { buildPageGraph, webAppNode } from '@/shared/lib/page-schema'
 import { DiagnosticTool } from '@/widgets/Platform/DiagnosticTool'
 import { FaqAccordion } from '@/widgets/FaqAccordion'
 import styles from '@/widgets/Platform/Platform.module.scss'
@@ -56,15 +57,15 @@ export async function generateMetadata({
 }
 
 export default function TokenizationReadinessPage() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: landing.faq.map((item) => ({
-      '@type': 'Question',
-      name: item.q,
-      acceptedAnswer: { '@type': 'Answer', text: item.a },
-    })),
-  }
+  const path = '/product/tokenization-readiness'
+  const faqSchema = buildPageGraph({
+    path,
+    name: landing.seoTitle,
+    description: landing.metaDescription,
+    crumbs: [{ name: landing.seoTitle, path }],
+    faq: landing.faq.map((item) => ({ question: item.q, answer: item.a })),
+    extra: [webAppNode(path, { name: landing.seoTitle, description: landing.metaDescription, price: 0 })],
+  })
 
   return (
     <main className={`${styles.page} ${styles.readinessPage}`}>

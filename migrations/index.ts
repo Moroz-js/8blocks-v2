@@ -21,6 +21,8 @@ import * as migration_20260806_000000_case_sort_order from './20260806_000000_ca
 import * as migration_20260807_000000_remove_case_category from './20260807_000000_remove_case_category'
 import * as migration_20260909_000000_events from './20260909_000000_events'
 
+import * as migration_20260905_000000_articles_alternate_slug from './20260905_000000_articles_alternate_slug'
+
 export const migrations = [
   {
     up: migration_20260601_000000_initial_schema.up,
@@ -128,6 +130,9 @@ export const migrations = [
     name: '20260807_000000_remove_case_category',
   },
   {
+    up: migration_20260905_000000_articles_alternate_slug.up,
+    down: migration_20260905_000000_articles_alternate_slug.down,
+    name: '20260905_000000_articles_alternate_slug',
     up: migration_20260909_000000_events.up,
     down: migration_20260909_000000_events.down,
     name: '20260909_000000_events',

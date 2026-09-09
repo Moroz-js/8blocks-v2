@@ -3,6 +3,7 @@ import { siteConfig } from '@/shared/config/site'
 import { lang } from '@/shared/i18n'
 import { termsMeta } from '@/shared/content/termsPage'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { buildPageGraph } from '@/shared/lib/page-schema'
 import { TermsEn } from './TermsEn'
 import { TermsRu } from './TermsRu'
 
@@ -20,5 +21,20 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function TermsPage() {
-  return lang === 'en' ? <TermsEn /> : <TermsRu />
+  const path = '/terms'
+  const jsonLd = buildPageGraph({
+    path,
+    name: termsMeta.title,
+    description: termsMeta.description,
+    crumbs: [{ name: termsMeta.title, path }],
+  })
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {lang === 'en' ? <TermsEn /> : <TermsRu />}
+    </>
+  )
 }

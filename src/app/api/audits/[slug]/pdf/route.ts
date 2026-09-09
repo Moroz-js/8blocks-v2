@@ -2,11 +2,33 @@ import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
+import { createHash } from 'node:crypto'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import path from 'node:path'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
 
 const PDF_VIEWPORT_WIDTH = 1200
+
+/** Готовые PDF хранятся на диске; ключ = slug + updatedAt документа, так что правка аудита инвалидирует кэш. */
+const AUDIT_PDF_CACHE_DIR =
+  process.env.AUDIT_PDF_CACHE_DIR || path.join(process.cwd(), '.cache', 'audit-pdf')
+
+/** Дубликат HTML-страницы аудита — из индекса исключаем, ссылки внутри не передают вес. */
+const PDF_HEADERS = {
+  'Content-Type': 'application/pdf',
+  'X-Robots-Tag': 'noindex, nofollow',
+  'Cache-Control': 'public, max-age=3600',
+} as const
+
+/** Один рендер на slug за раз: параллельные запросы ждут общий результат, а не поднимают по Chromium каждый. */
+const inflight = new Map<string, Promise<Buffer>>()
+
+function cacheKey(slug: string, updatedAt: string): string {
+  const h = createHash('sha1').update(`${slug}|${updatedAt}`).digest('hex').slice(0, 12)
+  return `${slug}-${h}.pdf`
+}
 
 /** Page-break / chrome-hide CSS injected while staying on *screen* media
  * so layout matches the desktop page. Charts use fixed px sizes (recharts 2). */
@@ -166,6 +188,7 @@ export async function GET(
 ) {
   const { slug } = await params
 
+  let updatedAt = ''
   try {
     const payload = await getPayload({ config })
     const result = await payload.find({
@@ -177,10 +200,43 @@ export async function GET(
     if (!result.docs.length) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 })
     }
+    updatedAt = String((result.docs[0] as { updatedAt?: string }).updatedAt ?? '')
   } catch {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
 
+  const file = path.join(AUDIT_PDF_CACHE_DIR, cacheKey(slug, updatedAt))
+  const headers = { ...PDF_HEADERS, 'Content-Disposition': `attachment; filename="${slug}.pdf"` }
+
+  try {
+    const cached = await readFile(file)
+    return new NextResponse(new Uint8Array(cached), { status: 200, headers })
+  } catch {
+    /* cache miss */
+  }
+
+  let job = inflight.get(file)
+  if (!job) {
+    job = renderPdf(slug)
+      .then(async (buf) => {
+        await mkdir(AUDIT_PDF_CACHE_DIR, { recursive: true })
+        await writeFile(file, buf)
+        return buf
+      })
+      .finally(() => inflight.delete(file))
+    inflight.set(file, job)
+  }
+
+  try {
+    const pdf = await job
+    return new NextResponse(new Uint8Array(pdf), { status: 200, headers })
+  } catch (err) {
+    console.error('PDF generation failed:', err)
+    return NextResponse.json({ error: 'PDF generation failed' }, { status: 500 })
+  }
+}
+
+async function renderPdf(slug: string): Promise<Buffer> {
   const targetUrl = `${internalBaseUrl()}/audits/${encodeURIComponent(slug)}?print=1`
 
   let browser: import('puppeteer').Browser | null = null
@@ -247,17 +303,7 @@ export async function GET(
       margin: { top: '0mm', right: '0mm', bottom: '0mm', left: '0mm' },
     })
 
-    return new NextResponse(Buffer.from(pdf), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${slug}.pdf"`,
-        'Cache-Control': 'no-store',
-      },
-    })
-  } catch (err) {
-    console.error('PDF generation failed:', err)
-    return NextResponse.json({ error: 'PDF generation failed' }, { status: 500 })
+    return Buffer.from(pdf)
   } finally {
     if (browser) await browser.close()
   }

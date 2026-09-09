@@ -18,6 +18,8 @@ import {
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
+import { lang } from '@/shared/i18n'
+import { buildPageGraph } from '@/shared/lib/page-schema'
 import { ThemeScopeMarker } from '@/shared/lib/ThemeScope'
 
 const ARTICLES_PER_PAGE = 9
@@ -131,6 +133,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ogImage?: unknown
         twitterTitle?: string
         twitterDescription?: string
+        alternateSlug?: string | null
+        noAlternates?: boolean | null
       } | undefined) ?? {}
     const title = seo.seoTitle ?? articleDoc.title
     const description = seo.seoDescription ?? (typeof articleDoc.excerpt === 'string' ? articleDoc.excerpt : undefined) ?? siteConfig.description
@@ -159,7 +163,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
       },
     }
-    return withPayloadPageMetadata(`/blog/${slug}`, base)
+    return withPayloadPageMetadata(`/blog/${slug}`, base, {
+      otherLangPath: seo.alternateSlug?.trim() ? `/blog/${seo.alternateSlug.trim()}` : null,
+      none: seo.noAlternates === true,
+    })
   }
 
   const categoryResult = await payload.find({
@@ -291,16 +298,36 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
     slug: doc.slug,
   }))
 
+  const categorySeo = (category.seo as { seoDescription?: string | null } | undefined) ?? {}
+  const categoryJsonLd = buildPageGraph({
+    path: `/blog/${category.slug}`,
+    name: category.title,
+    description:
+      categorySeo.seoDescription ??
+      (typeof category.description === 'string' ? category.description : null),
+    pageType: 'CollectionPage',
+    crumbs: [
+      { name: lang === 'ru' ? 'Блог' : 'Blog', path: '/blog' },
+      { name: category.title, path: `/blog/${category.slug}` },
+    ],
+  })
+
   return (
-    <BlogArchive
-      articles={articles}
-      categories={categories}
-      totalPages={articlesResult.totalPages}
-      currentPage={currentPage}
-      totalDocs={articlesResult.totalDocs}
-      activeCategory={category.slug}
-      categoryTitle={category.title}
-      paginationBase={`/blog/${category.slug}`}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(categoryJsonLd) }}
+      />
+      <BlogArchive
+        articles={articles}
+        categories={categories}
+        totalPages={articlesResult.totalPages}
+        currentPage={currentPage}
+        totalDocs={articlesResult.totalDocs}
+        activeCategory={category.slug}
+        categoryTitle={category.title}
+        paginationBase={`/blog/${category.slug}`}
+      />
+    </>
   )
 }

@@ -54,3 +54,5 @@ payload-types.ts
 .env.local
 migration
 # 8blocks-digital-assets 2
+# generated audit PDFs
+.cache/

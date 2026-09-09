@@ -6,6 +6,7 @@ import type { MediaMentionCard } from '@/entities/media-mention'
 import type { CategoryRef } from '@/entities/article'
 import { mediaMeta } from '@/shared/content/mediaPage'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { buildPageGraph, itemListNode } from '@/shared/lib/page-schema'
 
 export async function generateMetadata(): Promise<Metadata> {
   return withPayloadPageMetadata('/press', {
@@ -100,7 +101,36 @@ export default async function PressPage({ searchParams }: PageProps) {
     slug: doc.slug,
   }))
 
+  const path = '/press'
+  const jsonLd = buildPageGraph({
+    path,
+    name: mediaMeta.title,
+    description: mediaMeta.description,
+    pageType: 'CollectionPage',
+    crumbs: [{ name: mediaMeta.title, path }],
+    extra: mentions.length
+      ? [
+          itemListNode(
+            path,
+            mediaMeta.title,
+            mentions.map((m) => ({
+              name: m.title,
+              url: m.url,
+              description: m.excerpt ?? null,
+              datePublished: m.publishedAt,
+              itemType: 'NewsArticle',
+            })),
+          ),
+        ]
+      : [],
+  })
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     <MediaArchive
       mentions={mentions}
       categories={categories}
@@ -109,5 +139,6 @@ export default async function PressPage({ searchParams }: PageProps) {
       totalDocs={mentionsResult.totalDocs}
       activeCategory={cat ?? null}
     />
+    </>
   )
 }
