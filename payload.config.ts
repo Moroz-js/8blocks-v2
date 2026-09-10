@@ -53,6 +53,14 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { en, ru },
     fallbackLanguage: 'ru',
+    translations: {
+      ru: {
+        general: {
+          true: 'Да',
+          false: 'Нет',
+        },
+      },
+    },
   },
 
   // ── Admin ───────────────────────────────────────────────────────
