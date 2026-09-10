@@ -5,6 +5,7 @@ import type { EventBadge, EventCard, EventFormat, EventTiming } from '@/entities
 import { lang } from '@/shared/i18n'
 import { eventsContent } from '@/shared/content/eventsPage'
 import { EVENT_PLACEHOLDER_IMAGE } from '@/shared/config/events'
+import { EVENT_CITIES_MAP } from '@/shared/config/eventCities'
 import { ButtonLink } from '@/shared/ui'
 import styles from './EventsPage.module.scss'
 
@@ -102,7 +103,7 @@ function EventCardView({ event, timing }: { event: EventCard; timing: EventTimin
           {event.subtitle && <p>{event.subtitle}</p>}
           <div className={styles.featuredMeta}>
             <CalendarDate event={event} />
-            {isOffline && event.city && <span><MapPin size={16} />{event.venueName ?? event.city.name}</span>}
+            {isOffline && event.city && <span><MapPin size={16} />{event.venueName ?? (EVENT_CITIES_MAP.get(event.city)?.label ?? event.city)}</span>}
           </div>
           <Link href={href} className={styles.details}>{eventsContent.details} &gt;</Link>
         </div>
@@ -123,8 +124,8 @@ function EventCardView({ event, timing }: { event: EventCard; timing: EventTimin
           <div className={styles.locationMeta}>
             {isOffline ? <MapPin size={20} /> : <PlatformIcon platform={event.platform} />}
             <span>
-              <strong>{isOffline ? event.venueName ?? event.city?.name : platformName}</strong>
-              <small>{isOffline ? [event.city?.name, event.city?.country].filter(Boolean).join(', ') : event.hostName ? `Host: ${event.hostName}` : ''}</small>
+              <strong>{isOffline ? event.venueName ?? (event.city ? EVENT_CITIES_MAP.get(event.city)?.label ?? event.city : '') : platformName}</strong>
+              <small>{isOffline ? event.city ? EVENT_CITIES_MAP.get(event.city)?.label ?? event.city : '' : event.hostName ? `Host: ${event.hostName}` : ''}</small>
             </span>
           </div>
         </div>
@@ -142,8 +143,9 @@ function EventCardView({ event, timing }: { event: EventCard; timing: EventTimin
 }
 
 export function EventsPage({ events, timing, format, city, basePath = '/events', title = eventsContent.title, embedded = false }: Props) {
-  const visible = events.filter((event) => timingOf(event) === timing && event.format === format && (!city || event.city?.slug === city))
-  const cities = [...new Map(events.filter((event) => timingOf(event) === timing && event.format === 'offline' && event.city).map((event) => [event.city!.slug, event.city!])).values()]
+  const visible = events.filter((event) => timingOf(event) === timing && event.format === format && (!city || event.city === city))
+  const cities = [...new Set(events.filter((event) => timingOf(event) === timing && event.format === 'offline' && event.city).map((event) => event.city!))]
+    .map((slug) => ({ slug, label: EVENT_CITIES_MAP.get(slug)?.label ?? slug, countryCode: EVENT_CITIES_MAP.get(slug)?.countryCode }))
   const ordered = [...visible].sort((a, b) => timing === 'upcoming'
     ? new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
     : new Date(b.startsAt).getTime() - new Date(a.startsAt).getTime())
@@ -176,8 +178,9 @@ export function EventsPage({ events, timing, format, city, basePath = '/events',
         {format === 'offline' && cities.length > 0 && (
           <nav className={styles.cityNav} aria-label="Cities">
             {cities.map((eventCity) => {
-              const count = events.filter((event) => timingOf(event) === timing && event.format === 'offline' && event.city?.slug === eventCity.slug).length
-              return <Link key={eventCity.id} href={link({ city: city === eventCity.slug ? '' : eventCity.slug })} className={city === eventCity.slug ? styles.cityActive : styles.cityLink}><span className={styles.cityFlag}>{eventCity.countryCode ? String.fromCodePoint(...[...eventCity.countryCode].map((char) => 127397 + char.charCodeAt(0))) : <UserRound size={14} />}</span>{eventCity.name} <em>{count}</em></Link>
+              const count = events.filter((event) => timingOf(event) === timing && event.format === 'offline' && event.city === eventCity.slug).length
+              const flag = eventCity.countryCode ? String.fromCodePoint(...[...eventCity.countryCode].map((char) => 127397 + char.charCodeAt(0))) : null
+              return <Link key={eventCity.slug} href={link({ city: city === eventCity.slug ? '' : eventCity.slug })} className={city === eventCity.slug ? styles.cityActive : styles.cityLink}><span className={styles.cityFlag}>{flag ?? <UserRound size={14} />}</span>{eventCity.label} <em>{count}</em></Link>
             })}
           </nav>
         )}

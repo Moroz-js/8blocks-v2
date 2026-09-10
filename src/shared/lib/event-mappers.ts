@@ -1,4 +1,4 @@
-import type { Event, EventBadge, EventCard, EventCity, EventMedia, EventOrganizer, EventPerson } from '@/entities/event'
+import type { Event, EventBadge, EventCard, EventMedia, EventOrganizer, EventPerson } from '@/entities/event'
 
 type Raw = Record<string, unknown>
 
@@ -25,18 +25,6 @@ function media(value: unknown, fallbackAlt: string): EventMedia | null {
 
 function linkList(item: Raw, ids: string[]) {
   return ids.flatMap((id) => typeof item[id] === 'string' ? [{ id, href: item[id] as string }] : [])
-}
-
-function city(value: unknown): EventCity | null {
-  const item = record(value)
-  if (!item || typeof item.name !== 'string' || typeof item.slug !== 'string') return null
-  return {
-    id: String(item.id),
-    name: item.name,
-    slug: item.slug,
-    country: typeof item.country === 'string' ? item.country : null,
-    countryCode: typeof item.countryCode === 'string' ? item.countryCode : null,
-  }
 }
 
 function organizer(value: unknown): EventOrganizer | null {
@@ -98,7 +86,7 @@ export function mapEventCard(value: unknown): EventCard | null {
     startsAt: item.startsAt,
     endsAt: typeof item.endsAt === 'string' ? item.endsAt : null,
     timezone: typeof item.timezone === 'string' ? item.timezone : 'UTC',
-    city: city(item.city),
+    city: typeof item.city === 'string' ? item.city : null,
     venueName: typeof item.venueName === 'string' ? item.venueName : null,
     mapsUrl: typeof item.mapsUrl === 'string' ? item.mapsUrl : null,
     platform: typeof item.platform === 'string' ? item.platform : null,

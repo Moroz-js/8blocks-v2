@@ -2,7 +2,6 @@ export type {
   Event,
   EventBadge,
   EventCard,
-  EventCity,
   EventFormat,
   EventMedia,
   EventOrganizer,

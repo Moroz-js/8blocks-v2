@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { CalendarDays, Download, ExternalLink, Globe2, Instagram, Mail, MapPin, Play, UserRound } from 'lucide-react'
 import type { Event, EventBadge, EventOrganizer, EventPerson } from '@/entities/event'
 import { lang } from '@/shared/i18n'
+import { EVENT_CITIES_MAP } from '@/shared/config/eventCities'
 import { eventsContent } from '@/shared/content/eventsPage'
 import { EVENT_PLACEHOLDER_IMAGE } from '@/shared/config/events'
 import { RichText } from '@/shared/render/RichText'
@@ -105,7 +106,7 @@ export function EventPage({ event }: { event: Event }) {
         </div>
         <div className={`${styles.metaGrid} ${past && event.format === 'online' ? styles.metaGridOnlinePast : ''}`}>
           <div className={styles.infoSlot}><CalendarDays size={22} /><span><strong>{date.date}</strong><small>{date.time}</small></span></div>
-          {event.format === 'offline' && event.city && <a className={styles.infoSlot} href="#location"><MapPin size={22} /><span><strong>{event.venueName ?? event.city.name}</strong><small>{[event.city.name, event.city.country].filter(Boolean).join(', ')}</small></span></a>}
+          {event.format === 'offline' && event.city && <a className={styles.infoSlot} href="#location"><MapPin size={22} /><span><strong>{event.venueName ?? (EVENT_CITIES_MAP.get(event.city)?.label ?? event.city)}</strong><small>{EVENT_CITIES_MAP.get(event.city)?.label ?? event.city}</small></span></a>}
           {event.format === 'online' && onlinePlatform && <a className={styles.infoSlot} href={event.platformUrl ?? '#'} target={event.platformUrl ? '_blank' : undefined} rel="noreferrer"><Globe2 size={22} /><span><strong>{onlinePlatform}</strong><small>{event.hostName ? `Host: ${event.hostName}` : ''}</small></span></a>}
           {!past && event.format === 'offline' && event.eventUrl && <ExternalSlot href={event.eventUrl} label={eventsContent.openEventSite} icon={<Globe2 size={22} />} />}
           {!past && event.format === 'online' && <ExternalSlot href={`/events/${event.slug}/calendar.ics`} label={eventsContent.addToCalendar} icon={<CalendarDays size={22} />} />}

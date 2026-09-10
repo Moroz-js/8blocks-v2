@@ -1,4 +1,5 @@
 import type { CollectionConfig, Where } from 'payload'
+import { EVENT_CITY_SELECT_OPTIONS } from '@/shared/config/eventCities'
 import {
   BlockquoteFeature,
   BoldFeature,
@@ -124,8 +125,8 @@ export const Events: CollectionConfig = {
           fields: [
             {
               name: 'city',
-              type: 'relationship',
-              relationTo: 'event-cities',
+              type: 'select',
+              options: EVENT_CITY_SELECT_OPTIONS,
               label: 'Город',
               admin: { condition: (data: Record<string, unknown>) => data?.format === 'offline' },
               validate: (value: unknown, context: { data?: unknown }) =>

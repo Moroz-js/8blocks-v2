@@ -9,14 +9,6 @@ export interface EventMedia {
   mimeType?: string | null
 }
 
-export interface EventCity {
-  id: string
-  name: string
-  slug: string
-  country?: string | null
-  countryCode?: string | null
-}
-
 export interface EventPerson {
   id: string
   name: string
@@ -47,7 +39,7 @@ export interface EventCard {
   startsAt: string
   endsAt?: string | null
   timezone: string
-  city?: EventCity | null
+  city?: string | null          // city slug из захардкоженного списка
   venueName?: string | null
   mapsUrl?: string | null
   platform?: string | null

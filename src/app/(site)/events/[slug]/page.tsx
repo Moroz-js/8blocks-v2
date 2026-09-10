@@ -7,6 +7,7 @@ import { EventPage } from '@/widgets/EventPage'
 import { mapEvent } from '@/shared/lib/event-mappers'
 import { visibleEventConditions } from '@/shared/lib/visible-event-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { EVENT_CITIES_MAP } from '@/shared/config/eventCities'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -58,7 +59,7 @@ function buildEventSchema(event: Event) {
     eventStatus: `https://schema.org/${past ? 'EventCompleted' : 'EventScheduled'}`,
     ...(event.format === 'online'
       ? { location: { '@type': 'VirtualLocation', url: event.platformUrl ?? undefined } }
-      : event.city ? { location: { '@type': 'Place', name: event.venueName ?? event.city.name, address: [event.address, event.city.name, event.city.country].filter(Boolean).join(', ') } } : {}),
+      : event.city ? { location: { '@type': 'Place', name: event.venueName ?? (EVENT_CITIES_MAP.get(event.city)?.label ?? event.city), address: [event.address, EVENT_CITIES_MAP.get(event.city)?.label ?? event.city].filter(Boolean).join(', ') } } : {}),
     ...(event.cover ? { image: [event.cover.url] } : {}),
   }
 }

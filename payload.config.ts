@@ -36,7 +36,6 @@ import {
   Research,
   LaunchModules,
   Cases,
-  EventCities,
   EventOrganizers,
   Events,
 } from './payload/collections/index.ts'
@@ -122,7 +121,6 @@ export default buildConfig({
     Research,
     LaunchModules,
     Cases,
-    EventCities,
     EventOrganizers,
     Events,
   ],

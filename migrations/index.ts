@@ -21,6 +21,7 @@ import * as migration_20260806_000000_case_sort_order from './20260806_000000_ca
 import * as migration_20260807_000000_remove_case_category from './20260807_000000_remove_case_category'
 import * as migration_20260909_000000_events from './20260909_000000_events'
 import * as migration_20260910_000000_events_locked_rels from './20260910_000000_events_locked_rels'
+import * as migration_20260910_000001_drop_event_cities from './20260910_000001_drop_event_cities'
 
 import * as migration_20260905_000000_articles_alternate_slug from './20260905_000000_articles_alternate_slug'
 
@@ -144,5 +145,10 @@ export const migrations = [
     up: migration_20260910_000000_events_locked_rels.up,
     down: migration_20260910_000000_events_locked_rels.down,
     name: '20260910_000000_events_locked_rels',
+  },
+  {
+    up: migration_20260910_000001_drop_event_cities.up,
+    down: migration_20260910_000001_drop_event_cities.down,
+    name: '20260910_000001_drop_event_cities',
   },
 ]
