@@ -6,18 +6,26 @@ function record(value: unknown): Raw | null {
   return value && typeof value === 'object' && !Array.isArray(value) ? value as Raw : null
 }
 
+// Если NEXT_PUBLIC_MEDIA_BASE_URL задан (например, для RU-инстанса указываем URL EN-инстанса),
+// то все относительные медиа-URL становятся абсолютными и Next.js Image не добавляет basePath.
+const MEDIA_BASE = (process.env.NEXT_PUBLIC_MEDIA_BASE_URL || '').replace(/\/$/, '')
+
+function resolveUrl(url: string): string {
+  return MEDIA_BASE && url.startsWith('/') ? `${MEDIA_BASE}${url}` : url
+}
+
 function media(value: unknown, fallbackAlt: string): EventMedia | null {
   const item = record(value)
   if (!item || item.id === undefined) return null
-  const url = typeof item.url === 'string'
+  const rawUrl = typeof item.url === 'string'
     ? item.url
     : typeof item.filename === 'string'
       ? `/uploads/${item.filename}`
       : null
-  if (!url) return null
+  if (!rawUrl) return null
   return {
     id: String(item.id),
-    url,
+    url: resolveUrl(rawUrl),
     alt: typeof item.alt === 'string' ? item.alt : fallbackAlt,
     mimeType: typeof item.mimeType === 'string' ? item.mimeType : null,
   }

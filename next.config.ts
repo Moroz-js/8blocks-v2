@@ -86,6 +86,12 @@ const nextConfig: NextConfig = {
       { pathname: "/img/**" },
       { pathname: "/api/media/file/**" },
     ],
+    remotePatterns: [
+      // Для RU-инстанса медиа приходят с EN-инстанса (абсолютные URL)
+      { protocol: 'https', hostname: '**' },
+      { protocol: 'http', hostname: 'localhost' },
+      { protocol: 'http', hostname: '127.0.0.1' },
+    ],
   },
   serverExternalPackages: ["puppeteer"],
   experimental: {
