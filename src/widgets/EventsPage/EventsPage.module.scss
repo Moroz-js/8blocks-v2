@@ -160,7 +160,8 @@
 
 .featured {
   @include card-corner-border($border-primary, 28px, 1px);
-  aspect-ratio: 545 / 293;
+  position: relative;
+  min-height: 293px;
   overflow: hidden;
   isolation: isolate;
 }
@@ -207,7 +208,7 @@
   .badges { justify-content: flex-start; }
   .eventMetaRow { align-items: flex-start; flex-direction: column; gap: $space-5; margin-top: 0; }
   .cardFooter, .cardActions { align-items: flex-start; flex-direction: column; gap: $space-4; margin-top: 0; }
-  .featured { aspect-ratio: auto; min-height: 360px; }
+  .featured { min-height: 360px; }
   .featuredContent { padding: $space-6 $space-5; }
   .featuredContent h2 { font-size: $text-xl; }
   .featuredMeta { align-items: center; flex-direction: column; gap: $space-4; margin: $space-6 0; }
