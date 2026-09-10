@@ -199,9 +199,19 @@ pm2 save
 echo "✓ PM2 process updated"
 
 # ── ensure uploads dir ────────────────────────
-mkdir -p "${PROJECT_DIR}/public/uploads"
-chmod -R 775 "${PROJECT_DIR}/public/uploads" 2>/dev/null || true
-echo "✓ Uploads directory ready"
+# RU instance: symlink uploads to EN instance so both share the same files
+if [ "${NEXT_PUBLIC_BASE_PATH}" = "/ru" ]; then
+  EN_UPLOADS="/var/www/8blocks-staging-en/public/uploads"
+  mkdir -p "$(dirname "${EN_UPLOADS}")"
+  mkdir -p "${EN_UPLOADS}"
+  rm -rf "${PROJECT_DIR}/public/uploads"
+  ln -sfn "${EN_UPLOADS}" "${PROJECT_DIR}/public/uploads"
+  echo "✓ Uploads symlinked → ${EN_UPLOADS}"
+else
+  mkdir -p "${PROJECT_DIR}/public/uploads"
+  chmod -R 775 "${PROJECT_DIR}/public/uploads" 2>/dev/null || true
+  echo "✓ Uploads directory ready"
+fi
 
 # ── health check ─────────────────────────────
 sleep 5
