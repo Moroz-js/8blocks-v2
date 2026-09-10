@@ -22,6 +22,7 @@ NEXT_PUBLIC_STAGING_EN_URL="${NEXT_PUBLIC_STAGING_EN_URL:-}"
 NEXT_PUBLIC_STAGING_RU_URL="${NEXT_PUBLIC_STAGING_RU_URL:-}"
 NEXT_PUBLIC_BUILD_AT="${NEXT_PUBLIC_BUILD_AT:-}"
 SKIP_DATABASE_MAINTENANCE="${SKIP_DATABASE_MAINTENANCE:-false}"
+RUN_DATABASE_MIGRATIONS="${RUN_DATABASE_MIGRATIONS:-false}"
 
 # Детерминированная кэш-директория Chrome для Puppeteer. Один и тот же путь
 # используется при установке браузера и в рантайме (через .env), чтобы не
@@ -137,22 +138,26 @@ else
   echo "⚠️  Chrome not found in ${PUPPETEER_CACHE_DIR} (PDF export may not work)"
 fi
 
-if [ "${SKIP_DATABASE_MAINTENANCE}" = "true" ]; then
-  echo "⏭️  Skipping migrations and seed (shared staging database)"
-else
+if [ "${SKIP_DATABASE_MAINTENANCE}" != "true" ] || [ "${RUN_DATABASE_MIGRATIONS}" = "true" ]; then
   # ── run migrations ──────────────────────────
   echo "🗄️  Running Payload migrations"
   ./node_modules/.bin/cross-env NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts \
     node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs \
     scripts/run-migrations.ts
   echo "✓ Migrations applied"
+else
+  echo "⏭️  Skipping migrations (shared staging database)"
+fi
 
+if [ "${SKIP_DATABASE_MAINTENANCE}" != "true" ]; then
   # ── seed legacy cases ────────────────────────
   # The seed is idempotent: it creates missing mini-cases by slug and only fills
   # an empty category on existing legacy mini-cases. It never deletes content.
   echo "🌱 Seeding missing legacy mini-cases"
   npm run seed:cases
   echo "✓ Cases seed complete"
+else
+  echo "⏭️  Skipping seed (shared staging database)"
 fi
 
 # ── regenerate Payload import map ─────────────
