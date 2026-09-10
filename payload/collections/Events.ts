@@ -17,11 +17,16 @@ const publicEventWhere: Where = {
   and: [{ status: { equals: 'published' } }, { hidden: { not_equals: true } }],
 }
 
-function validateSlug(value: unknown) {
-  if (!value) return 'Slug обязателен'
-  if (typeof value !== 'string') return 'Некорректный slug'
-  if (!/^[a-z0-9-]+$/.test(value)) return 'Slug может содержать только латинские буквы, цифры и дефис (a-z, 0-9, -)'
-  return true
+const TRANSLIT: Record<string, string> = {
+  а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ё:'yo',ж:'zh',з:'z',и:'i',й:'y',
+  к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',
+  х:'kh',ц:'ts',ч:'ch',ш:'sh',щ:'sch',ъ:'',ы:'y',ь:'',э:'e',ю:'yu',я:'ya',
+}
+
+function slugify(value: unknown) {
+  if (typeof value !== 'string') return value
+  const transliterated = value.toLowerCase().split('').map(c => TRANSLIT[c] ?? c).join('')
+  return transliterated.trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
 }
 
 function validateUrl(value: unknown) {

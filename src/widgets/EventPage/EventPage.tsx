@@ -22,13 +22,19 @@ function isPast(event: Event) {
 function formatDate(event: Event) {
   const locale = lang === 'ru' ? 'ru-RU' : 'en-US'
   const options: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long', timeZone: event.timezone }
+  const timeOpts: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: event.timezone }
   try {
-    const date = new Intl.DateTimeFormat(locale, options).format(new Date(event.startsAt))
-    const time = new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: event.timezone }).format(new Date(event.startsAt))
-    const end = event.endsAt
-      ? new Intl.DateTimeFormat(locale, { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: event.timezone }).format(new Date(event.endsAt))
-      : null
-    return { date, time: `${time}${end ? ` – ${end}` : ''}` }
+    const startDate = new Date(event.startsAt)
+    const date = new Intl.DateTimeFormat(locale, options).format(startDate)
+    const time = new Intl.DateTimeFormat(locale, timeOpts).format(startDate)
+    if (!event.endsAt) return { date, time }
+    const endDate = new Date(event.endsAt)
+    const endTime = new Intl.DateTimeFormat(locale, timeOpts).format(endDate)
+    const sameDay = startDate.toDateString() === endDate.toDateString()
+    if (sameDay) return { date, time: `${time} – ${endTime}` }
+    // Разные дни: показываем дату окончания
+    const endDateStr = new Intl.DateTimeFormat(locale, options).format(endDate)
+    return { date, time: `${time} – ${endDateStr}, ${endTime}` }
   } catch {
     return { date: new Date(event.startsAt).toLocaleDateString(locale), time: '' }
   }

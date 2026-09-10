@@ -58,12 +58,16 @@ function PlatformIcon({ platform }: { platform?: string | null }) {
 function CalendarDate({ event }: { event: EventCard }) {
   const start = dateParts(event.startsAt, event.timezone)
   const end = event.endsAt ? dateParts(event.endsAt, event.timezone) : null
+  const multiDay = end && end.day !== start.day
   return (
     <div className={styles.dateMeta}>
       <span className={styles.dateTile}><small>{start.month}</small><strong>{start.day}</strong></span>
       <span>
         <strong>{start.weekday}</strong>
-        <small>{start.time}{end ? ` – ${end.time}` : ''}</small>
+        {multiDay
+          ? <small>{start.time} – {end.month} {end.day}, {end.time}</small>
+          : <small>{start.time}{end ? ` – ${end.time}` : ''}</small>
+        }
       </span>
     </div>
   )
