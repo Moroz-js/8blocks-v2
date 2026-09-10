@@ -35,6 +35,7 @@ function dateParts(iso: string, timezone: string) {
       month: new Intl.DateTimeFormat(locale, { month: 'short', timeZone: timezone }).format(date).replace('.', ''),
       day: new Intl.DateTimeFormat(locale, { day: '2-digit', timeZone: timezone }).format(date),
       group: new Intl.DateTimeFormat(locale, { month: 'long', timeZone: timezone }).format(date),
+      dateKey: new Intl.DateTimeFormat('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: timezone }).format(date),
     }
   } catch {
     return {
@@ -43,6 +44,7 @@ function dateParts(iso: string, timezone: string) {
       month: date.toLocaleDateString(locale, { month: 'short' }).replace('.', ''),
       day: String(date.getDate()).padStart(2, '0'),
       group: date.toLocaleDateString(locale, { month: 'long' }),
+      dateKey: date.toDateString(),
     }
   }
 }
@@ -58,14 +60,14 @@ function PlatformIcon({ platform }: { platform?: string | null }) {
 function CalendarDate({ event }: { event: EventCard }) {
   const start = dateParts(event.startsAt, event.timezone)
   const end = event.endsAt ? dateParts(event.endsAt, event.timezone) : null
-  const multiDay = end && end.day !== start.day
+  const multiDay = end && end.dateKey !== start.dateKey
   return (
     <div className={styles.dateMeta}>
       <span className={styles.dateTile}><small>{start.month}</small><strong>{start.day}</strong></span>
       <span>
-        <strong>{start.weekday}</strong>
+        <strong>{start.weekday}{multiDay ? `, ${start.time}` : ''}</strong>
         {multiDay
-          ? <small>{start.time} – {end.month} {end.day}, {end.time}</small>
+          ? <small>{end.weekday}, {end.time}</small>
           : <small>{start.time}{end ? ` – ${end.time}` : ''}</small>
         }
       </span>
