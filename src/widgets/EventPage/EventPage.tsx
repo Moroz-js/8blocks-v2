@@ -70,7 +70,7 @@ function PersonSocialIcon({ id }: { id: string }) {
 function Representative({ person }: { person: EventPerson }) {
   const body = (
     <>
-      <Image src={EVENT_PLACEHOLDER_IMAGE} alt="" width={120} height={120} className={styles.personPhoto} />
+      <Image src={person.photo?.url ?? EVENT_PLACEHOLDER_IMAGE} alt={person.name} width={120} height={120} className={styles.personPhoto} />
       <div className={styles.personContent}>
         <div className={styles.personHeading}>
           {person.showProfile && person.slug ? <Link href={`/team/${person.slug}`}>{person.name}</Link> : <h3>{person.name}</h3>}
@@ -95,7 +95,7 @@ export function EventPage({ event }: { event: Event }) {
   return (
     <section className={styles.root}>
       <aside className={styles.aside}>
-        <Image src={EVENT_PLACEHOLDER_IMAGE} alt="" width={320} height={320} className={styles.poster} priority />
+        <Image src={event.poster?.url ?? event.cover?.url ?? EVENT_PLACEHOLDER_IMAGE} alt={event.title} width={320} height={320} className={styles.poster} priority />
         {event.mainOrganizer && <section className={`${styles.organizerSection} ${styles.mainOrganizer}`}><p>{eventsContent.mainOrganizer}</p><div><OrganizerRow organizer={event.mainOrganizer} /></div></section>}
         {event.organizers.length > 0 && <section className={styles.organizerSection}><p>{eventsContent.organizers}</p><div>{event.organizers.map((organizer) => <OrganizerRow key={organizer.id} organizer={organizer} />)}</div></section>}
       </aside>
@@ -120,8 +120,8 @@ export function EventPage({ event }: { event: Event }) {
           <p className={styles.sectionLabel}>{textTitle}</p>
           {event.contentTitle && <h2>{event.contentTitle}</h2>}
           <RichText content={text} />
-          {past && event.recapMedia && <Image className={styles.recap} src={EVENT_PLACEHOLDER_IMAGE} alt="" width={960} height={540} />}
-          {event.gallery.length > 0 && <div className={styles.gallery}>{event.gallery.map((photo) => <Image key={photo.id} src={EVENT_PLACEHOLDER_IMAGE} alt="" width={480} height={320} />)}</div>}
+          {past && event.recapMedia && <Image className={styles.recap} src={event.recapMedia.url} alt={event.title} width={960} height={540} />}
+          {event.gallery.length > 0 && <div className={styles.gallery}>{event.gallery.map((photo) => <Image key={photo.id} src={photo.url} alt={photo.alt || event.title} width={480} height={320} />)}</div>}
         </section>}
 
         {event.format === 'offline' && (event.venueName || event.address || event.mapsEmbedUrl || event.mapsUrl) && <section className={styles.location} id="location">

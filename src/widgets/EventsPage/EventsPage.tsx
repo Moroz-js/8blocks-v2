@@ -79,7 +79,7 @@ function GalleryStack({ gallery }: { gallery: EventCard['gallery'] }) {
   return (
     <div className={styles.galleryStack} aria-label={`${gallery.length} photos`}>
       <div className={styles.galleryImages}>
-        {gallery.slice(0, 3).map((photo) => <Image key={photo.id} src={EVENT_PLACEHOLDER_IMAGE} alt="" width={32} height={32} />)}
+        {gallery.slice(0, 3).map((photo) => <Image key={photo.id} src={photo.url} alt="" width={32} height={32} />)}
       </div>
       <span>+{gallery.length}</span>
     </div>
@@ -96,7 +96,7 @@ function EventCardView({ event, timing }: { event: EventCard; timing: EventTimin
   if (event.featured) {
     return (
       <article className={styles.featured}>
-        <Image src={EVENT_PLACEHOLDER_IMAGE} alt="" fill sizes="(max-width: 768px) 100vw, 900px" className={styles.featuredImage} />
+        <Image src={event.cover?.url ?? EVENT_PLACEHOLDER_IMAGE} alt={event.title} fill sizes="(max-width: 768px) 100vw, 900px" className={styles.featuredImage} />
         <div className={styles.featuredScrim} />
         <div className={styles.featuredContent}>
           <h2><Link href={href}>{event.title}</Link></h2>
@@ -113,7 +113,7 @@ function EventCardView({ event, timing }: { event: EventCard; timing: EventTimin
 
   return (
     <article className={styles.card}>
-      <Image src={EVENT_PLACEHOLDER_IMAGE} alt="" width={96} height={96} className={styles.cover} />
+      <Image src={event.cover?.url ?? EVENT_PLACEHOLDER_IMAGE} alt={event.title} width={96} height={96} className={styles.cover} />
       <div className={styles.cardBody}>
         <div className={styles.cardHeading}>
           <h2><Link href={href}>{event.title}</Link></h2>

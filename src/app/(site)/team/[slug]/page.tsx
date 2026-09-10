@@ -110,7 +110,7 @@ export default async function TeamMemberPage({ params, searchParams }: PageProps
   return (
     <div className={styles.root}>
       <header className={styles.profile}>
-        <Image src={EVENT_PLACEHOLDER_IMAGE} alt="" width={256} height={256} priority />
+        <Image src={(author.photo as { url?: string } | null)?.url ?? EVENT_PLACEHOLDER_IMAGE} alt={author.name} width={256} height={256} priority />
         <div className={styles.profileInfo}>
           <h1>{author.name}</h1>
           {author.position && <p className={styles.position}>{author.position}</p>}
