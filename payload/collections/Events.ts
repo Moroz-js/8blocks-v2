@@ -97,11 +97,12 @@ export const Events: CollectionConfig = {
         {
           label: 'Расписание',
           fields: [
-            { name: 'startsAt', type: 'date', label: 'Начало', required: true, index: true },
+            { name: 'startsAt', type: 'date', label: 'Начало', required: true, index: true, admin: { date: { pickerAppearance: 'dayAndTime', timeIntervals: 15 } } },
             {
               name: 'endsAt',
               type: 'date',
               label: 'Окончание',
+              admin: { date: { pickerAppearance: 'dayAndTime', timeIntervals: 15 } },
               validate: (value: unknown, { siblingData }) => {
                 const start = (siblingData as { startsAt?: unknown } | undefined)?.startsAt
                 if (!value || !start) return true
