@@ -42,9 +42,6 @@ function representative(value: unknown): EventPerson | null {
   const row = record(value)
   const person = record(row?.person)
   if (!row || !person || typeof person.name !== 'string') return null
-  const badges: EventBadge[] = []
-  if (row.isSpeaker === true) badges.push('speaker')
-  if (row.hostRole === 'host' || row.hostRole === 'cohost') badges.push(row.hostRole)
   return {
     id: String(person.id),
     name: person.name,
@@ -55,12 +52,14 @@ function representative(value: unknown): EventPerson | null {
     bioOverride: typeof row.bioOverride === 'string' ? row.bioOverride : null,
     socialLinks: linkList(person, ['instagram', 'x', 'telegram', 'linkedIn', 'website', 'email'])
       .map((link) => link.id === 'email' ? { ...link, href: `mailto:${link.href}` } : link),
-    badges,
   }
 }
 
-function cardBadges(representatives: EventPerson[]): EventBadge[] {
-  return [...new Set(representatives.flatMap((person) => person.badges))]
+function ourRoleToBadges(ourRole: unknown): EventBadge[] {
+  if (ourRole === 'speaker') return ['speaker']
+  if (ourRole === 'host') return ['host']
+  if (ourRole === 'cohost') return ['cohost']
+  return []
 }
 
 export function mapEventCard(value: unknown): EventCard | null {
@@ -95,7 +94,7 @@ export function mapEventCard(value: unknown): EventCard | null {
     hostName: typeof item.hostName === 'string' ? item.hostName : null,
     recordingUrl: typeof item.recordingUrl === 'string' ? item.recordingUrl : null,
     recordingFile: media(item.recordingFile, `${item.title} — запись`),
-    badges: cardBadges(representatives),
+    badges: ourRoleToBadges(item.ourRole),
     gallery,
   }
 }

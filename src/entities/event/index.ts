@@ -5,6 +5,7 @@ export type {
   EventFormat,
   EventMedia,
   EventOrganizer,
+  EventOurRole,
   EventPerson,
   EventTiming,
 } from './types'

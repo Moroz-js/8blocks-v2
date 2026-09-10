@@ -79,6 +79,19 @@ export const Events: CollectionConfig = {
             { name: 'subtitle', type: 'text', label: 'Подзаголовок для featured-карточки' },
             { name: 'contentTitle', type: 'text', label: 'Подзаголовок в описании' },
             {
+              name: 'ourRole',
+              type: 'select',
+              label: 'Наша роль',
+              defaultValue: 'none',
+              options: [
+                { label: 'Участвуем', value: 'none' },
+                { label: 'Спикер', value: 'speaker' },
+                { label: 'Хост', value: 'host' },
+                { label: 'Ко-хост', value: 'cohost' },
+              ],
+              admin: { description: 'Роль А8А9 на этом событии (отображается как бейдж)' },
+            },
+            {
               name: 'format',
               type: 'select',
               label: 'Формат',
@@ -175,18 +188,6 @@ export const Events: CollectionConfig = {
               label: 'Представители 8Blocks',
               fields: [
                 { name: 'person', type: 'relationship', relationTo: 'authors', required: true, label: 'Человек' },
-                { name: 'isSpeaker', type: 'checkbox', label: 'Спикер', defaultValue: false },
-                {
-                  name: 'hostRole',
-                  type: 'select',
-                  label: 'Роль хоста',
-                  defaultValue: 'none',
-                  options: [
-                    { label: 'Не хост', value: 'none' },
-                    { label: 'Хост', value: 'host' },
-                    { label: 'Ко-хост', value: 'cohost' },
-                  ],
-                },
                 { name: 'bioOverride', type: 'textarea', label: 'Описание для этого события' },
               ],
             },

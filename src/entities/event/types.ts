@@ -1,5 +1,6 @@
 export type EventFormat = 'offline' | 'online'
 export type EventTiming = 'upcoming' | 'past'
+export type EventOurRole = 'none' | 'speaker' | 'host' | 'cohost'
 export type EventBadge = 'speaker' | 'host' | 'cohost'
 
 export interface EventMedia {
@@ -18,7 +19,6 @@ export interface EventPerson {
   bio?: string | null
   bioOverride?: string | null
   socialLinks: { id: string; href: string }[]
-  badges: EventBadge[]
 }
 
 export interface EventOrganizer {
