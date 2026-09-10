@@ -66,34 +66,30 @@ export const Events: CollectionConfig = {
     read: ({ req }) => (req.user ? true : publicEventWhere),
   },
   hooks: {
-    beforeChange: [
+    beforeValidate: [
       async ({ data, req, operation, originalDoc }) => {
-        // Генерируем slug из title только если slug ещё не задан (create) или title изменился
-        if (operation === 'create' || (data.title && data.title !== originalDoc?.title)) {
-          if (!data.slug || operation === 'create') {
-            const base = String(data.title ?? '')
-              .toLowerCase()
-              .trim()
-              .replace(/\s+/g, '-')
-              .replace(/[^a-z0-9-]/g, '')
-              .replace(/-+/g, '-')
-              .replace(/^-|-$/g, '')
-            if (base) {
-              // Проверяем уникальность: если slug занят — добавляем числовой суффикс
-              let slug = base
-              let attempt = 1
-              while (true) {
-                const existing = await req.payload.find({
-                  collection: 'events',
-                  where: { slug: { equals: slug } },
-                  limit: 1,
-                })
-                const conflict = existing.docs[0]
-                if (!conflict || (originalDoc && conflict.id === originalDoc.id)) break
-                slug = `${base}-${++attempt}`
-              }
-              data.slug = slug
+        if (!data) return data
+
+        const title = data.title ?? originalDoc?.title
+        const currentSlug = data.slug ?? originalDoc?.slug
+        const titleChanged = Boolean(data.title && data.title !== originalDoc?.title)
+
+        if (operation === 'create' || !currentSlug || titleChanged) {
+          const base = slugify(title)
+          if (typeof base === 'string' && base) {
+            let slug = base
+            let attempt = 1
+            while (true) {
+              const existing = await req.payload.find({
+                collection: 'events',
+                where: { slug: { equals: slug } },
+                limit: 1,
+              })
+              const conflict = existing.docs[0]
+              if (!conflict || (originalDoc && String(conflict.id) === String(originalDoc.id))) break
+              slug = `${base}-${++attempt}`
             }
+            data.slug = slug
           }
         }
         return data
