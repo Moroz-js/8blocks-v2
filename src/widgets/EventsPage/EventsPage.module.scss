@@ -127,7 +127,7 @@
 .coverPlaceholder { width: 96px; height: 96px; background: $bg-tertiary; }
 .cardBody { min-width: 0; }
 .cardHeading { display: flex; gap: $space-3; justify-content: space-between; align-items: flex-start; }
-.cardHeading h2 { margin: 0; font-size: $text-xl; line-height: $leading-snug; font-weight: 500; min-width: 0; }
+.cardHeading h2 { margin: 0; font-size: $text-xl; line-height: $leading-snug; font-weight: 500; min-width: 0; overflow-wrap: break-word; }
 .cardHeading h2 a { color: $text-primary; text-decoration: none; }
 .cardHeading h2 a:hover { color: $accent-purple; }
 .badges { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: $space-2; }
@@ -167,7 +167,7 @@
 .featuredImage { object-fit: cover; z-index: -2; }
 .featuredScrim { position: absolute; inset: 0; z-index: -1; background: color-mix(in srgb, var(--body-bg) 64%, transparent); }
 .featuredContent { max-width: 720px; margin: 0 auto; padding: $space-6; text-align: center; }
-.featuredContent h2 { margin: 0; font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl}); font-weight: 500; }
+.featuredContent h2 { margin: 0; font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl}); font-weight: 500; overflow-wrap: break-word; }
 .featuredContent h2 a { color: $text-primary; text-decoration: none; }
 .featuredContent p { color: $text-secondary; font-size: $text-sm; }
 .featuredMeta { display: flex; align-items: center; justify-content: center; gap: $space-5; margin: $space-5 0; color: $text-primary; font-size: $text-sm; }

@@ -27,7 +27,7 @@
 
 .main { min-width: 0; }
 .eventHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: $space-4; margin-bottom: $space-5; }
-.eventHeading h1 { margin: 0; font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl}); font-weight: 500; line-height: $leading-tight; letter-spacing: -0.02em; color: $text-primary; }
+.eventHeading h1 { margin: 0; font-size: clamp(#{$text-2xl}, 5vw, #{$text-4xl}); font-weight: 500; line-height: $leading-tight; letter-spacing: -0.02em; color: $text-primary; overflow-wrap: break-word; min-width: 0; }
 .eventHeading .badges { justify-content: flex-end; padding-top: $space-2; }
 .metaGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-top: 1px solid $border-secondary; border-bottom: 1px solid $border-secondary; }
 .metaGridOnlinePast { grid-template-columns: repeat(2, minmax(0, 1fr)); }
