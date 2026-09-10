@@ -18,9 +18,16 @@ const publicEventWhere: Where = {
 }
 
 function slugify(value: unknown) {
-  return typeof value === 'string'
-    ? value.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
-    : value
+  if (typeof value !== 'string') return value
+  const result = value.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
+  return result || value // если после очистки пусто — вернуть оригинал чтобы валидатор показал ошибку
+}
+
+function validateSlug(value: unknown) {
+  if (!value) return 'Slug обязателен'
+  if (typeof value !== 'string') return 'Некорректный slug'
+  if (!/^[a-z0-9-]+$/.test(value)) return 'Slug может содержать только латинские буквы, цифры и дефис (a-z, 0-9, -)'
+  return true
 }
 
 function validateUrl(value: unknown) {
@@ -74,6 +81,7 @@ export const Events: CollectionConfig = {
               required: true,
               unique: true,
               index: true,
+              validate: validateSlug,
               hooks: { beforeValidate: [({ value }) => slugify(value)] },
             },
             { name: 'subtitle', type: 'text', label: 'Подзаголовок для featured-карточки' },
