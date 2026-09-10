@@ -161,18 +161,18 @@ export function EventsPage({ events, timing, format, city, basePath = '/events',
 
   return (
     <section className={`${styles.root} ${embedded ? styles.embedded : ''}`}>
+      <div className={styles.pageHeader}>
+        <h1>{title}</h1>
+        <nav className={styles.formatNav} aria-label="Event format">
+          <Link href={link({ format: 'offline', city: undefined })} className={format === 'offline' ? styles.formatActive : styles.formatLink}><MapPin size={16} />{eventsContent.offline}</Link>
+          <Link href={link({ format: 'online', city: '' })} className={format === 'online' ? styles.formatActive : styles.formatLink}><Globe2 size={16} />{eventsContent.online}</Link>
+        </nav>
+      </div>
       <aside className={styles.timingNav}>
         <Link href={link({ when: 'upcoming' })} className={timing === 'upcoming' ? styles.timingActive : styles.timingLink}><CalendarDays size={20} />{eventsContent.upcoming}</Link>
         <Link href={link({ when: 'past' })} className={timing === 'past' ? styles.timingActive : styles.timingLink}><PartyPopper size={20} />{eventsContent.past}</Link>
       </aside>
       <div className={styles.main}>
-        <div className={styles.pageHeader}>
-          <h1>{title}</h1>
-          <nav className={styles.formatNav} aria-label="Event format">
-            <Link href={link({ format: 'offline', city: undefined })} className={format === 'offline' ? styles.formatActive : styles.formatLink}><MapPin size={16} />{eventsContent.offline}</Link>
-            <Link href={link({ format: 'online', city: '' })} className={format === 'online' ? styles.formatActive : styles.formatLink}><Globe2 size={16} />{eventsContent.online}</Link>
-          </nav>
-        </div>
         {format === 'offline' && cities.length > 0 && (
           <nav className={styles.cityNav} aria-label="Cities">
             {cities.map((eventCity) => {

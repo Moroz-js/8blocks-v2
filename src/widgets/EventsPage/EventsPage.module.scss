@@ -7,11 +7,15 @@
   padding: $space-11 $container-padding $space-12;
   display: grid;
   grid-template-columns: 160px minmax(0, 1fr);
+  grid-template-areas:
+    "header header"
+    "nav    main";
   align-items: start;
-  gap: $space-6;
+  gap: 0 $space-6;
 }
 
 .timingNav {
+  grid-area: nav;
   position: sticky;
   top: 112px;
   display: flex;
@@ -44,12 +48,14 @@
   font-weight: 500;
 }
 
-.timingLink:hover { color: $text-primary; border-color: $border-secondary; }
-.timingActive { color: $text-primary; border-color: $focus-accent; background: $focus-accent-bg; }
+.timingLink:hover { color: $text-primary; background: $bg-secondary; }
+.timingActive { color: $button-primary-fg; border-color: $focus-accent; background: $focus-accent; }
 
-.main { min-width: 0; }
+.main { grid-area: main; min-width: 0; }
 
 .pageHeader {
+  grid-area: header;
+  margin-bottom: $space-5;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -171,7 +177,14 @@
 .empty { margin: $space-8 0; color: $text-secondary; }
 
 @media (max-width: #{$bp-desktop}) {
-  .root { grid-template-columns: 1fr; padding-top: $space-10; }
+  .root {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "nav"
+      "main";
+    padding-top: $space-10;
+  }
   .timingNav { position: static; flex-direction: row; }
   .timingLink, .timingActive { flex: 1; }
 }
