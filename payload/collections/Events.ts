@@ -17,12 +17,6 @@ const publicEventWhere: Where = {
   and: [{ status: { equals: 'published' } }, { hidden: { not_equals: true } }],
 }
 
-function slugify(value: unknown) {
-  if (typeof value !== 'string') return value
-  const result = value.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '')
-  return result || value // если после очистки пусто — вернуть оригинал чтобы валидатор показал ошибку
-}
-
 function validateSlug(value: unknown) {
   if (!value) return 'Slug обязателен'
   if (typeof value !== 'string') return 'Некорректный slug'
@@ -66,6 +60,41 @@ export const Events: CollectionConfig = {
   access: {
     read: ({ req }) => (req.user ? true : publicEventWhere),
   },
+  hooks: {
+    beforeChange: [
+      async ({ data, req, operation, originalDoc }) => {
+        // Генерируем slug из title только если slug ещё не задан (create) или title изменился
+        if (operation === 'create' || (data.title && data.title !== originalDoc?.title)) {
+          if (!data.slug || operation === 'create') {
+            const base = String(data.title ?? '')
+              .toLowerCase()
+              .trim()
+              .replace(/\s+/g, '-')
+              .replace(/[^a-z0-9-]/g, '')
+              .replace(/-+/g, '-')
+              .replace(/^-|-$/g, '')
+            if (base) {
+              // Проверяем уникальность: если slug занят — добавляем числовой суффикс
+              let slug = base
+              let attempt = 1
+              while (true) {
+                const existing = await req.payload.find({
+                  collection: 'events',
+                  where: { slug: { equals: slug } },
+                  limit: 1,
+                })
+                const conflict = existing.docs[0]
+                if (!conflict || (originalDoc && conflict.id === originalDoc.id)) break
+                slug = `${base}-${++attempt}`
+              }
+              data.slug = slug
+            }
+          }
+        }
+        return data
+      },
+    ],
+  },
   fields: [
     {
       type: 'tabs',
@@ -81,8 +110,7 @@ export const Events: CollectionConfig = {
               required: true,
               unique: true,
               index: true,
-              validate: validateSlug,
-              hooks: { beforeValidate: [({ value }) => slugify(value)] },
+              admin: { hidden: true },
             },
             { name: 'subtitle', type: 'text', label: 'Подзаголовок для featured-карточки' },
             { name: 'contentTitle', type: 'text', label: 'Подзаголовок в описании' },
