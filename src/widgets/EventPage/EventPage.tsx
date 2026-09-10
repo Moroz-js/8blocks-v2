@@ -25,16 +25,16 @@ function formatDate(event: Event) {
   const timeOpts: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: event.timezone }
   try {
     const startDate = new Date(event.startsAt)
-    const date = new Intl.DateTimeFormat(locale, options).format(startDate)
+    const dateFormatter = new Intl.DateTimeFormat(locale, options)
+    const date = dateFormatter.format(startDate)
     const time = new Intl.DateTimeFormat(locale, timeOpts).format(startDate)
     if (!event.endsAt) return { date, time }
     const endDate = new Date(event.endsAt)
     const endTime = new Intl.DateTimeFormat(locale, timeOpts).format(endDate)
-    const sameDay = startDate.toDateString() === endDate.toDateString()
+    const endDateStr = dateFormatter.format(endDate)
+    const sameDay = date === endDateStr
     if (sameDay) return { date, time: `${time} – ${endTime}` }
-    // Разные дни: показываем дату окончания
-    const endDateStr = new Intl.DateTimeFormat(locale, options).format(endDate)
-    return { date, time: `${time} – ${endDateStr}, ${endTime}` }
+    return { date: `${date}, ${time}`, time: `${endDateStr}, ${endTime}` }
   } catch {
     return { date: new Date(event.startsAt).toLocaleDateString(locale), time: '' }
   }
