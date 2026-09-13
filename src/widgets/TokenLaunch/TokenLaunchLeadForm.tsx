@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { tokenLaunchContent } from '@/shared/content/tokenLaunch'
 import styles from './TokenLaunch.module.scss'
 
@@ -66,8 +67,10 @@ export function TokenLaunchLeadForm({ idPrefix, submitLabel, extraMessage }: Tok
       }
 
       setStatus('success')
+      trackPlatformEvent('form_submit', { form_id: 'token_launch', status: 'success', stage })
     } catch (err) {
       setStatus('error')
+      trackPlatformEvent('form_submit', { form_id: 'token_launch', status: 'error' })
       setErrorMsg(err instanceof Error ? err.message : formContent.errorFallback)
     }
   }

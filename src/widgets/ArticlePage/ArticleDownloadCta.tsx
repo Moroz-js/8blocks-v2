@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { ArticleCta } from '@/entities/article'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { Button } from '@/shared/ui'
+import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import styles from './ArticleDownloadCta.module.scss'
 
 type Status = 'idle' | 'loading' | 'error'
@@ -75,9 +76,12 @@ export function ArticleDownloadCta({ cta, source }: Props) {
       }
 
       close()
+      trackPlatformEvent('form_submit', { form_id: 'article_download', status: 'success', source })
+      trackPlatformEvent('file_download', { file_url: cta.fileUrl, location: source })
       triggerDownload(cta.fileUrl, cta.fileName)
     } catch (err) {
       setStatus('error')
+      trackPlatformEvent('form_submit', { form_id: 'article_download', status: 'error', source })
       setErrorMsg(err instanceof Error ? err.message : uiStrings.downloadGateError)
     }
   }
