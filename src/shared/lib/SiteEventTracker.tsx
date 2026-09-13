@@ -20,6 +20,22 @@ import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
  * `location` = closest section id / data-section, else pathname.
  */
 
+/** Internal destinations that count as a call-to-action (conversion page or product/service). */
+const CTA_PATHS = /^\/(contact|services(\/|$)|product(\/|$)|learn\/)/
+
+/** Zone of a click: header / footer / hero / sticky / body — for `cta_click.zone`. */
+function zoneOf(el: Element): string {
+  if (el.closest('header')) return 'header'
+  if (el.closest('footer')) return 'footer'
+  if (el.closest('[data-sticky], [class*="sticky" i]')) return 'sticky'
+  if (el.closest('[data-audit-hero], [class*="hero" i]')) return 'hero'
+  return 'body'
+}
+
+function labelOf(el: Element): string {
+  return (el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60)
+}
+
 const CALENDLY_EVENTS: Record<string, string> = {
   'calendly.profile_page_viewed': 'calendly_profile_page_viewed',
   'calendly.event_type_viewed': 'calendly_event_type_viewed',
@@ -43,6 +59,14 @@ function onClick(e: MouseEvent): void {
     trackPlatformEvent('cta_click', { target: cta.dataset.cta, location: locationOf(cta) })
   }
 
+  const share = target?.closest<HTMLElement>('[data-share]')
+  if (share?.dataset.share) {
+    trackPlatformEvent('share', { method: share.dataset.share, location: locationOf(share) })
+  }
+  if (target?.closest('#__replain_widget, [id*="replain"], [class*="replain"]')) {
+    trackPlatformEvent('chat_open', { location: window.location.pathname })
+  }
+
   const a = target?.closest<HTMLAnchorElement>('a[href]')
   if (!a) return
   const href = a.getAttribute('href') || ''
@@ -58,6 +82,8 @@ function onClick(e: MouseEvent): void {
     return
   }
   const host = url.hostname.replace(/^www\./, '')
+  // Absolute links to our own host (CMS rich text stores them that way) are internal.
+  const sameSite = host === window.location.hostname.replace(/^www\./, '')
 
   if (host.endsWith('calendly.com')) {
     return void trackPlatformEvent('calendly_click', { location, calendly_url: url.origin + url.pathname })
@@ -69,8 +95,24 @@ function onClick(e: MouseEvent): void {
     return void trackPlatformEvent('file_download', { file_url: url.pathname, location })
   }
 
-  if (url.origin !== window.location.origin) {
+  if (!sameSite) {
+    // Share buttons: attribute to `share`, not generic outbound.
+    if (/(twitter\.com\/intent|x\.com\/intent|facebook\.com\/sharer|t\.me\/share|linkedin\.com\/sharing)/.test(url.href)) {
+      const method = host.includes('facebook') ? 'facebook' : host.includes('linkedin') ? 'linkedin' : host === 't.me' ? 'telegram' : 'x'
+      return void trackPlatformEvent('share', { method, location })
+    }
     trackPlatformEvent('outbound_click', { link_domain: host, link_url: url.href.slice(0, 200), location })
+    return
+  }
+
+  // Internal call-to-action (contact / services / products) — skip if already reported via data-cta.
+  if (!cta && CTA_PATHS.test(url.pathname) && url.pathname !== window.location.pathname) {
+    trackPlatformEvent('cta_click', {
+      target: url.pathname,
+      label: labelOf(a),
+      zone: zoneOf(a),
+      location,
+    })
   }
 }
 
