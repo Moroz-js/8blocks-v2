@@ -7,7 +7,7 @@ import { EventPage } from '@/widgets/EventPage'
 import { mapEvent } from '@/shared/lib/event-mappers'
 import { visibleEventConditions } from '@/shared/lib/visible-event-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
-import { EVENT_CITIES_MAP } from '@/shared/config/eventCities'
+import { eventCityLabel } from '@/shared/config/eventCities'
 import { ORG_ID, organizationNode, websiteNode } from '@/shared/lib/content-schema'
 import { breadcrumbListNode } from '@/shared/lib/page-schema'
 import { siteConfig } from '@/shared/config/site'
@@ -55,7 +55,7 @@ function buildEventSchema(event: Event) {
   const base = siteConfig.url.replace(/\/$/, '')
   const url = `${base}/events/${event.slug}`
   const past = new Date(event.endsAt ?? event.startsAt).getTime() < Date.now()
-  const cityLabel = event.city ? (EVENT_CITIES_MAP.get(event.city)?.label ?? event.city) : null
+  const cityLabel = event.city ? eventCityLabel(event.city) : null
   const description = event.seo?.seoDescription ?? event.subtitle ?? undefined
 
   const organizerNode = (o: { name: string; links: { href: string }[] }) => ({
