@@ -118,7 +118,7 @@ export function ShareBlock({ url, title }: Props) {
       <p className={styles.label}>{uiStrings.share}</p>
       <div className={styles.buttons}>
         <button
-          className={`${styles.btn} ${copied ? styles.copied : ''}`}
+          className={`${styles.btn} ${copied ? styles.copied : ''}`} data-share="copy"
           onClick={handleCopy}
           aria-label={uiStrings.copyLink}
           title={uiStrings.copyLink}

@@ -12,6 +12,7 @@ import { htmlLang, locale, lang } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
 import { PlatformAnalyticsProvider } from '@/shared/lib/PlatformAnalyticsProvider'
+import { SiteEventTracker } from '@/shared/lib/SiteEventTracker'
 import { ThemeProvider } from '@/shared/lib/ThemeProvider'
 import { ThemeController } from '@/shared/lib/ThemeController'
 import { MantineThemeBridge } from '@/shared/lib/MantineThemeBridge'
@@ -128,6 +129,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             <GTMScript />
             <Suspense fallback={null}>
               <PlatformAnalyticsProvider />
+              <SiteEventTracker />
             </Suspense>
             {process.env.NEXT_PUBLIC_REPLAIN_ID && (
               <ReplainWidget id={process.env.NEXT_PUBLIC_REPLAIN_ID} />

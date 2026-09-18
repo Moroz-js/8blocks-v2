@@ -53,6 +53,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
   return new Response(contents, {
     headers: {
       'Content-Type': 'text/calendar; charset=utf-8',
+      'X-Robots-Tag': 'noindex',
       'Content-Disposition': `attachment; filename="${slug}.ics"`,
     },
   })
