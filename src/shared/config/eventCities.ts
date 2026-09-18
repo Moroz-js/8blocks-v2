@@ -101,7 +101,7 @@ export const EVENT_CITIES: CityOption[] = [
   { value: 'frankfurt',         label: 'Frankfurt',         countryCode: 'DE' },
   { value: 'cologne',           label: 'Cologne',           countryCode: 'DE' },
   { value: 'dusseldorf',        label: 'Düsseldorf',        countryCode: 'DE' },
-  { value: 'dortmund',          label: 'Dortmund',          countryCode: 'DE' },
+  { value: 'dortmund',          label: 'Dortmund',          labelRu: 'Дортмунд',          countryCode: 'DE' },
   { value: 'stuttgart',         label: 'Stuttgart',         countryCode: 'DE' },
   { value: 'madrid',            label: 'Madrid',            countryCode: 'ES' },
   { value: 'barcelona',         label: 'Barcelona',         countryCode: 'ES' },
