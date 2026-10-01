@@ -5,6 +5,7 @@ import { NewsletterForm } from '@/features/newsletter'
 import { footerContent } from '@/shared/content/footer'
 import { Logo } from '@/shared/ui'
 import { FooterWatermark } from './FooterWatermark'
+import { StandardPageChrome } from '@/widgets/TokenomicsAi/SiteChrome'
 import { FooterMap } from './FooterMap'
 import styles from './Footer.module.scss'
 
@@ -34,7 +35,7 @@ export function Footer({
   return (
     <footer className={styles.footer}>
       {/* ── Brand watermark ──────────────────────────────────────── */}
-      <FooterWatermark />
+      <StandardPageChrome><FooterWatermark /></StandardPageChrome>
 
       {/* ── Bottom section ───────────────────────────────────────── */}
       <div className={styles.bottomSection}>

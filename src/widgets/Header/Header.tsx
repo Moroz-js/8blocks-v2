@@ -30,6 +30,7 @@ function getNavSections(items: NavItem[]) {
 }
 
 interface HeaderProps {
+  className?: string
   mediaEnabled?: boolean
   blogEnabled?: boolean
   researchEnabled?: boolean
@@ -37,6 +38,7 @@ interface HeaderProps {
 }
 
 export function Header({
+  className = '',
   mediaEnabled: _mediaEnabled,
   blogEnabled = false,
   researchEnabled = false,
@@ -98,7 +100,7 @@ export function Header({
       {isStaging && <StagingBar />}
       <header
         ref={headerRef}
-        className={`${styles.header} ${isStaging ? styles.headerStaging : ''} ${overHero ? styles.overHero : ''}`}
+        className={`${styles.header} ${isStaging ? styles.headerStaging : ''} ${overHero ? styles.overHero : ''} ${className}`}
       >
         <div className={styles.inner}>
           <Logo className={styles.logo} />

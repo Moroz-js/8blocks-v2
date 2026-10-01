@@ -50,6 +50,8 @@ function LenisScrollReset({ lenisRef, startLoop, stopLoop }: {
 // ── Public provider ───────────────────────────────────────────────────────────
 
 export function LenisProvider({ children }: LenisProviderProps) {
+  const pathname = usePathname()
+  const nativeScroll = pathname === '/product/tokenomics-ai'
   const lenisRef = useRef<Lenis | null>(null)
   const rafIdRef = useRef<number | null>(null)
 
@@ -70,6 +72,7 @@ export function LenisProvider({ children }: LenisProviderProps) {
 
   // ── Init ───────────────────────────────────────────────────────────────────
   useEffect(() => {
+    if (nativeScroll) return
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const lenis = new Lenis({
@@ -100,7 +103,7 @@ export function LenisProvider({ children }: LenisProviderProps) {
       lenis.destroy()
       lenisRef.current = null
     }
-  }, [])
+  }, [nativeScroll])
 
   // ── In-page hash navigation ────────────────────────────────────────────────
   useEffect(() => {
