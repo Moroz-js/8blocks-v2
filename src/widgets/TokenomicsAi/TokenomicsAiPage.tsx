@@ -1,12 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { useRef, useState, type FormEvent } from 'react'
+import { useRef, useState, type CSSProperties, type FormEvent } from 'react'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { BinaryUnicornCanvas } from './BinaryUnicornCanvas'
 import { StickyStory } from './StickyStory'
 import { lang } from '@/shared/i18n'
 import { copy } from './copy'
+import { artworkPath, pagePath } from './paths'
 import styles from './TokenomicsAi.module.scss'
 
 function Badge() {
@@ -40,7 +41,7 @@ export function TokenomicsAiPage({ fontClass }: { fontClass: string }) {
     const stage = String(data.get('stage') ?? '')
     const heard = String(data.get('heard') ?? '')
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(pagePath('/api/contact'), {
         method: 'POST', headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ name: project, email, message: ['Tokenomics AI early access', `Project: ${project}`, `Goal: ${goal}`, `Stage: ${stage || 'Not specified'}`, `Source: ${heard || 'Not specified'}`].join('\n') }),
       })
@@ -52,7 +53,12 @@ export function TokenomicsAiPage({ fontClass }: { fontClass: string }) {
   }
 
   return (
-    <div className={`${styles.page} ${fontClass}`} lang={lang}>
+    <div className={`${styles.page} ${fontClass}`} lang={lang} style={{
+      '--ai-demo-background': `url("${artworkPath('demo-gradient')}")`,
+      '--ai-allocation-background': `url("${artworkPath('allocation-background')}")`,
+      '--ai-score-background': `url("${artworkPath('score-background')}")`,
+      '--ai-report-background': `url("${artworkPath('report-background')}")`,
+    } as CSSProperties}>
       <section className={styles.hero} aria-labelledby="tokenomics-ai-title">
         <div className={styles.heroInner}>
           <div className={styles.unicorn}><BinaryUnicornCanvas /></div>
@@ -73,16 +79,16 @@ export function TokenomicsAiPage({ fontClass }: { fontClass: string }) {
         <div className={styles.cards}>
           <article className={`${styles.card} ${styles.allocationCard}`}>
             <h3>{copy('Refined model')}</h3><p>{copy('8 buckets + vesting, tuned against category benchmarks')}</p>
-            <Image className={styles.allocationVisual} src="/img/tokenomics-ai/allocation-chart.png" width={245} height={245} alt={copy('Allocation chart showing eight buckets totaling 100% of supply')} />
+            <Image className={styles.allocationVisual} src={artworkPath('allocation-chart')} width={245} height={245} alt={copy('Allocation chart showing eight buckets totaling 100% of supply')} />
           </article>
           <article className={`${styles.card} ${styles.scoreCard}`}>
             <h3>{copy('Structure Score')}</h3><p>{copy('Shows where your supply structure creates sell pressure, judged against launches like yours')}</p>
-            <Image className={styles.unlockVisual} src="/img/tokenomics-ai/unlock-chart.png" width={357} height={208} alt={copy('Token unlock bars with a cumulative supply curve')} />
+            <Image className={styles.unlockVisual} src={artworkPath('unlock-chart')} width={357} height={208} alt={copy('Token unlock bars with a cumulative supply curve')} />
           </article>
           <article className={`${styles.card} ${styles.reportCard}`}>
             <h3>{copy('Investor-ready pitch deck')}</h3><p>{copy('Branded report ready for your data room in .pdf format')}</p>
-            <Image className={styles.reportVisual} src="/img/tokenomics-ai/report-preview.png" width={326} height={197} alt={copy('NOVA Protocol branded tokenomics report preview')} />
-            <Image className={styles.reportBehind} src="/img/tokenomics-ai/report-preview.png" width={326} height={197} alt="" />
+            <Image className={styles.reportVisual} src={artworkPath('report-preview')} width={326} height={197} alt={copy('NOVA Protocol branded tokenomics report preview')} />
+            <Image className={styles.reportBehind} src={artworkPath('report-preview')} width={326} height={197} alt="" />
           </article>
         </div>
       </section>
@@ -90,7 +96,7 @@ export function TokenomicsAiPage({ fontClass }: { fontClass: string }) {
       <section id="early-access" className={styles.closing} aria-labelledby="ai-cta-title">
         <Badge />
         <h2 id="ai-cta-title"><span className={styles.titleGradient}>{copy('Claim your AI')}<br />{copy('Tokenomics model')}</span><span>{copy('From $299')}</span></h2>
-        <div className={styles.closingActions}><button type="button" className={styles.primary} onClick={requestAccess}>{copy('Request early access')}</button><a className={styles.secondary} href="/contact">{copy('Contact sales')}</a></div>
+        <div className={styles.closingActions}><button type="button" className={styles.primary} onClick={requestAccess}>{copy('Request early access')}</button><a className={styles.secondary} href={pagePath('/contact')}>{copy('Contact sales')}</a></div>
       </section>
 
       <dialog ref={dialog} className={styles.accessDialog} aria-labelledby="ai-access-title" data-lenis-prevent onClick={event => { if (event.target === event.currentTarget) { const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.current?.close() } }}>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { artworkPath } from './paths'
 import styles from './TokenomicsAi.module.scss'
 
 type Digit = {
@@ -15,7 +16,7 @@ type Digit = {
   dust?: boolean
 }
 
-const SOURCE = '/img/tokenomics-ai/unicorn-reference-source.png'
+const SOURCE = artworkPath('unicorn-reference-source')
 
 export function BinaryUnicornCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)

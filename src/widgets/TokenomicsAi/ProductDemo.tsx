@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useReducedMotion } from './useReducedMotion'
 import { copy } from './copy'
+import { artworkPath } from './paths'
 import styles from './TokenomicsAi.module.scss'
 
 const durations = [1800, 2400, 2200, 2400, 2400, 2800, 2500, 2800, 2400, 4200]
@@ -86,7 +87,7 @@ export function ProductDemo() {
     pdf.setTextColor(100)
     pdf.text('Illustrative product demo. This is not a live model run.', 20, 65)
     const [allocation, unlock] = await Promise.all(['allocation-chart', 'unlock-chart'].map(async name => {
-      const response = await fetch(`/img/tokenomics-ai/${name}.png`)
+      const response = await fetch(artworkPath(name))
       if (!response.ok) throw new Error('Unable to load report artwork')
       const blob = await response.blob()
       return new Promise<string>((resolve, reject) => {
@@ -121,7 +122,7 @@ export function ProductDemo() {
           <AnimatePresence initial={false}>
             {shownPhase < 2 && (
               <motion.div key="welcome" className={styles.welcome} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={transition}>
-                <Image src="/img/tokenomics-ai/ai-orb.png" width={86} height={86} alt="" />
+                <Image src={artworkPath('ai-orb')} width={86} height={86} alt="" />
                 <p>{copy('Hi there! What’s')}<br />{copy('on your mind?')}</p>
               </motion.div>
             )}
@@ -137,10 +138,10 @@ export function ProductDemo() {
             )}
             {shownPhase >= 6 && (
               <motion.div key={`output-${shownPhase}`} className={styles.demoOutput} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={transition}>
-                {shownPhase === 6 && <><Image className={styles.demoDonut} src="/img/tokenomics-ai/allocation-chart.png" width={140} height={140} alt="" /><p>{copy('Drafting 8 allocation buckets...')}</p></>}
-                {shownPhase === 7 && <><Image className={styles.demoUnlock} src="/img/tokenomics-ai/unlock-chart.png" width={280} height={163} alt="" /><p>{copy('Testing unlock spikes...')}</p></>}
+                {shownPhase === 6 && <><Image className={styles.demoDonut} src={artworkPath('allocation-chart')} width={140} height={140} alt="" /><p>{copy('Drafting 8 allocation buckets...')}</p></>}
+                {shownPhase === 7 && <><Image className={styles.demoUnlock} src={artworkPath('unlock-chart')} width={280} height={163} alt="" /><p>{copy('Testing unlock spikes...')}</p></>}
                 {shownPhase === 8 && <><motion.span className={styles.pdfProgress} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : 1.8 }}>99%</motion.span><p>{copy('Creating a PDF for your investor...')}</p></>}
-                {shownPhase === 9 && <div className={styles.demoResult}><div><h3>NOVA PROTOCOL<br />{copy('Tokenomics')}</h3><p>{copy('DeFi · Pre-seed · $2M')}</p></div><Image src="/img/tokenomics-ai/allocation-chart.png" width={171} height={171} alt="" /></div>}
+                {shownPhase === 9 && <div className={styles.demoResult}><div><h3>NOVA PROTOCOL<br />{copy('Tokenomics')}</h3><p>{copy('DeFi · Pre-seed · $2M')}</p></div><Image src={artworkPath('allocation-chart')} width={171} height={171} alt="" /></div>}
               </motion.div>
             )}
           </AnimatePresence>

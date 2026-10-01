@@ -84,6 +84,9 @@ const nextConfig: NextConfig = {
       { pathname: "/partners/**" },
       { pathname: "/icons/**" },
       { pathname: "/img/**" },
+      ...(process.env.NEXT_PUBLIC_BASE_PATH
+        ? [{ pathname: `${process.env.NEXT_PUBLIC_BASE_PATH}/img/tokenomics-ai/**` }]
+        : []),
       { pathname: "/api/media/file/**" },
     ],
     remotePatterns: [

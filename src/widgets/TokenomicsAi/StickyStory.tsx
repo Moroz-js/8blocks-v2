@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ProductDemo } from './ProductDemo'
 import { useReducedMotion } from './useReducedMotion'
 import { copy } from './copy'
+import { pagePath } from './paths'
 import styles from './TokenomicsAi.module.scss'
 
 const stories = [
@@ -90,7 +91,7 @@ export function StickyStory({ onRequest }: { onRequest: () => void }) {
               </motion.div>
             ))}
           </div>
-          <div className={styles.storyActions}><button type="button" className={styles.primary} onClick={onRequest}>{copy('Request early access')}</button><a className={styles.secondary} href="/contact">{copy('Contact sales')}</a></div>
+          <div className={styles.storyActions}><button type="button" className={styles.primary} onClick={onRequest}>{copy('Request early access')}</button><a className={styles.secondary} href={pagePath('/contact')}>{copy('Contact sales')}</a></div>
         </div>
         <ProductDemo />
       </div>

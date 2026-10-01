@@ -1,3 +1,18 @@
+## 2026-10-01: Short desktop hero adjustment
+
+- In `TokenomicsAi.module.scss`, added `(max-height: 800px) and (min-width: 761px)` override: unicorn top is its existing computed position minus60px. This lifts its nose away from hero overflow on short desktop/tablet landscape viewports; mobile keeps its existing bottom-anchored responsive composition. Hero dimensions, mask, palette and scatter are unchanged. Sass compilation passed.
+
+## 2026-10-01: RU staging assets and demo font follow-up
+
+- Reproduced live RU staging failure: `/ru/_next/image?url=%2Fimg%2Ftokenomics-ai%2Fallocation-chart.png&w=640&q=75` returned 400 (`The requested resource isn't a valid image.`). Raw `/ru/img/tokenomics-ai/allocation-chart.png` returned 200; prefixed optimizer URL was also rejected by the old localPatterns.
+- Added page-local `src/widgets/TokenomicsAi/paths.ts`, reading `NEXT_PUBLIC_BASE_PATH`. All page Next Image sources, invisible unicorn mask, PDF artwork fetches and four CSS background variables now use this prefix. Root/production URLs stay unchanged when basePath is empty. Also corrected this page's contact links and contact API fetch for the RU mount.
+- `next.config.ts` now allows only `${NEXT_PUBLIC_BASE_PATH}/img/tokenomics-ai/**` additionally when a prefix exists. No global styling or old styleguide changes.
+- Chat bubble correction: left AI messages use the former right-message translucent white background (rgba255/255/255/.1), rounded18px bubbles and matching responsive padding; right user messages now use solid white with dark text. Choice chips retain their translucent fill.
+- Requested demo body text size is now 13.114px: welcome, chat messages, choice chips, status captions and input. Existing mobile container scaling is preserved with `min(13.114px, 1.9457cqw)`; result title, percent display, window chrome and controls keep their hierarchy.
+- Files changed: `next.config.ts`, `BinaryUnicornCanvas.tsx`, `ProductDemo.tsx`, `StickyStory.tsx`, `TokenomicsAiPage.tsx`, `TokenomicsAi.module.scss`; created `paths.ts`. Unicorn pose, palette, contrast and scatter are unchanged.
+- Validation: TypeScript and focused ESLint passed. Production build with `NEXT_PUBLIC_BASE_PATH=/ru` and RU locale passed (existing Nodemailer verification warnings persist). Served that build on temporary port3001: page200, all four rendered optimized artwork URLs200/image content, unicorn mask200, all four background PNGs200. Verified SSR background variables and sales links contain `/ru`. No real contact requests were submitted.
+- Deployment remains manual (`deploy.yml` has workflow_dispatch, no push trigger). The live RU staging instance will retain its old image failure until this revision is deployed using target `staging`.
+
 # Tokenomics AI page handoff
 
 ## Accepted revision and Git publication
