@@ -1,7 +1,7 @@
 export const eventsMeta = {
-  title: 'Events — 8Blocks',
-  description: 'Events, talks, and meetings with the 8Blocks team.',
-  ogTitle: 'Events — 8Blocks',
+  title: 'Events: Talks, X Spaces & Meetups on Tokenomics',
+  description: 'Upcoming and past events with the 8Blocks team: X Spaces, conference talks and meetups on tokenomics, RWA and Web3 business models. Recordings inside.',
+  ogTitle: 'Events with the 8Blocks team',
   ogDescription: 'Events, talks, and meetings with the 8Blocks team.',
 } as const
 
