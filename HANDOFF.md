@@ -1,3 +1,9 @@
+## 2026-10-02: Send icon background correction
+
+- Replaced raster `send-button.png` with the original complete32x32 SVG from Figma node2661:9759. It includes the white round button and black paper plane with transparent outer corners; the former PNG had an unwanted square matte and blurred at high DPI.
+- `paths.ts` now accepts an optional png/svg extension, preserving all current PNG paths and RU basePath handling. `ProductDemo.tsx` uses `artworkPath('send-button', 'svg')`. Existing right inset, sizes and responsive positioning are unchanged.
+- Verified SVG rendering at3x resolution has alpha0 in the outer corner. No palette/scroll/unicorn changes.
+
 ## 2026-10-02: Demo scroll, send button and unicorn opacity
 
 - Increased pinned storytelling travel by exactly2.5 on desktop and mobile: desktop variable viewport portion210svh to525svh, mobile220svh to550svh. `StickyStory.tsx` supplies `--story-extra-scroll` from measured stage/padding geometry so responsive fixed-height offsets also receive the2.5 multiplier. All four steps still span the entire pinned range; the right demo remains independently timer-driven.

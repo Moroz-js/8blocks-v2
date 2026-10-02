@@ -151,7 +151,7 @@ export function ProductDemo() {
       </div>
       <div className={styles.demoInput} aria-hidden="true">
         <AnimatePresence mode="wait" initial={false}><motion.span key={shownPhase === 1 ? 'request' : shownPhase === 2 ? 'name' : shownPhase > 6 ? 'ask' : 'placeholder'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : 0.2 }} className={shownPhase === 1 || shownPhase === 2 ? styles.typedInput : ''}>{shownPhase === 1 ? copy('I need tokenomics for solar panels company') : shownPhase === 2 ? 'NOVA PROTOCOL' : shownPhase > 6 ? copy('Ask anything...') : copy('Describe your project...')}</motion.span></AnimatePresence>
-        {(shownPhase === 1 || shownPhase === 2) && <span className={styles.sendIcon}><Image src={artworkPath('send-button')} width={32} height={32} alt="" unoptimized /></span>}
+        {(shownPhase === 1 || shownPhase === 2) && <span className={styles.sendIcon}><Image src={artworkPath('send-button', 'svg')} width={32} height={32} alt="" unoptimized /></span>}
       </div>
       <span className={styles.srOnly}>{copy('Illustrative demo:')} {labels[shownPhase]}{copy('. No live model is being generated.')}</span>
       {!reducedMotion && <button type="button" className={styles.demoPlayback} onClick={() => setPaused(current => !current)} aria-label={paused ? copy('Play product demo') : copy('Pause product demo')}>{paused ? copy('▶ Play') : copy('Ⅱ Pause')}</button>}

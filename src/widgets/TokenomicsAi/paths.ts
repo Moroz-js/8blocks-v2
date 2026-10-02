@@ -5,6 +5,6 @@ export function pagePath(path: string) {
   return `${basePath}${path}`
 }
 
-export function artworkPath(name: string) {
-  return pagePath(`/img/tokenomics-ai/${name}.png`)
+export function artworkPath(name: string, extension: 'png' | 'svg' = 'png') {
+  return pagePath(`/img/tokenomics-ai/${name}.${extension}`)
 }
