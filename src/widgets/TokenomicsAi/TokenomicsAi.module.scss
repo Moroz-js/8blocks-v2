@@ -50,7 +50,7 @@
 .hero::after { content: ''; position: absolute; z-index: 0; inset: auto -100px -40px; height: 280px; pointer-events: none; background: linear-gradient(0deg, #d71f71 10%, #7f0038 38%, rgba(36,0,16,.5) 65%, transparent 100%); filter: blur(37px); }
 .heroInner { position: relative; max-width: 1280px; height: 100%; margin: auto; }
 .unicorn { position: absolute; z-index: 1; width: 969px; height: 717px; left: 432px; top: max(37px, calc((100% - 659px) / 2 + 37px)); }
-.unicornCanvas { display: block; width: 100%; height: 100%; }
+.unicornCanvas { display: block; width: 100%; height: 100%; opacity: .93; }
 .heroCopy { position: relative; z-index: 2; top: max(0px, calc((100% - 659px) / 2)); padding: 62px 0 0 41px; width: 550px; }
 .heroCopy h1 { margin-top: 12px; font-size: 38px; line-height: 1.07; letter-spacing: -.6px; color: #fff; }
 .heroCopy h1 span { display: block; }
@@ -61,7 +61,7 @@
 .heroFacts { position: absolute; z-index: 2; left: 41px; bottom: 71px; display: flex; align-items: center; height: 60px; font-size: 12px; color: rgba(255,255,255,.9); }
 .heroFacts span { padding: 0 23px; border-left: 1px solid rgba(255,255,255,.1); &:first-child { padding-left: 23px; border: 0; } }
 
-.storySection { position: relative; padding: 140px 40px 0; height: calc(709px + 210svh); max-width: 1280px; margin: auto; }
+.storySection { position: relative; padding: 140px 40px 0; height: calc(709px + 525svh + var(--story-extra-scroll, 0px)); max-width: 1280px; margin: auto; }
 .storyStage { position: sticky; top: max(80px, calc((100svh - 569px + 64px) / 2)); display: grid; grid-template-columns: minmax(0,454fr) minmax(0,674fr); gap: 72px; align-items: center; height: 569px; }
 .storyContent { position: relative; padding-left: 72px; transform: translateY(32px); }
 .storyRail { position: absolute; top: -28px; bottom: -12px; left: 21px; width: 1px; background: linear-gradient(#f00b5f,rgba(240,11,95,.15)); }
@@ -96,9 +96,9 @@
 .pdfProgress { font-size: 80px; line-height: 1.1; letter-spacing: -4px; }
 .demoResult { position: absolute; inset: 21px 20px 0; display: flex; align-items: flex-start; justify-content: space-between; h3 { font-size: 24px; line-height: 1.05; } p { margin-top: 10px; color: rgba(255,255,255,.66); font-size: 12px; } img { width: 171px; height: 171px; } }
 .download { position: absolute; bottom: 27px; left: 20px; padding: 7px 15px; border: 0; border-radius: 99px; background: white; color: #020202; font-size: 12px; }
-.demoInput { position: absolute; left: 19.2878%; top: 69.4200%; width: 61.4243%; height: 7.0299%; border-radius: 24.643px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.12); backdrop-filter: blur(6px); display: flex; align-items: center; padding: 0 19px; font-size: 13.114px; color: rgba(255,255,255,.66); span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
+.demoInput { position: absolute; left: 19.2878%; top: 69.4200%; width: 61.4243%; height: 7.0299%; border-radius: 24.643px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.12); backdrop-filter: blur(6px); display: flex; align-items: center; padding: 0 44px 0 19px; font-size: 13.114px; color: rgba(255,255,255,.66); span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } }
 .typedInput { color: #fff; font-size: 13.114px; }
-.sendIcon { flex-shrink: 0; display: grid; place-items: center; height: 25px; width: 25px; margin-left: auto; border-radius: 50%; background: white; color: #630329; font-size: 13px; }
+.sendIcon { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; img { display: block; width: 100%; height: 100%; } }
 .demoPlayback { position: absolute; bottom: 14px; right: 16px; border: 1px solid rgba(255,255,255,.15); border-radius: 99px; color: rgba(255,255,255,.66); background: rgba(0,0,0,.15); padding: 5px 10px; font-size: 10px; }
 .demoError { position: absolute; left: 20px; bottom: 6px; font-size: 10px; color: #ffd4e4; }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -149,7 +149,8 @@
   .pdfProgress { font-size: 11.87cqw; }
   .demoResult { inset: 3.12cqw 2.97cqw 0; h3 { font-size: 3.56cqw; } p { font-size: 1.78cqw; } img { width: 25.37cqw; height: 25.37cqw; } }
   .download { bottom: 4cqw; left: 2.97cqw; font-size: 1.78cqw; padding: 1.03cqw 2.22cqw; }
-  .demoInput { font-size: min(13.114px, 1.9457cqw); padding: 0 2.82cqw; }
+  .demoInput { font-size: min(13.114px, 1.9457cqw); padding: 0 6.5282cqw 0 2.82cqw; }
+  .sendIcon { right: .5935cqw; width: 4.7478cqw; height: 4.7478cqw; }
   .typedInput { font-size: min(13.114px, 1.9457cqw); }
   .outputs { padding-inline: 24px; }
   .card { padding: 24px 20px; h3,p { font-size: 16px; line-height: 1.25; } }
@@ -167,7 +168,7 @@
   .unicorn { top: auto; bottom: 0; left: 50%; transform: translateX(-50%); width: auto; height: min(510px, max(240px, calc(100% - 260px))); aspect-ratio: 690 / 510; }
   .heroFacts { left: 12px; top: auto; bottom: 16px; font-size: 10px; span { padding: 0 12px; } }
   .hero::after { height: 210px; }
-  .storySection { padding-top: 70px; height: calc(640px + 220svh); }
+  .storySection { padding-top: 70px; height: calc(640px + 550svh + var(--story-extra-scroll, 0px)); }
   .storyStage { top: var(--story-sticky-top, 89px); display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 24px; min-height: 0; }
   .storyContent { transform: none; padding-left: 40px; }
   .storyRail { top: 8px; bottom: 0; }

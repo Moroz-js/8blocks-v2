@@ -1,3 +1,10 @@
+## 2026-10-02: Demo scroll, send button and unicorn opacity
+
+- Increased pinned storytelling travel by exactly2.5 on desktop and mobile: desktop variable viewport portion210svh to525svh, mobile220svh to550svh. `StickyStory.tsx` supplies `--story-extra-scroll` from measured stage/padding geometry so responsive fixed-height offsets also receive the2.5 multiplier. All four steps still span the entire pinned range; the right demo remains independently timer-driven.
+- Checked Figma file `uSZR8nZ3r4kqxTri5ZKDTG`, input2661:9757, send frame2661:9759. Downloaded its original32x32 PNG as `public/img/tokenomics-ai/send-button.png`. `ProductDemo.tsx` now uses this artwork with the existing basePath-aware helper, replacing the text arrow. Desktop send frame is32px with4px right inset, vertically centered; responsive geometry scales in container units. Input reserves44px on the right for the icon.
+- `TokenomicsAi.module.scss` sets canvas opacity to.93, reducing the entire unicorn artwork's opacity by7% without changing its palette, mask or particles.
+- Validation: Sass compilation, TypeScript, focused ESLint passed; downloaded PNG dimensions32x32 verified. Changes remain local to Tokenomics AI. User authorized commit/push; staging deployment remains manual.
+
 ## 2026-10-01: Short desktop hero adjustment
 
 - In `TokenomicsAi.module.scss`, added `(max-height: 800px) and (min-width: 761px)` override: unicorn top is its existing computed position minus60px. This lifts its nose away from hero overflow on short desktop/tablet landscape viewports; mobile keeps its existing bottom-anchored responsive composition. Hero dimensions, mask, palette and scatter are unchanged. Sass compilation passed.

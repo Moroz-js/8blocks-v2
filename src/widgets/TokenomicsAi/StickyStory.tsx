@@ -43,6 +43,9 @@ export function StickyStory({ onRequest }: { onRequest: () => void }) {
       const stickyTop = parseFloat(getComputedStyle(stage).top) || 0
       const padding = parseFloat(wrapperStyle.paddingTop) || 0
       const bottomPadding = parseFloat(wrapperStyle.paddingBottom) || 0
+      // Scale the full pinned travel, including the responsive stage-height offset.
+      const baseHeight = window.matchMedia('(max-width: 760px)').matches ? 640 : 709
+      wrapper.style.setProperty('--story-extra-scroll', `${(baseHeight - stage.offsetHeight - padding - bottomPadding) * 1.5}px`)
       start = wrapper.getBoundingClientRect().top + window.scrollY + padding - stickyTop
       distance = Math.max(1, wrapper.offsetHeight - stage.offsetHeight - padding - bottomPadding)
     }
