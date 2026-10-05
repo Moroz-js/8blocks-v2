@@ -23,7 +23,7 @@ export const eventsContent = {
   about: 'About the event',
   summary: 'Meeting summary',
   location: 'Location',
-  openEventSite: 'Open event website',
+  openEventSite: 'Registration link',
   addToCalendar: 'Add to calendar',
   recording: 'Talk recording',
   presentation: 'Presentation',

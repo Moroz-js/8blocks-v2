@@ -241,7 +241,7 @@ export const Events: CollectionConfig = {
         {
           label: 'Материалы',
           fields: [
-            { name: 'eventUrl', type: 'text', label: 'Сайт мероприятия', validate: validateUrl },
+            { name: 'eventUrl', type: 'text', label: 'Ссылка на регистрацию', validate: validateUrl },
             { name: 'recordingUrl', type: 'text', label: 'Ссылка на запись', validate: validateUrl },
             { name: 'recordingFile', type: 'upload', relationTo: 'media', label: 'Файл записи' },
             { name: 'presentation', type: 'upload', relationTo: 'media', label: 'Файл презентации' },

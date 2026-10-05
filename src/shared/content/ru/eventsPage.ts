@@ -23,7 +23,7 @@ export const eventsContent = {
   about: 'О событии',
   summary: 'Саммари встречи',
   location: 'Место',
-  openEventSite: 'Открыть сайт мероприятия',
+  openEventSite: 'Ссылка на регистрацию',
   addToCalendar: 'Добавить в календарь',
   recording: 'Запись доклада',
   presentation: 'Презентация',
