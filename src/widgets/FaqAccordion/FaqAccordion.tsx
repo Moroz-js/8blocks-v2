@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { Accordion } from '@mantine/core'
+import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
 import styles from './FaqAccordion.module.scss'
 
@@ -48,6 +49,13 @@ export function FaqAccordion({ headline, items, bare = false, headingOrder }: Fa
     <Accordion
       variant="separated"
       multiple
+      onChange={(opened: string[]) => {
+        const last = opened[opened.length - 1]
+        const idx = last ? Number(last.replace('faq-', '')) : NaN
+        if (!Number.isNaN(idx) && items[idx]) {
+          trackPlatformEvent('faq_open', { question: items[idx].question.slice(0, 100), location: window.location.pathname })
+        }
+      }}
       order={headingOrder}
       className={styles.accordion}
       classNames={{

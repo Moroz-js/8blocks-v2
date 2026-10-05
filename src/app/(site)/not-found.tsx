@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Container } from '@/shared/ui'
+import { NotFoundTracker } from '@/shared/lib/NotFoundTracker'
 
 export const metadata: Metadata = {
   title: 'Page not found',
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <Container>
+      <NotFoundTracker />
       <div style={{ paddingBlock: '120px 160px', textAlign: 'center' }}>
         <p
           style={{
