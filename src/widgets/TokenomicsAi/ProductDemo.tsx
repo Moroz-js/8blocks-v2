@@ -11,15 +11,19 @@ import styles from './TokenomicsAi.module.scss'
 const durations = [1800, 2400, 2200, 2400, 2400, 2800, 2500, 2800, 2400, 4200]
 const labels = [copy('Welcome'), copy('Describe your project'), copy('Project name'), copy('Sector'), copy('Stage'), copy('Funding round'), copy('Drafting allocations'), copy('Testing unlock spikes'), copy('Creating investor PDF'), copy('Your model is ready')]
 const messages = [
-  { text: copy('I need tokenomics for solar panels company'), user: true },
-  { text: copy('What is your project name?') },
-  { text: 'NOVA PROTOCOL', user: true },
-  { text: copy('Your sector is?') },
-  { text: 'DeFi', user: true },
-  { text: copy('Your stage is?') },
-  { text: copy('Pre-seed'), user: true },
-  { text: copy('Planned raise size and rounds?') },
-  { text: copy('$2M seed, then\na community round'), user: true },
+  { text: copy('Build tokenomics for a utility token'), user: true },
+  { text: copy('Do you have a pitch or a short project description?') },
+  { text: copy('Use the information from my site: tokenexample.com'), user: true },
+  { text: copy('What is the goal of issuing the token?') },
+  { text: copy('I want to make money by selling them'), user: true },
+  { text: copy('Would you send part of revenue to buy the token back?') },
+  { text: copy('No more than 30%.'), user: true },
+  { text: copy('What will we do with the tokens we buy back?') },
+  { text: copy('I want to sell them. The more I earn, the better.'), user: true },
+  { text: copy('If all your tokens sold today, in how many months could they be used as intended?') },
+  { text: copy('In 2–3 months'), user: true },
+  { text: copy('Here is a first draft of the allocation table. Take a look and leave comments.') },
+  { text: copy('Funds are still unclear. We may need to remove them.'), user: true },
 ]
 
 export function ProductDemo() {
@@ -59,12 +63,12 @@ export function ProductDemo() {
 
   const transition = { duration: reducedMotion ? 0 : 0.45, ease: 'easeOut' as const }
   const chat = shownPhase >= 2 && shownPhase <= 5
-  const count = [0, 0, 2, 4, 6, 9][shownPhase] ?? 0
+  const count = [0, 0, 2, 5, 9, 13][shownPhase] ?? 0
   useLayoutEffect(() => {
     const list = messageListRef.current
     const body = list?.parentElement
     if (!list || !body || !chat) return
-    const measure = () => setChatOffset(body.clientHeight - list.scrollHeight - body.clientWidth * 20 / 414)
+    const measure = () => setChatOffset(body.clientHeight - list.scrollHeight - 4)
     const observer = new ResizeObserver(measure)
     observer.observe(list)
     observer.observe(body)
@@ -132,7 +136,6 @@ export function ProductDemo() {
                   {messages.slice(0, count).map((message, index) => (
                     <motion.div key={index} className={`${styles.message} ${message.user ? styles.userMessage : styles.aiMessage}`} initial={{ opacity: 0, y: 10, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={transition}>{message.text}</motion.div>
                   ))}
-                  {(shownPhase === 3 || shownPhase === 4) && <motion.div key={`choices-${shownPhase}`} className={styles.demoChoices} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={transition}>{(shownPhase === 3 ? ['DeFi', 'GameFi', 'RWA', copy('Finance')] : [copy('Pre-seed'), copy('Private Sale'), 'Pre-TGE', 'TGE']).map(choice => <span key={choice}>{choice}</span>)}</motion.div>}
                 </motion.div>
               </motion.div>
             )}
@@ -150,7 +153,7 @@ export function ProductDemo() {
         {downloadState === 'error' && <p role="alert" className={styles.demoError}>{copy('Download failed. Please try again.')}</p>}
       </div>
       <div className={styles.demoInput} aria-hidden="true">
-        <AnimatePresence mode="wait" initial={false}><motion.span key={shownPhase === 1 ? 'request' : shownPhase === 2 ? 'name' : shownPhase > 6 ? 'ask' : 'placeholder'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : 0.2 }} className={shownPhase === 1 || shownPhase === 2 ? styles.typedInput : ''}>{shownPhase === 1 ? copy('I need tokenomics for solar panels company') : shownPhase === 2 ? 'NOVA PROTOCOL' : shownPhase > 6 ? copy('Ask anything...') : copy('Describe your project...')}</motion.span></AnimatePresence>
+        <AnimatePresence mode="wait" initial={false}><motion.span key={shownPhase === 1 ? 'request' : shownPhase === 2 ? 'site' : shownPhase > 6 ? 'ask' : 'placeholder'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : 0.2 }} className={shownPhase === 1 || shownPhase === 2 ? styles.typedInput : ''}>{shownPhase === 1 ? copy('Build tokenomics for a utility token') : shownPhase === 2 ? copy('Use the information from my site: tokenexample.com') : shownPhase > 6 ? copy('Ask anything...') : copy('Describe your project...')}</motion.span></AnimatePresence>
         {(shownPhase === 1 || shownPhase === 2) && <span className={styles.sendIcon}><Image src={artworkPath('send-button', 'svg')} width={32} height={32} alt="" unoptimized /></span>}
       </div>
       <span className={styles.srOnly}>{copy('Illustrative demo:')} {labels[shownPhase]}{copy('. No live model is being generated.')}</span>
