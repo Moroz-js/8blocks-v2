@@ -8,8 +8,6 @@ import { copy } from './copy'
 import { artworkPath } from './paths'
 import styles from './TokenomicsAi.module.scss'
 
-const durations = [1800, 2400, 2200, 2400, 2400, 2800, 2500, 2800, 2400, 4200]
-const labels = [copy('Welcome'), copy('Describe your project'), copy('Project name'), copy('Sector'), copy('Stage'), copy('Funding round'), copy('Drafting allocations'), copy('Testing unlock spikes'), copy('Creating investor PDF'), copy('Your model is ready')]
 const messages = [
   { text: copy('Build tokenomics for a utility token'), user: true },
   { text: copy('Do you have a pitch or a short project description?') },
@@ -35,7 +33,10 @@ export function ProductDemo() {
   const [paused, setPaused] = useState(false)
   const [phase, setPhase] = useState(0)
   const reducedMotion = useReducedMotion()
-  const shownPhase = reducedMotion ? 9 : phase
+  const chatStart = 2
+  const outputStart = chatStart + messages.length
+  const phaseCount = outputStart + 4
+  const shownPhase = reducedMotion ? phaseCount - 1 : phase
 
   useEffect(() => {
     const element = rootRef.current
@@ -51,7 +52,8 @@ export function ProductDemo() {
     let timer = 0
     const schedule = () => {
       window.clearTimeout(timer)
-      if (!document.hidden) timer = window.setTimeout(() => setPhase(current => (current + 1) % durations.length), durations[phase])
+      const delay = phase === 0 ? 2200 : phase === 1 ? 2800 : phase < outputStart ? 3400 : [2600, 2600, 2800, 4800][phase - outputStart]
+      if (!document.hidden) timer = window.setTimeout(() => setPhase(current => (current + 1) % phaseCount), delay)
     }
     schedule()
     document.addEventListener('visibilitychange', schedule)
@@ -59,11 +61,12 @@ export function ProductDemo() {
       window.clearTimeout(timer)
       document.removeEventListener('visibilitychange', schedule)
     }
-  }, [phase, visible, paused, reducedMotion])
+  }, [phase, visible, paused, reducedMotion, outputStart, phaseCount])
 
-  const transition = { duration: reducedMotion ? 0 : 0.45, ease: 'easeOut' as const }
-  const chat = shownPhase >= 2 && shownPhase <= 5
-  const count = [0, 0, 2, 5, 9, 13][shownPhase] ?? 0
+  const transition = { duration: reducedMotion ? 0 : 0.55, ease: 'easeOut' as const }
+  const chat = shownPhase >= chatStart && shownPhase < outputStart
+  const count = shownPhase < chatStart ? 0 : Math.min(messages.length, shownPhase - chatStart + 1)
+  const outputPhase = shownPhase - outputStart
   useLayoutEffect(() => {
     const list = messageListRef.current
     const body = list?.parentElement
@@ -139,24 +142,24 @@ export function ProductDemo() {
                 </motion.div>
               </motion.div>
             )}
-            {shownPhase >= 6 && (
-              <motion.div key={`output-${shownPhase}`} className={styles.demoOutput} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={transition}>
-                {shownPhase === 6 && <><Image className={styles.demoDonut} src={artworkPath('allocation-chart')} width={140} height={140} alt="" /><p>{copy('Drafting 8 allocation buckets...')}</p></>}
-                {shownPhase === 7 && <><Image className={styles.demoUnlock} src={artworkPath('unlock-chart')} width={280} height={163} alt="" /><p>{copy('Testing unlock spikes...')}</p></>}
-                {shownPhase === 8 && <><motion.span className={styles.pdfProgress} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : 1.8 }}>99%</motion.span><p>{copy('Creating a PDF for your investor...')}</p></>}
-                {shownPhase === 9 && <div className={styles.demoResult}><div><h3>NOVA PROTOCOL<br />{copy('Tokenomics')}</h3><p>{copy('DeFi · Pre-seed · $2M')}</p></div><Image src={artworkPath('allocation-chart')} width={171} height={171} alt="" /></div>}
+            {outputPhase >= 0 && (
+              <motion.div key={`output-${outputPhase}`} className={styles.demoOutput} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={transition}>
+                {outputPhase === 0 && <><Image className={styles.demoDonut} src={artworkPath('allocation-chart')} width={140} height={140} alt="" /><p>{copy('Drafting 8 allocation buckets...')}</p></>}
+                {outputPhase === 1 && <><Image className={styles.demoUnlock} src={artworkPath('unlock-chart')} width={280} height={163} alt="" /><p>{copy('Testing unlock spikes...')}</p></>}
+                {outputPhase === 2 && <><motion.span className={styles.pdfProgress} initial={{ opacity: 0.5 }} animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : 1.8 }}>99%</motion.span><p>{copy('Creating a PDF for your investor...')}</p></>}
+                {outputPhase === 3 && <div className={styles.demoResult}><div><h3>NOVA PROTOCOL<br />{copy('Tokenomics')}</h3><p>{copy('DeFi · Pre-seed · $2M')}</p></div><Image src={artworkPath('allocation-chart')} width={171} height={171} alt="" /></div>}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
-        {shownPhase === 9 && <button type="button" className={styles.download} disabled={downloadState === 'loading'} onClick={downloadReport}>{downloadState === 'loading' ? copy('Preparing…') : copy('Download')}<span className={styles.srOnly}> {copy('illustrative demo PDF')}</span></button>}
+        {outputPhase === 3 && <button type="button" className={styles.download} disabled={downloadState === 'loading'} onClick={downloadReport}>{downloadState === 'loading' ? copy('Preparing…') : copy('Download')}<span className={styles.srOnly}> {copy('illustrative demo PDF')}</span></button>}
         {downloadState === 'error' && <p role="alert" className={styles.demoError}>{copy('Download failed. Please try again.')}</p>}
       </div>
       <div className={styles.demoInput} aria-hidden="true">
-        <AnimatePresence mode="wait" initial={false}><motion.span key={shownPhase === 1 ? 'request' : shownPhase === 2 ? 'site' : shownPhase > 6 ? 'ask' : 'placeholder'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : 0.2 }} className={shownPhase === 1 || shownPhase === 2 ? styles.typedInput : ''}>{shownPhase === 1 ? copy('Build tokenomics for a utility token') : shownPhase === 2 ? copy('Use the information from my site: tokenexample.com') : shownPhase > 6 ? copy('Ask anything...') : copy('Describe your project...')}</motion.span></AnimatePresence>
-        {(shownPhase === 1 || shownPhase === 2) && <span className={styles.sendIcon}><Image src={artworkPath('send-button', 'svg')} width={32} height={32} alt="" unoptimized /></span>}
+        <AnimatePresence mode="wait" initial={false}><motion.span key={shownPhase === 1 ? 'request' : outputPhase >= 0 ? 'ask' : 'placeholder'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reducedMotion ? 0 : 0.2 }} className={shownPhase === 1 ? styles.typedInput : ''}>{shownPhase === 1 ? copy('Build tokenomics for a utility token') : outputPhase >= 0 ? copy('Ask anything...') : copy('Describe your project...')}</motion.span></AnimatePresence>
+        {shownPhase === 1 && <span className={styles.sendIcon}><Image src={artworkPath('send-button', 'svg')} width={32} height={32} alt="" unoptimized /></span>}
       </div>
-      <span className={styles.srOnly}>{copy('Illustrative demo:')} {labels[shownPhase]}{copy('. No live model is being generated.')}</span>
+      <span className={styles.srOnly}>{copy('Illustrative demo:')} {shownPhase < chatStart ? copy('Welcome') : chat ? messages[count - 1]?.text : copy('Your model is ready')}{copy('. No live model is being generated.')}</span>
       {!reducedMotion && <button type="button" className={styles.demoPlayback} onClick={() => setPaused(current => !current)} aria-label={paused ? copy('Play product demo') : copy('Pause product demo')}>{paused ? copy('▶ Play') : copy('Ⅱ Pause')}</button>}
     </div>
   )

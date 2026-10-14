@@ -184,7 +184,7 @@ export function TokenomicsAiPage({ fontClass }: { fontClass: string }) {
 
       <section id="early-access" className={styles.compare} aria-labelledby="ai-cta-title">
         <Badge />
-        <h2 id="ai-cta-title" className={styles.titleGradient}>{copy('Trust')}<br />{copy('a tuned model')}</h2>
+        <h2 id="ai-cta-title" className={styles.titleGradient}>{copy('Trust a tuned model')}</h2>
         <p className={styles.compareLead}>{copy('A generic AI picks a formula, explains it, and might guess right. It still cannot give an individual approach.')}</p>
         <div className={styles.compareActions}><button type="button" className={styles.primary} onClick={requestAccess}>{copy('Request early access')}</button><a className={styles.secondary} href={pagePath('/contact')}>{copy('Contact sales')}</a></div>
         <div className={styles.matrixWrap}>
