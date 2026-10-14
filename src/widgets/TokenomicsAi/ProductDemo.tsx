@@ -52,7 +52,7 @@ export function ProductDemo() {
     let timer = 0
     const schedule = () => {
       window.clearTimeout(timer)
-      const delay = phase === 0 ? 2200 : phase === 1 ? 2800 : phase < outputStart ? 3400 : [2600, 2600, 2800, 4800][phase - outputStart]
+      const delay = phase === 0 ? 1470 : phase === 1 ? 1870 : phase < outputStart ? 2270 : [2600, 2600, 2800, 4800][phase - outputStart]
       if (!document.hidden) timer = window.setTimeout(() => setPhase(current => (current + 1) % phaseCount), delay)
     }
     schedule()
