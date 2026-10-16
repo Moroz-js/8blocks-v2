@@ -1,6 +1,7 @@
 ﻿'use client'
 
 import { useState } from 'react'
+import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { contactFormContent } from '@/shared/content/contactPage'
 import styles from './ContactForm.module.scss'
 
@@ -41,8 +42,10 @@ export function ContactForm() {
       }
 
       setStatus('success')
+      trackPlatformEvent('form_submit', { form_id: 'contact', status: 'success' })
     } catch (err) {
       setStatus('error')
+      trackPlatformEvent('form_submit', { form_id: 'contact', status: 'error' })
       setErrorMsg(err instanceof Error ? err.message : contactFormContent.failedError)
     }
   }

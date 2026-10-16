@@ -1,6 +1,9 @@
+import { lang } from '@/shared/i18n'
+
 export interface CityOption {
   value: string       // slug, e.g. "new-york"
   label: string       // display name, e.g. "New York"
+  labelRu?: string    // Russian display name, e.g. "Москва"; falls back to label
   countryCode: string // ISO 3166-1 alpha-2, e.g. "US"
 }
 
@@ -98,6 +101,7 @@ export const EVENT_CITIES: CityOption[] = [
   { value: 'frankfurt',         label: 'Frankfurt',         countryCode: 'DE' },
   { value: 'cologne',           label: 'Cologne',           countryCode: 'DE' },
   { value: 'dusseldorf',        label: 'Düsseldorf',        countryCode: 'DE' },
+  { value: 'dortmund',          label: 'Dortmund',          labelRu: 'Дортмунд',          countryCode: 'DE' },
   { value: 'stuttgart',         label: 'Stuttgart',         countryCode: 'DE' },
   { value: 'madrid',            label: 'Madrid',            countryCode: 'ES' },
   { value: 'barcelona',         label: 'Barcelona',         countryCode: 'ES' },
@@ -157,7 +161,7 @@ export const EVENT_CITIES: CityOption[] = [
   { value: 'kyiv',              label: 'Kyiv',              countryCode: 'UA' },
   { value: 'lviv',              label: 'Lviv',              countryCode: 'UA' },
   { value: 'kharkiv',           label: 'Kharkiv',           countryCode: 'UA' },
-  { value: 'minsk',             label: 'Minsk',             countryCode: 'BY' },
+  { value: 'minsk',             label: 'Minsk',             labelRu: 'Минск',             countryCode: 'BY' },
   { value: 'chisinau',          label: 'Chișinău',          countryCode: 'MD' },
   { value: 'tbilisi',           label: 'Tbilisi',           countryCode: 'GE' },
   { value: 'yerevan',           label: 'Yerevan',           countryCode: 'AM' },
@@ -169,30 +173,30 @@ export const EVENT_CITIES: CityOption[] = [
   { value: 'monaco',            label: 'Monaco',            countryCode: 'MC' },
 
   // ── Russia & CIS ───────────────────────────────────────────
-  { value: 'moscow',            label: 'Moscow',            countryCode: 'RU' },
-  { value: 'saint-petersburg',  label: 'Saint Petersburg',  countryCode: 'RU' },
-  { value: 'novosibirsk',       label: 'Novosibirsk',       countryCode: 'RU' },
-  { value: 'yekaterinburg',     label: 'Yekaterinburg',     countryCode: 'RU' },
-  { value: 'kazan',             label: 'Kazan',             countryCode: 'RU' },
-  { value: 'nizhny-novgorod',   label: 'Nizhny Novgorod',   countryCode: 'RU' },
-  { value: 'chelyabinsk',       label: 'Chelyabinsk',       countryCode: 'RU' },
-  { value: 'samara',            label: 'Samara',            countryCode: 'RU' },
-  { value: 'ufa',               label: 'Ufa',               countryCode: 'RU' },
-  { value: 'rostov-on-don',     label: 'Rostov-on-Don',     countryCode: 'RU' },
-  { value: 'krasnoyarsk',       label: 'Krasnoyarsk',       countryCode: 'RU' },
-  { value: 'perm',              label: 'Perm',              countryCode: 'RU' },
-  { value: 'volgograd',         label: 'Volgograd',         countryCode: 'RU' },
-  { value: 'voronezh',          label: 'Voronezh',          countryCode: 'RU' },
-  { value: 'almaty',            label: 'Almaty',            countryCode: 'KZ' },
-  { value: 'astana',            label: 'Astana',            countryCode: 'KZ' },
-  { value: 'tashkent',          label: 'Tashkent',          countryCode: 'UZ' },
-  { value: 'bishkek',           label: 'Bishkek',           countryCode: 'KG' },
-  { value: 'dushanbe',          label: 'Dushanbe',          countryCode: 'TJ' },
-  { value: 'ashgabat',          label: 'Ashgabat',          countryCode: 'TM' },
+  { value: 'moscow',            label: 'Moscow',            labelRu: 'Москва',            countryCode: 'RU' },
+  { value: 'saint-petersburg',  label: 'Saint Petersburg',  labelRu: 'Санкт-Петербург',   countryCode: 'RU' },
+  { value: 'novosibirsk',       label: 'Novosibirsk',       labelRu: 'Новосибирск',       countryCode: 'RU' },
+  { value: 'yekaterinburg',     label: 'Yekaterinburg',     labelRu: 'Екатеринбург',      countryCode: 'RU' },
+  { value: 'kazan',             label: 'Kazan',             labelRu: 'Казань',            countryCode: 'RU' },
+  { value: 'nizhny-novgorod',   label: 'Nizhny Novgorod',   labelRu: 'Нижний Новгород',   countryCode: 'RU' },
+  { value: 'chelyabinsk',       label: 'Chelyabinsk',       labelRu: 'Челябинск',         countryCode: 'RU' },
+  { value: 'samara',            label: 'Samara',            labelRu: 'Самара',            countryCode: 'RU' },
+  { value: 'ufa',               label: 'Ufa',               labelRu: 'Уфа',               countryCode: 'RU' },
+  { value: 'rostov-on-don',     label: 'Rostov-on-Don',     labelRu: 'Ростов-на-Дону',    countryCode: 'RU' },
+  { value: 'krasnoyarsk',       label: 'Krasnoyarsk',       labelRu: 'Красноярск',        countryCode: 'RU' },
+  { value: 'perm',              label: 'Perm',              labelRu: 'Пермь',             countryCode: 'RU' },
+  { value: 'volgograd',         label: 'Volgograd',         labelRu: 'Волгоград',         countryCode: 'RU' },
+  { value: 'voronezh',          label: 'Voronezh',          labelRu: 'Воронеж',           countryCode: 'RU' },
+  { value: 'almaty',            label: 'Almaty',            labelRu: 'Алматы',            countryCode: 'KZ' },
+  { value: 'astana',            label: 'Astana',            labelRu: 'Астана',            countryCode: 'KZ' },
+  { value: 'tashkent',          label: 'Tashkent',          labelRu: 'Ташкент',           countryCode: 'UZ' },
+  { value: 'bishkek',           label: 'Bishkek',           labelRu: 'Бишкек',            countryCode: 'KG' },
+  { value: 'dushanbe',          label: 'Dushanbe',          labelRu: 'Душанбе',           countryCode: 'TJ' },
+  { value: 'ashgabat',          label: 'Ashgabat',          labelRu: 'Ашхабад',           countryCode: 'TM' },
 
   // ── Middle East ────────────────────────────────────────────
-  { value: 'dubai',             label: 'Dubai',             countryCode: 'AE' },
-  { value: 'abu-dhabi',         label: 'Abu Dhabi',         countryCode: 'AE' },
+  { value: 'dubai',             label: 'Dubai',             labelRu: 'Дубай',             countryCode: 'AE' },
+  { value: 'abu-dhabi',         label: 'Abu Dhabi',         labelRu: 'Абу-Даби',          countryCode: 'AE' },
   { value: 'sharjah',           label: 'Sharjah',           countryCode: 'AE' },
   { value: 'riyadh',            label: 'Riyadh',            countryCode: 'SA' },
   { value: 'jeddah',            label: 'Jeddah',            countryCode: 'SA' },
@@ -320,3 +324,11 @@ export const EVENT_CITY_SELECT_OPTIONS = EVENT_CITIES.map(c => ({
   label: c.label,
   value: c.value,
 }))
+
+/** Подпись города для текущей локали сайта: на ru берётся labelRu, иначе label. */
+export function eventCityLabel(value?: string | null) {
+  if (!value) return ''
+  const city = EVENT_CITIES_MAP.get(value)
+  if (!city) return value
+  return lang === 'ru' ? city.labelRu ?? city.label : city.label
+}
