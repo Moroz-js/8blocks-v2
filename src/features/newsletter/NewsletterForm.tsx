@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import styles from './NewsletterForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -36,8 +37,10 @@ export function NewsletterForm() {
       }
 
       setStatus('success')
+      trackPlatformEvent('form_submit', { form_id: 'newsletter', status: 'success' })
     } catch (err) {
       setStatus('error')
+      trackPlatformEvent('form_submit', { form_id: 'newsletter', status: 'error' })
       setErrorMsg(err instanceof Error ? err.message : 'Failed to subscribe')
     }
   }
