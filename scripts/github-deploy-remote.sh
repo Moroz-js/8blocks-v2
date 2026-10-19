@@ -86,12 +86,43 @@ printf '%s\n' \
 chmod 600 .env
 echo "✓ .env written"
 
+# ── ensure swap exists (prevent OOM on small VPS) ──
+if [ "$(id -u)" -eq 0 ] && [ "$(swapon --show | wc -l)" -eq 0 ]; then
+  if [ ! -f /swapfile ]; then
+    echo "💾 Creating 2G swapfile to prevent OOM during npm install"
+    (fallocate -l 2G /swapfile || dd if=/dev/zero of=/swapfile bs=1M count=2048 status=none) && \
+      chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile || true
+  else
+    swapon /swapfile 2>/dev/null || true
+  fi
+fi
+
 # ── install dependencies ──────────────────────
 # PUPPETEER_SKIP_DOWNLOAD: не качаем Chrome в postinstall (хрупко: нужен unzip,
 # сеть и т.д.). Браузер ставим отдельным управляемым шагом ниже.
-echo "📦 Installing dependencies"
-PUPPETEER_SKIP_DOWNLOAD=true npm ci --prefer-offline
-echo "✓ Dependencies installed"
+LOCK_HASH=$(sha256sum package-lock.json | awk '{print $1}')
+INSTALLED_HASH=""
+if [ -f "node_modules/.package-lock.hash" ]; then
+  INSTALLED_HASH=$(cat "node_modules/.package-lock.hash" 2>/dev/null || true)
+fi
+
+if [ "${LOCK_HASH}" = "${INSTALLED_HASH}" ] && [ -x "node_modules/.bin/next" ] && [ -f "node_modules/payload/dist/bin/index.js" ]; then
+  echo "⏭️  Dependencies up to date (package-lock.json unchanged)"
+else
+  echo "📦 Installing dependencies"
+  # Освобождаем память текущего инстанса перед тяжёлым npm ci
+  if pm2 describe "${PROJECT_NAME}" &>/dev/null; then
+    pm2 stop "${PROJECT_NAME}" || true
+  fi
+  NODE_OPTIONS="--max-old-space-size=1024" \
+    PUPPETEER_SKIP_DOWNLOAD=true \
+    npm ci --prefer-offline --no-audit --no-fund --progress=false --maxsockets=2 \
+    || NODE_OPTIONS="--max-old-space-size=1024" \
+       PUPPETEER_SKIP_DOWNLOAD=true \
+       npm install --prefer-offline --no-audit --no-fund --progress=false --maxsockets=2
+  echo "${LOCK_HASH}" > "node_modules/.package-lock.hash"
+  echo "✓ Dependencies installed"
+fi
 
 # ── Chromium system libs for Puppeteer (PDF export) ──
 # Идемпотентно: ставим один раз (маркер-файл), чтобы не гонять apt на каждом деплое.
@@ -133,8 +164,13 @@ fi
 # если скачать не удалось (сайт поднимется, не сработает только экспорт PDF).
 echo "🌐 Ensuring Puppeteer Chrome is installed (cache: ${PUPPETEER_CACHE_DIR})"
 mkdir -p "${PUPPETEER_CACHE_DIR}"
-npx --yes puppeteer browsers install chrome \
-  || echo "⚠️  Puppeteer Chrome install failed (PDF export may not work)"
+EXISTING_CHROME=$(find "${PUPPETEER_CACHE_DIR}/chrome" -maxdepth 1 -mindepth 1 -type d 2>/dev/null | head -n1 || true)
+if [ -n "${EXISTING_CHROME}" ]; then
+  echo "✓ Chrome already cached: ${EXISTING_CHROME}"
+else
+  npx --yes puppeteer browsers install chrome \
+    || echo "⚠️  Puppeteer Chrome install failed (PDF export may not work)"
+fi
 if [ -d "${PUPPETEER_CACHE_DIR}/chrome" ]; then
   echo "✓ Chrome present: $(find "${PUPPETEER_CACHE_DIR}/chrome" -maxdepth 1 -mindepth 1 -type d 2>/dev/null | head -n1)"
 else
@@ -194,7 +230,7 @@ echo "✓ GitHub build installed"
 # ── restart via PM2 ───────────────────────────
 echo "🔄 Restarting with PM2"
 if pm2 describe "${PROJECT_NAME}" &>/dev/null; then
-  pm2 reload "${PROJECT_NAME}" --update-env
+  pm2 reload "${PROJECT_NAME}" --update-env || pm2 restart "${PROJECT_NAME}" --update-env
 else
   pm2 start npm --name "${PROJECT_NAME}" -- start
 fi
