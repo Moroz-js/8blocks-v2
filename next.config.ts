@@ -29,7 +29,7 @@ function buildContentSecurityPolicy(): string {
     "img-src 'self' data: https: blob:",
     "font-src 'self' https://fonts.gstatic.com data:",
     "media-src 'self' https://widget.replain.cc",
-    "connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://mc.yandex.ru https://metrika.yandex.ru wss://mc.yandex.ru https://widget.replain.cc wss://widget.replain.cc wss://ws.replain.cc https://app.replain.cc wss://app.replain.cc https://calendly.com https://*.calendly.com https://us.i.posthog.com https://eu.i.posthog.com https://*.posthog.com",
+    `connect-src 'self' ${isDev ? "ws: wss: http://localhost:* http://127.0.0.1:* " : ""}https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://region1.google-analytics.com https://mc.yandex.ru https://metrika.yandex.ru wss://mc.yandex.ru https://widget.replain.cc wss://widget.replain.cc wss://ws.replain.cc https://app.replain.cc wss://app.replain.cc https://calendly.com https://*.calendly.com https://us.i.posthog.com https://eu.i.posthog.com https://*.posthog.com`,
     "frame-src https://www.googletagmanager.com https://www.google.com https://maps.google.com https://calendly.com https://*.calendly.com https://widget.replain.cc https://mc.yandex.ru https://metrika.yandex.ru",
     "worker-src 'self' blob:",
   ].join("; ");
@@ -37,9 +37,11 @@ function buildContentSecurityPolicy(): string {
 
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy();
 const IS_STAGING = process.env.NEXT_PUBLIC_STAGING === "true";
+const IS_PROD = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
+  allowedDevOrigins: ["localhost", "127.0.0.1"],
 
   async redirects() {
     return [
@@ -55,7 +57,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Strict-Transport-Security",
-            value: "max-age=63072000; includeSubDomains; preload",
+            value: IS_PROD ? "max-age=63072000; includeSubDomains; preload" : "max-age=0",
           },
           { key: "Content-Security-Policy", value: CONTENT_SECURITY_POLICY },
           { key: "X-Content-Type-Options", value: "nosniff" },

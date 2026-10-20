@@ -1,25 +1,20 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
+import { Geist } from 'next/font/google'
 import { lang, t } from '@/shared/i18n'
+import { BenchmarkIntro } from '@/widgets/Benchmarks/BenchmarkIntro'
+import { BenchmarkSectors } from '@/widgets/Benchmarks/BenchmarkSectors'
+import { BenchmarkAllocation } from '@/widgets/Benchmarks/BenchmarkAllocation'
+import { BenchmarkLowerSections } from '@/widgets/Benchmarks/BenchmarkLowerSections'
 import enContent from '@/shared/lib/platform/benchmarks/content.json'
 import ruContent from '@/shared/lib/platform/benchmarks/content.ru.json'
-import enAudits from '@/shared/lib/platform/benchmarks/audits.json'
-import ruAudits from '@/shared/lib/platform/benchmarks/audits.ru.json'
 import { platformPagesContent } from '@/shared/content/platformPages'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { buildPageGraph, datasetNode } from '@/shared/lib/page-schema'
-import { BenchmarkExplorer } from '@/widgets/Platform/BenchmarkExplorer'
-import { FaqAccordion } from '@/widgets/FaqAccordion'
-import styles from '@/widgets/Platform/Platform.module.scss'
 
-interface Source {
-  title: string
-  url: string
-}
+const geist = Geist({ subsets: ['latin', 'cyrillic'], weight: '400', display: 'swap', variable: '--font-tokenomics-geist' })
 
 const content = lang === 'ru' ? ruContent : enContent
-const audits = lang === 'ru' ? ruAudits : enAudits
 const copy = platformPagesContent.benchmarks
 
 const faq = t({
@@ -60,26 +55,6 @@ const faq = t({
     },
   ],
 })
-
-function SourceLinks({ sources }: { sources: (Source | undefined)[] }) {
-  return (
-    <span className={styles.fine}>
-      {sources.filter(Boolean).map((source, index) => (
-        <span key={source?.url}>
-          {index > 0 && ' · '}
-          <a
-            href={source?.url}
-            rel="nofollow noopener noreferrer"
-            target="_blank"
-            className={styles.source}
-          >
-            {source?.title}
-          </a>
-        </span>
-      ))}
-    </span>
-  )
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   return withPayloadPageMetadata('/learn/token-vesting-benchmarks', {
@@ -129,159 +104,15 @@ export default function TokenVestingBenchmarksPage() {
   })
 
   return (
-    <main className={styles.page}>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <section className={styles.hero}>
-        <div className={styles.narrow}>
-          <div className={styles.badges}>
-            {copy.badges.map((badge) => (
-              <span key={badge} className={styles.badge}>
-                {badge}
-              </span>
-            ))}
-          </div>
-          <h1 className={styles.headline}>{copy.headline}</h1>
-          <p className={styles.lead}>{copy.lead}</p>
-          <div className={styles.benchmarkLogoRow}>
-            {['SOL', 'UNI', 'ARB', 'OP', 'HYPE', 'SUI', 'APT'].map(
-              (symbol) => (
-                // Curated local assets.
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={symbol}
-                  className={styles.logo}
-                  src={`/logos/tokens/${symbol}.${
-                    ['ARB', 'HYPE'].includes(symbol) ? 'jpg' : 'png'
-                  }`}
-                  alt=""
-                  aria-hidden="true"
-                />
-              ),
-            )}
-            <span className={styles.fine}>{copy.projectsCount}</span>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.narrow}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.label}>{copy.categoryLabel}</span>
-            <p className={styles.sectionLead}>{copy.categoryLead}</p>
-          </div>
-          <BenchmarkExplorer />
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.narrow}>
-          <div className={styles.spread}>
-            <span className={styles.label}>{copy.audited}</span>
-            <Link href="/audits" className={styles.source}>
-              {copy.publicAudits} →
-            </Link>
-          </div>
-          <div className={styles.auditGrid}>
-            {audits.projects.map((audit) => (
-              <Link
-                key={audit.symbol}
-                href={audit.url || '/audits'}
-                className={`${styles.card} ${styles.auditCard}`}
-              >
-                <span className={styles.mono}>{audit.symbol}</span>
-                <h3>{audit.name}</h3>
-                <p className={styles.fine}>{audit.sector}</p>
-                <p className={styles.description}>{audit.facts[0]}</p>
-                <span className={styles.source}>{copy.readAudit} →</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.narrow}>
-          <span className={styles.label}>{copy.allocationLabel}</span>
-          <div className={styles.resultStack}>
-            {content.buckets.map((bucket) => (
-              <article key={bucket.key} className={styles.card}>
-                <div className={styles.benchmarkHeader}>
-                  <h2>{bucket.label}</h2>
-                  <span className={styles.rangeValue}>
-                    {bucket.typicalRange}
-                  </span>
-                </div>
-                {!bucket.median.startsWith('n/a') && (
-                  <p className={styles.fine}>median · {bucket.median}</p>
-                )}
-                <details>
-                  <summary className={styles.detailsSummary}>{copy.contextSources}</summary>
-                  <p className={styles.description}>{bucket.note}</p>
-                  <SourceLinks sources={[bucket.source, bucket.source2]} />
-                </details>
-              </article>
-            ))}
-          </div>
-          <div className={`${styles.card} ${styles.spread}`}>
-            <p>{copy.calculatorText}</p>
-            <Link href="/product/calculator" className={styles.primary}>
-              {copy.calculator} →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.narrow}>
-          <span className={styles.label}>{copy.vestingLabel}</span>
-          <div className={styles.resultStack}>
-            {content.vestingNorms.map((norm) => (
-              <article key={norm.figure} className={styles.card}>
-                <h3>{norm.figure}</h3>
-                <p className={styles.description}>{norm.claim}</p>
-                <SourceLinks sources={[norm.source, norm.source2]} />
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.narrow}>
-          <span className={styles.label}>{copy.trendsLabel}</span>
-          <div className={styles.resultStack}>
-            {content.trends.map((trend) => (
-              <article key={trend.source.url} className={styles.card}>
-                <p className={styles.description}>{trend.claim}</p>
-                <SourceLinks sources={[trend.source, trend.source2]} />
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.narrow}>
-          <span className={styles.label}>{copy.faq}</span>
-          <FaqAccordion
-            bare
-            items={faq.map((item) => ({
-              question: item.q,
-              answer: item.a,
-            }))}
-          />
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <div className={styles.narrow}>
-          <span className={styles.label}>{copy.methodology}</span>
-          <p className={styles.sectionLead}>{content.methodologyNote}</p>
-        </div>
-      </section>
-    </main>
+      <BenchmarkIntro fontClass={geist.variable} />
+      <BenchmarkSectors fontClass={geist.variable} />
+      <BenchmarkAllocation fontClass={geist.variable} />
+      <BenchmarkLowerSections fontClass={geist.variable} />
+    </>
   )
 }
