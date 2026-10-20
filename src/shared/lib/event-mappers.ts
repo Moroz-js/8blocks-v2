@@ -140,6 +140,8 @@ export function mapEvent(value: unknown): Event | null {
       ogDescription: typeof seo.ogDescription === 'string' ? seo.ogDescription : null,
       noindex: seo.noindex === true,
       ogImage: media(seo.ogImage, card.title),
+      alternateSlug: typeof seo.alternateSlug === 'string' ? seo.alternateSlug : null,
+      noAlternates: seo.noAlternates === true,
     } : null,
     updatedAt: typeof item.updatedAt === 'string' ? item.updatedAt : card.startsAt,
   }

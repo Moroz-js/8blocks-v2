@@ -344,6 +344,24 @@ export const Research: CollectionConfig = {
             description: 'Запрещает индексацию страницы',
           },
         },
+        {
+          name: 'alternateSlug',
+          type: 'text',
+          label: 'Slug на сайте другого языка (hreflang)',
+          admin: {
+            description:
+              'Slug этого же исследования на сайте другого языка (EN ↔ RU). Пусто — тот же slug. Используется для hreflang.',
+          },
+        },
+        {
+          name: 'noAlternates',
+          type: 'checkbox',
+          label: 'Нет версии на другом языке',
+          defaultValue: false,
+          admin: {
+            description: 'Исследование существует только на этом языке — hreflang не выводить.',
+          },
+        },
       ],
     },
 
