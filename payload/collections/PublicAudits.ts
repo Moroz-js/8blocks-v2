@@ -371,6 +371,24 @@ export const PublicAudits: CollectionConfig = {
           label: 'Скрыть от поисковиков (noindex)',
           defaultValue: false,
         },
+        {
+          name: 'alternateSlug',
+          type: 'text',
+          label: 'Slug на сайте другого языка (hreflang)',
+          admin: {
+            description:
+              'Slug этого же аудита на сайте другого языка (EN ↔ RU). Пусто — тот же slug. Используется для hreflang.',
+          },
+        },
+        {
+          name: 'noAlternates',
+          type: 'checkbox',
+          label: 'Нет версии на другом языке',
+          defaultValue: false,
+          admin: {
+            description: 'Аудит опубликован только на этом языке — hreflang не выводить.',
+          },
+        },
       ],
     },
     {

@@ -262,6 +262,24 @@ export const Events: CollectionConfig = {
                 { name: 'ogDescription', type: 'textarea', label: 'OG description' },
                 { name: 'ogImage', type: 'upload', relationTo: 'media', label: 'OG изображение' },
                 { name: 'noindex', type: 'checkbox', label: 'Скрыть от поисковиков', defaultValue: false },
+                {
+                  name: 'alternateSlug',
+                  type: 'text',
+                  label: 'Slug на сайте другого языка (hreflang)',
+                  admin: {
+                    description:
+                      'Slug этого же события на сайте другого языка (EN ↔ RU). Пусто — тот же slug. Используется для hreflang.',
+                  },
+                },
+                {
+                  name: 'noAlternates',
+                  type: 'checkbox',
+                  label: 'Нет версии на другом языке',
+                  defaultValue: false,
+                  admin: {
+                    description: 'Событие опубликовано только на этом языке — hreflang не выводить.',
+                  },
+                },
               ],
             },
           ],
