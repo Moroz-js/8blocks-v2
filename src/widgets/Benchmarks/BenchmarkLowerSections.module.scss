@@ -126,7 +126,6 @@
   width: 380px;
   height: 450px;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, .06);
   background: #1b1c1d;
   overflow: hidden;
   flex: none;
@@ -134,12 +133,10 @@
   isolation: isolate;
   transition:
     transform .36s cubic-bezier(.22, 1, .36, 1),
-    border-color .36s ease,
     box-shadow .36s cubic-bezier(.22, 1, .36, 1);
 
   &:hover {
     transform: translateY(-5px);
-    border-color: rgba(242, 120, 170, .32);
     box-shadow: 0 20px 44px rgba(157, 19, 80, .28);
 
     .vestingBg {
@@ -285,7 +282,6 @@
   width: 450px;
   height: 488px;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, .06);
   background: #1b1c1d;
   overflow: hidden;
   flex: none;
@@ -293,13 +289,11 @@
   transition:
     transform .36s cubic-bezier(.22, 1, .36, 1),
     background-color .36s ease,
-    border-color .36s ease,
     box-shadow .36s cubic-bezier(.22, 1, .36, 1);
 
   &:hover {
     transform: translateY(-5px);
     background: #212224;
-    border-color: rgba(255, 255, 255, .15);
     box-shadow: 0 20px 44px rgba(0, 0, 0, .55);
 
     .marketLogoDimmed {

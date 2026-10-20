@@ -70,6 +70,8 @@ export function BenchmarkIntro({ fontClass }: { fontClass: string }) {
       })}</p>
       <div className={styles.cards}>
         <article className={styles.works}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className={styles.worksBg} src={pagePath('/img/benchmarks/works-card-bg.png')} alt="" aria-hidden="true" />
           <h3>{t({ en: 'What benchmarks work', ru: 'Что бенчмарки дают' })}</h3>
           <ul>
             {works.map((item) => <li key={item}><Check /><span>{item}</span></li>)}

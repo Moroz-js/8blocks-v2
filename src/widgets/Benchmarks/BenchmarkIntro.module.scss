@@ -135,16 +135,17 @@
 }
 
 .works, .limits {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 390px;
   padding: 30px;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, .06);
+  overflow: hidden;
+  isolation: isolate;
   transition:
     transform .36s cubic-bezier(.22, 1, .36, 1),
-    box-shadow .36s cubic-bezier(.22, 1, .36, 1),
-    border-color .36s ease;
+    box-shadow .36s cubic-bezier(.22, 1, .36, 1);
 
   &:hover {
     transform: translateY(-4px);
@@ -179,26 +180,29 @@
 
 .works {
   ul { max-width: 528px; }
-  background-color: #20010e;
-  background-image:
-    radial-gradient(
-      ellipse 158% 113% at 104% 106%,
-      #b4879b 0%,
-      #aa778e 10%,
-      #a65b7e 18%,
-      #9f3263 30%,
-      #9d1350 42%,
-      #920443 55%,
-      #82013a 65%,
-      #540126 73%,
-      #300116 88%,
-      #20010e 100%
-    );
+  background: #1b1c1d;
 
   &:hover {
-    border-color: rgba(242, 120, 170, .28);
     box-shadow: 0 20px 48px rgba(157, 19, 80, .26);
+
+    .worksBg {
+      transform: scale(1.03);
+      filter: brightness(1.05);
+    }
   }
+}
+
+.worksBg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  transition:
+    transform .48s cubic-bezier(.22, 1, .36, 1),
+    filter .48s ease;
 }
 
 .limits {
@@ -207,7 +211,6 @@
   ul { max-width: 542px; }
 
   &:hover {
-    border-color: rgba(255, 255, 255, .14);
     box-shadow: 0 20px 48px rgba(0, 0, 0, .55);
   }
 }

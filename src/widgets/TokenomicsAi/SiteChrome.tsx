@@ -6,11 +6,12 @@ import { Header } from '@/widgets/Header'
 import styles from './SiteChrome.module.scss'
 
 const PAGE = '/product/tokenomics-ai'
+const NO_BLUR_PAGES = new Set(['/product/tokenomics-ai', '/learn/token-vesting-benchmarks'])
 
 // The root layout persists during client navigation: decide here rather than
 // using its initial request pathname, so the blur and footer watermark return on leaving.
 export function StandardPageChrome({ children }: { children: ReactNode }) {
-  return usePathname() === PAGE ? null : children
+  return NO_BLUR_PAGES.has(usePathname()) ? null : children
 }
 
 export function SiteHeader(props: ComponentProps<typeof Header>) {
