@@ -221,6 +221,24 @@ export const Cases: CollectionConfig = {
         { name: 'ogDescription', type: 'textarea', label: 'OG description' },
         { name: 'ogImage', type: 'upload', label: 'OG изображение', relationTo: 'media' },
         { name: 'noindex', type: 'checkbox', label: 'Скрыть от поисковиков', defaultValue: false },
+        {
+          name: 'alternateSlug',
+          type: 'text',
+          label: 'Slug на сайте другого языка (hreflang)',
+          admin: {
+            description:
+              'Slug этого же кейса на сайте другого языка (EN ↔ RU). Пусто — тот же slug. Используется для hreflang.',
+          },
+        },
+        {
+          name: 'noAlternates',
+          type: 'checkbox',
+          label: 'Нет версии на другом языке',
+          defaultValue: false,
+          admin: {
+            description: 'Кейс существует только на этом языке — hreflang не выводить.',
+          },
+        },
       ],
     },
     {

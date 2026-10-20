@@ -58,6 +58,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ogImage?: unknown
     twitterTitle?: string
     twitterDescription?: string
+    alternateSlug?: string | null
+    noAlternates?: boolean | null
   } | undefined) ?? {}
 
   const title = seo.seoTitle ?? doc.title
@@ -86,6 +88,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: twitterDescription,
       ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
     },
+  }, {
+    otherLangPath: seo.alternateSlug?.trim() ? `/audits/${seo.alternateSlug.trim()}` : null,
+    none: seo.noAlternates === true,
   })
 }
 
