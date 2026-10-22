@@ -144,6 +144,30 @@
   height: 38.657px;
 }
 
+.brandIdentity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tokenLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+
+.projectName {
+  margin: 0;
+  font-family: var(--font-tokenomics-geist), Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
 .listed {
   margin: 0;
   font-family: var(--font-tokenomics-geist), Arial, sans-serif;

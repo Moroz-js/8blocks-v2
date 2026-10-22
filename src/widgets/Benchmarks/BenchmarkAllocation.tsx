@@ -4,6 +4,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { lang, t } from '@/shared/i18n'
 import enContent from '@/shared/lib/platform/benchmarks/content.json'
 import ruContent from '@/shared/lib/platform/benchmarks/content.ru.json'
+import { getDefaultVestingConfigs, STANDARD_BUCKETS } from '@/shared/lib/platform/tokenlab/buckets'
+import { encodeModel } from '@/shared/lib/platform/tokenlab/urlState'
+import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { pagePath } from '@/widgets/TokenomicsAi/paths'
 import styles from './BenchmarkAllocation.module.scss'
 
@@ -258,9 +261,29 @@ function renderTextWithArrow(text: string, arrowClassName: string) {
   )
 }
 
+function buildBucketCalculatorUrl() {
+  const allocations = STANDARD_BUCKETS.map((b) => ({
+    key: b.key,
+    percent: b.defaultPercent,
+    enabled: b.defaultEnabled,
+  }))
+  const vestings = getDefaultVestingConfigs()
+  return pagePath(
+    `/product/calculator?m=${encodeModel({
+      name: '8Blocks Benchmark',
+      symbol: 'BENCH',
+      totalSupply: 1_000_000_000,
+      fdv: null,
+      allocations,
+      vestings,
+    })}&fork=1`,
+  )
+}
+
 export function BenchmarkAllocation({ fontClass }: { fontClass: string }) {
   const [activeKey, setActiveKey] = useState(buckets[0]?.key ?? 'team')
   const activeBucket = buckets.find((item) => item.key === activeKey) ?? buckets[0]
+  const calculatorUrl = useMemo(() => buildBucketCalculatorUrl(), [])
 
   if (!activeBucket) return null
 
@@ -306,7 +329,16 @@ export function BenchmarkAllocation({ fontClass }: { fontClass: string }) {
                 <a className={styles.btnPrimary} href={pagePath('/product/tokenomics-ai')}>
                   {t({ en: 'Copy to Tokenomics AI', ru: 'Скопировать в Tokenomics AI' })}
                 </a>
-                <a className={styles.btnSecondary} href={pagePath('/product/calculator')}>
+                <a
+                  className={styles.btnSecondary}
+                  href={calculatorUrl}
+                  onClick={() =>
+                    trackPlatformEvent('benchmark_fork_clicked', {
+                      project: 'BENCH',
+                      category: activeBucket.label,
+                    })
+                  }
+                >
                   {t({ en: 'Copy to Calculator', ru: 'Скопировать в калькулятор' })}
                 </a>
               </div>
