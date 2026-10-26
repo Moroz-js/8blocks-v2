@@ -15,11 +15,12 @@ import {
   visiblePublishedArticleConditions,
   visiblePublishedArticleWhere,
 } from '@/shared/lib/visible-article-where'
-import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { mediaToAbsoluteUrl, paginatedListingSeo, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
 import { lang } from '@/shared/i18n'
 import { buildPageGraph } from '@/shared/lib/page-schema'
+import { getNonEmptyBlogCategories } from '@/shared/lib/blog-nav-categories'
 import { ThemeScopeMarker } from '@/shared/lib/ThemeScope'
 
 const ARTICLES_PER_PAGE = 9
@@ -117,7 +118,7 @@ async function getPublishedArticleBySlug(slug: string) {
   return result.docs[0] ?? null
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const payload = await getPayload({ config })
 
@@ -192,7 +193,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       twitterTitle?: string
       twitterDescription?: string
     } | undefined) ?? {}
-  const title = seo.seoTitle ?? `${category.title} — Blog`
+  const listing = paginatedListingSeo(`/blog/${slug}`, (await searchParams).page)
+  // Пустая категория — тонкая страница: в индекс не пускаем, пока не появится первая статья.
+  const { totalDocs } = await payload.count({
+    collection: 'articles',
+    where: { and: [...visiblePublishedArticleConditions, { category: { equals: category.id } }] },
+  })
+  const title = `${seo.seoTitle ?? `${category.title} — Blog`}${listing.titleSuffix}`
   const description = seo.seoDescription ?? (typeof category.description === 'string' ? category.description : undefined) ?? siteConfig.description
   const ogTitle = seo.ogTitle ?? seo.seoTitle ?? title
   const ogDescription = seo.ogDescription ?? description
@@ -202,11 +209,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const base: Metadata = {
     title,
     description,
-    alternates: { canonical: `/blog/${slug}` },
+    alternates: { canonical: listing.canonical },
+    ...(totalDocs === 0 ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: ogTitle,
       description: ogDescription,
-      url: `/blog/${slug}`,
+      url: listing.canonical,
     },
     twitter: {
       card: 'summary_large_image',
@@ -214,7 +222,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: twitterDescription,
     },
   }
-  return withPayloadPageMetadata(`/blog/${slug}`, base)
+  return withPayloadPageMetadata(`/blog/${slug}`, base, listing.hreflang)
 }
 
 export default async function BlogSlugPage({ params, searchParams }: PageProps) {
@@ -282,21 +290,11 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
     depth: 1,
   })
 
-  const categoriesResult = await payload.find({
-    collection: 'categories',
-    limit: 100,
-    sort: 'title',
-  })
+  const categories = await getNonEmptyBlogCategories(payload)
 
   const articles = articlesResult.docs
     .map((doc) => mapArticleCard(doc))
     .filter((item): item is ArticleCardType => item !== null)
-
-  const categories: CategoryRef[] = categoriesResult.docs.map((doc) => ({
-    id: String(doc.id),
-    title: doc.title,
-    slug: doc.slug,
-  }))
 
   const categorySeo = (category.seo as { seoDescription?: string | null } | undefined) ?? {}
   const categoryJsonLd = buildPageGraph({

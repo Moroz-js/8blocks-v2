@@ -12,6 +12,7 @@ import { visibleFullCaseWhere } from '@/shared/lib/visible-case-where'
 import { methodologyContent } from '@/shared/content/methodology'
 import { getEventsEnabled } from '@/shared/lib/getEventsEnabled'
 import { visibleEventWhere } from '@/shared/lib/visible-event-where'
+import { getNonEmptyBlogCategories } from '@/shared/lib/blog-nav-categories'
 
 const BASE = siteConfig.url.replace(/\/$/, '')
 
@@ -56,9 +57,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/product/tokenization-readiness`, lastModified: now, priority: 0.8 },
     { url: `${BASE}/product/tokenization-cases`, lastModified: now, priority: 0.7 },
     { url: `${BASE}/product/tokenomics-ai`, lastModified: now, priority: 0.7 },
+    { url: `${BASE}/product/calculator`, lastModified: now, priority: 0.8 },
+    { url: `${BASE}/product/token-launch`, lastModified: now, priority: 0.8 },
+    { url: `${BASE}/product/workshop`, lastModified: now, priority: 0.7 },
     { url: `${BASE}/learn/token-vesting-benchmarks`, lastModified: now, priority: 0.7 },
     { url: `${BASE}/${methodologyContent.slug}`, lastModified: new Date(methodologyContent.updatedAt), priority: 0.8 },
     { url: `${BASE}/cases`,          lastModified: now, priority: 0.7 },
+    { url: `${BASE}/press`,          lastModified: now, priority: 0.5 },
     ...(hasVisibleBlog ? [{ url: `${BASE}/blog`, lastModified: now, priority: 0.8 }] : []),
     ...(hasVisibleResearch ? [{ url: `${BASE}/research`, lastModified: now, priority: 0.8 }] : []),
     ...(hasVisibleAudits ? [{ url: `${BASE}/audits`, lastModified: now, priority: 0.8 }] : []),
@@ -141,19 +146,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     let categoryPages: MetadataRoute.Sitemap = []
     let articlePages: MetadataRoute.Sitemap = []
     if (hasVisibleBlog) {
-      const catsResult = await payload.find({ collection: 'categories', limit: 200, sort: 'title' })
-      categoryPages = catsResult.docs.map((cat) => ({
+      const [categories, articlesResult] = await Promise.all([
+        getNonEmptyBlogCategories(payload),
+        payload.find({
+          collection: 'articles',
+          where: visiblePublishedArticleWhere,
+          limit: 1000,
+          sort: '-publishedAt',
+        }),
+      ])
+
+      categoryPages = categories.map((cat) => ({
         url: `${BASE}/blog/${cat.slug}`,
         lastModified: now,
         priority: 0.7,
       }))
 
-      const articlesResult = await payload.find({
-        collection: 'articles',
-        where: visiblePublishedArticleWhere,
-        limit: 1000,
-        sort: '-publishedAt',
-      })
       articlePages = articlesResult.docs
         .filter((doc) => !(doc.seo as { noindex?: boolean } | undefined)?.noindex)
         .map((doc) => ({

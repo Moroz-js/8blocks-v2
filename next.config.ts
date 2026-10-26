@@ -43,10 +43,24 @@ const nextConfig: NextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  // Метаданные всегда блокирующие (в <head>) для любого UA: иначе Next стримит их в <body>
+  // для краулеров вне встроенного списка (GPTBot, ClaudeBot, PerplexityBot, SEO-краулеры).
+  htmlLimitedBots: /.*/,
+
   async redirects() {
     return [
       { source: '/media', destination: '/press', permanent: true },
       { source: '/media/:path*', destination: '/press/:path*', permanent: true },
+      // Старый i18n-префикс: на /en ссылаются внешние сайты.
+      { source: '/en', destination: '/', permanent: true },
+      { source: '/en/:path*', destination: '/:path*', permanent: true },
+      // Кейсы, на которые статьи ссылались как на посты блога.
+      { source: '/blog/earnpark-weekly-vesting-audit', destination: '/cases/earnpark-weekly-vesting-audit', permanent: true },
+      {
+        source: '/blog/how-we-built-a-web3-game-that-made-4m-on-day-one',
+        destination: '/cases/how-we-built-a-web3-game-that-made-4m-on-day-one',
+        permanent: true,
+      },
     ]
   },
 

@@ -2,28 +2,31 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { BlogArchive } from '@/widgets/BlogArchive'
-import type { ArticleCard as ArticleCardType, CategoryRef } from '@/entities/article'
+import type { ArticleCard as ArticleCardType } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { blogMeta } from '@/shared/content/blogPage'
 import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
-import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { paginatedListingSeo, withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { getNonEmptyBlogCategories } from '@/shared/lib/blog-nav-categories'
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
+  const { page } = await searchParams
+  const listing = paginatedListingSeo('/blog', page)
   return withPayloadPageMetadata('/blog', {
-    title: blogMeta.title,
+    title: `${blogMeta.title}${listing.titleSuffix}`,
     description: blogMeta.description,
-    alternates: { canonical: '/blog' },
+    alternates: { canonical: listing.canonical },
     openGraph: {
       title: blogMeta.ogTitle,
       description: blogMeta.ogDescription,
-      url: '/blog',
+      url: listing.canonical,
     },
     twitter: {
       card: 'summary_large_image',
       title: blogMeta.ogTitle,
       description: blogMeta.ogDescription,
     },
-  })
+  }, listing.hreflang)
 }
 
 const ARTICLES_PER_PAGE = 9
@@ -48,12 +51,8 @@ export default async function BlogPage({ searchParams }: PageProps) {
     depth: 1,
   })
 
-  // Fetch all categories for the filter nav
-  const categoriesResult = await payload.find({
-    collection: 'categories',
-    limit: 100,
-    sort: 'title',
-  })
+  // Filter nav: only categories that have published articles
+  const categories = await getNonEmptyBlogCategories(payload)
 
   // Map Payload docs → ArticleCard type
   const articles: ArticleCardType[] = articlesResult.docs.map((doc) => {
@@ -83,12 +82,6 @@ export default async function BlogPage({ searchParams }: PageProps) {
       readingTime: estimateReadingTime(doc.content),
     }
   })
-
-  const categories: CategoryRef[] = categoriesResult.docs.map((doc) => ({
-    id:    String(doc.id),
-    title: doc.title,
-    slug:  doc.slug,
-  }))
 
   return (
     <BlogArchive
