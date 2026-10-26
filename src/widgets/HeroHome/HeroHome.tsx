@@ -47,14 +47,16 @@ export function HeroHome() {
             <span className={styles.labelBracket}>]</span>
           </motion.div>
 
+          {/* H1 — LCP-элемент: без opacity:0 в SSR, иначе текст невидим до гидрации. */}
           <motion.h1
             className={styles.headline}
-            initial={{ opacity: 0, y: 28 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ y: 28 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.65, ease, delay: 0.08 }}
           >
-            <span className={styles.headlineLine1}>{heroContent.headlineLine1}</span>
-            <span className={styles.headlineLine1}>{heroContent.headlineLine2}</span>
+            {/* Пробелы между строками: без них textContent склеивается («economiesthat powerthe»). */}
+            <span className={styles.headlineLine1}>{heroContent.headlineLine1}</span>{' '}
+            <span className={styles.headlineLine1}>{heroContent.headlineLine2}</span>{' '}
             <span className={styles.headlineLine3}>
               <em className={styles.headlineAccent}>{heroContent.headlineLine3}</em>
             </span>
