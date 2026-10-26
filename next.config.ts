@@ -61,6 +61,10 @@ const nextConfig: NextConfig = {
         destination: '/cases/how-we-built-a-web3-game-that-made-4m-on-day-one',
         permanent: true,
       },
+      { source: '/blog/web3-project-case', destination: '/cases/web3-project-case', permanent: true },
+      // 404 с органическим трафиком (GA4 page_not_found, 2026).
+      { source: '/contact1', destination: '/contact', permanent: true },
+      { source: '/audits/quant-qnt-token-audit', destination: '/audits/quant-network-tokenomics-audit', permanent: true },
     ]
   },
 
