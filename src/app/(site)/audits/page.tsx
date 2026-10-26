@@ -6,13 +6,13 @@ import { MethodologySection } from '@/widgets/MethodologySection'
 import type { PublicAuditCard } from '@/entities/public-audit'
 import { auditsMeta } from '@/shared/content/auditsPage'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
-import { paginatedListingSeo, withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { paginatedListingSeo, withPaginatedListing, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const { page } = await searchParams
   const listing = paginatedListingSeo('/audits', page)
-  return withPayloadPageMetadata('/audits', {
-    title: `${auditsMeta.title}${listing.titleSuffix}`,
+  const metadata = await withPayloadPageMetadata('/audits', {
+    title: auditsMeta.title,
     description: auditsMeta.description,
     alternates: { canonical: listing.canonical },
     openGraph: {
@@ -26,6 +26,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       description: auditsMeta.ogDescription,
     },
   }, listing.hreflang)
+  return withPaginatedListing(metadata, listing)
 }
 
 const AUDITS_PER_PAGE = 9

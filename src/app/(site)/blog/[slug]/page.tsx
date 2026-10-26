@@ -15,7 +15,7 @@ import {
   visiblePublishedArticleConditions,
   visiblePublishedArticleWhere,
 } from '@/shared/lib/visible-article-where'
-import { mediaToAbsoluteUrl, paginatedListingSeo, withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { mediaToAbsoluteUrl, paginatedListingSeo, withPaginatedListing, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
 import { lang } from '@/shared/i18n'
@@ -199,7 +199,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
     collection: 'articles',
     where: { and: [...visiblePublishedArticleConditions, { category: { equals: category.id } }] },
   })
-  const title = `${seo.seoTitle ?? `${category.title} — Blog`}${listing.titleSuffix}`
+  const title = seo.seoTitle ?? `${category.title} — Blog`
   const description = seo.seoDescription ?? (typeof category.description === 'string' ? category.description : undefined) ?? siteConfig.description
   const ogTitle = seo.ogTitle ?? seo.seoTitle ?? title
   const ogDescription = seo.ogDescription ?? description
@@ -222,7 +222,7 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
       description: twitterDescription,
     },
   }
-  return withPayloadPageMetadata(`/blog/${slug}`, base, listing.hreflang)
+  return withPaginatedListing(await withPayloadPageMetadata(`/blog/${slug}`, base, listing.hreflang), listing)
 }
 
 export default async function BlogSlugPage({ params, searchParams }: PageProps) {

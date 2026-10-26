@@ -6,14 +6,14 @@ import type { ArticleCard as ArticleCardType } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { blogMeta } from '@/shared/content/blogPage'
 import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
-import { paginatedListingSeo, withPayloadPageMetadata } from '@/shared/lib/site-seo'
+import { paginatedListingSeo, withPaginatedListing, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { getNonEmptyBlogCategories } from '@/shared/lib/blog-nav-categories'
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const { page } = await searchParams
   const listing = paginatedListingSeo('/blog', page)
-  return withPayloadPageMetadata('/blog', {
-    title: `${blogMeta.title}${listing.titleSuffix}`,
+  const metadata = await withPayloadPageMetadata('/blog', {
+    title: blogMeta.title,
     description: blogMeta.description,
     alternates: { canonical: listing.canonical },
     openGraph: {
@@ -27,6 +27,7 @@ export async function generateMetadata({ searchParams }: PageProps): Promise<Met
       description: blogMeta.ogDescription,
     },
   }, listing.hreflang)
+  return withPaginatedListing(metadata, listing)
 }
 
 const ARTICLES_PER_PAGE = 9

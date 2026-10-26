@@ -1,7 +1,7 @@
 export { getSiteSeoGlobal, getSiteSeoPageOverride } from './get-site-seo'
 export { mergePageSeoMetadata } from './merge-metadata'
 export { withPayloadPageMetadata } from './with-payload-page-metadata'
-export { paginatedListingSeo } from './paginated-listing'
+export { paginatedListingSeo, withPaginatedListing } from './paginated-listing'
 export type { PaginatedListingSeo } from './paginated-listing'
 export { buildLanguageAlternates, HREFLANG_HOSTS } from './hreflang'
 export type { HreflangOptions } from './hreflang'
