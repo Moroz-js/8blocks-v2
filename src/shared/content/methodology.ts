@@ -262,7 +262,7 @@ const en: MethodologyContent = {
       title: 'BNB: utility that expanded with the ecosystem',
       text: 'BNB began with exchange-fee utility and later gained uses across Launchpool, services and BNB Chain. It illustrates how an extensible model can add new demand sources as the business develops.',
       sourceLabel: 'Official BNB documentation',
-      sourceHref: 'https://www.bnbchain.org/en/bnb-chain-whitepaper',
+      sourceHref: 'https://github.com/bnb-chain/whitepaper/blob/master/WHITEPAPER.md',
     },
     {
       title: 'Hyperliquid: product demand and protocol expansion',
@@ -528,7 +528,7 @@ const ru: MethodologyContent = {
       title: 'BNB: применение, расширенное вместе с экосистемой',
       text: 'BNB начал с оплаты биржевых комиссий и позднее получил применение в Launchpool, сервисах и BNB Chain. Пример показывает, как расширяемая модель добавляет источники спроса по мере развития бизнеса.',
       sourceLabel: 'Официальная документация BNB',
-      sourceHref: 'https://www.bnbchain.org/en/bnb-chain-whitepaper',
+      sourceHref: 'https://github.com/bnb-chain/whitepaper/blob/master/WHITEPAPER.md',
     },
     {
       title: 'Hyperliquid: продуктовый спрос и развитие протокола',
