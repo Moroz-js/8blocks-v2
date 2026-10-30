@@ -207,6 +207,7 @@ export function CtaLadder({
                   placeholder={copy.cta.project}
                   value={project}
                   onChange={(event) => setProject(event.target.value)}
+                  maxLength={200}
                   className={styles.input}
                   aria-label={copy.cta.project}
                 />
