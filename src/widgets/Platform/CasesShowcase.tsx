@@ -1,9 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { lang } from '@/shared/i18n'
-import enData from '@/shared/lib/platform/cases/content.json'
-import ruData from '@/shared/lib/platform/cases/content.ru.json'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { platformPagesContent } from '@/shared/content/platformPages'
 import styles from './Platform.module.scss'
@@ -26,7 +23,7 @@ interface CaseItem {
   source: Source
 }
 
-interface CasesData {
+export interface CasesData {
   stats: {
     value: number
     prefix: string
@@ -37,8 +34,6 @@ interface CasesData {
   classes: string[]
   cases: CaseItem[]
 }
-
-const data = (lang === 'ru' ? ruData : enData) as CasesData
 
 function CountUp({
   value,
@@ -99,7 +94,7 @@ function Logo({ item }: { item: CaseItem }) {
   )
 }
 
-export function CasesShowcase() {
+export function CasesShowcase({ data }: { data: CasesData }) {
   const [active, setActive] = useState(data.classes[0])
   const cases = data.cases.filter(
     (item) => active === data.classes[0] || item.class === active,

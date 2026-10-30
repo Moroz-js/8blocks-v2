@@ -2,19 +2,29 @@ import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import { lang, t } from '@/shared/i18n'
 import { BenchmarkIntro } from '@/widgets/Benchmarks/BenchmarkIntro'
-import { BenchmarkSectors } from '@/widgets/Benchmarks/BenchmarkSectors'
-import { BenchmarkAllocation } from '@/widgets/Benchmarks/BenchmarkAllocation'
-import { BenchmarkLowerSections } from '@/widgets/Benchmarks/BenchmarkLowerSections'
+import { BenchmarkSectors, type RawCategory } from '@/widgets/Benchmarks/BenchmarkSectors'
+import { BenchmarkAllocation, type BucketBenchmark } from '@/widgets/Benchmarks/BenchmarkAllocation'
+import { BenchmarkLowerSections, type VestingNorm } from '@/widgets/Benchmarks/BenchmarkLowerSections'
 import enContent from '@/shared/lib/platform/benchmarks/content.json'
 import ruContent from '@/shared/lib/platform/benchmarks/content.ru.json'
+import enProjects from '@/shared/lib/platform/benchmarks/projects.json'
+import ruProjects from '@/shared/lib/platform/benchmarks/projects.ru.json'
 import { platformPagesContent } from '@/shared/content/platformPages'
+import { digitalAssetsContent } from '@/shared/content/digitalAssets'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { buildPageGraph, datasetNode } from '@/shared/lib/page-schema'
 
 const geist = Geist({ subsets: ['latin', 'cyrillic'], weight: '400', display: 'swap', variable: '--font-tokenomics-geist' })
 
-const content = lang === 'ru' ? ruContent : enContent
+// Клиентские секции получают только текущую локаль пропсами, чтобы не тянуть обе в бандл.
+const content = (lang === 'ru' ? ruContent : enContent) as {
+  buckets: BucketBenchmark[]
+  vestingNorms: VestingNorm[]
+  methodologyNote: string
+}
+const { categories } = (lang === 'ru' ? ruProjects : enProjects) as { categories: RawCategory[] }
+const faqItems = digitalAssetsContent.faq.items.slice(0, 6)
 const copy = platformPagesContent.benchmarks
 
 const faq = t({
@@ -80,7 +90,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function TokenVestingBenchmarksPage() {
   const path = '/learn/token-vesting-benchmarks'
-  const buckets = (content as { buckets: { label: string; source?: { title: string; url: string }; source2?: { title: string; url: string } }[] }).buckets
+  const { buckets } = content
   const citations = buckets
     .flatMap((b) => [b.source, b.source2])
     .filter((c): c is { title: string; url: string } => Boolean(c && c.url))
@@ -110,9 +120,14 @@ export default function TokenVestingBenchmarksPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       <BenchmarkIntro fontClass={geist.variable} />
-      <BenchmarkSectors fontClass={geist.variable} />
-      <BenchmarkAllocation fontClass={geist.variable} />
-      <BenchmarkLowerSections fontClass={geist.variable} />
+      <BenchmarkSectors fontClass={geist.variable} categories={categories} />
+      <BenchmarkAllocation fontClass={geist.variable} buckets={content.buckets} />
+      <BenchmarkLowerSections
+        fontClass={geist.variable}
+        vestingNorms={content.vestingNorms}
+        methodologyNote={content.methodologyNote}
+        faqItems={faqItems}
+      />
     </>
   )
 }

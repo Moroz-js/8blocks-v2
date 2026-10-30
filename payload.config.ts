@@ -17,7 +17,6 @@ import {
   UploadFeature,
   ParagraphFeature,
 } from '@payloadcms/richtext-lexical'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import sharp from 'sharp'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -73,28 +72,6 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-
-  // ── Email (production only — SMTP not available in local dev) ────
-  // PAYLOAD_SKIP_EMAIL_INIT=true — для CLI (seed, migrate), без verify SMTP
-  ...(process.env.NODE_ENV === 'production' &&
-  process.env.SMTP_HOST &&
-  process.env.PAYLOAD_SKIP_EMAIL_INIT !== 'true'
-    ? {
-        email: nodemailerAdapter({
-          defaultFromAddress: process.env.SMTP_FROM || 'hi@токеномика.рф',
-          defaultFromName: '8Blocks',
-          transportOptions: {
-            host: process.env.SMTP_HOST,
-            port: Number(process.env.SMTP_PORT) || 587,
-            secure: process.env.SMTP_SECURE === 'true',
-            auth: {
-              user: process.env.SMTP_USER,
-              pass: process.env.SMTP_PASSWORD,
-            },
-          },
-        }),
-      }
-    : {}),
 
   // ── Global rich text default editor ────────────────────────────
   editor: lexicalEditor({

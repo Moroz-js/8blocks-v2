@@ -41,6 +41,8 @@ const local = t({
     below: 'ниже',
     model: 'Модель токена',
     token: 'TOKEN',
+    leadName: 'Отчёт Token Lab',
+    leadMessage: 'Запрос PDF-отчёта Token Lab. Оценка структуры: {score}; уровень: {tier}; тикер: {symbol}.',
   },
   en: {
     pressure: { Low: 'Low', Elevated: 'Elevated', High: 'High' },
@@ -55,6 +57,8 @@ const local = t({
     below: 'below',
     model: 'Token model',
     token: 'TOKEN',
+    leadName: 'Token Lab report',
+    leadMessage: 'Token Lab PDF follow-up. Structure score: {score}; tier: {tier}; symbol: {symbol}.',
   },
 })
 
@@ -170,9 +174,12 @@ export function ResultsStep({ model }: { model: TokenModel }) {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          name: model.name || 'Token Lab report',
+          name: model.name || local.leadName,
           email,
-          message: `Token Lab PDF follow-up. Structure score: ${result.score}; tier: ${result.tier.name}; symbol: ${model.symbol || local.token}.`,
+          message: local.leadMessage
+            .replace('{score}', String(result.score))
+            .replace('{tier}', result.tier.name)
+            .replace('{symbol}', model.symbol || local.token),
         }),
       })
       if (!response.ok) throw new Error(String(response.status))

@@ -23,6 +23,9 @@ const framingCopy = t({
     weakTitle: 'Мы нашли реальные точки давления. Исправьте их до запуска.',
     weakText:
       'Полный аудит поможет закрыть риски и проверить модель спроса и стимулов.',
+    leadName: 'Заявка Token Lab',
+    leadSource: 'Источник: лист ожидания AI Token Model Sprint',
+    leadTier: 'Уровень структуры',
   },
   en: {
     worstTitle: '{name} is your weakest dimension.',
@@ -34,6 +37,9 @@ const framingCopy = t({
     weakTitle: 'Real pressure points found. Fix them before launch.',
     weakText:
       'A full audit closes structural risks and checks demand and incentives.',
+    leadName: 'Token Lab lead',
+    leadSource: 'Source: AI Token Model Sprint waitlist',
+    leadTier: 'Structure tier',
   },
 })
 
@@ -96,12 +102,15 @@ export function CtaLadder({
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          name: project || 'Token Lab lead',
+          name: project || framingCopy.leadName,
           email,
           message: [
-            'Source: AI Token Model Sprint waitlist',
-            `Structure tier: ${grade}`,
-            ...Object.entries(brief).map(([key, value]) => `${key}: ${value}`),
+            framingCopy.leadSource,
+            `${framingCopy.leadTier}: ${grade}`,
+            ...Object.entries(brief).map(
+              ([key, value]) =>
+                `${BRIEF_FIELDS.find((field) => field.id === key)?.label ?? key}: ${value}`,
+            ),
           ].join('\n'),
         }),
       })

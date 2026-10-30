@@ -126,24 +126,26 @@ public/
 |------------|----------|
 | `DATABASE_URI` | Строка подключения PostgreSQL |
 | `PAYLOAD_SECRET` | Секрет Payload CMS |
-| `ADMIN_EMAIL` | Email администратора (вход в /admin) |
-| `ADMIN_PASSWORD` | Пароль администратора |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Отправка писем (SMTP, адрес отправителя) |
-| `ADMIN_NOTIFY_EMAIL` | Ящик для админских уведомлений (заявки, подписки); один на все инстансы. Если не задан — используется `SMTP_FROM`. В проде: `noreply@8blocks.io` |
+| `UNISENDER_GO_API_KEY`, `RESEND_API_KEY` | Отправка писем по HTTPS: RU — Unisender Go, EN/AE — Resend |
+| `EMAIL_TEST_RECIPIENT` | Тестовый режим: письма клиентам уходят на этот адрес (админские — как обычно) |
+| `ADMIN_NOTIFY_EMAIL` | Ящик для админских уведомлений (заявки, подписки); один на все инстансы. Если не задан — адрес бренда инстанса. В проде: `noreply@8blocks.io` |
 | `NEXT_PUBLIC_SITE_URL` | Базовый URL сайта (canonical, OG) |
 | `NEXT_PUBLIC_LANG` | Язык сборки: `ru` или `en` |
 | `NEXT_PUBLIC_GTM_ID` | ID контейнера Google Tag Manager (опционально) |
 | `NEXT_PUBLIC_REPLAIN_ID` | ID виджета Replain (опционально, скрыт если не задан) |
 | `NEXT_PUBLIC_CALENDLY_URL` | URL Calendly-виджета (опционально, есть дефолт по языку) |
+| `NEXT_PUBLIC_POSTHOG_KEY`, `NEXT_PUBLIC_POSTHOG_HOST` | PostHog (опционально) |
+
+Полный список с комментариями, включая staging- и PDF-переменные, — в `.env.example`.
 
 ---
 
 ## CI/CD
 
-- **Deploy to Production** (`.github/workflows/deploy.yml`) — `workflow_dispatch`, SSH на RU / EN / AE (можно выбрать один сайт через `deploy_target`), на сервере выполняется `scripts/github-deploy-remote.sh`: `git reset` к `main`, запись `.env`, `npm ci`, миграции Payload, `npm run build`, PM2.
-- **Update .env** (`.github/workflows/update-env.yml`) — только перезапись `.env` и `pm2 reload`, без сборки и без смены пользователя в БД Payload.
+- **Deploy to Production** (`.github/workflows/deploy.yml`) — ручной запуск (`workflow_dispatch`), цель выбирается через `deploy_target`: `all`, `ru`, `en`, `ae`, `staging`. Прод (RU / EN / AE) собирается из `main`, staging (EN + RU под `/ru`) — из ветки `staging`.
+- Каждый деплой — вызов reusable `.github/workflows/deploy-site.yml`: сборка в CI, загрузка `.next` на сервер, затем `scripts/github-deploy-remote.sh`: `git reset` к деплоимой ветке, запись `.env`, `npm ci`, миграции Payload, PM2.
 
-Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (см. переменные в workflow-файлах). Дополнительно репозиторный секрет **`ADMIN_NOTIFY_EMAIL`** (без префикса): общий получатель админских писем для RU, EN и AE — задайте `noreply@8blocks.io` в GitHub → Settings → Secrets and variables → Actions, затем прогоните workflow **Update .env** (или полный деплой).
+Секреты — с префиксами `RU_*`, `EN_*`, `AE_*` (шаблон — `.env-github.example`). Общие секреты без префикса: `ADMIN_NOTIFY_EMAIL` (получатель админских писем для всех инстансов, в проде `noreply@8blocks.io`) и `NEXT_PUBLIC_POSTHOG_KEY`.
 
 ---
 

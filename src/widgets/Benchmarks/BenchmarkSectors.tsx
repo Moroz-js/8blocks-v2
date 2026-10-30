@@ -1,9 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { lang, t } from '@/shared/i18n'
-import enProjects from '@/shared/lib/platform/benchmarks/projects.json'
-import ruProjects from '@/shared/lib/platform/benchmarks/projects.ru.json'
+import { t } from '@/shared/i18n'
 import { getDefaultVestingConfigs, STANDARD_BUCKETS } from '@/shared/lib/platform/tokenlab/buckets'
 import type { StandardBucketKey } from '@/shared/lib/platform/tokenlab/types'
 import { encodeModel } from '@/shared/lib/platform/tokenlab/urlState'
@@ -33,15 +31,11 @@ interface RawProject {
   auditUrl?: string
 }
 
-interface RawCategory {
+export interface RawCategory {
   category: string
   categoryInsight: string
   projects: RawProject[]
 }
-
-const rawCategories = (
-  (lang === 'ru' ? ruProjects : enProjects) as { categories: RawCategory[] }
-).categories
 
 const SECTOR_META: { id: SectorId; icon: string }[] = [
   { id: 'l1', icon: '/img/benchmarks/tab-layers.svg' },
@@ -170,7 +164,13 @@ function buildCalculatorUrl(project: RawProject): string {
   )
 }
 
-export function BenchmarkSectors({ fontClass }: { fontClass: string }) {
+export function BenchmarkSectors({
+  fontClass,
+  categories: rawCategories,
+}: {
+  fontClass: string
+  categories: RawCategory[]
+}) {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeCategory = rawCategories[activeIndex] ?? rawCategories[0]
 

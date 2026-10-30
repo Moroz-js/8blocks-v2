@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { BLOG_THEME_STORAGE_KEY, DEFAULT_THEME, isThemeablePath } from './theme'
 
 type Theme = 'dark' | 'light'
 
@@ -17,21 +18,13 @@ const ThemeContext = createContext<ThemeContextValue>({
 })
 
 function initialTheme(): Theme {
-  if (typeof window === 'undefined') return 'dark'
-
-  const segments = window.location.pathname.split('/').filter(Boolean)
-  const isThemeable =
-    (segments[0] === 'blog' ||
-      segments[0] === 'research' ||
-      segments[0] === 'audits') &&
-    segments.length >= 2
-
-  if (!isThemeable) return 'dark'
+  if (typeof window === 'undefined') return DEFAULT_THEME
+  if (!isThemeablePath(window.location.pathname)) return DEFAULT_THEME
 
   try {
-    return localStorage.getItem('8blocks-blog-theme') === 'light' ? 'light' : 'dark'
+    return localStorage.getItem(BLOG_THEME_STORAGE_KEY) === 'light' ? 'light' : 'dark'
   } catch {
-    return 'dark'
+    return DEFAULT_THEME
   }
 }
 
@@ -47,14 +40,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     applyTheme(theme)
   }, [theme])
 
+  // The user's preference is persisted by ThemeToggle; switching here only applies it.
   const setTheme = useCallback((nextTheme: Theme) => {
     setThemeState(nextTheme)
     applyTheme(nextTheme)
-    try {
-      localStorage.setItem('8blocks-theme', nextTheme)
-    } catch {
-      // Storage may be unavailable in private browsing.
-    }
   }, [])
 
   const value = useMemo(

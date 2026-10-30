@@ -25,6 +25,8 @@ NEXT_PUBLIC_BUILD_AT="${NEXT_PUBLIC_BUILD_AT:-}"
 NEXT_PUBLIC_MEDIA_BASE_URL="${NEXT_PUBLIC_MEDIA_BASE_URL:-}"
 SKIP_DATABASE_MAINTENANCE="${SKIP_DATABASE_MAINTENANCE:-false}"
 RUN_DATABASE_MIGRATIONS="${RUN_DATABASE_MIGRATIONS:-false}"
+# Прод деплоится из main, staging — из ветки staging
+DEPLOY_BRANCH="${DEPLOY_BRANCH:-main}"
 
 # Детерминированная кэш-директория Chrome для Puppeteer. Один и тот же путь
 # используется при установке браузера и в рантайме (через .env), чтобы не
@@ -48,9 +50,9 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 cd "${PROJECT_DIR}"
 
 # ── pull latest code ──────────────────────────
-echo "📥 Pulling latest changes from main"
+echo "📥 Pulling latest changes from ${DEPLOY_BRANCH}"
 git fetch --all
-git reset --hard origin/main
+git reset --hard "origin/${DEPLOY_BRANCH}"
 
 # ── write .env ────────────────────────────────
 echo "⚙️  Writing .env"
@@ -60,15 +62,10 @@ printf '%s\n' \
   "PORT=${PORT}" \
   "DATABASE_URI=${DATABASE_URI}" \
   "PAYLOAD_SECRET=${PAYLOAD_SECRET}" \
-  "ADMIN_EMAIL=${ADMIN_EMAIL}" \
-  "ADMIN_PASSWORD=${ADMIN_PASSWORD}" \
-  "SMTP_HOST=${SMTP_HOST}" \
-  "SMTP_PORT=${SMTP_PORT}" \
-  "SMTP_SECURE=${SMTP_SECURE}" \
-  "SMTP_USER=${SMTP_USER}" \
-  "SMTP_PASSWORD=${SMTP_PASSWORD}" \
-  "SMTP_FROM=${SMTP_FROM}" \
   "ADMIN_NOTIFY_EMAIL=${ADMIN_NOTIFY_EMAIL}" \
+  "UNISENDER_GO_API_KEY=${UNISENDER_GO_API_KEY}" \
+  "RESEND_API_KEY=${RESEND_API_KEY}" \
+  "EMAIL_TEST_RECIPIENT=${EMAIL_TEST_RECIPIENT}" \
   "NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL}" \
   "NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}" \
   "NEXT_PUBLIC_LANG=${NEXT_PUBLIC_LANG}" \
@@ -186,17 +183,6 @@ if [ "${SKIP_DATABASE_MAINTENANCE}" != "true" ] || [ "${RUN_DATABASE_MIGRATIONS}
   echo "✓ Migrations applied"
 else
   echo "⏭️  Skipping migrations (shared staging database)"
-fi
-
-if [ "${SKIP_DATABASE_MAINTENANCE}" != "true" ]; then
-  # ── seed legacy cases ────────────────────────
-  # The seed is idempotent: it creates missing mini-cases by slug and only fills
-  # an empty category on existing legacy mini-cases. It never deletes content.
-  echo "🌱 Seeding missing legacy mini-cases"
-  npm run seed:cases
-  echo "✓ Cases seed complete"
-else
-  echo "⏭️  Skipping seed (shared staging database)"
 fi
 
 # ── regenerate Payload import map ─────────────

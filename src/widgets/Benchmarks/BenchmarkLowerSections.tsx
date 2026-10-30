@@ -1,11 +1,7 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { lang, t } from '@/shared/i18n'
-import enContent from '@/shared/lib/platform/benchmarks/content.json'
-import ruContent from '@/shared/lib/platform/benchmarks/content.ru.json'
-import { digitalAssetsContent as enDigitalAssets } from '@/shared/content/en/digitalAssets'
-import { digitalAssetsContent as ruDigitalAssets } from '@/shared/content/ru/digitalAssets'
+import { t } from '@/shared/i18n'
 import { pagePath } from '@/widgets/TokenomicsAi/paths'
 import styles from './BenchmarkLowerSections.module.scss'
 
@@ -14,7 +10,7 @@ interface Source {
   url: string
 }
 
-interface VestingNorm {
+export interface VestingNorm {
   figure: string
   claim: string
   source: Source
@@ -33,9 +29,9 @@ interface MarketCardSpec {
   url: string
 }
 
-const content = (lang === 'ru' ? ruContent : enContent) as {
-  vestingNorms: VestingNorm[]
-  methodologyNote: string
+export interface BenchmarkFaqItem {
+  question: string
+  answer: string
 }
 
 const ctaFeatures = t({
@@ -196,8 +192,6 @@ const marketCards: MarketCardSpec[] = t({
   ],
 })
 
-const faqItems = (lang === 'ru' ? ruDigitalAssets : enDigitalAssets).faq.items.slice(0, 6)
-
 function formatVestingFigure(figure: string) {
   return vestingHeadingBreaks[figure] ?? figure
 }
@@ -234,7 +228,17 @@ function renderTextWithArrow(text: string) {
   )
 }
 
-export function BenchmarkLowerSections({ fontClass }: { fontClass: string }) {
+export function BenchmarkLowerSections({
+  fontClass,
+  vestingNorms,
+  methodologyNote,
+  faqItems,
+}: {
+  fontClass: string
+  vestingNorms: VestingNorm[]
+  methodologyNote: string
+  faqItems: readonly BenchmarkFaqItem[]
+}) {
   const vestingRailRef = useRef<HTMLDivElement>(null)
   const marketRailRef = useRef<HTMLDivElement>(null)
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null)
@@ -291,7 +295,7 @@ export function BenchmarkLowerSections({ fontClass }: { fontClass: string }) {
 
         <div className={styles.railViewport} ref={vestingRailRef}>
           <div className={styles.railTrack}>
-            {content.vestingNorms.map((norm, idx) => (
+            {vestingNorms.map((norm, idx) => (
               <article
                 key={norm.figure}
                 className={`${styles.vestingCard} ${idx === 0 ? styles.vestingCardFirst : ''}`}
@@ -518,7 +522,7 @@ export function BenchmarkLowerSections({ fontClass }: { fontClass: string }) {
 
         <p className={styles.methodology}>
           {t({ en: 'Methodology and limitations: ', ru: 'Методология и ограничения: ' })}
-          {content.methodologyNote}
+          {methodologyNote}
         </p>
       </section>
     </div>

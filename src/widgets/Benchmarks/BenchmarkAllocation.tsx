@@ -1,9 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { lang, t } from '@/shared/i18n'
-import enContent from '@/shared/lib/platform/benchmarks/content.json'
-import ruContent from '@/shared/lib/platform/benchmarks/content.ru.json'
+import { t } from '@/shared/i18n'
 import { getDefaultVestingConfigs, STANDARD_BUCKETS } from '@/shared/lib/platform/tokenlab/buckets'
 import { encodeModel } from '@/shared/lib/platform/tokenlab/urlState'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
@@ -15,7 +13,7 @@ interface Source {
   url: string
 }
 
-interface BucketBenchmark {
+export interface BucketBenchmark {
   key: string
   label: string
   typicalRange: string
@@ -24,8 +22,6 @@ interface BucketBenchmark {
   source: Source
   source2?: Source
 }
-
-const buckets = ((lang === 'ru' ? ruContent : enContent) as { buckets: BucketBenchmark[] }).buckets
 
 function shortRange(typicalRange: string) {
   const match = typicalRange.match(/^\d+(?:\.\d+)?-\d+(?:\.\d+)?%/)
@@ -89,9 +85,11 @@ interface ComputedSlice {
 }
 
 function AllocationDonut({
+  buckets,
   activeKey,
   onSelect,
 }: {
+  buckets: BucketBenchmark[]
   activeKey: string
   onSelect: (key: string) => void
 }) {
@@ -119,7 +117,7 @@ function AllocationDonut({
         path: describeAnnularSector(cx, cy, innerR, outerR, startAngle, endAngle),
       }
     })
-  }, [])
+  }, [buckets])
 
   const activeSlice = slices.find((s) => s.key === activeKey) ?? slices[0]
   const [renderedArc, setRenderedArc] = useState(() => ({
@@ -280,7 +278,13 @@ function buildBucketCalculatorUrl() {
   )
 }
 
-export function BenchmarkAllocation({ fontClass }: { fontClass: string }) {
+export function BenchmarkAllocation({
+  fontClass,
+  buckets,
+}: {
+  fontClass: string
+  buckets: BucketBenchmark[]
+}) {
   const [activeKey, setActiveKey] = useState(buckets[0]?.key ?? 'team')
   const activeBucket = buckets.find((item) => item.key === activeKey) ?? buckets[0]
   const calculatorUrl = useMemo(() => buildBucketCalculatorUrl(), [])
@@ -320,7 +324,7 @@ export function BenchmarkAllocation({ fontClass }: { fontClass: string }) {
 
           <div className={styles.centerCol}>
             <div className={styles.donutWrap}>
-              <AllocationDonut activeKey={activeBucket.key} onSelect={setActiveKey} />
+              <AllocationDonut buckets={buckets} activeKey={activeBucket.key} onSelect={setActiveKey} />
               <div key={activeBucket.key} className={styles.donutText}>
                 <p className={styles.range}>{rangeText}</p>
                 {subText && <p className={styles.median}>{subText}</p>}

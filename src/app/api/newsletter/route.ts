@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
 import { BANNED_EMAILS } from '@/shared/config/banned-emails'
-import { sendNewsletterAdmin } from '@/shared/lib/email'
+import { sendNewsletterAdmin, sendNewsletterUser } from '@/shared/lib/email'
 import { PUBLIC_FORM_ERRORS, sanitizeNewsletterEmail } from '@/shared/lib/form-sanitize'
 
 export async function POST(req: NextRequest) {
@@ -50,11 +50,15 @@ export async function POST(req: NextRequest) {
     })
 
     after(async () => {
-      try {
-        await sendNewsletterAdmin(normalizedEmail)
-      } catch (err) {
-        console.error('[newsletter] email (admin notify) failed:', err)
-      }
+      const results = await Promise.allSettled([
+        sendNewsletterAdmin(normalizedEmail, source),
+        sendNewsletterUser(normalizedEmail),
+      ])
+      results.forEach((r, i) => {
+        if (r.status === 'rejected') {
+          console.error(`[newsletter] email (${i === 0 ? 'admin notify' : 'user confirmation'}) failed:`, r.reason)
+        }
+      })
     })
 
     return NextResponse.json({ success: true })

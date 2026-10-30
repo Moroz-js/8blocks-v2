@@ -110,7 +110,6 @@ export function BinaryUnicornCanvas() {
       const top = (height - imageHeight) / 2
       const cell = Math.max(4, Math.min(5.5, width / 180))
       fontSize = cell * 1.2
-      // Palette and both particle systems follow 8Blocks Binary Unicorn.html.
       glyphTile = Math.ceil(fontSize * dpr * 1.8)
       const palette: string[] = []
       for (let shade = 0; shade < 256; shade++) {

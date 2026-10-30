@@ -121,7 +121,7 @@ export function TokenomicsAiPage({ fontClass }: { fontClass: string }) {
     try {
       const response = await fetch(pagePath('/api/contact'), {
         method: 'POST', headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name: project, email, message: ['Tokenomics AI early access', `Project: ${project}`, `Goal: ${goal}`, `Stage: ${stage || 'Not specified'}`, `Source: ${heard || 'Not specified'}`].join('\n') }),
+        body: JSON.stringify({ name: project, email, message: [copy('Tokenomics AI early access'), `${copy('Project')}: ${project}`, `${copy('Goal')}: ${copy(goal)}`, `${copy('Stage')}: ${copy(stage || 'Not specified')}`, `${copy('Source')}: ${copy(heard || 'Not specified')}`].join('\n') }),
       })
       if (!response.ok) throw new Error('Unable to send request')
       setStatus('done')

@@ -38,8 +38,6 @@ interface Props {
   className?: string
   startOffset?: string
   endOffset?: string
-  /** @deprecated Цвет берётся из className; оставлено для совместимости */
-  dark?: boolean
   progress?: MotionValue<number>
 }
 
