@@ -40,17 +40,6 @@ export const contactPageContent = {
       'Аудит текущей модели',
     ],
   },
-  section: {
-    label: 'Контакт',
-    headline: 'Обсудим',
-    headlineAccent: 'ваш проект',
-    description:
-      'Расскажите нам о своей задаче — мы ответим в течение одного рабочего дня и предложим формат сотрудничества.',
-    emailLabel: 'Email',
-    phoneLabel: 'Phone',
-    officeLabel: 'Office',
-    directionsLabel: 'Маршрут',
-  },
 } as const
 
 export const contactFormContent = {

@@ -10,8 +10,8 @@ import { useThemeScopeActive } from './ThemeScope'
  * - On a themeable page: restore the saved preference.
  * - Anywhere else (incl. archives): force the default theme without losing the preference.
  *
- * The initial theme for a full page load is already resolved by the pre-hydration
- * head script in the layout, so we intentionally skip the first effect run to avoid
+ * The initial theme for a full page load is already resolved by ThemeProvider
+ * (isThemeablePath + saved preference), so we intentionally skip the first effect run to avoid
  * a flash (it would otherwise force `dark` before ThemeScopeMarker mounts, then flip
  * back to the saved preference). This only reacts to client-side navigation changes.
  */

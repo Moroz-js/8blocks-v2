@@ -7,4 +7,3 @@ const locale = lang === 'ru' ? ru : en
 export const tokenomicsContent = locale.tokenomicsContent
 export const tokenomicsMeta = locale.tokenomicsMeta
 export const tokenomicsCompositionContent = locale.tokenomicsCompositionContent
-export const tokenomicsProcessContent = locale.tokenomicsProcessContent

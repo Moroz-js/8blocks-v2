@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
+import { apiPath } from '@/shared/lib/apiPath'
 import styles from './NewsletterForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -19,7 +20,7 @@ export function NewsletterForm() {
     const email = (formData.get('email') as string)?.trim()
 
     try {
-      const res = await fetch('/api/newsletter', {
+      const res = await fetch(apiPath('/api/newsletter'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

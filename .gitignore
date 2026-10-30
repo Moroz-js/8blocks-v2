@@ -30,8 +30,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# env files (templates are committed)
+.env
+.env.*
+!.env.example
+!.env-github.example
 
 # vercel
 .vercel
@@ -50,9 +53,8 @@ next-env.d.ts
 # payload generated types
 payload-types.ts
 
-# env files
-.env.local
-migration
-# 8blocks-digital-assets 2
+# playwright mcp artifacts
+/.playwright-mcp/
+
 # generated audit PDFs
 .cache/

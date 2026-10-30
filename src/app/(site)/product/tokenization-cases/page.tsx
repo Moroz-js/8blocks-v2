@@ -7,7 +7,7 @@ import { buildPageGraph, itemListNode } from '@/shared/lib/page-schema'
 import { lang } from '@/shared/i18n'
 import enCases from '@/shared/lib/platform/cases/content.json'
 import ruCases from '@/shared/lib/platform/cases/content.ru.json'
-import { CasesShowcase } from '@/widgets/Platform/CasesShowcase'
+import { CasesShowcase, type CasesData } from '@/widgets/Platform/CasesShowcase'
 import styles from '@/widgets/Platform/Platform.module.scss'
 
 const copy = platformPagesContent.cases
@@ -36,9 +36,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function TokenizationCasesPage() {
   const path = '/product/tokenization-cases'
-  const data = (lang === 'ru' ? ruCases : enCases) as {
-    cases: { name: string; line?: string; year?: string; source?: { title: string; url: string } }[]
-  }
+  // CasesShowcase — клиентский компонент: передаём только текущую локаль.
+  const data = (lang === 'ru' ? ruCases : enCases) as CasesData
   const jsonLd = buildPageGraph({
     path,
     name: copy.title,
@@ -103,7 +102,7 @@ export default function TokenizationCasesPage() {
 
       <section className={styles.section}>
         <div className={styles.container}>
-          <CasesShowcase />
+          <CasesShowcase data={data} />
         </div>
       </section>
 

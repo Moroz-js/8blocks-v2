@@ -1,11 +1,10 @@
 /** Theme switching is allowed only on article / research detail pages. */
-export const THEME_STORAGE_KEY = '8blocks-theme'
 export const BLOG_THEME_STORAGE_KEY = '8blocks-blog-theme'
-export const DEFAULT_THEME = 'dark'
+export const DEFAULT_THEME = 'dark' as const
 
 /**
- * Path-level heuristic for themeable pages (article / research detail).
- * Used by the pre-hydration head script; actual toggle visibility is driven by
+ * Path-level heuristic for themeable pages (article / research / audit detail).
+ * Used for the initial client theme in ThemeProvider; actual toggle visibility is driven by
  * ThemeScopeMarker so that blog category archives stay non-themeable.
  */
 export function isThemeablePath(pathname: string | null | undefined): boolean {

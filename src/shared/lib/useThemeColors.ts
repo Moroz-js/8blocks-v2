@@ -70,6 +70,3 @@ export function usePlaceholderGradients() {
 
   return gradients
 }
-
-/** @deprecated Use usePlaceholderGradients() */
-export const PLACEHOLDER_GRADIENTS = FALLBACK_COVERS

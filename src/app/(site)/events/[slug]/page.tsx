@@ -48,6 +48,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
+  }, {
+    otherLangPath: seo?.alternateSlug?.trim() ? `/events/${seo.alternateSlug.trim()}` : null,
+    none: seo?.noAlternates === true,
   })
 }
 

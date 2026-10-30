@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Manrope } from 'next/font/google'
+import localFont from 'next/font/local'
 import { headers } from 'next/headers'
 import { Suspense } from 'react'
 import '@mantine/core/styles.css'
@@ -26,9 +26,15 @@ import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
 import { getResearchEnabled } from '@/shared/lib/getResearchEnabled'
 import { getEventsEnabled } from '@/shared/lib/getEventsEnabled'
 
-const manrope = Manrope({
-  subsets: ['latin', 'cyrillic'],
-  weight: ['400', '500', '800'],
+// Локальные файлы вместо next/font/google: сборка не зависит от доступности Google Fonts.
+// next/font/local берёт имя семейства из имени константы, поэтому она называется Manrope —
+// на это имя ссылаются стили ($font-base, SVG).
+const Manrope = localFont({
+  src: [
+    { path: '../fonts/Manrope-400.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/Manrope-500.woff2', weight: '500', style: 'normal' },
+    { path: '../fonts/Manrope-800.woff2', weight: '800', style: 'normal' },
+  ],
   display: 'swap',
   variable: '--font-manrope',
 })
@@ -97,7 +103,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     .join('\n')
 
   return (
-    <html lang={htmlLang} className={manrope.variable} suppressHydrationWarning>
+    <html lang={htmlLang} className={Manrope.variable} suppressHydrationWarning>
       <head>
         {/* Site-wide entities: every page graph links to #organization / #website by @id. */}
         <script

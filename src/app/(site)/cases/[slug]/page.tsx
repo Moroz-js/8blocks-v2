@@ -146,6 +146,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       ogTitle?: string
       ogDescription?: string
       ogImage?: unknown
+      alternateSlug?: string | null
+      noAlternates?: boolean | null
     } | undefined) ?? {}
   const result =
     doc.result && typeof doc.result === 'object'
@@ -176,6 +178,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: ogDescription,
       ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
     },
+  }, {
+    otherLangPath: seo.alternateSlug?.trim() ? `/cases/${seo.alternateSlug.trim()}` : null,
+    none: seo.noAlternates === true,
   })
 }
 

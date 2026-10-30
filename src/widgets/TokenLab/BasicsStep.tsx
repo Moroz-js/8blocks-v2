@@ -72,6 +72,7 @@ export function BasicsStep({ model, onChange }: Props) {
             value={model.name}
             placeholder={copy.basics.tokenPlaceholder}
             onChange={(event) => onChange({ name: event.target.value })}
+            maxLength={64}
             className={styles.input}
           />
         </label>

@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
-import { Geist } from 'next/font/google'
+import localFont from 'next/font/local'
 import { TokenomicsAiPage as TokenomicsAiExperience } from '@/widgets/TokenomicsAi/TokenomicsAiPage'
 import { platformPagesContent } from '@/shared/content/platformPages'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { buildPageGraph, webAppNode } from '@/shared/lib/page-schema'
-const geist = Geist({ subsets: ['latin', 'cyrillic'], weight: '400', display: 'swap', variable: '--font-tokenomics-geist' })
+// Имя константы = имя семейства в CSS (next/font/local).
+const Geist = localFont({
+  src: '../../../fonts/Geist-400.woff2',
+  weight: '400',
+  display: 'swap',
+  variable: '--font-tokenomics-geist',
+})
 
 const copy = platformPagesContent.ai
 
@@ -52,7 +58,7 @@ export default function TokenomicsAiPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <TokenomicsAiExperience fontClass={geist.variable} />
+      <TokenomicsAiExperience fontClass={Geist.variable} />
     </>
   )
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { tokenLaunchContent } from '@/shared/content/tokenLaunch'
+import { apiPath } from '@/shared/lib/apiPath'
 import styles from './TokenLaunch.module.scss'
 
 const { form: formContent } = tokenLaunchContent
@@ -49,7 +50,7 @@ export function TokenLaunchLeadForm({ idPrefix, submitLabel, extraMessage }: Tok
     lines.push(formContent.sourceLine)
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, message: lines.join('\n') }),

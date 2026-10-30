@@ -73,6 +73,8 @@ export interface Event extends EventCard {
     ogDescription?: string | null
     noindex?: boolean | null
     ogImage?: EventMedia | null
+    alternateSlug?: string | null
+    noAlternates?: boolean | null
   } | null
   updatedAt: string
 }

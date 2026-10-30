@@ -40,17 +40,6 @@ export const contactPageContent = {
       'Current model audit',
     ],
   },
-  section: {
-    label: 'Contact',
-    headline: "Let's discuss",
-    headlineAccent: 'your project',
-    description:
-      "Tell us about your challenge — we'll respond within one business day and suggest a collaboration format.",
-    emailLabel: 'Email',
-    phoneLabel: 'Phone',
-    officeLabel: 'Office',
-    directionsLabel: 'Get Directions',
-  },
 } as const
 
 export const contactFormContent = {

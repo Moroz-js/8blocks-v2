@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/shared/ui/Button'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
+import { apiPath } from '@/shared/lib/apiPath'
 import { t } from '@/shared/i18n'
 import { copy } from './copy'
 import styles from './TokenLab.module.scss'
@@ -23,6 +24,9 @@ const framingCopy = t({
     weakTitle: 'Мы нашли реальные точки давления. Исправьте их до запуска.',
     weakText:
       'Полный аудит поможет закрыть риски и проверить модель спроса и стимулов.',
+    leadName: 'Заявка Token Lab',
+    leadSource: 'Источник: лист ожидания AI Token Model Sprint',
+    leadTier: 'Уровень структуры',
   },
   en: {
     worstTitle: '{name} is your weakest dimension.',
@@ -34,6 +38,9 @@ const framingCopy = t({
     weakTitle: 'Real pressure points found. Fix them before launch.',
     weakText:
       'A full audit closes structural risks and checks demand and incentives.',
+    leadName: 'Token Lab lead',
+    leadSource: 'Source: AI Token Model Sprint waitlist',
+    leadTier: 'Structure tier',
   },
 })
 
@@ -92,16 +99,19 @@ export function CtaLadder({
     if (state === 'sending') return
     setState('sending')
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          name: project || 'Token Lab lead',
+          name: project || framingCopy.leadName,
           email,
           message: [
-            'Source: AI Token Model Sprint waitlist',
-            `Structure tier: ${grade}`,
-            ...Object.entries(brief).map(([key, value]) => `${key}: ${value}`),
+            framingCopy.leadSource,
+            `${framingCopy.leadTier}: ${grade}`,
+            ...Object.entries(brief).map(
+              ([key, value]) =>
+                `${BRIEF_FIELDS.find((field) => field.id === key)?.label ?? key}: ${value}`,
+            ),
           ].join('\n'),
         }),
       })
@@ -197,6 +207,7 @@ export function CtaLadder({
                   placeholder={copy.cta.project}
                   value={project}
                   onChange={(event) => setProject(event.target.value)}
+                  maxLength={200}
                   className={styles.input}
                   aria-label={copy.cta.project}
                 />

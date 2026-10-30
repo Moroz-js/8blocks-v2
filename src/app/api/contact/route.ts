@@ -2,7 +2,7 @@ import { after } from 'next/server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
-import { sendContactAdmin } from '@/shared/lib/email'
+import { sendContactAdmin, sendContactUser } from '@/shared/lib/email'
 import { sanitizeContactForm } from '@/shared/lib/form-sanitize'
 
 export async function POST(req: NextRequest) {
@@ -32,13 +32,16 @@ export async function POST(req: NextRequest) {
 
     // Ответ сразу (без долгого await SMTP), но отправка дожимается через after() —
     // иначе void Promise без after часто обрывается вместе с завершением запроса Next.js.
-    // Юзеру confirmation не шлём — только уведомление админу.
     after(async () => {
-      try {
-        await sendContactAdmin({ name, email, message })
-      } catch (err) {
-        console.error('[contact] email (admin notify) failed:', err)
-      }
+      const results = await Promise.allSettled([
+        sendContactAdmin({ name, email, message }),
+        sendContactUser(email, { name, email, message }),
+      ])
+      results.forEach((r, i) => {
+        if (r.status === 'rejected') {
+          console.error(`[contact] email (${i === 0 ? 'admin notify' : 'user confirmation'}) failed:`, r.reason)
+        }
+      })
     })
 
     return NextResponse.json({ success: true })
