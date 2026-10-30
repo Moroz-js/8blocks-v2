@@ -13,6 +13,7 @@ import { fmtShort } from '@/shared/lib/platform/tokenlab/format'
 import { compareWithMarket } from '@/shared/lib/platform/tokenlab/benchmarkNorms'
 import { encodeModel } from '@/shared/lib/platform/tokenlab/urlState'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
+import { apiPath } from '@/shared/lib/apiPath'
 import { Button } from '@/shared/ui/Button'
 import { t } from '@/shared/i18n'
 import {
@@ -170,7 +171,7 @@ export function ResultsStep({ model }: { model: TokenModel }) {
     if (reportState === 'sending') return
     setReportState('sending')
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({

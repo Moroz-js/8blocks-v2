@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/shared/ui/Button'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
+import { apiPath } from '@/shared/lib/apiPath'
 import { t } from '@/shared/i18n'
 import { copy } from './copy'
 import styles from './TokenLab.module.scss'
@@ -98,7 +99,7 @@ export function CtaLadder({
     if (state === 'sending') return
     setState('sending')
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({

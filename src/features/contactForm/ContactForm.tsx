@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { contactFormContent } from '@/shared/content/contactPage'
+import { apiPath } from '@/shared/lib/apiPath'
 import styles from './ContactForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -24,7 +25,7 @@ export function ContactForm() {
     }
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

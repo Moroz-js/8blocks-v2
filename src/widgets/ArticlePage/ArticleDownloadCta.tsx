@@ -5,6 +5,7 @@ import type { ArticleCta } from '@/entities/article'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { Button } from '@/shared/ui'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
+import { apiPath } from '@/shared/lib/apiPath'
 import styles from './ArticleDownloadCta.module.scss'
 
 type Status = 'idle' | 'loading' | 'error'
@@ -62,7 +63,7 @@ export function ArticleDownloadCta({ cta, source }: Props) {
     const email = (new FormData(e.currentTarget).get('email') as string)?.trim()
 
     try {
-      const res = await fetch('/api/newsletter', {
+      const res = await fetch(apiPath('/api/newsletter'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, source }),
