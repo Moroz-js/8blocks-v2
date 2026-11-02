@@ -1,0 +1,179 @@
+@use 'sass:color';
+@use '@/shared/ds/styles' as *;
+
+.page {
+  @include ds-container;
+  padding-block: 120px $ds-block-gap;
+
+  code {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 13px;
+    color: $ds-text;
+  }
+}
+
+.intro {
+  max-width: 800px;
+  margin-bottom: $ds-inner-gap;
+}
+
+.eyebrow {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+  margin-bottom: $ds-space-3;
+}
+
+.pageTitle {
+  @include ds-h2;
+  margin-bottom: $ds-space-4;
+}
+
+.lead {
+  @include ds-text-lg;
+  color: $ds-text-muted;
+}
+
+.block {
+  padding-block: $ds-space-8;
+  border-top: 1px solid $ds-border;
+}
+
+.blockTitle {
+  @include ds-h5;
+  margin-bottom: $ds-space-5;
+}
+
+.note {
+  @include ds-text-md;
+  color: $ds-text-muted;
+  margin-bottom: $ds-space-5;
+}
+
+.muted {
+  color: $ds-text-muted;
+}
+
+// ── Colors ──────────────────────────────────────────────────────────
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: $ds-space-4;
+}
+
+.swatch {
+  @include ds-text-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+}
+
+.swatchColor {
+  display: block;
+  height: 72px;
+  margin-bottom: $ds-space-2;
+  border-radius: $ds-radius-card;
+  border: 1px solid $ds-border;
+}
+
+.swatchName {
+  color: $ds-text;
+}
+
+// ── Typography ──────────────────────────────────────────────────────
+.typeRow {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: $ds-space-5;
+  align-items: baseline;
+  padding-block: $ds-space-5;
+  border-bottom: 1px solid $ds-border;
+
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $ds-space-2;
+  }
+}
+
+.typeMeta {
+  @include ds-text-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+}
+
+.h1 { @include ds-h1; }
+.h2 { @include ds-h2; }
+.h3 { @include ds-h3; }
+.h4 { @include ds-h4; }
+.h5 { @include ds-h5; }
+.textLg { @include ds-text-lg; max-width: 420px; }
+.textMd { @include ds-text-md; max-width: 420px; }
+.textSm { @include ds-text-sm; max-width: 420px; }
+
+// ── Grid & shape ────────────────────────────────────────────────────
+.gridDemo {
+  display: grid;
+  grid-template-columns: repeat($ds-columns, minmax(0, 1fr));
+  gap: $ds-gutter;
+  height: 96px;
+  margin-bottom: $ds-space-6;
+
+  span {
+    background: $ds-surface;
+    border-radius: 2px;
+  }
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.tableRow {
+  @include ds-text-sm;
+  display: grid;
+  grid-template-columns: 200px 200px minmax(0, 1fr);
+  gap: $ds-space-4;
+  padding-block: $ds-space-3;
+  border-bottom: 1px solid $ds-border;
+
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $ds-space-1;
+  }
+}
+
+// ── Elements ────────────────────────────────────────────────────────
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $ds-space-3;
+  margin-bottom: $ds-space-5;
+}
+
+.onGradient {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-space-3;
+  padding: $ds-space-7;
+  margin-bottom: $ds-space-5;
+  border-radius: $ds-radius-card;
+  // Preview background only — the real CTA gradient lands with the CTA blocks.
+  background: linear-gradient(120deg, #{color.mix($ds-black, $ds-pink, 80%)} 0%, $ds-pink 100%);
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $ds-space-5 $ds-space-4;
+  max-width: 720px;
+
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.wide {
+  grid-column: 1 / -1;
+}

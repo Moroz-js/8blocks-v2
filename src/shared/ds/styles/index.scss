@@ -1,0 +1,5 @@
+// Entry point for design system v2 styles: `@use '@/shared/ds/styles' as *;`
+// Paths go through the @ alias: Turbopack resolves relative @forward
+// against the importing module, not this file.
+@forward '@/shared/ds/styles/tokens';
+@forward '@/shared/ds/styles/mixins';

@@ -1,0 +1,101 @@
+@use 'sass:list';
+@use '@/shared/ds/styles/tokens' as *;
+
+// ── Breakpoints ───────────────────────────────────────────────────────
+@mixin ds-tablet {
+  @media (max-width: #{$ds-bp-tablet}) {
+    @content;
+  }
+}
+
+@mixin ds-mobile {
+  @media (max-width: #{$ds-bp-mobile}) {
+    @content;
+  }
+}
+
+// ── Typography ────────────────────────────────────────────────────────
+@mixin _ds-type($style, $tracking: 0) {
+  font-family: $ds-font;
+  font-weight: $ds-weight;
+  font-size: list.nth($style, 1);
+  line-height: list.nth($style, 2);
+  letter-spacing: $tracking;
+}
+
+// Headings step one level down on mobile (Figma 375 frame).
+// H5 stays 24/30 — it is already the smallest heading.
+@mixin ds-h1 {
+  @include _ds-type($ds-h1);
+  @include ds-mobile { @include _ds-type($ds-h2); }
+}
+
+@mixin ds-h2 {
+  @include _ds-type($ds-h2);
+  @include ds-mobile { @include _ds-type($ds-h3); }
+}
+
+@mixin ds-h3 {
+  @include _ds-type($ds-h3);
+  @include ds-mobile { @include _ds-type($ds-h4); }
+}
+
+@mixin ds-h4 {
+  @include _ds-type($ds-h4);
+  @include ds-mobile { @include _ds-type($ds-h5); }
+}
+
+@mixin ds-h5 {
+  @include _ds-type($ds-h5);
+}
+
+@mixin ds-text-lg {
+  @include _ds-type($ds-text-lg, $ds-tracking-text);
+}
+
+@mixin ds-text-md {
+  @include _ds-type($ds-text-md, $ds-tracking-text);
+}
+
+@mixin ds-text-sm {
+  @include _ds-type($ds-text-sm, $ds-tracking-text);
+}
+
+// ── Layout ────────────────────────────────────────────────────────────
+// Content column: 1200 centred, side margins shrink on smaller screens.
+@mixin ds-container {
+  width: 100%;
+  max-width: calc(#{$ds-content} + 2 * #{$ds-margin});
+  margin-inline: auto;
+  padding-inline: $ds-margin;
+
+  @include ds-tablet { padding-inline: $ds-margin-tablet; }
+  @include ds-mobile { padding-inline: $ds-margin-mobile; }
+}
+
+// Vertical rhythm between page blocks.
+@mixin ds-block-spacing {
+  padding-block: calc(#{$ds-block-gap} / 2);
+
+  @include ds-tablet { padding-block: calc(#{$ds-block-gap-tablet} / 2); }
+  @include ds-mobile { padding-block: calc(#{$ds-block-gap-mobile} / 2); }
+}
+
+// ── Interaction ───────────────────────────────────────────────────────
+// Hover tint stacked over the base fill (Figma models hover as an overlay).
+@mixin ds-overlay($overlay) {
+  background-image: linear-gradient(#{$overlay}, #{$overlay});
+}
+
+@mixin ds-focus-visible {
+  &:focus-visible {
+    outline: 2px solid $ds-focus;
+    outline-offset: 2px;
+  }
+}
+
+@mixin ds-transition($props...) {
+  transition-property: $props;
+  transition-duration: $ds-duration;
+  transition-timing-function: $ds-ease;
+}

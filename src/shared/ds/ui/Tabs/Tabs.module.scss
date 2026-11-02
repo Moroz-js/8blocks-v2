@@ -1,0 +1,39 @@
+@use '@/shared/ds/styles' as *;
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-space-2;
+}
+
+// Figma: Tab off (63:3172).
+.tab {
+  @include ds-text-sm;
+  @include ds-transition(background-color, background-image, color);
+  @include ds-focus-visible;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 10px $ds-space-4;
+  border: none;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    @include ds-overlay($ds-overlay-lighten);
+  }
+}
+
+// Figma: Tab on (63:3169).
+.selected {
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+
+  &:hover {
+    @include ds-overlay($ds-overlay-darken-soft);
+  }
+}

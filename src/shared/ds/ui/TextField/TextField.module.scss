@@ -1,0 +1,102 @@
+@use '@/shared/ds/styles' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+  width: 100%;
+}
+
+.label {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+// «Поле ввода»: 56px, radius 10, Dark fill.
+.control {
+  @include ds-transition(background-color, border-color, box-shadow);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding-inline: $ds-space-4;
+  background-color: $ds-surface;
+  // Border is always present but transparent so states don't shift layout;
+  // focus uses 1.5px, emulated with an inset shadow on top of the 1px border.
+  border: 1px solid transparent;
+  border-radius: $ds-radius-field;
+  overflow: hidden;
+
+  &:hover {
+    background-color: $ds-surface-raised;
+    border-color: $ds-border-strong;
+  }
+
+  &:focus-within {
+    background-color: $ds-surface;
+    border-color: $ds-focus;
+    box-shadow:
+      inset 0 0 0 0.5px $ds-focus,
+      0 0 0 3px $ds-focus-ring;
+  }
+}
+
+.multiline {
+  align-items: flex-start;
+  padding-block: 17px; // aligns first line with the 56px single-line field
+
+  .alert {
+    margin-top: 2px;
+  }
+}
+
+.invalid,
+.invalid:hover {
+  background-color: $ds-surface;
+  border-color: $ds-danger;
+}
+
+.input {
+  @include ds-text-md;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: $ds-text;
+  caret-color: $ds-text;
+
+  &::placeholder {
+    color: $ds-text-muted;
+    opacity: 1;
+  }
+
+  // The control draws the focus state.
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.alert {
+  flex-shrink: 0;
+}
+
+.error,
+.hint {
+  @include ds-text-sm;
+}
+
+.error {
+  color: $ds-danger;
+}
+
+.hint {
+  color: $ds-text-muted;
+}

@@ -1,0 +1,64 @@
+@use '@/shared/ds/styles' as *;
+
+// Figma: Button Primary / Secondary / Tertiary (63:3156–63:3158).
+.button {
+  @include ds-text-sm;
+  @include ds-transition(background-color, background-image, opacity);
+  @include ds-focus-visible;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $ds-space-2;
+  height: 56px;
+  padding: 10px $ds-space-5;
+  border: none;
+  border-radius: $ds-radius-pill;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.primary {
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+
+  &:hover {
+    @include ds-overlay($ds-overlay-darken);
+  }
+}
+
+.secondary {
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+
+  &:hover {
+    @include ds-overlay($ds-overlay-lighten);
+  }
+}
+
+.tertiary {
+  background-color: $ds-surface-glass;
+  color: $ds-text;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  &:hover {
+    @include ds-overlay($ds-overlay-darken-soft);
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
