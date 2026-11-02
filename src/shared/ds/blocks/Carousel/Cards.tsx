@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react'
 import Image, { type ImageProps } from 'next/image'
 import clsx from 'clsx'
-import accentArt from '../../assets/accent-card.webp'
 import asterisk from '../../icons/asterisk.svg'
 import { ArrowLink } from '../../ui/Elements'
 import styles from './Cards.module.scss'
@@ -25,7 +24,6 @@ export function AccentCard({
 }) {
   return (
     <article className={clsx(styles.card, styles.accent, className)}>
-      <Image src={accentArt} alt="" fill sizes="394px" className={styles.bg} />
       <Image src={asterisk} alt="" width={24} height={24} />
       <div className={styles.text}>
         <h3 className={styles.title}>{title}</h3>

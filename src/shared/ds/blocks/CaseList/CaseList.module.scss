@@ -60,6 +60,7 @@
 
 .row {
   display: flex;
+  align-self: stretch;
   align-items: flex-end;
   justify-content: space-between;
   gap: $ds-space-5;
