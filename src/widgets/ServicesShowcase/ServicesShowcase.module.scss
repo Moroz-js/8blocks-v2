@@ -79,7 +79,7 @@
 }
 
 .itemActive {
-  border-color: rgba(194, 78, 136, 0.3);
+  border-color: rgba($pal-magenta, 0.3);
 
   .itemTitle {
     color: $text-primary;

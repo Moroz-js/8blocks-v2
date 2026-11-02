@@ -104,8 +104,8 @@
 .upsell {
   position: relative;
   padding: $space-7 $space-8;
-  background: rgba(194, 78, 136, 0.07);
-  border: 1px solid rgba(194, 78, 136, 0.2);
+  background: rgba($pal-magenta, 0.07);
+  border: 1px solid rgba($pal-magenta, 0.2);
   display: flex;
   flex-direction: column;
   gap: $space-4;
@@ -122,7 +122,7 @@
   left: 0;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(194, 78, 136, 0.22) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba($pal-magenta, 0.22) 0%, transparent 70%);
   pointer-events: none;
   transform: translate(-60px, -60px);
   transition: transform 0.08s linear;

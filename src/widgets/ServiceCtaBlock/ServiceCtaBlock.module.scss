@@ -41,8 +41,8 @@
   height: 400px;
   background: radial-gradient(
     ellipse,
-    rgba(194, 78, 136, 0.14) 0%,
-    rgba(142, 74, 189, 0.06) 40%,
+    rgba($pal-magenta, 0.14) 0%,
+    rgba($pal-purple, 0.06) 40%,
     transparent 70%
   );
   filter: blur(40px);

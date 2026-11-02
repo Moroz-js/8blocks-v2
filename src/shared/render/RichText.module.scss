@@ -108,7 +108,7 @@
     margin: $space-7 0;
     padding: $space-5 $space-6;
     border-left: 3px solid $accent-purple;
-    background: rgba(194, 78, 136, 0.06);
+    background: rgba($pal-magenta, 0.06);
     border-radius: 0;
     font-size: $text-md;
     font-style: italic;
@@ -132,7 +132,7 @@
     color: $accent-pink-deep;
     text-decoration: underline;
     text-underline-offset: 3px;
-    text-decoration-color: rgba(194, 78, 136, 0.5);
+    text-decoration-color: rgba($pal-magenta, 0.5);
     transition: color $transition-fast, text-decoration-color $transition-fast;
 
     &:hover {
@@ -226,8 +226,8 @@
     border-left-color: $accent-purple;
     background: linear-gradient(
       135deg,
-      rgba(142, 74, 189, 0.28) 0%,
-      rgba(194, 78, 136, 0.14) 42%,
+      rgba($pal-purple, 0.28) 0%,
+      rgba($pal-magenta, 0.14) 42%,
       rgba(12, 10, 18, 0.72) 100%
     );
     backdrop-filter: blur(16px);
@@ -241,8 +241,8 @@
       inset: 0;
       background: radial-gradient(
         ellipse 90% 80% at 12% 0%,
-        rgba(194, 78, 136, 0.35) 0%,
-        rgba(142, 74, 189, 0.12) 45%,
+        rgba($pal-magenta, 0.35) 0%,
+        rgba($pal-purple, 0.12) 45%,
         transparent 72%
       );
       pointer-events: none;
@@ -682,7 +682,7 @@
 
   .statRow {
     padding: $space-3 0;
-    border-top: 1px solid rgba(194, 78, 136, 0.22);
+    border-top: 1px solid rgba($pal-magenta, 0.22);
     font-size: $text-sm;
 
     &:first-of-type {

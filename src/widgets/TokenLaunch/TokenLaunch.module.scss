@@ -177,7 +177,7 @@
     height: 600px;
     top: -15%;
     left: -10%;
-    background: radial-gradient(circle, rgba(194, 78, 136, 0.32) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba($pal-magenta, 0.32) 0%, transparent 70%);
   }
 
   &B {
@@ -185,7 +185,7 @@
     height: 500px;
     top: 25%;
     right: -8%;
-    background: radial-gradient(circle, rgba(142, 74, 189, 0.26) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba($pal-purple, 0.26) 0%, transparent 70%);
   }
 }
 
@@ -1425,7 +1425,7 @@
     pointer-events: none;
     background: radial-gradient(
       ellipse 45% 45% at 50% 45%,
-      rgba(194, 78, 136, 0.14) 0%,
+      rgba($pal-magenta, 0.14) 0%,
       transparent 68%
     );
   }

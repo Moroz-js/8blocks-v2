@@ -75,7 +75,7 @@
   border-radius: 50%;
   background: radial-gradient(
     ellipse 80% 70% at 80% 40%,
-    rgba(194, 78, 136, 0.14) 0%,
+    rgba($pal-magenta, 0.14) 0%,
     transparent 65%
   );
   min-height: 120px;
@@ -145,10 +145,10 @@
 }
 
 .cardEmphasis {
-  border-color: rgba(194, 78, 136, 0.35);
+  border-color: rgba($pal-magenta, 0.35);
   background: linear-gradient(
     165deg,
-    rgba(194, 78, 136, 0.1) 0%,
+    rgba($pal-magenta, 0.1) 0%,
     $bg-secondary 42%,
     $bg-secondary 100%
   );

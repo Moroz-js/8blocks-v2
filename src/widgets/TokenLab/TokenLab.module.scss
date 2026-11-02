@@ -25,7 +25,7 @@
     inset: -60% -10% auto 35%;
     height: 560px;
     pointer-events: none;
-    background: radial-gradient(circle, rgba(194, 78, 136, 0.2), transparent 68%);
+    background: radial-gradient(circle, rgba($pal-magenta, 0.2), transparent 68%);
     filter: blur(28px);
   }
 }
@@ -116,8 +116,8 @@
 .stepActive,
 .selected {
   color: $text-primary;
-  border-color: rgba(194, 78, 136, 0.65);
-  background: rgba(194, 78, 136, 0.1);
+  border-color: rgba($pal-magenta, 0.65);
+  background: rgba($pal-magenta, 0.1);
 }
 
 .stepDisabled,
@@ -226,7 +226,7 @@
 }
 
 .cardAccent {
-  border-color: rgba(194, 78, 136, 0.35);
+  border-color: rgba($pal-magenta, 0.35);
 }
 
 .templateGrid {

@@ -188,7 +188,7 @@
     height: 600px;
     top: -15%;
     left: -10%;
-    background: radial-gradient(circle, rgba(194, 78, 136, 0.32) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba($pal-magenta, 0.32) 0%, transparent 70%);
   }
 
   &B {
@@ -196,7 +196,7 @@
     height: 500px;
     top: 25%;
     right: -8%;
-    background: radial-gradient(circle, rgba(142, 74, 189, 0.26) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba($pal-purple, 0.26) 0%, transparent 70%);
   }
 }
 
@@ -330,7 +330,7 @@
 }
 
 .heroGridActive {
-  background: rgba(194, 78, 136, 0.48);
+  background: rgba($pal-magenta, 0.48);
   border-color: rgba(255, 214, 242, 0.95) !important;
 }
 
@@ -503,7 +503,7 @@
 .journeySection {
   padding-block: $space-9;
   background:
-    radial-gradient(ellipse 60% 90% at 0% 45%, rgba(194, 78, 136, 0.14), transparent 72%),
+    radial-gradient(ellipse 60% 90% at 0% 45%, rgba($pal-magenta, 0.14), transparent 72%),
     $bg-secondary;
 
   .inner {
@@ -560,7 +560,7 @@
     bottom: 0;
     left: 0;
     width: 1px;
-    background: rgba(194, 78, 136, 0.45);
+    background: rgba($pal-magenta, 0.45);
     transition: background-color 180ms ease;
   }
 
@@ -580,7 +580,7 @@
   width: 26px;
   height: 26px;
   place-items: center;
-  border: 1px solid rgba(194, 78, 136, 0.72);
+  border: 1px solid rgba($pal-magenta, 0.72);
   border-radius: 50%;
   background: $body-bg;
   font-family: $font-base;
@@ -592,7 +592,7 @@
 .journeySelfServeActive .journeySelfServeNumber,
 .journeyStepActive .journeyNumber {
   border-color: $accent-pink-deep;
-  box-shadow: 0 0 0 4px rgba(194, 78, 136, 0.14);
+  box-shadow: 0 0 0 4px rgba($pal-magenta, 0.14);
   color: $text-primary;
 }
 
@@ -606,7 +606,7 @@
     color: $text-secondary;
     font-size: $text-sm;
     text-decoration: none;
-    border-bottom: 1px solid rgba(194, 78, 136, 0.7);
+    border-bottom: 1px solid rgba($pal-magenta, 0.7);
     padding-bottom: 2px;
 
     &:hover {
@@ -630,7 +630,7 @@
     bottom: 0;
     left: -$space-7;
     width: 1px;
-    background: rgba(194, 78, 136, 0.45);
+    background: rgba($pal-magenta, 0.45);
     transition: background-color 180ms ease;
   }
 
@@ -653,7 +653,7 @@
   width: 26px;
   height: 26px;
   place-items: center;
-  border: 1px solid rgba(194, 78, 136, 0.72);
+  border: 1px solid rgba($pal-magenta, 0.72);
   border-radius: 50%;
   background: $body-bg;
   font-family: $font-base;
@@ -1288,7 +1288,7 @@
     pointer-events: none;
     background: radial-gradient(
       ellipse 45% 75% at 15% 45%,
-      rgba(194, 78, 136, 0.16) 0%,
+      rgba($pal-magenta, 0.16) 0%,
       transparent 72%
     );
   }

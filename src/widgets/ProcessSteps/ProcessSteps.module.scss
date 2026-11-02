@@ -76,7 +76,7 @@
   transition: border-color $transition-base, color $transition-base;
 
   .step:hover & {
-    border-color: rgba(194, 78, 136, 0.4);
+    border-color: rgba($pal-magenta, 0.4);
     color: $accent-purple;
   }
 }

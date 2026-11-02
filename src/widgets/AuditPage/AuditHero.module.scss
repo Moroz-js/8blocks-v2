@@ -12,13 +12,13 @@
   color: #f4f1f8;
   background:
     // dominant magenta bloom — right edge, lower-mid (как в Figma)
-    radial-gradient(ellipse 48% 80% at 100% 76%, rgba(224, 64, 148, 0.6) 0%, rgba(194, 78, 136, 0.22) 36%, transparent 70%),
+    radial-gradient(ellipse 48% 80% at 100% 76%, rgba(224, 64, 148, 0.6) 0%, rgba($pal-magenta, 0.22) 36%, transparent 70%),
     // secondary haze near the rating (upper-right)
-    radial-gradient(ellipse 42% 48% at 99% 24%, rgba(194, 78, 136, 0.3) 0%, transparent 62%),
+    radial-gradient(ellipse 42% 48% at 99% 24%, rgba($pal-magenta, 0.3) 0%, transparent 62%),
     // soft pink glow — bottom-left corner
     radial-gradient(ellipse 46% 58% at 0% 102%, rgba(200, 70, 142, 0.32) 0%, transparent 62%),
     // subtle purple up top-center
-    radial-gradient(ellipse 60% 60% at 38% 6%, rgba(142, 74, 189, 0.16) 0%, transparent 62%),
+    radial-gradient(ellipse 60% 60% at 38% 6%, rgba($pal-purple, 0.16) 0%, transparent 62%),
     // dark base
     linear-gradient(155deg, #130c1a 0%, #0a0610 52%, #0d0813 100%);
   overflow: hidden;

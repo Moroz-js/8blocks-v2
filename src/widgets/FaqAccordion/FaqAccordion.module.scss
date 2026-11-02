@@ -59,7 +59,7 @@
   }
 
   &[data-active] {
-    border-color: rgba(194, 78, 136, 0.35) !important;
+    border-color: rgba($pal-magenta, 0.35) !important;
   }
 }
 

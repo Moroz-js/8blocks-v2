@@ -100,7 +100,7 @@
 
 .catChipActive {
   border-color: $focus-accent;
-  color: rgba(197, 61, 255, 0.9);
+  color: rgba($pal-magenta, 0.9);
   background: $focus-accent-bg;
 
   &:hover {

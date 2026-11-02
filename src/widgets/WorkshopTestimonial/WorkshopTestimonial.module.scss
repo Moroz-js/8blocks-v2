@@ -86,7 +86,7 @@
 .quoteClientLink {
   color: $text-primary;
   text-decoration: underline;
-  text-decoration-color: rgba(194, 78, 136, 0.45);
+  text-decoration-color: rgba($pal-magenta, 0.45);
   text-underline-offset: 3px;
 
   &:hover {
