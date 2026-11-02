@@ -1,0 +1,75 @@
+@use '@/shared/ds/styles' as *;
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  overflow: hidden;
+  padding: 25px 33px 25px 25px;
+  border-radius: $ds-radius-card;
+  user-select: none;
+
+  // Images inside a draggable track must not start native drag.
+  img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
+}
+
+.accent {
+  min-height: 450px;
+  background-color: $ds-surface-raised;
+  box-shadow: 0 1px 2px rgba(#14151a, 0.05);
+}
+
+.quote {
+  gap: 25px;
+  min-height: 488px;
+  padding: 24px 34px 24px 24px;
+  border: 1px solid $ds-border;
+  background-color: $ds-surface;
+}
+
+.bg {
+  z-index: -1;
+  object-fit: cover;
+}
+
+.logo {
+  flex-shrink: 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  @include ds-h5;
+  color: rgba($ds-white, 0.9);
+}
+
+.body {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+.bodyMuted {
+  color: $ds-text-muted;
+}
+
+.source {
+  margin-top: auto;
+  max-width: 346px;
+
+  // The link itself stays clickable inside the draggable track.
+  img {
+    pointer-events: none;
+  }
+}

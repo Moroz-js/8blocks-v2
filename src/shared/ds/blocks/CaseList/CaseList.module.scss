@@ -1,0 +1,97 @@
+@use '@/shared/ds/styles' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-block: 20px;
+
+  & + & {
+    border-top: 1px solid $ds-border;
+  }
+
+  &:first-child { padding-top: 0; }
+  &:last-child { padding-bottom: 0; }
+
+  @include ds-mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+}
+
+.thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 230px;
+  height: 148px;
+  overflow: hidden;
+  border-radius: $ds-radius-lg;
+  background-color: $ds-surface;
+
+  img {
+    object-fit: cover;
+  }
+
+  @include ds-mobile {
+    width: 100%;
+    height: 180px;
+  }
+}
+
+.body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+
+  @include ds-mobile {
+    gap: 10px;
+  }
+}
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: $ds-space-5;
+
+  & + & {
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  // Mobile: flatten rows so the button can move to the end of the card.
+  @include ds-mobile {
+    display: contents;
+  }
+}
+
+.title {
+  @include ds-h4;
+  color: $ds-text;
+}
+
+.description {
+  @include ds-text-md;
+  max-width: 470px;
+  color: $ds-text-faint;
+}
+
+.cta {
+  flex-shrink: 0;
+
+  @include ds-mobile {
+    order: 1;
+    align-self: flex-start;
+    margin-top: $ds-space-2;
+  }
+}

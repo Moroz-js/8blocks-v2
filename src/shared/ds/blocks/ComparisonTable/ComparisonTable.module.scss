@@ -1,0 +1,95 @@
+@use '@/shared/ds/styles' as *;
+
+// The Figma table spans the full 1280 frame: labels start at the 40px margin.
+.scroller {
+  overflow-x: auto;
+  margin-inline: calc(-1 * #{$ds-margin});
+
+  @include ds-tablet { margin-inline: calc(-1 * #{$ds-margin-tablet}); }
+  @include ds-mobile { margin-inline: calc(-1 * #{$ds-margin-mobile}); }
+}
+
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.table tr > * {
+  height: 70px;
+  border-bottom: 1px solid $ds-border;
+}
+
+.table tbody tr:last-child > * {
+  border-bottom: none;
+}
+
+.corner {
+  width: 232px;
+
+  @include ds-mobile { width: 160px; }
+}
+
+.label {
+  @include ds-text-sm;
+  padding: 11px 10px 11px $ds-margin;
+  border-right: 1px solid $ds-border;
+  color: $ds-text;
+  font-weight: inherit;
+  text-align: left;
+
+  @include ds-tablet { padding-left: $ds-margin-tablet; }
+  @include ds-mobile { padding-left: $ds-margin-mobile; }
+
+  tbody tr:last-child & {
+    border-right: none;
+  }
+}
+
+.cell {
+  @include ds-text-sm;
+  padding: 11px 10px;
+  border-right: 1px solid $ds-border;
+  color: $ds-text;
+  text-align: center;
+  white-space: nowrap;
+
+  &:last-child {
+    border-right: none;
+  }
+}
+
+.head {
+  @include ds-text-md;
+  font-weight: inherit;
+  white-space: normal;
+}
+
+// Highlighted segment: tinted column with a 15px-rounded outline.
+.highlight {
+  background-color: $ds-highlight;
+  border-left: 1px solid $ds-border;
+}
+
+.head.highlight {
+  border-top: 1px solid $ds-border;
+  border-top-left-radius: $ds-radius-lg;
+  border-top-right-radius: $ds-radius-lg;
+}
+
+.table tbody tr:last-child .highlight {
+  border-bottom: 1px solid $ds-border;
+  border-bottom-left-radius: $ds-radius-lg;
+  border-bottom-right-radius: $ds-radius-lg;
+}

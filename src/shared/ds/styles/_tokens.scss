@@ -29,7 +29,9 @@ $ds-surface-glass: var(--ds-surface-glass); // tertiary button over imagery
 $ds-text: var(--ds-text);
 $ds-text-muted: var(--ds-text-muted); // descriptions, labels, placeholders
 $ds-text-inverse: var(--ds-text-inverse); // on light fills (primary button, tab on)
+$ds-text-faint: var(--ds-text-faint); // 40% white — secondary text on gradients and photos
 $ds-border: var(--ds-border); // dividers, table lines
+$ds-highlight: var(--ds-highlight); // highlighted table column
 $ds-border-strong: var(--ds-border-strong); // field hover
 $ds-accent: var(--ds-accent);
 $ds-danger: var(--ds-danger);
@@ -90,8 +92,11 @@ $ds-space-8: 48px;
 
 // ── Shape ─────────────────────────────────────────────────────────────
 $ds-radius-pill: 64px; // buttons, tabs, round controls
-$ds-radius-field: 10px; // inputs, textarea
-$ds-radius-card: 8px; // cards, panels
+$ds-radius-card: 10px; // cards, panels, CTA
+$ds-radius-field: 10px; // inputs, textarea (component sheet 52:407)
+$ds-radius-lg: 15px; // FAQ list, table highlight, case thumbnails
+$ds-radius-badge: 12px; // price pill
+$ds-radius-step: 5px; // roadmap step number
 
 // ── Breakpoints (desktop-first; Figma has 1280 and 375) ──────────────
 $ds-bp-tablet: 1024px;

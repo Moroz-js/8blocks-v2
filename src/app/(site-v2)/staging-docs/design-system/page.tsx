@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Button, TextField, Textarea } from '@/shared/ds'
 import { TabsDemo } from './TabsDemo'
@@ -77,6 +78,11 @@ export default function DesignSystemPage() {
           Токены и элементы из Figma «Design system», страница Elements. Код: <code>src/shared/ds</code>,
           глобальные стили: <code>src/app/globals-v2.scss</code>, документация: <code>docs/design-system-v2.md</code>.
           Только тёмная тема.
+        </p>
+        <p className={styles.lead}>
+          <Link href="/staging-docs/design-system/blocks" className={styles.link}>
+            Блоки из Figma →
+          </Link>
         </p>
       </header>
 

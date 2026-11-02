@@ -1,0 +1,25 @@
+@use '@/shared/ds/styles' as *;
+
+.viewport {
+  overflow: hidden;
+  // Keep the focus ring of the first card visible.
+  padding-block: 4px;
+  margin-block: -4px;
+}
+
+.track {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  cursor: grab;
+  touch-action: pan-y;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.slide {
+  flex: 0 0 var(--slide-width);
+  max-width: calc(100vw - 2 * #{$ds-margin-mobile} - 24px);
+}

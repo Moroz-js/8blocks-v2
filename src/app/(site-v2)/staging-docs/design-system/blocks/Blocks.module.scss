@@ -1,0 +1,61 @@
+@use '@/shared/ds/styles' as *;
+
+.page {
+  padding-block: 120px $ds-block-gap;
+
+  code {
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+    font-size: 13px;
+  }
+}
+
+.intro {
+  @include ds-container;
+
+  > * {
+    max-width: 800px;
+  }
+}
+
+.eyebrow {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+  margin-bottom: $ds-space-3;
+
+  a:hover {
+    color: $ds-text;
+  }
+}
+
+.title {
+  @include ds-h2;
+  margin-bottom: $ds-space-4;
+}
+
+.lead {
+  @include ds-text-lg;
+  color: $ds-text-muted;
+}
+
+// Annotation above each block.
+.label {
+  @include ds-container;
+  @include ds-text-sm;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-space-2 $ds-space-5;
+  margin-top: $ds-space-8;
+  padding-top: $ds-space-5;
+  border-top: 1px dashed rgba($ds-white, 0.15);
+  color: $ds-text-muted;
+
+  code {
+    color: $ds-text;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+}

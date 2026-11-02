@@ -1,0 +1,59 @@
+@use '@/shared/ds/styles' as *;
+
+.section {
+  @include ds-container;
+  @include ds-block-spacing;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-inner-gap;
+
+  @include ds-mobile {
+    gap: $ds-inner-gap-mobile;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-5;
+}
+
+.center {
+  justify-content: center;
+  text-align: center;
+}
+
+.title {
+  @include ds-h3;
+  color: $ds-text;
+  max-width: 760px;
+}
+
+.sheen {
+  @include ds-title-sheen;
+}
+
+.actions {
+  display: flex;
+  gap: $ds-space-2;
+  flex-shrink: 0;
+}
+
+.body {
+  min-width: 0;
+}
+
+.narrow {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+// Content may overflow to the right viewport edge (carousels).
+.bleed .body {
+  margin-right: calc(-1 * max(#{$ds-margin}, (100vw - #{$ds-content}) / 2));
+
+  @include ds-tablet { margin-right: calc(-1 * #{$ds-margin-tablet}); }
+  @include ds-mobile { margin-right: calc(-1 * #{$ds-margin-mobile}); }
+}

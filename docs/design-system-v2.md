@@ -124,10 +124,42 @@ Manrope Medium 500 во всех стилях. Body-стили — letter-spacin
 | `Tabs` | Tab on / Tab off (`63:3169`, `63:3172`) | `items`, `value`, `onChange`, `label`, `panelIdPrefix?`. 44px, pill. ARIA tabs, ← → Home End |
 | `TextField` | Поля / Текстовое поле (`52:407`) | `label`, `error?`, `hint?` + пропсы `<input>`. 56px, радиус 10. Состояния: default, hover, focus (рамка 1.5px + halo 3px) — CSS; «заполнено» — поле со значением; «ошибка» — `error` (красная рамка, иконка, текст) |
 | `Textarea` | (поле формы, 145px) | как `TextField`, `rows` (по умолчанию 4) |
+| `IconButton` | Arrows / Button (`54:3039`) | `direction: 'prev' \| 'next'`, `label`. 48px, Charcoal, шеврон 32 |
+| `ArrowLink` | ссылка-источник с ↗ | `href` (внешняя — новая вкладка), `tone: 'muted' \| 'light'` |
+| `Pill` | плашка цены (`40:975`) | `items` — факты через точку; чёрная, радиус 12, Text large Pink |
+| `Eyebrow` | «RWA · COMMODITIES» | Text small, uppercase, 40% белого |
+| `Meta` | «⚡ Читать 12 минут» | иконка zap + Text normal, 40% |
+| `StepNumber` | номер шага Roadmap (`47:2106`) | 32px, радиус 5, рамка Pink 50% |
+| `Divider` | линия между строками | 1px `--ds-border` |
+
+## Блоки (`@/shared/ds`)
+
+Витрина: `/staging-docs/design-system/blocks` — каждый блок на демо-данных из Figma с подписью фрейма.
+
+| Компонент | Figma | API / заметки |
+|---|---|---|
+| `Section` | обёртка любого блока | `title?` (Heading 3), `align: 'left' \| 'center'`, `sheen?` (белый перелив заголовка), `actions?` (слот справа), `narrow?` (колонка 720), `bleed?` (контент до правого края экрана). Даёт колонку 1200, ритм 180 и отступ 40 под заголовком |
+| `FeatureCards` | Карточка - компактная (`38:978`), - кнопка (`38:1033`), Иллюстрация содержания (`38:1089`) | `variant: 'compact' \| 'action' \| 'illustrated'`, `items: { title, description, illustration?, action? }[]`, `columns?: 2 \| 3 \| 4`. Без `illustration` — плейсхолдер 5% белого, как в макете |
+| `Metrics` | Карточка - крупная цифра (`38:964`) | `items: { value, label }[]`; 4 в ряд, Heading 3 |
+| `Carousel` | Карточка - акцент (`54:2632`), - цитата (`54:2858`) | `title`, `slideWidth` (394 / 450), дети — карточки. Framer Motion: drag/свайп + стрелки, шаг — ширина карточки; `prefers-reduced-motion` без анимации. Карточки выходят за правый край колонки |
+| `AccentCard` | контейнер `54:2646` | `title`, `text`, `source?: { label, href }`. Фон — экспорт градиента из Figma (`assets/accent-card.webp`) |
+| `QuoteCard` | контейнер `54:3074` | `logo?: { src, alt, width, height }`, `title`, `text`, `source?` |
+| `Faq` | FAQ (`41:1069` = `47:2126`) | `items: { question, answer }[]`, `defaultOpen?` (по умолчанию первый), `footer?`. Аккордеон, можно открыть несколько; `aria-expanded` / `region` |
+| `FormBlock` + `FormRow` | Форма (`54:2453`) | обёртка `<form>`: поля внутри, `FormRow` — пара полей в строку; `submitLabel`, `pending?`, `status?`. Только вёрстка — отправку подключает фича (по образцу существующих форм и `/api/contact`) |
+| `Cta` | CTA - левый край (`40:549`), CTA - цена (`40:757`) | `variant: 'left' \| 'price'`, `title`, `description?`, `primary`, `secondary?`, `facts?` (плашка на верхней кромке). Фон — экспорт «Astro Gradient» из Figma (`assets/cta-gradient.webp`) |
+| `Roadmap` | Roadmap (`45:2055`) | `steps: { title, description }[]`; 3 в ряд |
+| `CaseList` | Кейс (`43:1602`) | `items: { href, image, category, title, description, meta?, cta }[]`; на mobile кнопка уходит вниз карточки |
+| `ComparisonTable` | Таблица (`42:1286`), с выделением сегмента (`43:1391`) | `columns`, `rows: { label, values }[]`, `highlight?` (индекс колонки), `caption?`. Семантичная `<table>`; на mobile — горизонтальный скролл |
+
+Картинки фонов подключаются статическим импортом через `next/image` — так они работают и под `basePath` (RU-staging). Демо-картинки витрины лежат рядом с ней, в `src/app/(site-v2)/staging-docs/design-system/demo`.
+
+### Расхождения в макете (уточнить у дизайнера)
+
+- **Радиус поля:** в компоненте «Поля / Текстовое поле» — 10px, в инстансах формы (`54:2453`) — 15px. В коде 10px, по компоненту.
+- **Мобильные версии блоков** (фрейм `79:130`) построчно не сверялись; на mobile блоки перестраиваются в одну колонку по логике сетки, таблица скроллится.
+- **Отступы для планшета** (поля 24, ритм 120/80) и уменьшение заголовков на mobile — интерполированы.
 
 ### Ещё не сделано
 
-- **Элементы:** IconButton (круглые стрелки карусели), Link со стрелкой, Badge/Pill, Eyebrow/Tag, Meta с иконкой, номер-маркер, Divider.
-- **Блоки:** секция-заголовок, карточки (компактная, с кнопкой, иллюстрации, метрики, акцент, цитата), FAQ, форма, CTA (левый край, цена), Roadmap, список кейсов, таблицы. Карусели — на Framer Motion.
-- **Иконки** — отложены (TBD): в Figma собственный набор 965 иконок 24px, способ доставки в код не выбран. Пока в `src/shared/ds/icons` только то, что нужно элементам (`circle-alert.svg`).
+- **Иконки** — отложены (TBD): в Figma собственный набор 965 иконок 24px. В `src/shared/ds/icons` только иконки из макетов блоков (как экспортированы из Figma).
 - **Светлая тема.**

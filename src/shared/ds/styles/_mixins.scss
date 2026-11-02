@@ -99,3 +99,12 @@
   transition-duration: $ds-duration;
   transition-timing-function: $ds-ease;
 }
+
+// Block title with the soft white sheen used on carousel and table headers
+// (Figma: 75% → 100% → 75% white, clipped to text).
+@mixin ds-title-sheen {
+  background: linear-gradient(90deg, rgba($ds-white, 0.75) 0%, $ds-white 50%, rgba($ds-white, 0.75) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

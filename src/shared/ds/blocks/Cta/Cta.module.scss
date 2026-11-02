@@ -1,0 +1,115 @@
+@use '@/shared/ds/styles' as *;
+
+.wrap {
+  position: relative;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+}
+
+// Figma composition of shapes, noise and a hue layer — exported as an image.
+.bg {
+  z-index: -1;
+  object-fit: cover;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  @include ds-h3;
+  color: rgba($ds-white, 0.9);
+}
+
+.description {
+  @include ds-text-md;
+  color: $ds-text-faint;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-space-4;
+}
+
+// ── left ────────────────────────────────────────────────────────────
+.left .card {
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: $ds-space-7;
+  min-height: 224px;
+  padding: $ds-space-7;
+
+  @include ds-tablet {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  @include ds-mobile {
+    padding: $ds-space-5 20px;
+  }
+}
+
+.left .text {
+  max-width: 636px;
+}
+
+.left .description {
+  max-width: 462px;
+}
+
+// ── price ───────────────────────────────────────────────────────────
+.price {
+  padding-top: 22px; // pill overlaps the card's top edge
+}
+
+.price .card {
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-7;
+  padding: 72px $ds-space-7 36px;
+  text-align: center;
+
+  @include ds-mobile {
+    padding: 64px 20px $ds-space-6;
+  }
+}
+
+.price .text {
+  align-items: center;
+  max-width: 636px;
+}
+
+.price .title {
+  max-width: 557px;
+}
+
+.price .description {
+  max-width: 462px;
+}
+
+.price .actions {
+  justify-content: center;
+}
+
+.pill {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+
+  @include ds-mobile {
+    @include ds-text-sm;
+    padding: $ds-space-3 $ds-space-4;
+  }
+}

@@ -1,0 +1,96 @@
+@use '@/shared/ds/styles' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-inner-gap;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+}
+
+.item {
+  background-color: $ds-surface;
+
+  &:first-child {
+    border-top-left-radius: $ds-radius-lg;
+    border-top-right-radius: $ds-radius-lg;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $ds-radius-lg;
+    border-bottom-right-radius: $ds-radius-lg;
+  }
+}
+
+.heading {
+  font: inherit;
+}
+
+.question {
+  @include ds-text-md;
+  @include ds-focus-visible;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-4;
+  width: 100%;
+  padding: 20px 25px;
+  border: none;
+  border-radius: inherit;
+  background: none;
+  color: rgba($ds-white, 0.9);
+  text-align: left;
+  cursor: pointer;
+
+  .open & {
+    padding-bottom: 0;
+  }
+
+  @include ds-mobile {
+    padding: $ds-space-4 20px;
+  }
+}
+
+.chevron {
+  flex-shrink: 0;
+  @include ds-transition(transform);
+
+  .open & {
+    transform: rotate(180deg);
+  }
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+.answer {
+  @include ds-text-sm;
+  max-width: 482px;
+  padding: 10px 25px 20px;
+  color: $ds-text-muted;
+
+  @include ds-mobile {
+    padding: 10px 20px $ds-space-4;
+  }
+}
+
+.footer {
+  @include ds-text-md;
+  color: $ds-text-muted;
+  text-align: center;
+
+  a {
+    color: $ds-text;
+    margin-left: $ds-space-2;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,0 +1,127 @@
+@use '@/shared/ds/styles' as *;
+
+// Figma: Arrows / Button (54:3039) — 48px, Charcoal, chevron 32.
+.iconButton {
+  @include ds-transition(background-color, background-image, opacity);
+  @include ds-focus-visible;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 32px;
+  background-color: $ds-surface-raised;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    @include ds-overlay($ds-overlay-lighten);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.arrowLink {
+  @include ds-text-sm;
+  @include ds-transition(color, opacity);
+  @include ds-focus-visible;
+  display: inline;
+  text-decoration: none;
+
+  span {
+    margin-right: 4px;
+  }
+
+  // Inline so the arrow follows the last word when the label wraps.
+  .arrow {
+    display: inline-block;
+    vertical-align: -4px;
+  }
+}
+
+.muted {
+  color: $ds-text-muted;
+
+  &:hover {
+    color: $ds-text;
+  }
+}
+
+.light {
+  color: $ds-text;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Figma: price pill (40:975) — black, radius 12, Text large pink.
+.pill {
+  @include ds-text-lg;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: $ds-space-4 20px;
+  border-radius: $ds-radius-badge;
+  background-color: $ds-bg;
+  color: $ds-accent;
+  white-space: nowrap;
+}
+
+.pillItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.eyebrow {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+  text-transform: uppercase;
+}
+
+.meta {
+  @include ds-text-md;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: $ds-text-faint;
+  white-space: nowrap;
+
+  img {
+    opacity: 0.4;
+  }
+}
+
+// Figma: Roadmap step (47:2106) — 32px, radius 5, Pink 50% border.
+.step {
+  @include ds-text-lg;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 1px solid rgba($ds-pink, 0.5);
+  border-radius: $ds-radius-step;
+  color: $ds-accent;
+}
+
+.divider {
+  width: 100%;
+  height: 0;
+  border: none;
+  border-top: 1px solid $ds-border;
+}
