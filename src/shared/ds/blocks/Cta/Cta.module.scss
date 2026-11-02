@@ -27,7 +27,8 @@
 
 .title {
   @include ds-h3;
-  color: rgba($ds-white, 0.9);
+  // Solid white: Figma's 90% opacity reads as grey over the pink gradient.
+  color: $ds-text;
 }
 
 .description {

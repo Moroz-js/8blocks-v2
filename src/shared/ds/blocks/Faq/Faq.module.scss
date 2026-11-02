@@ -51,8 +51,10 @@
     padding-bottom: 0;
   }
 
+  // Figma 79:130 «FAQ — мобильный»: Text small, 16px padding.
   @include ds-mobile {
-    padding: $ds-space-4 20px;
+    @include ds-text-sm;
+    padding: $ds-space-4;
   }
 }
 
@@ -76,7 +78,8 @@
   color: $ds-text-muted;
 
   @include ds-mobile {
-    padding: 10px 20px $ds-space-4;
+    max-width: none;
+    padding: 10px $ds-space-4 $ds-space-4;
   }
 }
 
