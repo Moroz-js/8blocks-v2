@@ -4,7 +4,7 @@ import { headers } from 'next/headers'
 import { Suspense } from 'react'
 import '@mantine/core/styles.css'
 import '../globals.scss'
-import { SiteHeader, StandardPageChrome } from '@/widgets/TokenomicsAi/SiteChrome'
+import { RouteDecor, RouteHeader } from '@/widgets/RouteOverrides'
 import { Footer } from '@/widgets/Footer'
 import { ScrollToTop } from '@/shared/ui/ScrollToTop'
 import { siteConfig } from '@/shared/config/site'
@@ -113,7 +113,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         {headCombined ? <HeadMarkupInjector markup={headCombined} /> : null}
       </head>
       <body suppressHydrationWarning>
-        <StandardPageChrome>
+        <RouteDecor>
         <div
           aria-hidden="true"
           style={{
@@ -130,7 +130,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
             WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
           }}
         />
-        </StandardPageChrome>
+        </RouteDecor>
         <ThemeProvider>
           <ThemeController />
           <MantineThemeBridge>
@@ -143,7 +143,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
               <ReplainWidget id={process.env.NEXT_PUBLIC_REPLAIN_ID} />
             )}
             <LenisProvider>
-              <SiteHeader
+              <RouteHeader
                 mediaEnabled={mediaEnabled}
                 blogEnabled={blogNavEnabled}
                 researchEnabled={researchEnabled}
