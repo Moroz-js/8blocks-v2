@@ -31,7 +31,7 @@ export function Footer({
       (link.href !== '/events' || eventsEnabled),
   )
   return (
-    <footer className={styles.footer}>
+    <footer data-chrome="footer" className={styles.footer}>
       {/* ── Bottom section ───────────────────────────────────────── */}
       <div className={styles.bottomSection}>
         <div className={styles.inner}>

@@ -37,7 +37,7 @@ export function StagingBar() {
   const formattedBuildAt = formatBuildDate(buildAt)
 
   return (
-    <aside className={styles.bar} aria-label={lang === 'ru' ? 'Панель стейджинга' : 'Staging toolbar'}>
+    <aside data-chrome="staging-bar" className={styles.bar} aria-label={lang === 'ru' ? 'Панель стейджинга' : 'Staging toolbar'}>
       <div className={styles.inner}>
         <span className={styles.updated}>
           {formattedBuildAt

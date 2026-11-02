@@ -99,6 +99,7 @@ export function Header({
     <>
       {isStaging && <StagingBar />}
       <header
+        data-chrome="header"
         ref={headerRef}
         className={`${styles.header} ${isStaging ? styles.headerStaging : ''} ${overHero ? styles.overHero : ''} ${className}`}
       >
@@ -204,6 +205,7 @@ export function Header({
 
       {/* Mobile overlay menu */}
       <div
+        data-chrome="mobile-menu"
         className={`${styles.mobileMenu} ${isStaging ? styles.mobileMenuStaging : ''} ${isOpen ? styles.mobileMenuOpen : ''}`}
         aria-hidden={!isOpen}
       >
