@@ -49,7 +49,6 @@ $cover-scrim: var(--cover-scrim);
 $text-on-media: var(--text-on-media);
 $muted-strong: var(--muted-strong);
 $glass-highlight: var(--glass-highlight);
-$glass-shadow: var(--glass-shadow);
 $cta-solid-hover-fg: var(--cta-solid-hover-fg);
 
 $benefits-card-bg: var(--benefits-card-bg);
@@ -75,9 +74,7 @@ $bloom-bottom: 0.04;
 
 $accent-purple: $pal-magenta;
 $accent: var(--accent);
-$accent-pink-light: $pal-rose;
 $accent-pink-deep: $pal-magenta;
-$accent-purple-deep: $pal-purple;
 $accent-green: #75fb63;
 $accent-blue: #638efb;
 
@@ -128,12 +125,7 @@ $container-padding-mobile: 16px;
 $bp-mobile: 640px;
 $bp-tablet: 768px;
 $bp-desktop: 1024px;
-$bp-wide: 1280px;
 
-$radius-sm: 0;
-$radius-md: 0;
-$radius-lg: 0;
-$radius-xl: 0;
 
 $text-xs: 12px;
 $text-sm: 14px;

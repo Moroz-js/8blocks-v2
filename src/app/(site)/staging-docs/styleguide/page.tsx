@@ -103,8 +103,6 @@ const BREAKPOINTS = [
   ['mobile', '$bp-mobile', '≤ 640'],
   ['tablet', '$bp-tablet', '≤ 768'],
   ['desktop', '$bp-desktop', '≤ 1024'],
-  ['above-tablet', '$bp-tablet + 1', '≥ 769'],
-  ['above-desktop', '$bp-desktop + 1', '≥ 1025'],
 ] as const
 
 const MISC = [

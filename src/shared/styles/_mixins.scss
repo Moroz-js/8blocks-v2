@@ -19,18 +19,6 @@
   }
 }
 
-@mixin above-tablet {
-  @media (min-width: #{$bp-tablet + 1px}) {
-    @content;
-  }
-}
-
-@mixin above-desktop {
-  @media (min-width: #{$bp-desktop + 1px}) {
-    @content;
-  }
-}
-
 // Typography mixins
 @mixin heading-hero {
   font-family: $font-base;
@@ -102,18 +90,6 @@
 }
 
 // Flex utilities
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 // Frosted card surface
 @mixin card-surface {
   background: $bg-secondary;
