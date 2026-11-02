@@ -18,7 +18,9 @@
   --ds-text: #{$ds-white};
   --ds-text-muted: #{$ds-gray};
   --ds-text-inverse: #{$ds-black};
-  --ds-border: #{rgba($ds-white, 0.08)};
+  --ds-text-faint: #{rgba($ds-white, 0.4)};
+  --ds-border: #{rgba($ds-white, 0.1)};
+  --ds-highlight: #{rgba($ds-white, 0.03)};
   --ds-border-strong: #{$ds-gray};
   --ds-accent: #{$ds-pink};
   --ds-danger: #{$ds-red};
