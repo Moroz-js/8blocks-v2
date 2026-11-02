@@ -87,7 +87,12 @@ const nextConfig: NextConfig = {
       { pathname: "/icons/**" },
       { pathname: "/img/**" },
       ...(process.env.NEXT_PUBLIC_BASE_PATH
-        ? [{ pathname: `${process.env.NEXT_PUBLIC_BASE_PATH}/img/tokenomics-ai/**` }]
+        ? [
+            { pathname: `${process.env.NEXT_PUBLIC_BASE_PATH}/img/tokenomics-ai/**` },
+            // Static image imports (next/image with `import img from './x.webp'`)
+            // get the basePath prefix; without this the optimizer returns 400 on RU.
+            { pathname: `${process.env.NEXT_PUBLIC_BASE_PATH}/_next/static/media/**` },
+          ]
         : []),
       { pathname: "/api/media/file/**" },
     ],
