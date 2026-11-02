@@ -1,5 +1,11 @@
 @use '@/shared/styles/variables' as *;
 
+// Blue glow of the CTA orb — decorative, local to this block.
+$orb-glow: rgb(41, 149, 237);
+$orb-light: #45b3f0;
+$orb-mid: #2485cc;
+$orb-dark: #1a6faa;
+
 .section {
   padding-block: $space-11;
 
@@ -99,10 +105,10 @@
   &:hover .tgIcon {
     transform: scale(1.06) translateY(-2px);
     box-shadow:
-      0 0 0 10px rgba(41, 149, 237, 0.12),
-      0 0 50px rgba(41, 149, 237, 0.50),
-      0 0 100px rgba(41, 149, 237, 0.25),
-      0 20px 40px rgba(0, 0, 0, 0.4);
+      0 0 0 10px rgba($orb-glow, 0.12),
+      0 0 50px rgba($orb-glow, 0.50),
+      0 0 100px rgba($orb-glow, 0.25),
+      0 20px 40px rgba($black, 0.4);
   }
 
   &:hover .tgGlow {
@@ -131,8 +137,8 @@
   border-radius: var(--card-radius);
   background: radial-gradient(
     circle,
-    rgba(41, 149, 237, 0.45) 0%,
-    rgba(41, 149, 237, 0.12) 55%,
+    rgba($orb-glow, 0.45) 0%,
+    rgba($orb-glow, 0.12) 55%,
     transparent 72%
   );
   pointer-events: none;
@@ -148,14 +154,14 @@
   width: 80px;
   height: 80px;
   border-radius: var(--card-radius);
-  background: linear-gradient(145deg, #45b3f0 0%, #2485cc 60%, #1a6faa 100%);
+  background: linear-gradient(145deg, $orb-light 0%, $orb-mid 60%, $orb-dark 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow:
-    0 0 0 4px rgba(41, 149, 237, 0.12),
-    0 0 16px rgba(41, 149, 237, 0.45),
-    0 0 36px rgba(41, 149, 237, 0.15),
+    0 0 0 4px rgba($orb-glow, 0.12),
+    0 0 16px rgba($orb-glow, 0.45),
+    0 0 36px rgba($orb-glow, 0.15),
     inset 0 1px 0 $border-primary;
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   z-index: 1;
@@ -163,10 +169,10 @@
   .tgLink:hover & {
     transform: scale(1.05) translateY(-2px);
     box-shadow:
-      0 0 0 5px rgba(41, 149, 237, 0.16),
-      0 0 22px rgba(41, 149, 237, 0.55),
-      0 0 44px rgba(41, 149, 237, 0.22),
-      inset 0 1px 0 rgba(255, 255, 255, 0.30);
+      0 0 0 5px rgba($orb-glow, 0.16),
+      0 0 22px rgba($orb-glow, 0.55),
+      0 0 44px rgba($orb-glow, 0.22),
+      inset 0 1px 0 rgba($white, 0.30);
   }
 }
 
@@ -177,7 +183,7 @@
   color: $text-tertiary;
   letter-spacing: 0.02em;
   transition: color $transition-fast;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba($white, 0.10);
   padding-bottom: 2px;
   white-space: nowrap;
 }

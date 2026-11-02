@@ -679,7 +679,7 @@
   .moduleCard[data-checked='true'] & {
     background: $accent-pink-deep;
     border-color: $accent-pink-deep;
-    color: #fff;
+    color: $white;
   }
 }
 
@@ -1087,8 +1087,8 @@
   background-repeat: no-repeat;
 
   option {
-    background: #111;
-    color: #fff;
+    background: $ink-soft;
+    color: $white;
   }
 }
 

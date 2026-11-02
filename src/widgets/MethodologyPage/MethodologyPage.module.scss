@@ -4,8 +4,8 @@
   min-height: 100vh;
   color: $text-primary;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    linear-gradient(rgba($white, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($white, 0.018) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
@@ -362,7 +362,7 @@
   width: min(58%, 140px);
   aspect-ratio: 100 / 30;
   background: $text-primary;
-  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.12));
+  filter: drop-shadow(0 0 14px rgba($white, 0.12));
   mask: url('/icons/en-logo.svg') center / contain no-repeat;
   -webkit-mask: url('/icons/en-logo.svg') center / contain no-repeat;
 }

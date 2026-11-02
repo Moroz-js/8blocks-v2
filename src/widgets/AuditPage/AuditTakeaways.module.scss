@@ -19,7 +19,7 @@
 
 .item {
   padding-left: $space-5;
-  border-left: 3px solid #ad0b58;
+  border-left: 3px solid $accent-deep;
 }
 
 .text {
@@ -37,11 +37,11 @@
 }
 
 .plus {
-  color: #3ecf8e;
+  color: $status-positive;
 }
 
 .minus {
-  color: #e5484d;
+  color: $status-negative;
 }
 
 @media print {

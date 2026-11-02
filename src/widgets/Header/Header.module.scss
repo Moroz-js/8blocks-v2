@@ -27,12 +27,12 @@
   .logo,
   .navLink,
   .burger {
-    color: #fff;
+    color: $white;
   }
 
   .navLink:hover,
   .burger:hover {
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba($white, 0.72);
   }
 }
 
@@ -175,7 +175,7 @@
   border: 1px solid $border-secondary;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 16px 40px rgba($black, 0.24);
 }
 
 .dropdownSection,

@@ -81,6 +81,25 @@ $accent-purple-deep: $pal-purple;
 $accent-green: #75fb63;
 $accent-blue: #638efb;
 
+// Fixed palette — theme-independent. For blocks that stay dark in both themes,
+// status marks and shadows. Prefer semantic tokens (var(--*)) for anything that
+// should follow the theme.
+$white: #fff;
+$black: #000;
+$on-dark: #f4f1f8; // text on always-dark blocks (audit hero)
+$ink: #08070a; // always-dark panel (audit rating box)
+$ink-soft: #111; // native <option> background in dark selects
+$ink-card: #141414; // research card surface
+$accent-deep: #ad0b58; // audit accent: ratings, takeaways, audit rich text
+
+$status-positive: #3ecf8e;
+$status-positive-solid: #1f9d63;
+$status-negative: #e5484d;
+$status-negative-solid: #b70003;
+$status-warning: #ffb74d;
+$status-warning-deep: #d69e35;
+$status-amber: #f59e0b;
+
 $gradient-accent: var(--gradient-accent);
 $gradient-accent-h: linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
 $gradient-card-border: linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);

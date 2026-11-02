@@ -1,8 +1,8 @@
 @use '@/shared/styles/variables' as *;
 
 .card {
-  --research-card-bg: #141414;
-  --research-card-fg: #ffffff;
+  --research-card-bg: #{$ink-card};
+  --research-card-fg: #{$white};
 
   display: flex;
   height: 100%;

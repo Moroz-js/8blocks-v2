@@ -1,5 +1,9 @@
 @use '@/shared/styles/variables' as *;
 
+// Dark tails of callout gradients (accent and danger callouts).
+$callout-tail: rgb(12, 10, 18);
+$callout-danger-tail: rgb(18, 10, 12);
+
 .richText {
   font-family: $font-base;
   font-size: $text-base;
@@ -228,7 +232,7 @@
       135deg,
       rgba($pal-purple, 0.28) 0%,
       rgba($pal-magenta, 0.14) 42%,
-      rgba(12, 10, 18, 0.72) 100%
+      rgba($callout-tail, 0.72) 100%
     );
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -257,19 +261,19 @@
 
   // Critical — red-tinted, stronger emphasis
   .callout_critical {
-    border-left-color: #e5484d;
+    border-left-color: $status-negative;
     background: linear-gradient(
       135deg,
-      rgba(229, 72, 77, 0.26) 0%,
-      rgba(229, 72, 77, 0.12) 42%,
-      rgba(18, 10, 12, 0.72) 100%
+      rgba($status-negative, 0.26) 0%,
+      rgba($status-negative, 0.12) 42%,
+      rgba($callout-danger-tail, 0.72) 100%
     );
 
     &::before {
       background: radial-gradient(
         ellipse 90% 80% at 12% 0%,
-        rgba(229, 72, 77, 0.34) 0%,
-        rgba(229, 72, 77, 0.1) 45%,
+        rgba($status-negative, 0.34) 0%,
+        rgba($status-negative, 0.1) 45%,
         transparent 72%
       );
     }
@@ -436,7 +440,7 @@
 
     :global(.katex) {
       font-size: 1.2em;
-      color: #ad0b58;
+      color: $accent-deep;
     }
 
     :global(.katex-display) {
@@ -604,16 +608,16 @@
     font-size: 12px;
     font-weight: 700;
     border-radius: 50%;
-    color: #fff;
+    color: $white;
   }
 
   .mark_check {
-    background: #1f9d63;
+    background: $status-positive-solid;
   }
 
   // Negative (minus) — solid red circle with white glyph
   .mark_cross {
-    background: #b70003;
+    background: $status-negative-solid;
   }
 
   // Risk — amber warning triangle (no circle background)
@@ -701,7 +705,7 @@
   }
 
   .statRowValue {
-    color: #ad0b58;
+    color: $accent-deep;
     font-weight: 600;
     white-space: nowrap;
   }
@@ -759,7 +763,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #ad0b58;
+    color: $accent-deep;
   }
 
   .infoBody {
@@ -804,8 +808,8 @@
     font-family: $font-mono;
     font-size: $text-md;
     font-weight: 600;
-    color: #fff;
-    background: #b70003;
+    color: $white;
+    background: $status-negative-solid;
     border: none;
   }
 

@@ -4,8 +4,8 @@
   min-height: 100vh;
   color: $text-primary;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+    linear-gradient(rgba($white, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($white, 0.018) 1px, transparent 1px);
   background-size: 48px 48px;
 }
 
@@ -142,8 +142,8 @@
 
 .bannerWarning {
   color: $text-primary;
-  border-color: rgba(245, 158, 11, 0.4);
-  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba($status-amber, 0.4);
+  background: rgba($status-amber, 0.08);
 }
 
 .bannerError {
@@ -420,7 +420,7 @@
 }
 
 .medium {
-  color: #d69e35;
+  color: $status-warning-deep;
 }
 
 .bad {
@@ -580,7 +580,7 @@
   display: inline-block;
   width: 16px;
   height: 3px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba($white, 0.3);
 }
 
 .scoreHero {

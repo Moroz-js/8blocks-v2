@@ -160,8 +160,8 @@
   flex-direction: column;
   justify-content: flex-start;
   padding: $space-6 $space-7 $space-6 $space-6;
-  background: #08070a;
-  color: #fff;
+  background: $ink;
+  color: $white;
 }
 
 .ratingBoxLabel {
@@ -170,7 +170,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba($white, 0.6);
 }
 
 .scoreLine {
@@ -184,13 +184,13 @@
   font-size: 56px;
   font-weight: 700;
   line-height: 1;
-  color: #ad0b58;
+  color: $accent-deep;
 }
 
 .scoreMax {
   font-size: $text-xl;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba($white, 0.5);
 }
 
 .ratingLetter {
@@ -199,7 +199,7 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #fff;
+  color: $white;
 }
 
 // Expert pinned to the bottom of the black box
@@ -209,7 +209,7 @@
   gap: $space-3;
   margin-top: auto;
   padding-top: $space-6;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid rgba($white, 0.14);
 
   @media (max-width: #{$bp-tablet}) {
     margin-top: $space-6;
@@ -221,7 +221,7 @@
   width: 40px;
   height: 40px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba($white, 0.1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -236,7 +236,7 @@
 .expertFallback {
   font-size: $text-sm;
   font-weight: 600;
-  color: #fff;
+  color: $white;
 }
 
 .expertInfo {
@@ -247,13 +247,13 @@
 
 .expertLabel {
   font-size: $text-xs;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba($white, 0.55);
 }
 
 .expertName {
   font-size: $text-md;
   font-weight: 600;
-  color: #fff;
+  color: $white;
 }
 
 .expertNameLink {
@@ -270,7 +270,7 @@
 
 .expertLinkedInIcon {
   flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba($white, 0.55);
   transition: color 0.15s ease;
 
   .expertNameLink:hover & {
@@ -280,7 +280,7 @@
 
 .expertRole {
   font-size: $text-xs;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba($white, 0.65);
 }
 
 // ── Detail table (flush under the summary panel) ────────────────────
@@ -321,7 +321,7 @@
   }
 
   .scoreCell {
-    color: #ad0b58;
+    color: $accent-deep;
     font-weight: 600;
   }
 
@@ -338,13 +338,13 @@
   tfoot td {
     font-weight: 700;
     font-size: $text-md;
-    color: #fff;
-    background: #08070a;
+    color: $white;
+    background: $ink;
     border-bottom: none;
   }
 
   tfoot .totalContrib {
-    color: #ad0b58;
+    color: $accent-deep;
   }
 }
 
