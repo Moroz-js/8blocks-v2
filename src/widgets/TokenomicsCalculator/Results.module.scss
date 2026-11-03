@@ -1,0 +1,316 @@
+@use '@/shared/ds/styles' as *;
+@use '@/widgets/TokenomicsCalculator/mixins' as *;
+
+// Results step. Structure from the prototype's result page (readiness,
+// radar, key metrics, inputs, unlock schedule, benchmarks, growth points);
+// surfaces, type and colours from design system v2.
+
+@include tones;
+
+.results {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+}
+
+.row2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $ds-gutter;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5 $ds-space-4; }
+}
+
+.cardHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-4;
+}
+
+.cardTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.eyebrow {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.body {
+  @include ds-text-md;
+  color: $ds-text-muted;
+}
+
+.note {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.link {
+  @include ds-text-sm;
+  @include ds-focus-visible;
+  color: $ds-text;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Readiness ─────────────────────────────────────────────────────────
+.readiness { justify-content: center; }
+
+.tier {
+  @include ds-h3;
+  @include ds-mobile { @include ds-h4; }
+}
+
+.score {
+  @include ds-text-md;
+  color: $ds-text-muted;
+
+  strong { color: $ds-text; font-weight: inherit; }
+}
+
+.cap {
+  @include ds-text-sm;
+  padding: $ds-space-3 $ds-space-4;
+  border: 1px solid $ds-warning;
+  border-radius: $ds-radius-field;
+  color: $ds-text;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-gutter;
+  margin-top: $ds-space-2;
+}
+
+.emailRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-gutter;
+
+  .input { flex: 1 1 240px; width: auto; }
+}
+
+.input {
+  @include calc-input;
+}
+
+// ── Radar ─────────────────────────────────────────────────────────────
+.radarCard {
+  align-items: center;
+  justify-content: center;
+  padding-inline: 110px;
+
+  @include ds-mobile { padding-inline: 70px; }
+}
+
+.radar {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+}
+
+.radarLabel {
+  @include ds-text-sm;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 110px;
+  color: $ds-text-muted;
+  text-align: center;
+  transform: translate(-50%, -50%);
+
+  strong {
+    @include ds-text-md;
+    color: $ds-text;
+    font-weight: inherit;
+  }
+
+  @include ds-mobile { width: 76px; }
+}
+
+// ── Rows (key metrics, inputs) ────────────────────────────────────────
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.rowItem {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $ds-space-6;
+  padding-block: 14px;
+
+  & + & { border-top: 1px solid $ds-border; }
+
+  dt {
+    @include ds-text-sm;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $ds-text-muted;
+  }
+
+  dd {
+    @include ds-text-md;
+    max-width: 62%;
+    color: $ds-text;
+    text-align: right;
+  }
+}
+
+.edit {
+  @include ds-text-sm;
+  @include ds-focus-visible;
+  @include ds-transition(border-color, background-image);
+  padding: $ds-space-2 $ds-space-4;
+  border: 1px solid $ds-border-strong;
+  border-radius: $ds-radius-pill;
+  background: transparent;
+  color: $ds-text;
+  cursor: pointer;
+
+  &:hover { @include ds-overlay($ds-overlay-lighten); border-color: $ds-text; }
+}
+
+// ── Dimensions ────────────────────────────────────────────────────────
+.dimensions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $ds-space-6 $ds-space-7;
+  list-style: none;
+
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.dimension {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+}
+
+.dimensionHead {
+  @include ds-text-md;
+  display: flex;
+  justify-content: space-between;
+  gap: $ds-space-4;
+  color: $ds-text;
+}
+
+.bar { @include progress-bar; }
+
+.barFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+// ── Benchmarks and growth points ──────────────────────────────────────
+.market,
+.fixes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: $ds-gutter;
+  list-style: none;
+}
+
+.marketItem,
+.fix {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+  padding: 20px;
+  border-radius: $ds-radius-field;
+  background-color: $ds-bg;
+}
+
+.marketValue {
+  @include ds-h5;
+  color: $ds-text;
+  font-weight: inherit;
+}
+
+.fixTitle {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+// ── Next step ─────────────────────────────────────────────────────────
+.ladder {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  margin-top: $ds-space-7;
+}
+
+.ladderTitle {
+  @include ds-h4;
+  max-width: 760px;
+  color: $ds-text;
+}
+
+.offers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-gutter;
+  margin-top: $ds-space-4;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.offer {
+  align-items: flex-start;
+
+  > :last-child { margin-top: auto; }
+}
+
+.offerAccent {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  .body,
+  .eyebrow { color: $ds-text-faint; }
+}
+
+.offerBg {
+  z-index: -1;
+  object-fit: cover;
+}
+
+.offerTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+  width: 100%;
+}

@@ -1,0 +1,275 @@
+@use '@/shared/ds/styles' as *;
+
+// All values are from Figma «Website», frame 3608:10888 (desktop 1280).
+// The hero is one screen tall and slides under the translucent site header,
+// as in Figma; its content keeps the Figma distances from the header bottom
+// (frame 3608:10889 starts at y −11 under a 92px header, so frame y − 103).
+// Mobile values are not in the design — layout only collapses.
+
+// Site header height (src/widgets/Header: 64px + 1px border, 56 + 1 on mobile).
+$header: 65px;
+$header-mobile: 57px;
+
+// ── Hero ──────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 100vh;
+  height: 100svh;
+  min-height: 640px;
+  margin-top: -$header;
+  background-color: $ds-bg;
+
+  @include ds-mobile {
+    margin-top: -$header-mobile;
+  }
+}
+
+// Figma 3608:10890 / 3608:10891 — two blurred radial glows, 30% and 50%.
+.glowWide,
+.glowNarrow {
+  position: absolute;
+  top: $header - 11px;
+  // Figma x = −171 in a 1280 frame; anchored to the centre like the art so
+  // the glow stays on the hand at any width.
+  left: calc(50% - 811px);
+  z-index: -1;
+  width: 1626px;
+  height: 689px;
+  border-radius: 0 0 28.444px 28.444px;
+  filter: blur(37px);
+  pointer-events: none;
+  // Own layer: the blur is rasterised once, not on every canvas frame above it.
+  will-change: transform;
+
+  @include ds-mobile {
+    left: calc(18% - 811px); // follows the art, shifted left on mobile
+  }
+}
+
+.glowWide {
+  opacity: 0.3;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1626 689' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-97 57.85 -10.14 -17.003 1053 204.5)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");
+}
+
+.glowNarrow {
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1626 689' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-97 57.85 -2.9524 -4.9505 1053 204.5)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");
+}
+
+// Figma 3608:10892 — 1519 × 816, centred at (50% + 1.5, 50% − 15.5), screen.
+.art {
+  position: absolute;
+  top: $header + 272px;
+  left: calc(50% + 1.5px);
+  width: 1519px;
+  height: 816px;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+
+  @include ds-mobile {
+    top: auto;
+    bottom: -120px;
+    left: 18%;
+    width: 1100px;
+    height: 600px;
+    transform: translateX(-50%);
+  }
+}
+
+.artCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// Figma 3608:10895 — 1280 × 58 fade at the bottom edge.
+.fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 58px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.heroInner {
+  @include ds-container;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  min-height: inherit;
+  padding-top: $header + 57px;
+  padding-bottom: 70px;
+  padding-left: calc(#{$ds-margin} + 2px); // Figma x = 42
+
+  @include ds-tablet { padding-left: $ds-margin-tablet; }
+
+  @include ds-mobile {
+    padding-top: $header-mobile + 57px;
+    padding-left: $ds-margin-mobile;
+    padding-bottom: $ds-space-7;
+  }
+}
+
+// Figma 3608:10893 — Heading 3, 468 wide, 90% opacity; first line Colors/Gray.
+.heroTitle {
+  @include ds-h3;
+  max-width: 468px;
+  color: $ds-text;
+  opacity: 0.9;
+
+  span {
+    display: block;
+  }
+
+  @include ds-mobile {
+    @include ds-h4;
+  }
+}
+
+.heroEyebrow {
+  color: $ds-text-muted;
+}
+
+// ── Calculator (Figma 3608:10896) ─────────────────────────────────────
+.toolSection {
+  padding-top: $ds-block-gap;
+  scroll-margin-top: 100px;
+
+  @include ds-tablet { padding-top: $ds-block-gap-tablet; }
+  @include ds-mobile { padding-top: $ds-block-gap-mobile; }
+}
+
+// ── Steps (Figma 3608:10897 + 3608:10898) ───────────────────────────────
+.steps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: $ds-gutter;
+
+  @include ds-tablet {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $ds-inner-gap;
+  }
+}
+
+// Heading 4, 314 wide.
+.stepsTitle {
+  @include ds-h4;
+  max-width: 314px;
+  color: $ds-text;
+}
+
+// Card_number 797 × 445, radius 10, padding 30; dividers at 140 and 283.
+.stepsCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  list-style: none;
+
+  @include ds-mobile {
+    padding: 0 20px;
+  }
+}
+
+.stepsBg {
+  z-index: -1;
+  object-fit: cover;
+}
+
+// Title → points 10, points → divider 35, divider → title 35.
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+  padding-block: 35px;
+
+  &:first-child { padding-top: 30px; }
+  &:last-child { padding-bottom: 30px; }
+
+  & + & {
+    border-top: 1px solid $ds-border; // Vector 6758: white at 10%
+  }
+}
+
+// Text large, white 90%.
+.stepTitle {
+  @include ds-text-lg;
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+// Text small, white 40%, bullets indented 21.
+.stepPoints {
+  @include ds-text-sm;
+  padding-left: 21px;
+  list-style: disc;
+  color: $ds-text-faint;
+}
+
+// ── Features (Figma 3608:11074 + 3608:11075) ────────────────────────────
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-inner-gap;
+
+  @include ds-mobile { gap: $ds-inner-gap-mobile; }
+}
+
+// Heading 4, 444 wide.
+.featuresTitle {
+  @include ds-h4;
+  max-width: 444px;
+  color: $ds-text;
+}
+
+.featureRows {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+
+  // Figma cards here have no illustration — drop the 5% art placeholder.
+  li > [aria-hidden='true']:empty {
+    display: none;
+  }
+}
+
+// Second row in Figma uses 25 padding instead of 30.
+.featureRowTight > li {
+  padding: 25px;
+}
+
+// ── FAQ (Figma 3608:11096) ──────────────────────────────────────────────
+.faq {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-inner-gap;
+
+  > :last-child {
+    align-self: stretch;
+  }
+
+  @include ds-mobile { gap: $ds-inner-gap-mobile; }
+}
+
+// Heading 3, 380 wide, centred.
+.faqTitle {
+  @include ds-h3;
+  max-width: 380px;
+  color: $ds-text;
+  text-align: center;
+}

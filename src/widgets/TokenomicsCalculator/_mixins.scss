@@ -1,0 +1,44 @@
+@use '@/shared/ds/styles' as *;
+
+// Field on a panel: black fill, 10% border, as in the Figma calculator preview
+// (inputs are darker than the Dark panel they sit on).
+@mixin calc-input {
+  @include ds-text-md;
+  @include ds-transition(border-color, box-shadow);
+  width: 100%;
+  min-height: 56px;
+  padding-inline: $ds-space-4;
+  border: 1px solid $ds-border;
+  border-radius: $ds-radius-field;
+  background-color: $ds-bg;
+  color: $ds-text;
+  outline: none;
+
+  &::placeholder {
+    color: $ds-text-faint;
+    opacity: 1;
+  }
+
+  &:hover {
+    border-color: $ds-border-strong;
+  }
+
+  &:focus-visible {
+    border-color: $ds-focus;
+    box-shadow: 0 0 0 3px $ds-focus-ring;
+  }
+}
+
+@mixin tones {
+  .good { color: $ds-success; }
+  .medium { color: $ds-warning; }
+  .bad { color: $ds-danger; }
+}
+
+@mixin progress-bar {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: $ds-radius-pill;
+  background-color: rgba($ds-white, 0.12);
+}

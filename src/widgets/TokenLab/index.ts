@@ -1,1 +1,0 @@
-export { TokenLabPage } from './TokenLabPage'

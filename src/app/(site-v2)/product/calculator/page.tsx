@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { tokenLabCalculator as content } from '@/shared/content/tokenLabCalculator'
-import { TokenLabPage } from '@/widgets/TokenLab'
-import { FaqAccordion } from '@/widgets/FaqAccordion'
+import { CalculatorV2Page } from '@/widgets/TokenomicsCalculator/CalculatorV2Page'
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
@@ -33,32 +32,8 @@ export async function generateMetadata({
   })
 }
 
+// Design system v2 (Figma «Website», 3608:10888). The calculator logic is
+// wired in later; until then the tool block is the design's picture.
 export default function TokenLabRoute() {
-  const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: content.faq.items.map((item) => ({
-      '@type': 'Question',
-      name: item.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
-  }
-
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <TokenLabPage />
-      <FaqAccordion
-        headline={content.faq.title}
-        items={content.faq.items}
-        headingOrder={3}
-      />
-    </>
-  )
+  return <CalculatorV2Page />
 }

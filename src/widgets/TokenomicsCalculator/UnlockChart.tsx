@@ -12,13 +12,15 @@ import {
 import { detectSpikes } from '@/shared/lib/platform/tokenlab/spikes'
 import { fmtShort } from '@/shared/lib/platform/tokenlab/format'
 import { t } from '@/shared/i18n'
-import styles from './TokenLab.module.scss'
+import styles from './Calculator.module.scss'
 
 interface Props {
   allocations: AllocationBucket[]
   vestings: VestingConfig[]
   totalSupply: number
   height?: number
+  /** SVG font size; the chart is scaled with its container, so narrow panels need a larger value. */
+  labelSize?: number
 }
 
 const copy = t({
@@ -52,26 +54,15 @@ const RIGHT = 44
 const TOP = 12
 const BOTTOM = 24
 
-export function UnlockChart({
-  allocations,
-  vestings,
-  totalSupply,
-  height = 240,
-}: Props) {
+/** Monthly unlock bars over the circulating-supply curve. Engine data, DS colours. */
+export function UnlockChart({ allocations, vestings, totalSupply, height = 240, labelSize = 8 }: Props) {
   const { monthly, circulating, spikes } = useMemo(() => {
-    const nextMonthly = calcTotalMonthlyUnlocks(
-      allocations,
-      vestings,
-      totalSupply,
-    )
+    const nextMonthly = calcTotalMonthlyUnlocks(allocations, vestings, totalSupply)
+    const nextCirculating = calcCumulativeCirculating(nextMonthly)
     return {
       monthly: nextMonthly,
-      circulating: calcCumulativeCirculating(nextMonthly),
-      spikes: detectSpikes(
-        nextMonthly,
-        calcCumulativeCirculating(nextMonthly),
-        totalSupply,
-      ),
+      circulating: nextCirculating,
+      spikes: detectSpikes(nextMonthly, nextCirculating, totalSupply),
     }
   }, [allocations, vestings, totalSupply])
   const wrapRef = useRef<HTMLDivElement>(null)
@@ -80,30 +71,18 @@ export function UnlockChart({
   const plotWidth = WIDTH - LEFT - RIGHT
   const plotHeight = height - TOP - BOTTOM
   const spikeMonths = new Set(spikes.map((item) => item.month))
-  const maxMonthlyPercent = Math.max(
-    ...monthly.map((amount) => (amount / totalSupply) * 100),
-    5,
-  )
+  const maxMonthlyPercent = Math.max(...monthly.map((amount) => (amount / totalSupply) * 100), 5)
   const barWidth = Math.max((plotWidth / count) * 0.55, 1.5)
-  const xFor = (month: number) =>
-    LEFT + (month / Math.max(count - 1, 1)) * plotWidth
+  const xFor = (month: number) => LEFT + (month / Math.max(count - 1, 1)) * plotWidth
   const yBar = (tokens: number) =>
-    TOP +
-    plotHeight -
-    ((tokens / totalSupply / maxMonthlyPercent) * 100) * plotHeight
-  const yCirculating = (tokens: number) =>
-    TOP + plotHeight - (tokens / totalSupply) * plotHeight
+    TOP + plotHeight - (tokens / totalSupply / maxMonthlyPercent) * 100 * plotHeight
+  const yCirculating = (tokens: number) => TOP + plotHeight - (tokens / totalSupply) * plotHeight
   const line = circulating
-    .map(
-      (amount, index) =>
-        `${index === 0 ? 'M' : 'L'} ${xFor(index).toFixed(2)} ${yCirculating(amount).toFixed(2)}`,
-    )
+    .map((amount, index) => `${index === 0 ? 'M' : 'L'} ${xFor(index).toFixed(2)} ${yCirculating(amount).toFixed(2)}`)
     .join(' ')
   const area = `${line} L ${xFor(count - 1).toFixed(2)} ${TOP + plotHeight} L ${LEFT} ${TOP + plotHeight} Z`
   const ticks: number[] = []
-  for (let month = 0; month < count; month += count > 40 ? 12 : 6) {
-    ticks.push(month)
-  }
+  for (let month = 0; month < count; month += count > 40 ? 12 : 6) ticks.push(month)
 
   function handleMove(event: React.MouseEvent) {
     const rect = wrapRef.current?.getBoundingClientRect()
@@ -128,58 +107,27 @@ export function UnlockChart({
 
   return (
     <div>
-      <div
-        ref={wrapRef}
-        className={styles.chartWrap}
-        onMouseMove={handleMove}
-        onMouseLeave={() => setHover(null)}
-      >
-        <svg
-          viewBox={`0 0 ${WIDTH} ${height}`}
-          className={styles.chartSvg}
-          role="img"
-          aria-label={copy.aria}
-        >
+      <div ref={wrapRef} className={styles.chartWrap} onMouseMove={handleMove} onMouseLeave={() => setHover(null)}>
+        <svg viewBox={`0 0 ${WIDTH} ${height}`} className={styles.chartSvg} role="img" aria-label={copy.aria}>
           <defs>
-            <linearGradient id="tokenlab-circ-fill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="rgba(194,78,136,0.18)" />
-              <stop offset="100%" stopColor="rgba(194,78,136,0)" />
-            </linearGradient>
-            <linearGradient id="tokenlab-circ-line" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#8E4ABD" />
-              <stop offset="100%" stopColor="#C24E88" />
+            <linearGradient id="calc-circ-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#E52D9A" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#E52D9A" stopOpacity="0" />
             </linearGradient>
           </defs>
           {[25, 50, 75, 100].map((percent) => {
             const y = TOP + plotHeight - (percent / 100) * plotHeight
             return (
               <g key={percent}>
-                <line
-                  x1={LEFT}
-                  x2={WIDTH - RIGHT}
-                  y1={y}
-                  y2={y}
-                  stroke="var(--border-subtle)"
-                  strokeDasharray="2 4"
-                />
-                <text
-                  x={WIDTH - RIGHT + 8}
-                  y={y + 3}
-                  fontSize={9}
-                  fill="var(--text-tertiary)"
-                >
+                <line x1={LEFT} x2={WIDTH - RIGHT} y1={y} y2={y} stroke="var(--ds-border)" strokeDasharray="2 4" />
+                <text x={WIDTH - RIGHT + 8} y={y + 3} fontSize={labelSize} fill="var(--ds-text-muted)">
                   {percent}%
                 </text>
               </g>
             )
           })}
-          <path d={area} fill="url(#tokenlab-circ-fill)" />
-          <path
-            d={line}
-            fill="none"
-            stroke="url(#tokenlab-circ-line)"
-            strokeWidth={1.6}
-          />
+          <path d={area} fill="url(#calc-circ-fill)" />
+          <path d={line} fill="none" stroke="#E52D9A" strokeWidth={1.6} />
           {monthly.map((tokens, month) => {
             if (tokens <= 0) return null
             const spike = spikeMonths.has(month)
@@ -191,15 +139,7 @@ export function UnlockChart({
                 y={yBar(tokens)}
                 width={barWidth}
                 height={TOP + plotHeight - yBar(tokens)}
-                fill={
-                  spike
-                    ? active
-                      ? '#f38ca5'
-                      : 'var(--error-fg)'
-                    : active
-                      ? 'var(--text-primary)'
-                      : 'rgba(210, 200, 207, 0.35)'
-                }
+                fill={spike ? 'var(--ds-danger)' : active ? 'var(--ds-text)' : 'rgba(255,255,255,0.35)'}
               />
             )
           })}
@@ -209,64 +149,43 @@ export function UnlockChart({
               x2={xFor(hover)}
               y1={TOP}
               y2={TOP + plotHeight}
-              stroke="var(--text-tertiary)"
+              stroke="var(--ds-text-muted)"
               strokeDasharray="3 3"
             />
           )}
           {ticks.map((month) => (
-            <text
-              key={month}
-              x={xFor(month)}
-              y={height - 8}
-              fontSize={9}
-              textAnchor="middle"
-              fill="var(--text-tertiary)"
-            >
+            <text key={month} x={xFor(month)} y={height - 8} fontSize={labelSize} textAnchor="middle" fill="var(--ds-text-muted)">
               M{month}
             </text>
           ))}
         </svg>
         {tooltip && (
           <div
-            className={styles.tooltip}
-            style={{
-              left: `${tooltip.left}%`,
-              transform:
-                tooltip.left > 60 ? 'translateX(-104%)' : 'translateX(6%)',
-            }}
+            className={styles.chartTooltip}
+            style={{ left: `${tooltip.left}%`, transform: tooltip.left > 60 ? 'translateX(-104%)' : 'translateX(6%)' }}
           >
             <strong>
               {copy.month} {tooltip.month}
               {tooltip.spike ? ` · ${copy.spike}` : ''}
             </strong>
-            <div>
-              {copy.unlocks}: {fmtShort(tooltip.unlocks)} ·{' '}
-              {tooltip.unlockPercent.toFixed(2)}% {copy.supply}
-            </div>
-            <div>
-              {copy.circulating}: {fmtShort(tooltip.circulating)} ·{' '}
-              {tooltip.circulatingPercent.toFixed(1)}%
-            </div>
+            <span>
+              {copy.unlocks}: {fmtShort(tooltip.unlocks)} · {tooltip.unlockPercent.toFixed(2)}% {copy.supply}
+            </span>
+            <span>
+              {copy.circulating}: {fmtShort(tooltip.circulating)} · {tooltip.circulatingPercent.toFixed(1)}%
+            </span>
           </div>
         )}
       </div>
       <div className={styles.legend}>
         <span className={styles.legendItem}>
-          <i className={styles.legendSwatch} /> {copy.monthly}
+          <i className={styles.legendSwatch} style={{ background: 'rgba(255,255,255,0.35)' }} /> {copy.monthly}
         </span>
         <span className={styles.legendItem}>
-          <i
-            className={styles.legendSwatch}
-            style={{ background: 'var(--error-fg)' }}
-          />{' '}
-          {copy.spikeMonth}
+          <i className={styles.legendSwatch} style={{ background: 'var(--ds-danger)' }} /> {copy.spikeMonth}
         </span>
         <span className={styles.legendItem}>
-          <i
-            className={styles.legendSwatch}
-            style={{ background: 'var(--gradient-accent)' }}
-          />{' '}
-          {copy.circulation}
+          <i className={styles.legendSwatch} style={{ background: '#E52D9A' }} /> {copy.circulation}
         </span>
       </div>
     </div>
