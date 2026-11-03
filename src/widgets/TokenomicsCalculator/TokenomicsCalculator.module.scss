@@ -58,13 +58,13 @@ $header-mobile: 57px;
   background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1626 689' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)' opacity='1'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-97 57.85 -2.9524 -4.9505 1053 204.5)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");
 }
 
-// Figma 3608:10892 — 1519 × 816, centred at (50% + 1.5, 50% − 15.5), screen.
+// Keep the supplied 1280 × 800 animation's proportions in the existing hero.
 .art {
   position: absolute;
   top: $header + 272px;
   left: calc(50% + 1.5px);
   width: 1519px;
-  height: 816px;
+  aspect-ratio: 8 / 5;
   transform: translate(-50%, -50%);
   mix-blend-mode: screen;
   pointer-events: none;
@@ -73,9 +73,8 @@ $header-mobile: 57px;
     top: 52%;
     left: 50%;
     width: 900px;
-    height: 490px;
-    // The hand is at 68% of the source image's width.
-    transform: translate(-68%, -50%);
+    // The reference coin centre is at 69.5% of the scene's width.
+    transform: translate(-69.5%, -50%);
   }
 }
 
@@ -83,6 +82,9 @@ $header-mobile: 57px;
   display: block;
   width: 100%;
   height: 100%;
+  // Blend the rectangular digit field into the hero without dimming the hand.
+  -webkit-mask-image: linear-gradient(to bottom, transparent, $ds-black 22%);
+  mask-image: linear-gradient(to bottom, transparent, $ds-black 22%);
 }
 
 // Figma 3608:10895 — 1280 × 58 fade at the bottom edge.

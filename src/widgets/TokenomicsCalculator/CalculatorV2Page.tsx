@@ -9,7 +9,7 @@ import stepsGradient from './assets/steps-gradient.webp'
 import styles from './TokenomicsCalculator.module.scss'
 
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/$/, '')
-const HAND_ART = `${basePath}/img/calculator/hand-binary.webp`
+const HAND_ART = `${basePath}/img/calculator/hand-reference.png`
 const TOOL_ID = 'calculator'
 
 /** Tokenomics calculator page on design system v2 (Figma «Website», 3608:10888). */
