@@ -18,6 +18,9 @@
 - Калькулятор v2 `/product/calculator` (2026-11-03): typecheck и eslint по новым файлам проходят; Playwright 1280/375 — рендер, анимация руки, без горизонтального скролла, консоль без ошибок.
 - Калькулятор v2 (2026-11-03, перед деплоем): подключён живой `Calculator`, Playwright на 1280 — переходы Basics → Allocation → Vesting → Results, результаты и графики отображаются, горизонтального скролла нет. Виджет перенесён из `TokenLab` в `TokenomicsCalculator`.
 - GitHub: ветка `staging` существует и синхронизирована с origin перед коммитом; предыдущий staging-деплой через reusable `deploy-site.yml` завершился успешно (run `41447349312`, 2026-11-02).
+- Staging-деплой всех локальных изменений (2026-11-03): код `f3c8894`, [GitHub Actions run 41629878845](https://github.com/Moroz-js/8blocks-v2/actions/runs/41629878845) — success; `deploy-staging-en` и `deploy-staging-ru` завершены, production jobs пропущены. Результаты проверки записаны отдельным docs-коммитом после выкладки.
+- Проверка выложенного сайта через Playwright MCP: главные EN/RU и `/product/calculator`, `/ru/product/calculator` возвращают 200; `lang=en/ru`, заголовок `X-Robots-Tag: noindex…` сохранён. Четыре шага калькулятора и результаты (53/100 на исходной модели) работают в обеих локалях; на 1280/375 горизонтального скролла нет, JS-исключений нет. Ресурс руки доступен по EN- и RU-путям (200), битых изображений на странице калькулятора не найдено. FAQ раскрывается и сворачивается.
+- Figma MCP (2026-11-03): получены снимки дизайн-системы `gmaUW6LoKd0jLh4MMuHjq4`, секция `60:3137` и мобильный FAQ `79:1270`; общий FAQ страницы визуально сопоставлен с макетом. Снимки Figma и стенда — в игнорируемой `.playwright-mcp/`. Полная сверка страницы с фреймом «Website» `3608:10888` не выполнялась: ключ этого файла в документации не указан.
 
 ## Заявлено, не проверено
 
@@ -28,6 +31,7 @@
 
 ## Открытые риски
 
+- На staging при проверке 2026-11-03 CSP блокирует часть сторонней аналитики (Ahrefs, Clarity, PostHog assets, Google Ads); на главных EN/RU оптимизатор изображения `hes-article-cover.webp` возвращает 400. Обнаружено при проверке деплоя, эти участки кода в данной сессии не менялись.
 - `npm run lint` падает на 12 ошибках, появившихся до 2026-10-29: `no-html-link-for-pages` (TermsEn, TermsRu, CasesShowcase), `react-hooks/set-state-in-effect` (MantineThemeBridge, useThemeColors, ThemeToggle, FooterMap), `react-hooks/immutability` (BenchmarkAllocation), `prefer-const` (form-sanitize), `react/no-unescaped-entities` (WorkshopTestimonial).
 - Два root layout: переход по ссылке между страницами `(site)` и `(site-v2)` — полная перезагрузка (ожидаемо).
 - Turbopack не резолвит относительные `@forward` внутри `@/shared/ds/styles/index.scss` — пути внутри `ds/styles` только через `@/`.
