@@ -84,7 +84,9 @@
 // ── Interaction ───────────────────────────────────────────────────────
 // Hover tint stacked over the base fill (Figma models hover as an overlay).
 @mixin ds-overlay($overlay) {
-  background-image: linear-gradient(#{$overlay}, #{$overlay});
+  // Inset shadow preserves the Figma tint and can interpolate on hover.
+  // CSS gradients switch discretely even with a background-image transition.
+  box-shadow: inset 0 0 0 100vmax $overlay;
 }
 
 @mixin ds-focus-visible {

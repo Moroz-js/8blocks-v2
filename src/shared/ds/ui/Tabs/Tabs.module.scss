@@ -9,7 +9,7 @@
 // Figma: Tab off (63:3172).
 .tab {
   @include ds-text-sm;
-  @include ds-transition(background-color, background-image, color);
+  @include ds-transition(background-color, box-shadow, color);
   @include ds-focus-visible;
   display: inline-flex;
   align-items: center;

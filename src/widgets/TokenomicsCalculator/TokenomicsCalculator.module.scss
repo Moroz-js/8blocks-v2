@@ -120,7 +120,7 @@ $header-mobile: 57px;
   }
 }
 
-// Figma 3608:10893 — Heading 3, 468 wide, 90% opacity; first line Colors/Gray.
+// Figma 3608:10893 on desktop; mobile heading increased one type step.
 .heroTitle {
   @include ds-h3;
   max-width: 468px;
@@ -132,7 +132,7 @@ $header-mobile: 57px;
   }
 
   @include ds-mobile {
-    @include ds-h4;
+    @include ds-h3;
   }
 }
 

@@ -2,7 +2,7 @@
 
 // Figma: Arrows / Button (54:3039) — 48px, Charcoal, chevron 32.
 .iconButton {
-  @include ds-transition(background-color, background-image, opacity);
+  @include ds-transition(background-color, box-shadow, opacity);
   @include ds-focus-visible;
   display: inline-flex;
   align-items: center;

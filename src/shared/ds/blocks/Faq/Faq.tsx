@@ -60,8 +60,10 @@ export function Faq({ items, defaultOpen = 0, footer, className }: FaqProps) {
                   <Image src={chevronDown} alt="" width={16} height={16} className={styles.chevron} />
                 </button>
               </h3>
-              <div id={panelId} role="region" aria-labelledby={buttonId} className={styles.panel} hidden={!isOpen}>
-                <div className={styles.answer}>{item.answer}</div>
+              <div id={panelId} role="region" aria-labelledby={buttonId} aria-hidden={!isOpen} inert={!isOpen} className={styles.panel}>
+                <div className={styles.answerClip}>
+                  <div className={styles.answer}>{item.answer}</div>
+                </div>
               </div>
             </li>
           )

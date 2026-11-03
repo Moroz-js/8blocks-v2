@@ -224,7 +224,7 @@
 .chip,
 .shapeChip {
   @include ds-text-sm;
-  @include ds-transition(background-color, background-image, border-color, color);
+  @include ds-transition(background-color, box-shadow, border-color, color);
   @include ds-focus-visible;
   display: inline-flex;
   align-items: center;
@@ -248,7 +248,7 @@
 .chipOn,
 .chipOn:hover {
   background-color: $ds-text;
-  background-image: none;
+  box-shadow: none;
   border-color: transparent;
   color: $ds-text-inverse;
 }

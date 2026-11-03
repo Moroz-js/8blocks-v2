@@ -3,7 +3,7 @@
 // Figma: Button Primary / Secondary / Tertiary (63:3156–63:3158).
 .button {
   @include ds-text-sm;
-  @include ds-transition(background-color, background-image, opacity);
+  @include ds-transition(background-color, box-shadow, color, opacity);
   @include ds-focus-visible;
   display: inline-flex;
   align-items: center;

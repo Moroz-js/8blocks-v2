@@ -63,9 +63,12 @@
 .link {
   @include ds-text-sm;
   @include ds-focus-visible;
+  @include ds-transition(text-decoration-color);
   color: $ds-text;
+  text-decoration: underline;
+  text-decoration-color: transparent;
 
-  &:hover { text-decoration: underline; }
+  &:hover { text-decoration-color: currentColor; }
 }
 
 // ── Readiness ─────────────────────────────────────────────────────────
@@ -187,7 +190,7 @@
 .edit {
   @include ds-text-sm;
   @include ds-focus-visible;
-  @include ds-transition(border-color, background-image);
+  @include ds-transition(border-color, box-shadow);
   padding: $ds-space-2 $ds-space-4;
   border: 1px solid $ds-border-strong;
   border-radius: $ds-radius-pill;

@@ -34,6 +34,7 @@
 .question {
   @include ds-text-md;
   @include ds-focus-visible;
+  @include ds-transition(color, padding-bottom);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,6 +47,8 @@
   color: rgba($ds-white, 0.9);
   text-align: left;
   cursor: pointer;
+
+  &:hover { color: $ds-text; }
 
   .open & {
     padding-bottom: 0;
@@ -67,8 +70,21 @@
   }
 }
 
-.panel[hidden] {
-  display: none;
+.panel {
+  @include ds-transition(grid-template-rows, opacity);
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+
+  .open & {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+.answerClip {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .answer {
@@ -89,11 +105,14 @@
   text-align: center;
 
   a {
+    @include ds-transition(text-decoration-color);
     color: $ds-text;
     margin-left: $ds-space-2;
+    text-decoration: underline;
+    text-decoration-color: transparent;
 
     &:hover {
-      text-decoration: underline;
+      text-decoration-color: currentColor;
     }
   }
 }
