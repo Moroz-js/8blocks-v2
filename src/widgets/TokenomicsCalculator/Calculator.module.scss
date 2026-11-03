@@ -279,33 +279,18 @@
   font-size: 10px;
   line-height: 1;
   cursor: help;
+}
 
-  &::after {
-    @include ds-text-sm;
-    content: attr(data-tip);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    z-index: 5;
-    width: max-content;
-    max-width: 260px;
-    padding: 10px 12px;
-    border: 1px solid $ds-border;
-    border-radius: $ds-radius-field;
-    background-color: $ds-surface-raised;
-    color: $ds-text;
-    text-align: left;
-    opacity: 0;
-    pointer-events: none;
-    transform: translate(-50%, 4px);
-    transition: opacity 140ms $ds-ease, transform 140ms $ds-ease;
-  }
-
-  &:hover::after,
-  &:focus-visible::after {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
+.hintTooltip {
+  @include ds-text-sm;
+  max-width: calc(100vw - 24px);
+  padding: 10px 12px;
+  border: 1px solid $ds-border;
+  border-radius: $ds-radius-field;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  text-align: left;
+  overflow-wrap: anywhere;
 }
 
 // ── Allocation ────────────────────────────────────────────────────────

@@ -1,10 +1,20 @@
+import { Tooltip } from '@mantine/core'
 import styles from './Calculator.module.scss'
 
-/** Round «?» with a CSS tooltip, shown on hover and keyboard focus (Figma: calculator preview). */
+/** Tooltip stays within the viewport, including touch and keyboard interactions. */
 export function Hint({ text }: { text: string }) {
   return (
-    <span className={styles.hint} tabIndex={0} role="img" aria-label={text} data-tip={text}>
-      ?
-    </span>
+    <Tooltip
+      label={text}
+      multiline
+      w={260}
+      withinPortal
+      events={{ hover: true, focus: true, touch: true }}
+      classNames={{ tooltip: styles.hintTooltip }}
+    >
+      <span className={styles.hint} tabIndex={0} role="img" aria-label={text}>
+        ?
+      </span>
+    </Tooltip>
   )
 }

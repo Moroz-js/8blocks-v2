@@ -44,7 +44,7 @@ $header-mobile: 57px;
   will-change: transform;
 
   @include ds-mobile {
-    left: calc(18% - 811px); // follows the art, shifted left on mobile
+    left: calc(50% - 900px); // follows the centred, smaller hand on mobile
   }
 }
 
@@ -70,12 +70,12 @@ $header-mobile: 57px;
   pointer-events: none;
 
   @include ds-mobile {
-    top: auto;
-    bottom: -120px;
-    left: 18%;
-    width: 1100px;
-    height: 600px;
-    transform: translateX(-50%);
+    top: 52%;
+    left: 50%;
+    width: 900px;
+    height: 490px;
+    // The hand is at 68% of the source image's width.
+    transform: translate(-68%, -50%);
   }
 }
 
