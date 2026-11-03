@@ -4,15 +4,7 @@ import { CalculatorV2Page } from '@/widgets/TokenomicsCalculator/CalculatorV2Pag
 import { siteConfig } from '@/shared/config/site'
 import { withPayloadPageMetadata } from '@/shared/lib/site-seo'
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: Promise<{ m?: string }>
-}): Promise<Metadata> {
-  const { m } = await searchParams
-  const image = m
-    ? `/api/og?t=calc&m=${encodeURIComponent(m)}`
-    : '/api/og?t=calc'
+export async function generateMetadata(): Promise<Metadata> {
   return withPayloadPageMetadata('/product/calculator', {
     title: content.meta.title,
     description: content.meta.description,
@@ -21,13 +13,13 @@ export async function generateMetadata({
       title: content.meta.ogTitle,
       description: content.meta.ogDescription,
       url: '/product/calculator',
-      images: [{ url: image, width: 1200, height: 630 }],
+      images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
     },
     twitter: {
       card: 'summary_large_image',
       title: content.meta.ogTitle,
       description: content.meta.ogDescription,
-      images: [image],
+      images: [siteConfig.ogImage],
     },
   })
 }
