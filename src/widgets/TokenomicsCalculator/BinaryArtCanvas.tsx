@@ -14,6 +14,7 @@ type Digit = {
 const SHADES = 64
 const BANDS = 64
 const MAX_DPR = 1.5
+const DIGIT_DENSITY = 1.65
 
 /*
  * Live binary rendering of a picture, in the spirit of the Tokenomics AI
@@ -143,7 +144,8 @@ export function BinaryArtCanvas({ src }: { src: string }) {
       const imageHeight = source.naturalHeight * scale
       const left = (width - imageWidth) / 2
       const top = (height - imageHeight) / 2
-      cell = Math.max(5, Math.min(7, width / 220))
+      // Density is per area: reduce both grid axes by sqrt of the multiplier.
+      cell = Math.max(5, Math.min(7, width / 220)) / Math.sqrt(DIGIT_DENSITY)
       const fontSize = cell * 1.25
       const columns = Math.ceil(width / cell)
       const rows = Math.ceil(height / cell)
