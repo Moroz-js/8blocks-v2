@@ -96,6 +96,7 @@
 
 .stepper {
   display: grid;
+  list-style: none;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   border-bottom: 1px solid $ds-border;
 
@@ -110,7 +111,6 @@
 .stepperItem {
   @include ds-text-sm;
   @include ds-transition(color, border-color);
-  @include ds-focus-visible;
   margin-bottom: -1px;
   padding: 0 0 $ds-space-3;
   border: none;
@@ -119,10 +119,6 @@
   color: $ds-text-faint;
   text-align: left;
   white-space: nowrap;
-  cursor: pointer;
-
-  &:hover:not(:disabled) { color: $ds-text; }
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 .stepperOn {

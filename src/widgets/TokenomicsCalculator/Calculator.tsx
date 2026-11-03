@@ -187,24 +187,17 @@ export function Calculator() {
   }, [model])
 
   const stepper = (
-    <nav className={styles.stepper} aria-label={copy.steps.basics}>
-      {STEPS.map((key, index) => {
-        const gated = !complete && (key === 'vesting' || key === 'results')
-        return (
-          <button
-            key={key}
-            type="button"
-            disabled={gated}
-            title={gated ? copy.navigation.allocateFirst : undefined}
-            aria-current={step === key ? 'step' : undefined}
-            onClick={() => (key === 'results' ? runAnalysis() : goTo(key))}
-            className={clsx(styles.stepperItem, step === key && styles.stepperOn)}
-          >
-            {index + 1}. {copy.steps[key]}
-          </button>
-        )
-      })}
-    </nav>
+    <ol className={styles.stepper}>
+      {STEPS.map((key, index) => (
+        <li
+          key={key}
+          aria-current={step === key ? 'step' : undefined}
+          className={clsx(styles.stepperItem, step === key && styles.stepperOn)}
+        >
+          {index + 1}. {copy.steps[key]}
+        </li>
+      ))}
+    </ol>
   )
 
   const banners = (
