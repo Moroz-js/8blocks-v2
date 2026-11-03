@@ -4,6 +4,7 @@
 
 ## Проверено
 
+- OG-исправление `560b4fa` выложено на EN/RU-staging: [run 41632591526](https://github.com/Moroz-js/8blocks-v2/actions/runs/41632591526) — success. Typecheck и ESLint страницы прошли; сборки обеих локалей прошли в CI. Playwright MCP на стенде: обычные ссылки и `?m=test` возвращают 200; `og:image` и `twitter:image` — `/og-image-en.png` для EN и `/ru/og-image.png` для RU.
 - Калькулятор OG (2026-11-03): Open Graph и Twitter используют общую `siteConfig.ogImage`, как `/product/tokenomics-ai`; генерация превью через `/api/og?t=calc` и зависимость метаданных от `?m=` убраны. Playwright MCP локально: `og:image` и `twitter:image` совпадают с обычной продуктовой страницей, включая URL с `?m=test`. Вёрстка не менялась, сверка с Figma для метатегов не требуется.
 - `npm run typecheck`, `npm run test:platform` (82/82), `npm run build` — проходят (2026-11-03), включая второй root layout `(site-v2)` и новую страницу калькулятора. ESLint изменённых файлов калькулятора проходит.
 - `npm run lint` — 12 старых ошибок (список ниже), новых нет; ESLint-границы v1/v2 срабатывают (проверено пробными импортами).
