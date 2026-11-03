@@ -79,12 +79,21 @@ $header-mobile: 57px;
 }
 
 .artCanvas {
+  position: relative;
+  overflow: hidden;
   display: block;
   width: 100%;
   height: 100%;
   // Blend the rectangular digit field into the hero without dimming the hand.
   -webkit-mask-image: linear-gradient(to bottom, transparent, $ds-black 22%);
   mask-image: linear-gradient(to bottom, transparent, $ds-black 22%);
+
+  canvas {
+    position: absolute;
+    top: 0;
+    display: block;
+    height: 100%;
+  }
 }
 
 // Figma 3608:10895 — 1280 × 58 fade at the bottom edge.
