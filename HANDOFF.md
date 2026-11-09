@@ -1,3 +1,11 @@
+## 2026-11-09: sitemap lastmod больше не равен времени запроса
+
+- Диагноз по nginx-логам 8blocks.io: 03–08.11 OpenAI-SearchBot вырос со 180 до 972 запросов в сутки при неизменном наборе из 60 URL (3 → 14 обращений на страницу в день). Остальные ИИ-боты не изменились. Причина — `sitemap.ts` с `export const dynamic = 'force-dynamic'` и `lastModified: new Date()`: каждая выдача сайтмапа помечала 30 URL как «только что изменённые». На эти 30 URL пришлось 4 077 из 5 911 запросов бота (69%).
+- `src/app/sitemap.ts`: статические маркетинговые страницы получают `STATIC_PAGES_UPDATED_AT` (константа, правится вместе со страницей — как уже сделано для `methodologyContent.updatedAt`). Листинги `/blog`, `/audits`, `/cases`, `/research`, `/events` и рубрики `/blog/<slug>` датируются свежайшим `updatedAt` своих элементов через `newestUpdatedAt()`. Карточки контента как брали дату из документа, так и берут. Ветка `catch` (payload недоступен) отдаёт статические страницы и листинги с той же константой.
+- Тест `src/app/__tests__/sitemap.test.ts` (vitest, payload замокан): повторные вызовы дают идентичный lastmod, ни одна запись не совпадает с временем запроса, листинги и рубрики датируются своим свежайшим элементом, noindex не попадает в выдачу. На прежнем коде падают 4 из 5 проверок. Добавлены `vitest.config.ts` (алиасы `@/*`, `@payload-config`, которых vitest сам не читает) и скрипт `npm test`.
+- Не трогал: `Cache-Control: private, no-cache, no-store` на страницах — это следствие полного динамического рендеринга (layout читает `headers()`), и без перевода страниц на ISR условные запросы и ответы 304 не появятся. Это отдельная задача, в эту правку не входит.
+- Проверено: `tsc --noEmit` и eslint по изменённым файлам чисто; `vitest run` — 79 тестов проходят, 2 файла падают из-за отсутствующего в локальном `node_modules` пакета `lz-string` (не связано с правкой). Деплой по-прежнему ручной (`workflow_dispatch`).
+
 ## 2026-10-02: Send icon background correction
 
 - Replaced raster `send-button.png` with the original complete32x32 SVG from Figma node2661:9759. It includes the white round button and black paper plane with transparent outer corners; the former PNG had an unwanted square matte and blurred at high DPI.
