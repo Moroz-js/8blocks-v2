@@ -25,6 +25,16 @@ interface TelegramNotification {
 }
 
 const TELEGRAM_API = 'https://api.telegram.org'
+/** Лимит Bot API на текст сообщения; форма допускает до 10 000 символов. */
+const TELEGRAM_TEXT_MAX = 4096
+
+/** Обрезает текст под лимит Telegram, сохраняя хвост с сайтом-источником. */
+function fitTelegramLimit(body: string, footer: string): string {
+  const full = body + footer
+  if (full.length <= TELEGRAM_TEXT_MAX) return full
+  const marker = '\n… (обрезано, полный текст — в админке и письме)'
+  return body.slice(0, TELEGRAM_TEXT_MAX - footer.length - marker.length) + marker + footer
+}
 
 async function getNotificationSettings(): Promise<NotificationSettingsDoc | null> {
   try {
@@ -72,11 +82,9 @@ export async function notifyTelegram(notification: TelegramNotification): Promis
       const value = (f.value ?? '').trim()
       if (value) lines.push(`${f.label}: ${value}`)
     }
-    if (notification.siteUrl) {
-      lines.push('', `Сайт: ${notification.siteUrl}`)
-    }
+    const footer = notification.siteUrl ? `\n\nСайт: ${notification.siteUrl}` : ''
 
-    await sendTelegramMessage(token, chatId, lines.join('\n'))
+    await sendTelegramMessage(token, chatId, fitTelegramLimit(lines.join('\n'), footer))
   } catch (err) {
     console.error('[telegram] failed to send notification:', err)
   }
