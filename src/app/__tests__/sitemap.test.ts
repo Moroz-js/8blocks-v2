@@ -7,13 +7,19 @@ const AUDITS = [
   { slug: 'tether-gold', updatedAt: '2026-10-20T10:00:00.000Z', seo: {} },
   { slug: 'hidden-one', updatedAt: '2026-11-05T10:00:00.000Z', seo: { noindex: true } },
 ]
-const CASES = [{ slug: 'hadronica', updatedAt: '2026-09-15T10:00:00.000Z', seo: {} }]
+const CASES = [
+  { slug: 'hadronica', updatedAt: '2026-09-15T10:00:00.000Z', seo: {}, format: 'full' },
+  // mini-кейс своей страницы не имеет, но на листинге /cases показывается.
+  { slug: 'tibiti', updatedAt: '2026-10-05T10:00:00.000Z', seo: {}, format: 'mini' },
+]
 const RESEARCH = [{ slug: 'correlation-study', updatedAt: '2026-08-02T10:00:00.000Z', seo: {} }]
 const EVENTS = [{ slug: 'token2049', updatedAt: '2026-07-07T10:00:00.000Z', seo: {} }]
 const ARTICLES = [
   { slug: 'clarity-act', updatedAt: '2026-10-28T10:00:00.000Z', seo: {}, category: { id: 'c-defi' } },
   { slug: 'listing-on-dexs', updatedAt: '2026-06-01T10:00:00.000Z', seo: {}, category: 'c-nft' },
 ]
+const PRESS = [{ updatedAt: '2026-11-02T10:00:00.000Z' }, { updatedAt: '2026-05-01T10:00:00.000Z' }]
+const LAUNCH_MODULES = [{ updatedAt: '2026-04-09T10:00:00.000Z' }]
 
 const DOCS_BY_COLLECTION: Record<string, unknown[]> = {
   'public-audits': AUDITS,
@@ -21,8 +27,9 @@ const DOCS_BY_COLLECTION: Record<string, unknown[]> = {
   research: RESEARCH,
   events: EVENTS,
   articles: ARTICLES,
+  'media-mentions': PRESS,
+  'launch-modules': LAUNCH_MODULES,
 }
-
 vi.mock('payload', () => ({
   getPayload: async () => ({
     find: async ({ collection }: { collection: string }) => ({
@@ -63,6 +70,7 @@ describe('sitemap', () => {
     vi.setSystemTime(new Date('2026-11-12T18:30:00.000Z'))
     const second = await sitemap()
 
+    expect(first.length).toBeGreaterThan(20)
     expect(first).toHaveLength(second.length)
     const firstDates = first.map((entry) => `${entry.url} ${new Date(entry.lastModified as string | Date).toISOString()}`)
     const secondDates = second.map((entry) => `${entry.url} ${new Date(entry.lastModified as string | Date).toISOString()}`)
@@ -76,6 +84,7 @@ describe('sitemap', () => {
 
     const entries = await sitemap()
 
+    expect(entries.length).toBeGreaterThan(20)
     const stamped = entries.filter(
       (entry) =>
         Math.abs(new Date(entry.lastModified as string | Date).getTime() - requestTime.getTime()) <
@@ -88,10 +97,25 @@ describe('sitemap', () => {
     const entries = await sitemap()
 
     expect(lastmodOf(entries, '/audits')).toBe('2026-10-20T10:00:00.000Z')
-    expect(lastmodOf(entries, '/cases')).toBe('2026-09-15T10:00:00.000Z')
     expect(lastmodOf(entries, '/research')).toBe('2026-08-02T10:00:00.000Z')
     expect(lastmodOf(entries, '/events')).toBe('2026-07-07T10:00:00.000Z')
     expect(lastmodOf(entries, '/blog')).toBe('2026-10-28T10:00:00.000Z')
+    expect(lastmodOf(entries, '/press')).toBe('2026-11-02T10:00:00.000Z')
+  })
+
+  it('датирует главную и /product/token-launch их контентом из CMS', async () => {
+    const entries = await sitemap()
+
+    expect(lastmodOf(entries, '8blocks.io')).toBe('2026-10-28T10:00:00.000Z')
+    expect(lastmodOf(entries, '/product/token-launch')).toBe('2026-04-09T10:00:00.000Z')
+  })
+
+  it('датирует /cases и mini-кейсом, но страницу заводит только для full', async () => {
+    const entries = await sitemap()
+
+    expect(lastmodOf(entries, '/cases')).toBe('2026-10-05T10:00:00.000Z')
+    expect(entries.some((entry) => entry.url.endsWith('/cases/hadronica'))).toBe(true)
+    expect(entries.some((entry) => entry.url.endsWith('/cases/tibiti'))).toBe(false)
   })
 
   it('датирует рубрику блога её свежайшей статьёй', async () => {

@@ -8,7 +8,7 @@ import { getPublicAuditsEnabled } from '@/shared/lib/getPublicAuditsEnabled'
 import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
 import { visiblePublishedResearchWhere } from '@/shared/lib/visible-research-where'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
-import { visibleFullCaseWhere } from '@/shared/lib/visible-case-where'
+import { visibleCaseWhere } from '@/shared/lib/visible-case-where'
 import { methodologyContent } from '@/shared/content/methodology'
 import { getEventsEnabled } from '@/shared/lib/getEventsEnabled'
 import { visibleEventWhere } from '@/shared/lib/visible-event-where'
@@ -64,8 +64,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ])
   const hasVisibleBlog = siteConfig.blogEnabled && blogEnabledRaw
 
+  // Только страницы, которые меняются вместе с кодом. Всё, что зависит от коллекций Payload
+  // (главная с анонсами статей, /press, /product/token-launch, листинги), датируется ниже
+  // по свежайшему элементу своей коллекции.
   const staticPages: MetadataRoute.Sitemap = [
-    { url: BASE,                     lastModified: staticDate, priority: 1.0 },
     ...servicePages,
     ...(siteConfig.digitalAssetsEnabled
       ? [
@@ -77,19 +79,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/product/tokenization-cases`, lastModified: staticDate, priority: 0.7 },
     { url: `${BASE}/product/tokenomics-ai`, lastModified: staticDate, priority: 0.7 },
     { url: `${BASE}/product/calculator`, lastModified: staticDate, priority: 0.8 },
-    { url: `${BASE}/product/token-launch`, lastModified: staticDate, priority: 0.8 },
     { url: `${BASE}/product/workshop`, lastModified: staticDate, priority: 0.7 },
     { url: `${BASE}/learn/token-vesting-benchmarks`, lastModified: staticDate, priority: 0.7 },
     { url: `${BASE}/${methodologyContent.slug}`, lastModified: new Date(methodologyContent.updatedAt), priority: 0.8 },
-    { url: `${BASE}/press`,          lastModified: staticDate, priority: 0.5 },
     { url: `${BASE}/about`,          lastModified: staticDate, priority: 0.6 },
     { url: `${BASE}/contact`,        lastModified: staticDate, priority: 0.5 },
     { url: `${BASE}/privacy-policy`, lastModified: staticDate, priority: 0.3 },
     { url: `${BASE}/terms`,          lastModified: staticDate, priority: 0.3 },
   ]
 
-  // Листинги без данных коллекций (ветка catch): дата релиза — честнее, чем время запроса.
-  const fallbackListingPages: MetadataRoute.Sitemap = [
+  // Ветка catch (Payload недоступен): те же URL, но с датой релиза вместо даты контента.
+  const fallbackContentPages: MetadataRoute.Sitemap = [
+    { url: BASE, lastModified: staticDate, priority: 1.0 },
+    { url: `${BASE}/product/token-launch`, lastModified: staticDate, priority: 0.8 },
+    { url: `${BASE}/press`, lastModified: staticDate, priority: 0.5 },
     { url: `${BASE}/cases`, lastModified: staticDate, priority: 0.7 },
     ...(hasVisibleBlog ? [{ url: `${BASE}/blog`, lastModified: staticDate, priority: 0.8 }] : []),
     ...(hasVisibleResearch ? [{ url: `${BASE}/research`, lastModified: staticDate, priority: 0.8 }] : []),
@@ -132,19 +135,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
 
+    // Листинг /cases показывает и mini-кейсы, поэтому его дату считаем по всем видимым;
+    // собственная страница есть только у формата full — из них и строим URL.
     const caseDocs = (
       await payload.find({
         collection: 'cases',
-        where: visibleFullCaseWhere,
+        where: visibleCaseWhere,
         limit: 1000,
         sort: '-publishedAt',
       })
     ).docs.filter((doc) => !(doc.seo as { noindex?: boolean } | undefined)?.noindex)
-    const casePages: MetadataRoute.Sitemap = caseDocs.map((doc) => ({
-      url: `${BASE}/cases/${doc.slug}`,
-      lastModified: new Date(doc.updatedAt),
-      priority: 0.7,
-    }))
+    const casePages: MetadataRoute.Sitemap = caseDocs
+      .filter((doc) => doc.format === 'full')
+      .map((doc) => ({
+        url: `${BASE}/cases/${doc.slug}`,
+        lastModified: new Date(doc.updatedAt),
+        priority: 0.7,
+      }))
 
     const eventDocs = hasVisibleEvents
       ? (
@@ -206,7 +213,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }))
     }
 
-    const listingPages: MetadataRoute.Sitemap = [
+    const pressDocs = (
+      await payload.find({ collection: 'media-mentions', limit: 1000, depth: 0 })
+    ).docs
+    const launchModuleDocs = (
+      await payload.find({ collection: 'launch-modules', limit: 100, depth: 0 })
+    ).docs
+
+    // Страницы, чей контент живёт в CMS: дата — свежайший элемент того, что на них показано.
+    // Главная выводит анонсы последних статей, /press — упоминания в СМИ,
+    // /product/token-launch — состав и цены модулей запуска.
+    const contentPages: MetadataRoute.Sitemap = [
+      { url: BASE, lastModified: newestUpdatedAt(articleDocs), priority: 1.0 },
+      {
+        url: `${BASE}/product/token-launch`,
+        lastModified: newestUpdatedAt(launchModuleDocs),
+        priority: 0.8,
+      },
+      { url: `${BASE}/press`, lastModified: newestUpdatedAt(pressDocs), priority: 0.5 },
       { url: `${BASE}/cases`, lastModified: newestUpdatedAt(caseDocs), priority: 0.7 },
       ...(hasVisibleBlog
         ? [{ url: `${BASE}/blog`, lastModified: newestUpdatedAt(articleDocs), priority: 0.8 }]
@@ -224,7 +248,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return [
       ...staticPages,
-      ...listingPages,
+      ...contentPages,
       ...auditPages,
       ...casePages,
       ...categoryPages,
@@ -233,6 +257,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...eventPages,
     ]
   } catch {
-    return [...staticPages, ...fallbackListingPages]
+    return [...staticPages, ...fallbackContentPages]
   }
 }
