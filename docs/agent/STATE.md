@@ -4,6 +4,8 @@
 
 ## Проверено
 
+- Перевод 8 страниц на v2 выложен на EN/RU-staging по команде владельца (2026-11-09): `aec3625`, [run 42661691507](https://github.com/Moroz-js/8blocks-v2/actions/runs/42661691507) — success, production jobs skipped. Все 8 URL на `staging.8blocks.io` и `/ru` отвечают 200. Папка макетов `project/` (137 МБ) в репозиторий не добавлена.
+
 - Перевод страниц на DS v2 (2026-11-09, локально): `/product/calculator/result?m=`, `/product/tokenization-readiness` и `/result?a=`, `/product/digital-assets`, `/services/tokenomics`, `/services/audit`, `/services/strategic-consulting`, `/product/workshop` живут в `(site-v2)`, страницы `(site)` удалены. `npm run typecheck`, `npm run test:platform` (11 файлов, 79/79 — тесты удалённого кода ушли вместе с ним) и `npm run build` проходят; lint — только старые ошибки. Все 8 страниц на 1280 сверены со скриншотами макетов `project/*.dc.html`, на 375 просмотрены; горизонтального переполнения на 1280/375 нет (проверка в браузере Cursor через CDP). Без коммита, пуша и деплоя.
 
 - Все четыре оптимизации руки выложены на EN/RU-staging по явной команде владельца (2026-11-04): `aa991b1`, [run 41708556419](https://github.com/Moroz-js/8blocks-v2/actions/runs/41708556419) — success, обе CI-сборки/деплои прошли, production jobs skipped. Playwright MCP на обеих локалях 375/1280, DPR 3: страницы и PNG 200, WebGL2 работает в Worker (в RU весь путь Worker/chunks содержит `/ru`), 30–31 кадров за 1s, размеры backing 1080×1688 / 3795×2848 при CSS-ширине 360/1265, маска 22%, overflow/pageerror отсутствуют. Скриншоты `.playwright-mcp/deployed-webgl-en-375.png` и `deployed-webgl-ru-375.png` просмотрены. Результат фиксируется отдельным docs-коммитом.
