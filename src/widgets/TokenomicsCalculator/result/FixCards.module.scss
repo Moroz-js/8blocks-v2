@@ -1,0 +1,119 @@
+@use '@/shared/ds/styles' as *;
+
+$flip: 500ms ease;
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+// The locked row fades into the page like the designer's gradient overlay.
+.lockedRow {
+  -webkit-mask-image: linear-gradient(180deg, $ds-black 25%, rgba($ds-black, 0.2) 100%);
+  mask-image: linear-gradient(180deg, $ds-black 25%, rgba($ds-black, 0.2) 100%);
+
+  @include ds-mobile {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 450px;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  text-align: center;
+  transition: background-color $flip, color $flip;
+
+  @include ds-mobile {
+    height: auto;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.open {
+  background-color: $ds-white;
+  color: $ds-text-inverse;
+}
+
+.bg {
+  z-index: -1;
+  object-fit: cover;
+  transition: opacity $flip;
+
+  .open & { opacity: 0; }
+}
+
+.glyph {
+  position: absolute;
+  top: 150px;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  pointer-events: none;
+  transition: opacity $flip;
+
+  .open & { opacity: 0; }
+
+  @include ds-mobile {
+    position: relative;
+    top: auto;
+    order: 1;
+    flex-shrink: 0;
+    width: auto;
+    align-self: stretch;
+    margin: $ds-space-4 -20px;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 336px;
+}
+
+.label {
+  @include ds-text-sm;
+  opacity: 0.4;
+}
+
+.title {
+  @include ds-h5;
+  min-height: 60px;
+  opacity: 0.9;
+  white-space: pre-line;
+}
+
+.action {
+  margin-top: auto;
+  transition: background-color $flip, box-shadow $flip, color $flip;
+
+  .open & {
+    background-color: transparent;
+    box-shadow: inset 0 0 0 1px $ds-text-muted;
+    color: $ds-text-inverse;
+  }
+
+  @include ds-mobile { order: 2; }
+}

@@ -61,6 +61,10 @@
   @include _ds-type($ds-text-sm, $ds-tracking-text);
 }
 
+@mixin ds-text-xs {
+  @include _ds-type($ds-text-xs, $ds-tracking-text);
+}
+
 // ── Layout ────────────────────────────────────────────────────────────
 // Content column: 1200 centred, side margins shrink on smaller screens.
 @mixin ds-container {

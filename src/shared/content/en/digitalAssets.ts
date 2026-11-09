@@ -1,407 +1,362 @@
-// Digital Asset Strategy page — single source of truth
+import type { PathId } from '@/shared/lib/platform/readiness/scoring'
+import { readiness, type ReadinessContent } from './readiness'
 
-const enObject = {
+interface Action {
+  label: string
+  href: string
+}
+
+export type CountryId = 'uk' | 'eu' | 'ch' | 'kz' | 'ae' | 'jp' | 'sg' | 'us' | 'vg'
+
+export interface DigitalAssetsContent {
+  meta: { title: string; description: string }
+  hero: { title: string; action: Action }
+  widen: { title: string; cards: { title: string; points: string[] }[]; note: string }
+  owners: { title: string; tabs: { path: PathId; label: string }[] }
+  realEstate: { title: string; description: string; action: Action; imageAlt: string }
+  steps: {
+    title: string
+    result: string
+    items: { lead: string; text: string; result: string; action?: Action }[]
+    selfServe: { title: string; actions: Action[] }
+  }
+  market: {
+    source: string
+    lead: { place: string; date: string; title: string; description: string; href: string }
+    items: { place: string; date: string; title: string; description: string; href: string }[]
+  }
+  jurisdictions: {
+    title: string
+    description: string
+    more: string
+    close: string
+    countries: Record<CountryId, { name: string; paragraphs: string[] }>
+  }
+  depths: {
+    title: string
+    badge: string
+    labels: { provide: string; executes: string; ends: string }
+    action: Action
+    items: { title: string; subtitle: string; provide: string; executes: string; ends: string }[]
+  }
+  blocks: { title: string; items: { title: string; description: string }[] }
+  casework: ReadinessContent['result']['casework']
+  team: ReadinessContent['team']
+  resources: { eyebrow: string; title: string; description: string; action: Action }[]
+  faq: { title: string; items: { question: string; answer: string }[]; footer: { text: string; link: string; href: string } }
+}
+
+const CALL = 'https://calendly.com/care-8blocks/intro'
+const CHECK = '/product/tokenization-readiness'
+const CASES = '/product/tokenization-cases'
+const DUBAI_SOURCE =
+  'https://dubailand.gov.ae/en/news-media/dld-launches-the-mena-s-first-tokenized-real-estate-project-through-the-prypco-mint-platform'
+
+export const digitalAssets: DigitalAssetsContent = {
   meta: {
-    title: 'Turn a real asset into a financing instrument | 8Blocks Digital Asset Strategy',
+    title: 'Turn a real asset into a financing instrument',
     description:
-      'For owners of established businesses and real assets. We check whether your property, energy asset, or contracted revenue can support fractional investment — and design the structure only if the numbers work.',
+      'For owners of established businesses and real assets. We check whether your property, receivables or fund interests can support fractional investment — and design the structure only if the numbers work.',
   },
   hero: {
-    label: 'Digital Asset Strategy',
-    headline: 'Turn a real asset into a financing instrument.',
-    headlineAccent: 'Without selling control.',
-    description:
-      'For owners of established businesses and real assets. We assess the business case, design the economics and holder rights, and coordinate implementation with specialised legal, technical, and market partners.',
-    ctaLabel: 'Book a free 45-min call',
-    ctaHref: 'https://calendly.com/care-8blocks/intro',
-    secondaryLabel: 'Check your readiness',
-    secondaryHref: '/product/tokenization-readiness',
-    points: [
-      'Keep operating control',
-      'Test feasibility before any legal spend',
-      'One team from asset to structure to launch',
-    ],
-    photoAlt: 'Aerial view of a solar farm beside cultivated farmland',
-    chipLeft: 'The asset — you keep running it',
-    chipRight: 'Economic rights investors can hold',
-    exampleLead: 'Working example.',
-    exampleText:
-      'In May 2025 the Dubai Land Department — a government body — launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes.',
-    exampleSourceLabel: 'Source',
-    exampleSourceHref:
-      'https://dubailand.gov.ae/en/news-media/dld-launches-the-mena-s-first-tokenized-real-estate-project-through-the-prypco-mint-platform',
+    title: 'Turn a real asset into\na financing instrument.\nWithout selling control.',
+    action: { label: 'Book a call', href: CALL },
   },
-  stickyLead: 'Ready to look at your asset?',
-  legalDisclaimer:
-    'This content is provided for informational and educational purposes only. It does not constitute investment, financial, legal, or tax advice, and is not a recommendation to buy, sell, or hold any token or digital asset. Token design does not guarantee any financial return, token price performance, or regulatory outcome. Crypto assets carry a high risk of loss. The legal classification of a token depends on its specific structure and the applicable jurisdiction. Readers should conduct independent research and consult qualified legal and financial advisors.',
-  paths: {
-    number: '01',
-    label: 'Who this is for',
-    headline: 'Owners of real assets.\nFind your situation.',
+  widen: {
+    title: 'Widen access to capital without selling the asset',
+    cards: [
+      {
+        title: 'Bank financing',
+        points: [
+          'Asset is typically used as collateral',
+          'Cost of capital depends heavily on your local market',
+          'Default can put the underlying asset at risk',
+        ],
+      },
+      {
+        title: 'Bonds / traditional debt',
+        points: [
+          'Fixed repayment obligations',
+          'Principal has to be repaid on schedule',
+          'Less flexibility if the project underperforms',
+        ],
+      },
+      {
+        title: 'Equity',
+        points: [
+          'You dilute ownership',
+          'Investors receive governance rights',
+          'You may lose part of the operational control over the business',
+        ],
+      },
+      {
+        title: 'Tokenization',
+        points: [
+          'Reach investors beyond your home market',
+          'Structure returns around specific asset cash flows',
+          'Keep operational control of the asset',
+          'Choose a structure that fits both the business and investors',
+        ],
+      },
+    ],
+    note: 'Access widens only when a real buyer side exists — that is exactly what the assessment checks.',
+  },
+  owners: {
+    title: 'Owners of real assets. Find your situation',
+    tabs: [
+      { path: 'asset_backed', label: 'Commercial real estate' },
+      { path: 'credit', label: 'Debt and collateral on the books' },
+      { path: 'other', label: 'High-value movables people rent' },
+      { path: 'funds', label: 'Securities or fund interests' },
+    ],
+  },
+  realEstate: {
+    title: 'Real Estate Tokenization is already working worldwide',
     description:
-      'Four situations we are built for. If yours is close to one of them, the call is worth 45 minutes.',
-    youOwnLabel: 'You own',
-    holdersGetLabel: 'Holders get',
-    youKeepLabel: 'You keep',
-    firstWeCheckLabel: 'First we check',
+      'Working example from commercial real estate: in May 2025 the Dubai Land Department — a government body — launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes.',
+    action: { label: 'Explore Real Estate Tokenization', href: CASES },
+    imageAlt: 'Residential tower',
+  },
+  steps: {
+    title: 'From asset to instrument, step by step.',
+    result: 'You leave with:',
     items: [
       {
-        own: 'Commercial real estate',
-        image: '/img/tf-property.jpg',
-        imageAlt: 'Illuminated commercial building at night',
-        result: 'capital without selling the asset',
-        holdersGet:
-          'Defined economic rights in the asset — designed to be enforceable and reviewed by your counsel',
-        youKeep: 'Operation, management, the decision to sell',
-        firstWeCheck: 'Who buys the fractions, at what minimum ticket',
+        lead: 'Free 45-minute call.',
+        text: 'You describe the asset and the goal. No deck, no preparation.',
+        result: 'a fit / no-fit read, the likely path, and whether the Workshop is worth it.',
+        action: { label: 'Book a call', href: CALL },
       },
       {
-        own: 'Securities or fund interests',
-        image: '/img/tf-securities.jpg',
-        imageAlt: 'Financial district office towers',
-        result: 'liquidity and a wider investor pool',
-        holdersGet: 'The same instrument in digital form, tradable in smaller lots',
-        youKeep: 'The issuance terms and the investor registry',
-        firstWeCheck: 'Which regulated venue and framework fit your jurisdiction',
+        lead: 'The Workshop.',
+        text: 'We collect the facts, work the session, and send the written diagnosis after internal review.',
+        result: 'the math on your asset, structure options, a roadmap — or a reasoned “not yet”.',
+        action: { label: 'Explore Workshops', href: '/product/workshop' },
       },
       {
-        own: 'Debt and collateral on the books',
-        image: '/img/tf-settlement.jpg',
-        imageAlt: 'Archived paper records',
-        result: 'a secondary market for what sits as dead weight',
-        holdersGet: 'A defined claim on documented debt or its income',
-        youKeep: 'The client relationships and the servicing',
-        firstWeCheck: 'Whether the paper is documented and assignable',
+        lead: 'Architecture.',
+        text: 'The full design: economics, rights, payout logic, partner brief.',
+        result: 'a build-ready specification your counsel and partners can work from.',
       },
       {
-        own: 'High-value movables people rent',
-        image: '/img/tf-movables.jpg',
-        imageAlt: 'Yacht at sunset',
-        result: 'fractional ownership with rental income',
-        holdersGet: 'A share in the asset and its rental income',
-        youKeep: 'Custody, management, and the rental calendar',
-        firstWeCheck: 'Insurance, custody, and whether rental demand covers the math',
+        lead: 'Build coordination.',
+        text: 'Legal, technical, and market partners coordinated around your decisions.',
+        result: 'a working system, accepted by you.',
+      },
+      {
+        lead: 'Launch and operate.',
+        text: 'Monitoring, reporting, holder communication — until the agreed handoff.',
+        result: 'a live instrument and a planned handoff to your team.',
       },
     ],
-  },
-  journey: {
-    number: '02',
-    label: 'Your journey',
-    headline: 'From asset to instrument,\nstep by step.',
-    description:
-      'Each step has a defined output. You can stop after any of them — with something useful in hand.',
-    leaveLabel: 'You leave with:',
     selfServe: {
       title: 'Prefer self-serve first?',
-      readinessLabel: 'Run the 3-minute readiness check',
-      readinessHref: '/product/tokenization-readiness',
-      casesLabel: 'Browse institutional cases',
-      casesHref: '/product/tokenization-cases',
+      actions: [
+        { label: 'Run the 3-minute readiness check', href: CHECK },
+        { label: 'Browse institutional cases', href: CASES },
+      ],
     },
-    steps: [
-      {
-        title: 'Free 45-minute call',
-        description: 'You describe the asset and the goal. No deck, no preparation.',
-        leaveWith: 'a fit / no-fit read, the likely path, and whether the Workshop is worth it.',
-      },
-      {
-        title: 'The Workshop',
-        description:
-          'We collect the facts, work the session, and send the written diagnosis after internal review.',
-        leaveWith:
-          'the math on your asset, structure options, a roadmap — or a reasoned “not yet”.',
-      },
-      {
-        title: 'Architecture',
-        description: 'The full design: economics, rights, payout logic, partner brief.',
-        leaveWith: 'a build-ready specification.',
-      },
-      {
-        title: 'Build coordination',
-        description:
-          'Legal, technical, and market partners coordinated around your decisions.',
-        leaveWith: 'a working system, accepted by you.',
-      },
-      {
-        title: 'Launch and operate',
-        description:
-          'Monitoring, reporting, holder communication — until the agreed handoff.',
-        leaveWith: 'an operation that runs without us.',
-      },
-    ],
   },
-  context: {
-    number: '03',
-    label: 'Market context',
-    headline: 'Why this is possible\nnow.',
-    description: 'Three dated shifts — each with a document behind it.',
-    sourceLabel: 'View source',
+  market: {
+    source: 'View source',
+    lead: {
+      place: 'Dubai',
+      date: 'May 2025',
+      title: 'First government-run platform for tokenized property title deeds',
+      description: 'Dirham payments, entry from AED 2,000, real title deeds on record.',
+      href: DUBAI_SOURCE,
+    },
     items: [
       {
-        date: 'Jan 28, 2026 · United States',
-        title: 'The rules are now explicit',
-        description:
-          'SEC staff clarified that a tokenized security is still a security — the technology changes the format, not the law. In the EU, MiCA — the Markets in Crypto-Assets regulation — has been in force since 2024.',
-        sourceHref:
-          'https://www.morganlewis.com/pubs/2026/02/sec-clarifies-federal-securities-law-treatment-of-tokenized-securities',
-      },
-      {
-        date: 'May 2025 · Dubai',
-        title: 'Governments moved first',
-        description:
-          'The Dubai Land Department launched the region’s first government-run platform for tokenized property title deeds — dirham payments, entry from AED 2,000, real title deeds on record.',
-        sourceHref:
-          'https://dubailand.gov.ae/en/news-media/dld-launches-the-mena-s-first-tokenized-real-estate-project-through-the-prypco-mint-platform',
-      },
-      {
-        date: '2023–2025 · Global',
+        place: 'USA',
+        date: '2023–2025',
         title: 'Real money, early market',
         description:
           'Tokenized U.S. Treasuries grew from $104 million to roughly $5 billion in two years. Real estate on the same rails is still under 0.1% of the global market. Both facts shape how we size your case.',
-        sourceHref:
-          'https://reports.weforum.org/docs/WEF_Asset_Tokenization_in_Financial_Markets_2025.pdf',
+        href: 'https://reports.weforum.org/docs/WEF_Asset_Tokenization_in_Financial_Markets_2025.pdf',
+      },
+      {
+        place: 'EU',
+        date: '2023–2025',
+        title: 'The rules are now explicit',
+        description:
+          'SEC staff clarified that a tokenized security is still a security — the technology changes the format, not the law. In the EU, MiCA — the Markets in Crypto-Assets regulation — has been in force since 2024.',
+        href: 'https://www.morganlewis.com/pubs/2026/02/sec-clarifies-federal-securities-law-treatment-of-tokenized-securities',
       },
     ],
   },
-  packages: {
-    number: '04',
-    label: 'How we work',
-    headline: 'One team.\nThree depths of involvement.',
+  jurisdictions: {
+    title: 'Where RWA tokens can be issued',
     description:
-      'The journey is the same; the packages set how much of it we carry. Everything starts with the free call, and the Workshop prices the rest.',
-    workshop: {
-      badge: 'The first paid step',
-      title: 'The Workshop — your situation, on paper',
-      description:
-        'Pre-work first: asset facts, ownership, debt, revenue, target raise. Then the working session. The written diagnosis follows after internal review — including the recommendation not to build, when the numbers say so.',
-      ctaLabel: 'Book the Workshop',
-      ctaHref: 'mailto:hello@8blocks.io?subject=The%20Workshop',
-      price: '$2,000 · credited in full toward any engagement below.',
+      'There is no single “RWA law”. Each jurisdiction combines securities, fund and digital-asset rules — here is how the main ones work today.',
+    more: 'Learn more',
+    close: 'Close',
+    countries: {
+      uk: {
+        name: 'United Kingdom',
+        paragraphs: [
+          'The FCA classifies RWA tokens as security tokens — issuance, custody and trading require FCA authorisation.',
+          'The regulator also takes part in international work with MAS Singapore to standardise approaches.',
+        ],
+      },
+      eu: {
+        name: 'European Union',
+        paragraphs: [
+          'MiCA came into full force in 2026. RWA tokens in the EU fall into two categories: those qualifying as transferable securities under MiFID II — subject to the traditional prospectus and trading-venue requirements — and those outside that definition, regulated directly by MiCA.',
+          'Germany — the Electronic Securities Act (eWpG, 2021) legalises DLT-based securities without a paper certificate; crypto-securities registrars need a BaFin licence. France — the PACTE law (2019) introduced the DASP regime: platforms register with the AMF, public offerings need a separate AMF visa.',
+          'Luxembourg — the law of 15 March 2023 recognises DLT systems as a valid securities register, one of the best routes for tokenised funds with an EU passport. Liechtenstein (EEA) — the TVTG “Token Act” uses a token-container model: a token can represent any right or asset, and passports into 30 EEA states.',
+        ],
+      },
+      ch: {
+        name: 'Switzerland',
+        paragraphs: [
+          'The DLT Act, in force since 2021, gives tokenised securities — “DLT rights” — the same legal standing as traditional ones. They can represent equity, debt or other rights.',
+          'FINMA supervises issuance. Switzerland is the global benchmark for legal clarity and infrastructure maturity, with venues such as SDX.',
+        ],
+      },
+      kz: {
+        name: 'Kazakhstan',
+        paragraphs: [
+          'A less obvious but fast-growing hub. The AIFC regulator AFSA issues the Digital Asset Operator licence and the Investment Fund Manager licence, and the centre operates under English law.',
+          'Tax: 0% profit tax inside the AIFC until 2066 and 0% VAT on digital assets. A strong fit for the CIS market and first rounds up to roughly $20m.',
+        ],
+      },
+      ae: {
+        name: 'UAE',
+        paragraphs: [
+          'One of the most progressive regimes. In May 2025 VARA, Dubai’s virtual-asset regulator, classified RWA tokens as Asset-Referenced Virtual Assets and allowed issuance, listing and secondary trading — full legislation, not a sandbox.',
+          'Issuers need a Category 1 licence with minimum capital of AED 1.5m (~$408k), monthly audits and reserve verification. Eligible collateral: real estate, private credit and income-producing assets.',
+          'DIFC and ADGM run on English law, with access to institutional capital across the Middle East and Asia. In 2025 Dubai also launched a pilot tokenising property title deeds through the Land Department.',
+        ],
+      },
+      jp: {
+        name: 'Japan',
+        paragraphs: [
+          'Japan keeps expanding its crypto regulation.',
+          'In 2025 it launched a pilot tokenising government securities on DLT, following successful projects in Germany, Singapore and Hong Kong.',
+        ],
+      },
+      sg: {
+        name: 'Singapore',
+        paragraphs: [
+          'MAS regulates tokenised assets through the Securities and Futures Act: RWA tokens count as securities when they convey equity, debt or collective-investment interests.',
+          'Issuance, custody, trading and market operation all require SFA licences. Project Guardian serves as the institutional sandbox for testing tokenisation.',
+        ],
+      },
+      us: {
+        name: 'United States',
+        paragraphs: [
+          'There is no dedicated RWA law. In January 2026 the SEC confirmed that a security remains a security whether or not ownership is recorded on a blockchain. Tokens conveying rights to income or profit are securities under federal rules — the Howey test and prospectus requirements apply.',
+          'In 2025–2026 the SEC launched “Project Crypto” with the CFTC: asset classification, a safe harbour for tokens, a single licence for trading venues and lighter custody rules. The GENIUS Act (July 2025) created the first federal framework for stablecoins, and the CLARITY Act on market structure passed the House and is pending in the Senate.',
+        ],
+      },
+      vg: {
+        name: 'British Virgin Islands',
+        paragraphs: [
+          'A classic offshore route, used as a holding SPV without a licence to distribute — a structural layer rather than the point of sale to investors.',
+          'Tax: 0% on profit, capital gains and VAT. Usually combined with a regulated front in another jurisdiction, for example Liechtenstein or the AIFC.',
+        ],
+      },
     },
-    youGetLabel: 'You get',
-    youProvideLabel: 'You provide',
-    whoExecutesLabel: 'Who executes',
-    endsWithLabel: 'Ends with',
-    talkLabel: 'Book a call',
-    talkHref: 'https://calendly.com/care-8blocks/intro',
-    tiers: [
-      {
-        name: 'Essential',
-        tagline: 'The architect',
-        youGet: 'Full structure spec, rights model, partner brief',
-        youProvide: 'Asset facts, decisions, your counsel',
-        whoExecutes: 'You — with partners you contract directly',
-        endsWith: 'A build-ready specification',
-      },
-      {
-        name: 'Growth',
-        tagline: 'Architect + general contractor',
-        youGet: 'Everything in Essential, plus the coordinated build',
-        youProvide: 'Decisions at weekly checkpoints',
-        whoExecutes: 'Vetted partners — legal, technical, market — coordinated by us',
-        endsWith: 'A working system, accepted by you',
-      },
-      {
-        name: 'Institutional',
-        tagline: 'Your external team',
-        youGet: 'End-to-end delivery, through launch and the agreed period after',
-        youProvide: 'The mandate and sign-offs',
-        whoExecutes: 'We own the outcome across all partners',
-        endsWith: 'Launch, then a planned handoff',
-      },
-    ],
-    note: 'Scope is set by the diagnosis, not the package — the Workshop decides which parts apply before any build begins. Its price is credited; whatever it rules out, you don’t buy.',
   },
-  risks: {
-    number: '05',
-    label: 'Before you spend money',
-    headline: 'Risks we screen first',
-    description: 'Five ways these projects fail — screened in this order, before any build.',
-    sourceLabel: 'View source',
+  depths: {
+    title: 'Three depths of involvement',
+    badge: 'Most popular option',
+    labels: { provide: 'You provide', executes: 'Who executes', ends: 'Ends with' },
+    action: { label: 'Book a call', href: CALL },
     items: [
       {
-        title: 'Liquidity',
-        description:
-          '“Sell anytime” is a design goal, not a given — nearly half of the $15B+ in tokenized bonds trade under $1M turnover.',
-        sourceHref:
-          'https://reports.weforum.org/docs/WEF_Asset_Tokenization_in_Financial_Markets_2025.pdf',
+        title: 'The architect',
+        subtitle: 'Full structure spec, rights model, partner brief',
+        provide: 'Asset facts, decisions, your counsel',
+        executes: 'You — with partners you contract directly',
+        ends: 'A build-ready specification',
       },
       {
-        title: 'Asset quality',
-        description:
-          'A digital instrument doesn’t fix a physical asset — Detroit’s lawsuit against RealT’s tokenized homes is the cautionary tale.',
-        sourceHref:
-          'https://detroitmi.gov/news/city-scores-major-win-tenants-living-troubled-real-token-properties-are-subject-sweeping-lawsuit',
+        title: 'Architect +\ngeneral contractor',
+        subtitle: 'Everything in The architect, plus the coordinated build',
+        provide: 'Decisions at weekly checkpoints',
+        executes: 'Vetted partners — legal, technical',
+        ends: 'A working system, accepted by you',
       },
       {
-        title: 'Buyer demand',
-        description:
-          'If the realistic buyer pool can’t absorb the raise at the minimum ticket, we stop — before you’ve paid for anything.',
-      },
-      {
-        title: 'Legal status',
-        description:
-          'Holder rights must survive counsel review in your jurisdiction — or the structure never leaves the drawing board.',
-      },
-      {
-        title: 'Bank and investor constraints',
-        description:
-          'Existing covenants and mortgages are part of the design brief — both see the structure before anything is issued.',
-      },
-    ],
-    ctaHeadline: 'Knowing where this breaks is the difference between a pitch and a plan.',
-    ctaLabel: 'Get this screen on your asset',
-    ctaHref: '/contact',
-  },
-  about: {
-    number: '06',
-    label: 'Who you are dealing with',
-    headline: '8Blocks, in\neight blocks.',
-    blocks: [
-      {
-        title: 'Since 2017',
-        description: 'Token economies designed through every market cycle.',
-      },
-      {
-        title: 'Economics first',
-        description: 'A structure must pay off as a business before it exists as software.',
-      },
-      {
-        title: 'Built into the business',
-        description: 'Instruments that work inside your operation — not beside it.',
-      },
-      {
-        title: 'Design and build',
-        description: 'From a model on paper to a live, running instrument.',
-      },
-      {
-        title: 'Jurisdiction-specific',
-        description: 'Every structure is drawn for your counsel’s review.',
-      },
-      {
-        title: 'One point of contact',
-        description: 'We coordinate every partner; you deal with one team.',
-      },
-      {
-        title: 'Two worlds, one team',
-        description: 'We translate between your business and the on-chain rails.',
-      },
-      {
-        title: 'Stress-tested',
-        description: 'Models are pressure-tested before anything launches.',
-      },
-    ],
-    note: 'You work with a senior team and the partner network each engagement requires — legal counsel, custody, technology, and market-access partners, coordinated per project.',
-    caseworkLabel: 'From our casework',
-    allCasesLabel: 'All cases',
-    allCasesHref: '/cases',
-    cases: [
-      {
-        tag: 'RWA · Real estate',
-        title: 'Gold as collateral',
-        description: 'Tokenized gold financing residential construction.',
-      },
-      {
-        tag: 'RWA · Agriculture',
-        title: 'Exports without bank credit',
-        description: 'Wild-harvest receivables turned into an investable instrument.',
-      },
-      {
-        tag: 'RWA · Commodities',
-        title: 'An illiquid metal, made investable',
-        description: 'High-purity metal structured across three jurisdictions.',
+        title: 'Your external team',
+        subtitle: 'End-to-end delivery, through launch and the agreed period after',
+        provide: 'The mandate and sign-offs',
+        executes: 'We own the outcome across all partners',
+        ends: 'Launch, then a planned handoff',
       },
     ],
   },
-  next: {
-    number: '07',
-    label: 'Next step',
-    headline: '45 minutes. No deck.\nA straight answer.',
-    description:
-      'You talk directly with the people who design these structures. Bring one asset — that’s preparation enough.',
-    points: [
-      'Your asset and your goal, in your terms — revenue, cost, control.',
-      'A first pass at the numbers that decide it: fraction price, minimum ticket, likely buyers, cost of structure.',
-      'A straight read: the realistic path with ranges — or the reasons to wait.',
-    ],
-    note: 'No deck to prepare, nothing to install. You won’t get a full design on the call — you’ll know whether it’s worth designing. The written diagnosis is the Workshop’s job.',
-    ctaLabel: 'Book the free 45-min call',
-    ctaHref: '/contact',
-    emailLead: 'Prefer plain email?',
-    email: 'care@8blocks.io',
-    emailNote: 'busy? send a two-line asset brief, we’ll reply with a first read.',
-    cards: [
-      {
-        tag: 'Self-serve',
-        title: 'Check your asset in Token Lab.',
-        description:
-          'A few questions about the asset and the goal — a first read on what might fit, before you talk to anyone. Three minutes, free, no registration.',
-        ctaLabel: 'Open Token Lab',
-        href: '/product/tokenization-readiness',
-      },
-      {
-        tag: 'For the busy owner',
-        title: 'The owner’s guide, on one page.',
-        description:
-          'Seven questions to ask before tokenizing an asset — the same ones we ask on the call. No email required.',
-        ctaLabel: 'Open the guide',
-        href: '/product/digital-assets/owners-guide',
-      },
+  blocks: {
+    title: '8Blocks in 8 blocks',
+    items: [
+      { title: 'Since 2017', description: 'Token economies designed through every market cycle.' },
+      { title: 'Economics first', description: 'A structure must pay off as a business before it exists as software.' },
+      { title: 'Jurisdiction-specific', description: 'Every structure is drawn for your counsel’s review.' },
+      { title: 'Stress-tested', description: 'Models are pressure-tested before anything launches.' },
+      { title: 'Built into the business', description: 'Instruments that work inside your operation — not beside it.' },
+      { title: 'Design and build', description: 'From a model on paper to a live, running instrument.' },
+      { title: 'One point of contact', description: 'We coordinate every partner; you deal with one team.' },
+      { title: 'Two worlds, one team', description: 'We translate between your business and the on-chain rails.' },
     ],
   },
+  casework: readiness.result.casework,
+  team: readiness.team,
+  resources: [
+    {
+      eyebrow: 'Self-serve',
+      title: 'Check your asset in Token Lab.',
+      description:
+        'A few questions about the asset and the goal — a first read on what might fit, before you talk to anyone. Three minutes, free, no registration.',
+      action: { label: 'Open Token Lab', href: CHECK },
+    },
+    {
+      eyebrow: 'For the busy owner',
+      title: readiness.result.guide.title.replace('\n', ' '),
+      description: readiness.result.guide.description,
+      action: readiness.result.guide.action,
+    },
+  ],
   faq: {
-    number: '08',
-    label: 'Plain answers',
-    headline: 'The questions owners ask us first.',
+    title: 'The questions owners ask us first.',
     items: [
       {
-        question: 'What does “tokenization” actually mean, in plain terms?',
+        question: 'What does tokenization mean, in plain terms?',
         answer:
-          'Taking something real — a company, land, energy, contracted revenue — and giving it a digital form investors can hold in parts, with a legal structure designed to make each part enforceable. Sometimes that is a public instrument; more often for our clients it is a quieter private structure. Which form fits, if any, is the first question we answer.',
+          'Tokenization puts ownership, a financial claim, or another defined economic right on digital infrastructure. Think of a share in a building, a pool of invoices, or a revenue stream. We design the legal and financial structure first and use blockchain to implement it. The first question we answer is which form fits your case, if any.',
       },
       {
-        question: 'Is this legal?',
+        question: 'Is tokenization legal?',
         answer:
-          'The rules are clearer than they’ve ever been. SEC staff confirmed in January 2026 that tokenized securities follow the same laws as traditional ones; MiCA — the EU’s Markets in Crypto-Assets regulation — has been in force since 2024; Dubai’s government runs its own tokenization platform. The honest part: the final legal status depends on your structure and your jurisdiction, and your counsel makes the final call. Our job is to hand them a design built to survive that review — and every design is jurisdiction-specific from day one.',
+          'The rules are clearer today than ever, and legal feasibility still depends on your case. Specialized counsel and regulated partners in your jurisdiction make that call. We hand them a design that’s built to pass their review.',
+      },
+      {
+        question: 'Do I keep control of my asset?',
+        answer:
+          'Yes. You keep operations, management, and the decision to sell. Holders get the economic rights your structure defines, such as a share of income or repayment, written into enforceable documents that your counsel reviews.',
+      },
+      {
+        question: 'Will this unsettle my bank or existing investors?',
+        answer:
+          'Before we design anything, we map your existing loans, covenants, and shareholder agreements. If a structure would breach a covenant or affect current investors, the Workshop flags it early, and we adjust the design or recommend waiting.',
+      },
+      {
+        question: 'Who holds the licenses and legal responsibility?',
+        answer:
+          'Licensed partners issue and distribute the instrument, and your counsel signs off on the legal structure in your jurisdiction. 8Blocks designs the economics and rights, then coordinates every partner, so you deal with one team.',
       },
       {
         question: 'Who buys the fractions?',
         answer:
-          'Three channels, depending on the structure: licensed platforms where such instruments are listed; private networks — funds, family offices, and brokers we reach through our partner network; and your own circle — customers, suppliers, and partners who already know the asset. Which channels are open to your case, and how much demand they can realistically carry, is part of the math we run before any build. If the buyers aren’t there, you hear it before you’ve spent anything.',
+          'Typically qualified investors, family offices, and investors outside your home market, plus retail buyers where local rules allow it. Your jurisdiction and structure define who’s eligible. We confirm a real buyer side and the minimum ticket before any build starts.',
       },
       {
-        question: 'What rights do fraction holders get over my asset?',
+        question: 'What does it cost to work with you?',
         answer:
-          'The rights you design in — and no more. In the structures we build, fraction holders typically hold economic rights: a defined share of income or proceeds. Operating control, management, and the decision to sell stay with you unless you deliberately grant more. That split is written into the legal structure itself, not into a promise.',
-      },
-      {
-        question: 'Will this unsettle my bank or my existing investors?',
-        answer:
-          'We size the instrument so your bank’s collateral and your current investors’ equity stay exactly where they are — and both see the structure before anything is issued. An existing mortgage isn’t an obstacle; it’s part of the design brief. This is one of the specific things we model before recommending anything.',
-      },
-      {
-        question: 'Will anyone need a crypto wallet?',
-        answer:
-          'Depends on the structure. Some never expose buyers to wallets at all — Dubai’s government pilot ran on ordinary dirham payments. Others use wallets behind the scenes, or only for qualified participants. It is a design choice we make with you, not a requirement. The same goes for you: no crypto knowledge is needed to own or run any of this.',
-      },
-      {
-        question: 'What does it cost, and how long does it take?',
-        answer:
-          'The first 45-minute call is free. The Workshop — the written diagnosis — is $2,000, credited in full toward any engagement. Scope and pricing beyond that come out of the Workshop — you never buy a build before knowing whether the thing is worth building.',
+          'The first 45-minute call is free. The Workshop has a fixed fee, and we credit it in full toward further work. We scope and price architecture and build around your asset after the Workshop.',
       },
     ],
-  },
-  finalCta: {
-    label: 'Digital Asset Strategy',
-    headline: 'Start with one asset.\nAnd 45 free minutes.',
-    description:
-      'You talk to the people who design these structures — not a sales rep. You leave with ranges, the realistic path, and a clear next step.',
-    ctaLabel: 'Book the free 45-min call',
-    ctaHref: 'https://calendly.com/care-8blocks/intro',
-    secondaryLabel: 'Or check your readiness first',
-    secondaryHref: '/product/tokenization-readiness',
+    footer: { text: 'Have other questions not mentioned?', link: 'Contact us', href: '/contact' },
   },
 }
-
-export const digitalAssetsContent = enObject
-export const digitalAssetsMeta = enObject.meta

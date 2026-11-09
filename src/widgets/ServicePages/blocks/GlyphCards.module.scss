@@ -1,0 +1,118 @@
+@use '@/shared/ds/styles' as *;
+
+.grid {
+  display: grid;
+  gap: 5px;
+  list-style: none;
+}
+
+.cols2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cols4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.cols3,
+.cols4 {
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.grid {
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-height: var(--card-height);
+  padding: 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile {
+    padding: $ds-space-5 20px;
+  }
+}
+
+.bg {
+  z-index: -1;
+  object-fit: cover;
+}
+
+.glyph {
+  position: absolute;
+  top: var(--glyph-top);
+  left: 0;
+  width: 100%;
+  height: var(--glyph-height);
+  pointer-events: none;
+}
+
+.label {
+  @include ds-text-sm;
+  position: relative;
+  color: $ds-accent;
+}
+
+.text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.title {
+  @include ds-text-lg;
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+.description {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+
+  .imageCard & {
+    color: $ds-text-faint;
+  }
+}
+
+.bottom .card {
+  justify-content: flex-end;
+}
+
+.bottom .card:has(.label) {
+  justify-content: space-between;
+}
+
+.under .card {
+  padding-top: calc(var(--glyph-top) + var(--glyph-height) + 15px);
+}
+
+.center .card {
+  text-align: center;
+  align-items: center;
+}
+
+// Mobile text runs longer than the desktop card allows: the glyph joins the flow.
+@include ds-mobile {
+  .grid .card {
+    min-height: 0;
+    padding-top: $ds-space-5;
+  }
+
+  .glyph {
+    position: relative;
+    top: auto;
+    flex-shrink: 0;
+    align-self: stretch;
+    width: auto;
+    height: min(var(--glyph-height), 280px);
+    margin-inline: -20px;
+  }
+
+  .label {
+    order: -1;
+  }
+}

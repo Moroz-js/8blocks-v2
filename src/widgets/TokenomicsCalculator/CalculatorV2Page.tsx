@@ -2,14 +2,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button, Faq, FeatureCards, Section } from '@/shared/ds'
 import { calculatorV2 as copy } from '@/shared/content/calculatorV2'
-import { BinaryArtCanvas } from './BinaryArtCanvas'
+import { BinaryScene } from '@/widgets/BinaryArt/BinaryScene'
 import { Calculator } from './Calculator'
 import heroFade from './assets/hero-fade.webp'
 import stepsGradient from './assets/steps-gradient.webp'
 import styles from './TokenomicsCalculator.module.scss'
 
-const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/$/, '')
-const HAND_ART = `${basePath}/img/calculator/hand-reference.png`
 const TOOL_ID = 'calculator'
 
 /** Tokenomics calculator page on design system v2 (Figma «Website», 3608:10888). */
@@ -21,7 +19,7 @@ export function CalculatorV2Page() {
         <div className={styles.glowWide} aria-hidden="true" />
         <div className={styles.glowNarrow} aria-hidden="true" />
         <div className={styles.art}>
-          <BinaryArtCanvas src={HAND_ART} />
+          <BinaryScene scene="hand-coin" className={styles.artCanvas} />
         </div>
         <Image src={heroFade} alt="" className={styles.fade} sizes="100vw" />
         <div className={styles.heroInner}>

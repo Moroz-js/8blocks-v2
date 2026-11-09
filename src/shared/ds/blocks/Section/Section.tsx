@@ -3,8 +3,10 @@ import clsx from 'clsx'
 import styles from './Section.module.scss'
 
 interface SectionProps extends Omit<ComponentPropsWithoutRef<'section'>, 'title'> {
-  /** Block title (Figma: Heading 3). Omit for blocks without a heading. */
+  /** Block title (Figma: Heading 3). Omit for blocks without a heading. Line breaks (\n) are kept. */
   title?: ReactNode
+  /** Short muted text under the title. */
+  description?: ReactNode
   /** Title alignment. */
   align?: 'left' | 'center'
   /** Soft white sheen on the title (carousels, tables). */
@@ -23,6 +25,7 @@ interface SectionProps extends Omit<ComponentPropsWithoutRef<'section'>, 'title'
  */
 export function Section({
   title,
+  description,
   align = 'left',
   sheen = false,
   actions,
@@ -32,11 +35,17 @@ export function Section({
   children,
   ...props
 }: SectionProps) {
+  const heading = title && <h2 className={clsx(styles.title, sheen && styles.sheen)}>{title}</h2>
   return (
     <section className={clsx(styles.section, bleed && styles.bleed, className)} {...props}>
       {(title || actions) && (
         <div className={clsx(styles.header, styles[align])}>
-          {title && <h2 className={clsx(styles.title, sheen && styles.sheen)}>{title}</h2>}
+          {description ? (
+            <div className={styles.heading}>
+              {heading}
+              <p className={styles.description}>{description}</p>
+            </div>
+          ) : heading}
           {actions && <div className={styles.actions}>{actions}</div>}
         </div>
       )}

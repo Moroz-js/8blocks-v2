@@ -1,0 +1,121 @@
+@use '@/shared/ds/styles' as *;
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 32px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-tablet { padding-bottom: 0; }
+  @include ds-mobile { padding: $ds-space-5 20px 0; }
+}
+
+.stack { min-height: 364px; }
+
+.row {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: $ds-space-6;
+  min-height: 268px;
+  padding: $ds-space-7;
+
+  @include ds-tablet {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 0;
+  }
+
+  @include ds-mobile { padding: $ds-space-5 20px 0; }
+}
+
+.text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 470px;
+
+  .row & {
+    gap: 20px;
+    max-width: 741px;
+  }
+}
+
+.title {
+  @include ds-h4;
+  max-width: 452px;
+  color: $ds-text;
+  white-space: pre-line;
+
+  @include ds-mobile { white-space: normal; }
+}
+
+.description {
+  @include ds-text-sm;
+  max-width: 380px;
+  color: $ds-text-muted;
+
+  .row & {
+    @include ds-text-md;
+    max-width: none;
+    color: $ds-text-faint;
+  }
+}
+
+.action {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+
+  .row & { flex-shrink: 0; }
+
+  @include ds-tablet { margin-top: $ds-space-6; }
+}
+
+// Lets the art rise above the card while cutting it at the card's bottom and right edges.
+.clip {
+  position: absolute;
+  top: calc(-1 * var(--art-height));
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  border-bottom-right-radius: $ds-radius-card;
+  pointer-events: none;
+
+  @include ds-tablet {
+    position: relative;
+    top: auto;
+    align-self: center;
+    width: min(var(--art-width), 100%);
+    overflow: visible;
+    margin-top: $ds-space-6;
+  }
+}
+
+.art {
+  position: absolute;
+  right: var(--art-right);
+  bottom: var(--art-bottom);
+  width: var(--art-width);
+  height: var(--art-height);
+
+  img {
+    object-fit: cover;
+    object-position: 50% 0;
+  }
+
+  @include ds-tablet {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: var(--art-ratio);
+  }
+}

@@ -1,0 +1,108 @@
+@use '@/shared/ds/styles' as *;
+
+.layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $ds-space-7;
+
+  @include ds-tablet {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 293px;
+  flex-shrink: 0;
+
+  @include ds-tablet { width: auto; }
+}
+
+.title {
+  @include ds-h3;
+  color: $ds-text;
+}
+
+.description {
+  @include ds-text-sm;
+  max-width: 476px;
+  color: $ds-text-faint;
+}
+
+.cards {
+  display: flex;
+  gap: 5px;
+  width: 705px;
+  height: 300px;
+  list-style: none;
+
+  @include ds-tablet {
+    width: 100%;
+  }
+
+  @include ds-mobile {
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+.card {
+  flex: 1 1 0;
+  min-width: 0;
+  transition: flex 480ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+
+.active {
+  flex: 0 0 293px;
+
+  @include ds-mobile { flex: none; }
+}
+
+.button {
+  @include ds-focus-visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  text-align: left;
+  cursor: pointer;
+
+  @include ds-mobile {
+    gap: $ds-space-3;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.index {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.text {
+  @include ds-text-lg;
+  width: 233px;
+  color: $ds-text;
+  opacity: 0;
+  transition: opacity 240ms $ds-ease;
+
+  .active & {
+    opacity: 1;
+    transition-delay: 200ms;
+  }
+
+  @include ds-mobile {
+    width: auto;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,149 @@
+@use '@/shared/ds/styles' as *;
+
+$line: rgba($ds-white, 0.55); // designer's route arrows and stage numbers
+
+.layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: $ds-space-7;
+
+  @include ds-tablet {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 595px;
+}
+
+.title {
+  @include ds-h3;
+  max-width: 503px;
+  color: $ds-text;
+  white-space: pre-line;
+}
+
+.description {
+  @include ds-text-sm;
+  max-width: 309px;
+  color: $ds-text-faint;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  width: 595px;
+  height: 525px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-tablet {
+    width: 100%;
+    max-width: 595px;
+    align-self: center;
+  }
+
+  @include ds-mobile {
+    height: auto;
+    padding: $ds-space-6 20px;
+  }
+}
+
+.bg {
+  z-index: -1;
+  object-fit: cover;
+}
+
+.arrows {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: $line;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  path { marker-end: url(#strategy-arrow); }
+  marker path { marker-end: none; }
+
+  @include ds-mobile { display: none; }
+}
+
+// Desktop: the designer's coordinates (595 × 525 card, 150 × 60 pills).
+// Top row 01–03 runs right, bottom row 04–06 comes back left.
+.stages {
+  position: absolute;
+  inset: 0;
+  list-style: none;
+
+  @include ds-mobile {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $ds-space-5;
+  }
+}
+
+.stage {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &:nth-child(1) { left: 45px; top: 126px; }
+  &:nth-child(2) { left: 222px; top: 126px; }
+  &:nth-child(3) { left: 400px; top: 126px; }
+  &:nth-child(4) { left: 400px; top: 291px; }
+  &:nth-child(5) { left: 222px; top: 291px; }
+  &:nth-child(6) { left: 45px; top: 291px; }
+
+  @include ds-mobile {
+    position: static;
+    align-items: center;
+  }
+}
+
+.number {
+  @include ds-text-xs;
+  padding-left: 18px;
+  color: $line;
+
+  @include ds-mobile { padding-left: 0; }
+}
+
+.pill {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 60px;
+  padding: 0 14px;
+  border: 1px solid rgba($ds-white, 0.22);
+  border-radius: $ds-radius-pill;
+  background: linear-gradient(180deg, rgba($ds-white, 0.16) 0%, rgba($ds-white, 0.05) 100%);
+  box-shadow: inset 0 1px 0 rgba($ds-white, 0.28), 0 10px 30px rgba($ds-black, 0.25);
+  backdrop-filter: blur(14px);
+  color: $ds-text;
+  text-align: center;
+
+  .final & {
+    border-color: rgba($ds-white, 0.95);
+    background: rgba($ds-white, 0.92);
+    box-shadow: 0 10px 30px rgba($ds-black, 0.25);
+    backdrop-filter: none;
+    color: $ds-text-inverse;
+  }
+
+  @include ds-mobile { width: 200px; }
+}

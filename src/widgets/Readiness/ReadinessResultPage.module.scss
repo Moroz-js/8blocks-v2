@@ -1,0 +1,385 @@
+@use '@/shared/ds/styles' as *;
+
+$header: 65px;
+
+.good { color: $ds-success; }
+.medium { color: $ds-warning; }
+.bad { color: $ds-danger; }
+
+.muted {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+// ── Verdict + cards ─────────────────────────────────────────────────
+.topSection {
+  padding-top: 70px;
+
+  @include ds-mobile { padding-top: $ds-space-7; }
+}
+
+.top {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: $ds-space-7;
+
+  @include ds-tablet {
+    flex-direction: column;
+  }
+}
+
+// Pinned next to the cards until the column ends.
+.intro {
+  position: sticky;
+  top: $header + 40px;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+  width: 457px;
+
+  @include ds-tablet {
+    position: static;
+    width: auto;
+    max-width: 600px;
+  }
+}
+
+.direction {
+  @include ds-text-sm;
+  color: $ds-text;
+}
+
+.title {
+  @include ds-h2;
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+.readiness {
+  @include ds-text-sm;
+  margin-top: 14px;
+  color: $ds-text;
+}
+
+.summary {
+  @include ds-text-sm;
+  margin-top: $ds-space-5;
+  color: $ds-text-faint;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 595px;
+  flex-shrink: 0;
+
+  @include ds-tablet { width: auto; }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
+}
+
+.cardTitle {
+  @include ds-text-lg;
+  position: relative;
+  color: $ds-text;
+}
+
+.strengths {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+  list-style: none;
+}
+
+.strength {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  gap: $ds-space-2;
+  padding-block: 14px;
+  color: $ds-text;
+
+  & + & { border-top: 1px solid $ds-surface-raised; }
+
+  svg {
+    flex-shrink: 0;
+    color: $ds-success;
+  }
+}
+
+.noStrengths { margin-top: $ds-space-4; }
+
+.validateTitle { margin-top: 26px; }
+
+.validate {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  margin-top: $ds-space-4;
+  list-style: none;
+}
+
+.validateItem {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  gap: $ds-space-2;
+  color: $ds-text;
+}
+
+.validateIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: $ds-warning;
+}
+
+.inputs { gap: 15px; }
+
+.inputsLine {
+  overflow: hidden;
+  max-width: 470px;
+  color: $ds-text-muted;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.edit {
+  @include ds-text-sm;
+  @include ds-focus-visible;
+  @include ds-transition(opacity);
+  position: absolute;
+  top: 30px;
+  right: 25px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: $ds-text;
+
+  &:hover { opacity: 0.8; }
+
+  @include ds-mobile {
+    top: $ds-space-5;
+    right: 20px;
+  }
+}
+
+// ── Precedent ───────────────────────────────────────────────────────
+.precedent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $ds-space-6;
+  min-height: 428px;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  // Keeps the text readable over the photo.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, $ds-surface 0%, color-mix(in srgb, $ds-surface 70%, transparent) 30%, transparent 60%);
+  }
+
+  @include ds-mobile {
+    min-height: 480px;
+    padding: $ds-space-5 20px;
+
+    &::before {
+      background: linear-gradient(180deg, $ds-surface 0%, color-mix(in srgb, $ds-surface 75%, transparent) 55%, transparent 100%);
+    }
+  }
+}
+
+.precedentImage { object-fit: cover; }
+
+.precedentText,
+.stat {
+  position: relative;
+  z-index: 2;
+}
+
+.precedentText {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 458px;
+}
+
+.precedentTitle {
+  @include ds-h5;
+  display: flex;
+  flex-direction: column;
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+.kicker { color: $ds-text-muted; }
+
+.precedentDescription {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+  white-space: pre-line;
+}
+
+.stat {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  gap: $ds-space-2;
+  color: $ds-text;
+
+  svg { flex-shrink: 0; }
+}
+
+.note { margin-top: 30px; }
+
+// ── Widen access ────────────────────────────────────────────────────
+.widenTitle {
+  @include ds-h3;
+  max-width: 563px;
+  margin-bottom: $ds-space-7;
+  color: $ds-text;
+}
+
+.widen {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.widenCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $ds-space-7;
+  min-height: 223px;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile {
+    min-height: 0;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.cardBg {
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.widenValue {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+}
+
+.widenNumber {
+  @include ds-h3;
+  color: $ds-text;
+}
+
+.widenText {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+
+  .digital & { color: $ds-text-muted; }
+}
+
+// ── Route ───────────────────────────────────────────────────────────
+.route {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
+}
+
+.routeSteps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: $ds-space-6; }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.routeStep {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-height: 88px;
+
+  & + & {
+    padding-left: 22px;
+    border-left: 1px solid color-mix(in srgb, $ds-text 10%, transparent);
+  }
+
+  @include ds-tablet {
+    &:nth-child(odd) {
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
+
+  @include ds-mobile {
+    min-height: 0;
+
+    & + & {
+      padding-top: $ds-space-5;
+      padding-left: 0;
+      border-top: 1px solid color-mix(in srgb, $ds-text 10%, transparent);
+      border-left: 0;
+    }
+  }
+}
+
+.routeTitle {
+  @include ds-text-lg;
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+.routeText {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+// ── Broken link ─────────────────────────────────────────────────────
+.invalid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $ds-space-5;
+  min-height: 400px;
+}

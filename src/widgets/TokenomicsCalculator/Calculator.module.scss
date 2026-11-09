@@ -73,8 +73,7 @@
 }
 
 .actionsEnd,
-.actionsSplit,
-.actionsStart {
+.actionsSplit {
   display: flex;
   flex-wrap: wrap;
   gap: $ds-space-4;
@@ -83,17 +82,8 @@
 
 .actionsEnd { justify-content: flex-end; }
 .actionsSplit { justify-content: space-between; }
-.actionsStart { margin-top: 0; }
 
 // ── Stepper ───────────────────────────────────────────────────────────
-.resultsNav {
-  padding: $ds-space-6 $ds-space-6 0;
-  border-radius: $ds-radius-lg;
-  background-color: $ds-surface;
-
-  @include ds-mobile { padding: $ds-space-5 $ds-space-4 0; }
-}
-
 .stepper {
   display: grid;
   list-style: none;
@@ -257,36 +247,6 @@
   text-align: left;
 
   &::placeholder { color: rgba($ds-black, 0.5); opacity: 1; }
-}
-
-// «?» with a tooltip.
-.hint {
-  @include ds-focus-visible;
-  position: relative;
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: rgba($ds-white, 0.22);
-  color: $ds-text;
-  font-size: 10px;
-  line-height: 1;
-  cursor: help;
-}
-
-.hintTooltip {
-  @include ds-text-sm;
-  max-width: calc(100vw - 24px);
-  padding: 10px 12px;
-  border: 1px solid $ds-border;
-  border-radius: $ds-radius-field;
-  background-color: $ds-surface-raised;
-  color: $ds-text;
-  text-align: left;
-  overflow-wrap: anywhere;
 }
 
 // ── Allocation ────────────────────────────────────────────────────────

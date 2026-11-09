@@ -24,8 +24,6 @@ export async function generateMetadata(): Promise<Metadata> {
   })
 }
 
-// Design system v2 (Figma «Website», 3608:10888). The calculator logic is
-// wired in later; until then the tool block is the design's picture.
 export default function TokenLabRoute() {
   return <CalculatorV2Page />
 }

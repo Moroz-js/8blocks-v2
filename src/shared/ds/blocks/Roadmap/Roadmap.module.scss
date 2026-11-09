@@ -10,6 +10,13 @@
   @include ds-mobile { grid-template-columns: minmax(0, 1fr); gap: $ds-space-5; }
 }
 
+.cols4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
 .step {
   display: flex;
   align-items: flex-start;

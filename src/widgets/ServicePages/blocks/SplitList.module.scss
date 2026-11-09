@@ -1,0 +1,134 @@
+@use '@/shared/ds/styles' as *;
+
+$row-line: rgba($ds-white, 0.25); // designer's list rules, brighter than $ds-border
+
+.layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: $ds-space-7;
+
+  @include ds-tablet {
+    flex-direction: column;
+  }
+}
+
+.aside {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 382px;
+  flex-shrink: 0;
+
+  @include ds-tablet {
+    position: static;
+    width: auto;
+  }
+}
+
+.title {
+  color: $ds-text;
+}
+
+.md {
+  @include ds-h3;
+  max-width: 326px;
+}
+
+.sm {
+  @include ds-h4;
+}
+
+.description {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+.list {
+  width: 746px;
+  min-width: 0;
+
+  @include ds-tablet {
+    width: 100%;
+  }
+}
+
+// ── Indexed rows ────────────────────────────────────────────────────
+.indexed {
+  list-style: none;
+}
+
+.indexedRow {
+  display: flex;
+  min-height: 96px;
+
+  & + & {
+    border-top: 1px solid $row-line;
+  }
+}
+
+.index {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  width: 94px;
+  flex-shrink: 0;
+  padding-left: $ds-space-7;
+  border-right: 1px solid $row-line;
+  color: $ds-text;
+
+  @include ds-mobile {
+    width: 56px;
+    padding-left: 0;
+  }
+}
+
+.indexedText {
+  @include ds-text-sm;
+  align-self: center;
+  max-width: 557px;
+  padding: 18px $ds-space-7 18px 35px;
+  color: $ds-text-muted;
+
+  @include ds-mobile {
+    padding: $ds-space-4 0 $ds-space-4 20px;
+  }
+}
+
+.lead {
+  color: $ds-text;
+}
+
+// ── Labeled rows ────────────────────────────────────────────────────
+.labeled {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-7;
+  list-style: none;
+}
+
+.labeledRow {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-right: $ds-space-7;
+
+  &:not(:last-child) {
+    padding-bottom: $ds-space-7;
+    border-bottom: 1px solid $row-line;
+  }
+}
+
+.label {
+  @include ds-text-sm;
+  padding-left: 7px;
+  color: $ds-accent;
+}
+
+.labeledText {
+  @include ds-text-lg;
+  max-width: 519px;
+  color: $ds-text;
+}

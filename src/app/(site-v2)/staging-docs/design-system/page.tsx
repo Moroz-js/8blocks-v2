@@ -49,12 +49,18 @@ const TYPE = [
   ['ds-text-lg', 'Text large', '18 / 25 · +1%', 'textLg'],
   ['ds-text-md', 'Text normal', '16 / 22 · +1%', 'textMd'],
   ['ds-text-sm', 'Text small', '14 / 20 · +1%', 'textSm'],
+  ['ds-text-xs', 'Text extra small', '12 / 16 · +1%', 'textXs'],
 ] as const
 
 const SHAPE = [
   ['$ds-radius-pill', '64px', 'Кнопки, табы, круглые контролы'],
   ['$ds-radius-field', '10px', 'Поля ввода'],
-  ['$ds-radius-card', '8px', 'Карточки, панели'],
+  ['$ds-radius-card', '10px', 'Карточки, панели'],
+  ['$ds-radius-lg', '15px', 'FAQ, подсветка колонки таблицы, превью кейсов'],
+  ['$ds-radius-badge', '12px', 'Плашка цены'],
+  ['$ds-radius-md / sm / xs', '8 / 6 / 4px', 'Мелкие элементы: чипы, теги, бары графиков'],
+  ['$ds-radius-step', '5px', 'Номер шага в Roadmap'],
+  ['$ds-weight / regular / bold', '500 / 400 / 700', 'Начертания Manrope; по умолчанию 500'],
   ['$ds-content', '1200px', 'Колонка контента; 8 колонок × 141, gutter 10'],
   ['$ds-margin', '40 / 24 / 12px', 'Поля: desktop / tablet ≤ 1024 / mobile ≤ 640'],
   ['$ds-block-gap', '180 / 120 / 80px', 'Между блоками страницы'],

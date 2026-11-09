@@ -17,7 +17,7 @@
 | `npm install` | Установка зависимостей | работает |
 | `npm run dev` | Dev-сервер (порт 3000, при занятом — следующий свободный) | работает |
 | `npm run typecheck` | `tsc --noEmit` | проходит |
-| `npm run test:platform` | Vitest, `src/shared/lib/platform` (11 файлов, 82 теста) | проходит |
+| `npm run test:platform` | Vitest, `src/shared/lib/platform` (11 файлов, 79 тестов) | проходит |
 | `npm run build` | Production-сборка | проходит |
 | `npm run lint` | ESLint | **падает**: 12 старых ошибок (см. `docs/agent/STATE.md`) |
 
@@ -42,4 +42,5 @@
 - Тексты — в `src/shared/content/{ru,en}/*.ts`, корневые `src/shared/content/*.ts` выбирают локаль.
 - Клиентские компоненты (`'use client'`) не должны импортировать обе локали JSON/контента: выбирать локаль на server-странице и передавать пропсами.
 - `src/app/(payload)/admin/importMap.js` генерируется Payload (`generate:importmap`), руками не править.
+- Дизайн-система v2: токены и миксины — `src/shared/ds/styles/_tokens.scss`, `_mixins.scss`; витрина — `/staging-docs/design-system`. В вёрстке использовать только токены. Если значение в макете (Figma или HTML из `project/`) не совпадает с токеном — приводить к ближайшему существующему, новых значений не заводить. Уже согласовано: текст 15px → 16px, 13px → 14px; заголовок 48px → 40px (h3). Новые токены — только по решению владельца.
 - Новые env-переменные — сразу в `.env.example` с комментарием, секреты деплоя — в `.env-github.example` и `.github/workflows/deploy-site.yml`.

@@ -29,6 +29,7 @@
   @include ds-h3;
   // Solid white: Figma's 90% opacity reads as grey over the pink gradient.
   color: $ds-text;
+  white-space: pre-line;
 }
 
 .description {
@@ -66,6 +67,76 @@
 
 .left .description {
   max-width: 462px;
+}
+
+// Service pages: smaller title, short card.
+.md .card,
+.sm .card {
+  min-height: 0;
+}
+
+.md .text,
+.sm .text {
+  gap: 10px;
+}
+
+.md .text {
+  max-width: none;
+}
+
+.md .title {
+  @include ds-h4;
+}
+
+.sm .title {
+  @include ds-h5;
+}
+
+.md .description,
+.sm .description {
+  @include ds-text-sm;
+}
+
+.md .description { max-width: 636px; }
+.sm .description { max-width: 400px; }
+
+.sm .card {
+  align-items: center;
+  min-height: 160px;
+
+  @include ds-tablet {
+    align-items: flex-start;
+  }
+}
+
+// Card in a narrow column (calculator results): Text L title, 30px padding.
+.xs .card {
+  align-items: flex-end;
+  gap: $ds-space-7;
+  min-height: 0;
+  padding: 30px;
+
+  @include ds-mobile {
+    padding: $ds-space-5 20px;
+  }
+}
+
+.xs .text {
+  gap: 10px;
+  max-width: none;
+}
+
+.xs .title {
+  @include ds-text-lg;
+}
+
+.xs .description {
+  @include ds-text-sm;
+  max-width: none;
+}
+
+.xs .actions {
+  flex-shrink: 0;
 }
 
 // ── price ───────────────────────────────────────────────────────────

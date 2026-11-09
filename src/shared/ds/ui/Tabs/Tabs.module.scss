@@ -14,6 +14,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: $ds-space-2;
   height: 44px;
   padding: 10px $ds-space-4;
   border: none;
@@ -28,6 +29,10 @@
   }
 }
 
+.icon {
+  flex-shrink: 0;
+}
+
 // Figma: Tab on (63:3169).
 .selected {
   background-color: $ds-text;
@@ -36,4 +41,54 @@
   &:hover {
     @include ds-overlay($ds-overlay-darken-soft);
   }
+
+  .icon {
+    filter: invert(1);
+  }
 }
+
+// ── Ghost: transparent tabs, one white indicator flows to the selected tab ──
+$flow: calc(#{$ds-duration} * 2);
+$lag: calc(#{$ds-duration} / 2);
+
+.ghost {
+  position: relative;
+  isolation: isolate;
+
+  .tab {
+    background-color: transparent;
+    transition-duration: $ds-duration, $ds-duration, $ds-duration;
+    transition-delay: 0s, 0s, $lag;
+  }
+
+  .icon {
+    @include ds-transition(filter);
+    transition-delay: $lag;
+  }
+
+  // Once measured, the indicator carries the fill (SSR keeps the tab's own).
+  &.ready .selected,
+  &.ready .selected:hover {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.indicator {
+  position: absolute;
+  z-index: -1;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-text;
+  transition-property: left, right, top, height;
+  transition-duration: $flow;
+  transition-timing-function: $ds-ease;
+  pointer-events: none;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// The leading edge moves first, the trailing edge catches up.
+.forward { transition-delay: $lag, 0s, 0s, 0s; }
+.backward { transition-delay: 0s, $lag, 0s, 0s; }

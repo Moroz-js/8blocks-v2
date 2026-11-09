@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
-import { Button } from '@/shared/ds'
+import { Button, Hint } from '@/shared/ds'
 import type { TokenModel } from '@/shared/lib/platform/tokenlab/model'
 import { createDefaultModel } from '@/shared/lib/platform/tokenlab/model'
 import type {
@@ -28,16 +29,15 @@ import { copy, localizeTier } from './copy'
 import { AllocationStep } from './AllocationStep'
 import { BasicsStep } from './BasicsStep'
 import { DonutChart } from './DonutChart'
-import { Hint } from './Hint'
-import { ResultsStep } from './ResultsStep'
 import { UnlockChart } from './UnlockChart'
 import { VestingStep } from './VestingStep'
 import styles from './Calculator.module.scss'
 
-type StepKey = 'basics' | 'allocation' | 'vesting' | 'results'
+type StepKey = 'basics' | 'allocation' | 'vesting'
 
-const STEPS: StepKey[] = ['basics', 'allocation', 'vesting', 'results']
+const STEPS = ['basics', 'allocation', 'vesting', 'results'] as const
 const DRAFT_KEY = 'tokenlab-draft'
+const resultUrl = (model: TokenModel) => `/product/calculator/result?m=${encodeModel(model)}`
 
 // Figma preview opens on 10M supply.
 const createInitialModel = (): TokenModel => ({ ...createDefaultModel(), totalSupply: 10_000_000 })
@@ -47,11 +47,12 @@ function tone(level: 'good' | 'medium' | 'bad') {
 }
 
 /**
- * The calculator: three input steps with a live preview and the results step.
- * Logic and state handling are the v1 calculator's; the markup follows the
- * Figma preview (3608:10896) and design system v2.
+ * The calculator: three input steps with a live preview; results live on
+ * /product/calculator/result. Logic and state handling are the v1 calculator's;
+ * the markup follows the Figma preview (3608:10896) and design system v2.
  */
 export function Calculator() {
+  const router = useRouter()
   const [model, setModel] = useState<TokenModel>(createInitialModel)
   const [step, setStep] = useState<StepKey>('basics')
   const [forkBanner, setForkBanner] = useState(false)
@@ -72,16 +73,19 @@ export function Calculator() {
         setInvalidBanner(true)
         return
       }
+      const fork = params.get('fork') === '1'
+      if (!fork && params.get('edit') !== '1') {
+        // Old shared links pointed at the calculator itself.
+        router.replace(resultUrl(shared))
+        return
+      }
       setModel(shared)
       startedRef.current = true
       window.dispatchEvent(new CustomEvent('tokenlab:started'))
-      if (params.get('fork') === '1') {
+      if (fork) {
         setStep('vesting')
         setForkBanner(true)
         trackPlatformEvent('benchmark_fork_opened', { symbol: shared.symbol || undefined })
-      } else {
-        setStep('results')
-        trackPlatformEvent('shared_view_opened', { symbol: shared.symbol || undefined })
       }
       // A shared link lands on the tool, not on the hero.
       requestAnimationFrame(() => rootRef.current?.scrollIntoView({ block: 'start' }))
@@ -100,7 +104,7 @@ export function Calculator() {
     } catch {
       // Draft persistence is best-effort.
     }
-  }, [])
+  }, [router])
 
   useEffect(() => {
     if (!startedRef.current) return
@@ -125,11 +129,18 @@ export function Calculator() {
   }
 
   function runAnalysis() {
-    goTo('results')
-    if (!completedRef.current && startedRef.current && isFullyAllocated(model.allocations)) {
+    markStarted()
+    trackPlatformEvent('tool_step', { tool: 'tokenlab', step: 'results' })
+    if (!completedRef.current && isFullyAllocated(model.allocations)) {
       completedRef.current = true
       trackPlatformEvent('tool_complete', { tool: 'tokenlab' })
     }
+    try {
+      window.localStorage.setItem(DRAFT_KEY, encodeModel(model))
+    } catch {
+      // Draft persistence is best-effort.
+    }
+    router.push(resultUrl(model))
   }
 
   function startFresh() {
@@ -228,21 +239,6 @@ export function Calculator() {
       )}
     </>
   )
-
-  if (step === 'results') {
-    return (
-      <div ref={rootRef} className={styles.calculator}>
-        <div className={styles.resultsNav}>{stepper}</div>
-        {banners}
-        <ResultsStep model={model} onEdit={() => goTo('basics')} />
-        <div className={styles.actionsStart}>
-          <Button variant="secondary" onClick={() => goTo('vesting')} icon={<span aria-hidden="true">←</span>} iconPosition="left">
-            {copy.navigation.adjust}
-          </Button>
-        </div>
-      </div>
-    )
-  }
 
   const allocationMessage = !complete
     ? (total > 100 ? copy.allocation.remove : copy.allocation.remaining).replace('{value}', Math.abs(total > 100 ? total - 100 : 100 - total).toFixed(0))

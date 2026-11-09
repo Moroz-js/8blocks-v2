@@ -1,0 +1,147 @@
+@use '@/shared/ds/styles' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-5;
+  min-height: 640px;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  scroll-margin-top: 120px;
+
+  @include ds-mobile {
+    min-height: 0;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.progress {
+  @include ds-text-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  color: $ds-text;
+}
+
+.segments {
+  display: flex;
+  gap: 6px;
+}
+
+.segment {
+  @include ds-transition(background-color);
+  flex: 1;
+  height: 4px;
+  padding: 0;
+  border: none;
+  border-radius: $ds-radius-pill;
+  background-color: rgba($ds-white, 0.12);
+  cursor: pointer;
+
+  &:disabled { cursor: default; }
+
+  &:focus-visible {
+    outline: 2px solid $ds-focus;
+    outline-offset: 4px;
+  }
+}
+
+.done { background-color: color-mix(in srgb, var(--ds-success) 70%, transparent); }
+.current { background-color: $ds-success; }
+
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $ds-space-2;
+}
+
+.chip {
+  @include ds-text-sm;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 $ds-space-3;
+  border-radius: $ds-radius-pill;
+  background-color: color-mix(in srgb, var(--ds-success) 10%, transparent);
+  color: $ds-success;
+}
+
+.title {
+  @include ds-h5;
+  max-width: 900px;
+  color: $ds-text;
+}
+
+.help {
+  @include ds-text-sm;
+  max-width: 700px;
+  color: $ds-text-muted;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.option {
+  @include ds-text-sm;
+  @include ds-transition(background-color, color);
+  @include ds-focus-visible;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 52px;
+  padding: 10px $ds-space-4;
+  border: none;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface-raised;
+  color: rgba($ds-white, 0.86);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover { @include ds-overlay($ds-overlay-lighten); }
+}
+
+.key {
+  @include ds-transition(border-color, color);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba($ds-white, 0.16);
+  border-radius: $ds-radius-sm;
+  color: $ds-text-muted;
+}
+
+.selected {
+  background-color: color-mix(in srgb, var(--ds-success) 10%, transparent);
+  color: $ds-text;
+
+  .key {
+    border-color: color-mix(in srgb, var(--ds-success) 50%, transparent);
+    color: $ds-success;
+  }
+}
+
+.back {
+  @include ds-text-sm;
+  @include ds-transition(opacity);
+  @include ds-focus-visible;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $ds-text;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}

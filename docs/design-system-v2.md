@@ -85,6 +85,13 @@ Manrope Medium 500 во всех стилях. Body-стили — letter-spacin
 | `ds-text-lg` | Text large | 18 / 25 | — |
 | `ds-text-md` | Text normal | 16 / 22 | — |
 | `ds-text-sm` | Text small | 14 / 20 | — |
+| `ds-text-xs` | Text extra small | 12 / 16 | — |
+
+Начертания: `$ds-weight` 500 (основное), `$ds-weight-regular` 400, `$ds-weight-bold` 700.
+
+**Значения вне токенов.** Если в макете (Figma или HTML из `project/`) размер не совпадает с токеном — берётся ближайший существующий, новых значений не заводим. Согласовано: текст 15 → 16, 13 → 14, заголовок 48 → 40 (h3). Новые токены — только по решению владельца.
+
+**Переносы в заголовках.** Ручные `\n` в заголовках рассчитаны на desktop-ширину; на mobile у `Section`, `ServiceHero`, `CoverCard`, `TeamCta` стоит `white-space: normal`, текст переносится сам.
 
 Уменьшение заголовков на mobile на один уровень — по мобильному макету (заголовок блока H3 → 40px строки); при расхождении с макетами конкретных блоков — уточнить у дизайнера.
 
@@ -111,8 +118,11 @@ Manrope Medium 500 во всех стилях. Body-стили — letter-spacin
 |---|---|---|
 | `$ds-radius-pill` | 64px | Кнопки, табы, круглые контролы |
 | `$ds-radius-field` | 10px | Поля ввода |
-| `$ds-radius-card` | 8px | Карточки, панели |
-| `$ds-duration` / `$ds-ease` | 160ms / `cubic-bezier(.2, 0, 0, 1)` | Переходы (`ds-transition`) |
+| `$ds-radius-card` | 10px | Карточки, панели, CTA |
+| `$ds-radius-lg` | 15px | FAQ, выделение таблицы, превью кейсов, медиакарточки |
+| `$ds-radius-badge` / `-step` | 12 / 5px | Плашка цены, номер шага |
+| `$ds-radius-md` / `-sm` / `-xs` | 8 / 6 / 4px | Мелкие элементы |
+| `$ds-duration` / `$ds-ease` | 160ms / `cubic-bezier(.2, 0, 0, 1)` | Переходы (`ds-transition`); длинные анимации — кратные `$ds-duration` |
 
 ---
 
@@ -121,7 +131,8 @@ Manrope Medium 500 во всех стилях. Body-стили — letter-spacin
 | Компонент | Figma | API |
 |---|---|---|
 | `Button` | Button Primary / Secondary / Tertiary (`63:3156–63:3158`) | `variant: 'primary' \| 'secondary' \| 'tertiary'`, `href?` (рендерит `Link`), `fullWidth?`, `icon?`, `iconPosition?`, `disabled?`. 56px, pill, Text small. Hover — слой поверх заливки |
-| `Tabs` | Tab on / Tab off (`63:3169`, `63:3172`) | `items`, `value`, `onChange`, `label`, `panelIdPrefix?`. 44px, pill. ARIA tabs, ← → Home End |
+| `Tabs` | Tab on / Tab off (`63:3169`, `63:3172`) | `items: { value, label, icon? }[]` (иконка 20px, инвертируется на выбранном), `value`, `onChange`, `label`, `panelIdPrefix?`, `variant: 'pill' \| 'ghost'`. 44px, pill. ARIA tabs, ← → Home End. `ghost` — табы без фона, выбранный подсвечивает одна белая плашка, которая «перетекает» к новому табу (ведущий край первым, хвост с задержкой `$ds-duration / 2`); до гидратации заливка у самого таба, при reduced-motion — без анимации |
+| `Hint` / `HintTooltip` | подсказка «?» | `text`; Mantine Tooltip в портале, держится внутри viewport, работает на hover/focus/touch. `HintTooltip` оборачивает любой элемент |
 | `TextField` | Поля / Текстовое поле (`52:407`) | `label`, `error?`, `hint?` + пропсы `<input>`. 56px, радиус 10. Состояния: default, hover, focus (рамка 1.5px + halo 3px) — CSS; «заполнено» — поле со значением; «ошибка» — `error` (красная рамка, иконка, текст) |
 | `Textarea` | (поле формы, 145px) | как `TextField`, `rows` (по умолчанию 4) |
 | `IconButton` | Arrows / Button (`54:3039`) | `direction: 'prev' \| 'next'`, `label`. 48px, Charcoal, шеврон 32 |
@@ -138,18 +149,36 @@ Manrope Medium 500 во всех стилях. Body-стили — letter-spacin
 
 | Компонент | Figma | API / заметки |
 |---|---|---|
-| `Section` | обёртка любого блока | `title?` (Heading 3), `align: 'left' \| 'center'`, `sheen?` (белый перелив заголовка), `actions?` (слот справа), `narrow?` (колонка 720), `bleed?` (контент до правого края экрана). Даёт колонку 1200, ритм 180 и отступ 40 под заголовком |
+| `Section` | обёртка любого блока | `title?` (Heading 3; `\n` сохраняются), `description?` (Text small, 40%), `align: 'left' \| 'center'`, `sheen?` (белый перелив заголовка), `actions?` (слот справа), `narrow?` (колонка 720), `bleed?` (контент до правого края экрана). Даёт колонку 1200, ритм 180 и отступ 40 под заголовком |
 | `FeatureCards` | Карточка - компактная (`38:978`), - кнопка (`38:1033`), Иллюстрация содержания (`38:1089`) | `variant: 'compact' \| 'action' \| 'illustrated'`, `items: { title, description, illustration?, action? }[]`, `columns?: 2 \| 3 \| 4`. Без `illustration` — плейсхолдер 5% белого, как в макете |
 | `Metrics` | Карточка - крупная цифра (`38:964`) | `items: { value, label }[]`; 4 в ряд, Heading 3 |
-| `Carousel` | Карточка - акцент (`54:2632`), - цитата (`54:2858`) | `title`, `slideWidth` (394 / 450), дети — карточки. Framer Motion: drag/свайп + стрелки, шаг — ширина карточки; `prefers-reduced-motion` без анимации. Карточки выходят за правый край колонки |
+| `Carousel` | Карточка - акцент (`54:2632`), - цитата (`54:2858`) | `title`, `description?`, `sheen?` (перелив заголовка; на страницах услуг выключен), `slideWidth` (394 / 450), дети — карточки. Framer Motion: drag/свайп + стрелки, шаг — ширина карточки; `prefers-reduced-motion` без анимации. Карточки выходят за правый край колонки |
 | `AccentCard` | контейнер `54:2646` | `title`, `text`, `source?: { label, href }`. Фон — экспорт градиента из Figma (`assets/accent-card.webp`) |
 | `QuoteCard` | контейнер `54:3074` | `logo?: { src, alt, width, height }`, `title`, `text`, `source?` |
 | `Faq` | FAQ (`41:1069` = `47:2126`) | `items: { question, answer }[]`, `defaultOpen?` (по умолчанию первый), `footer?`. Аккордеон, можно открыть несколько; `aria-expanded` / `region` |
 | `FormBlock` + `FormRow` | Форма (`54:2453`) | обёртка `<form>`: поля внутри, `FormRow` — пара полей в строку; `submitLabel`, `pending?`, `status?`. Только вёрстка — отправку подключает фича (по образцу существующих форм и `/api/contact`) |
-| `Cta` | CTA - левый край (`40:549`), CTA - цена (`40:757`) | `variant: 'left' \| 'price'`, `title`, `description?`, `primary`, `secondary?`, `facts?` (плашка на верхней кромке). Фон — экспорт «Astro Gradient» из Figma (`assets/cta-gradient.webp`) |
-| `Roadmap` | Roadmap (`45:2055`) | `steps: { title, description }[]`; 3 в ряд |
+| `Cta` | CTA - левый край (`40:549`), CTA - цена (`40:757`) | `variant: 'left' \| 'price'`, `title`, `description?`, `primary`, `secondary?` (tertiary-кнопка), `facts?` (плашка на верхней кромке), `size: 'lg' \| 'md' \| 'sm' \| 'xs'` (заголовок h3 / h4 / h5 в одну строку / Text L для узкой колонки), `image?` (свой фон; `null` — простая подложка). Фон по умолчанию — экспорт «Astro Gradient» из Figma (`assets/cta-gradient.webp`) |
+| `Roadmap` | Roadmap (`45:2055`) | `steps: { title, description }[]`, `columns: 3 \| 4`, `numbering: 'plain' \| 'padded'` (`1` / `01`) |
+| `ScorePetals` | «лепестки» оценки (калькулятор, readiness) | `petals: { id, label, value 0–1, tone, tip? }[]` (4 или 5), `label` (a11y), `bare?`, `hints?` (подсказки у подписей). Canvas, анимация заполнения 700ms; уровни колец `PETAL_LEVELS` и цвет `petalTone(value)` — в `petals.ts` (без `'use client'`, можно вызывать на сервере) |
 | `CaseList` | Кейс (`43:1602`) | `items: { href, image, category, title, description, meta?, cta }[]`; на mobile кнопка уходит вниз карточки |
 | `ComparisonTable` | Таблица (`42:1286`), с выделением сегмента (`43:1391`) | `columns`, `rows: { label, values }[]`, `highlight?` (индекс колонки), `caption?`. Семантичная `<table>`; на mobile — горизонтальный скролл |
+
+## Блоки страниц (`src/widgets/ServicePages/blocks`)
+
+Общие секции новых страниц (услуги, workshop, калькулятор, readiness, digital assets). Собраны из элементов `@/shared/ds` и токенов; используются на нескольких страницах, поэтому живут вне конкретного виджета.
+
+| Компонент | Где | API / заметки |
+|---|---|---|
+| `ServiceHero` | все страницы | `scene?` (бинарная сцена) или `image?` (фото на всю ширину), `title`, `description?`, `titleSize: 'lg' \| 'md'`, `layout: 'center' \| 'spread'`, `aside?`, `footnote?`, дети — кнопки. Заезжает под хедер `SiteShell` |
+| `GlyphCards` | услуги, readiness | карточки с `BinaryGlyph`: `columns`, `height`, `glyph: { top?, height }`, `text: 'bottom' \| 'under'`, `align`; на mobile глиф в потоке над текстом |
+| `CallSteps` | результаты калькулятора и readiness | заголовок, фото звонка с градиентом, 3 шага, кнопка; `imageFirst?` — заголовок под фото |
+| `CoverCard` | калькулятор, readiness, DA | `layout: 'stack' \| 'row'`, `art: { width, height, right, bottom? }`. Иллюстрация поднимается над карточкой и обрезается её краем; на планшете и mobile — в потоке под текстом |
+| `TeamCta` | readiness, DA | `title`, `description`, `primary`, `secondary`, `people[]` — аватары 234px (сейчас инициалы, фото нет) |
+| `SituationTabs` | readiness, DA | `label`, `labels`, `items` (`situationItems()` из `Readiness/art.ts`), `tabsVariant?`. Фото под `HeroDigits`, четыре карточки с «глитч»-сменой текста (`useScramble`) |
+| `ServiceFaq` | все страницы | `Faq` в узкой колонке + строка «Есть вопросы?» |
+| `ChecklistRows`, `ExpandingCards`, `SplitList`, `StepsCarousel`, `StrategyDiagram`, `UseCases`, `MiniApp`, `PartnersMarquee` | страницы услуг и workshop | по комментарию в файле компонента |
+
+**Анимации — общий движок `src/widgets/BinaryArt`.** `BinaryScene` (сцены из `project/Binary *.dc.html`: рендер в Web Worker через OffscreenCanvas, запасной путь — Canvas 2D на основном потоке), `BinaryGlyph` (иконки из бинарных цифр, `shape`/`ox`/`oy`/`os`; освещение считается один раз на размер, кадр — перекраска по уровням яркости), `HeroDigits` (фото с наложением цифр по hover). Общий тикер, пауза вне экрана и при скрытой вкладке, статичный кадр при `prefers-reduced-motion`. `useScramble` (`src/shared/lib`) — смена текста с «глитчем».
 
 Картинки фонов подключаются статическим импортом через `next/image` — так они работают и под `basePath` (RU-staging). Демо-картинки витрины лежат рядом с ней, в `src/app/(site-v2)/staging-docs/design-system/demo`.
 

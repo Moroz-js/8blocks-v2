@@ -21,8 +21,8 @@ export interface CaseListItem {
 export function CaseList({ items, className }: { items: readonly CaseListItem[]; className?: string }) {
   return (
     <ul className={clsx(styles.list, className)}>
-      {items.map((item) => (
-        <li key={item.href} className={styles.item}>
+      {items.map((item, i) => (
+        <li key={`${i}:${item.href}`} className={styles.item}>
           <div className={styles.thumb}>
             <Image src={item.image.src} alt={item.image.alt} fill sizes="(max-width: 640px) 100vw, 230px" />
           </div>

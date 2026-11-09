@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import clsx from 'clsx'
+import { Hint } from '@/shared/ds'
 import type { TokenModel } from '@/shared/lib/platform/tokenlab/model'
 import { applyTemplate, MODEL_TEMPLATES } from '@/shared/lib/platform/tokenlab/presets'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { copy, templateCopy } from './copy'
-import { Hint } from './Hint'
 import styles from './Calculator.module.scss'
 
 interface Props {

@@ -1,0 +1,320 @@
+@use '@/shared/ds/styles' as *;
+
+$separator: rgba($ds-white, 0.2);
+
+// ── Hero ────────────────────────────────────────────────────────────
+.stat {
+  @include ds-text-sm;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 42px;
+  margin-top: $ds-space-5;
+  padding: 0 13px 0 4px;
+  border: 1px solid rgba($ds-white, 0.1);
+  border-radius: $ds-radius-pill;
+  background-color: rgba($ds-white, 0.08);
+  color: $ds-text;
+
+  @include ds-mobile {
+    height: auto;
+    flex-wrap: wrap;
+    margin-top: 0;
+    padding: 4px 13px 4px 4px;
+    border-radius: $ds-radius-lg;
+  }
+}
+
+.statSource {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-accent;
+  color: $ds-white;
+  white-space: nowrap;
+
+  svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.heroFacts {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 27px;
+  list-style: none;
+  color: $ds-text;
+  white-space: nowrap;
+
+  li + li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    &::before {
+      content: '';
+      width: 1px;
+      height: 20px;
+      background-color: $separator;
+    }
+  }
+
+  @include ds-mobile {
+    width: 100%;
+    margin: $ds-space-3 0 0;
+  }
+}
+
+// ── Audience ────────────────────────────────────────────────────────
+.audience {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-inner-gap;
+  text-align: center;
+}
+
+.audienceHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.eyebrow {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.audienceTitle {
+  @include ds-h3;
+  color: $ds-text;
+  white-space: pre-line;
+}
+
+.facts {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+
+  @include ds-mobile {
+    flex-direction: column;
+  }
+}
+
+.fact {
+  @include ds-text-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 260px;
+  color: $ds-text;
+
+  & + & {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: -16px;
+      width: 1px;
+      height: 68px;
+      background-color: $separator;
+      transform: translateY(-50%);
+
+      @include ds-mobile { display: none; }
+    }
+  }
+}
+
+// ── Results + credit ────────────────────────────────────────────────
+.credit {
+  margin-top: 50px;
+}
+
+// ── 15 questions ────────────────────────────────────────────────────
+.questionColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 160px;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
+}
+
+.questionAccent {
+  background-color: $ds-accent;
+}
+
+.questionIndex {
+  @include ds-text-sm;
+  color: $ds-accent;
+
+  .questionAccent & {
+    color: rgba($ds-white, 0.7);
+  }
+}
+
+.questionText {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+// ── Proof ───────────────────────────────────────────────────────────
+.proof {
+  display: flex;
+  align-items: stretch;
+  gap: 35px;
+
+  @include ds-tablet {
+    flex-direction: column;
+  }
+}
+
+.quote {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $ds-space-7;
+  width: 595px;
+  min-height: 536px;
+  flex-shrink: 0;
+  padding: $ds-space-7 $ds-space-7 $ds-space-7 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-tablet { width: 100%; }
+
+  @include ds-mobile {
+    min-height: 0;
+    padding: $ds-space-6 20px;
+  }
+}
+
+.quoteBg {
+  z-index: -1;
+  object-fit: cover;
+}
+
+.quoteMark {
+  margin-left: 10px;
+  fill: $ds-white;
+  opacity: 0.2;
+}
+
+.quoteText {
+  @include ds-h3;
+  max-width: 473px;
+  margin-left: 10px;
+  color: $ds-text;
+}
+
+.quoteAuthor {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-left: 10px;
+}
+
+.authorName {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+.authorRole {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+.trust {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+  flex-grow: 1;
+}
+
+.trustTop {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 5px;
+}
+
+.slotsTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.slotsText {
+  @include ds-text-sm;
+  max-width: 400px;
+  color: $ds-text-faint;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  min-height: 180px;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile {
+    min-height: 140px;
+    padding: $ds-space-5 $ds-space-4;
+  }
+}
+
+.statValue {
+  @include ds-h3;
+  color: $ds-accent;
+}
+
+.statLabel {
+  @include ds-text-sm;
+  color: $ds-text;
+}
+
+.offices {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}

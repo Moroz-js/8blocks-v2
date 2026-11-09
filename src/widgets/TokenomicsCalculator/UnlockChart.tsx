@@ -21,6 +21,18 @@ interface Props {
   height?: number
   /** SVG font size; the chart is scaled with its container, so narrow panels need a larger value. */
   labelSize?: number
+  /** `mono` — results page: grey bars, light spikes, white curve, TGE/M6/Y1 axis. */
+  variant?: 'accent' | 'mono'
+}
+
+const PALETTE = {
+  accent: { bar: 'rgba(255,255,255,0.35)', spike: 'var(--ds-danger)', line: '#E52D9A' },
+  mono: { bar: 'var(--ds-text-muted)', spike: 'var(--ds-text)', line: 'var(--ds-text)' },
+}
+
+function monthLabel(month: number) {
+  if (month === 0) return 'TGE'
+  return month % 12 === 0 ? `Y${month / 12}` : `M${month}`
 }
 
 const copy = t({
@@ -55,7 +67,9 @@ const TOP = 12
 const BOTTOM = 24
 
 /** Monthly unlock bars over the circulating-supply curve. Engine data, DS colours. */
-export function UnlockChart({ allocations, vestings, totalSupply, height = 240, labelSize = 8 }: Props) {
+export function UnlockChart({ allocations, vestings, totalSupply, height = 240, labelSize = 8, variant = 'accent' }: Props) {
+  const mono = variant === 'mono'
+  const colors = PALETTE[variant]
   const { monthly, circulating, spikes } = useMemo(() => {
     const nextMonthly = calcTotalMonthlyUnlocks(allocations, vestings, totalSupply)
     const nextCirculating = calcCumulativeCirculating(nextMonthly)
@@ -82,7 +96,7 @@ export function UnlockChart({ allocations, vestings, totalSupply, height = 240, 
     .join(' ')
   const area = `${line} L ${xFor(count - 1).toFixed(2)} ${TOP + plotHeight} L ${LEFT} ${TOP + plotHeight} Z`
   const ticks: number[] = []
-  for (let month = 0; month < count; month += count > 40 ? 12 : 6) ticks.push(month)
+  for (let month = 0; month < count; month += count > (mono ? 72 : 40) ? 12 : 6) ticks.push(month)
 
   function handleMove(event: React.MouseEvent) {
     const rect = wrapRef.current?.getBoundingClientRect()
@@ -126,8 +140,7 @@ export function UnlockChart({ allocations, vestings, totalSupply, height = 240, 
               </g>
             )
           })}
-          <path d={area} fill="url(#calc-circ-fill)" />
-          <path d={line} fill="none" stroke="#E52D9A" strokeWidth={1.6} />
+          {!mono && <path d={area} fill="url(#calc-circ-fill)" />}
           {monthly.map((tokens, month) => {
             if (tokens <= 0) return null
             const spike = spikeMonths.has(month)
@@ -139,10 +152,11 @@ export function UnlockChart({ allocations, vestings, totalSupply, height = 240, 
                 y={yBar(tokens)}
                 width={barWidth}
                 height={TOP + plotHeight - yBar(tokens)}
-                fill={spike ? 'var(--ds-danger)' : active ? 'var(--ds-text)' : 'rgba(255,255,255,0.35)'}
+                fill={spike ? colors.spike : active ? 'var(--ds-text)' : colors.bar}
               />
             )
           })}
+          <path d={line} fill="none" stroke={colors.line} strokeWidth={1.6} />
           {hover !== null && (
             <line
               x1={xFor(hover)}
@@ -154,8 +168,15 @@ export function UnlockChart({ allocations, vestings, totalSupply, height = 240, 
             />
           )}
           {ticks.map((month) => (
-            <text key={month} x={xFor(month)} y={height - 8} fontSize={labelSize} textAnchor="middle" fill="var(--ds-text-muted)">
-              M{month}
+            <text
+              key={month}
+              x={xFor(month)}
+              y={height - 8}
+              fontSize={labelSize}
+              textAnchor="middle"
+              fill={mono && month % 12 === 0 ? 'var(--ds-text)' : 'var(--ds-text-muted)'}
+            >
+              {mono ? monthLabel(month) : `M${month}`}
             </text>
           ))}
         </svg>
@@ -179,13 +200,13 @@ export function UnlockChart({ allocations, vestings, totalSupply, height = 240, 
       </div>
       <div className={styles.legend}>
         <span className={styles.legendItem}>
-          <i className={styles.legendSwatch} style={{ background: 'rgba(255,255,255,0.35)' }} /> {copy.monthly}
+          <i className={styles.legendSwatch} style={{ background: colors.bar }} /> {copy.monthly}
         </span>
         <span className={styles.legendItem}>
-          <i className={styles.legendSwatch} style={{ background: 'var(--ds-danger)' }} /> {copy.spikeMonth}
+          <i className={styles.legendSwatch} style={{ background: colors.spike }} /> {copy.spikeMonth}
         </span>
         <span className={styles.legendItem}>
-          <i className={styles.legendSwatch} style={{ background: '#E52D9A' }} /> {copy.circulation}
+          <i className={styles.legendSwatch} style={{ background: colors.line }} /> {copy.circulation}
         </span>
       </div>
     </div>

@@ -65,6 +65,8 @@
   text-align: center;
   white-space: nowrap;
 
+  @include ds-mobile { white-space: normal; }
+
   &:last-child {
     border-right: none;
   }

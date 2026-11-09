@@ -1,1 +1,0 @@
-export { TokenomicsCompositionBlock } from './TokenomicsCompositionBlock'

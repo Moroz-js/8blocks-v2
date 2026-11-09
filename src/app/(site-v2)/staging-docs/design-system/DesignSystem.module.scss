@@ -109,6 +109,7 @@
 .textLg { @include ds-text-lg; max-width: 420px; }
 .textMd { @include ds-text-md; max-width: 420px; }
 .textSm { @include ds-text-sm; max-width: 420px; }
+.textXs { @include ds-text-xs; max-width: 420px; }
 
 // ── Grid & shape ────────────────────────────────────────────────────
 .gridDemo {

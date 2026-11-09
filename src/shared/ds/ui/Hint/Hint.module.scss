@@ -1,0 +1,31 @@
+@use '@/shared/ds/styles' as *;
+
+// «?» with a tooltip.
+.hint {
+  @include ds-focus-visible;
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rgba($ds-white, 0.22);
+  color: $ds-text;
+  font-size: 10px;
+  line-height: 1;
+  cursor: help;
+}
+
+.tooltip {
+  @include ds-text-sm;
+  max-width: calc(100vw - 24px);
+  padding: 10px 12px;
+  border: 1px solid $ds-border;
+  border-radius: $ds-radius-field;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  text-align: left;
+  overflow-wrap: anywhere;
+}

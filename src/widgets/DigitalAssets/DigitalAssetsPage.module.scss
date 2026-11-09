@@ -1,0 +1,557 @@
+@use '@/shared/ds/styles' as *;
+
+.cardTitle {
+  @include ds-text-lg;
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+// ── Widen access ──────────────────────────────────────────────────────
+.widen {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+  list-style: none;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.widenCard {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  min-height: 288px;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile {
+    min-height: 0;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.widenAccent {
+  gap: 10px;
+}
+
+.widenBg {
+  z-index: -1;
+  object-fit: cover;
+  opacity: 0.9;
+}
+
+.points {
+  @include ds-text-sm;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  color: $ds-text-faint;
+  list-style: none;
+}
+
+.note {
+  @include ds-text-sm;
+  margin-top: $ds-space-6;
+  color: $ds-text-faint;
+  text-align: center;
+}
+
+// ── Steps ─────────────────────────────────────────────────────────────
+.stepsBlock {
+  overflow: hidden;
+  border: 1px solid $ds-border;
+  border-radius: $ds-radius-card;
+}
+
+.steps {
+  list-style: none;
+}
+
+.step {
+  display: grid;
+  // Fixed last column keeps the text columns aligned; wider buttons overflow to the left.
+  grid-template-columns: 94px minmax(0, 1fr) minmax(0, 1fr) 115px;
+  align-items: center;
+  min-height: 96px;
+  padding-right: $ds-space-5;
+
+  & + & { border-top: 1px solid $ds-border; }
+
+  @include ds-tablet {
+    grid-template-columns: 70px minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $ds-space-3;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.stepNumber {
+  @include ds-text-sm;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding-left: $ds-space-5;
+  border-right: 1px solid $ds-border;
+  color: $ds-text;
+
+  @include ds-mobile {
+    padding: 0;
+    border: 0;
+  }
+}
+
+.stepText {
+  @include ds-text-sm;
+  max-width: 388px;
+  padding-block: $ds-space-5;
+  color: $ds-text-muted;
+
+  &:nth-child(2) { justify-self: center; }
+
+  @include ds-tablet {
+    &:nth-child(2) { justify-self: stretch; padding-inline: $ds-space-5; }
+  }
+
+  @include ds-mobile {
+    padding: 0;
+
+    &:nth-child(2) { padding: 0; }
+  }
+}
+
+.lead {
+  color: $ds-text;
+}
+
+.stepAction {
+  display: flex;
+  justify-content: flex-end;
+  white-space: nowrap;
+
+  @include ds-tablet {
+    grid-column: 2 / -1;
+    justify-content: flex-start;
+    padding: 0 $ds-space-5 $ds-space-5;
+
+    &:empty { display: none; }
+  }
+
+  @include ds-mobile {
+    grid-column: auto;
+    padding: $ds-space-2 0 0;
+  }
+}
+
+.selfServe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-5;
+  min-height: 96px;
+  padding-inline: $ds-space-5;
+  border-top: 1px solid $ds-border;
+  background-color: $ds-surface;
+
+  @include ds-mobile {
+    flex-direction: column;
+    align-items: stretch;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.selfServeTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.selfServeActions {
+  display: flex;
+  gap: 10px;
+
+  @include ds-mobile { flex-direction: column; }
+}
+
+// ── Market ────────────────────────────────────────────────────────────
+.market {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $ds-gutter;
+  min-height: 533px;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.marketLead,
+.marketCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: $ds-radius-lg;
+  background-color: $ds-surface;
+}
+
+.marketImage {
+  z-index: -2;
+  object-fit: cover;
+}
+
+.marketLead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px $ds-space-6;
+  text-align: center;
+
+  @include ds-tablet { min-height: 533px; }
+  @include ds-mobile {
+    min-height: 480px;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.marketLeadTitle {
+  @include ds-h3;
+  max-width: 500px;
+  margin-top: $ds-space-3;
+  color: $ds-text;
+
+  @include ds-mobile { @include ds-h4; }
+}
+
+.marketLeadText {
+  @include ds-text-sm;
+  max-width: 460px;
+  margin-top: $ds-space-5;
+  color: $ds-text;
+}
+
+.marketLeadAction {
+  margin-top: auto;
+}
+
+.marketList {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+}
+
+.marketCard {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $ds-space-5;
+  padding: 28px;
+
+  // Darkens the photo towards the text side.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(75% 105% at 97% 41%, transparent 30%, $ds-surface 100%);
+    pointer-events: none;
+  }
+
+  @include ds-mobile {
+    min-height: 300px;
+    padding: $ds-space-5 20px;
+  }
+}
+
+.marketText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.marketTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.marketDescription {
+  @include ds-text-sm;
+  max-width: 380px;
+  color: $ds-text-faint;
+}
+
+.marketFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $ds-space-3 $ds-space-5;
+}
+
+.source {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  gap: $ds-space-2;
+  color: $ds-text;
+}
+
+.sourceFlag {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  overflow: hidden;
+  border-radius: 50%;
+
+  svg,
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// ── Jurisdictions ─────────────────────────────────────────────────────
+// The globe slides under the heading.
+.jurisdictions > :first-child {
+  position: relative;
+  z-index: 1;
+}
+
+// ── Depths ────────────────────────────────────────────────────────────
+.depths {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  list-style: none;
+
+  @include ds-tablet {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $ds-space-6;
+  }
+}
+
+.depth {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-5;
+  min-height: 680px;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  text-align: center;
+
+  @include ds-tablet { min-height: 0; }
+  @include ds-mobile { padding: $ds-space-6 20px 20px; }
+}
+
+.badge {
+  @include ds-text-sm;
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  height: 28px;
+  padding-inline: $ds-space-4;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.depthHead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-height: 100px;
+
+  @include ds-tablet { min-height: 0; }
+}
+
+.depthTitle {
+  @include ds-h5;
+  color: $ds-text;
+  white-space: pre-line;
+
+  @include ds-mobile { white-space: normal; }
+}
+
+.depthSubtitle {
+  @include ds-text-sm;
+  color: $ds-text;
+}
+
+.depthGlyph {
+  flex-shrink: 0;
+  width: 222px;
+  height: 222px;
+  pointer-events: none;
+
+  @include ds-mobile {
+    width: 180px;
+    height: 180px;
+  }
+}
+
+.depthFacts {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: stretch;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: $ds-space-2;
+  }
+
+  dt {
+    @include ds-text-sm;
+    color: $ds-text;
+  }
+
+  dd {
+    @include ds-text-md;
+    color: $ds-text-faint;
+  }
+}
+
+.depthEnds {
+  margin-top: $ds-space-1;
+  padding-top: 24px;
+  border-top: 1px solid $ds-border;
+}
+
+// ── 8 blocks ──────────────────────────────────────────────────────────
+.blocks {
+  display: grid;
+  grid-template-columns: minmax(0, 797fr) minmax(0, 393fr);
+  gap: 10px;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.blocksGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 295px;
+  gap: 10px;
+  list-style: none;
+
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(260px, auto);
+  }
+}
+
+.blocksList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.block {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
+}
+
+.blockRow {
+  flex: 1 1 0;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 142px;
+}
+
+.blockGlyph {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.blockText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .blockRow & { width: 60%; }
+}
+
+.blockDescription {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+// ── Resources ─────────────────────────────────────────────────────────
+.resources {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $ds-gutter;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.resource {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $ds-space-6;
+  min-height: 385px;
+  padding: $ds-space-7 30px 30px $ds-space-7;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  color: $ds-text;
+
+  @include ds-mobile {
+    min-height: 320px;
+    padding: $ds-space-5 20px 20px;
+  }
+}
+
+.resourceLight {
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+}
+
+.resourceText {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 518px;
+}
+
+.resourceEyebrow {
+  @include ds-text-sm;
+}
+
+.resourceTitle {
+  @include ds-h4;
+}
+
+.resourceDescription {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}

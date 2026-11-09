@@ -1,0 +1,194 @@
+@use '@/shared/ds/styles' as *;
+
+// Designer's frame: 1280 × 781 hero under the header, scene 1280 × 800.
+// Site header height (src/widgets/Header: 64px + 1px border, 56 + 1 on mobile).
+$header: 65px;
+$header-mobile: 57px;
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 781px;
+  margin-top: -$header;
+  background-color: $ds-bg;
+
+  @include ds-mobile {
+    height: auto;
+    min-height: 640px;
+    margin-top: -$header-mobile;
+  }
+}
+
+// The hero fade already separates it from the first block.
+.center + :global(section) {
+  padding-top: 22px;
+}
+
+.art {
+  position: absolute;
+  top: var(--art-top);
+  left: 50%;
+  width: 1280px;
+  height: 800px;
+  transform: translateX(-50%);
+  pointer-events: none;
+
+  // Wider than the frame: let the digit field fade out instead of ending on a hard edge.
+  @media (min-width: 1360px) {
+    -webkit-mask-image: linear-gradient(90deg, transparent, $ds-black 12%, $ds-black 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, $ds-black 12%, $ds-black 88%, transparent);
+  }
+
+  @include ds-mobile {
+    top: auto;
+    bottom: 0;
+    left: auto;
+    right: -300px;
+    width: 832px;
+    height: 520px;
+    transform: none;
+    opacity: 0.7;
+  }
+}
+
+.scene {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, $ds-black 15%);
+  mask-image: linear-gradient(to bottom, transparent, $ds-black 15%);
+}
+
+// Designer's «audit-glow»: one wide blurred radial glow under the scene.
+.glow {
+  position: absolute;
+  top: 391px;
+  left: calc(50% - 640px - 1781px);
+  width: 2912px;
+  height: 1841px;
+  border-radius: 0 0 28px 28px;
+  opacity: 0.2;
+  filter: blur(37px);
+  pointer-events: none;
+  will-change: transform;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");
+}
+
+.photo {
+  object-fit: cover;
+  object-position: 50% 30%;
+  pointer-events: none;
+}
+
+.fadeImage {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 187px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(180deg, rgba($ds-black, 0) 0%, rgba($ds-black, 0.75) 55%, $ds-bg 100%);
+  pointer-events: none;
+}
+
+.inner {
+  @include ds-container;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 25px;
+  height: 100%;
+  padding-left: calc(#{$ds-margin} + 8px); // designer's x = 48
+
+  @include ds-tablet { padding-left: $ds-margin-tablet; }
+
+  @include ds-mobile {
+    padding-top: $header-mobile + 72px;
+    padding-bottom: 260px;
+    padding-left: $ds-margin-mobile;
+  }
+}
+
+.center .inner {
+  justify-content: center;
+
+  @include ds-mobile { justify-content: flex-start; }
+}
+
+.spread .inner {
+  padding-top: 162px;
+  padding-bottom: 66px;
+
+  @include ds-mobile {
+    padding-top: $header-mobile + 48px;
+    padding-bottom: 260px;
+  }
+}
+
+.spread .actions {
+  margin-top: auto;
+
+  @include ds-mobile { margin-top: 0; }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 600px;
+
+  // Photo heroes carry longer, hand-broken titles.
+  .withImage & { max-width: 760px; }
+}
+
+.title {
+  color: $ds-text;
+  white-space: pre-line;
+
+  @include ds-mobile { white-space: normal; }
+}
+
+.lg {
+  @include ds-h2;
+}
+
+.md {
+  @include ds-h3;
+}
+
+.description {
+  @include ds-text-sm;
+  max-width: 460px;
+  color: $ds-text-faint;
+
+  .md + & {
+    max-width: 347px;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.footnote {
+  @include ds-text-sm;
+  margin-top: -5px; // 20px under the actions
+  color: $ds-text-muted;
+}
+
+.spread.withFootnote .inner {
+  padding-bottom: 30px;
+
+  @include ds-mobile { padding-bottom: 260px; }
+}

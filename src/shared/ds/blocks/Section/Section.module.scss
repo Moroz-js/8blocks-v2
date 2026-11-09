@@ -28,6 +28,35 @@
   @include ds-h3;
   color: $ds-text;
   max-width: 760px;
+  white-space: pre-line;
+
+  // Line breaks in titles are set for the desktop measure.
+  @include ds-mobile { white-space: normal; }
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.description {
+  @include ds-text-sm;
+  max-width: 476px;
+  color: $ds-text-faint;
+  white-space: pre-line;
+}
+
+.center .heading {
+  align-items: center;
+}
+
+.center .description {
+  max-width: 595px;
+}
+
+.header:has(.actions) {
+  align-items: flex-end;
 }
 
 .sheen {

@@ -9,6 +9,9 @@ import styles from './Carousel.module.scss'
 
 interface CarouselProps {
   title: ReactNode
+  description?: ReactNode
+  /** Title sheen (Figma carousels); plain on service pages. */
+  sheen?: boolean
   /** Slides; each child is one card. */
   children: ReactNode
   /** Slide width on desktop, px (Figma: accent 394, quote 450). */
@@ -26,6 +29,8 @@ const GAP = 10
  */
 export function Carousel({
   title,
+  description,
+  sheen = true,
   children,
   slideWidth,
   labels = { prev: 'Previous', next: 'Next' },
@@ -75,7 +80,8 @@ export function Carousel({
   return (
     <Section
       title={title}
-      sheen
+      description={description}
+      sheen={sheen}
       bleed
       className={className}
       actions={

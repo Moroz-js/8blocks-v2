@@ -1,8 +1,10 @@
 # Состояние
 
-Обновлено: 2026-11-04.
+Обновлено: 2026-11-09.
 
 ## Проверено
+
+- Перевод страниц на DS v2 (2026-11-09, локально): `/product/calculator/result?m=`, `/product/tokenization-readiness` и `/result?a=`, `/product/digital-assets`, `/services/tokenomics`, `/services/audit`, `/services/strategic-consulting`, `/product/workshop` живут в `(site-v2)`, страницы `(site)` удалены. `npm run typecheck`, `npm run test:platform` (11 файлов, 79/79 — тесты удалённого кода ушли вместе с ним) и `npm run build` проходят; lint — только старые ошибки. Все 8 страниц на 1280 сверены со скриншотами макетов `project/*.dc.html`, на 375 просмотрены; горизонтального переполнения на 1280/375 нет (проверка в браузере Cursor через CDP). Без коммита, пуша и деплоя.
 
 - Все четыре оптимизации руки выложены на EN/RU-staging по явной команде владельца (2026-11-04): `aa991b1`, [run 41708556419](https://github.com/Moroz-js/8blocks-v2/actions/runs/41708556419) — success, обе CI-сборки/деплои прошли, production jobs skipped. Playwright MCP на обеих локалях 375/1280, DPR 3: страницы и PNG 200, WebGL2 работает в Worker (в RU весь путь Worker/chunks содержит `/ru`), 30–31 кадров за 1s, размеры backing 1080×1688 / 3795×2848 при CSS-ширине 360/1265, маска 22%, overflow/pageerror отсутствуют. Скриншоты `.playwright-mcp/deployed-webgl-en-375.png` и `deployed-webgl-ru-375.png` просмотрены. Результат фиксируется отдельным docs-коммитом.
 - Оптимизация руки hero (2026-11-04, локально): выполнены все четыре запрошенных пункта. Canvas занимает только видимые горизонтальные колонки, сохраняя исходный масштаб сцены/DPR и mask 0→22%; на 375px буфер 900→375 CSS px (≈58% меньше; в Chromium с обычным scrollbar видимая ширина 360px). Геометрия/освещение вынесены в `handCoinScene.ts` и готовятся однократно, координаты bitmap-штрихов кэшируются при resize, состояния цифр в 2D меняются только при переходе цикла. Основной путь — WebGL2 instanced quads в `handCoin.worker.ts` через OffscreenCanvas; мерцание/смена цифр считает GPU, на основном потоке нет кадрового цикла. Запасные пути: 2D в Worker без WebGL2; 2D на main без Worker/OffscreenCanvas, при ошибке загрузки Worker или потере контекста. Новый DOM canvas при каждом effect/recovery обеспечивает Strict Mode/HMR cleanup.
@@ -52,7 +54,9 @@
 ## Открытые риски
 
 - На staging при проверке 2026-11-03 CSP блокирует часть сторонней аналитики (Ahrefs, Clarity, PostHog assets, Google Ads); на главных EN/RU оптимизатор изображения `hes-article-cover.webp` возвращает 400. Обнаружено при проверке деплоя, эти участки кода в данной сессии не менялись.
-- `npm run lint` падает на 12 ошибках, появившихся до 2026-10-29: `no-html-link-for-pages` (TermsEn, TermsRu, CasesShowcase), `react-hooks/set-state-in-effect` (MantineThemeBridge, useThemeColors, ThemeToggle, FooterMap), `react-hooks/immutability` (BenchmarkAllocation), `prefer-const` (form-sanitize), `react/no-unescaped-entities` (WorkshopTestimonial).
+- `npm run lint` падает на старых ошибках, появившихся до 2026-10-29: `no-html-link-for-pages` (TermsEn, TermsRu, CasesShowcase), `react-hooks/set-state-in-effect` (MantineThemeBridge, useThemeColors, ThemeToggle, FooterMap), `react-hooks/immutability` (BenchmarkAllocation), `prefer-const` (form-sanitize). Ошибка в WorkshopTestimonial ушла вместе с удалённым виджетом (2026-11-09).
+- Страницы v2 по макетам `project/` (2026-11-09): в TeamCta нет фото Сергея Новикова и Антона Ефименко (в Payload их нет) — стоят инициалы, нужны фото от владельца. Заголовки секций — 40px (h3) против 32 в части макетов; акцент квиза readiness — `$ds-success`; кнопка ресурсов DA — charcoal вместо чёрной. Опечатки и дубли текста в макетах исправлены в контенте.
+- Turbopack dev иногда отдаёт устаревший CSS для новых scss-модулей (пустые классы) — остановить dev-сервер, удалить `.next/dev`, перезапустить.
 - Два root layout: переход по ссылке между страницами `(site)` и `(site-v2)` — полная перезагрузка (ожидаемо).
 - Turbopack не резолвит относительные `@forward` внутри `@/shared/ds/styles/index.scss` — пути внутри `ds/styles` только через `@/`.
 - v2: радиус поля — 10px в компоненте, 15px в инстансах формы; в коде 10.
