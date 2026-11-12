@@ -52,6 +52,7 @@ export function CaseDetailPage({ item }: Props) {
                 width={1200}
                 height={675}
                 className={styles.coverImage}
+                sizes="(max-width: 1240px) 100vw, 1200px"
                 priority
               />
             </div>

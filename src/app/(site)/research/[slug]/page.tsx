@@ -180,6 +180,7 @@ export default async function ResearchSlugPage({ params }: PageProps) {
         relatedArticles={[]}
         basePath="/research"
         trackViews={false}
+        linkCategory={false}
       />
     </>
   )

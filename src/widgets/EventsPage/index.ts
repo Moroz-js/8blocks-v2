@@ -1,1 +1,1 @@
-export { EventsPage } from './EventsPage'
+export { EventsPage, resolveEventView } from './EventsPage'

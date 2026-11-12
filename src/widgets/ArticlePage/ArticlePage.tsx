@@ -30,6 +30,8 @@ interface Props {
   basePath?: string
   /** Whether to track views via the articles API (blog only). */
   trackViews?: boolean
+  /** Link the category label to `${basePath}/${category.slug}` (only the blog has category pages). */
+  linkCategory?: boolean
   /** Expand the article layout to include the table of contents. */
   wide?: boolean
 }
@@ -39,6 +41,7 @@ export function ArticlePage({
   relatedArticles = [],
   basePath = '/blog',
   trackViews = true,
+  linkCategory = true,
   wide = false,
 }: Props) {
   const tocItems = buildToc(article.content)
@@ -53,11 +56,13 @@ export function ArticlePage({
 
       {/* ── Header ──────────────────────────────────────────────── */}
       <header className={styles.header}>
-        {article.category && (
+        {article.category && (linkCategory ? (
           <a href={`${basePath}/${article.category.slug}`} className={styles.category}>
             {article.category.title}
           </a>
-        )}
+        ) : (
+          <span className={styles.category}>{article.category.title}</span>
+        ))}
         <h1 className={styles.title}>{article.title}</h1>
         {article.excerpt && (
           <p className={styles.excerpt}>{article.excerpt}</p>
@@ -110,6 +115,7 @@ export function ArticlePage({
             width={1200}
             height={630}
             className={styles.coverImg}
+            sizes="(max-width: 1240px) 100vw, 1200px"
             priority
           />
         </div>

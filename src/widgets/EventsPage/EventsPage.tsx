@@ -53,6 +53,21 @@ function timingOf(event: EventCard): EventTiming {
   return new Date(event.endsAt ?? event.startsAt).getTime() < Date.now() ? 'past' : 'upcoming'
 }
 
+/**
+ * Вкладка по умолчанию: без явного `when` открываем предстоящие, а если их нет — прошедшие.
+ * Иначе хаб отдаёт пустое состояние, и ссылок на страницы событий нет в HTML.
+ */
+export function resolveEventView(
+  events: EventCard[],
+  when: string | undefined,
+  format: string | undefined,
+): { timing: EventTiming; format: EventFormat } {
+  const resolvedFormat: EventFormat = format === 'online' ? 'online' : 'offline'
+  if (when === 'past' || when === 'upcoming') return { timing: when, format: resolvedFormat }
+  const hasUpcoming = events.some((event) => timingOf(event) === 'upcoming' && event.format === resolvedFormat)
+  return { timing: hasUpcoming ? 'upcoming' : 'past', format: resolvedFormat }
+}
+
 function PlatformIcon({ platform }: { platform?: string | null }) {
   return <span className={styles.platformIcon} aria-hidden>{platform === 'x' ? '𝕏' : <Globe2 size={18} />}</span>
 }
