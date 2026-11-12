@@ -24,6 +24,7 @@ import * as migration_20260910_000000_events_locked_rels from './20260910_000000
 import * as migration_20260910_000001_drop_event_cities from './20260910_000001_drop_event_cities'
 import * as migration_20260910_000002_events_our_role from './20260910_000002_events_our_role'
 import * as migration_20261030_000000_hreflang_alternate_slug from './20261030_000000_hreflang_alternate_slug'
+import * as migration_20261109_000000_notification_settings from './20261109_000000_notification_settings'
 
 import * as migration_20260905_000000_articles_alternate_slug from './20260905_000000_articles_alternate_slug'
 
@@ -162,5 +163,10 @@ export const migrations = [
     up: migration_20261030_000000_hreflang_alternate_slug.up,
     down: migration_20261030_000000_hreflang_alternate_slug.down,
     name: '20261030_000000_hreflang_alternate_slug',
+  },
+  {
+    up: migration_20261109_000000_notification_settings.up,
+    down: migration_20261109_000000_notification_settings.down,
+    name: '20261109_000000_notification_settings',
   },
 ]

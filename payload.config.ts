@@ -38,7 +38,7 @@ import {
   EventOrganizers,
   Events,
 } from './payload/collections/index.ts'
-import { SiteSeo } from './payload/globals/index.ts'
+import { SiteSeo, NotificationSettings } from './payload/globals/index.ts'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const payloadSecret = process.env.PAYLOAD_SECRET
@@ -110,7 +110,7 @@ export default buildConfig({
     Events,
   ],
 
-  globals: [SiteSeo],
+  globals: [SiteSeo, NotificationSettings],
 
   // ── Secret & Security ───────────────────────────────────────────
   secret: payloadSecret,
