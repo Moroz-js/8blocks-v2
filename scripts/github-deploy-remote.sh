@@ -49,10 +49,10 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 
 cd "${PROJECT_DIR}"
 
-# ── pull latest code ──────────────────────────
-echo "📥 Pulling latest changes from ${DEPLOY_BRANCH}"
+# ── checkout the same source that was built in CI ──
+echo "📥 Fetching ${DEPLOY_BRANCH} (build commit: ${DEPLOY_COMMIT:-branch HEAD})"
 git fetch --all
-git reset --hard "origin/${DEPLOY_BRANCH}"
+git reset --hard "${DEPLOY_COMMIT:-origin/${DEPLOY_BRANCH}}"
 
 # ── write .env ────────────────────────────────
 echo "⚙️  Writing .env"

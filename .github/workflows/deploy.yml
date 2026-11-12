@@ -1,7 +1,11 @@
 name: Deploy to Production
 
-# Ручной запуск. Прод (ru, en, ae) собирается из main, staging — из ветки staging.
+# Push/merge в main — три production-сайта и staging; в staging — только staging.
 on:
+  push:
+    branches:
+      - main
+      - staging
   workflow_dispatch:
     inputs:
       deploy_target:
@@ -16,46 +20,82 @@ on:
           - ae
           - staging
 
+# Не прерываем SSH-деплой и не запускаем параллельные обновления серверов.
+concurrency:
+  group: deploy-sites
+  cancel-in-progress: false
+
 jobs:
+  resolve-refs:
+    runs-on: ubuntu-latest
+    outputs:
+      main: ${{ steps.refs.outputs.main }}
+      staging: ${{ steps.refs.outputs.staging }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve source commits once for all sites
+        id: refs
+        env:
+          TRIGGER_EVENT: ${{ github.event_name }}
+          TRIGGER_REF: ${{ github.ref }}
+          TRIGGER_SHA: ${{ github.sha }}
+        run: |
+          for branch in main staging; do
+            if [[ "$TRIGGER_EVENT" == "push" && "$TRIGGER_REF" == "refs/heads/$branch" ]]; then
+              sha="$TRIGGER_SHA"
+            else
+              sha="$(git ls-remote origin "refs/heads/$branch" | cut -f1)"
+            fi
+            [[ "$sha" =~ ^[0-9a-f]{40}$ ]] || exit 1
+            echo "$branch=$sha" >> "$GITHUB_OUTPUT"
+          done
+
   deploy-ru:
-    if: ${{ inputs.deploy_target == 'all' || inputs.deploy_target == 'ru' || inputs.deploy_target == '' }}
+    needs: resolve-refs
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'all' || inputs.deploy_target == 'ru' || inputs.deploy_target == '')) }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
       name: ru
       branch: main
+      ref: ${{ needs.resolve-refs.outputs.main }}
       server: RU
       site: RU
 
   deploy-en:
-    if: ${{ inputs.deploy_target == 'all' || inputs.deploy_target == 'en' || inputs.deploy_target == '' }}
+    needs: resolve-refs
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'all' || inputs.deploy_target == 'en' || inputs.deploy_target == '')) }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
       name: en
       branch: main
+      ref: ${{ needs.resolve-refs.outputs.main }}
       server: EN
       site: EN
 
   deploy-ae:
-    if: ${{ inputs.deploy_target == 'all' || inputs.deploy_target == 'ae' || inputs.deploy_target == '' }}
+    needs: resolve-refs
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'all' || inputs.deploy_target == 'ae' || inputs.deploy_target == '')) }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
       name: ae
       branch: main
+      ref: ${{ needs.resolve-refs.outputs.main }}
       server: AE
       site: AE
 
   # Staging живёт на EN-сервере и использует EN-базу; RU-стейдж — под /ru.
   deploy-staging-en:
-    needs: deploy-en
-    if: ${{ always() && (inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && (needs['deploy-en'].result == 'success' || needs['deploy-en'].result == 'skipped') }}
+    needs: [resolve-refs, deploy-en]
+    if: ${{ !cancelled() && needs.resolve-refs.result == 'success' && (github.event_name == 'push' || inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && (needs['deploy-en'].result == 'success' || needs['deploy-en'].result == 'skipped') }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
       name: staging-en
       branch: staging
+      ref: ${{ needs.resolve-refs.outputs.staging }}
       server: EN
       site: EN
       project_name: 8blocks-staging-en
@@ -68,13 +108,14 @@ jobs:
       run_migrations: true
 
   deploy-staging-ru:
-    needs: deploy-staging-en
-    if: ${{ always() && (inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && needs['deploy-staging-en'].result == 'success' }}
+    needs: [resolve-refs, deploy-staging-en]
+    if: ${{ !cancelled() && (github.event_name == 'push' || inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && needs['deploy-staging-en'].result == 'success' }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
       name: staging-ru
       branch: staging
+      ref: ${{ needs.resolve-refs.outputs.staging }}
       server: EN
       site: RU
       project_name: 8blocks-staging-ru
