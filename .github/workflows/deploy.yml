@@ -1,7 +1,10 @@
 name: Deploy to Production
 
-# Ручной запуск. Прод (ru, en, ae) собирается из main, staging — из ветки staging.
+# Прод (ru, en, ae) — вручную из main. Staging — автоматически после push/merge и вручную.
 on:
+  push:
+    branches:
+      - staging
   workflow_dispatch:
     inputs:
       deploy_target:
@@ -16,9 +19,14 @@ on:
           - ae
           - staging
 
+# Не прерываем SSH-деплой и не запускаем параллельные обновления серверов.
+concurrency:
+  group: deploy-sites
+  cancel-in-progress: false
+
 jobs:
   deploy-ru:
-    if: ${{ inputs.deploy_target == 'all' || inputs.deploy_target == 'ru' || inputs.deploy_target == '' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'all' || inputs.deploy_target == 'ru' || inputs.deploy_target == '') }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
@@ -28,7 +36,7 @@ jobs:
       site: RU
 
   deploy-en:
-    if: ${{ inputs.deploy_target == 'all' || inputs.deploy_target == 'en' || inputs.deploy_target == '' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'all' || inputs.deploy_target == 'en' || inputs.deploy_target == '') }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
@@ -38,7 +46,7 @@ jobs:
       site: EN
 
   deploy-ae:
-    if: ${{ inputs.deploy_target == 'all' || inputs.deploy_target == 'ae' || inputs.deploy_target == '' }}
+    if: ${{ github.event_name == 'workflow_dispatch' && (inputs.deploy_target == 'all' || inputs.deploy_target == 'ae' || inputs.deploy_target == '') }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
@@ -50,12 +58,13 @@ jobs:
   # Staging живёт на EN-сервере и использует EN-базу; RU-стейдж — под /ru.
   deploy-staging-en:
     needs: deploy-en
-    if: ${{ always() && (inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && (needs['deploy-en'].result == 'success' || needs['deploy-en'].result == 'skipped') }}
+    if: ${{ !cancelled() && (github.event_name == 'push' || inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && (needs['deploy-en'].result == 'success' || needs['deploy-en'].result == 'skipped') }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
       name: staging-en
       branch: staging
+      ref: ${{ github.event_name == 'push' && github.sha || 'staging' }}
       server: EN
       site: EN
       project_name: 8blocks-staging-en
@@ -69,12 +78,13 @@ jobs:
 
   deploy-staging-ru:
     needs: deploy-staging-en
-    if: ${{ always() && (inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && needs['deploy-staging-en'].result == 'success' }}
+    if: ${{ !cancelled() && (github.event_name == 'push' || inputs.deploy_target == 'all' || inputs.deploy_target == 'staging' || inputs.deploy_target == '') && needs['deploy-staging-en'].result == 'success' }}
     uses: ./.github/workflows/deploy-site.yml
     secrets: inherit
     with:
       name: staging-ru
       branch: staging
+      ref: ${{ github.event_name == 'push' && github.sha || 'staging' }}
       server: EN
       site: RU
       project_name: 8blocks-staging-ru
