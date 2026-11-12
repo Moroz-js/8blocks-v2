@@ -30,7 +30,7 @@
 - Один агент на сессию. Без ролей, без субагентов, без выбора моделей.
 - Работать только в ветке `staging`. В `main` не коммитить и не пушить.
 - Релиз в прод — только через PR `staging` → `main`.
-- Деплой ручной, через GitHub Actions → **Deploy to Production** (`.github/workflows/deploy.yml`), параметр `deploy_target`: `all`, `ru`, `en`, `ae`, `staging`.
+- Деплой через GitHub Actions → **Deploy to Production** (`.github/workflows/deploy.yml`): push/merge в `main` автоматически обновляет три прода и оба staging-инстанса; push/merge в `staging` — только staging. Сливать PR в main и обновлять staging может только Moroz-js. Ручной параметр `deploy_target`: `all`, `ru`, `en`, `ae`, `staging`.
   - Три прода: RU, EN, AE — собираются из `main`.
   - Staging (EN на `staging.8blocks.io`, RU на `/ru`) — собирается из ветки `staging`.
 - После завершения работы — проверка в браузере через Playwright MCP и сверка с макетами через Figma MCP. Если MCP не установлен или не подключён — установить/подключить (Figma MCP требует авторизации владельцем через `/mcp`).
