@@ -1,6 +1,6 @@
 @use '@/shared/ds/styles' as *;
 
-$header: 65px;
+$header: 92px; // sticky site header
 
 .good { color: $ds-success; }
 .medium { color: $ds-warning; }
@@ -272,6 +272,8 @@ $header: 65px;
 
 .widenCard {
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -286,11 +288,6 @@ $header: 65px;
     min-height: 0;
     padding: $ds-space-5 20px;
   }
-}
-
-.cardBg {
-  object-fit: cover;
-  pointer-events: none;
 }
 
 .widenValue {
@@ -315,6 +312,7 @@ $header: 65px;
 // ── Route ───────────────────────────────────────────────────────────
 .route {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   padding: 30px;
   border-radius: $ds-radius-card;

@@ -1,0 +1,484 @@
+@use '@/shared/ds/styles' as *;
+
+.sources {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+}
+
+.source {
+  @include ds-text-sm;
+  @include ds-transition(color);
+  align-self: flex-start;
+  max-width: 420px;
+  color: $ds-text-muted;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover { color: $ds-text; }
+}
+
+// ── Hero ───────────────────────────────────────────────────────────────
+.heroTokens {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $ds-space-5;
+  margin-top: $ds-space-6;
+
+  @include ds-mobile { margin-top: 0; gap: $ds-space-3; }
+}
+
+.tokenList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-space-3;
+  list-style: none;
+}
+
+.token {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid $ds-border;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface-glass;
+
+  img { opacity: 0.9; }
+
+  @include ds-mobile { width: 40px; height: 40px; }
+}
+
+.tokenNote {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+  white-space: nowrap;
+}
+
+// ── Category carousel ──────────────────────────────────────────────────
+.project {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 528px;
+  height: 100%;
+  padding: $ds-space-7;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile {
+    min-height: 0;
+    padding: $ds-space-5;
+  }
+}
+
+.projectHead {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+  max-width: 350px;
+}
+
+.projectName {
+  @include ds-h4;
+  color: $ds-text;
+}
+
+.projectMeta {
+  @include ds-text-lg;
+  color: $ds-text-faint;
+}
+
+.projectFacts {
+  @include ds-text-sm;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 330px;
+  margin-top: $ds-space-7;
+  color: $ds-text;
+}
+
+.advice {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 362px;
+  margin-top: auto;
+  padding-top: $ds-space-7;
+}
+
+.adviceLabel {
+  @include ds-text-lg;
+  color: $ds-accent;
+}
+
+.adviceText {
+  @include ds-text-sm;
+  color: $ds-text;
+}
+
+.bubbles {
+  position: absolute;
+  top: 28px;
+  left: 416px;
+
+  @include ds-tablet {
+    position: relative;
+    top: auto;
+    left: auto;
+    align-self: center;
+    margin-top: $ds-space-6;
+  }
+
+  @include ds-mobile {
+    scale: 0.8;
+    margin-block: -40px;
+  }
+}
+
+.bubble {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba($ds-black, 0.95) 55%, rgba($ds-pink, 0.25) 100%);
+  box-shadow: inset 0 0 var(--glow) rgba($ds-white, 0.9);
+  color: $ds-text;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.bubbleLabel {
+  width: 80%;
+  line-height: 1.2;
+}
+
+.projectAction {
+  position: absolute;
+  right: $ds-space-7;
+  bottom: $ds-space-7;
+
+  @include ds-tablet {
+    position: static;
+    margin-top: $ds-space-5;
+  }
+}
+
+.insight {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 20px 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-4; }
+}
+
+.insightHead {
+  display: flex;
+  align-items: center;
+  gap: $ds-space-5;
+  width: 100%;
+  min-height: 56px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $ds-text;
+  text-align: left;
+  cursor: pointer;
+  @include ds-focus-visible;
+
+  @include ds-mobile { gap: $ds-space-3; }
+}
+
+.insightValue {
+  @include ds-h3;
+  flex-shrink: 0;
+  color: $ds-accent;
+}
+
+.insightLabel {
+  @include ds-text-md;
+  flex: 1;
+}
+
+.insightChevron {
+  flex-shrink: 0;
+  margin-right: 10px;
+  transition: transform calc(#{$ds-duration} * 2) $ds-ease;
+
+  &.open { transform: rotate(180deg); }
+}
+
+.insightPanel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows calc(#{$ds-duration} * 3) $ds-ease;
+
+  > div {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  &.open { grid-template-rows: 1fr; }
+}
+
+.insightText {
+  @include ds-text-sm;
+  max-width: 1000px;
+  padding-top: 18px;
+  color: $ds-text-muted;
+}
+
+.dataNote {
+  @include ds-text-xs;
+  margin-top: $ds-space-4;
+  color: $ds-text-faint;
+}
+
+// ── Buckets ────────────────────────────────────────────────────────────
+.buckets {
+  display: grid;
+  grid-template-columns: 251px 350px 326px;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: $ds-space-7;
+
+  @include ds-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.bucketList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  @include ds-tablet {
+    flex-direction: row;
+    gap: $ds-space-2;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+}
+
+.bucketTab {
+  @include ds-text-lg;
+  @include ds-transition(background-color, color);
+  @include ds-focus-visible;
+  min-height: 49px;
+  padding: $ds-space-3 $ds-space-5;
+  border: none;
+  border-radius: $ds-radius-card;
+  background-color: transparent;
+  color: $ds-text-faint;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:hover { color: $ds-text; }
+}
+
+.bucketTabActive {
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+}
+
+.cone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-5;
+}
+
+.coneCircle {
+  position: relative;
+  width: 350px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba($ds-black, 0.85) 0%, rgba($ds-black, 0.55) 30%, rgba($ds-black, 0) 55%),
+    conic-gradient(
+      from 300deg,
+      $ds-pink 0% var(--low),
+      rgba($ds-pink, 0.45) var(--low) var(--high),
+      transparent var(--high) 100%
+    ),
+    $ds-surface;
+  box-shadow: inset 0 0 28px rgba($ds-white, 0.14);
+}
+
+.coneText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 230px;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.coneRange {
+  @include ds-h3;
+  color: $ds-text;
+}
+
+.coneNote {
+  @include ds-text-xs;
+  color: $ds-text-muted;
+}
+
+.bucketInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $ds-space-7;
+}
+
+.bucketText {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+}
+
+.bucketName {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.bucketNote {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+// ── Vesting norms ──────────────────────────────────────────────────────
+.normFigure {
+  color: $ds-accent;
+}
+
+.normClaim {
+  @include ds-text-sm;
+  max-width: 543px;
+  color: $ds-text;
+}
+
+// ── Market data ────────────────────────────────────────────────────────
+.market {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-5;
+  height: 488px;
+  padding: 30px;
+  border-radius: $ds-radius-lg;
+  background-color: $ds-surface;
+
+  .sources { margin-top: auto; }
+
+  @include ds-mobile {
+    height: auto;
+    min-height: 420px;
+    padding: $ds-space-5;
+  }
+}
+
+.marketLogo {
+  display: flex;
+  align-items: center;
+  height: 42px;
+
+  img { display: block; }
+}
+
+.marketText {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  margin-top: $ds-space-2;
+}
+
+.marketTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.marketDescription {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+// ── AI CTA ─────────────────────────────────────────────────────────────
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-7;
+  max-width: 895px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.ctaTitle {
+  @include ds-h3;
+  display: flex;
+  flex-direction: column;
+  color: $ds-text;
+}
+
+.ctaAccent {
+  color: $ds-accent;
+}
+
+.ctaFeatures {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+
+  @include ds-mobile {
+    flex-direction: column;
+    gap: $ds-space-6;
+  }
+}
+
+.ctaFeature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 230px;
+  padding-inline: 15px;
+  box-sizing: content-box;
+
+  img { margin-bottom: $ds-space-4; }
+
+  & + & { border-left: 1px solid $ds-border-strong; }
+
+  @include ds-mobile {
+    & + & { border-left: none; }
+  }
+}
+
+.ctaFeatureTitle {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+.ctaFeatureText {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+  white-space: pre-line;
+}
+
+.methodology {
+  @include ds-text-xs;
+  margin-top: $ds-space-8;
+  color: $ds-text-faint;
+}

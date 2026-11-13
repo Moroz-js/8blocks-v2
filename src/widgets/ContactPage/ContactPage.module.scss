@@ -1,372 +1,193 @@
-@use '@/shared/styles/variables' as *;
+@use '@/shared/ds/styles' as *;
 
-// ── 1. Hero: avatar left + form right ─────────────────────────────
-
-.hero {
-  padding-block: $space-10;
-  border-top: 1px solid $border-secondary;
-
-  @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-8 $space-7;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-7 $space-6;
-  }
+.muted {
+  @include ds-text-sm;
+  color: $ds-text-muted;
 }
 
-.heroInner {
-  max-width: $container-max;
-  margin-inline: auto;
-  padding-inline: $container-padding;
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-  }
+.faint {
+  @include ds-text-sm;
+  max-width: 512px;
+  color: $ds-text-faint;
 }
 
-.heroGrid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: $space-10;
-  align-items: stretch;
-
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr;
-    gap: $space-8;
-  }
-}
-
-.heroLeft {
+// ── Booking (EN): intro + Calendly ─────────────────────────────────────
+.booking {
+  @include ds-container;
   display: flex;
   flex-direction: column;
-  gap: $space-5;
-}
+  gap: $ds-space-8 * 2;
+  padding-top: $ds-space-6;
 
-.heroRight {
-  min-width: 0;
-  padding-top: $space-9;
-  display: flex;
-  flex-direction: column;
-
-  @media (max-width: #{$bp-tablet}) {
-    padding-top: 0;
+  @include ds-mobile {
+    gap: $ds-space-7;
+    padding-top: $ds-space-5;
   }
 }
 
-.label {
-  display: inline-block;
-  font-family: $font-base;
-  font-size: $text-xs;
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: $text-tertiary;
-}
-
-.heroHeadline {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: clamp(32px, 4vw, 52px);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: $text-primary;
-  margin: 0;
-}
-
-.heroDescription {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-base;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-  margin: 0;
-  max-width: 440px;
-}
-
-// ── Person card ──────────────────────────────────────────────────
-
-.personCard {
+.bookingIntro {
   display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.bookingTitle {
+  @include ds-h2;
+  color: $ds-text;
+}
+
+.bookingText {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+  max-width: 560px;
+}
+
+.services {
+  @include ds-text-md;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: $space-4;
-  padding: $space-5;
-  border: 1px solid $border-secondary;
-  background: $bg-secondary;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  margin-top: $space-3;
+  gap: $ds-space-2;
+  color: $ds-accent;
 }
 
-.personAvatar {
-  flex-shrink: 0;
+.service {
+  display: inline-flex;
+  align-items: center;
+  gap: $ds-space-2;
 }
 
-.personImg {
-  width: 72px;
-  height: 72px;
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: $ds-accent;
+}
+
+.bookingDescription {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+.calendly {
+  height: 700px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+// ── Contact: form + person ─────────────────────────────────────────────
+.contact {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $ds-space-8;
+
+  @include ds-tablet {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.formColumn {
+  display: flex;
+  flex: 0 1 720px;
+  flex-direction: column;
+  gap: $ds-space-7;
+}
+
+.formIntro {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+}
+
+.title {
+  @include ds-h3;
+  @include ds-title-sheen;
+}
+
+.person {
+  display: flex;
+  flex: 0 0 325px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @include ds-tablet { align-self: center; }
+}
+
+.photo {
+  width: 247px;
+  height: 247px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.personInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
 .personName {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: $text-base;
-  color: $text-primary;
-  margin: 0;
+  @include ds-h4;
+  margin-top: $ds-space-4;
+  color: $ds-text;
 }
 
 .personRole {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  color: $text-tertiary;
-  margin: 0;
+  @include ds-text-lg;
+  margin-top: $ds-space-1;
+  color: $ds-text-faint;
 }
 
-.personTg {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  color: $accent-purple;
-  text-decoration: none;
-  margin-top: $space-1;
-  transition: opacity $transition-fast;
-
-  &:hover {
-    opacity: 0.75;
-  }
-}
-
-// ── Prefer email ─────────────────────────────────────────────────
-
-.preferEmail {
+.personLinks {
   display: flex;
-  flex-direction: column;
-  gap: $space-1;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: $ds-space-8;
 }
 
-.preferLabel {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-xs;
-  color: $text-tertiary;
-  margin: 0;
-}
-
-.preferValue {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  color: $text-secondary;
-  text-decoration: none;
-  transition: color $transition-fast;
-
-  &:hover {
-    color: $text-primary;
-  }
-}
-
-// ── 2. Secondary contacts ─────────────────────────────────────────
-
-.contactsSection {
-  padding-block: $space-9;
-  border-top: 1px solid $border-secondary;
-
-  @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-8;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-7;
-  }
-}
-
-.contactsInner {
-  max-width: $container-max;
-  margin-inline: auto;
-  padding-inline: $container-padding;
+// ── Details ────────────────────────────────────────────────────────────
+.details {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $space-8;
+  grid-template-columns: minmax(0, 542px) auto 325px;
+  justify-content: space-between;
+  gap: $ds-space-8;
 
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr 1fr;
-    gap: $space-7;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-    grid-template-columns: 1fr;
-    gap: $space-7;
-  }
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); gap: $ds-space-6; }
 }
 
-.contactCol {
+.detail {
   display: flex;
   flex-direction: column;
-  gap: $space-4;
+  gap: $ds-space-3;
 }
 
-.contactColLabel {
-  font-family: $font-base;
-  font-size: $text-xs;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: $text-tertiary;
-  margin: 0;
+.detailValue {
+  @include ds-text-lg;
+  color: $ds-text;
+  @include ds-transition(color);
+
+  &:hover { color: $ds-accent; }
 }
 
-.contactValue {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-md;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-  text-decoration: none;
-  transition: color $transition-base;
-
-  &:hover {
-    color: $text-primary;
-  }
-}
-
-.socialList {
+.socials {
   display: flex;
-  flex-direction: column;
-  gap: $space-3;
+  align-items: center;
+  gap: 20px;
+  height: 25px;
 }
 
-.socialLink {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-md;
-  color: $text-secondary;
-  text-decoration: none;
-  transition: color $transition-base;
-
-  &:hover {
-    color: $text-primary;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 2px;
-    border-radius: 0;
-  }
-}
-
-// ── 4. Calendly ───────────────────────────────────────────────────
-
-.calendlySection {
-  padding-block: $space-11 $space-10;
-
-  @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-8;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-block: $space-7;
-  }
-}
-
-.calendlyInner {
-  max-width: $container-max;
-  margin-inline: auto;
-  padding-inline: $container-padding;
-  display: grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap: $space-10;
-  align-items: start;
-
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr;
-    gap: $space-7;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-    gap: $space-6;
-  }
-}
-
-.calendlyLeft {
+.social {
   display: flex;
-  flex-direction: column;
-  gap: $space-5;
-  position: sticky;
-  top: $space-8;
+  align-items: center;
+  color: $ds-text;
+  @include ds-transition(color);
 
-  @media (max-width: #{$bp-tablet}) {
-    position: static;
-  }
+  &:hover { color: $ds-accent; }
 }
-
-.calendlyHeadline {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: clamp(26px, 3vw, 40px);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  color: $text-primary;
-  margin: 0;
-}
-
-.calendlyDescription {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-base;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-  margin: 0;
-}
-
-.calendlyList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: $space-3;
-
-  li {
-    font-family: $font-base;
-    font-size: $text-sm;
-    color: $text-tertiary;
-    padding-left: $space-5;
-    position: relative;
-
-    &::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: $accent-purple;
-      opacity: 0.7;
-    }
-  }
-}
-
-.calendlyRight {
-  min-width: 0;
-}
-
-.calendlyEmbed {
-  border: 1px solid $border-secondary;
-  border-radius: 0;
-  overflow: hidden;
-  background: $bg-secondary;
-
-  :global(.calendly-inline-widget) {
-    margin-top: -44px;
-    margin-bottom: -16px;
-  }
-}
-

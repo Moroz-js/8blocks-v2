@@ -1,0 +1,119 @@
+@use '@/shared/ds/styles' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-space-8 $ds-space-5;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.grid2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  color: $ds-text;
+  @include ds-focus-visible;
+}
+
+.cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 828 / 466;
+  overflow: hidden;
+  background-color: $ds-surface;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform calc(#{$ds-duration} * 3) $ds-ease;
+
+  .card:hover & {
+    transform: scale(1.03);
+  }
+}
+
+.body {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: $ds-space-3;
+  padding-top: $ds-space-5;
+}
+
+.meta {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+.title {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+.excerpt {
+  @include ds-text-sm;
+  flex-grow: 1;
+  color: $ds-text-muted;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-4;
+  margin-top: $ds-space-2;
+}
+
+.footer {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+.read {
+  @include ds-text-sm;
+  display: inline-flex;
+  align-items: center;
+  height: $ds-space-7;
+  padding-inline: $ds-space-4;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  white-space: nowrap;
+  @include ds-overlay(transparent);
+  @include ds-transition(box-shadow);
+
+  .card:hover & {
+    @include ds-overlay($ds-surface-glass);
+  }
+}
+
+// Text card on the surface (research): no cover, larger title.
+.text {
+  min-height: 216px;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  .body {
+    justify-content: flex-end;
+    padding-top: 0;
+  }
+
+  .meta {
+    color: $ds-accent;
+  }
+
+  .title {
+    @include ds-h4;
+  }
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
+}

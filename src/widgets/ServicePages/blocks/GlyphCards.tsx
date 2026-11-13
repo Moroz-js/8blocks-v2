@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react'
-import Image, { type StaticImageData } from 'next/image'
 import clsx from 'clsx'
+import { AccentSurface } from '@/shared/ds'
 import { BinaryGlyph } from '@/widgets/BinaryArt/BinaryGlyph'
 import styles from './GlyphCards.module.scss'
 
@@ -11,8 +11,6 @@ export interface GlyphCardItem {
   label?: ReactNode
   /** Binary glyph from the designer's set; `oy` / `os` — vertical anchor and scale. */
   glyph: { shape: string; oy?: number; os?: number }
-  /** Card background art (gradient cards). */
-  image?: StaticImageData
 }
 
 interface GlyphCardsProps {
@@ -25,21 +23,41 @@ interface GlyphCardsProps {
   /** `bottom` — text at the bottom; `under` — text right under the glyph. */
   text?: 'bottom' | 'under'
   align?: 'left' | 'center'
+  /**
+   * Cards on the accent surface. `group` (default) — the grid shares one gradient;
+   * `false` — a parent with `data-accent-group` (several grids, one gradient).
+   */
+  accent?: boolean
+  accentGroup?: boolean
   className?: string
 }
 
 /** Cards with an animated binary glyph (designer's service pages). */
-export function GlyphCards({ items, columns, height, glyph, text = 'bottom', align = 'left', className }: GlyphCardsProps) {
+export function GlyphCards({
+  items,
+  columns,
+  height,
+  glyph,
+  text = 'bottom',
+  align = 'left',
+  accent = false,
+  accentGroup = true,
+  className,
+}: GlyphCardsProps) {
   const vars = {
     '--card-height': `${height}px`,
     '--glyph-top': `${glyph.top ?? 0}px`,
     '--glyph-height': `${glyph.height}px`,
   } as CSSProperties
   return (
-    <ul className={clsx(styles.grid, styles[`cols${columns}`], styles[text], styles[align], className)} style={vars}>
+    <ul
+      className={clsx(styles.grid, styles[`cols${columns}`], styles[text], styles[align], className)}
+      style={vars}
+      data-accent-group={accent && accentGroup ? '' : undefined}
+    >
       {items.map((item, i) => (
-        <li key={i} className={clsx(styles.card, item.image && styles.imageCard)}>
-          {item.image && <Image src={item.image} alt="" fill sizes="(max-width: 640px) 100vw, 600px" className={styles.bg} />}
+        <li key={i} className={clsx(styles.card, accent && styles.accentCard)}>
+          {accent && <AccentSurface />}
           <div className={styles.glyph} aria-hidden="true">
             <BinaryGlyph shape={item.glyph.shape} oy={item.glyph.oy} os={item.glyph.os} />
           </div>

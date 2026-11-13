@@ -1,15 +1,44 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { findIllustration } from './engine/illustrations'
+import { mountIllustration } from './engine/mountIllustration'
 import { createGlyph, type GlyphOptions } from './glyph/createGlyph'
 import { elapsed, subscribe } from './ticker'
 
 interface BinaryGlyphProps extends GlyphOptions {
   className?: string
+  /** Darker body, brighter edges — the look of every card in project 2. Engine illustrations only. */
+  deep?: boolean
 }
 
-/** Animated white binary-digit icon; fills its box. Static at `prefers-reduced-motion`. */
-export function BinaryGlyph({ shape, ox, oy, os, grid, className }: BinaryGlyphProps) {
+/**
+ * Animated binary-digit art; fills its box. Shapes registered in `engine/illustrations` are drawn by the
+ * Binary Engine (monochrome object revealed on scroll), the rest by the procedural glyph.
+ * Static at `prefers-reduced-motion`.
+ */
+export function BinaryGlyph({ shape, deep = true, className, ...glyph }: BinaryGlyphProps) {
+  return findIllustration(shape) ? (
+    <EngineIllustration shape={shape} deep={deep} className={className} {...glyph} />
+  ) : (
+    <ProceduralGlyph shape={shape} className={className} {...glyph} />
+  )
+}
+
+function EngineIllustration({ shape, ox, oy, os, deep, className }: BinaryGlyphProps) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    const ill = findIllustration(shape)
+    if (!el || !ill) return
+    return mountIllustration(el, ill, { ox, oy, os, deep })
+  }, [shape, ox, oy, os, deep])
+
+  return <div ref={ref} className={className} style={{ position: 'relative', width: '100%', height: '100%' }} aria-hidden="true" />
+}
+
+function ProceduralGlyph({ shape, ox, oy, os, grid, className }: BinaryGlyphProps) {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {

@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react'
-import Image from 'next/image'
 import clsx from 'clsx'
-import { Section } from '@/shared/ds'
-import background from '../assets/sc-strategy-bg.webp'
+import { AccentSurface, Section } from '@/shared/ds'
 import styles from './StrategyDiagram.module.scss'
 
 interface StrategyDiagramProps {
@@ -22,7 +20,7 @@ export function StrategyDiagram({ title, description, stages }: StrategyDiagramP
           <p className={styles.description}>{description}</p>
         </div>
         <div className={styles.card}>
-          <Image src={background} alt="" fill sizes="(max-width: 1024px) 100vw, 595px" className={styles.bg} />
+          <AccentSurface />
           <svg className={styles.arrows} viewBox="0 0 595 525" aria-hidden="true">
             <defs>
               <marker id="strategy-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

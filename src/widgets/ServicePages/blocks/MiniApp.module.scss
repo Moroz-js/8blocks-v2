@@ -23,11 +23,6 @@
   }
 }
 
-.bg {
-  z-index: -1;
-  object-fit: cover;
-}
-
 // Phone screenshot runs past the bottom edge (designer: x 741, 476 × 852).
 .shot {
   position: absolute;
@@ -81,10 +76,20 @@
   max-width: 768px;
 }
 
+// All texts share one grid cell: the block keeps the height of the longest one.
+.tabTexts {
+  display: grid;
+  max-width: 741px;
+}
+
 .tabText {
   @include ds-text-sm;
-  max-width: 741px;
+  grid-area: 1 / 1;
   color: $ds-text-faint;
+}
+
+.tabTextHidden {
+  visibility: hidden;
 }
 
 .links {

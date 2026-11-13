@@ -15,6 +15,7 @@ $ds-black: #000000;
 $ds-dark: #101113;
 $ds-charcoal: #1b1b1b;
 $ds-gray: #707172;
+$ds-gray-light: #aaaaac; // HTML mockups: links and sources in article text
 $ds-white: #ffffff;
 $ds-pink: #ca005a;
 $ds-green: #34c759;
@@ -30,6 +31,7 @@ $ds-text: var(--ds-text);
 $ds-text-muted: var(--ds-text-muted); // descriptions, labels, placeholders
 $ds-text-inverse: var(--ds-text-inverse); // on light fills (primary button, tab on)
 $ds-text-faint: var(--ds-text-faint); // 40% white — secondary text on gradients and photos
+$ds-text-link: var(--ds-text-link); // links and sources inside running text (underlined)
 $ds-border: var(--ds-border); // dividers, table lines
 $ds-highlight: var(--ds-highlight); // highlighted table column
 $ds-border-strong: var(--ds-border-strong); // field hover
@@ -46,6 +48,19 @@ $ds-overlay-darken-soft: var(--ds-overlay-darken-soft); // 5% black — tab on, 
 $ds-overlay-lighten: var(--ds-overlay-lighten); // 3% white — secondary, tab off
 
 $ds-shadow-xs: var(--ds-shadow-xs); // Figma: shadows/xs
+
+// Accent surface (Figma 110:6122): dark plum → pink. Angle follows the block's
+// proportions, see AccentSurface. Stops past 100% are intentional.
+$ds-accent-stops: (
+  #120209 9.9%,
+  #210311 23.8%,
+  #310519 37.7%,
+  #4b0524 51.7%,
+  #760337 65.6%,
+  #a20049 80.3%,
+  #a63669 97.9%,
+  #c66993 107.3%
+);
 
 // ── Typography (Figma text styles; Manrope Medium everywhere) ─────────
 $ds-font: var(--font-manrope), 'Manrope', system-ui, sans-serif;

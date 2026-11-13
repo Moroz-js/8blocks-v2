@@ -1,5 +1,45 @@
 @use '@/shared/ds/styles' as *;
 
+// The section body bleeds to the right edge; rows in the column take it back.
+$bleed: max(#{$ds-margin}, (100vw - #{$ds-content}) / 2);
+
+@mixin in-column {
+  margin-right: $bleed;
+
+  @include ds-tablet { margin-right: $ds-margin-tablet; }
+  @include ds-mobile { margin-right: $ds-margin-mobile; }
+}
+
+.toolbar {
+  @include in-column;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-5;
+  margin-bottom: $ds-inner-gap;
+
+  @include ds-mobile { margin-bottom: $ds-inner-gap-mobile; }
+}
+
+.toolbarMain {
+  min-width: 0;
+}
+
+.arrows {
+  display: flex;
+  flex-shrink: 0;
+  gap: $ds-space-2;
+
+  @include ds-mobile { display: none; }
+}
+
+.footer {
+  @include in-column;
+  margin-top: $ds-inner-gap;
+
+  @include ds-mobile { margin-top: $ds-inner-gap-mobile; }
+}
+
 .viewport {
   overflow: hidden;
   // Keep the focus ring of the first card visible.

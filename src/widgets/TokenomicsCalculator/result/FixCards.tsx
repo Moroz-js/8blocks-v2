@@ -1,29 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import Image, { type StaticImageData } from 'next/image'
 import clsx from 'clsx'
-import { Button } from '@/shared/ds'
+import { AccentSurface, Button } from '@/shared/ds'
 import { useScramble } from '@/shared/lib/useScramble'
 import { BinaryGlyph } from '@/widgets/BinaryArt/BinaryGlyph'
-import bg1 from '../assets/fix-bg-1.webp'
-import bg2 from '../assets/fix-bg-2.webp'
-import bg3 from '../assets/fix-bg-3.webp'
-import bg4 from '../assets/fix-bg-4.webp'
-import bg5 from '../assets/fix-bg-5.webp'
-import bg6 from '../assets/fix-bg-6.webp'
 import styles from './FixCards.module.scss'
 
-const OPEN_ART: { shape: string; bg: StaticImageData }[] = [
-  { shape: 'padlock', bg: bg1 },
-  { shape: 'team', bg: bg2 },
-  { shape: 'scales', bg: bg3 },
-]
-const LOCKED_ART: { shape: string; bg: StaticImageData }[] = [
-  { shape: 'buoy', bg: bg4 },
-  { shape: 'hourglass', bg: bg5 },
-  { shape: 'stairs', bg: bg6 },
-]
+const OPEN_ART = ['padlock', 'team', 'scales']
+const LOCKED_ART = ['buoy', 'hourglass', 'stairs']
 const EyeIcon = (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <path d="M10 3.75c4.17 0 7.72 2.59 9.17 6.25-1.45 3.66-5 6.25-9.17 6.25S2.28 13.66.83 10C2.28 6.34 5.83 3.75 10 3.75Zm0 2.08a4.17 4.17 0 1 0 0 8.34 4.17 4.17 0 0 0 0-8.34Zm0 1.67a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" />
@@ -58,12 +43,11 @@ function OpenCard({ index, title, result, copy }: { index: number; title: string
   const [open, setOpen] = useState(false)
   const label = open ? copy.leaveWith : copy.improvement.replace('{n}', String(index + 1))
   const text = useScramble(open ? result : title)
-  const art = OPEN_ART[index % OPEN_ART.length]
   return (
     <li className={clsx(styles.card, open && styles.open)}>
-      <Image src={art.bg} alt="" fill sizes="(max-width: 640px) 100vw, 400px" className={styles.bg} />
+      <AccentSurface className={styles.bg} />
       <div className={styles.glyph} aria-hidden="true">
-        <BinaryGlyph shape={art.shape} os={0.93} />
+        <BinaryGlyph shape={OPEN_ART[index % OPEN_ART.length]} os={0.93} />
       </div>
       <div className={styles.text}>
         <p className={styles.label}>{label}</p>
@@ -96,7 +80,7 @@ export function FixCards({
   copy: FixCardsCopy
 }) {
   return (
-    <div className={styles.rows}>
+    <div className={styles.rows} data-accent-group>
       {open.length > 0 && (
         <ul className={styles.grid}>
           {open.map((fix, i) => (
@@ -107,9 +91,9 @@ export function FixCards({
       <ul className={clsx(styles.grid, styles.lockedRow)}>
         {locked.map((title, i) => (
           <li key={title} className={styles.card}>
-            <Image src={LOCKED_ART[i % LOCKED_ART.length].bg} alt="" fill sizes="(max-width: 640px) 100vw, 400px" className={styles.bg} />
+            <AccentSurface className={styles.bg} />
             <div className={styles.glyph} aria-hidden="true">
-              <BinaryGlyph shape={LOCKED_ART[i % LOCKED_ART.length].shape} os={0.93} />
+              <BinaryGlyph shape={LOCKED_ART[i % LOCKED_ART.length]} os={0.93} />
             </div>
             <div className={styles.text}>
               <p className={styles.label}>{copy.improvement.replace('{n}', String(open.length + i + 1))}</p>

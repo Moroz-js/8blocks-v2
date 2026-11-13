@@ -72,7 +72,6 @@ export interface ReadinessContent {
     description: string
     primary: Action
     secondary: Action
-    people: { name: string; role: string; initials: string }[]
   }
   faq: { title: string; items: { question: string; answer: string }[]; footer: { text: string; link: string; href: string } }
   result: {
@@ -165,7 +164,7 @@ export const readiness: ReadinessContent = {
         check: 'Who buys the fractions, at what minimum ticket',
         example: {
           title: 'Working example from commercial real estate.',
-          body: 'In May 2025 the Dubai Land Department — a government body — launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes.',
+          body: 'In May 2025 the Dubai Land Department, a government body, launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes.',
         },
         imageAlt: 'Commercial building facade at night',
         validate: 'Jurisdiction and the regulated route for distribution',
@@ -499,10 +498,6 @@ export const readiness: ReadinessContent = {
     description: 'before you spend money on legal or technical implementation.',
     primary: { label: 'Book the free 45-min call', href: CALL },
     secondary: { label: 'Or check your readiness first', href: '#quiz' },
-    people: [
-      { name: 'Sergei Novikov', role: 'CPO, 8Blocks', initials: 'SN' },
-      { name: 'Anton Efimenko', role: 'Co-founder, 8Blocks', initials: 'AE' },
-    ],
   },
   faq: {
     title: 'The questions owners\nask us first.',
@@ -581,19 +576,19 @@ export const readiness: ReadinessContent = {
         {
           category: 'RWA · Commodities',
           title: 'Gold as collateral',
-          description: 'Tokenized gold financing residential construction.',
+          description: 'Tokenised gold as collateral to fund residential construction.',
           href: '/cases',
         },
         {
           category: 'RWA · Trade finance',
           title: 'Exports without bank credit',
-          description: 'Wild-harvest receivables turned into an investable instrument.',
+          description: 'A financing instrument for wild-harvest exports, with buyback.',
           href: '/cases',
         },
         {
           category: 'RWA · Commodities',
           title: 'An illiquid metal, made investable',
-          description: 'High-purity metal structured across three jurisdictions.',
+          description: 'High-purity metal turned liquid across three jurisdictions.',
           href: '/cases',
         },
       ],
@@ -619,7 +614,7 @@ export const readiness: ReadinessContent = {
     },
     guide: {
       title: 'The owner’s guide,\non one page.',
-      description: 'Seven questions to ask before tokenizing an asset — the same ones we ask on the call. No email required.',
+      description: 'Seven questions to ask before tokenizing an asset, the same ones we ask on the call. No email required.',
       action: { label: 'Open the guide', href: '/product/digital-assets/owners-guide' },
       imageAlt: 'Envelope with the owner’s guide',
     },

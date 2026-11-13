@@ -1,199 +1,190 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import Image, { type StaticImageData } from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { navGroups, type NavItem } from '@/shared/config/site'
-import { t } from '@/shared/i18n'
-import { uiStrings } from '@/shared/content/uiStrings'
-import { Button, Logo } from '@/shared/ui'
+import clsx from 'clsx'
+import type { SiteNav } from '@/shared/content/siteNav'
+import { AccentSurface } from '@/shared/ds'
+import { Logo } from '@/shared/ui'
 import { ThemeToggle } from '@/shared/ui/ThemeToggle'
 import { useThemeScopeActive } from '@/shared/lib/ThemeScope'
+import { BinaryGlyph } from '@/widgets/BinaryArt/BinaryGlyph'
 import { StagingBar } from './StagingBar'
+import { filterNav, type NavFlags } from './navFilter'
+import coinArt from './assets/nav-ill-tokenomics-coin.png'
+import houseArt from './assets/nav-ill-assets-house.png'
+import profilesArt from './assets/nav-ill-company-profiles.png'
 import styles from './Header.module.scss'
 
-const soonLabel = t({ ru: 'скоро', en: 'soon' })
 const isStaging = process.env.NEXT_PUBLIC_STAGING === 'true'
 
-function getNavSections(items: NavItem[]) {
-  return items.reduce<Array<{ label?: string; items: NavItem[] }>>((sections, item) => {
-    const lastSection = sections.at(-1)
-
-    if (lastSection && lastSection.label === item.section) {
-      lastSection.items.push(item)
-    } else {
-      sections.push({ label: item.section, items: [item] })
-    }
-
-    return sections
-  }, [])
+/** Intro card art per menu, placed as in the mockup (420×220 card). */
+const INTRO_ART: Record<string, { src: StaticImageData; className: string }> = {
+  tokenomics: { src: coinArt, className: styles.artCoin },
+  assets: { src: houseArt, className: styles.artHouse },
+  company: { src: profilesArt, className: styles.artProfiles },
 }
 
-interface HeaderProps {
+/** Menus without a drawn card art use an engine glyph; it mounts only while the menu is open. */
+const INTRO_GLYPH: Record<string, string> = {
+  media: 'docpage',
+}
+
+interface HeaderProps extends NavFlags {
+  nav: SiteNav
   className?: string
-  mediaEnabled?: boolean
-  blogEnabled?: boolean
-  researchEnabled?: boolean
-  eventsEnabled?: boolean
 }
 
-export function Header({
-  className = '',
-  mediaEnabled: _mediaEnabled,
-  blogEnabled = false,
-  researchEnabled = false,
-  eventsEnabled = false,
-}: HeaderProps) {
-  const groups = navGroups
-    .map((group) => ({
-      ...group,
-      items: group.items.filter(
-        (item) =>
-          (item.href !== '/blog' || blogEnabled) &&
-          (item.href !== '/research' || researchEnabled) &&
-          (item.href !== '/events' || eventsEnabled),
-      ),
-    }))
-    .filter((group) => group.items.length > 0)
+function Chevron() {
+  return (
+    <svg className={styles.chevron} width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+      <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
-  const [isOpen, setIsOpen] = useState(false)
-  const [overHero, setOverHero] = useState(false)
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
-  const headerRef = useRef<HTMLElement>(null)
+export function Header({ nav: fullNav, className, ...flags }: HeaderProps) {
+  const nav = filterNav(fullNav, flags)
+  const [openId, setOpenId] = useState<string | null>(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const navRef = useRef<HTMLElement>(null)
+  const switchTimer = useRef<number | undefined>(undefined)
   const pathname = usePathname()
+
+  // With a menu open, switching waits a moment: a diagonal path to the panel can
+  // cross a neighbouring trigger without swapping the menu.
+  const hoverGroup = (id: string) => {
+    window.clearTimeout(switchTimer.current)
+    if (!openId || openId === id) setOpenId(id)
+    else switchTimer.current = window.setTimeout(() => setOpenId(id), 150)
+  }
+
+  const closeMenu = () => {
+    window.clearTimeout(switchTimer.current)
+    setOpenId(null)
+  }
+
+  useEffect(() => () => window.clearTimeout(switchTimer.current), [])
   const showThemeToggle = useThemeScopeActive()
 
-  // Close menu on route change
+  // Close menus after client-side navigation.
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- close mobile menu when navigating
-    setIsOpen(false)
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- reset menus when the route changes
+    setOpenId(null)
+    setMobileOpen(false)
   }, [pathname])
 
-  // Transparent header with light text while overlapping a dark audit hero.
   useEffect(() => {
-    const update = () => {
-      const hero = document.querySelector('[data-audit-hero]')
-      if (!hero) {
-        setOverHero(false)
-        return
-      }
-      const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0
-      setOverHero(hero.getBoundingClientRect().bottom > headerBottom)
-    }
-    update()
-    window.addEventListener('scroll', update, { passive: true })
-    window.addEventListener('resize', update)
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => {
-      window.removeEventListener('scroll', update)
-      window.removeEventListener('resize', update)
+      document.body.style.overflow = ''
     }
-  }, [pathname])
+  }, [mobileOpen])
 
-  // Lock body scroll when menu is open
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
-  }, [isOpen])
+    if (!openId && !mobileOpen) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return
+      setOpenId(null)
+      setMobileOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [openId, mobileOpen])
 
   return (
     <>
       {isStaging && <StagingBar />}
       <header
         data-chrome="header"
-        ref={headerRef}
-        className={`${styles.header} ${isStaging ? styles.headerStaging : ''} ${overHero ? styles.overHero : ''} ${className}`}
+        className={clsx(styles.header, isStaging && styles.headerStaging, openId && styles.menuOpen, className)}
+        // The header row sits above the open panel, so leaving is tracked on the whole header.
+        onMouseLeave={closeMenu}
       >
         <div className={styles.inner}>
           <Logo className={styles.logo} />
 
-          <nav className={styles.nav} aria-label="Main navigation">
-            <ul className={styles.navList}>
-              {groups.map((group) => (
-                <li
-                  key={group.label}
-                  className={`${styles.navGroup} ${openDropdown === group.label ? styles.navGroupOpen : ''}`}
-                  onMouseEnter={() => setOpenDropdown(group.label)}
-                  onMouseLeave={() => setOpenDropdown(null)}
-                  onFocus={() => setOpenDropdown(group.label)}
-                  onBlur={(event) => {
-                    if (!event.currentTarget.contains(event.relatedTarget)) {
-                      setOpenDropdown(null)
-                    }
-                  }}
+          <nav
+            ref={navRef}
+            className={styles.nav}
+            aria-label="Main navigation"
+            onBlur={(event) => {
+              if (!navRef.current?.contains(event.relatedTarget)) closeMenu()
+            }}
+          >
+            <span className={styles.sheet} aria-hidden="true" />
+            {nav.groups.map((group) => {
+              const open = openId === group.id
+              const art = INTRO_ART[group.id]
+              return (
+                <div
+                  key={group.id}
+                  className={clsx(styles.item, open && styles.itemOpen)}
+                  onMouseEnter={() => hoverGroup(group.id)}
+                  onFocus={() => setOpenId(group.id)}
                 >
                   <button
                     type="button"
-                    className={styles.navLink}
-                    aria-haspopup="true"
-                    aria-expanded={openDropdown === group.label}
-                    onClick={() => {
-                      setOpenDropdown((current) =>
-                        current === group.label ? null : group.label,
-                      )
-                    }}
+                    className={styles.trigger}
+                    aria-expanded={open}
+                    aria-controls={`nav-panel-${group.id}`}
+                    onClick={() => setOpenId(open ? null : group.id)}
                   >
                     {group.label}
-                    <span className={styles.navChevron} aria-hidden="true">▾</span>
+                    <Chevron />
                   </button>
-                  <div className={styles.dropdown}>
-                    <ul className={styles.dropdownList}>
-                      {getNavSections(group.items).map((section, sectionIndex) => (
-                        <li
-                          key={section.label ?? 'default'}
-                          className={`${styles.dropdownSection} ${sectionIndex > 0 ? styles.dropdownSectionSeparated : ''}`}
-                        >
-                          {section.label && <p className={styles.dropdownSectionLabel}>{section.label}</p>}
-                          <ul className={styles.dropdownSectionList}>
-                            {section.items.map((item) =>
-                              item.soon ? (
-                                <li key={item.label}>
-                                  <span className={styles.dropdownSoon}>
-                                    {item.label}
-                                    <span className={styles.soonBadge}>{soonLabel}</span>
-                                  </span>
-                                </li>
-                              ) : (
-                                <li key={item.href}>
-                                  <Link
-                                    href={item.href}
-                                    className={styles.dropdownLink}
-                                    onClick={() => setOpenDropdown(null)}
-                                  >
-                                    {item.label}
-                                  </Link>
-                                </li>
-                              ),
-                            )}
-                          </ul>
-                        </li>
-                      ))}
-                    </ul>
+                  <div id={`nav-panel-${group.id}`} className={styles.panel}>
+                    <Link href={group.intro.href} className={styles.intro} onClick={() => setOpenId(null)}>
+                      <AccentSurface />
+                      {art && <Image src={art.src} alt="" className={clsx(styles.introArt, art.className)} />}
+                      {open && INTRO_GLYPH[group.id] && (
+                        <span className={styles.introGlyph} aria-hidden="true">
+                          <BinaryGlyph shape={INTRO_GLYPH[group.id]} os={0.8} />
+                        </span>
+                      )}
+                      <span className={styles.introText}>
+                        <span className={styles.introTitle}>{group.intro.title}</span>
+                        <span className={styles.introLead}>{group.intro.text}</span>
+                      </span>
+                      <span className={styles.introMore}>{group.intro.more}</span>
+                    </Link>
+                    {group.columns.map((column) => (
+                      <div key={column.heading} className={styles.column}>
+                        <p className={styles.columnHeading}>{column.heading}</p>
+                        {column.links.map((link) => (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className={styles.link}
+                            onClick={() => setOpenId(null)}
+                          >
+                            {link.label}
+                          </Link>
+                        ))}
+                      </div>
+                    ))}
                   </div>
-                </li>
-              ))}
-            </ul>
+                </div>
+              )
+            })}
           </nav>
 
           <div className={styles.actions}>
             {showThemeToggle && <ThemeToggle />}
-            <Link href="/contact" className={styles.ctaLink}>
-              <Button variant="primary" size="sm" type="button">
-                {uiStrings.contactUs}
-              </Button>
+            <Link href={nav.contact.href} className={styles.contact}>
+              {nav.contact.label}
             </Link>
-          </div>
-
-          <div className={styles.mobileHeaderActions}>
-            {showThemeToggle && <ThemeToggle />}
             <button
-              className={`${styles.burger} ${isOpen ? styles.burgerOpen : ''}`}
-              onClick={() => setIsOpen((v) => !v)}
-              aria-label={isOpen ? uiStrings.menuClose : uiStrings.menuOpen}
-              aria-expanded={isOpen}
+              type="button"
+              className={clsx(styles.burger, mobileOpen && styles.burgerOpen)}
+              onClick={() => setMobileOpen((value) => !value)}
+              aria-label={mobileOpen ? nav.menu.close : nav.menu.open}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
             >
-              <span className={styles.burgerLabel}>
-                {isOpen ? uiStrings.menuCloseLabel : uiStrings.menuLabel}
-              </span>
+              <span className={styles.burgerLabel}>{mobileOpen ? nav.menu.closeLabel : nav.menu.label}</span>
               <span className={styles.burgerLines} aria-hidden="true">
                 <span />
                 <span />
@@ -203,65 +194,32 @@ export function Header({
         </div>
       </header>
 
-      {/* Mobile overlay menu */}
       <div
+        id="mobile-menu"
         data-chrome="mobile-menu"
-        className={`${styles.mobileMenu} ${isStaging ? styles.mobileMenuStaging : ''} ${isOpen ? styles.mobileMenuOpen : ''}`}
-        aria-hidden={!isOpen}
+        className={clsx(styles.mobileMenu, isStaging && styles.mobileMenuStaging, mobileOpen && styles.mobileMenuOpen)}
+        aria-hidden={!mobileOpen}
+        inert={!mobileOpen}
       >
-        <nav className={styles.mobileNav} aria-label="Mobile navigation">
-          <div className={styles.mobileNavGroups} data-lenis-prevent>
-            {groups.map((group, gi) => (
-              <div
-                key={group.label}
-                className={styles.mobileNavGroup}
-                style={{ '--i': gi } as React.CSSProperties}
-              >
-                <p className={styles.mobileNavGroupLabel}>{group.label}</p>
-                <ul className={styles.mobileNavList}>
-                  {getNavSections(group.items).map((section) => (
-                    <li key={section.label ?? 'default'} className={styles.mobileNavSection}>
-                      {section.label && <p className={styles.mobileNavSectionLabel}>{section.label}</p>}
-                      <ul className={styles.mobileNavSectionList}>
-                        {section.items.map((item) =>
-                          item.soon ? (
-                            <li key={item.label}>
-                              <span className={`${styles.mobileNavLink} ${styles.mobileNavSoon}`}>
-                                {item.label}
-                                <span className={styles.soonBadge}>{soonLabel}</span>
-                              </span>
-                            </li>
-                          ) : (
-                            <li key={item.href}>
-                              <Link
-                                href={item.href}
-                                className={styles.mobileNavLink}
-                                onClick={() => setIsOpen(false)}
-                              >
-                                {item.label}
-                              </Link>
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </li>
+        <nav className={styles.mobileNav} aria-label="Mobile navigation" data-lenis-prevent>
+          {nav.groups.map((group, index) => (
+            <div key={group.id} className={styles.mobileGroup} style={{ '--i': index } as CSSProperties}>
+              <p className={styles.mobileGroupLabel}>{group.label}</p>
+              {group.columns.map((column) => (
+                <div key={column.heading} className={styles.mobileColumn}>
+                  <p className={styles.columnHeading}>{column.heading}</p>
+                  {column.links.map((link) => (
+                    <Link key={link.href} href={link.href} className={styles.mobileLink}>
+                      {link.label}
+                    </Link>
                   ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className={styles.mobileActions}>
-            <Link
-              href="/contact"
-              className={styles.mobileCta}
-              onClick={() => setIsOpen(false)}
-            >
-              <Button variant="primary" size="lg" fullWidth type="button">
-                {uiStrings.contactUs}
-              </Button>
-            </Link>
-          </div>
+                </div>
+              ))}
+            </div>
+          ))}
+          <Link href={nav.contact.href} className={styles.mobileContact}>
+            {nav.contact.label}
+          </Link>
         </nav>
       </div>
     </>

@@ -1,152 +1,166 @@
-@use '@/shared/styles/variables' as *;
+@use '@/shared/ds/styles' as *;
+
+// Article template (project 2 «Article»): centred header, 770px cover,
+// table of contents + 595px reading column.
+$toc: 233px;
+$column: 595px;
 
 .root {
-  max-width: 860px;
-  margin: 0 auto;
-  padding-inline: $container-padding;
-  padding-top: $space-9;
-  padding-bottom: $space-12;
+  // RichText, the download CTA and the expert quote read system v1 tokens: map them to v2.
+  --text-primary: var(--ds-text);
+  --text-secondary: var(--ds-text-muted);
+  --text-tertiary: var(--ds-text-muted);
+  --muted-strong: var(--ds-text-muted);
+  --bg-secondary: var(--ds-surface);
+  --card-panel-bg: var(--ds-surface);
+  --border-primary: var(--ds-border-strong);
+  --border-secondary: var(--ds-border);
 
-  @media (max-width: #{$bp-tablet}) {
-    padding-top: $space-7;
-    padding-bottom: $space-10;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-  }
+  color: $ds-text;
 }
 
-.rootWide {
-  max-width: 1200px;
-}
-
-// ── Header ─────────────────────────────────────────────────────────
+// ── Header ─────────────────────────────────────────────────────────────
 .header {
-  margin-bottom: $space-9;
+  @include ds-container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-4;
+  max-width: calc(800px + 2 * #{$ds-margin});
+  padding-top: $ds-space-8;
+  text-align: center;
+
+  @include ds-mobile { padding-top: $ds-space-6; }
 }
 
-.category {
-  display: inline-flex;
-  align-items: center;
-  height: 24px;
-  padding: 0 $space-3;
-  border: 1px solid rgba($pal-magenta, 0.3);
-  border-radius: 0;
-  font-family: $font-base;
-  font-size: $text-xs;
-  font-weight: 400;
-  color: rgba($pal-magenta, 0.85);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  margin-bottom: $space-5;
-  transition: border-color $transition-fast, color $transition-fast;
+.eyebrow {
+  @include ds-text-sm;
+  color: $ds-accent;
 
-  &:hover {
-    border-color: $accent-purple;
-    color: $accent-purple;
-  }
+  a { @include ds-transition(color); }
+  a:hover { color: $ds-text; }
 }
 
 .title {
-  font-family: $font-base;
-  font-size: $text-4xl;
-  font-weight: 500;
-  line-height: $leading-tight;
-  letter-spacing: -0.03em;
-  color: $text-primary;
-  margin: 0 0 $space-5;
-
-  @media (max-width: #{$bp-tablet}) {
-    font-size: $text-3xl;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    font-size: $text-2xl;
-  }
+  @include ds-h3;
+  @include ds-title-sheen;
 }
 
 .excerpt {
-  font-family: $font-base;
-  font-size: $text-md;
-  font-weight: 400;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-  margin: 0 0 $space-6;
+  @include ds-text-md;
+  max-width: 595px;
+  color: $ds-text-muted;
 }
 
 .meta {
-  display: flex;
-  align-items: center;
-  gap: $space-3;
-  flex-wrap: wrap;
-}
+  @include ds-text-sm;
+  color: $ds-text-faint;
 
-.author,
-.date,
-.readingTime {
-  font-family: $font-base;
-  font-size: $text-sm;
-  font-weight: 400;
-  color: $text-tertiary;
-  letter-spacing: 0.03em;
-}
-
-.authorLink {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba($white, 0.25);
-  transition: color 0.15s ease;
-
-  &:hover {
-    color: $text-primary;
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 }
 
-.metaSep {
-  color: $text-tertiary;
-  opacity: 0.5;
-  user-select: none;
-}
-
-// ── Cover ───────────────────────────────────────────────────────────
-.coverWrap {
-  margin-bottom: $space-9;
-  border-radius: 0;
-  overflow: hidden;
+.cover {
+  @include ds-container;
+  max-width: calc(770px + 2 * #{$ds-margin});
+  margin-top: $ds-space-7;
 }
 
 .coverImg {
+  display: block;
   width: 100%;
   height: auto;
-  display: block;
-  object-fit: cover;
+  border-radius: $ds-radius-card;
 }
 
-// ── Body layout ─────────────────────────────────────────────────────
+// ── Body ───────────────────────────────────────────────────────────────
 .body {
-  display: block;
-}
+  @include ds-container;
+  display: grid;
+  grid-template-columns: $toc $column;
+  justify-content: start;
+  gap: 70px;
+  padding-block: calc(#{$ds-block-gap} / 2);
 
-.bodyWithToc {
-  @media (min-width: #{$bp-desktop}) {
-    display: grid;
-    grid-template-columns: 1fr 220px;
-    gap: $space-9;
-    align-items: stretch; // sidebar stretches to full height so sticky works
+  @include ds-mobile { padding-top: $ds-space-8; }
 
-    // Allow article page to be wider when ToC is present
-    max-width: unset;
+  // Without a table of contents the column centres under the cover.
+  &:not(:has(.sidebar)) {
+    grid-template-columns: minmax(0, $column);
+    justify-content: center;
   }
-}
 
-.content {
-  min-width: 0;
+  @include ds-tablet {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $ds-space-6;
+  }
 }
 
 .sidebar {
-  @media (max-width: calc(#{$bp-desktop} - 1px)) {
-    display: none;
-  }
+  position: sticky;
+  top: 132px;
+  align-self: start;
+
+  @include ds-tablet { display: none; }
 }
 
+.root .content {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-8;
+  min-width: 0;
+
+  // RichText typography in the v2 article style.
+  :global(h2) {
+    @include ds-h5;
+    margin-top: $ds-space-6;
+    scroll-margin-top: 132px;
+    color: $ds-text;
+  }
+
+  :global(h3) {
+    @include ds-text-lg;
+    margin-top: $ds-space-4;
+    scroll-margin-top: 132px;
+    color: $ds-text;
+  }
+
+  :global(p),
+  :global(li) {
+    @include ds-text-md;
+    color: $ds-text-muted;
+  }
+
+  :global(strong),
+  :global(b) {
+    color: $ds-text;
+    font-weight: $ds-weight;
+  }
+
+  :global(a) {
+    color: $ds-text-link;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  :global(blockquote) {
+    @include ds-text-md;
+    padding-left: $ds-space-4;
+    border-left: 2px solid $ds-accent;
+    color: $ds-text;
+  }
+
+  :global(li)::marker {
+    color: $ds-accent;
+  }
+
+  :global(img) {
+    border-radius: $ds-radius-card;
+  }
+
+  :global(table) {
+    @include ds-text-sm;
+  }
+}

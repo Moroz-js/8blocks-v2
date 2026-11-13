@@ -4,10 +4,10 @@ import { partnersContent } from '@/shared/content/homePage'
 import styles from './PartnersMarquee.module.scss'
 
 /** Endless strip of partner logos; pauses on hover. */
-export function PartnersMarquee({ label }: { label: string }) {
+export function PartnersMarquee({ label, className }: { label: string; className?: string }) {
   const partners = partnersContent.partners
   return (
-    <section className={styles.section} aria-label={label}>
+    <section className={clsx(styles.section, className)} aria-label={label}>
       <div className={styles.track}>
         {[0, 1].map((copy) => (
           <ul key={copy} className={styles.group} aria-hidden={copy === 1 || undefined}>

@@ -6,11 +6,10 @@ interface TeamCtaProps {
   description: string
   primary: { label: string; href: string }
   secondary: { label: string; href: string }
-  people: readonly { name: string; role: string; initials: string }[]
 }
 
-/** «We are trying to determine whether a real business case exists»: text, two buttons and the team. */
-export function TeamCta({ title, description, primary, secondary, people }: TeamCtaProps) {
+/** «We are trying to determine whether a real business case exists»: text left, two buttons right. */
+export function TeamCta({ title, description, primary, secondary }: TeamCtaProps) {
   return (
     <Section>
       <div className={styles.card}>
@@ -20,21 +19,10 @@ export function TeamCta({ title, description, primary, secondary, people }: Team
         </div>
         <div className={styles.actions}>
           <Button href={primary.href}>{primary.label}</Button>
-          <Button variant="secondary" href={secondary.href}>
+          <Button variant="tertiary" href={secondary.href}>
             {secondary.label}
           </Button>
         </div>
-        <ul className={styles.people}>
-          {people.map((person) => (
-            <li key={person.name} className={styles.person}>
-              <span className={styles.avatar} aria-hidden="true">
-                {person.initials}
-              </span>
-              <p className={styles.name}>{person.name}</p>
-              <p className={styles.muted}>{person.role}</p>
-            </li>
-          ))}
-        </ul>
       </div>
     </Section>
   )

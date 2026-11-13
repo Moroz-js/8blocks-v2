@@ -3,8 +3,7 @@
 import { useId, useState } from 'react'
 import Image from 'next/image'
 import clsx from 'clsx'
-import { Button, Section, Tabs } from '@/shared/ds'
-import background from '../assets/app-bg.webp'
+import { AccentSurface, Button, Section, Tabs } from '@/shared/ds'
 import shot1 from '../assets/app-1.webp'
 import shot2 from '../assets/app-2.webp'
 import shot3 from '../assets/app-3.webp'
@@ -37,7 +36,7 @@ export function MiniApp({ copy }: { copy: MiniAppCopy }) {
   return (
     <Section>
       <div className={styles.card}>
-        <Image src={background} alt="" fill sizes="(max-width: 1280px) 100vw, 1200px" className={styles.bg} />
+        <AccentSurface />
         {SHOTS.map((shot, i) => (
           <Image
             key={i}
@@ -53,9 +52,19 @@ export function MiniApp({ copy }: { copy: MiniAppCopy }) {
         </div>
         <div className={styles.controls}>
           <Tabs items={items} value={tab} onChange={setTab} label={copy.tabsLabel} panelIdPrefix={panelId} />
-          <p id={`${panelId}-${tab}`} role="tabpanel" className={styles.tabText}>
-            {copy.tabs[active].text}
-          </p>
+          <div className={styles.tabTexts}>
+            {copy.tabs.map((item, i) =>
+              i === active ? (
+                <p key={i} id={`${panelId}-${tab}`} role="tabpanel" className={styles.tabText}>
+                  {item.text}
+                </p>
+              ) : (
+                <p key={i} className={clsx(styles.tabText, styles.tabTextHidden)} aria-hidden="true">
+                  {item.text}
+                </p>
+              ),
+            )}
+          </div>
         </div>
       </div>
       <div className={styles.links}>

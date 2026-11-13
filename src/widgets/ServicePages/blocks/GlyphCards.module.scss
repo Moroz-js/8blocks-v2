@@ -36,11 +36,6 @@
   }
 }
 
-.bg {
-  z-index: -1;
-  object-fit: cover;
-}
-
 .glyph {
   position: absolute;
   top: var(--glyph-top);
@@ -73,7 +68,7 @@
   @include ds-text-sm;
   color: $ds-text-muted;
 
-  .imageCard & {
+  .accentCard & {
     color: $ds-text-faint;
   }
 }

@@ -6,28 +6,22 @@ import { IndexedRows, SplitList } from './blocks/SplitList'
 import { StepsCarousel } from './blocks/StepsCarousel'
 import { MiniApp } from './blocks/MiniApp'
 import { ServiceFaq } from './blocks/ServiceFaq'
-import card1 from './assets/tok-card-1.webp'
-import card2 from './assets/tok-card-2.webp'
-import card3 from './assets/tok-card-3.webp'
-import card4 from './assets/tok-card-4.webp'
-import ctaPink from './assets/cta-pink.webp'
 
 const { common, tokenomics: page } = servicePages
 
 const PAIN_GLYPHS = [
   { shape: 'plugout', oy: 0.5, os: 0.92 },
-  { shape: 'buysell', oy: 0.5, os: 0.95 },
+  { shape: 'gauge', oy: 0.5, os: 0.9 },
   { shape: 'drain', oy: 0.47, os: 0.98 },
   { shape: 'crackedcoin', oy: 0.48, os: 0.9 },
 ]
 
 const APPROACH_GLYPHS = [
-  { shape: 'cube', oy: 0.533, os: 0.93 },
-  { shape: 'orbit', oy: 0.5, os: 0.88 },
-  { shape: 'gear', oy: 0.5, os: 0.9 },
-  { shape: 'crane', oy: 0.484, os: 0.74 },
+  { shape: 'cube', oy: 0.5, os: 0.49 },
+  { shape: 'orbit', oy: 0.5, os: 0.47 },
+  { shape: 'gear', oy: 0.5, os: 0.71 },
+  { shape: 'crane', oy: 0.5, os: 0.43 },
 ]
-const APPROACH_IMAGES = [card1, card2, card3, card4]
 
 export function TokenomicsPage() {
   return (
@@ -52,7 +46,8 @@ export function TokenomicsPage() {
           glyph={{ height: 380 }}
           text="under"
           align="center"
-          items={page.approach.items.map((item, i) => ({ ...item, glyph: APPROACH_GLYPHS[i], image: APPROACH_IMAGES[i] }))}
+          accent
+          items={page.approach.items.map((item, i) => ({ ...item, glyph: APPROACH_GLYPHS[i] }))}
         />
       </Section>
 
@@ -65,7 +60,7 @@ export function TokenomicsPage() {
       <MiniApp copy={common.miniApp} />
 
       <Section>
-        <Cta size="md" image={ctaPink} title={page.cta.title} description={page.cta.description} primary={common.bookCall} />
+        <Cta size="md" title={page.cta.title} description={page.cta.description} primary={common.bookCall} />
       </Section>
 
       <ServiceFaq title={common.faq.title} items={page.faq} footer={common.faq.footer} />

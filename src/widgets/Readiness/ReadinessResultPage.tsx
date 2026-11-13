@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
-import { Button, CaseList, Cta, ScorePetals, Section, petalTone, type Petal } from '@/shared/ds'
+import { AccentSurface, Button, CaseList, Cta, ScorePetals, Section, petalTone, type Petal } from '@/shared/ds'
 import type { ReadinessContent } from '@/shared/content/readiness'
 import {
   PILLARS,
@@ -18,8 +18,6 @@ import { PATH_ART } from './art'
 import { PencilIcon, SourceIcon, StrengthIcon, ValidateIcon } from './icons'
 import { CHECK_PATH } from './paths'
 import solar from './assets/precedent-solar.webp'
-import gradientWide from './assets/card-gradient-wide.webp'
-import gradientHalf from './assets/card-gradient-half.webp'
 import caseGold from '@/widgets/ServicePages/assets/case-gold.webp'
 import caseHarvest from '@/widgets/ServicePages/assets/case-harvest.webp'
 import caseMill from '@/widgets/ServicePages/assets/case-mill.webp'
@@ -150,7 +148,6 @@ export function ReadinessResultPage({ answers, content }: { answers: Answers; co
       <Section>
         <Cta
           size="md"
-          image={gradientWide}
           title={result.feasibility.title}
           description={result.feasibility.description}
           primary={result.feasibility.primary}
@@ -163,7 +160,7 @@ export function ReadinessResultPage({ answers, content }: { answers: Answers; co
         <div className={styles.widen}>
           {[pathCopy.widen.conventional, pathCopy.widen.digital].map((side, i) => (
             <div key={side.label} className={clsx(styles.widenCard, i === 1 && styles.digital)}>
-              {i === 1 && <Image src={gradientHalf} alt="" fill sizes="(max-width: 1280px) 100vw, 595px" className={styles.cardBg} />}
+              {i === 1 && <AccentSurface />}
               <p className={styles.cardTitle}>{side.label}</p>
               <div className={styles.widenValue}>
                 <p className={styles.widenNumber}>{side.value}</p>
@@ -176,7 +173,7 @@ export function ReadinessResultPage({ answers, content }: { answers: Answers; co
 
       <Section title={result.route.title} description={result.route.description}>
         <div className={styles.route}>
-          <Image src={gradientWide} alt="" fill sizes="(max-width: 1280px) 100vw, 1200px" className={styles.cardBg} />
+          <AccentSurface />
           <ol className={styles.routeSteps}>
             {result.route.steps.map((step, i) => (
               <li key={step.title} className={styles.routeStep}>

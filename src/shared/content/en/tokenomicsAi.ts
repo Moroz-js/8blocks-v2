@@ -1,0 +1,125 @@
+// Tokenomics AI — texts from the designer's mockup (project 2 «Tokenomics AI»).
+
+export const tokenomicsAiContent = {
+  limited: 'Limited slots available',
+  hero: {
+    titleLead: 'Tokenomics AI:',
+    title: 'Your token model. Investor-ready in 48 hours.',
+    description:
+      'AI drafts allocations and vesting. The 8Blocks scoring engine flags structural risks and refines the model. You get the refined design and a report for your data room.',
+    facts: ['Early access', 'From $299', '48h turnaround'],
+  },
+  actions: { access: 'Request early access', sales: 'Contact sales' },
+  steps: {
+    title: 'From brief to model\nin four steps',
+    items: [
+      {
+        title: 'You describe the project',
+        subtitle: 'Name, sector, stage, goal',
+        text: 'The 8Blocks scoring engine flags structural risks and refines the model. You get the refined design and a report for your data room.',
+      },
+      {
+        title: 'AI asks what matters',
+        subtitle: 'A short dialogue fills the gaps',
+        text: 'Tell us about your planned raise, funding rounds, and any allocations already promised. AI asks the questions a form cannot.',
+      },
+      {
+        title: 'Model is generated',
+        subtitle: 'Allocations + vesting',
+        text: 'AI drafts eight allocation buckets and vesting schedules. The scoring engine tests unlock spikes and refines the model against category benchmarks.',
+      },
+      {
+        title: 'You get the package',
+        subtitle: 'Ready for your data room',
+        text: 'Your refined model, Structure Score, and branded investor PDF, together in one investor-ready package.',
+      },
+    ],
+    demo: {
+      label: 'Tokenomics AI product preview',
+      greeting: 'Hi there! What’s\non your mind?',
+      project: 'NOVA PROTOCOL',
+      meta: 'DeFi · Pre-seed · $2M',
+      ready: 'Your model is ready',
+      input: 'Describe your project…',
+      note: 'Illustrative demo. No live model is being generated.',
+    },
+  },
+  outputs: {
+    title: 'Your investor-ready AI model:',
+    accent: 'AI drafts allocations and vesting',
+    vesting: {
+      title: 'Allocation and vesting',
+      text: 'Who receives how many tokens, and the conditions for them to enter circulation',
+      chartLabel: 'Vesting chart of token allocations entering circulation',
+      legend: ['Team', 'Public', 'Advisors', 'Seed', 'Pre-Seed', 'Lead VC'],
+    },
+    circulation: {
+      title: 'Circulation scheme',
+      text: 'How tokens are issued, circulate, are withdrawn, and burned',
+      nodes: ['Emission', 'Investors', 'Team', 'Treasury', 'Users', 'Utility', 'Market', 'Burn'],
+    },
+    utility: {
+      title: 'Token utility logic',
+      text: 'Incentives to buy and use the token',
+      checks: [
+        'Who will buy your token, and why?',
+        'How can the token be used to get an extra benefit?',
+        'If the token pays no income, what does it give?',
+        'Staking is not a utility. It only delays a sale.',
+      ],
+    },
+  },
+  compare: {
+    title: 'Trust a tuned model',
+    description:
+      'A generic AI picks a formula, explains it, and might guess right. It still cannot give an individual approach.',
+    caption: 'Comparison of ChatGPT, Tokenomics AI, and consulting',
+    columns: ['ChatGPT', 'Tokenomics AI', 'Consulting'],
+    included: 'Included',
+    notIncluded: 'Not included',
+    possible: 'Possible',
+    rows: [
+      { label: 'Price', cells: ['$0', '$300/m', '$15000'] },
+      { label: 'Allocations', cells: ['yes', 'yes', 'yes'] },
+      { label: 'Vesting and cliffs', cells: ['yes', 'yes', 'yes'] },
+      { label: 'Burn', cells: ['maybe', 'yes', 'yes'] },
+      { label: 'Buyback', cells: ['maybe', 'yes', 'yes'] },
+      { label: 'Staking (formulas and logic)', cells: ['maybe', 'yes', 'yes'] },
+      { label: 'Treasury (accumulation and turnover)', cells: ['no', 'yes', 'yes'] },
+      { label: 'Token utilities', cells: ['maybe', 'yes', 'yes'] },
+      { label: 'Answer to “who will buy your token, and why”', cells: ['no', 'yes', 'yes'] },
+    ],
+  },
+  cta: 'Hand your ideas to the agent and get a first proposal for free',
+  form: {
+    close: 'Close early access form',
+    title: 'Request early access',
+    email: 'Email',
+    emailPlaceholder: 'you@company.com',
+    project: 'Project name',
+    projectPlaceholder: 'Your project',
+    goal: 'Your goal',
+    goalPlaceholder: 'Select a goal',
+    goals: ['Investor round', 'Token launch', 'Refine an existing model', 'Explore a token model'],
+    stage: 'Project stage (optional)',
+    stagePlaceholder: 'Select a stage',
+    stages: ['Pre-seed', 'Private Sale', 'Pre-TGE', 'TGE', 'Post-TGE'],
+    heard: 'How did you hear about us? (optional)',
+    heardPlaceholder: 'Select a source',
+    sources: ['Search', 'Social media', 'Referral', 'Event', 'Other'],
+    submit: 'Request early access',
+    sending: 'Sending…',
+    note: 'Early access starts from $299. We’ll confirm scope and timing with you before payment.',
+    error: 'We couldn’t send your request. Please try again.',
+    successTitle: 'Thanks, request received',
+    successText: 'We’ll confirm scope and timing with you before payment.',
+    messageTitle: 'Tokenomics AI early access',
+    messageProject: 'Project',
+    messageGoal: 'Goal',
+    messageStage: 'Stage',
+    messageSource: 'Source',
+    notSpecified: 'Not specified',
+  },
+}
+
+export type TokenomicsAiContent = typeof tokenomicsAiContent

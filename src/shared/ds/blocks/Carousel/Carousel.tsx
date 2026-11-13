@@ -17,6 +17,12 @@ interface CarouselProps {
   /** Slide width on desktop, px (Figma: accent 394, quote 450). */
   slideWidth: number
   labels?: { prev: string; next: string }
+  /** Row under the title (e.g. filter tabs); the arrows move into it. */
+  toolbar?: ReactNode
+  /** Content under the slides, in the column. */
+  footer?: ReactNode
+  /** Changing it scrolls the track back to the first slide (new slide set). */
+  resetKey?: string | number
   className?: string
 }
 
@@ -34,6 +40,9 @@ export function Carousel({
   children,
   slideWidth,
   labels = { prev: 'Previous', next: 'Next' },
+  toolbar,
+  footer,
+  resetKey,
   className,
 }: CarouselProps) {
   const viewportRef = useRef<HTMLDivElement>(null)
@@ -62,6 +71,10 @@ export function Carousel({
 
   useEffect(() => x.on('change', (value) => setOffset(-value)), [x])
 
+  useEffect(() => {
+    x.set(0)
+  }, [resetKey, x])
+
   const step = useCallback(
     (direction: 1 | -1) => {
       const first = trackRef.current?.firstElementChild as HTMLElement | null
@@ -76,6 +89,13 @@ export function Carousel({
 
   const atStart = offset <= 1
   const atEnd = offset >= maxOffset - 1
+  const arrows =
+    maxOffset > 0 ? (
+      <>
+        <IconButton direction="prev" label={labels.prev} onClick={() => step(-1)} disabled={atStart} />
+        <IconButton direction="next" label={labels.next} onClick={() => step(1)} disabled={atEnd} />
+      </>
+    ) : null
 
   return (
     <Section
@@ -84,15 +104,14 @@ export function Carousel({
       sheen={sheen}
       bleed
       className={className}
-      actions={
-        maxOffset > 0 ? (
-          <>
-            <IconButton direction="prev" label={labels.prev} onClick={() => step(-1)} disabled={atStart} />
-            <IconButton direction="next" label={labels.next} onClick={() => step(1)} disabled={atEnd} />
-          </>
-        ) : null
-      }
+      actions={toolbar ? undefined : arrows}
     >
+      {toolbar && (
+        <div className={styles.toolbar}>
+          <div className={styles.toolbarMain}>{toolbar}</div>
+          {arrows && <div className={styles.arrows}>{arrows}</div>}
+        </div>
+      )}
       <div ref={viewportRef} className={styles.viewport}>
         <motion.ul
           ref={trackRef}
@@ -108,6 +127,7 @@ export function Carousel({
           ))}
         </motion.ul>
       </div>
+      {footer && <div className={styles.footer}>{footer}</div>}
     </Section>
   )
 }

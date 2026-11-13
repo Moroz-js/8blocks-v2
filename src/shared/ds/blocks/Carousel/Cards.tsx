@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import Image, { type ImageProps } from 'next/image'
 import clsx from 'clsx'
 import asterisk from '../../icons/asterisk.svg'
+import { AccentSurface } from '../../ui/AccentSurface'
 import { ArrowLink } from '../../ui/Elements'
 import styles from './Cards.module.scss'
 
@@ -24,6 +25,7 @@ export function AccentCard({
 }) {
   return (
     <article className={clsx(styles.card, styles.accent, className)}>
+      <AccentSurface />
       <Image src={asterisk} alt="" width={24} height={24} />
       <div className={styles.text}>
         <h3 className={styles.title}>{title}</h3>

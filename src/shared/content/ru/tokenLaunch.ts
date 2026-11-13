@@ -8,6 +8,7 @@ const ruObject = {
   },
   hero: {
     label: 'Запуск токена',
+    statBadge: 'Исследование 8Blocks',
     statValue: '79%',
     statCaption: 'токенов падают в первые 90 дней после листинга',
     statSourceLabel: 'А8А9 · High FDV Token Failure Study · анализ 542 листингов на топ-биржах',
@@ -107,21 +108,21 @@ const ruObject = {
   },
   partners: {
     label: 'решение',
-    headline: 'Три партнёра. Один трек запуска',
+    headline: 'Три партнёра.\nОдин трек запуска',
     description:
       'Мы объединили стратегию, инвесторов и листинг в один процесс, чтобы каждое решение усиливало следующий этап запуска, а не создавало новые разрывы.',
     items: [
       {
         name: 'А8А9',
         role: 'Стратегия и подготовка',
-        subtitle: 'Токеномика, продуктовая логика, упаковка',
+        subtitle: 'Токеномика,\nпродуктовая логика, упаковка',
         description:
           'Аудит существующей токеномики или разработка новой модели, проработка продуктовой логики и подготовка проекта к pitch-сессиям с инвесторами. Workshop по токеномике, который помогает проверить ключевые решения до запуска. Если модель уже есть — проводим аудит и пересобираем её. Если нет — создаём новую так, чтобы токен поддерживал бизнес, а не существовал отдельно.',
       },
       {
         name: 'Fibonacci',
         role: 'Доступ к инвесторам и ликвидность',
-        subtitle: 'Pitch-сессии с фондами и маркет-мейкинг',
+        subtitle: 'Pitch-сессии\nс фондами и маркет-мейкинг',
         description:
           'Организация pitch-сессий с фондами и частными инвесторами, маркет-мейкинг и поддержка ликвидности после листинга. Совместно с А8А9 готовит проект к привлечению инвестиций и сопровождает его до выхода на биржу.',
       },
@@ -140,12 +141,12 @@ const ruObject = {
     description:
       'Шесть модулей. Каждый — самостоятельная услуга с фиксированной стоимостью и сроком. Можно начать с любого модуля, пройти весь трек или подключиться на этапе маркет-мейкинга. Платите только за то, что действительно нужно вашему проекту.',
     step1Title: 'Шаг 1. Соберите ваш трек',
-    step2Title: 'Шаг 2. Расскажите о проекте',
+    step2Title: 'Расскажите о проекте',
     detailsLabel: 'Подробнее',
     packagesLabel: 'Варианты пакетов',
     fromPrefix: 'от',
     customPriceLabel: 'По запросу',
-    totalCostLabel: 'Стоимость',
+    totalCostLabel: 'Итого',
     totalDurationLabel: 'Срок',
     weeksTemplate: '~%s нед.',
     emptyTotalNote: 'Отметьте модули, чтобы увидеть стоимость и срок',
@@ -160,19 +161,19 @@ const ruObject = {
   },
   form: {
     nameLabel: 'Имя и фамилия',
-    namePlaceholder: 'Иван Иванов',
+    namePlaceholder: 'Ваше имя',
     companyLabel: 'Компания / проект',
     companyPlaceholder: 'Название проекта',
     emailLabel: 'Email',
-    emailPlaceholder: 'ivan@company.io',
+    emailPlaceholder: 'you@company.com',
     telegramLabel: 'Telegram',
     telegramPlaceholder: '@username',
     telegramOptional: 'опционально',
-    stageLabel: 'Стадия проекта',
+    stageLabel: 'Стадия',
     stagePlaceholder: 'Выберите стадию',
     stageOptions: ['Идея', 'MVP', 'Pre-TGE', 'Post-TGE', 'Ретокеномика'],
     taskLabel: 'Опишите задачу',
-    taskPlaceholder: 'Коротко о проекте и задаче',
+    taskPlaceholder: 'Расскажите о проекте',
     submitCalcLabel: 'Рассчитать трек',
     submitShortLabel: 'Оставить заявку',
     sendingLabel: 'Отправляем…',
@@ -289,7 +290,7 @@ const ruObject = {
       },
     ],
     geographyTitle: 'География и клиенты',
-    geographyText: 'Офисы в Дубае и Берлине. Клиенты в США, Европе, MENA и LatAm.',
+    geographyText: 'Офисы в Цуге, Дубае и Берлине. Клиенты в Европе, США, MENA и LatAm.',
     networkLabel: 'партнёрская сеть',
     networkTitle: 'Наша партнёрская сеть',
     network: [

@@ -1,215 +1,167 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
+import clsx from 'clsx'
+import { Button, Tabs } from '@/shared/ds'
 import type { CaseCardData, CaseCategory } from '@/entities/case-study'
-import { casesContent, casesUiContent } from '@/shared/content/casesPage'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import styles from './CasesPage.module.scss'
 
-const ease = 'easeOut' as const
+const CATEGORIES: CaseCategory[] = ['DeFi', 'GameFi', 'RWA', 'Finance']
+type Filter = 'all' | CaseCategory
 
-const tagClassMap: Record<string, string> = {
-  DeFi: styles.tagDeFi,
-  GameFi: styles.tagGameFi,
-  RWA: styles.tagRWA,
-  Finance: styles.tagFinance,
+export interface CasesPageCopy {
+  headline: string
+  description: string
+  ariaLabel: string
+  filterAll: string
+  taskLabel: string
+  actionsLabel: string
+  resultLabel: string
+  viewFull: string
+  emptyLabel: string
+  serviceLabels: Record<string, string>
+  count: string
 }
 
-const categories: CaseCategory[] = ['DeFi', 'GameFi', 'RWA', 'Finance']
+const Check = (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true" className={styles.check}>
+    <circle cx="9" cy="9" r="9" fill="currentColor" opacity="0.22" />
+    <path d="M5.2 9.3l2.4 2.4 5-5.2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
 
-function CaseCard({ item, index }: { item: CaseCardData; index: number }) {
-  const tag = item.category || item.industry
-  const isFull = item.format === 'full'
-  const content = (
-    <>
-      {item.cover && (
-        <div className={styles.cardCover}>
-          <Image
-            src={item.cover.url}
-            alt={item.cover.alt}
-            width={item.cover.width}
-            height={item.cover.height}
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className={styles.cardCoverImage}
-          />
-        </div>
-      )}
+/** «Lead: rest» → bold lead and muted rest, as in the featured case lists. */
+function splitLead(text: string) {
+  const i = text.indexOf(':')
+  return i > 0 && i < 90 ? { lead: text.slice(0, i + 1), rest: text.slice(i + 1) } : { lead: '', rest: text }
+}
 
-      <div className={styles.cardBody}>
-        <div className={styles.cardHeader}>
-          {tag && (
-            <span className={`${styles.cardTag} ${tagClassMap[tag] ?? styles.tagDefault}`}>
+function FeaturedCase({ item, copy, reversed }: { item: CaseCardData; copy: CasesPageCopy; reversed: boolean }) {
+  const href = `/cases/${item.slug}`
+  const track = () => trackPlatformEvent('case_opened', { slug: item.slug, format: item.format, category: item.category ?? undefined })
+  const tags = [item.category ?? item.industry, item.service ? copy.serviceLabels[item.service] : null].filter(Boolean)
+  return (
+    <article className={clsx(styles.featured, reversed && styles.reversed)}>
+      <div className={styles.featuredText}>
+        <h2 className={styles.cardTitle}>{item.title}</h2>
+        <ul className={styles.checks}>
+          {item.actions.map((action) => {
+            const { lead, rest } = splitLead(action)
+            return (
+              <li key={action} className={styles.checkItem}>
+                {Check}
+                <span>
+                  {lead && <span className={styles.lead}>{lead}</span>}
+                  <span className={lead ? styles.muted : undefined}>{rest}</span>
+                </span>
+              </li>
+            )
+          })}
+        </ul>
+        <Button href={href} onClick={track} className={styles.featuredAction}>
+          {copy.viewFull}
+        </Button>
+      </div>
+      <Link href={href} onClick={track} className={styles.featuredMedia} tabIndex={-1} aria-hidden="true">
+        {item.cover && <Image src={item.cover.url} alt="" fill sizes="(max-width: 1024px) 100vw, 600px" className={styles.cover} />}
+        <span className={styles.coverShade} />
+        <span className={styles.tags}>
+          {tags.map((tag) => (
+            <span key={tag} className={styles.glassTag}>
               {tag}
             </span>
-          )}
-          {item.service && (
-            <span className={styles.serviceTag}>
-              {casesUiContent.serviceLabels[item.service]}
-            </span>
-          )}
-        </div>
-
-        <h3 className={styles.cardTitle}>{item.title}</h3>
-
-        <div className={styles.cardTask}>
-          <p className={styles.cardTaskLabel}>{casesUiContent.taskLabel}</p>
-          <p className={styles.cardTaskText}>{item.task}</p>
-        </div>
-
-        {item.actions.length > 0 && (
-          <div className={styles.cardActions}>
-            <p className={styles.cardActionsLabel}>{casesUiContent.actionsLabel}</p>
-            {item.actions.map((action, actionIndex) => (
-              <div key={`${item.slug}-${actionIndex}`} className={styles.actionItem}>
-                <span className={styles.actionArrow} aria-hidden>→</span>
-                <span>{action}</span>
-              </div>
-            ))}
-          </div>
-        )}
-
-        <div className={styles.cardResult}>
-          <p className={styles.resultLabel}>{casesUiContent.resultLabel}</p>
-          {item.metricValue && (
-            <p className={styles.resultMetric}>
-              {item.metricValue}
-              {item.metricLabel && <span>{item.metricLabel}</span>}
-            </p>
-          )}
-          <p className={styles.resultText}>{item.result}</p>
-        </div>
-
-        {isFull && (
-          <span className={styles.cardCta}>
-            {casesUiContent.viewFull} <span aria-hidden>→</span>
+          ))}
+        </span>
+        {item.metricValue && (
+          <span className={styles.stat}>
+            <span className={styles.statValue}>{item.metricValue}</span>
+            {item.metricLabel && <span className={styles.statLabel}>{item.metricLabel}</span>}
           </span>
         )}
+      </Link>
+    </article>
+  )
+}
+
+function MiniCase({ item, copy }: { item: CaseCardData; copy: CasesPageCopy }) {
+  const tag = item.category ?? item.industry
+  return (
+    <article className={styles.mini}>
+      <div className={styles.miniHead}>
+        {tag && <span className={styles.tag}>{tag}</span>}
+        <h2 className={styles.cardTitle}>{item.title}</h2>
       </div>
-    </>
-  )
-
-  return (
-    <motion.article
-      className={styles.card}
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.45, ease, delay: (index % 2) * 0.08 }}
-      layout
-    >
-      {isFull ? (
-        <Link
-          href={`/cases/${item.slug}`}
-          className={styles.cardLink}
-          onClick={() =>
-            trackPlatformEvent('case_opened', {
-              slug: item.slug,
-              format: item.format,
-              category: item.category ?? undefined,
-            })
-          }
-        >
-          {content}
-        </Link>
-      ) : (
-        <div className={styles.cardStatic}>{content}</div>
-      )}
-    </motion.article>
-  )
-}
-
-interface Props {
-  cases: CaseCardData[]
-}
-
-export function CasesPage({ cases }: Props) {
-  const [activeCategory, setActiveCategory] = useState<CaseCategory | null>(null)
-
-  const filtered = useMemo(
-    () =>
-      activeCategory
-        ? cases.filter((item) => item.category === activeCategory)
-        : cases,
-    [activeCategory, cases],
-  )
-
-  return (
-    <>
-      {/* Hero */}
-      <section className={styles.hero} aria-label={casesUiContent.heroAriaLabel}>
-        <div className={styles.heroInner}>
-          <motion.span
-            className={styles.label}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, ease }}
-          >
-            {casesUiContent.heroLabel}
-          </motion.span>
-
-          <motion.h1
-            className={styles.heroHeadline}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease, delay: 0.05 }}
-          >
-            {casesUiContent.heroHeadline}
-          </motion.h1>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease, delay: 0.12 }}
-          >
-            <ScrollRevealText
-              text={casesContent.description}
-              className={styles.heroDescription}
-            />
-          </motion.div>
+      <div className={styles.field}>
+        <p className={styles.fieldLabel}>{copy.taskLabel}</p>
+        <p className={styles.fieldText}>{item.task}</p>
+      </div>
+      {item.actions.length > 0 && (
+        <div className={styles.field}>
+          <p className={styles.fieldLabel}>{copy.actionsLabel}</p>
+          <ul className={styles.checks}>
+            {item.actions.map((action) => (
+              <li key={action} className={styles.checkItem}>
+                {Check}
+                <span>{action}</span>
+              </li>
+            ))}
+          </ul>
         </div>
-      </section>
-
-      {/* Filters */}
-      <div className={styles.filters}>
-        <button
-          className={activeCategory === null ? styles.filterBtnActive : styles.filterBtn}
-          onClick={() => {
-            setActiveCategory(null)
-            trackPlatformEvent('case_filter_selected', { category: 'all' })
-          }}
-        >
-          {casesUiContent.filterAll}
-        </button>
-        {categories.map((category) => (
-          <button
-            key={category}
-            className={activeCategory === category ? styles.filterBtnActive : styles.filterBtn}
-            onClick={() => {
-              setActiveCategory(category)
-              trackPlatformEvent('case_filter_selected', { category })
-            }}
-          >
-            {category}
-          </button>
-        ))}
+      )}
+      <div className={clsx(styles.field, styles.result)}>
+        <p className={styles.fieldLabel}>{copy.resultLabel}</p>
+        <p className={styles.fieldText}>{item.result}</p>
       </div>
+    </article>
+  )
+}
 
-      {/* Grid */}
-      <div className={styles.grid}>
-        <AnimatePresence mode="popLayout">
-          {filtered.length > 0 ? (
-            filtered.map((item, index) => (
-              <CaseCard key={item.id} item={item} index={index} />
-            ))
-          ) : (
-            <p className={styles.empty}>{casesUiContent.emptyLabel}</p>
+/** Cases listing on design system v2 (project 2 «Cases»): full cases as wide cards, the rest in a grid. */
+export function CasesPage({ cases, copy }: { cases: CaseCardData[]; copy: CasesPageCopy }) {
+  const [filter, setFilter] = useState<Filter>('all')
+  const filtered = useMemo(() => (filter === 'all' ? cases : cases.filter((item) => item.category === filter)), [filter, cases])
+  const featured = filtered.filter((item) => item.format === 'full' && item.cover)
+  const rest = filtered.filter((item) => !featured.includes(item))
+
+  return (
+    <div className={styles.page} aria-label={copy.ariaLabel}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>{copy.headline}</h1>
+        <p className={styles.description}>
+          {copy.description} · {copy.count}
+        </p>
+      </header>
+
+      <Tabs
+        className={styles.filters}
+        label={copy.filterAll}
+        value={filter}
+        onChange={(value) => {
+          setFilter(value)
+          trackPlatformEvent('case_filter_selected', { category: value })
+        }}
+        items={[{ value: 'all' as Filter, label: copy.filterAll }, ...CATEGORIES.map((category) => ({ value: category as Filter, label: category }))]}
+      />
+
+      {filtered.length === 0 ? (
+        <p className={styles.empty}>{copy.emptyLabel}</p>
+      ) : (
+        <div className={styles.list}>
+          {featured.map((item, i) => (
+            <FeaturedCase key={item.id} item={item} copy={copy} reversed={i % 2 === 1} />
+          ))}
+          {rest.length > 0 && (
+            <div className={styles.grid}>
+              {rest.map((item) => (
+                <MiniCase key={item.id} item={item} copy={copy} />
+              ))}
+            </div>
           )}
-        </AnimatePresence>
-      </div>
-    </>
+        </div>
+      )}
+    </div>
   )
 }

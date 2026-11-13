@@ -5,9 +5,13 @@
   flex-direction: column;
   align-items: center;
   gap: $ds-inner-gap;
+  margin-bottom: $ds-inner-gap;
   text-align: center;
 
-  @include ds-mobile { gap: $ds-inner-gap-mobile; }
+  @include ds-mobile {
+    gap: $ds-inner-gap-mobile;
+    margin-bottom: $ds-inner-gap-mobile;
+  }
 }
 
 .title {

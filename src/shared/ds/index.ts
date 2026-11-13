@@ -6,9 +6,10 @@ export { Button } from './ui/Button'
 export type { ButtonProps, ButtonVariant } from './ui/Button'
 export { Tabs } from './ui/Tabs'
 export type { TabItem } from './ui/Tabs'
-export { TextField, Textarea } from './ui/TextField'
+export { SelectField, TextField, Textarea } from './ui/TextField'
 export { ArrowLink, Divider, Eyebrow, IconButton, Meta, Pill, StepNumber } from './ui/Elements'
 export { Hint, HintTooltip } from './ui/Hint'
+export { AccentSurface } from './ui/AccentSurface'
 
 // Blocks
 export { Section } from './blocks/Section'

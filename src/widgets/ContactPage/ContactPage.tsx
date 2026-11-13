@@ -1,224 +1,108 @@
-'use client'
-
-import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
-import { ScrollRevealText } from '@/shared/ui/ScrollRevealText/ScrollRevealText'
-import { ContactForm } from '@/features/contactForm/ContactForm'
+import { Button, Section } from '@/shared/ds'
 import { siteConfig, socialLinks } from '@/shared/config/site'
 import { lang } from '@/shared/i18n'
-import { contactPageContent } from '@/shared/content/contactPage'
+import { contactFormContent, contactPageContent } from '@/shared/content/contactPage'
+import { ContactForm } from '@/features/contactForm/ContactForm'
+import { SocialIcon } from '@/widgets/Footer/SocialIcon'
+import oksana from './assets/oksana.webp'
 import styles from './ContactPage.module.scss'
 
-const ease = 'easeOut' as const
+const CALENDLY_URL =
+  process.env.NEXT_PUBLIC_CALENDLY_URL ||
+  'https://calendly.com/care-8blocks/intro?hide_gdpr_banner=1&background_color=101113&text_color=ffffff&primary_color=ca005a'
 
-// ── Calendly inline embed ─────────────────────────────────────────
+const { hero, calendly, contacts } = contactPageContent
 
-function CalendlyEmbed() {
-  const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const head = document.head
-
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = 'https://assets.calendly.com/assets/external/widget.css'
-    head.appendChild(link)
-
-    const script = document.createElement('script')
-    script.src = 'https://assets.calendly.com/assets/external/widget.js'
-    script.async = true
-    head.appendChild(script)
-
-    return () => {
-      if (head.contains(link)) head.removeChild(link)
-      if (head.contains(script)) head.removeChild(script)
-    }
-  }, [])
-
-  const calendlyUrl =
-    process.env.NEXT_PUBLIC_CALENDLY_URL ||
-    (lang === 'en'
-      ? 'https://calendly.com/care-8blocks/intro?primary_color=ad0462'
-      : 'https://calendly.com/care-8blocks/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=a10a63')
-
-  return (
-    <div
-      ref={containerRef}
-      className="calendly-inline-widget"
-      data-url={calendlyUrl}
-      style={{ minWidth: '320px', height: '680px' }}
-    />
-  )
-}
-
-// ── Main component ────────────────────────────────────────────────
-
+/** Contact page on design system v2 (project 2 «Contact»). Calendly is EN-only, as before. */
 export function ContactPage() {
   return (
     <>
       {lang === 'en' && (
-        <section id="calendly" className={styles.calendlySection} aria-label={contactPageContent.calendly.ariaLabel}>
-          <div className={styles.calendlyInner}>
-            <motion.div
-              className={styles.calendlyLeft}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, ease }}
-            >
-              <ScrollRevealText text={contactPageContent.calendly.headline} className={styles.calendlyHeadline} />
-              <ScrollRevealText
-                text={contactPageContent.calendly.description}
-                className={styles.calendlyDescription}
-              />
-              <ul className={styles.calendlyList}>
-                {contactPageContent.calendly.services.map((s) => (
-                  <li key={s}>{s}</li>
+        <section id="calendly" className={styles.booking} aria-label={calendly.ariaLabel}>
+          <div className={styles.bookingIntro}>
+            <h2 className={styles.bookingTitle}>{calendly.headline}</h2>
+            <div className={styles.bookingText}>
+              <p className={styles.services}>
+                {calendly.services.map((service, i) => (
+                  <span key={service} className={styles.service}>
+                    {i > 0 && <span className={styles.dot} aria-hidden="true" />}
+                    {service}
+                  </span>
                 ))}
-              </ul>
-            </motion.div>
-
-            <motion.div
-              className={styles.calendlyRight}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, ease, delay: 0.1 }}
-            >
-              <div className={styles.calendlyEmbed}>
-                <CalendlyEmbed />
-              </div>
-            </motion.div>
+              </p>
+              <p className={styles.bookingDescription}>{calendly.description}</p>
+            </div>
+          </div>
+          <div className={styles.calendly}>
+            <iframe src={CALENDLY_URL} title={calendly.ariaLabel} loading="lazy" />
           </div>
         </section>
       )}
 
-      {/* ── Hero: avatar + form ───────────────────────────────────── */}
-      <section className={styles.hero} aria-label={contactPageContent.hero.ariaLabel}>
-        <div className={styles.heroInner}>
-          <div className={styles.heroGrid}>
-
-            {/* Left: info + avatar */}
-            <motion.div
-              className={styles.heroLeft}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease, delay: 0.05 }}
-            >
-              <span className={styles.label}>{contactPageContent.hero.label}</span>
-
-              <h1 className={styles.heroHeadline}>{contactPageContent.hero.headline}</h1>
-
-              <p className={styles.heroDescription}>
-                {contactPageContent.hero.description}
-              </p>
-
-              <div className={styles.personCard}>
-                <div className={styles.personAvatar}>
-                  <Image
-                    src="/team/team-3.png"
-                    alt={contactPageContent.hero.person.name}
-                    width={72}
-                    height={72}
-                    className={styles.personImg}
-                  />
-                </div>
-                <div className={styles.personInfo}>
-                  <p className={styles.personName}>{contactPageContent.hero.person.name}</p>
-                  <p className={styles.personRole}>{contactPageContent.hero.person.role}</p>
-                  <a
-                    href={contactPageContent.hero.person.tgHref}
-                    className={styles.personTg}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {contactPageContent.hero.person.tgLabel}
-                  </a>
-                </div>
-              </div>
-
-              <div className={styles.preferEmail}>
-                <p className={styles.preferLabel}>{contactPageContent.hero.preferEmailLabel}</p>
-                <a href={`mailto:${siteConfig.email}`} className={styles.preferValue}>
-                  {siteConfig.email}
-                </a>
-              </div>
-            </motion.div>
-
-            {/* Right: form */}
-            <motion.div
-              className={styles.heroRight}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease, delay: 0.15 }}
-            >
-              <ContactForm />
-            </motion.div>
-
+      <Section aria-label={hero.ariaLabel}>
+        <div className={styles.contact}>
+          <div className={styles.formColumn}>
+            <div className={styles.formIntro}>
+              <h1 className={styles.title}>{hero.headline}</h1>
+              <p className={styles.faint}>{hero.description}</p>
+            </div>
+            <ContactForm text={contactFormContent} />
+          </div>
+          <div className={styles.person}>
+            <Image src={oksana} alt={`${hero.person.name}, ${hero.person.role}`} className={styles.photo} sizes="247px" />
+            <p className={styles.personName}>{hero.person.name}</p>
+            <p className={styles.personRole}>{hero.person.role}</p>
+            <div className={styles.personLinks}>
+              <Button href={hero.person.tgHref} target="_blank" rel="noopener noreferrer">
+                {hero.person.tgLabel}
+              </Button>
+              <Button variant="secondary" href={`mailto:${siteConfig.email}`}>
+                {`${hero.person.emailLabel} ${siteConfig.email}`}
+              </Button>
+            </div>
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* ── 3. Secondary contacts ─────────────────────────────────── */}
-      <section className={styles.contactsSection} aria-label={contactPageContent.contacts.ariaLabel}>
-        <div className={styles.contactsInner}>
-          <motion.div
-            className={styles.contactCol}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.5, ease, delay: 0 }}
-          >
-            <p className={styles.contactColLabel}>{contactPageContent.contacts.socialsLabel}</p>
-            <div className={styles.socialList}>
+      <Section aria-label={contacts.ariaLabel}>
+        <dl className={styles.details}>
+          <div className={styles.detail}>
+            <dt className={styles.muted}>{contacts.addressLabel}</dt>
+            <dd>
+              <a href={siteConfig.addressUrl} target="_blank" rel="noopener noreferrer" className={styles.detailValue}>
+                {siteConfig.address}
+              </a>
+            </dd>
+          </div>
+          <div className={styles.detail}>
+            <dt className={styles.muted}>{contacts.phoneLabel}</dt>
+            <dd>
+              <a href={`tel:${siteConfig.phone.replace(/[^\d+]/g, '')}`} className={styles.detailValue}>
+                {siteConfig.phone}
+              </a>
+            </dd>
+          </div>
+          <div className={styles.detail}>
+            <dt className={styles.muted}>{contacts.socialsLabel}</dt>
+            <dd className={styles.socials}>
               {socialLinks.map((link) => (
                 <a
                   key={link.id}
                   href={link.href}
-                  className={styles.socialLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={link.label}
+                  title={link.label}
+                  className={styles.social}
                 >
-                  {link.label}
+                  <SocialIcon id={link.id} />
                 </a>
               ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            className={styles.contactCol}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.5, ease, delay: 0.08 }}
-          >
-            <p className={styles.contactColLabel}>{contactPageContent.contacts.addressLabel}</p>
-            <a
-              href={siteConfig.addressUrl}
-              className={styles.contactValue}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {siteConfig.address}
-            </a>
-          </motion.div>
-
-          <motion.div
-            className={styles.contactCol}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-30px' }}
-            transition={{ duration: 0.5, ease, delay: 0.16 }}
-          >
-            <p className={styles.contactColLabel}>{contactPageContent.contacts.phoneLabel}</p>
-            <a href={`tel:${siteConfig.phone.replace(/\s/g, '')}`} className={styles.contactValue}>
-              {siteConfig.phone}
-            </a>
-          </motion.div>
-        </div>
-      </section>
-
+            </dd>
+          </div>
+        </dl>
+      </Section>
     </>
   )
 }

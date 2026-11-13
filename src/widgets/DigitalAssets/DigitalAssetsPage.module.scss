@@ -39,12 +39,6 @@
   gap: 10px;
 }
 
-.widenBg {
-  z-index: -1;
-  object-fit: cover;
-  opacity: 0.9;
-}
-
 .points {
   @include ds-text-sm;
   display: flex;

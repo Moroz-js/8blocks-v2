@@ -1,8 +1,10 @@
-import Link from 'next/link'
-import { FaqAccordion } from '@/widgets/FaqAccordion'
+import { AccentSurface } from '@/shared/ds'
+import { servicePages } from '@/shared/content/servicePages'
 import { methodologyContent as content } from '@/shared/content/methodology'
 import { siteConfig, socialLinks } from '@/shared/config/site'
 import { lang } from '@/shared/i18n'
+import { BinaryScene } from '@/widgets/BinaryArt/BinaryScene'
+import { ServiceFaq } from '@/widgets/ServicePages/blocks/ServiceFaq'
 import { MethodologyToc } from './MethodologyToc'
 import styles from './MethodologyPage.module.scss'
 
@@ -23,6 +25,7 @@ function JsonLd({ value }: { value: object }) {
   )
 }
 
+/** Methodology article on design system v2 (project 2 «Methodology»). */
 export function MethodologyPage() {
   const baseUrl = siteConfig.url.replace(/\/$/, '')
   const pageUrl = `${baseUrl}/${content.slug}`
@@ -88,6 +91,7 @@ export function MethodologyPage() {
     ],
   }
   const toc = [
+    [content.philosophyTitle, 'philosophy'],
     [content.definitionTitle, 'definition'],
     [content.problemTitle, 'problem'],
     [content.metricsTitle, 'metrics'],
@@ -105,45 +109,49 @@ export function MethodologyPage() {
       <JsonLd value={termSchema} />
       <JsonLd value={breadcrumbSchema} />
 
-      <header className={styles.hero}>
-        <div className={styles.container}>
-          <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
-            <Link href="/">{content.breadcrumbHome}</Link>
-            <span aria-hidden="true">/</span>
-            <span>{content.breadcrumbCurrent}</span>
-          </nav>
-          <p className={styles.eyebrow}>{content.eyebrow}</p>
-          <h1>{content.title}</h1>
+      <header className={styles.hero} data-under-header>
+        <BinaryScene scene="brain" className={styles.heroArt} />
+        <div className={styles.heroGlow} aria-hidden="true" />
+        <div className={styles.heroText}>
+          <h1 className={styles.title}>{content.title}</h1>
           <p className={styles.lead}>{content.lead}</p>
-          <div className={styles.meta}>
-            <span>{content.authorLabel}: {content.authorName}</span>
-            <span aria-hidden="true">·</span>
-            <span>{content.publishedLabel}: <time dateTime={content.publishedAt}>{formatDate(content.publishedAt)}</time></span>
-            <span aria-hidden="true">·</span>
-            <span>{content.updatedLabel}: <time dateTime={content.updatedAt}>{formatDate(content.updatedAt)}</time></span>
-          </div>
         </div>
+        <p className={styles.meta}>
+          {content.authorLabel}: {content.authorName} · {content.publishedLabel}:{' '}
+          <time dateTime={content.publishedAt}>{formatDate(content.publishedAt)}</time> · {content.updatedLabel}:{' '}
+          <time dateTime={content.updatedAt}>{formatDate(content.updatedAt)}</time>
+        </p>
       </header>
 
       <div className={styles.layout}>
         <MethodologyToc label={content.tocLabel} items={toc} />
 
         <div className={styles.content}>
-          <section className={styles.section} aria-labelledby="philosophy">
+          <section id="philosophy" className={styles.section}>
             <p className={styles.kicker}>01 · {lang === 'en' ? '8Blocks' : 'А8А9'}</p>
-            <h2 id="philosophy">{content.philosophyTitle}</h2>
-            {content.philosophy.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <h2>{content.philosophyTitle}</h2>
+            {content.philosophy.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </section>
 
           <section id="definition" className={styles.section}>
             <p className={styles.kicker}>02 · TEM / ЭМТ</p>
             <h2>{content.definitionTitle}</h2>
-            {content.definition.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {content.definition.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
             <div className={styles.tableWrap}>
               <table>
                 <caption>{content.comparison.caption}</caption>
                 <thead>
-                  <tr>{content.comparison.headers.map((header) => <th key={header} scope="col">{header}</th>)}</tr>
+                  <tr>
+                    {content.comparison.headers.map((header) => (
+                      <th key={header} scope="col">
+                        {header}
+                      </th>
+                    ))}
+                  </tr>
                 </thead>
                 <tbody>
                   {content.comparison.rows.map((row) => (
@@ -161,23 +169,30 @@ export function MethodologyPage() {
           <section id="problem" className={styles.section}>
             <p className={styles.kicker}>03 · Problem</p>
             <h2>{content.problemTitle}</h2>
-            {content.problem.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            {content.problem.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </section>
 
           <section id="metrics" className={styles.section}>
             <p className={styles.kicker}>04 · Test</p>
             <h2>{content.metricsTitle}</h2>
             <p>{content.metricsLead}</p>
-            <div className={styles.metricGrid}>
+            <ol className={styles.metrics}>
               {content.metrics.map((metric, index) => (
-                <article key={metric.title} className={styles.card}>
-                  <span className={styles.number}>{String(index + 1).padStart(2, '0')}</span>
-                  <h3>{metric.title}</h3>
-                  <p>{metric.text}</p>
-                </article>
+                <li key={metric.title} className={styles.metric}>
+                  <span className={styles.metricNumber}>{index + 1}</span>
+                  <div>
+                    <h3>{metric.title}</h3>
+                    <p>{metric.text}</p>
+                  </div>
+                </li>
               ))}
-            </div>
-            <blockquote>{content.pullQuote}</blockquote>
+            </ol>
+            <blockquote className={styles.pullQuote}>
+              <AccentSurface />
+              {content.pullQuote}
+            </blockquote>
           </section>
 
           <section id="eight-blocks" className={styles.section}>
@@ -186,31 +201,32 @@ export function MethodologyPage() {
             <p>{content.blocksLead}</p>
             <div className={styles.wheel} role="list" aria-label={content.blocksTitle}>
               {content.blocks.map((block, index) => (
-                <a key={block.id} href={`#${block.id}`} role="listitem">
+                <a key={block.id} href={`#${block.id}`} role="listitem" className={styles.wheelItem}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   {block.title}
                 </a>
               ))}
               <div className={styles.wheelCenter} aria-hidden="true">
-                {lang === 'en' ? (
-                  <span className={styles.wheelWordmark} />
-                ) : (
-                  <strong>А8А9</strong>
-                )}
+                {lang === 'en' ? <span className={styles.wheelWordmark} /> : <strong>А8А9</strong>}
               </div>
             </div>
             <div className={styles.blockList}>
               {content.blocks.map((block, index) => (
                 <article key={block.id} id={block.id} className={styles.block}>
-                  <div className={styles.blockHeading}>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <p>{block.title}</p>
-                  </div>
+                  <p className={styles.kicker}>
+                    {String(index + 1).padStart(2, '0')} · {block.title}
+                  </p>
                   <h3>{block.question}</h3>
                   <p className={styles.directAnswer}>{block.answer}</p>
-                  {block.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                  {block.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
                   {block.points && (
-                    <ul>{block.points.map((point) => <li key={point}>{point}</li>)}</ul>
+                    <ul>
+                      {block.points.map((point) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
                   )}
                 </article>
               ))}
@@ -222,9 +238,9 @@ export function MethodologyPage() {
             <h2>{content.treasury.title}</h2>
             <p>{content.treasury.description}</p>
             <figure className={styles.flowFigure}>
-              <div className={styles.flow}>
+              <div className={styles.steps}>
                 {content.treasury.steps.map((step, index) => (
-                  <div key={step} className={styles.flowStep}>
+                  <div key={step} className={styles.step}>
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     <strong>{step}</strong>
                   </div>
@@ -238,54 +254,56 @@ export function MethodologyPage() {
             <p className={styles.kicker}>07 · CEL / ЗЭЦ</p>
             <h2>{content.cel.title}</h2>
             <p className={styles.directAnswer}>{content.cel.definition}</p>
-            {content.cel.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-            <div className={styles.loop} aria-label={content.cel.title}>
+            {content.cel.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+            <div className={styles.steps} aria-label={content.cel.title}>
               {content.cel.steps.map((step, index) => (
-                <div key={step}>
+                <div key={step} className={styles.step}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <strong>{step}</strong>
                 </div>
               ))}
             </div>
             <h3>{content.cel.listingQuestion}</h3>
-            <p className={styles.directAnswer}>{content.cel.listingAnswer}</p>
-            <ul>{content.cel.listingCriteria.map((item) => <li key={item}>{item}</li>)}</ul>
-          </section>
-
-          <section id="examples" className={styles.section}>
-            <p className={styles.kicker}>08 · Evidence</p>
-            <h2>{content.examplesTitle}</h2>
-            <div className={styles.exampleGrid}>
-              {content.examples.map((example) => (
-                <article key={example.title} className={styles.card}>
-                  <h3>{example.title}</h3>
-                  <p>{example.text}</p>
-                  <a href={example.sourceHref} target="_blank" rel="noopener noreferrer">
-                    {example.sourceLabel} ↗
-                  </a>
-                </article>
+            <p>{content.cel.listingAnswer}</p>
+            <ul>
+              {content.cel.listingCriteria.map((item) => (
+                <li key={item}>{item}</li>
               ))}
-            </div>
+            </ul>
           </section>
-
-          <section id="faq" className={`${styles.section} ${styles.faqSection}`}>
-            <p className={styles.kicker}>09 · FAQ</p>
-            <h2>{content.faqTitle}</h2>
-            <FaqAccordion
-              bare
-              headingOrder={3}
-              items={content.faq.map((item) => ({
-                question: item.question,
-                answer: item.answer,
-              }))}
-            />
-          </section>
-
-          <aside className={styles.disclaimer}>
-            <h2>{content.disclaimerTitle}</h2>
-            <p>{content.disclaimer}</p>
-          </aside>
         </div>
+      </div>
+
+      <div className={styles.wide}>
+        <section id="examples" className={styles.wideSection}>
+          <p className={styles.kicker}>08 · Evidence</p>
+          <h2 className={styles.wideTitle}>{content.examplesTitle}</h2>
+          <div className={styles.examples}>
+            {content.examples.map((example) => (
+              <article key={example.title} className={styles.example}>
+                <h3>{example.title}</h3>
+                <p>{example.text}</p>
+                <a href={example.sourceHref} target="_blank" rel="noopener noreferrer">
+                  {example.sourceLabel}
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <div id="faq" className={styles.faqSection}>
+          <ServiceFaq
+            title={content.faqTitle}
+            items={content.faq.map((item) => ({ question: item.question, answer: item.answer }))}
+            footer={servicePages.common.faq.footer}
+          />
+        </div>
+
+        <aside className={styles.disclaimer} aria-label={content.disclaimerTitle}>
+          <p>{content.disclaimer}</p>
+        </aside>
       </div>
     </article>
   )

@@ -1,29 +1,13 @@
-import Link from 'next/link'
-import type { MediaMentionCard as MediaMentionCardType } from '@/entities/media-mention'
-import { MediaMentionCardUI } from '@/entities/media-mention'
+import type { MediaMentionCard } from '@/entities/media-mention'
 import type { CategoryRef } from '@/entities/article'
 import { lang } from '@/shared/i18n'
-import { mediaArchiveContent } from '@/shared/content/mediaPage'
-import styles from './MediaArchive.module.scss'
-
-function ArrowLeft() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function ArrowRight() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
+import { mediaArchiveContent as copy } from '@/shared/content/mediaPage'
+import { FilterChips, ListingEmpty, ListingHeader, ListingPage, Pagination } from '@/widgets/Posts/Listing'
+import { PostCard, PostGrid } from '@/widgets/Posts/PostCard'
+import { formatPostDate, postMeta } from '@/widgets/Posts/format'
 
 interface Props {
-  mentions: MediaMentionCardType[]
+  mentions: MediaMentionCard[]
   categories: CategoryRef[]
   totalPages: number
   currentPage: number
@@ -31,133 +15,80 @@ interface Props {
   activeCategory?: string | null
 }
 
-export function MediaArchive({
-  mentions,
-  categories,
-  totalPages,
-  currentPage,
-  totalDocs,
-  activeCategory = null,
-}: Props) {
-  function pageHref(page: number) {
+const OUTLETS: Record<string, string> = { beincrypto: 'BeInCrypto', cointelegraph: 'Cointelegraph', forklog: 'ForkLog', rbc: 'РБК' }
+
+/** «Read on BeInCrypto»: the outlet comes from the publication URL. */
+function outletName(url: string) {
+  try {
+    const host = new URL(url).hostname.replace(/^www\./, '')
+    return OUTLETS[host.split('.')[0]] ?? host
+  } catch {
+    return ''
+  }
+}
+
+function countLabel(count: number) {
+  if (lang === 'ru') {
+    const mod10 = count % 10
+    const mod100 = count % 100
+    if (mod10 === 1 && mod100 !== 11) return copy.countSingular
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return copy.countFew
+    return copy.countMany
+  }
+  return count === 1 ? copy.countSingular : copy.countMany
+}
+
+/** Press listing on design system v2 (project 2 «Press»). */
+export function MediaArchive({ mentions, categories, totalPages, currentPage, totalDocs, activeCategory = null }: Props) {
+  const pageHref = (page: number) => {
     const base = activeCategory ? `/press?cat=${activeCategory}` : '/press'
     if (page <= 1) return base
     return `${base}${activeCategory ? '&' : '?'}page=${page}`
   }
 
-  function countLabel(count: number) {
-    if (lang === 'ru') {
-      if (count === 1) return mediaArchiveContent.countSingular
-      if (count >= 2 && count <= 4) return mediaArchiveContent.countFew
-      return mediaArchiveContent.countMany
-    }
-    return count === 1 ? mediaArchiveContent.countSingular : mediaArchiveContent.countMany
-  }
-
   return (
-    <div className={styles.root}>
-      {/* ── Page header ─────────────────────────────────────────── */}
-      <div className={styles.pageHeader}>
-        <div className={styles.pageHeaderInner}>
-          <span className={styles.label}>
-            <span className={styles.labelBracket}>[</span>
-            {mediaArchiveContent.labelSection}
-            <span className={styles.labelBracket}>]</span>
-          </span>
-          <h1 className={styles.headline}>{mediaArchiveContent.headline}</h1>
-          {totalDocs > 0 && (
-            <p className={styles.count}>
-              {totalDocs} {countLabel(totalDocs)}
-            </p>
-          )}
-        </div>
-
-        {/* ── Category filter ─────────────────────────────────────── */}
+    <ListingPage>
+      <ListingHeader title={copy.headline} subtitle={totalDocs > 0 ? `${totalDocs} ${countLabel(totalDocs)}` : undefined}>
         {categories.length > 0 && (
-          <nav className={styles.categoryNav} aria-label={mediaArchiveContent.filterByCategory}>
-            <Link
-              href="/press"
-              className={`${styles.catChip} ${!activeCategory ? styles.catChipActive : ''}`}
-            >
-              {mediaArchiveContent.filterAll}
-            </Link>
-            {categories.map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/press?cat=${cat.slug}`}
-                className={`${styles.catChip} ${activeCategory === cat.slug ? styles.catChipActive : ''}`}
-              >
-                {cat.title}
-              </Link>
-            ))}
-          </nav>
+          <FilterChips
+            label={copy.filterByCategory}
+            items={[
+              { label: copy.filterAll, href: '/press', active: !activeCategory },
+              ...categories.map((cat) => ({ label: cat.title, href: `/press?cat=${cat.slug}`, active: activeCategory === cat.slug })),
+            ]}
+          />
         )}
-      </div>
+      </ListingHeader>
 
-      {/* ── Cards grid ──────────────────────────────────────────── */}
       {mentions.length > 0 ? (
-        <div className={styles.grid}>
-          {mentions.map((mention, i) => (
-            <MediaMentionCardUI
-              key={mention.id}
-              mention={mention}
-              index={i}
-              priority={i < 3}
-            />
-          ))}
-        </div>
+        <PostGrid>
+          {mentions.map((mention, i) => {
+            const outlet = outletName(mention.url)
+            return (
+              <PostCard
+                key={mention.id}
+                href={mention.url}
+                external
+                cover={mention.cover ? { url: mention.cover.url, alt: mention.cover.alt } : null}
+                title={mention.title}
+                excerpt={mention.excerpt}
+                footer={postMeta(mention.category?.title, formatPostDate(mention.publishedAt))}
+                action={outlet ? `${copy.readOn} ${outlet}` : copy.readLink}
+                priority={i < 3}
+              />
+            )
+          })}
+        </PostGrid>
       ) : (
-        <div className={styles.empty}>
-          <p className={styles.emptyText}>{mediaArchiveContent.emptyState}</p>
-          <p className={styles.emptyHint}>{mediaArchiveContent.emptyHint}</p>
-        </div>
+        <ListingEmpty title={copy.emptyState} hint={copy.emptyHint} />
       )}
 
-      {/* ── Pagination ──────────────────────────────────────────── */}
-      {totalPages > 1 && (
-        <nav className={styles.pagination} aria-label={mediaArchiveContent.paginationAriaLabel}>
-          {currentPage > 1 && (
-            <Link href={pageHref(currentPage - 1)} className={styles.pageArrow} aria-label={mediaArchiveContent.prevPage}>
-              <ArrowLeft />
-            </Link>
-          )}
-
-          <div className={styles.pageNumbers}>
-            {buildPageRange(currentPage, totalPages).map((item, i) =>
-              item === '…' ? (
-                <span key={`ellipsis-${i}`} className={styles.pageEllipsis}>…</span>
-              ) : (
-                <Link
-                  key={item}
-                  href={pageHref(item)}
-                  className={`${styles.pageNum} ${item === currentPage ? styles.pageNumActive : ''}`}
-                  aria-current={item === currentPage ? 'page' : undefined}
-                >
-                  {item}
-                </Link>
-              ),
-            )}
-          </div>
-
-          {currentPage < totalPages && (
-            <Link href={pageHref(currentPage + 1)} className={styles.pageArrow} aria-label={mediaArchiveContent.nextPage}>
-              <ArrowRight />
-            </Link>
-          )}
-        </nav>
-      )}
-    </div>
+      <Pagination
+        current={currentPage}
+        total={totalPages}
+        href={pageHref}
+        labels={{ nav: copy.paginationAriaLabel, prev: copy.prevPage, next: copy.nextPage }}
+      />
+    </ListingPage>
   )
-}
-
-function buildPageRange(current: number, total: number): (number | '…')[] {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
-  const pages: (number | '…')[] = []
-  const addPage = (p: number) => { if (!pages.includes(p)) pages.push(p) }
-  addPage(1)
-  if (current > 3) pages.push('…')
-  for (let p = Math.max(2, current - 1); p <= Math.min(total - 1, current + 1); p++) addPage(p)
-  if (current < total - 2) pages.push('…')
-  addPage(total)
-  return pages
 }

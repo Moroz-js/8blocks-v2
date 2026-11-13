@@ -31,10 +31,14 @@
   font: inherit;
 }
 
+// Answer unfolds with height, fade and a slight rise; the chevron turns in step.
+$unfold: calc(#{$ds-duration} * 3);
+
 .question {
   @include ds-text-md;
   @include ds-focus-visible;
   @include ds-transition(color, padding-bottom);
+  transition-duration: $ds-duration, $unfold;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -64,6 +68,7 @@
 .chevron {
   flex-shrink: 0;
   @include ds-transition(transform);
+  transition-duration: $unfold;
 
   .open & {
     transform: rotate(180deg);
@@ -71,14 +76,17 @@
 }
 
 .panel {
-  @include ds-transition(grid-template-rows, opacity);
+  @include ds-transition(grid-template-rows, opacity, transform);
+  transition-duration: $unfold;
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
+  transform: translateY(-#{$ds-space-2});
 
   .open & {
     grid-template-rows: 1fr;
     opacity: 1;
+    transform: none;
   }
 }
 

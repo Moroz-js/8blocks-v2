@@ -1,0 +1,121 @@
+@use '@/shared/ds/styles' as *;
+
+.root {
+  @include ds-container;
+  padding-block: $ds-space-8 calc(#{$ds-block-gap} / 2);
+
+  @include ds-mobile { padding-block: $ds-space-6 calc(#{$ds-block-gap-mobile} / 2); }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-6;
+  margin-bottom: $ds-space-7;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+}
+
+.title {
+  @include ds-h2;
+  color: $ds-text;
+}
+
+.subtitle {
+  @include ds-text-md;
+  color: $ds-text-faint;
+}
+
+// ── Filter chips (Tabs look, links) ────────────────────────────────────
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-space-2;
+}
+
+.chip {
+  @include ds-text-sm;
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding-inline: $ds-space-4;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  white-space: nowrap;
+  @include ds-overlay(transparent);
+  @include ds-transition(box-shadow, background-color, color);
+  @include ds-focus-visible;
+
+  &:hover { @include ds-overlay($ds-overlay-lighten); }
+}
+
+.chipActive {
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+
+  &:hover { @include ds-overlay($ds-overlay-darken-soft); }
+}
+
+// ── Pagination ─────────────────────────────────────────────────────────
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $ds-space-2;
+  margin-top: $ds-space-8;
+}
+
+.page {
+  @include ds-text-sm;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding-inline: $ds-space-3;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  @include ds-overlay(transparent);
+  @include ds-transition(box-shadow);
+  @include ds-focus-visible;
+
+  &:hover { @include ds-overlay($ds-overlay-lighten); }
+}
+
+.pageActive {
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+}
+
+.gap {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+// ── Empty state ────────────────────────────────────────────────────────
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-2;
+  padding: $ds-space-8 $ds-space-5;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  text-align: center;
+}
+
+.emptyTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.emptyHint {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}

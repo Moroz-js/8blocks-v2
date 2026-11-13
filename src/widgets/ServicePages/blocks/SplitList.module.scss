@@ -30,6 +30,9 @@ $row-line: rgba($ds-white, 0.25); // designer's list rules, brighter than $ds-bo
 
 .title {
   color: $ds-text;
+  white-space: pre-line;
+
+  @include ds-mobile { white-space: normal; }
 }
 
 .md {
@@ -85,20 +88,47 @@ $row-line: rgba($ds-white, 0.25); // designer's list rules, brighter than $ds-bo
   }
 }
 
-.indexedText {
-  @include ds-text-sm;
+.indexedBody {
+  display: flex;
+  flex-direction: column;
   align-self: center;
-  max-width: 557px;
+  max-width: 557px + 35px + $ds-space-7;
   padding: 18px $ds-space-7 18px 35px;
-  color: $ds-text-muted;
 
   @include ds-mobile {
     padding: $ds-space-4 0 $ds-space-4 20px;
   }
 }
 
+.indexedLabel {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.indexedText {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
 .lead {
   color: $ds-text;
+}
+
+.indexedLg {
+  .indexedBody {
+    gap: $ds-space-4;
+    max-width: none;
+    padding-block: $ds-space-7;
+
+    @include ds-mobile { padding-block: $ds-space-5; }
+  }
+
+  .indexedText {
+    @include ds-text-lg;
+    max-width: 520px;
+  }
+
+  .lead { display: block; }
 }
 
 // ── Labeled rows ────────────────────────────────────────────────────

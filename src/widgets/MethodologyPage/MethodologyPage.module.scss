@@ -1,683 +1,480 @@
-@use '@/shared/styles/variables' as *;
+@use '@/shared/ds/styles' as *;
+
+// Methodology article (project 2 «Methodology»): centred hero with the brain scene,
+// sticky table of contents + 595px reading column, full-width evidence and FAQ.
+$toc: 180px;
+$column: 595px;
 
 .page {
-  min-height: 100vh;
-  color: $text-primary;
-  background:
-    linear-gradient(rgba($white, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba($white, 0.018) 1px, transparent 1px);
-  background-size: 48px 48px;
+  color: $ds-text;
 }
 
-.container,
-.layout {
-  width: min(100% - 32px, 1120px);
-  margin-inline: auto;
-}
-
+// ── Hero ───────────────────────────────────────────────────────────────
 .hero {
   position: relative;
+  isolation: isolate;
   overflow: hidden;
-  padding-block: 80px 72px;
-  border-bottom: 1px solid $border-secondary;
-
-  &::before {
-    position: absolute;
-    inset: -40% -10% auto 35%;
-    height: 520px;
-    content: '';
-    pointer-events: none;
-    background: radial-gradient(circle, rgba($pal-magenta, 0.2), transparent 68%);
-    filter: blur(28px);
-  }
-
-  h1 {
-    position: relative;
-    max-width: 900px;
-    margin: 22px 0 0;
-    font-size: clamp(42px, 6vw, 76px);
-    font-weight: 500;
-    line-height: 1.02;
-    letter-spacing: -0.045em;
-  }
-}
-
-.breadcrumbs {
-  position: relative;
   display: flex;
-  gap: $space-2;
+  flex-direction: column;
   align-items: center;
-  color: $text-tertiary;
-  font-size: $text-xs;
+  min-height: 781px;
+  padding: 138px $ds-margin $ds-space-8;
+  text-align: center;
 
-  a {
-    color: inherit;
-    text-decoration: none;
-
-    &:hover {
-      color: $text-primary;
-    }
+  @include ds-mobile {
+    min-height: 640px;
+    padding: 104px $ds-margin-mobile $ds-space-6;
   }
 }
 
-.eyebrow,
-.kicker,
-.toc > p,
-.number,
-.blockHeading span,
-.flowStep span,
-.loop span,
-.wheel span {
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.heroArt {
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  z-index: -1;
+  width: 1024px;
+  height: 640px;
+  transform: translateX(-50%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 15%, #000 70%, transparent 100%);
+
+  @include ds-mobile {
+    top: 220px;
+    width: 640px;
+    height: 400px;
+  }
 }
 
-.eyebrow {
-  position: relative;
-  margin: 56px 0 0;
-  color: $accent-purple;
+.heroGlow {
+  position: absolute;
+  inset: 220px 0 auto;
+  z-index: -2;
+  height: 280px;
+  background: radial-gradient(60% 50% at 50% 50%, rgba($ds-pink, 0.25), transparent 70%);
+  pointer-events: none;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-3;
+  max-width: 720px;
+}
+
+.title {
+  @include ds-h2;
+  @include ds-title-sheen;
 }
 
 .lead {
-  position: relative;
-  max-width: 780px;
-  margin: 28px 0 0;
-  color: $text-secondary;
-  font-size: clamp(18px, 2vw, 22px);
-  line-height: 1.65;
+  @include ds-text-sm;
+  max-width: 460px;
+  color: $ds-text-faint;
 }
 
 .meta {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: $space-2;
-  margin-top: $space-6;
-  color: $text-tertiary;
-  font-size: $text-xs;
+  @include ds-text-sm;
+  margin-top: auto;
+  color: $ds-text-faint;
 }
 
+// ── Reading layout ─────────────────────────────────────────────────────
 .layout {
+  @include ds-container;
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 72px;
-  align-items: start;
+  grid-template-columns: $toc $column;
+  gap: $ds-space-7;
+  padding-top: $ds-space-8;
+
+  @include ds-tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .toc {
   position: sticky;
-  top: 120px;
-  padding-block: 64px;
+  top: 132px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
 
   > p {
-    margin: 0 0 $space-4;
-    color: $text-tertiary;
+    @include ds-text-sm;
+    color: $ds-text-muted;
   }
 
   nav {
     display: flex;
     flex-direction: column;
-    gap: $space-3;
+    gap: $ds-space-4;
   }
 
   a {
-    position: relative;
-    padding-left: $space-3;
-    color: $text-secondary;
-    font-size: $text-xs;
-    line-height: 1.4;
-    text-decoration: none;
-    border-left: 1px solid $border-secondary;
-    transition:
-      color $transition-fast,
-      border-color $transition-fast,
-      transform $transition-fast;
+    @include ds-text-sm;
+    padding-left: $ds-space-3;
+    border-left: 2px solid transparent;
+    color: $ds-text-muted;
+    @include ds-transition(color, border-color);
 
-    &:hover {
-      color: $accent-purple;
-    }
+    &:hover { color: $ds-text; }
   }
+
+  @include ds-tablet { display: none; }
 }
 
-.toc a.tocActive {
-  color: $text-primary;
-  border-left-color: $accent-purple;
-  transform: translateX(4px);
+.tocActive {
+  border-left-color: $ds-accent !important;
+  color: $ds-text !important;
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-8;
   min-width: 0;
 }
 
-.section {
-  padding-block: 72px;
-  scroll-margin-top: 96px;
-  border-bottom: 1px solid $border-secondary;
+.section,
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  scroll-margin-top: 132px;
 
-  h2 {
-    max-width: 760px;
-    margin: $space-3 0 $space-6;
-    font-size: clamp(30px, 4vw, 48px);
-    font-weight: 500;
-    line-height: 1.12;
-    letter-spacing: -0.03em;
-  }
+  h2 { @include ds-h5; color: $ds-text; }
+  h3 { @include ds-h5; margin-top: $ds-space-3; color: $ds-text; }
 
-  h3 {
-    margin: $space-6 0 $space-4;
-    font-size: clamp(22px, 2.5vw, 30px);
-    font-weight: 500;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-  }
-
-  > p:not(.kicker),
-  .block > p {
-    max-width: 760px;
-    margin: 0 0 $space-4;
-    color: $text-secondary;
-    font-size: $text-base;
-    line-height: 1.75;
+  > p {
+    @include ds-text-md;
+    color: $ds-text-muted;
   }
 
   ul {
-    display: grid;
-    gap: $space-2;
-    margin: $space-5 0 0;
-    padding-left: 22px;
-    color: $text-secondary;
-    line-height: 1.65;
+    display: flex;
+    flex-direction: column;
+    gap: $ds-space-3;
+    list-style: none;
+  }
+
+  li {
+    @include ds-text-sm;
+    position: relative;
+    padding-left: $ds-space-4;
+    color: $ds-text;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: $ds-accent;
+    }
+  }
+
+  blockquote {
+    @include ds-text-lg;
+    padding-left: $ds-space-3;
+    border-left: 2px solid $ds-accent;
+    color: $ds-text;
   }
 }
 
-.kicker {
-  margin: 0;
-  color: $accent-purple;
+.block {
+  scroll-margin-top: 132px;
 }
 
+.kicker {
+  @include ds-text-sm;
+  color: $ds-accent !important;
+}
+
+.directAnswer {
+  @include ds-text-md;
+  padding-left: $ds-space-3;
+  border-left: 2px solid $ds-accent;
+  color: $ds-text !important;
+}
+
+// ── Comparison table ───────────────────────────────────────────────────
 .tableWrap {
-  margin-top: $space-7;
   overflow-x: auto;
-  border: 1px solid $border-primary;
+  margin-top: $ds-space-4;
 
   table {
     width: 100%;
-    min-width: 680px;
     border-collapse: collapse;
   }
 
   caption {
-    padding: $space-5;
-    color: $text-primary;
-    font-size: $text-lg;
-    font-weight: 500;
+    @include ds-text-md;
+    margin-bottom: $ds-space-6;
+    color: $ds-text;
     text-align: left;
-    border-bottom: 1px solid $border-primary;
   }
 
   th,
   td {
-    padding: $space-4;
-    color: $text-secondary;
-    font-size: $text-sm;
-    line-height: 1.5;
+    @include ds-text-sm;
+    padding: $ds-space-4 $ds-space-3;
+    border-bottom: 1px solid $ds-border;
+    text-align: center;
+  }
+
+  thead th {
+    @include ds-text-md;
+    color: $ds-text;
+  }
+
+  tbody th {
+    color: $ds-text-muted;
+    font-weight: $ds-weight;
     text-align: left;
-    vertical-align: top;
-    border-right: 1px solid $border-secondary;
-    border-bottom: 1px solid $border-secondary;
   }
 
-  th {
-    color: $text-primary;
-    font-weight: 500;
+  td { color: $ds-text-muted; }
+
+  // Highlighted «Token Economic Model» column.
+  th:last-child,
+  td:last-child {
+    background-color: $ds-surface;
+    color: $ds-text;
   }
+
+  thead th:last-child { border-radius: $ds-radius-lg $ds-radius-lg 0 0; }
+  tbody tr:last-child td:last-child { border-radius: 0 0 $ds-radius-lg $ds-radius-lg; }
 }
 
-.metricGrid,
-.exampleGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: $space-3;
-  margin-top: $space-7;
+// ── Metrics checklist ──────────────────────────────────────────────────
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+  list-style: none;
 }
 
-.metricGrid > :last-child:nth-child(odd) {
-  grid-column: 1 / -1;
-}
+.metric {
+  display: flex !important;
+  gap: $ds-space-4;
+  padding: 20px !important;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
 
-.card {
-  padding: $space-6;
-  background: $bg-secondary;
-  border: 1px solid $border-secondary;
+  &::before { display: none; }
 
   h3 {
-    margin: $space-5 0 $space-3;
-    font-size: $text-lg;
+    @include ds-text-md;
+    margin: 0 0 $ds-space-1;
   }
 
   p {
-    margin: 0;
-    color: $text-secondary;
-    font-size: $text-sm;
-    line-height: 1.65;
-  }
-
-  a {
-    display: inline-block;
-    margin-top: $space-5;
-    color: $accent-purple;
-    font-size: $text-sm;
-    text-underline-offset: 3px;
+    @include ds-text-sm;
+    color: $ds-text-muted;
   }
 }
 
-.number {
-  color: $text-tertiary;
+.metricNumber {
+  @include ds-text-sm;
+  flex-shrink: 0;
+  color: $ds-accent;
 }
 
-.section blockquote {
-  margin: 64px 0 0;
-  padding: $space-7;
-  color: $text-primary;
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  background:
-    linear-gradient(120deg, rgba($pal-magenta, 0.18), transparent 68%),
-    $bg-secondary;
-  border: 1px solid rgba($pal-magenta, 0.35);
-}
-
+// ── Eight blocks grid ──────────────────────────────────────────────────
 .wheel {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: repeat(3, 150px);
-  margin-top: $space-7;
-  gap: $space-3;
+  gap: $ds-space-1;
+  margin-top: $ds-space-4;
+}
 
-  a {
-    display: flex;
-    flex-direction: column;
-    gap: $space-5;
-    justify-content: space-between;
-    padding: $space-5;
-    color: $text-primary;
-    text-decoration: none;
-    background: $bg-secondary;
-    border: 1px solid $border-primary;
-    transition:
-      background $transition-fast,
-      border-color $transition-fast,
-      transform $transition-fast;
+.wheelItem,
+.wheelCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $ds-space-1;
+  min-height: 90px;
+  padding: $ds-space-3;
+  border-radius: $ds-radius-sm;
+  background-color: $ds-surface;
+  text-align: center;
+}
 
-    &:hover {
-      background: $bg-tertiary;
-      border-color: rgba($pal-magenta, 0.5);
-      transform: translateY(-3px);
-    }
-  }
+.wheelItem {
+  @include ds-text-sm;
+  color: $ds-text;
+  @include ds-transition(background-color);
 
   span {
-    color: $accent-purple;
+    @include ds-text-xs;
+    color: $ds-accent;
   }
 
-  a:nth-child(1) { grid-area: 1 / 1; }
-  a:nth-child(2) { grid-area: 1 / 2; }
-  a:nth-child(3) { grid-area: 1 / 3; }
-  a:nth-child(4) { grid-area: 2 / 3; }
-  a:nth-child(5) { grid-area: 3 / 3; }
-  a:nth-child(6) { grid-area: 3 / 2; }
-  a:nth-child(7) { grid-area: 3 / 1; }
-  a:nth-child(8) { grid-area: 2 / 1; }
+  &:hover { background-color: $ds-surface-raised; }
+
+  // Centre cell (the wordmark) is the fifth in the 3 × 3 grid.
+  &:nth-child(n + 5) { order: 1; }
 }
 
 .wheelCenter {
-  position: relative;
-  display: flex;
-  grid-area: 2 / 2;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  background:
-    radial-gradient(circle at center, rgba($pal-magenta, 0.2), transparent 70%),
-    $bg-secondary;
-  border: 1px solid rgba($pal-magenta, 0.45);
-  box-shadow:
-    inset 0 0 48px rgba($pal-magenta, 0.08),
-    0 0 36px rgba($pal-magenta, 0.06);
+  order: 0;
+  grid-column: 2;
+  grid-row: 2;
 
   strong {
-    font-size: 48px;
-    font-weight: 500;
-    line-height: 0.9;
-    background: $gradient-accent-wide;
-    background-clip: text;
-    color: transparent;
+    @include ds-h5;
   }
 }
 
 .wheelWordmark {
   width: min(58%, 140px);
   aspect-ratio: 100 / 30;
-  background: $text-primary;
-  filter: drop-shadow(0 0 14px rgba($white, 0.12));
+  background-color: $ds-text;
   mask: url('/icons/en-logo.svg') center / contain no-repeat;
-  -webkit-mask: url('/icons/en-logo.svg') center / contain no-repeat;
 }
 
 .blockList {
-  margin-top: $space-9;
-}
-
-.block {
-  padding-block: $space-8;
-  scroll-margin-top: 96px;
-  border-top: 1px solid $border-primary;
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  h3 {
-    max-width: 720px;
-  }
-}
-
-.blockHeading {
   display: flex;
-  gap: $space-3;
-  align-items: center;
-
-  span {
-    color: $accent-purple;
-  }
-
-  p {
-    margin: 0;
-    color: $text-tertiary;
-    font-size: $text-xs;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+  flex-direction: column;
+  gap: $ds-space-8;
+  margin-top: $ds-space-4;
 }
 
-.directAnswer {
-  padding-left: $space-5;
-  color: $text-primary !important;
-  font-size: $text-md !important;
-  border-left: 2px solid $accent-purple;
-}
-
+// ── Treasury / CEL steps ───────────────────────────────────────────────
 .flowFigure {
-  margin: $space-7 0 0;
-}
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
 
-.flow {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: $space-5 72px;
-
-  &::before {
-    position: absolute;
-    top: 32px;
-    bottom: 32px;
-    left: 50%;
-    width: 1px;
-    content: '';
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      $accent-purple 12%,
-      $accent-purple 88%,
-      transparent
-    );
+  figcaption {
+    @include ds-text-sm;
+    color: $ds-text-muted;
   }
 }
 
-.flowStep {
-  position: relative;
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-space-1;
+
+  @include ds-mobile { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.step {
   display: flex;
-  min-height: 112px;
   flex-direction: column;
   justify-content: space-between;
-  padding: $space-5;
-  background: $bg-secondary;
-  border: 1px solid $border-primary;
+  gap: $ds-space-5;
+  min-height: 76px;
+  padding: $ds-space-3;
+  border-radius: $ds-radius-sm;
+  background-color: $ds-surface;
 
   span {
-    color: $accent-purple;
+    @include ds-text-xs;
+    color: $ds-accent;
   }
 
   strong {
-    max-width: 180px;
-    font-size: $text-base;
-    font-weight: 500;
-    line-height: 1.4;
-  }
-
-  &::before {
-    position: absolute;
-    top: 50%;
-    width: 9px;
-    height: 9px;
-    content: '';
-    background: $accent-purple;
-    border: 3px solid $body-bg;
-    border-radius: 50%;
-    transform: translateY(-50%);
-    box-sizing: content-box;
-  }
-
-  &::after {
-    position: absolute;
-    top: 50%;
-    width: 36px;
-    height: 1px;
-    content: '';
-    background: linear-gradient(90deg, $border-primary, $accent-purple);
-  }
-
-  &:nth-child(odd) {
-    grid-column: 1;
-
-    &::before {
-      right: -44px;
-    }
-
-    &::after {
-      right: -36px;
-    }
-  }
-
-  &:nth-child(even) {
-    grid-column: 2;
-
-    &::before {
-      left: -44px;
-    }
-
-    &::after {
-      left: -36px;
-      transform: rotate(180deg);
-    }
-  }
-
-  &:nth-child(4) {
-    background:
-      linear-gradient(120deg, rgba($pal-magenta, 0.2), transparent 75%),
-      $bg-secondary;
-    border-color: rgba($pal-magenta, 0.5);
+    @include ds-text-sm;
+    color: $ds-text;
+    font-weight: $ds-weight;
   }
 }
 
-.flowFigure figcaption {
-  margin-top: $space-4;
-  color: $text-tertiary;
-  font-size: $text-xs;
-  line-height: 1.6;
+// ── Full-width: examples, FAQ, disclaimer ──────────────────────────────
+.wide {
+  @include ds-container;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-block-gap;
+  padding-block: $ds-block-gap calc(#{$ds-block-gap} / 2);
+
+  @include ds-mobile {
+    gap: $ds-block-gap-mobile;
+    padding-block: $ds-block-gap-mobile calc(#{$ds-block-gap-mobile} / 2);
+  }
 }
 
-.loop {
+.wideSection {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  scroll-margin-top: 132px;
+}
+
+.wideTitle {
+  @include ds-h3;
+  margin-bottom: $ds-space-5;
+  color: $ds-text;
+}
+
+.examples {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: $space-3;
-  margin: $space-7 0 $space-9;
+  gap: 5px;
 
-  div {
-    min-height: 110px;
-    padding: $space-5;
-    background: $bg-secondary;
-    border: 1px solid $border-secondary;
-  }
-
-  span {
-    display: block;
-    margin-bottom: $space-5;
-    color: $accent-purple;
-  }
-
-  strong {
-    font-size: $text-sm;
-    font-weight: 500;
-    line-height: 1.45;
-  }
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
 }
 
-.exampleGrid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.example {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  min-height: 312px;
+  padding: 20px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
 
-  .card h3 {
-    margin-top: 0;
-  }
-}
-
-.faqSection h3 {
-  margin: 0;
-  font-size: inherit;
-  line-height: inherit;
-  letter-spacing: normal;
-}
-
-.disclaimer {
-  margin-block: 72px 96px;
-  padding: $space-6;
-  background: $bg-secondary;
-  border: 1px solid $border-primary;
-
-  h2 {
-    margin: 0 0 $space-3;
-    font-size: $text-base;
-    font-weight: 500;
+  h3 {
+    @include ds-h5;
+    color: $ds-text;
   }
 
   p {
-    margin: 0;
-    color: $text-tertiary;
-    font-size: $text-xs;
-    line-height: 1.65;
+    @include ds-text-sm;
+    color: $ds-text-muted;
+  }
+
+  a {
+    @include ds-text-sm;
+    margin-top: auto;
+    color: $ds-text-muted;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    @include ds-transition(color);
+
+    &:hover { color: $ds-text; }
   }
 }
 
-@media (max-width: #{$bp-desktop}) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+// ServiceFaq brings its own section rhythm.
+.faqSection {
+  margin-block: calc(-1 * #{$ds-block-gap} / 2);
+  scroll-margin-top: 132px;
 
-  .toc {
-    display: none;
-  }
+  @include ds-mobile { margin-block: calc(-1 * #{$ds-block-gap-mobile} / 2); }
 }
 
-@media (max-width: #{$bp-tablet}) {
-  .hero {
-    padding-block: 56px;
-  }
-
-  .eyebrow {
-    margin-top: 40px;
-  }
-
-  .section {
-    padding-block: 56px;
-  }
-
-  .metricGrid,
-  .exampleGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .metricGrid > :last-child:nth-child(odd) {
-    grid-column: auto;
-  }
-
-  .wheel,
-  .loop {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .wheel {
-    grid-template-rows: none;
-
-    a {
-      grid-area: auto !important;
-      min-height: 120px;
-    }
-  }
-
-  .wheelCenter {
-    display: none;
-  }
+.disclaimer p {
+  @include ds-text-sm;
+  max-width: 720px;
+  margin-inline: auto;
+  color: $ds-text-faint;
+  text-align: center;
 }
 
-@media (max-width: #{$bp-mobile}) {
-  .hero h1 {
-    font-size: 40px;
-  }
-
-  .meta {
-    align-items: flex-start;
-    flex-direction: column;
-
-    [aria-hidden='true'] {
-      display: none;
-    }
-  }
-
-  .wheel,
-  .loop {
-    grid-template-columns: 1fr;
-  }
-
-  .flow {
-    grid-template-columns: 24px minmax(0, 1fr);
-    gap: $space-3;
-
-    &::before {
-      top: 0;
-      bottom: 0;
-      left: 7px;
-    }
-  }
-
-  .flowStep {
-    grid-column: 2 !important;
-
-    &::before {
-      left: -48px !important;
-      right: auto !important;
-    }
-
-    &::after {
-      left: -36px !important;
-      right: auto !important;
-      transform: rotate(180deg);
-    }
-  }
-
-  .section blockquote {
-    padding: $space-6;
-  }
+.pullQuote {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: $ds-space-8 $ds-space-5 !important;
+  border: none !important;
+  border-radius: $ds-radius-card;
+  text-align: center;
+  @include ds-h5;
 }

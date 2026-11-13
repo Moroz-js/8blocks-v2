@@ -6,9 +6,22 @@ export const SCENE_IMAGES: Record<BinarySceneId, string | null> = {
   'hand-coin': '/img/calculator/hand-reference.png',
   'coin-stacks': '/img/binary/coin-stacks.png',
   'hand-coins': '/img/binary/hand-coins.png',
-  'light-bulb': '/img/binary/light-bulb.png',
+  'light-bulb': '/img/binary/lightBulb.webp',
   'coin-pedestal': null,
   skyline: '/img/binary/skyline.png',
+  profiles: '/img/binary/profiles.webp',
+  'gold-coin': '/img/binary/goldCoin.webp',
+  bulb: '/img/binary/bulb.webp',
+  briefcase: '/img/binary/briefcase.webp',
+  'broken-coin': '/img/binary/brokenCoin.webp',
+  'way-file': '/img/binary/wayFile.webp',
+  'way-scales': '/img/binary/wayScales.webp',
+  'way-puzzle': '/img/binary/wayPuzzle.webp',
+  brain: '/img/binary/brain.webp',
+  shuttle: '/img/binary/shuttle.webp',
+  'city-coins': '/img/binary/cityCoins.webp',
+  office: '/img/binary/office.webp',
+  unicorn: '/img/binary/unicorn.webp',
 }
 
 const builders: Record<Exclude<BinarySceneId, 'hand-coin'>, () => Promise<{ buildScene: SceneBuilder }>> = {
@@ -17,6 +30,19 @@ const builders: Record<Exclude<BinarySceneId, 'hand-coin'>, () => Promise<{ buil
   'light-bulb': () => import('./scenes/lightBulb.js'),
   'coin-pedestal': () => import('./scenes/coinPedestal.js'),
   skyline: () => import('./scenes/skyline.js'),
+  profiles: () => import('./scenes/profiles.js'),
+  'gold-coin': () => import('./scenes/goldCoin.js'),
+  bulb: () => import('./scenes/bulb.js'),
+  briefcase: () => import('./scenes/briefcase.js'),
+  'broken-coin': () => import('./scenes/brokenCoin.js'),
+  'way-file': () => import('./scenes/wayFile.js'),
+  'way-scales': () => import('./scenes/wayScales.js'),
+  'way-puzzle': () => import('./scenes/wayPuzzle.js'),
+  brain: () => import('./scenes/brain.js'),
+  shuttle: () => import('./scenes/shuttle.js'),
+  'city-coins': () => import('./scenes/cityCoins.js'),
+  office: () => import('./scenes/office.js'),
+  unicorn: () => import('./scenes/unicorn.js'),
 }
 
 /** Prefers WebGL where a scene has a GPU renderer, otherwise Canvas 2D. */

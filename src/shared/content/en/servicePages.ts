@@ -751,15 +751,14 @@ const workshop = {
     /** The availability note after the prefix comes from the SEO global (admin). */
     slots: {
       title: 'Maximum 6 workshops per month.',
-      descriptionPrefix: 'Each one requires a custom scenario — that takes real time.',
+      descriptionPrefix: 'Each one requires a custom scenario, and that takes real time.',
     },
     stats: [
-      { value: '2017', label: 'Building token economies' },
-      { value: '$180M+', label: 'Raised by clients before TGE' },
-      { value: '100%', label: 'Token as part of the product' },
-      { value: '5', label: 'Verticals: DeFi, GameFi, RWA, infrastructure, finance' },
+      { value: '$180M+', label: 'raised by clients before TGE' },
+      { value: '9 years', label: 'building token economies' },
+      { value: '30+', label: 'partners across exchanges, market making, security, and media' },
     ],
-    offices: 'Offices in Dubai and Berlin. Clients across the US, Europe, and MENA.',
+    offices: 'Offices in Zug, Dubai, and Berlin. Clients across Europe, the US, and MENA.',
   },
   partnersLabel: 'Partners',
   faq: [

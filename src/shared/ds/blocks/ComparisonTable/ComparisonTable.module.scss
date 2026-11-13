@@ -9,12 +9,39 @@
   @include ds-mobile { margin-inline: calc(-1 * #{$ds-margin-mobile}); }
 }
 
+$corner: 232px;
+$corner-mobile: 160px;
+
+.frame {
+  position: relative;
+  isolation: isolate;
+  min-width: 720px;
+}
+
 .table {
   width: 100%;
-  min-width: 720px;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
+}
+
+// Accent column: one surface behind the highlighted cells (equal value columns).
+.accentColumn {
+  --corner: #{$corner};
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--corner) + (100% - var(--corner)) * var(--column) / var(--columns));
+  z-index: -1;
+  width: calc((100% - var(--corner)) / var(--columns));
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+
+  @include ds-mobile { --corner: #{$corner-mobile}; }
+}
+
+.onAccent {
+  border-right-color: transparent;
 }
 
 .caption {
@@ -36,9 +63,9 @@
 }
 
 .corner {
-  width: 232px;
+  width: $corner;
 
-  @include ds-mobile { width: 160px; }
+  @include ds-mobile { width: $corner-mobile; }
 }
 
 .label {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Button, TextField, Textarea } from '@/shared/ds'
+import { AccentSurface, Button, TextField, Textarea } from '@/shared/ds'
 import { TabsDemo } from './TabsDemo'
 import styles from './DesignSystem.module.scss'
 
@@ -17,6 +17,7 @@ const PRIMITIVES = [
   ['Colors/Dark', '--ds-surface', '#101113'],
   ['Colors/Charcoal', '--ds-surface-raised', '#1B1B1B'],
   ['Colors/Gray', '--ds-text-muted', '#707172'],
+  ['Gray light (HTML)', '--ds-text-link', '#AAAAAC'],
   ['Colors/White', '--ds-text', '#FFFFFF'],
   ['Colors/Pink', '--ds-accent', '#CA005A'],
   ['Colors/Green', '--ds-success', '#34C759'],
@@ -32,6 +33,8 @@ const SEMANTIC = [
   ['--ds-text', 'Основной текст'],
   ['--ds-text-muted', 'Описания, лейблы, плейсхолдеры'],
   ['--ds-text-inverse', 'Текст на светлой заливке'],
+  ['--ds-text-faint', 'Вторичный текст на градиенте и фото'],
+  ['--ds-text-link', 'Ссылки и источники в тексте статьи'],
   ['--ds-border', 'Разделители, линии таблиц'],
   ['--ds-border-strong', 'Рамка поля на hover'],
   ['--ds-accent', 'Акцент'],
@@ -175,6 +178,37 @@ export default function DesignSystemPage() {
           <Button variant="tertiary">Discuss your property</Button>
         </div>
         <Button fullWidth>Full width</Button>
+      </section>
+
+      <section className={styles.block}>
+        <h2 className={styles.blockTitle}>AccentSurface</h2>
+        <p className={styles.note}>
+          <code>{'<AccentSurface />'}</code> — акцентный фон: градиент <code>$ds-accent-stops</code> и медленно
+          всплывающий шум. Первым ребёнком в блок с <code>position: relative; isolation: isolate; overflow: hidden</code>
+          . Угол градиента зависит от пропорций блока. Карточки внутри <code>data-accent-group</code> делят один
+          градиент на всю группу.
+        </p>
+        <div className={styles.accentWide}>
+          <AccentSurface />
+          <p className={styles.h4}>Pressure-test your tokenomics</p>
+          <Button variant="tertiary">Book a call</Button>
+        </div>
+        <div className={styles.accentGroup} data-accent-group>
+          {['Business model', 'Tokenomics', 'Investor narrative'].map((title) => (
+            <div key={title} className={styles.accentCard}>
+              <AccentSurface />
+              <p className={styles.h5}>{title}</p>
+              <p className={styles.accentText}>Один градиент на группу, шум — у каждой карточки.</p>
+            </div>
+          ))}
+        </div>
+        <p className={styles.note}>
+          Ссылка в тексте статьи:{' '}
+          <a href="https://app.rwa.xyz/" className={styles.textLink}>
+            rwa.xyz
+          </a>{' '}
+          — <code>$ds-text-link</code>, подчёркнутая.
+        </p>
       </section>
 
       <section className={styles.block}>

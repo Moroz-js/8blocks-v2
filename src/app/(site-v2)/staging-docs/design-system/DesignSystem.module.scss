@@ -164,6 +164,51 @@
   background: linear-gradient(120deg, #{color.mix($ds-black, $ds-pink, 80%)} 0%, $ds-pink 100%);
 }
 
+.accentWide,
+.accentCard {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: $ds-radius-card;
+}
+
+.accentWide {
+  min-height: 320px;
+  padding: $ds-space-7;
+  margin-bottom: $ds-gutter;
+}
+
+.accentGroup {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-gutter;
+  margin-bottom: $ds-space-5;
+
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.accentCard {
+  min-height: 240px;
+  padding: $ds-space-5;
+}
+
+.accentText {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+.textLink {
+  color: $ds-text-link;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -8,16 +8,14 @@ import { StepsCarousel } from './blocks/StepsCarousel'
 import { UseCases } from './blocks/UseCases'
 import { MiniApp } from './blocks/MiniApp'
 import { ServiceFaq } from './blocks/ServiceFaq'
-import ctaTge from './assets/sc-tge-bg.webp'
-import ctaPink from './assets/cta-pink.webp'
 
 const { common, consulting: page } = servicePages
 
 const PAIN_GLYPHS = [
-  { shape: 'trail', oy: 0.48, os: 0.82 },
-  { shape: 'bubbles', oy: 0.5, os: 0.9 },
-  { shape: 'puzzlegap', oy: 0.5, os: 0.95 },
-  { shape: 'chaos', oy: 0.5, os: 0.9 },
+  { shape: 'compass', oy: 0.5, os: 0.9 },
+  { shape: 'target', oy: 0.5, os: 0.9 },
+  { shape: 'team', oy: 0.5, os: 0.9 },
+  { shape: 'clock', oy: 0.5, os: 0.85 },
 ]
 
 export function ConsultingPage() {
@@ -37,7 +35,7 @@ export function ConsultingPage() {
       </Section>
 
       <Section>
-        <Cta size="sm" image={ctaTge} title={page.tgeCta.title} description={page.tgeCta.description} primary={common.bookCall} />
+        <Cta size="sm" title={page.tgeCta.title} description={page.tgeCta.description} primary={common.bookCall} />
       </Section>
 
       <StrategyDiagram title={page.strategy.title} description={page.strategy.description} stages={page.strategy.stages} />
@@ -45,7 +43,7 @@ export function ConsultingPage() {
       <ChecklistRows title={page.deliver.title} items={page.deliver.items} />
 
       <Section>
-        <Cta size="md" image={ctaPink} title={page.utilityCta.title} description={page.utilityCta.description} primary={common.bookCall} />
+        <Cta size="md" title={page.utilityCta.title} description={page.utilityCta.description} primary={common.bookCall} />
       </Section>
 
       <StepsCarousel title={common.howWeWork} steps={page.steps} labels={common.stepsLabels} numbering="padded" />

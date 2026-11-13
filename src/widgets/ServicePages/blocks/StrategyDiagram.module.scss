@@ -56,11 +56,6 @@ $line: rgba($ds-white, 0.55); // designer's route arrows and stage numbers
   }
 }
 
-.bg {
-  z-index: -1;
-  object-fit: cover;
-}
-
 .arrows {
   position: absolute;
   inset: 0;

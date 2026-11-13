@@ -3,8 +3,8 @@
 // The globe starts right under the section title (designer's frame: 20px below it).
 .wrap {
   position: relative;
+  @include ds-bleed;
   margin-top: -128px;
-  margin-inline: calc(50% - 50vw);
   aspect-ratio: 1280 / 778;
 
   @include ds-mobile {

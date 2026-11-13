@@ -17,6 +17,12 @@
   align-items: center;
   justify-content: space-between;
   gap: $ds-space-5;
+
+  // A title next to a button would break word by word: the button wraps under it.
+  @include ds-mobile {
+    flex-wrap: wrap;
+    gap: $ds-space-4;
+  }
 }
 
 .center {

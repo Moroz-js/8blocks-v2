@@ -1,0 +1,271 @@
+@use '@/shared/ds/styles' as *;
+
+.h3 { @include ds-h3; white-space: pre-line; }
+.h4 { @include ds-h4; }
+.sheen { @include ds-title-sheen; }
+
+.muted {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.faint {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+// ── Statement + principles ─────────────────────────────────────────────
+.statement {
+  @include ds-h3;
+  margin-bottom: $ds-space-8;
+  text-align: center;
+  white-space: pre-line;
+
+  @include ds-mobile { white-space: normal; }
+}
+
+.statementMuted { color: $ds-text-muted; }
+
+.statementBright {
+  @include ds-title-sheen;
+}
+
+.principles {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-8;
+  list-style: none;
+}
+
+.principle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-3;
+  max-width: 589px;
+  text-align: center;
+}
+
+.principleArt {
+  width: min(589px, 100%);
+  aspect-ratio: 589 / 368;
+  margin-bottom: $ds-space-5;
+}
+
+.principleTitle {
+  @include ds-h5;
+  max-width: 400px;
+  color: $ds-text;
+}
+
+.principleText {
+  @include ds-text-sm;
+  max-width: 400px;
+  color: $ds-text-muted;
+}
+
+// ── Areas / proof cards ────────────────────────────────────────────────
+.areas,
+.proof {
+  display: grid;
+  gap: 5px;
+  list-style: none;
+}
+
+.areas {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.proof {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: $ds-space-8;
+  text-align: left;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.area,
+.proofCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $ds-space-6;
+  padding: 20px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+}
+
+.area {
+  min-height: 352px;
+}
+
+.proofCard {
+  align-items: flex-start;
+}
+
+.areaText {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+}
+
+.areaTitle {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.areaLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $ds-space-1;
+}
+
+// ── Clients ────────────────────────────────────────────────────────────
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: $ds-space-8;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.splitText {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-5;
+  max-width: 470px;
+}
+
+.clients {
+  list-style: none;
+}
+
+.client {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  padding-block: $ds-space-7;
+  border-bottom: 1px solid $ds-border;
+
+  &:first-child { padding-top: 0; }
+  &:last-child { border-bottom: none; }
+}
+
+.clientLabel {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.clientText {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+// ── Since 2017 ─────────────────────────────────────────────────────────
+.track {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: $ds-space-8;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.trackText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $ds-space-5;
+}
+
+.trackStats {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: $ds-space-3;
+  min-height: 157px;
+  padding: 20px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  &:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+.statValue {
+  @include ds-h3;
+  color: $ds-accent;
+}
+
+.statLabel {
+  @include ds-text-sm;
+  max-width: 237px;
+  color: $ds-text;
+
+  .stat:last-child:nth-child(odd) & { max-width: 360px; }
+}
+
+// ── Ways ───────────────────────────────────────────────────────────────
+.ways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+  list-style: none;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.way {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-2;
+  min-height: 400px;
+  padding: 20px 20px 30px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  text-align: center;
+}
+
+.wayArt {
+  width: 100%;
+  aspect-ratio: 525 / 328;
+  margin-bottom: $ds-space-3;
+}
+
+.wayTitle {
+  @include ds-text-lg;
+  color: $ds-text;
+}
+
+.wayText {
+  @include ds-text-sm;
+  max-width: 337px;
+  color: $ds-text-faint;
+}
+
+// ── Clutch ─────────────────────────────────────────────────────────────
+.clutch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-4;
+  text-align: center;
+}

@@ -1,0 +1,71 @@
+@use '@/shared/ds/styles' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  padding: $ds-space-7;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5; }
+}
+
+.title {
+  @include ds-h5;
+  display: flex;
+  align-items: center;
+  gap: $ds-space-3;
+  color: $ds-text;
+}
+
+.icon,
+.bullet {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: $ds-surface-raised;
+  color: $ds-text-muted;
+
+  [data-good] & {
+    background-color: rgba($ds-pink, 0.2);
+    color: $ds-accent;
+  }
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+}
+
+.bullet {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  list-style: none;
+
+  li {
+    @include ds-text-sm;
+    display: flex;
+    gap: 11px;
+    color: $ds-text-muted;
+
+    [data-good] & { color: $ds-text; }
+  }
+}

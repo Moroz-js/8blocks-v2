@@ -26,16 +26,32 @@ export function SplitList({ title, description, titleSize = 'md', children }: Sp
   )
 }
 
-/** Rows «01 | Lead. Text» with a numbered column. */
-export function IndexedRows({ items }: { items: readonly { lead: ReactNode; text: ReactNode }[] }) {
+export interface IndexedRow {
+  /** Pink line above the text. */
+  label?: ReactNode
+  lead: ReactNode
+  text: ReactNode
+  /** Extra content under the text (data, source link). */
+  body?: ReactNode
+}
+
+/**
+ * Rows «01 | Lead. Text» with a numbered column. `lg` — Text L, lead and text
+ * on separate lines (question / answer rows).
+ */
+export function IndexedRows({ items, size = 'sm' }: { items: readonly IndexedRow[]; size?: 'sm' | 'lg' }) {
   return (
-    <ol className={styles.indexed}>
+    <ol className={clsx(styles.indexed, size === 'lg' && styles.indexedLg)}>
       {items.map((item, i) => (
         <li key={i} className={styles.indexedRow}>
           <span className={styles.index}>{String(i + 1).padStart(2, '0')}</span>
-          <p className={styles.indexedText}>
-            <span className={styles.lead}>{item.lead}</span> {item.text}
-          </p>
+          <div className={styles.indexedBody}>
+            {item.label && <p className={styles.indexedLabel}>{item.label}</p>}
+            <p className={styles.indexedText}>
+              <span className={styles.lead}>{item.lead}</span> {item.text}
+            </p>
+            {item.body}
+          </div>
         </li>
       ))}
     </ol>

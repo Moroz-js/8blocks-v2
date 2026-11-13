@@ -21,12 +21,7 @@
 
 .accent {
   min-height: 450px;
-  // CSS rebuild of the Figma gradient (54:2647), matched to its colours:
-  // dark plum at the top, magenta glow rising from the bottom-left.
-  // Pure CSS — sharp at any pixel density, unlike an exported bitmap.
-  background:
-    linear-gradient(200deg, #1f030f 0%, #2d0313 28%, #47041f 60%, #620834 100%);
-  box-shadow: 0 1px 2px rgba(#14151a, 0.05);
+  box-shadow: $ds-shadow-xs;
 }
 
 .quote {

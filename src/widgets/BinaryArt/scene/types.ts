@@ -1,6 +1,25 @@
 export type SceneSurface = HTMLCanvasElement | OffscreenCanvas
 
-export type BinarySceneId = 'hand-coin' | 'coin-stacks' | 'hand-coins' | 'light-bulb' | 'coin-pedestal' | 'skyline'
+export type BinarySceneId =
+  | 'hand-coin'
+  | 'coin-stacks'
+  | 'hand-coins'
+  | 'light-bulb'
+  | 'coin-pedestal'
+  | 'skyline'
+  | 'profiles'
+  | 'gold-coin'
+  | 'bulb'
+  | 'briefcase'
+  | 'broken-coin'
+  | 'way-file'
+  | 'way-scales'
+  | 'way-puzzle'
+  | 'brain'
+  | 'shuttle'
+  | 'city-coins'
+  | 'office'
+  | 'unicorn'
 
 /** Buffer covers only visible columns; scale/offset retain the full scene's pixel grid. */
 export type SceneViewport = {

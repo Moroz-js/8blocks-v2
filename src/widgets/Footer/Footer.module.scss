@@ -1,278 +1,162 @@
-@use '@/shared/styles/variables' as *;
+@use '@/shared/ds/styles' as *;
+
+// Footer (project 2 mockups). Renders on v1 pages too, so it declares the v2 token values itself.
+$side: 220px;
+$map-height: 208px;
 
 .footer {
-  overflow: clip;
+  @include ds-theme-dark;
+  padding-bottom: $ds-space-6;
+  background: $ds-bg;
+  color: $ds-text;
+  font-family: $ds-font;
+  font-weight: $ds-weight;
 }
 
 .inner {
-  max-width: $container-max;
-  margin-inline: auto;
-  padding-inline: $container-padding;
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-  }
+  @include ds-container;
 }
 
-// ── Brand watermark ───────────────────────────────────────────────
-.watermarkSection {
-  overflow: hidden;
-  padding-block: 0;
-  line-height: 0;
-}
-
-.watermarkText {
-  font-family: $font-base;
-  text-align: center;
-  font-weight: 700;
-  font-size: clamp(40px, 13.5vw, 160px);
-  letter-spacing: -0.04em;
-  line-height: 0.85;
-  color: $text-primary;
-  white-space: nowrap;
-  padding-inline: $container-padding;
-  padding-block: clamp(16px, 3vw, 40px);
-}
-
-.watermarkEnglish {
-  font-size: clamp(60px, 20.25vw, 240px);
-}
-
-.watermarkRu {
-  white-space: normal;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  line-height: 0.9;
-  gap: 0.05em;
-  padding-block: clamp(12px, 2vw, 32px) clamp(20px, 3vw, 48px);
-}
-
-.watermarkRuLine1 {
-  display: block;
-  font-size: clamp(56px, 27vw, 300px);
-  line-height: 0.9;
-}
-
-.watermarkRuLine2 {
-  display: block;
-  font-size: clamp(20px, 9vw, 100px);
-  line-height: 0.9;
-}
-
-// Contact page variant: email fills the same watermark space
-.watermarkEmail {
-  font-size: clamp(36px, 10vw, 140px);
-  white-space: normal;
-  word-break: break-all;
-  letter-spacing: -0.03em;
-  line-height: 0.9;
-  padding-block: clamp(24px, 4vw, 60px);
-}
-
-// ── Bottom section ────────────────────────────────────────────────
-.bottomSection {
-  padding-block: $space-9 $space-6;
-  border-top: 1px solid $border-secondary;
-
-  @media (max-width: #{$bp-tablet}) {
-    padding-block: $space-7 $space-5;
-  }
-}
-
-.bottomGrid {
+.top {
   display: grid;
-  grid-template-columns: 1.5fr 0.85fr 1fr 0.9fr 1.45fr;
-  gap: $space-7;
-  padding-bottom: $space-7;
-  border-bottom: 1px solid $border-secondary;
+  grid-template-columns: $side minmax(0, 1fr) $side;
+  column-gap: $ds-space-8;
+  padding-top: $ds-space-8;
+  border-top: 1px solid $ds-border;
 
-  @media (max-width: #{$bp-desktop}) {
-    grid-template-columns: 1fr 1fr;
-    gap: $space-6;
+  @include ds-tablet {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: $ds-space-7 $ds-space-5;
   }
 
-  @media (max-width: #{$bp-mobile}) {
-    grid-template-columns: 1fr 1fr;
-    gap: $space-5;
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-// ── Subscribe column ──────────────────────────────────────────────
-.subscribeCol {
+.brand {
   display: flex;
   flex-direction: column;
-  gap: $space-4;
-  max-width: 360px;
-
-  @media (max-width: #{$bp-desktop}) {
-    max-width: 100%;
-    grid-column: 1 / -1;
-  }
 }
 
-.subscribeLabel {
-  font-family: $font-base;
-  font-size: $text-xs;
-  font-weight: 400;
-  color: $text-tertiary;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin: 0;
+.subscribe {
+  @include ds-text-lg;
 }
 
-.subscribeNote {
-  font-family: $font-base;
-  font-size: $text-sm;
-  color: $text-tertiary;
-  margin: 0;
-  line-height: $leading-normal;
+.note {
+  @include ds-text-sm;
+  margin-top: $ds-space-2;
+  color: $ds-text-muted;
+  white-space: pre-line;
 }
 
-// ── Social icons ──────────────────────────────────────────────────
+.form {
+  margin-top: $ds-space-5;
+}
+
 .socials {
   display: flex;
   align-items: center;
-  gap: $space-2;
-  margin-top: $space-1;
+  gap: $ds-space-4;
+  height: 20px;
+  margin-top: $ds-space-6;
 }
 
-.socialLink {
+.social {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 0;
-  text-decoration: none;
-  opacity: 0.75;
-  transition: opacity $transition-fast;
-
-  img {
-    width: 40px !important;
-    height: 40px !important;
-  }
+  color: $ds-text-faint;
+  @include ds-transition(color);
+  @include ds-focus-visible;
 
   &:hover {
-    opacity: 1;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 2px;
+    color: $ds-text;
   }
 }
 
-// ── Map column ────────────────────────────────────────────────────
-.mapCol {
-  align-self: stretch;
+.columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: $ds-space-5;
 
-  @media (max-width: #{$bp-desktop}) {
+  @include ds-tablet {
     grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  @include ds-mobile {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $ds-space-6 $ds-space-5;
   }
 }
 
-.mapWrap {
-  width: 100%;
-  height: 100%;
-  min-height: 160px;
-  border-radius: 0;
-  overflow: hidden;
-  border: 1px solid $border-secondary;
-  // Wrapper filter (not iframe) — theme via --map-filter in globals.scss
-  filter: var(--map-filter);
-}
-
-.mapIframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-}
-
-// ── Nav columns ───────────────────────────────────────────────────
-.navHeading {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-xs;
-  color: $text-tertiary;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin: 0 0 $space-4;
-}
-
-.navList {
+.column,
+.office {
   display: flex;
   flex-direction: column;
-  gap: $space-3;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+  align-items: flex-start;
+  gap: $ds-space-3;
 }
 
-.navLink {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-sm;
-  color: $text-secondary;
-  text-decoration: none;
-  transition: color $transition-fast;
+.heading {
+  @include ds-text-sm;
+  margin-bottom: $ds-space-2;
+  color: $ds-text-muted;
+}
+
+.link {
+  @include ds-text-sm;
+  color: $ds-text;
+  @include ds-transition(color);
+  @include ds-focus-visible;
 
   &:hover {
-    color: $text-primary;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 2px;
-    border-radius: 0;
+    color: $ds-accent;
   }
 }
 
-// ── Copyright bar ─────────────────────────────────────────────────
-.copyright {
-  padding-top: $space-5;
+.map {
+  position: relative;
+  width: 100%;
+  height: $map-height;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background: $ds-surface;
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    filter: grayscale(1) invert(0.92) contrast(0.85) brightness(0.85);
+  }
+}
+
+.bottom {
+  @include ds-text-sm;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: $space-5;
+  gap: $ds-space-3 $ds-space-5;
+  margin-top: $ds-space-8;
+  padding-top: $ds-space-5;
+  border-top: 1px solid $ds-border;
+  color: $ds-text-muted;
+}
 
-  @media (max-width: #{$bp-mobile}) {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: $space-4;
+.legal {
+  display: flex;
+  gap: $ds-space-5;
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    @include ds-transition(color);
+
+    &:hover {
+      color: $ds-text;
+    }
   }
 }
-
-.logo {
-  text-decoration: none;
-  color: $text-primary;
-  display: inline-flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.copyrightText {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-xs;
-  color: $text-tertiary;
-  margin: 0;
-  text-align: center;
-}
-
-.privacyLink {
-  font-family: $font-base;
-  font-size: $text-xs;
-  color: $text-tertiary;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color $transition-fast;
-  flex-shrink: 0;
-
-  &:hover {
-    color: $text-secondary;
-  }
-}
-

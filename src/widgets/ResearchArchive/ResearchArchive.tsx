@@ -1,25 +1,11 @@
-import Link from 'next/link'
 import type { ResearchCard as ResearchCardType } from '@/entities/research'
-import { ResearchCardUI } from '@/entities/research'
 import { lang } from '@/shared/i18n'
-import { researchArchiveContent } from '@/shared/content/researchPage'
+import { researchArchiveContent as copy } from '@/shared/content/researchPage'
+import { uiStrings } from '@/shared/content/uiStrings'
+import { ListingEmpty, ListingPage, Pagination } from '@/widgets/Posts/Listing'
+import { PostCard, PostGrid } from '@/widgets/Posts/PostCard'
+import { formatPostDate, postMeta } from '@/widgets/Posts/format'
 import styles from './ResearchArchive.module.scss'
-
-function ArrowLeft() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-function ArrowRight() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-      <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
 
 interface Props {
   research: ResearchCardType[]
@@ -28,99 +14,70 @@ interface Props {
   totalDocs: number
 }
 
-export function ResearchArchive({ research, totalPages, currentPage, totalDocs }: Props) {
-  function pageHref(page: number) {
-    if (page <= 1) return '/research'
-    return `/research?page=${page}`
+function countLabel(count: number) {
+  if (lang === 'ru') {
+    const mod10 = count % 10
+    const mod100 = count % 100
+    if (mod10 === 1 && mod100 !== 11) return copy.countSingular
+    if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return copy.countFew
+    return copy.countMany
   }
-
-  function countLabel(count: number) {
-    if (lang === 'ru') {
-      if (count === 1) return researchArchiveContent.countSingular
-      if (count >= 2 && count <= 4) return researchArchiveContent.countFew
-      return researchArchiveContent.countMany
-    }
-    return count === 1 ? researchArchiveContent.countSingular : researchArchiveContent.countMany
-  }
-
-  return (
-    <div className={styles.root}>
-      {/* ── Page header ─────────────────────────────────────────── */}
-      <div className={styles.pageHeader}>
-        <div className={styles.pageHeaderInner}>
-          <span className={styles.label}>
-            <span className={styles.labelBracket}>[</span>
-            {researchArchiveContent.labelSection}
-            <span className={styles.labelBracket}>]</span>
-          </span>
-          <h1 className={styles.headline}>{researchArchiveContent.headline}</h1>
-          {totalDocs > 0 && (
-            <p className={styles.count}>
-              {totalDocs} {countLabel(totalDocs)}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* ── Cards grid (2×2) ─────────────────────────────────────── */}
-      {research.length > 0 ? (
-        <div className={styles.grid}>
-          {research.map((item, i) => (
-            <ResearchCardUI key={item.id} research={item} priority={i < 2} />
-          ))}
-        </div>
-      ) : (
-        <div className={styles.empty}>
-          <p className={styles.emptyText}>{researchArchiveContent.emptyState}</p>
-          <p className={styles.emptyHint}>{researchArchiveContent.emptyHint}</p>
-        </div>
-      )}
-
-      {/* ── Pagination ──────────────────────────────────────────── */}
-      {totalPages > 1 && (
-        <nav className={styles.pagination} aria-label={researchArchiveContent.paginationAriaLabel}>
-          {currentPage > 1 && (
-            <Link href={pageHref(currentPage - 1)} className={styles.pageArrow} aria-label={researchArchiveContent.prevPage}>
-              <ArrowLeft />
-            </Link>
-          )}
-
-          <div className={styles.pageNumbers}>
-            {buildPageRange(currentPage, totalPages).map((item, i) =>
-              item === '…' ? (
-                <span key={`ellipsis-${i}`} className={styles.pageEllipsis}>…</span>
-              ) : (
-                <Link
-                  key={item}
-                  href={pageHref(item)}
-                  className={`${styles.pageNum} ${item === currentPage ? styles.pageNumActive : ''}`}
-                  aria-current={item === currentPage ? 'page' : undefined}
-                >
-                  {item}
-                </Link>
-              ),
-            )}
-          </div>
-
-          {currentPage < totalPages && (
-            <Link href={pageHref(currentPage + 1)} className={styles.pageArrow} aria-label={researchArchiveContent.nextPage}>
-              <ArrowRight />
-            </Link>
-          )}
-        </nav>
-      )}
-    </div>
-  )
+  return count === 1 ? copy.countSingular : copy.countMany
 }
 
-function buildPageRange(current: number, total: number): (number | '…')[] {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
-  const pages: (number | '…')[] = []
-  const addPage = (p: number) => { if (!pages.includes(p)) pages.push(p) }
-  addPage(1)
-  if (current > 3) pages.push('…')
-  for (let p = Math.max(2, current - 1); p <= Math.min(total - 1, current + 1); p++) addPage(p)
-  if (current < total - 2) pages.push('…')
-  addPage(total)
-  return pages
+const Eye = (
+  <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <path d="M10 3.75c4.17 0 7.72 2.59 9.17 6.25-1.45 3.66-5 6.25-9.17 6.25S2.28 13.66.83 10C2.28 6.34 5.83 3.75 10 3.75Zm0 2.08a4.17 4.17 0 1 0 0 8.34 4.17 4.17 0 0 0 0-8.34Zm0 1.67a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5Z" />
+  </svg>
+)
+
+/** Research listing on design system v2 (project 2 «Research»). */
+export function ResearchArchive({ research, totalPages, currentPage, totalDocs }: Props) {
+  const pageHref = (page: number) => (page <= 1 ? '/research' : `/research?page=${page}`)
+
+  return (
+    <ListingPage>
+      <header className={styles.header}>
+        <p className={styles.title}>{copy.labelSection}</p>
+        <div className={styles.subtitle}>
+          <h1 className={styles.headline}>{copy.headline}</h1>
+          {totalDocs > 0 && ` · ${totalDocs} ${countLabel(totalDocs)}`}
+        </div>
+      </header>
+
+      <div className={styles.sectionHead}>
+        <h2 className={styles.sectionTitle}>{copy.allStudies}</h2>
+        <p className={styles.sort}>{copy.sortedByDate}</p>
+      </div>
+
+      {research.length > 0 ? (
+        <PostGrid columns={2}>
+          {research.map((item) => (
+            <PostCard
+              key={item.id}
+              href={`/research/${item.slug}`}
+              meta={postMeta(item.category?.title, formatPostDate(item.publishedAt))}
+              title={item.title}
+              footer={
+                <span className={styles.views}>
+                  {Eye}
+                  {item.views ?? 0}
+                </span>
+              }
+              action={`${uiStrings.read} →`}
+            />
+          ))}
+        </PostGrid>
+      ) : (
+        <ListingEmpty title={copy.emptyState} hint={copy.emptyHint} />
+      )}
+
+      <Pagination
+        current={currentPage}
+        total={totalPages}
+        href={pageHref}
+        labels={{ nav: copy.paginationAriaLabel, prev: copy.prevPage, next: copy.nextPage }}
+      />
+    </ListingPage>
+  )
 }

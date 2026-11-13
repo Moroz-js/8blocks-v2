@@ -14,6 +14,8 @@ export const researchArchiveContent = {
   prevPage: 'Previous page',
   nextPage: 'Next page',
   readLink: 'Read',
+  allStudies: 'All studies',
+  sortedByDate: 'Sorted by date',
   countSingular: 'study',
   countFew: 'studies',
   countMany: 'studies',

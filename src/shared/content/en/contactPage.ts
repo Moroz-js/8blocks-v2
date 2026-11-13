@@ -17,9 +17,10 @@ export const contactPageContent = {
       'Reach out about strategic consulting, tokenomics, and audit. If convenient, book a call slot right away.',
     person: {
       name: 'Oksana',
-      role: 'COO',
+      role: 'COO, 8Blocks',
       tgHref: 'https://t.me/Eight_Blocks',
-      tgLabel: 'Telegram channel →',
+      tgLabel: 'Telegram',
+      emailLabel: 'Email:',
     },
     preferEmailLabel: 'Prefer email?',
   },
@@ -44,9 +45,11 @@ export const contactPageContent = {
 
 export const contactFormContent = {
   nameLabel: 'Name',
-  namePlaceholder: 'John Doe',
+  namePlaceholder: 'Your name',
+  emailLabel: 'Email',
+  emailPlaceholder: 'you@company.com',
   messageLabel: 'Message',
-  messagePlaceholder: 'Tell us about your project and what you are looking for',
+  messagePlaceholder: 'Tell us about your project',
   submitLabel: 'Submit request',
   sendingLabel: 'Sending…',
   failedError: 'Failed to send',

@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import clsx from 'clsx'
-import { Button, CaseList, Section } from '@/shared/ds'
+import { AccentSurface, Button, CaseList, Section } from '@/shared/ds'
 import type { CountryId, DigitalAssetsContent } from '@/shared/content/digitalAssets'
 import type { ReadinessContent } from '@/shared/content/readiness'
 import { BinaryGlyph } from '@/widgets/BinaryArt/BinaryGlyph'
@@ -16,7 +16,6 @@ import caseMill from '@/widgets/ServicePages/assets/case-mill.webp'
 import { FLAGS } from './flags'
 import { Jurisdictions } from './Jurisdictions'
 import hero from './assets/hero.webp'
-import brandGradient from './assets/brand-gradient-card.webp'
 import tower from './assets/tower.webp'
 import dubai from './assets/dubai.webp'
 import srcMoney from './assets/src-money.webp'
@@ -70,7 +69,7 @@ export function DigitalAssetsPage({ content, paths }: DigitalAssetsPageProps) {
             const last = i === widen.cards.length - 1
             return (
               <li key={card.title} className={clsx(styles.widenCard, last && styles.widenAccent)}>
-                {last && <Image src={brandGradient} alt="" fill sizes="(max-width: 640px) 100vw, 300px" className={styles.widenBg} />}
+                {last && <AccentSurface />}
                 <h3 className={styles.cardTitle}>{card.title}</h3>
                 <ul className={styles.points}>
                   {card.points.map((point) => (

@@ -1,0 +1,176 @@
+@use '@/shared/ds/styles' as *;
+
+$rhythm: calc(#{$ds-block-gap} / 2);
+
+// ── Hero extras ────────────────────────────────────────────────────────
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 36px;
+  min-height: 51px;
+  margin-block: $ds-space-2;
+
+  img {
+    display: block;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.55;
+  }
+
+  @include ds-mobile { gap: $ds-space-5; }
+}
+
+// ── Page body ──────────────────────────────────────────────────────────
+.page {
+  @include ds-container;
+  display: flex;
+  flex-direction: column;
+  gap: $rhythm;
+  padding-block: $rhythm;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: $ds-space-4;
+  min-height: 200px;
+  padding: $ds-space-6;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+}
+
+.statText {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+}
+
+.statValue {
+  @include ds-h3;
+  color: $ds-text;
+}
+
+.statLabel {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.source {
+  @include ds-text-sm;
+  @include ds-transition(color);
+  align-self: flex-start;
+  color: $ds-text-muted;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover { color: $ds-text; }
+}
+
+// ── Case library ───────────────────────────────────────────────────────
+.library {
+  display: flex;
+  flex-direction: column;
+}
+
+.libraryTitle {
+  @include ds-h3;
+  @include ds-title-sheen;
+}
+
+.filter {
+  margin-block: 35px 20px;
+
+  @include ds-mobile { margin-block: $ds-space-5 $ds-space-4; }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5px;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  .source {
+    margin-top: auto;
+    padding-top: 30px;
+  }
+
+  @include ds-mobile {
+    min-height: 0;
+    padding: $ds-space-5;
+  }
+}
+
+.cardHead {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+}
+
+.cardMeta {
+  @include ds-text-sm;
+  display: flex;
+  justify-content: space-between;
+  gap: $ds-space-3;
+  color: $ds-text-muted;
+}
+
+.cardClass {
+  color: $ds-accent;
+}
+
+.cardName {
+  @include ds-h5;
+  min-height: 60px;
+  color: $ds-text;
+
+  @include ds-mobile { min-height: 0; }
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: $ds-space-5;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.metricValue {
+  @include ds-h2;
+  color: $ds-text;
+}
+
+.metricLabel {
+  @include ds-text-sm;
+  color: $ds-text;
+}
+
+.cardLine {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}

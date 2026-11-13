@@ -215,11 +215,6 @@ $separator: rgba($ds-white, 0.2);
   }
 }
 
-.quoteBg {
-  z-index: -1;
-  object-fit: cover;
-}
-
 .quoteMark {
   margin-left: 10px;
   fill: $ds-white;
@@ -297,6 +292,11 @@ $separator: rgba($ds-white, 0.2);
   padding: 30px;
   border-radius: $ds-radius-card;
   background-color: $ds-surface;
+
+  // An odd last stat takes the full row.
+  &:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 
   @include ds-mobile {
     min-height: 140px;

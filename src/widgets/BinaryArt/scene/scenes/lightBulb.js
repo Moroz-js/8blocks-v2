@@ -1,4 +1,4 @@
-// Ported from the designer's project/Binary Light Bulb.dc.html. Scene geometry and lighting are
+// Ported from the designer's project 2/Binary Light Bulb.dc.html. Scene geometry and lighting are
 // built once from the reference image; the returned frame draws one 1280 × 800 frame.
 /* eslint-disable */
 export function buildScene(img, makeCanvas) {
@@ -170,7 +170,7 @@ export function buildScene(img, makeCanvas) {
             let al = 0;
             if (glow > 0 && nz > 0.25) al = Math.min(0.21, 0.196 * glow * (0.5 + nz));
             if (near && nz >= 0.55) al = Math.max(al, 0.22 / near);
-            { const bd = Math.hypot(gx * cellW - bulbCx, gy * cellH - bulbCy) / bulbR; if (bd > 1.12 && bd < 2.6 && nz > 0.3) al = Math.max(al, 0.26 * Math.pow(Math.max(0, 1 - (bd - 1.12) / 1.5), 2) * (0.5 + nz)); }
+            { const dy = gy * cellH - bulbCy, bd = Math.hypot(gx * cellW - bulbCx, dy > 0 ? dy / 1.7 : dy) / bulbR; if (bd < 3.4) { const gl = Math.pow(Math.max(0, 1 - (Math.max(bd, 0.98) - 0.98) / 2.42), 2.6); al = Math.max(al, 0.27 * gl * (0.55 + 0.45 * nz)); } }   // soft wide halo, dense near the glass, fading smoothly
             kind[k] = 3; bgA[k] = al;
             continue;
           }
@@ -246,9 +246,9 @@ export function buildScene(img, makeCanvas) {
         if (v <= 0.55) { const rr = Math.hypot(u, v); if (rr < 1) { inGlass = true; e = 1 - rr; } }
         else if (v < 1.27) { const hw = neckHW(v); if (Math.abs(u) < hw) { inGlass = true; e = (hw - Math.abs(u)) * 0.9; } }
         if (inGlass) {
-          const fres = Math.pow(1 - Math.min(1, e / 0.13), 1.6);
-          val = 0.06 + 1.05 * fres * (0.7 + 0.3 * Math.max(-1, Math.min(1, -u - v * 0.4)));               // rim catches light, brighter upper-left
-          { const a = 0.6, cu = u + 0.48, cv = v + 0.42, ru = cu * Math.cos(a) + cv * Math.sin(a), rv = -cu * Math.sin(a) + cv * Math.cos(a); const hl = (ru / 0.1) ** 2 + (rv / 0.3) ** 2; if (hl < 1) val = Math.max(val, 0.75 + 0.35 * (1 - hl)); }
+          const fres = Math.pow(1 - Math.min(1, e / 0.3), 2.4);
+          val = 0.15 + 0.62 * fres * (0.7 + 0.3 * Math.max(-1, Math.min(1, -u - v * 0.4)));               // rim catches light, brighter upper-left
+          { const a = 0.6, cu = u + 0.48, cv = v + 0.42, ru = cu * Math.cos(a) + cv * Math.sin(a), rv = -cu * Math.sin(a) + cv * Math.cos(a); const hl = (ru / 0.1) ** 2 + (rv / 0.3) ** 2; if (hl < 1) val = Math.max(val, 0.35 + 0.5 * Math.pow(1 - hl, 1.5)); }
           { const hl = ((u - 0.52) / 0.06) ** 2 + ((v + 0.2) / 0.16) ** 2; if (hl < 1) val = Math.max(val, 0.45 + 0.2 * (1 - hl)); }
           // glass stem (mount) rising from the neck
           if (v > 0.3 && v < 1.27) { const hw = 0.06 + 0.13 * (v - 0.3) / 0.97; if (Math.abs(u) < hw) val = Math.max(val, 0.3 + 0.2 * (1 - Math.abs(u) / hw)); }
@@ -272,7 +272,10 @@ export function buildScene(img, makeCanvas) {
         // black glass insulator + contact tip
         if (v >= 1.97 && v < 2.06) { const hw = 0.36 - 0.6 * (v - 1.97); if (Math.abs(u) < hw) val = 0.12 + 0.1 * Math.sqrt(1 - (u / hw) ** 2); }
         if (v >= 2.06 && v < 2.17) { const hw = 0.19 * Math.sqrt(Math.max(0, 1 - ((v - 2.06) / 0.11) ** 2)); if (Math.abs(u) < hw) val = 0.35 + 0.5 * Math.sqrt(1 - (u / hw) ** 2); }
-        if (val < 0) continue;
+        if (val < 0) {   // dark reference cells right beside the glass would punch holes in the halo: give them the halo instead
+          if (kind[k] !== 3 && v < 1.3) { const bd = Math.hypot(u, v > 0 ? v / 1.7 : v); if (bd < 3.4) { kind[k] = 3; bgA[k] = 0.27 * Math.pow(Math.max(0, 1 - (Math.max(bd, 0.98) - 0.98) / 2.42), 2.6) * (0.55 + 0.45 * nzArr[k]); } }
+          continue;
+        }
         kind[k] = 4; base[k] = val; hotC[k] = hot; bgA[k] = 0;
       }
     };
@@ -396,6 +399,6 @@ export function buildScene(img, makeCanvas) {
       flush(buckets, palette);
       flush(hotBuckets, hotPal);
     };
-    if (img) buildHand(img); buildDepth(); buildStatic(); buildBulb(); buildLive();
+    if (img) buildHand(img); buildDepth(); buildStatic(); buildLive();
     return frame;
 }

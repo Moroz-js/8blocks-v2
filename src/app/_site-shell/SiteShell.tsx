@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { headers } from 'next/headers'
 import { Suspense, type ReactNode } from 'react'
-import { RouteDecor, RouteHeader } from '@/widgets/RouteOverrides'
+import { Header } from '@/widgets/Header'
 import { Footer } from '@/widgets/Footer'
 import { ScrollToTop } from '@/shared/ui/ScrollToTop'
 import { siteConfig } from '@/shared/config/site'
+import { siteNav } from '@/shared/content/siteNav'
 import { htmlLang, locale, lang } from '@/shared/i18n'
 import { LenisProvider } from '@/shared/lib/LenisProvider'
 import { GTMScript } from '@/shared/lib/GTMScript'
@@ -130,24 +131,22 @@ export async function SiteShell({ children, system, topBlur = false }: SiteShell
       </head>
       <body suppressHydrationWarning>
         {topBlur ? (
-          <RouteDecor>
-            <div
-              aria-hidden="true"
-              style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 120,
-                pointerEvents: 'none',
-                zIndex: 99,
-                backdropFilter: 'blur(18px)',
-                WebkitBackdropFilter: 'blur(18px)',
-                maskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
-              }}
-            />
-          </RouteDecor>
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 120,
+              pointerEvents: 'none',
+              zIndex: 99,
+              backdropFilter: 'blur(18px)',
+              WebkitBackdropFilter: 'blur(18px)',
+              maskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 40%, transparent 100%)',
+            }}
+          />
         ) : null}
         <ThemeProvider>
           <ThemeController />
@@ -161,19 +160,24 @@ export async function SiteShell({ children, system, topBlur = false }: SiteShell
               <ReplainWidget id={process.env.NEXT_PUBLIC_REPLAIN_ID} />
             )}
             <LenisProvider>
-              <RouteHeader
-                mediaEnabled={mediaEnabled}
-                blogEnabled={blogNavEnabled}
-                researchEnabled={researchEnabled}
-                eventsEnabled={eventsEnabled}
-              />
-              <main>{children}</main>
-              <Footer
+              <Header
+                nav={siteNav}
                 mediaEnabled={mediaEnabled}
                 auditsEnabled={auditsEnabled}
                 blogEnabled={blogNavEnabled}
                 researchEnabled={researchEnabled}
                 eventsEnabled={eventsEnabled}
+                digitalAssetsEnabled={siteConfig.digitalAssetsEnabled}
+              />
+              <main>{children}</main>
+              <Footer
+                nav={siteNav}
+                mediaEnabled={mediaEnabled}
+                auditsEnabled={auditsEnabled}
+                blogEnabled={blogNavEnabled}
+                researchEnabled={researchEnabled}
+                eventsEnabled={eventsEnabled}
+                digitalAssetsEnabled={siteConfig.digitalAssetsEnabled}
               />
               <ScrollToTop />
             </LenisProvider>

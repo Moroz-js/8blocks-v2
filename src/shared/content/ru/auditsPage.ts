@@ -22,6 +22,7 @@ export const auditsArchiveContent = {
   countSingular: 'аудит',
   countFew: 'аудита',
   countMany: 'аудитов',
+  scoreNote: 'независимых аудитов токенов, каждый оценён по шкале от 0 до 100',
 } as const
 
 export const methodologyContent = {

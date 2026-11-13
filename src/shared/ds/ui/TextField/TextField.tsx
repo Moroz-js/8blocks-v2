@@ -1,6 +1,7 @@
 import { forwardRef, useId, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import Image from 'next/image'
 import clsx from 'clsx'
+import chevronDown from '../../icons/chevron-down.svg'
 import circleAlert from '../../icons/circle-alert.svg'
 import styles from './TextField.module.scss'
 
@@ -46,6 +47,59 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
           {...inputProps}
         />
         {error && <Image src={circleAlert} alt="" width={18} height={18} className={styles.alert} />}
+      </div>
+      {message && (
+        <p id={messageId} className={error ? styles.error : styles.hint}>
+          {message}
+        </p>
+      )}
+    </div>
+  )
+})
+
+type SelectFieldProps = FieldChromeProps &
+  Omit<ComponentPropsWithoutRef<'select'>, 'className' | 'children'> & {
+    options: readonly string[]
+    placeholder?: string
+  }
+
+/** Native select in the TextField chrome; the placeholder is a disabled first option. */
+export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(function SelectField(
+  { label, error, hint, className, id, options, placeholder, defaultValue, ...selectProps },
+  ref,
+) {
+  const autoId = useId()
+  const fieldId = id ?? autoId
+  const messageId = `${fieldId}-message`
+  const message = error ?? hint
+
+  return (
+    <div className={clsx(styles.field, className)}>
+      <label htmlFor={fieldId} className={styles.label}>
+        {label}
+      </label>
+      <div className={clsx(styles.control, error && styles.invalid)}>
+        <select
+          ref={ref}
+          id={fieldId}
+          className={clsx(styles.input, styles.select)}
+          defaultValue={defaultValue ?? (placeholder ? '' : undefined)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={message ? messageId : undefined}
+          {...selectProps}
+        >
+          {placeholder && (
+            <option value="" disabled>
+              {placeholder}
+            </option>
+          )}
+          {options.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+        <Image src={chevronDown} alt="" width={16} height={16} className={styles.chevron} />
       </div>
       {message && (
         <p id={messageId} className={error ? styles.error : styles.hint}>

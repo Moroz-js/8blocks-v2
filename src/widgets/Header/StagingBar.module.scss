@@ -1,77 +1,64 @@
-@use '@/shared/styles/variables' as *;
+@use '@/shared/ds/styles' as *;
 
 .bar {
+  @include ds-theme-dark;
   position: sticky;
   top: 0;
   z-index: 102;
   height: 32px;
-  background: $header-bg-solid;
-  border-bottom: 1px solid $border-secondary;
-  color: $text-secondary;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid $ds-border;
+  background: $ds-bg;
+  color: $ds-text-muted;
+  font-family: $ds-font;
+  font-weight: $ds-weight;
 }
 
 .inner {
-  max-width: $container-max;
-  height: 100%;
-  margin-inline: auto;
-  padding-inline: $container-padding;
+  @include ds-container;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $space-4;
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-  }
+  gap: $ds-space-4;
+  height: 100%;
 }
 
 .updated {
+  @include ds-text-xs;
   min-width: 0;
   overflow: hidden;
-  font-size: $text-xs;
-  line-height: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .languages {
-  flex-shrink: 0;
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
-  border: 1px solid $border-secondary;
+  border: 1px solid $ds-border;
 }
 
 .link,
 .active {
-  min-width: 34px;
-  height: 24px;
-  padding-inline: $space-2;
+  @include ds-text-xs;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: $text-xs;
-  line-height: 1;
-  text-decoration: none;
+  min-width: 34px;
+  height: 24px;
+  padding-inline: $ds-space-2;
 }
 
 .link {
-  color: $text-secondary;
-  transition: color $transition-fast, background $transition-fast;
+  color: $ds-text-muted;
+  @include ds-transition(color);
+  @include ds-focus-visible;
 
   &:hover {
-    color: $text-primary;
-    background: $button-ghost-hover-bg;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 2px;
+    color: $ds-text;
   }
 }
 
 .active {
-  color: $button-primary-fg;
-  background: $button-primary-bg;
+  background: $ds-text;
+  color: $ds-text-inverse;
 }

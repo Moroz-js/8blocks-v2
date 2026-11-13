@@ -1,16 +1,11 @@
 import Image from 'next/image'
 import clsx from 'clsx'
-import { Button, Carousel, ComparisonTable, Cta, Roadmap, Section } from '@/shared/ds'
+import { AccentSurface, Button, Carousel, ComparisonTable, Cta, Roadmap, Section } from '@/shared/ds'
 import { servicePages } from '@/shared/content/servicePages'
 import { ServiceHero } from './blocks/ServiceHero'
 import { GlyphCards } from './blocks/GlyphCards'
 import { PartnersMarquee } from './blocks/PartnersMarquee'
 import { ServiceFaq } from './blocks/ServiceFaq'
-import result1 from './assets/ws-result-1.webp'
-import result2 from './assets/ws-result-2.webp'
-import result3 from './assets/ws-result-3.webp'
-import quoteBg from './assets/ws-quote-bg.webp'
-import ctaBg from './assets/ws-cta-bg.webp'
 import iconClock from './assets/ws-ic-clock.svg'
 import iconCalendar from './assets/ws-ic-calendar.svg'
 import iconScenario from './assets/ws-ic-scenario.svg'
@@ -19,8 +14,8 @@ import styles from './WorkshopPage.module.scss'
 const { common, workshop: page } = servicePages
 
 const PEOPLE_GLYPHS = [
-  { shape: 'dumpchart', os: 0.85 },
-  { shape: 'misfit', os: 0.85 },
+  { shape: 'crackedcoin', os: 0.85 },
+  { shape: 'plugout', os: 0.85 },
 ]
 const WHAT_GLYPHS = [
   { shape: 'target', os: 1.15 },
@@ -32,7 +27,6 @@ const RESULT_GLYPHS = [
   { shape: 'docpage', os: 1 },
   { shape: 'concepts', os: 1 },
 ]
-const RESULT_IMAGES = [result1, result2, result3]
 const FACT_ICONS = [iconClock, iconCalendar, iconScenario]
 
 /** Two questions per carousel column, like the designer's two-row grid. */
@@ -124,7 +118,8 @@ export function WorkshopPage({ slotsNote }: { slotsNote: string }) {
           height={400}
           glyph={{ top: 20, height: 260 }}
           align="center"
-          items={page.results.items.map((item, i) => ({ ...item, glyph: RESULT_GLYPHS[i], image: RESULT_IMAGES[i] }))}
+          accent
+          items={page.results.items.map((item, i) => ({ ...item, glyph: RESULT_GLYPHS[i] }))}
         />
         <Cta
           size="sm"
@@ -163,7 +158,7 @@ export function WorkshopPage({ slotsNote }: { slotsNote: string }) {
       <Section>
         <div className={styles.proof}>
           <figure className={styles.quote}>
-            <Image src={quoteBg} alt="" fill sizes="(max-width: 1024px) 100vw, 595px" className={styles.quoteBg} />
+            <AccentSurface />
             <svg className={styles.quoteMark} width="46" height="44" viewBox="0 0 45.88 43.72" aria-hidden="true">
               <path d="M45.88 0.43L44.82 8.42C42.19 8.22 40.2 8.74 38.86 9.96C37.51 11.17 36.65 12.84 36.26 14.96C35.88 17.07 35.78 19.41 35.97 21.98H45.88V43.72H27.03V19.09C27.03 12.36 28.66 7.29 31.93 3.9C35.27 0.43 39.92 -0.72 45.88 0.43ZM18.85 0.43L17.79 8.42C15.17 8.22 13.18 8.74 11.83 9.96C10.48 11.17 9.62 12.84 9.23 14.96C8.85 17.07 8.75 19.41 8.95 21.98H18.85V43.72H0V19.09C0 12.36 1.64 7.29 4.91 3.9C8.24 0.43 12.89 -0.72 18.85 0.43Z" />
             </svg>
@@ -198,7 +193,7 @@ export function WorkshopPage({ slotsNote }: { slotsNote: string }) {
       <ServiceFaq title={common.faq.title} items={page.faq} footer={common.faq.footer} />
 
       <Section>
-        <Cta size="md" image={ctaBg} title={page.bookCta.title} primary={page.bookCta.action} />
+        <Cta size="md" title={page.bookCta.title} primary={page.bookCta.action} />
       </Section>
     </>
   )

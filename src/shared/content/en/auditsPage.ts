@@ -22,6 +22,7 @@ export const auditsArchiveContent = {
   countSingular: 'audit',
   countFew: 'audits',
   countMany: 'audits',
+  scoreNote: 'independent token audits, each scored from 0 to 100',
 } as const
 
 export const methodologyContent = {

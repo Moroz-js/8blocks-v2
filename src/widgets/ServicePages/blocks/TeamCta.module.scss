@@ -1,24 +1,18 @@
 @use '@/shared/ds/styles' as *;
 
 .card {
-  position: relative;
-  display: grid;
-  grid-template-areas:
-    'text people'
-    'actions people';
-  grid-template-columns: minmax(0, 1fr) auto;
-  min-height: 364px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-7;
+  min-height: 214px;
   padding: 30px;
   border-radius: $ds-radius-card;
   background-color: $ds-surface;
 
   @include ds-tablet {
-    grid-template-areas:
-      'text'
-      'people'
-      'actions';
-    grid-template-columns: minmax(0, 1fr);
-    gap: $ds-space-6;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   @include ds-mobile { padding: $ds-space-5 20px; }
@@ -27,8 +21,8 @@
 .text {
   display: flex;
   flex-direction: column;
-  grid-area: text;
-  gap: 14px;
+  gap: $ds-space-3;
+  max-width: 627px;
 }
 
 .title {
@@ -47,53 +41,6 @@
 .actions {
   display: flex;
   flex-wrap: wrap;
-  grid-area: actions;
-  align-self: end;
+  flex-shrink: 0;
   gap: 10px;
-}
-
-.people {
-  display: flex;
-  grid-area: people;
-  margin-top: 6px;
-  margin-right: 52px;
-  list-style: none;
-
-  @include ds-tablet {
-    justify-content: center;
-    margin: 0;
-  }
-}
-
-.person {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: $ds-space-1;
-  width: 234px;
-  text-align: center;
-
-  & + & { margin-left: -8px; }
-
-  @include ds-mobile { width: 50%; }
-}
-
-.avatar {
-  @include ds-h4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  aspect-ratio: 1;
-  margin-bottom: 16px;
-  border-radius: 50%;
-  background-color: $ds-surface-raised;
-  color: $ds-text-muted;
-
-  .person + .person & { box-shadow: 0 0 0 5px $ds-surface; }
-}
-
-.name {
-  @include ds-text-md;
-  color: $ds-text;
 }

@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button, Faq, FeatureCards, Section } from '@/shared/ds'
+import { AccentSurface, Button, Faq, Section } from '@/shared/ds'
 import { calculatorV2 as copy } from '@/shared/content/calculatorV2'
 import { BinaryScene } from '@/widgets/BinaryArt/BinaryScene'
+import { GlyphCards } from '@/widgets/ServicePages/blocks/GlyphCards'
 import { Calculator } from './Calculator'
 import heroFade from './assets/hero-fade.webp'
-import stepsGradient from './assets/steps-gradient.webp'
 import styles from './TokenomicsCalculator.module.scss'
 
 const TOOL_ID = 'calculator'
@@ -15,7 +15,7 @@ export function CalculatorV2Page() {
   return (
     <>
       {/* Figma 3608:10889 */}
-      <section className={styles.hero} aria-labelledby="calculator-title">
+      <section data-under-header className={styles.hero} aria-labelledby="calculator-title">
         <div className={styles.glowWide} aria-hidden="true" />
         <div className={styles.glowNarrow} aria-hidden="true" />
         <div className={styles.art}>
@@ -41,7 +41,7 @@ export function CalculatorV2Page() {
         <div className={styles.steps}>
           <h2 className={styles.stepsTitle}>{copy.steps.title}</h2>
           <ol className={styles.stepsCard}>
-            <Image src={stepsGradient} alt="" fill sizes="(max-width: 1024px) 100vw, 800px" className={styles.stepsBg} />
+            <AccentSurface />
             {copy.steps.items.map((step, i) => (
               <li key={step.title} className={styles.step}>
                 <h3 className={styles.stepTitle}>
@@ -62,11 +62,12 @@ export function CalculatorV2Page() {
       <Section>
         <div className={styles.features}>
           <h2 className={styles.featuresTitle}>{copy.features.title}</h2>
-          <div className={styles.featureRows}>
-            {copy.features.rows.map((row, i) => (
-              <FeatureCards key={i} variant="compact" columns={3} items={row} className={i > 0 ? styles.featureRowTight : undefined} />
-            ))}
-          </div>
+          <GlyphCards
+            columns={3}
+            height={360}
+            glyph={{ height: 360 }}
+            items={copy.features.items.map(({ shape, ...item }) => ({ ...item, glyph: { shape, oy: 0.34, os: 0.42 } }))}
+          />
         </div>
       </Section>
 

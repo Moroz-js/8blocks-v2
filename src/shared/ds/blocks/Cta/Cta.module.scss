@@ -13,7 +13,6 @@
   background-color: $ds-surface;
 }
 
-// Figma composition of shapes, noise and a hue layer — exported as an image.
 .bg {
   z-index: -1;
   object-fit: cover;
@@ -137,6 +136,32 @@
 
 .xs .actions {
   flex-shrink: 0;
+}
+
+// ── center ──────────────────────────────────────────────────────────
+.center .card {
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 56px $ds-space-7;
+  text-align: center;
+
+  @include ds-mobile {
+    padding: $ds-space-7 20px;
+  }
+}
+
+.center .text {
+  align-items: center;
+}
+
+.center .title {
+  @include ds-h4;
+  max-width: 560px;
+}
+
+.center .actions {
+  justify-content: center;
 }
 
 // ── price ───────────────────────────────────────────────────────────

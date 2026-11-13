@@ -3,7 +3,7 @@
 
 @include tones;
 
-$header: 65px;
+$header: 92px; // sticky site header
 
 .muted {
   @include ds-text-sm;

@@ -6,7 +6,8 @@
 // (frame 3608:10889 starts at y −11 under a 92px header, so frame y − 103).
 // Mobile values are not in the design — layout only collapses.
 
-// Site header height (src/widgets/Header: 64px + 1px border, 56 + 1 on mobile).
+// Offsets inside the hero assume the old 65 / 57px header box; the hero sits
+// under the header (data-under-header).
 $header: 65px;
 $header-mobile: 57px;
 
@@ -18,12 +19,7 @@ $header-mobile: 57px;
   height: 100vh;
   height: 100svh;
   min-height: 640px;
-  margin-top: -$header;
   background-color: $ds-bg;
-
-  @include ds-mobile {
-    margin-top: -$header-mobile;
-  }
 }
 
 // Figma 3608:10890 / 3608:10891 — two blurred radial glows, 30% and 50%.
@@ -184,11 +180,6 @@ $header-mobile: 57px;
   }
 }
 
-.stepsBg {
-  z-index: -1;
-  object-fit: cover;
-}
-
 // Title → points 10, points → divider 35, divider → title 35.
 .step {
   display: flex;
@@ -219,7 +210,7 @@ $header-mobile: 57px;
   color: $ds-text-faint;
 }
 
-// ── Features (Figma 3608:11074 + 3608:11075) ────────────────────────────
+// ── Features: six cards with engine illustrations ───────────────────────
 .features {
   display: flex;
   flex-direction: column;
@@ -228,27 +219,10 @@ $header-mobile: 57px;
   @include ds-mobile { gap: $ds-inner-gap-mobile; }
 }
 
-// Heading 4, 444 wide.
 .featuresTitle {
   @include ds-h4;
-  max-width: 444px;
+  max-width: 520px;
   color: $ds-text;
-}
-
-.featureRows {
-  display: flex;
-  flex-direction: column;
-  gap: $ds-gutter;
-
-  // Figma cards here have no illustration — drop the 5% art placeholder.
-  li > [aria-hidden='true']:empty {
-    display: none;
-  }
-}
-
-// Second row in Figma uses 25 padding instead of 30.
-.featureRowTight > li {
-  padding: 25px;
 }
 
 // ── FAQ (Figma 3608:11096) ──────────────────────────────────────────────

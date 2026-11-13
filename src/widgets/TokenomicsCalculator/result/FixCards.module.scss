@@ -56,8 +56,6 @@ $flip: 500ms ease;
 }
 
 .bg {
-  z-index: -1;
-  object-fit: cover;
   transition: opacity $flip;
 
   .open & { opacity: 0; }

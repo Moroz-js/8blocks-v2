@@ -8,4 +8,7 @@ export interface PublicAuditCard {
   cover?: MediaItem | null
   publishedAt: string
   featured?: boolean
+  /** Letter grade and 0–100 score from the audit hero. */
+  rating?: string | null
+  score?: number | null
 }

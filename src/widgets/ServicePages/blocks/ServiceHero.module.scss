@@ -1,7 +1,7 @@
 @use '@/shared/ds/styles' as *;
 
-// Designer's frame: 1280 × 781 hero under the header, scene 1280 × 800.
-// Site header height (src/widgets/Header: 64px + 1px border, 56 + 1 on mobile).
+// Designer's frame: 1280 × 781 hero under the header (data-under-header), scene 1280 × 800.
+// Offsets inside the hero assume the old 65 / 57px header box.
 $header: 65px;
 $header-mobile: 57px;
 
@@ -10,13 +10,11 @@ $header-mobile: 57px;
   isolation: isolate;
   overflow: hidden;
   height: 781px;
-  margin-top: -$header;
   background-color: $ds-bg;
 
   @include ds-mobile {
     height: auto;
     min-height: 640px;
-    margin-top: -$header-mobile;
   }
 }
 
@@ -31,13 +29,18 @@ $header-mobile: 57px;
   left: 50%;
   width: 1280px;
   height: 800px;
-  transform: translateX(-50%);
+  transform: translateX(calc(-50% + var(--art-left, 0px)));
   pointer-events: none;
 
   // Wider than the frame: let the digit field fade out instead of ending on a hard edge.
   @media (min-width: 1360px) {
     -webkit-mask-image: linear-gradient(90deg, transparent, $ds-black 12%, $ds-black 88%, transparent);
     mask-image: linear-gradient(90deg, transparent, $ds-black 12%, $ds-black 88%, transparent);
+  }
+
+  &.artShifted {
+    -webkit-mask-image: linear-gradient(90deg, transparent, $ds-black 15%);
+    mask-image: linear-gradient(90deg, transparent, $ds-black 15%);
   }
 
   @include ds-mobile {
@@ -147,6 +150,8 @@ $header-mobile: 57px;
 
   // Photo heroes carry longer, hand-broken titles.
   .withImage & { max-width: 760px; }
+
+  &:has(.sm) { max-width: 460px; }
 }
 
 .title {
@@ -162,6 +167,33 @@ $header-mobile: 57px;
 
 .md {
   @include ds-h3;
+}
+
+.sm {
+  @include ds-h4;
+}
+
+// Partner logos in the designer's frame: right 41, top 671 of the 781 hero.
+.corner {
+  position: absolute;
+  right: $ds-margin;
+  bottom: 78px;
+
+  @include ds-mobile {
+    right: auto;
+    left: $ds-margin-mobile;
+    bottom: $ds-space-7;
+  }
+}
+
+// Designer's facts row: x = 48, 64 above the hero edge.
+.cornerLeft {
+  right: auto;
+  left: calc(#{$ds-margin} + 8px);
+  bottom: 64px;
+
+  @include ds-tablet { left: $ds-margin-tablet; }
+  @include ds-mobile { left: $ds-margin-mobile; bottom: $ds-space-7; }
 }
 
 .description {

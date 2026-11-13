@@ -1,125 +1,93 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { socialLinks, siteConfig } from '@/shared/config/site'
+import type { SiteNav } from '@/shared/content/siteNav'
 import { NewsletterForm } from '@/features/newsletter'
-import { footerContent } from '@/shared/content/footer'
-import { Logo } from '@/shared/ui'
-import { FooterMap } from './FooterMap'
+import { filterNav, type NavFlags } from '@/widgets/Header/navFilter'
+import { SocialIcon } from './SocialIcon'
 import styles from './Footer.module.scss'
 
-interface FooterProps {
-  mediaEnabled?: boolean
-  auditsEnabled?: boolean
-  blogEnabled?: boolean
-  researchEnabled?: boolean
-  eventsEnabled?: boolean
+interface FooterProps extends NavFlags {
+  nav: SiteNav
 }
 
-export function Footer({
-  mediaEnabled = false,
-  auditsEnabled = false,
-  blogEnabled = false,
-  researchEnabled = false,
-  eventsEnabled = false,
-}: FooterProps) {
-  const pageLinks = footerContent.pageLinks.filter(
-    (link) =>
-      (link.href !== '/press' || mediaEnabled) &&
-      (link.href !== '/audits' || auditsEnabled) &&
-      (link.href !== '/blog' || blogEnabled) &&
-      (link.href !== '/research' || researchEnabled) &&
-      (link.href !== '/events' || eventsEnabled),
-  )
+export function Footer({ nav: fullNav, ...flags }: FooterProps) {
+  const nav = filterNav(fullNav, flags)
+  const { footer } = nav
+
   return (
     <footer data-chrome="footer" className={styles.footer}>
-      {/* ── Bottom section ───────────────────────────────────────── */}
-      <div className={styles.bottomSection}>
-        <div className={styles.inner}>
-          <div className={styles.bottomGrid}>
-
-            {/* Newsletter + socials */}
-            <div className={styles.subscribeCol}>
-              <p className={styles.subscribeLabel}>{footerContent.subscribeLabel}</p>
-              <NewsletterForm />
-              <p className={styles.subscribeNote}>{footerContent.subscribeNote}</p>
-              <div className={styles.socials}>
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    className={styles.socialLink}
-                    aria-label={link.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Image
-                      src={link.icon}
-                      alt=""
-                      width={40}
-                      height={40}
-                      aria-hidden="true"
-                    />
-                  </a>
-                ))}
-              </div>
+      <div className={styles.inner}>
+        <div className={styles.top}>
+          <div className={styles.brand}>
+            <p className={styles.subscribe}>{footer.subscribe}</p>
+            <p className={styles.note}>{footer.subscribeNote}</p>
+            <div className={styles.form}>
+              <NewsletterForm text={footer.newsletter} />
             </div>
-
-            {/* Pages nav */}
-            <nav aria-label="Pages">
-              <p className={styles.navHeading}>{footerContent.navHeading}</p>
-              <ul className={styles.navList}>
-                {pageLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className={styles.navLink}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Services nav */}
-            <nav aria-label="Services">
-              <p className={styles.navHeading}>{footerContent.servicesHeading}</p>
-              <ul className={styles.navList}>
-                {footerContent.serviceLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className={styles.navLink}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Products nav */}
-            <nav aria-label="Products">
-              <p className={styles.navHeading}>{footerContent.productsHeading}</p>
-              <ul className={styles.navList}>
-                {footerContent.productLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className={styles.navLink}>{link.label}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Map */}
-            <div className={styles.mapCol}>
-              <FooterMap />
+            <div className={styles.socials}>
+              {socialLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  className={styles.social}
+                  aria-label={link.label}
+                  title={link.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <SocialIcon id={link.id} />
+                </a>
+              ))}
             </div>
-
           </div>
 
-          {/* Copyright bar */}
-          <div className={styles.copyright}>
-            <Logo className={styles.logo} />
-            <p className={styles.copyrightText}>
-              © {new Date().getFullYear()} {siteConfig.legalName}. {footerContent.copyright}
-            </p>
-            <Link href="/privacy-policy" className={styles.privacyLink}>
-              {footerContent.privacyPolicy}
-            </Link>
+          <div className={styles.columns}>
+            {nav.groups.map((group) => (
+              <nav key={group.id} className={styles.column} aria-label={group.label}>
+                <p className={styles.heading}>{group.label}</p>
+                {group.columns
+                  .flatMap((column) => column.links)
+                  .map((link) => (
+                    <Link key={link.href} href={link.href} className={styles.link}>
+                      {link.label}
+                    </Link>
+                  ))}
+              </nav>
+            ))}
+          </div>
+
+          <div className={styles.office}>
+            <p className={styles.heading}>{footer.office}</p>
+            <div className={styles.map} data-lenis-prevent>
+              <iframe
+                title={footer.mapTitle}
+                src={footer.mapEmbedSrc}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+            <a href={`mailto:${siteConfig.email}`} className={styles.link}>
+              {siteConfig.email}
+            </a>
+            <a href={`tel:${siteConfig.phone.replace(/[^\d+]/g, '')}`} className={styles.link}>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+
+        <div className={styles.bottom}>
+          <p>
+            © {new Date().getFullYear()} {siteConfig.legalName}. {footer.rights}
+          </p>
+          <div className={styles.legal}>
+            {footer.legal.map((link) => (
+              <Link key={link.href} href={link.href}>
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
-
     </footer>
   )
 }

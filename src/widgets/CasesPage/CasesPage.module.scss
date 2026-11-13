@@ -1,383 +1,219 @@
-@use '@/shared/styles/variables' as *;
-@use '@/shared/styles/mixins' as *;
+@use '@/shared/ds/styles' as *;
 
-// ── Hero ──────────────────────────────────────────────────────────
-.hero {
-  padding-top: $space-12;
-  padding-bottom: $space-9;
+.page {
+  @include ds-container;
+  padding-block: $ds-space-8 calc(#{$ds-block-gap} / 2);
 
-  @include tablet {
-    padding-top: $space-10;
-    padding-bottom: $space-7;
-  }
+  @include ds-mobile { padding-block: $ds-space-6 calc(#{$ds-block-gap-mobile} / 2); }
 }
 
-.heroInner {
-  max-width: $container-max;
-  margin: 0 auto;
-  padding: 0 $container-padding;
-
-  @include mobile {
-    padding: 0 $container-padding-mobile;
-  }
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  max-width: 640px;
 }
 
-.label {
-  @include section-label;
-  margin-bottom: $space-5;
-  display: block;
+.title {
+  @include ds-h3;
+  @include ds-title-sheen;
 }
 
-.heroHeadline {
-  @include heading-hero;
-  margin-bottom: $space-5;
-  max-width: 720px;
+.description {
+  @include ds-text-lg;
+  color: $ds-text-faint;
 }
 
-.heroDescription {
-  @include body-text;
-  max-width: 600px;
-  font-size: $text-lg;
-}
-
-// ── Filters ───────────────────────────────────────────────────────
 .filters {
-  max-width: $container-max;
-  margin: 0 auto;
-  padding: 0 $container-padding $space-8;
+  margin-block: $ds-space-8 $ds-space-7;
+}
+
+.list {
   display: flex;
-  flex-wrap: wrap;
-  gap: $space-3;
-
-  @include mobile {
-    padding: 0 $container-padding-mobile $space-6;
-  }
+  flex-direction: column;
+  gap: 5px;
 }
 
-.filterBtn {
-  font-family: $font-base;
-  font-size: $text-sm;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  padding: $space-2 $space-5;
-  border: 1px solid $border-secondary;
-  background: transparent;
-  color: $text-secondary;
-  cursor: pointer;
-  transition: all $transition-base;
-  white-space: nowrap;
-
-  &:hover {
-    border-color: $border-primary;
-    color: $text-primary;
-  }
+.empty {
+  @include ds-text-md;
+  color: $ds-text-muted;
 }
 
-.filterBtnActive {
-  composes: filterBtn;
-  border-color: rgba($pal-magenta, 0.5);
-  color: $text-primary;
-  background: rgba($pal-magenta, 0.1);
+.cardTitle {
+  @include ds-h5;
+  max-width: 449px;
+  color: $ds-text;
 }
 
-// ── Grid ──────────────────────────────────────────────────────────
-.grid {
-  max-width: $container-max;
-  margin: 0 auto;
-  padding: 0 $container-padding $space-12;
+.muted { color: $ds-text-muted; }
+.lead { color: $ds-text; }
+
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  list-style: none;
+}
+
+.checkItem {
+  @include ds-text-sm;
+  display: flex;
+  gap: $ds-space-3;
+  align-items: flex-start;
+  color: $ds-text;
+}
+
+.check {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: $ds-accent;
+}
+
+// ── Featured (full) cases ──────────────────────────────────────────────
+.featured {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $space-5;
-
-  @include desktop {
-    gap: $space-4;
-  }
-
-  @include tablet {
-    grid-template-columns: 1fr;
-    padding: 0 $container-padding-mobile $space-10;
-  }
-}
-
-// ── Card ──────────────────────────────────────────────────────────
-.card {
-  @include card-surface;
-  @include card-corner-border($border-primary, 28px, 1px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-height: 456px;
   overflow: hidden;
-  transition: border-color $transition-base, background $transition-base;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
 
-  &:hover {
-    background: $bg-tertiary;
-    border-color: rgba($pal-magenta, 0.35);
-  }
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
 }
 
-.cardLink,
-.cardStatic {
-  min-height: 100%;
+.reversed .featuredText {
+  order: 2;
+
+  @include ds-tablet { order: 0; }
+}
+
+.featuredText {
   display: flex;
   flex-direction: column;
-  color: inherit;
-  text-decoration: none;
+  gap: $ds-space-5;
+  padding: $ds-space-7;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
 }
 
-.cardBody {
-  min-height: 100%;
-  padding: $space-7;
+.featuredAction {
+  align-self: flex-start;
+}
+
+.featuredMedia {
+  position: relative;
+  min-height: 320px;
+  overflow: hidden;
+  background-color: $ds-bg;
+  color: $ds-text;
+}
+
+.cover {
+  object-fit: cover;
+  object-position: right center;
+}
+
+.coverShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, $ds-bg 110%);
+}
+
+.tags {
+  position: absolute;
+  top: $ds-space-5;
+  left: $ds-space-5;
   display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: $space-5;
-
-  @include tablet {
-    padding: $space-6;
-  }
-
-  @include mobile {
-    padding: $space-5;
-    gap: $space-4;
-  }
+  gap: $ds-space-2;
 }
 
-.cardLink {
-  &:focus-visible {
-    outline: 2px solid $pal-magenta;
-    outline-offset: -3px;
-  }
-}
-
-.cardCover {
-  background: $bg-secondary;
-  line-height: 0;
-}
-
-.cardCoverImage {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.cardHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: $space-3;
-}
-
-// ── Tag ───────────────────────────────────────────────────────────
-.cardTag {
+.glassTag {
+  @include ds-text-xs;
   display: inline-flex;
   align-items: center;
-  gap: $space-2;
-  font-family: $font-mono;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 4px $space-3;
-  width: fit-content;
-
-  &::before {
-    content: '';
-    display: block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  height: $ds-space-6;
+  padding-inline: $ds-space-3;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-glass;
+  backdrop-filter: blur(8px);
 }
 
-.tagDefault {
-  color: $text-secondary;
-  border: 1px solid $border-secondary;
-  background: rgba($pal-magenta, 0.04);
-
-  &::before {
-    background: $text-tertiary;
-  }
-}
-
-.serviceTag {
-  font-family: $font-mono;
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $text-tertiary;
-}
-
-.tagDeFi {
-  color: $accent-green;
-  border: 1px solid rgba($accent-green, 0.2);
-  background: rgba($accent-green, 0.06);
-
-  &::before {
-    background: $accent-green;
-  }
-}
-
-.tagGameFi {
-  color: $accent-blue;
-  border: 1px solid rgba($accent-blue, 0.2);
-  background: rgba($accent-blue, 0.06);
-
-  &::before {
-    background: $accent-blue;
-  }
-}
-
-.tagRWA {
-  color: $pal-rose;
-  border: 1px solid rgba($pal-rose, 0.2);
-  background: rgba($pal-rose, 0.06);
-
-  &::before {
-    background: $pal-rose;
-  }
-}
-
-.tagFinance {
-  color: $status-warning;
-  border: 1px solid rgba($status-warning, 0.2);
-  background: rgba($status-warning, 0.06);
-
-  &::before {
-    background: $status-warning;
-  }
-}
-
-// ── Card content ──────────────────────────────────────────────────
-.cardTitle {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: clamp($text-lg, 2vw, $text-xl);
-  line-height: $leading-snug;
-  color: $text-primary;
-}
-
-.cardTask {
+.stat {
+  position: absolute;
+  left: $ds-space-6;
+  right: $ds-space-6;
+  bottom: 30px;
   display: flex;
   flex-direction: column;
-  gap: $space-2;
+  gap: $ds-space-1;
 }
 
-.cardTaskLabel {
-  font-family: $font-base;
-  font-weight: 600;
-  font-size: $text-sm;
-  color: $text-tertiary;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.statValue {
+  @include ds-h2;
 }
 
-.cardTaskText {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-base;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
+.statLabel {
+  @include ds-text-sm;
+  max-width: 400px;
+  color: $ds-text;
 }
 
-// ── Actions ───────────────────────────────────────────────────────
-.cardActions {
+// ── Mini cases ─────────────────────────────────────────────────────────
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.mini {
   display: flex;
   flex-direction: column;
-  gap: $space-2;
+  gap: $ds-space-5;
+  padding: $ds-space-7;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
 }
 
-.cardActionsLabel {
-  font-family: $font-base;
-  font-weight: 600;
-  font-size: $text-sm;
-  color: $text-tertiary;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: $space-1;
-}
-
-.actionItem {
-  display: flex;
-  gap: $space-3;
-  align-items: baseline;
-  font-family: $font-base;
-  font-size: $text-sm;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-}
-
-.actionArrow {
-  color: $text-tertiary;
-  flex-shrink: 0;
-  font-size: $text-sm;
-}
-
-// ── Result ────────────────────────────────────────────────────────
-.cardResult {
+.miniHead {
   display: flex;
   flex-direction: column;
-  gap: $space-2;
+  gap: $ds-space-3;
 }
 
-.resultLabel {
-  font-family: $font-base;
-  font-weight: 600;
-  font-size: $text-sm;
-  color: $accent-green;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.resultText {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: $text-base;
-  line-height: $leading-relaxed;
-  color: $text-primary;
-}
-
-.resultMetric {
-  display: flex;
-  align-items: baseline;
-  gap: $space-2;
-  font-family: $font-base;
-  font-size: clamp($text-xl, 3vw, 32px);
-  font-weight: 600;
-  color: $accent-green;
-
-  span {
-    font-size: $text-sm;
-    font-weight: 400;
-    color: $text-tertiary;
-  }
-}
-
-.cardCta {
-  margin-top: auto;
-  padding-top: $space-4;
-  border-top: 1px solid $border-secondary;
-  display: flex;
+.tag {
+  @include ds-text-xs;
+  align-self: flex-start;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  font-size: $text-sm;
-  font-weight: 600;
-  color: $text-primary;
-
-  span {
-    color: $pal-magenta;
-    transition: transform $transition-base;
-  }
-
-  .card:hover & {
-    span {
-      transform: translateX(4px);
-    }
-  }
+  height: 28px;
+  padding-inline: $ds-space-3;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
 }
 
-// ── Empty state ───────────────────────────────────────────────────
-.empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: $space-10 0;
-  color: $text-tertiary;
-  font-size: $text-lg;
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+}
+
+.fieldLabel {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.fieldText {
+  @include ds-text-sm;
+  color: $ds-text;
+}
+
+.result {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid $ds-border;
 }

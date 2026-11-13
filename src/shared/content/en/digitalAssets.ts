@@ -90,7 +90,7 @@ export const digitalAssets: DigitalAssetsContent = {
         ],
       },
       {
-        title: 'Tokenization',
+        title: 'Asset Tokenization',
         points: [
           'Reach investors beyond your home market',
           'Structure returns around specific asset cash flows',
@@ -99,7 +99,7 @@ export const digitalAssets: DigitalAssetsContent = {
         ],
       },
     ],
-    note: 'Access widens only when a real buyer side exists — that is exactly what the assessment checks.',
+    note: 'Access widens only when a real buyer side exists: that is exactly what the assessment checks.',
   },
   owners: {
     title: 'Owners of real assets. Find your situation',
@@ -113,7 +113,7 @@ export const digitalAssets: DigitalAssetsContent = {
   realEstate: {
     title: 'Real Estate Tokenization is already working worldwide',
     description:
-      'Working example from commercial real estate: in May 2025 the Dubai Land Department — a government body — launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes.',
+      'Working example from commercial real estate: in May 2025 the Dubai Land Department, a government body, launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes.',
     action: { label: 'Explore Real Estate Tokenization', href: CASES },
     imageAlt: 'Residential tower',
   },
@@ -130,7 +130,7 @@ export const digitalAssets: DigitalAssetsContent = {
       {
         lead: 'The Workshop.',
         text: 'We collect the facts, work the session, and send the written diagnosis after internal review.',
-        result: 'the math on your asset, structure options, a roadmap — or a reasoned “not yet”.',
+        result: 'the math on your asset, structure options, a roadmap, or a reasoned “not yet”.',
         action: { label: 'Explore Workshops', href: '/product/workshop' },
       },
       {
@@ -145,7 +145,7 @@ export const digitalAssets: DigitalAssetsContent = {
       },
       {
         lead: 'Launch and operate.',
-        text: 'Monitoring, reporting, holder communication — until the agreed handoff.',
+        text: 'Monitoring, reporting, holder communication, until the agreed handoff.',
         result: 'a live instrument and a planned handoff to your team.',
       },
     ],
@@ -180,7 +180,7 @@ export const digitalAssets: DigitalAssetsContent = {
         date: '2023–2025',
         title: 'The rules are now explicit',
         description:
-          'SEC staff clarified that a tokenized security is still a security — the technology changes the format, not the law. In the EU, MiCA — the Markets in Crypto-Assets regulation — has been in force since 2024.',
+          'SEC staff clarified that a tokenized security is still a security: the technology changes the format, not the law. In the EU, MiCA, the Markets in Crypto-Assets regulation, has been in force since 2024.',
         href: 'https://www.morganlewis.com/pubs/2026/02/sec-clarifies-federal-securities-law-treatment-of-tokenized-securities',
       },
     ],
@@ -188,7 +188,7 @@ export const digitalAssets: DigitalAssetsContent = {
   jurisdictions: {
     title: 'Where RWA tokens can be issued',
     description:
-      'There is no single “RWA law”. Each jurisdiction combines securities, fund and digital-asset rules — here is how the main ones work today.',
+      'There is no single “RWA law”. Each jurisdiction combines securities, fund and digital-asset rules: here is how the main ones work today.',
     more: 'Learn more',
     close: 'Close',
     countries: {
@@ -269,14 +269,14 @@ export const digitalAssets: DigitalAssetsContent = {
         title: 'The architect',
         subtitle: 'Full structure spec, rights model, partner brief',
         provide: 'Asset facts, decisions, your counsel',
-        executes: 'You — with partners you contract directly',
+        executes: 'You, with partners you contract directly',
         ends: 'A build-ready specification',
       },
       {
         title: 'Architect +\ngeneral contractor',
         subtitle: 'Everything in The architect, plus the coordinated build',
         provide: 'Decisions at weekly checkpoints',
-        executes: 'Vetted partners — legal, technical',
+        executes: 'Vetted partners: legal, technical',
         ends: 'A working system, accepted by you',
       },
       {
@@ -295,7 +295,7 @@ export const digitalAssets: DigitalAssetsContent = {
       { title: 'Economics first', description: 'A structure must pay off as a business before it exists as software.' },
       { title: 'Jurisdiction-specific', description: 'Every structure is drawn for your counsel’s review.' },
       { title: 'Stress-tested', description: 'Models are pressure-tested before anything launches.' },
-      { title: 'Built into the business', description: 'Instruments that work inside your operation — not beside it.' },
+      { title: 'Built into the business', description: 'Instruments that work inside your operation, not beside it.' },
       { title: 'Design and build', description: 'From a model on paper to a live, running instrument.' },
       { title: 'One point of contact', description: 'We coordinate every partner; you deal with one team.' },
       { title: 'Two worlds, one team', description: 'We translate between your business and the on-chain rails.' },
@@ -308,7 +308,7 @@ export const digitalAssets: DigitalAssetsContent = {
       eyebrow: 'Self-serve',
       title: 'Check your asset in Token Lab.',
       description:
-        'A few questions about the asset and the goal — a first read on what might fit, before you talk to anyone. Three minutes, free, no registration.',
+        'A few questions about the asset and the goal: a first read on what might fit, before you talk to anyone. Three minutes, free, no registration.',
       action: { label: 'Open Token Lab', href: CHECK },
     },
     {

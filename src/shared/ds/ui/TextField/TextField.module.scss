@@ -79,6 +79,26 @@
   }
 }
 
+.select {
+  align-self: stretch;
+  padding-block: $ds-space-4;
+  appearance: none;
+  cursor: pointer;
+
+  // Placeholder option: muted until a value is chosen.
+  &:has(option[value='']:checked) { color: $ds-text-muted; }
+
+  option {
+    background-color: $ds-surface;
+    color: $ds-text;
+  }
+}
+
+.chevron {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
 .textarea {
   min-height: 110px;
   resize: vertical;

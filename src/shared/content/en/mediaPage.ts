@@ -16,6 +16,7 @@ export const mediaArchiveContent = {
   prevPage: 'Previous page',
   nextPage: 'Next page',
   readLink: 'Read',
+  readOn: 'Read on',
   countSingular: 'publication',
   countFew: 'publications',
   countMany: 'publications',
