@@ -16,7 +16,7 @@ export const contactPageContent = {
     description:
       'Reach out about strategic consulting, tokenomics, and audit. If convenient, book a call slot right away.',
     person: {
-      name: 'Oksana',
+      name: 'Oxana',
       role: 'COO, 8Blocks',
       tgHref: 'https://t.me/Eight_Blocks',
       tgLabel: 'Telegram',

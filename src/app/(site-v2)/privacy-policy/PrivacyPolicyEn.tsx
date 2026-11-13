@@ -1,5 +1,4 @@
 import { siteConfig } from '@/shared/config/site'
-import { Container } from '@/shared/ui'
 import styles from './PrivacyPolicy.module.scss'
 
 const LAST_UPDATED = 'February 9, 2026'
@@ -8,11 +7,11 @@ const COMPANY_ADDRESS =
 
 export function PrivacyPolicyEn() {
   return (
-    <Container>
+    <div className={styles.page}>
       <article className={styles.article}>
 
         <header className={styles.header}>
-          <p className={styles.label}>[ Legal Information ]</p>
+          <p className={styles.label}>Legal Information</p>
           <h1 className={styles.title}>Privacy Policy</h1>
           <p className={styles.updated}>Last updated: {LAST_UPDATED}</p>
           <p>
@@ -302,6 +301,6 @@ export function PrivacyPolicyEn() {
         </section>
 
       </article>
-    </Container>
+    </div>
   )
 }

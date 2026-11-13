@@ -30,6 +30,8 @@ const DEPTH_GLYPHS = ['compass', 'crane', 'team']
 const FEATURED_DEPTH = 1
 const GRID_GLYPHS = ['clock', 'coin', 'flag', 'kettlebell']
 const LIST_GLYPHS = ['gear', 'blueprint', 'orbit', 'twin']
+/** Hidden until the Real Estate Tokenization page is released. */
+const SHOW_REAL_ESTATE = false
 
 const isExternal = (href: string) => /^https?:\/\//.test(href)
 const external = (href: string) => (isExternal(href) ? { target: '_blank', rel: 'noopener noreferrer' } : {})
@@ -87,15 +89,17 @@ export function DigitalAssetsPage({ content, paths }: DigitalAssetsPageProps) {
         <SituationTabs label={owners.title} labels={paths.labels} items={situationItems(paths, owners.tabs)} tabsVariant="ghost" />
       </Section>
 
-      <CoverCard
-        layout="row"
-        title={realEstate.title}
-        description={realEstate.description}
-        action={realEstate.action}
-        image={tower}
-        imageAlt={realEstate.imageAlt}
-        art={{ width: 396, height: 509, right: -44, bottom: -40 }}
-      />
+      {SHOW_REAL_ESTATE && (
+        <CoverCard
+          layout="row"
+          title={realEstate.title}
+          description={realEstate.description}
+          action={realEstate.action}
+          image={tower}
+          imageAlt={realEstate.imageAlt}
+          art={{ width: 396, height: 509, right: -44, bottom: -40 }}
+        />
+      )}
 
       <Section title={steps.title}>
         <div className={styles.stepsBlock}>

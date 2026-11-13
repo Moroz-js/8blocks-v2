@@ -1,15 +1,14 @@
 import { siteConfig } from '@/shared/config/site'
-import { Container } from '@/shared/ui'
 import styles from '../privacy-policy/PrivacyPolicy.module.scss'
 
 const LAST_UPDATED = 'July 5, 2026'
 
 export function TermsEn() {
   return (
-    <Container>
+    <div className={styles.page}>
       <article className={styles.article}>
         <header className={styles.header}>
-          <p className={styles.label}>[ Legal Information ]</p>
+          <p className={styles.label}>Legal Information</p>
           <h1 className={styles.title}>Terms of Service</h1>
           <p className={styles.updated}>Last updated: {LAST_UPDATED}</p>
           <p>
@@ -105,6 +104,6 @@ export function TermsEn() {
           </p>
         </section>
       </article>
-    </Container>
+    </div>
   )
 }

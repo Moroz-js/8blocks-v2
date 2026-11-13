@@ -126,6 +126,13 @@ $header-mobile: 57px;
   @include ds-mobile { justify-content: flex-start; }
 }
 
+// The actions sit at the bottom: keep them on the first screen of short viewports.
+.spread {
+  height: clamp(600px, 100svh, 781px);
+
+  @include ds-mobile { height: auto; }
+}
+
 .spread .inner {
   padding-top: 162px;
   padding-bottom: 66px;

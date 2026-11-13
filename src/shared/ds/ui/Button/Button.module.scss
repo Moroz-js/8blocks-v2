@@ -47,7 +47,6 @@
   background-color: $ds-surface-glass;
   color: $ds-text;
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 
   &:hover {
     @include ds-overlay($ds-overlay-darken-soft);

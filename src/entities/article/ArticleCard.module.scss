@@ -20,7 +20,6 @@
   aspect-ratio: 16 / 9;
   background: $bg-secondary;
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
 
   &:hover .coverImg {

@@ -37,6 +37,8 @@ function buildContentSecurityPolicy(): string {
 
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy();
 const IS_STAGING = process.env.NEXT_PUBLIC_STAGING === "true";
+// Staging shares the EN production database, but uploaded files live on production.
+const MEDIA_PROXY_ORIGIN = (process.env.MEDIA_PROXY_ORIGIN || "").replace(/\/$/, "");
 const IS_PROD = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
@@ -66,6 +68,19 @@ const nextConfig: NextConfig = {
       { source: '/contact1', destination: '/contact', permanent: true },
       { source: '/audits/quant-qnt-token-audit', destination: '/audits/quant-network-tokenomics-audit', permanent: true },
     ]
+  },
+
+  async rewrites() {
+    return {
+      beforeFiles: MEDIA_PROXY_ORIGIN
+        ? [
+            { source: "/api/media/file/:path*", destination: `${MEDIA_PROXY_ORIGIN}/api/media/file/:path*` },
+            { source: "/uploads/:path*", destination: `${MEDIA_PROXY_ORIGIN}/uploads/:path*` },
+          ]
+        : [],
+      afterFiles: [],
+      fallback: [],
+    };
   },
 
   async headers() {

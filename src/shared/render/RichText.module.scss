@@ -235,7 +235,6 @@ $callout-danger-tail: rgb(18, 10, 12);
       rgba($callout-tail, 0.72) 100%
     );
     backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     overflow: hidden;
     isolation: isolate;
 
@@ -427,7 +426,6 @@ $callout-danger-tail: rgb(18, 10, 12);
     border: 1px solid $border-secondary;
     background: $bg-secondary;
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     overflow-x: auto;
     text-align: center;
   }

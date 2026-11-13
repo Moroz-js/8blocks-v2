@@ -5,7 +5,7 @@ import { lang } from '@/shared/i18n'
 import { contactFormContent, contactPageContent } from '@/shared/content/contactPage'
 import { ContactForm } from '@/features/contactForm/ContactForm'
 import { SocialIcon } from '@/widgets/Footer/SocialIcon'
-import oksana from './assets/oksana.webp'
+import oxana from './assets/oxana.webp'
 import styles from './ContactPage.module.scss'
 
 const CALENDLY_URL =
@@ -50,7 +50,7 @@ export function ContactPage() {
             <ContactForm text={contactFormContent} />
           </div>
           <div className={styles.person}>
-            <Image src={oksana} alt={`${hero.person.name}, ${hero.person.role}`} className={styles.photo} sizes="247px" />
+            <Image src={oxana} alt={`${hero.person.name}, ${hero.person.role}`} className={styles.photo} sizes="247px" />
             <p className={styles.personName}>{hero.person.name}</p>
             <p className={styles.personRole}>{hero.person.role}</p>
             <div className={styles.personLinks}>

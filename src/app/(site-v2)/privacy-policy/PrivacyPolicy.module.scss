@@ -1,0 +1,145 @@
+@use '@/shared/ds/styles' as *;
+
+// Legal pages in the v2 article style: centred header, one 770px reading column.
+$column: 770px;
+
+.page {
+  @include ds-container;
+  max-width: calc(#{$column} + 2 * #{$ds-margin});
+  padding-top: $ds-space-8;
+  padding-bottom: calc(#{$ds-block-gap} / 2);
+
+  @include ds-mobile {
+    max-width: none;
+    padding-top: $ds-space-6;
+  }
+}
+
+.article {
+  color: $ds-text-muted;
+
+  h2 {
+    @include ds-h5;
+    margin-top: $ds-space-8;
+    margin-bottom: $ds-space-4;
+    padding-top: $ds-space-6;
+    border-top: 1px solid $ds-border;
+    color: $ds-text;
+  }
+
+  h3 {
+    @include ds-text-lg;
+    margin-top: $ds-space-6;
+    margin-bottom: $ds-space-3;
+    color: $ds-text;
+  }
+
+  h4 {
+    @include ds-text-md;
+    margin-top: $ds-space-5;
+    margin-bottom: $ds-space-2;
+    color: $ds-text;
+  }
+
+  p,
+  li {
+    @include ds-text-md;
+  }
+
+  p {
+    margin-bottom: $ds-space-3;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: $ds-space-2;
+    margin-bottom: $ds-space-4;
+    padding-left: $ds-space-5;
+    list-style: disc;
+  }
+
+  li::marker {
+    color: $ds-accent;
+  }
+
+  strong {
+    color: $ds-text;
+    font-weight: $ds-weight;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-4;
+  margin-bottom: $ds-space-7;
+  text-align: center;
+
+  // The intro paragraph reads as body text.
+  p:last-child:not(.updated) {
+    margin-top: $ds-space-4;
+    margin-bottom: 0;
+    text-align: left;
+  }
+}
+
+.article .label {
+  @include ds-text-sm;
+  margin-bottom: 0;
+  color: $ds-accent;
+}
+
+.title {
+  @include ds-h3;
+  @include ds-title-sheen;
+}
+
+.article .updated {
+  @include ds-text-sm;
+  margin-bottom: 0;
+  color: $ds-text-faint;
+}
+
+.definitions {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+  margin-block: $ds-space-4;
+
+  > div {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: $ds-space-5;
+    padding: $ds-space-4 $ds-space-5;
+    border-radius: $ds-radius-card;
+    background-color: $ds-surface;
+
+    @include ds-mobile {
+      grid-template-columns: 1fr;
+      gap: $ds-space-1;
+    }
+  }
+
+  dt {
+    @include ds-text-md;
+    color: $ds-text;
+  }
+
+  dd {
+    @include ds-text-md;
+    margin: 0;
+  }
+}
+
+.emailLink {
+  @include ds-transition(color);
+  color: $ds-text-link;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: $ds-text;
+  }
+}

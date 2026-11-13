@@ -12,7 +12,7 @@ const ITEMS = [
 
 type Value = (typeof ITEMS)[number]['value']
 
-export function TabsDemo() {
+export function TabsDemo({ variant }: { variant?: 'pill' | 'glass' | 'ghost' }) {
   const [value, setValue] = useState<Value>('all')
-  return <Tabs items={ITEMS} value={value} onChange={setValue} label="Фильтр материалов" />
+  return <Tabs items={ITEMS} value={value} onChange={setValue} label="Фильтр материалов" variant={variant} />
 }

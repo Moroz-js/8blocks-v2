@@ -51,7 +51,7 @@ export function MiniApp({ copy }: { copy: MiniAppCopy }) {
           <p className={styles.description}>{copy.description}</p>
         </div>
         <div className={styles.controls}>
-          <Tabs items={items} value={tab} onChange={setTab} label={copy.tabsLabel} panelIdPrefix={panelId} />
+          <Tabs items={items} value={tab} onChange={setTab} label={copy.tabsLabel} panelIdPrefix={panelId} variant="glass" />
           <div className={styles.tabTexts}>
             {copy.tabs.map((item, i) =>
               i === active ? (

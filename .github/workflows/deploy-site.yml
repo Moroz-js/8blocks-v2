@@ -49,6 +49,9 @@ on:
       media_base_url:
         type: string
         default: ''
+      media_proxy_origin:
+        type: string
+        default: ''
       skip_db_maintenance:
         type: boolean
         default: false
@@ -84,6 +87,7 @@ jobs:
       NEXT_PUBLIC_STAGING_EN_URL: ${{ inputs.staging && 'https://staging.8blocks.io' || '' }}
       NEXT_PUBLIC_STAGING_RU_URL: ${{ inputs.staging && 'https://staging.8blocks.io/ru' || '' }}
       NEXT_PUBLIC_MEDIA_BASE_URL: ${{ inputs.media_base_url }}
+      MEDIA_PROXY_ORIGIN: ${{ inputs.media_proxy_origin }}
       BUILD_ARCHIVE_NAME: next-build-${{ github.run_id }}-${{ inputs.name }}.tar.gz
     steps:
       - uses: actions/checkout@v4

@@ -214,9 +214,14 @@ export default function DesignSystemPage() {
       <section className={styles.block}>
         <h2 className={styles.blockTitle}>Tabs</h2>
         <p className={styles.note}>
-          <code>{'<Tabs items value onChange label />'}</code> — 44px, pill; стрелки ← → переключают табы.
+          <code>{'<Tabs items value onChange label />'}</code> — 44px, pill; стрелки ← → переключают табы.{' '}
+          <code>variant=&quot;glass&quot;</code> — полупрозрачные табы на акцентном фоне.
         </p>
         <TabsDemo />
+        <div className={styles.accentWide}>
+          <AccentSurface />
+          <TabsDemo variant="glass" />
+        </div>
       </section>
 
       <section className={styles.block}>

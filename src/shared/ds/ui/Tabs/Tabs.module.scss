@@ -47,6 +47,11 @@
   }
 }
 
+// ── Glass: translucent off tabs for accent surfaces ──
+.glass .tab:not(.selected) {
+  background-color: $ds-surface-glass;
+}
+
 // ── Ghost: transparent tabs, one white indicator flows to the selected tab ──
 $flow: calc(#{$ds-duration} * 2);
 $lag: calc(#{$ds-duration} / 2);

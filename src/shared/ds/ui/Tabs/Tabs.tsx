@@ -21,8 +21,11 @@ interface TabsProps<V extends string> {
   className?: string
   /** id prefix of the panels this list controls (`${panelIdPrefix}-${value}`). */
   panelIdPrefix?: string
-  /** `pill` — filled tabs; `ghost` — transparent tabs, the selection flows between them. */
-  variant?: 'pill' | 'ghost'
+  /**
+   * `pill` — filled tabs; `glass` — translucent off tabs (on accent surfaces);
+   * `ghost` — transparent tabs, the selection flows between them.
+   */
+  variant?: 'pill' | 'glass' | 'ghost'
 }
 
 interface Indicator {
@@ -89,7 +92,7 @@ export function Tabs<V extends string>({
   }
 
   return (
-    <div ref={listRef} role="tablist" aria-label={label} className={clsx(styles.list, ghost && styles.ghost, ghost && indicator && styles.ready, className)}>
+    <div ref={listRef} role="tablist" aria-label={label} className={clsx(styles.list, styles[variant], ghost && indicator && styles.ready, className)}>
       {ghost && indicator && (
         <span
           aria-hidden="true"
