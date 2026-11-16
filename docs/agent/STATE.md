@@ -4,6 +4,8 @@
 
 ## Проверено
 
+- 2026-11-16 на staging выключена аналитика по запросу владельца. Для staging-сборок `deploy-site.yml` передаёт пустые `NEXT_PUBLIC_GTM_ID` и `NEXT_PUBLIC_POSTHOG_KEY` (GTM-скрипт не рендерится, PostHog не инициализируется), а `ArticleViewTracker` не шлёт просмотры (staging пишет в базу EN-прода). Пока правка не попала в `main`, деплой из `main` собирает staging по старому workflow — с аналитикой.
+
 - 2026-11-16 замечания дизайнера выложены на staging по команде владельца: коммит `38b34db`, [run 43857257761](https://github.com/Moroz-js/8blocks-v2/actions/runs/43857257761) — success (оба staging, production skipped). Перед пушем `npm run build` прошёл. На staging `/`, `/product/tokenomics-ai`, `/product/tokenization-cases`, `/services/tokenomics`, `/ru`, `/ru/product/digital-assets` и `handCoinDark.webp` отвечают 200; аудиты (`mantra-om`, `lma1`, `isd`, `hes`) — 200, `data-ds=v2`, JSON-LD на месте, сняты на 1280/375. В консоли аудита React #418 — расхождение гидратации графиков recharts в RichText (известно, было и раньше).
 
 - 2026-11-16 (выложено коммитом `38b34db`) исправлены замечания дизайнера из Google-документа, пункты 7–27. Что сделано:
