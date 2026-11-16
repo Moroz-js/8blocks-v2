@@ -18,8 +18,9 @@
     padding-bottom: 420px;
   }
 
+  // Reserve = visible part of the phone (608 − 330) + 32 gap.
   @include ds-mobile {
-    padding: $ds-space-5 20px 380px;
+    padding: $ds-space-5 20px 310px;
   }
 }
 
@@ -98,4 +99,11 @@
   justify-content: center;
   gap: 10px;
   margin-top: $ds-space-7;
+
+  @include ds-mobile {
+    flex-direction: column;
+    margin-top: $ds-space-5;
+
+    > * { width: 100%; }
+  }
 }

@@ -7,3 +7,4 @@ const locale = lang === 'ru' ? ru : en
 export const auditsMeta = locale.auditsMeta
 export const auditsArchiveContent = locale.auditsArchiveContent
 export const methodologyContent = locale.methodologyContent
+export const auditDetailContent = locale.auditDetailContent

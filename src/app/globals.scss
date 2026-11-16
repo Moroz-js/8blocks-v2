@@ -271,26 +271,6 @@ body::before {
   background-size: 32px 32px, 32px 32px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
 }
 
-// ── Audit detail page: flat Figma document (no grid/bloom stripes) ──
-html.audit-doc {
-  &[data-theme='light'],
-  &:not([data-theme='dark']) {
-    --body-bg: #f3f3f5;
-    --card-panel-bg: #ffffff;
-    --bg-secondary: rgba(13, 10, 18, 0.035);
-    --border-secondary: rgba(13, 10, 18, 0.1);
-  }
-
-  &[data-theme='dark'] {
-    --body-bg: #0a070f;
-    --card-panel-bg: rgba(255, 255, 255, 0.04);
-  }
-
-  body::before {
-    display: none !important;
-  }
-}
-
 ul,
 ol {
   list-style: none;

@@ -4,6 +4,7 @@ import type { BinarySceneId, SceneRenderer, SceneSurface } from './types'
 /** Reference photos the scenes are traced from; `null` scenes are fully procedural. */
 export const SCENE_IMAGES: Record<BinarySceneId, string | null> = {
   'hand-coin': '/img/calculator/hand-reference.png',
+  'hand-coin-dark': '/img/binary/handCoinDark.webp',
   'coin-stacks': '/img/binary/coin-stacks.png',
   'hand-coins': '/img/binary/hand-coins.png',
   'light-bulb': '/img/binary/lightBulb.webp',
@@ -25,6 +26,7 @@ export const SCENE_IMAGES: Record<BinarySceneId, string | null> = {
 }
 
 const builders: Record<Exclude<BinarySceneId, 'hand-coin'>, () => Promise<{ buildScene: SceneBuilder }>> = {
+  'hand-coin-dark': () => import('./scenes/handCoinDark.js'),
   'coin-stacks': () => import('./scenes/coinStacks.js'),
   'hand-coins': () => import('./scenes/handCoins.js'),
   'light-bulb': () => import('./scenes/lightBulb.js'),

@@ -36,7 +36,7 @@ export const calculatorV2 = {
     title: 'Everything you need to validate your token design.',
     items: [
       {
-        shape: 'coinstacks',
+        shape: 'buckets',
         title: 'Up to 8 allocation buckets',
         description: 'Team, investors, community, ecosystem, treasury, liquidity, foundation, public sale.',
       },

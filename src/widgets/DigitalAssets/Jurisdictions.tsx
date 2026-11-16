@@ -7,17 +7,20 @@ import globe from './assets/globe.webp'
 import { FLAGS } from './flags'
 import styles from './Jurisdictions.module.scss'
 
-/** Marker anchors on the 1280 × 778 globe frame, % (designer's positions). */
+/**
+ * Flag centres on the 1280 × 778 globe frame, % — over the country on the photo.
+ * The US and the BVI lie off the photo: they sit at its western edge.
+ */
 const MARKERS: { id: CountryId; x: number; y: number }[] = [
-  { id: 'uk', x: 5, y: 52 },
-  { id: 'eu', x: 17.3, y: 62 },
-  { id: 'ch', x: 10, y: 67.5 },
-  { id: 'us', x: 1.5, y: 67.1 },
-  { id: 'kz', x: 40, y: 67 },
-  { id: 'jp', x: 80, y: 67 },
-  { id: 'ae', x: 25, y: 84 },
-  { id: 'sg', x: 60, y: 88 },
-  { id: 'vg', x: 3, y: 90 },
+  { id: 'uk', x: 9.5, y: 51 },
+  { id: 'eu', x: 19, y: 57 },
+  { id: 'ch', x: 11, y: 64.5 },
+  { id: 'us', x: 4, y: 76 },
+  { id: 'kz', x: 41, y: 66 },
+  { id: 'jp', x: 90.5, y: 72 },
+  { id: 'ae', x: 34, y: 86 },
+  { id: 'sg', x: 72, y: 90 },
+  { id: 'vg', x: 10, y: 92 },
 ]
 
 const Chevron = (

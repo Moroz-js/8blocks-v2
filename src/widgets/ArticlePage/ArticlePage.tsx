@@ -1,20 +1,15 @@
-import { Fragment } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import type { Article, ArticleCard } from '@/entities/article'
 import { estimateReadingTime } from '@/entities/article'
 import { Button, Section } from '@/shared/ds'
 import { siteConfig } from '@/shared/config/site'
-import { RichText } from '@/shared/render'
-import { buildToc } from '@/shared/lib/buildToc'
 import { uiStrings } from '@/shared/content/uiStrings'
 import { ArticleViewTracker } from '@/features/articleView'
 import { ShareBlock } from '@/features/shareBlock'
 import { PostCard, PostGrid } from '@/widgets/Posts/PostCard'
 import { formatPostDate, postMeta } from '@/widgets/Posts/format'
-import { ArticleToc } from './ArticleToc'
+import { ArticleBody, ArticleCover, ArticleHeader, ArticleRoot } from './ArticleParts'
 import { ArticleDownloadCta } from './ArticleDownloadCta'
-import styles from './ArticlePage.module.scss'
 
 interface Props {
   article: Article
@@ -46,90 +41,41 @@ export function ArticlePage({
   trackViews = true,
   linkCategory = true,
 }: Props) {
-  const tocItems = buildToc(article.content)
-  const readingTime = estimateReadingTime(article.content)
-  const hasToc = tocItems.length >= 2
   const articleUrl = `${siteConfig.url.replace(/\/$/, '')}${basePath}/${article.slug}`
 
   return (
-    <article className={styles.root}>
+    <ArticleRoot>
       {trackViews && <ArticleViewTracker slug={article.slug} />}
 
-      <header className={styles.header}>
-        <p className={styles.eyebrow}>
-          <Link href={basePath}>{sectionLabel}</Link>
-          {article.category && (
-            <>
-              {' · '}
-              {linkCategory ? (
-                <Link href={`${basePath}/${article.category.slug}`}>{article.category.title}</Link>
-              ) : (
-                <span>{article.category.title}</span>
-              )}
-            </>
-          )}
-        </p>
-        <h1 className={styles.title}>{article.title}</h1>
-        {article.excerpt && <p className={styles.excerpt}>{article.excerpt}</p>}
-        <p className={styles.meta}>
-          {uiStrings.by}:{' '}
-          {article.authors && article.authors.length > 0 ? (
-            article.authors.map((author, i) => (
-              <Fragment key={author.id}>
-                {i > 0 && ', '}
-                {author.linkedIn ? (
-                  <a href={author.linkedIn} target="_blank" rel="noopener noreferrer">
-                    {author.name}
-                    {author.position ? `, ${author.position}` : ''}
-                  </a>
+      <ArticleHeader
+        eyebrow={
+          <>
+            <Link href={basePath}>{sectionLabel}</Link>
+            {article.category && (
+              <>
+                {' · '}
+                {linkCategory ? (
+                  <Link href={`${basePath}/${article.category.slug}`}>{article.category.title}</Link>
                 ) : (
-                  <span>
-                    {author.name}
-                    {author.position ? `, ${author.position}` : ''}
-                  </span>
+                  <span>{article.category.title}</span>
                 )}
-              </Fragment>
-            ))
-          ) : (
-            <span>{siteConfig.name}</span>
-          )}
-          {article.publishedAt && (
-            <>
-              {' · '}
-              {uiStrings.published}: <time dateTime={article.publishedAt}>{formatPostDate(article.publishedAt)}</time>
-            </>
-          )}
-          {' · '}
-          {readingTime} {uiStrings.minRead}
-        </p>
-      </header>
+              </>
+            )}
+          </>
+        }
+        title={article.title}
+        excerpt={article.excerpt}
+        authors={article.authors}
+        publishedAt={article.publishedAt}
+        readingTime={estimateReadingTime(article.content)}
+      />
 
-      {article.cover?.url && (
-        <div className={styles.cover}>
-          <Image
-            src={article.cover.url}
-            alt={article.cover.alt || article.title}
-            width={1200}
-            height={630}
-            className={styles.coverImg}
-            sizes="(max-width: 800px) 100vw, 770px"
-            priority
-          />
-        </div>
-      )}
+      {article.cover?.url && <ArticleCover src={article.cover.url} alt={article.cover.alt || article.title} />}
 
-      <div className={styles.body}>
-        {hasToc && (
-          <aside className={styles.sidebar}>
-            <ArticleToc items={tocItems} />
-          </aside>
-        )}
-        <div className={styles.content}>
-          <RichText content={article.content} />
-          {article.cta && <ArticleDownloadCta cta={article.cta} source={`${basePath.replace(/^\//, '')}:${article.slug}`} />}
-          <ShareBlock url={articleUrl} title={article.title} />
-        </div>
-      </div>
+      <ArticleBody content={article.content}>
+        {article.cta && <ArticleDownloadCta cta={article.cta} source={`${basePath.replace(/^\//, '')}:${article.slug}`} />}
+        <ShareBlock url={articleUrl} title={article.title} />
+      </ArticleBody>
 
       {relatedArticles.length > 0 && (
         <Section
@@ -157,6 +103,6 @@ export function ArticlePage({
           </PostGrid>
         </Section>
       )}
-    </article>
+    </ArticleRoot>
   )
 }

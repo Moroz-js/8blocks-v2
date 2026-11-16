@@ -399,6 +399,6 @@ export function buildScene(img, makeCanvas) {
       flush(buckets, palette);
       flush(hotBuckets, hotPal);
     };
-    if (img) buildHand(img); buildDepth(); buildStatic(); buildLive();
+    if (img) buildHand(img); buildDepth(); buildStatic(); buildBulb(); buildLive();
     return frame;
 }

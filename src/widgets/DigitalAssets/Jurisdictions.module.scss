@@ -48,12 +48,15 @@
   }
 }
 
+// The flag (52px) is centred on the anchor point.
 .marker {
   position: absolute;
+  transform: translate(-50%, -26px);
 
   @include ds-mobile {
     position: relative;
     inset: auto !important;
+    transform: none;
     display: flex;
     justify-content: center;
   }

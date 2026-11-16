@@ -12,10 +12,16 @@ $header-mobile: 57px;
   height: 781px;
   background-color: $ds-bg;
 
+  // Mobile: text first, the scene below it in the flow (never under the text).
   @include ds-mobile {
+    display: flex;
+    flex-direction: column;
     height: auto;
-    min-height: 640px;
   }
+}
+
+.withImage {
+  @include ds-mobile { min-height: 640px; }
 }
 
 // The hero fade already separates it from the first block.
@@ -27,8 +33,9 @@ $header-mobile: 57px;
   position: absolute;
   top: var(--art-top);
   left: 50%;
-  width: 1280px;
-  height: 800px;
+  // Sized rather than transformed: the scene measures its box to size the canvas.
+  width: calc(1280px * var(--art-scale, 1));
+  height: calc(800px * var(--art-scale, 1));
   transform: translateX(calc(-50% + var(--art-left, 0px)));
   pointer-events: none;
 
@@ -43,15 +50,23 @@ $header-mobile: 57px;
     mask-image: linear-gradient(90deg, transparent, $ds-black 15%);
   }
 
+  // Half-size frame; --art-cx (the object's centre in the 1280 frame) lands on the screen centre.
   @include ds-mobile {
+    position: relative;
     top: auto;
-    bottom: 0;
     left: auto;
-    right: -300px;
-    width: 832px;
-    height: 520px;
+    order: 2;
+    flex-shrink: 0;
+    width: 640px;
+    height: 400px;
+    margin: (-$ds-space-5) 0 0 calc(50% - var(--art-cx, 973px) / 2);
     transform: none;
-    opacity: 0.7;
+
+    &,
+    &.artShifted {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
   }
 }
 
@@ -115,7 +130,7 @@ $header-mobile: 57px;
 
   @include ds-mobile {
     padding-top: $header-mobile + 72px;
-    padding-bottom: 260px;
+    padding-bottom: 0;
     padding-left: $ds-margin-mobile;
   }
 }
@@ -139,7 +154,7 @@ $header-mobile: 57px;
 
   @include ds-mobile {
     padding-top: $header-mobile + 48px;
-    padding-bottom: 260px;
+    padding-bottom: 0;
   }
 }
 
@@ -187,9 +202,11 @@ $header-mobile: 57px;
   bottom: 78px;
 
   @include ds-mobile {
+    position: relative;
     right: auto;
-    left: $ds-margin-mobile;
-    bottom: $ds-space-7;
+    bottom: auto;
+    left: auto;
+    margin-top: $ds-space-2;
   }
 }
 
@@ -200,7 +217,7 @@ $header-mobile: 57px;
   bottom: 64px;
 
   @include ds-tablet { left: $ds-margin-tablet; }
-  @include ds-mobile { left: $ds-margin-mobile; bottom: $ds-space-7; }
+  @include ds-mobile { left: auto; bottom: auto; }
 }
 
 .description {
@@ -229,5 +246,10 @@ $header-mobile: 57px;
 .spread.withFootnote .inner {
   padding-bottom: 30px;
 
+  @include ds-mobile { padding-bottom: 0; }
+}
+
+// Photo heroes keep the photo visible under the text on mobile.
+.hero.withImage .inner {
   @include ds-mobile { padding-bottom: 260px; }
 }

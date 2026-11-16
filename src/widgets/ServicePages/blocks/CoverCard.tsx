@@ -19,6 +19,9 @@ interface CoverCardProps {
   layout?: 'stack' | 'row'
 }
 
+/** Share of the row art kept on tablet/mobile: its top is drawn empty to rise above the card. */
+const ROW_ART_VISIBLE = 0.6
+
 /** Card with text and a button and an illustration rising out of it on the right. */
 export function CoverCard({ title, description, action, image, imageAlt, art, layout = 'stack' }: CoverCardProps) {
   const vars = {
@@ -27,6 +30,7 @@ export function CoverCard({ title, description, action, image, imageAlt, art, la
     '--art-right': `${art.right}px`,
     '--art-bottom': `${art.bottom ?? 0}px`,
     '--art-ratio': `${art.width} / ${art.height}`,
+    '--art-ratio-cropped': `${art.width} / ${Math.round(art.height * ROW_ART_VISIBLE)}`,
   } as CSSProperties
   return (
     <Section>

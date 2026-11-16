@@ -18,7 +18,7 @@ const PAIN_GLYPHS = [
 ]
 
 const REVIEW_GLYPHS = [
-  { shape: 'coinstacks', oy: 0.51, os: 1.25 },
+  { shape: 'buckets', oy: 0.53, os: 0.8 },
   { shape: 'bars', oy: 0.385, os: 1.12 },
   { shape: 'target', oy: 0.514, os: 0.74 },
   { shape: 'scales', oy: 0.5, os: 0.92 },

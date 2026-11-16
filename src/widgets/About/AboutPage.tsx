@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import Image from 'next/image'
 import clsx from 'clsx'
 import { AccentSurface, Button, Cta, Section } from '@/shared/ds'
@@ -9,6 +10,13 @@ import clutch from './assets/clutch.svg'
 import styles from './AboutPage.module.scss'
 
 const PRINCIPLE_SCENES: BinarySceneId[] = ['gold-coin', 'bulb', 'briefcase', 'broken-coin']
+/** Designer's crop of each 589 × 368 scene inside the 360 × 360 window: object centre x, top offset. */
+const PRINCIPLE_CROP: [number, number][] = [
+  [414, 0],
+  [419, -8],
+  [416, -2],
+  [414, 0],
+]
 const WAY_SCENES: BinarySceneId[] = ['way-file', 'way-scales', 'way-puzzle']
 
 /** About page on design system v2 (project 2 «About»). */
@@ -31,7 +39,12 @@ export function AboutPage() {
         <ul className={styles.principles}>
           {about.principles.map((item, i) => (
             <li key={item.title} className={styles.principle}>
-              <BinaryScene scene={PRINCIPLE_SCENES[i]} className={styles.principleArt} />
+              <div
+                className={styles.principleArt}
+                style={{ '--crop-x': `${PRINCIPLE_CROP[i][0]}px`, '--crop-y': `${PRINCIPLE_CROP[i][1]}px` } as CSSProperties}
+              >
+                <BinaryScene scene={PRINCIPLE_SCENES[i]} className={styles.principleScene} />
+              </div>
               <h3 className={styles.principleTitle}>{item.title}</h3>
               <p className={styles.principleText}>{item.text}</p>
             </li>

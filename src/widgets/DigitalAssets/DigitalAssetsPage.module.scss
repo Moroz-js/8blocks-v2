@@ -56,10 +56,9 @@
 }
 
 // ── Steps ─────────────────────────────────────────────────────────────
+// Designer's table: open rows divided by lines, no outer frame.
 .stepsBlock {
-  overflow: hidden;
-  border: 1px solid $ds-border;
-  border-radius: $ds-radius-card;
+  border-top: 1px solid $ds-border;
 }
 
 .steps {
@@ -72,9 +71,7 @@
   grid-template-columns: 94px minmax(0, 1fr) minmax(0, 1fr) 115px;
   align-items: center;
   min-height: 96px;
-  padding-right: $ds-space-5;
-
-  & + & { border-top: 1px solid $ds-border; }
+  border-bottom: 1px solid $ds-border;
 
   @include ds-tablet {
     grid-template-columns: 70px minmax(0, 1fr) minmax(0, 1fr);
@@ -83,7 +80,7 @@
   @include ds-mobile {
     grid-template-columns: minmax(0, 1fr);
     gap: $ds-space-3;
-    padding: $ds-space-5 20px;
+    padding-block: $ds-space-5;
   }
 }
 
@@ -92,12 +89,12 @@
   align-self: stretch;
   display: flex;
   align-items: center;
-  padding-left: $ds-space-5;
+  justify-content: center;
   border-right: 1px solid $ds-border;
   color: $ds-text;
 
   @include ds-mobile {
-    padding: 0;
+    justify-content: flex-start;
     border: 0;
   }
 }
@@ -151,7 +148,6 @@
   gap: $ds-space-5;
   min-height: 96px;
   padding-inline: $ds-space-5;
-  border-top: 1px solid $ds-border;
   background-color: $ds-surface;
 
   @include ds-mobile {

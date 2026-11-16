@@ -25,6 +25,27 @@ export const auditsArchiveContent = {
   scoreNote: 'independent token audits, each scored from 0 to 100',
 } as const
 
+export const auditDetailContent = {
+  takeaways: 'Key takeaways',
+  disclaimer: 'This audit is not investment advice. Use it as part of your own analysis.',
+  rating: {
+    title: 'Final rating',
+    profile: 'Block profile',
+    breakdown: 'Breakdown (0–100)',
+    conclusion: 'Summary',
+    ratingWord: 'Rating',
+    leadExpert: 'Lead expert',
+    columns: {
+      block: 'Block',
+      weight: 'Weight',
+      scoreFive: 'Score (0–5)',
+      score100: 'Score (0–100)',
+      contribution: 'Contribution',
+      total: 'Total',
+    },
+  },
+} as const
+
 export const methodologyContent = {
   ariaLabel: 'Rating methodology',
   label: 'Rating methodology',

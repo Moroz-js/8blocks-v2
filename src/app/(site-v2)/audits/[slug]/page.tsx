@@ -6,7 +6,6 @@ import { siteConfig } from '@/shared/config/site'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { AuditPage } from '@/widgets/AuditPage'
-import { ThemeScopeMarker } from '@/shared/lib/ThemeScope'
 import { buildAuditGraph } from '@/shared/lib/content-schema'
 
 interface PageProps {
@@ -155,7 +154,6 @@ export default async function AuditSlugPage({ params, searchParams }: PageProps)
 
   return (
     <>
-      <ThemeScopeMarker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(auditJsonLd) }} />
       <AuditPage
         print={print}

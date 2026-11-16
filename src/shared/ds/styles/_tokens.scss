@@ -89,7 +89,7 @@ $ds-columns: 8;
 $ds-gutter: 10px;
 $ds-margin: 40px;
 $ds-margin-tablet: 24px; // not in Figma — interpolated
-$ds-margin-mobile: 12px; // Figma 375 frame: 351 content
+$ds-margin-mobile: 16px; // designer feedback: Figma's 12 read too tight → 343 content
 
 // Rhythm: 180 between blocks, 40 between a block title and its content.
 $ds-block-gap: 180px;

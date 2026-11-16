@@ -38,6 +38,7 @@ export function TokenizationCasesPage({ copy, data }: { copy: TokenizationCasesC
         scene="office"
         artTop={80}
         artLeft={190}
+        artCenterX={760}
         titleSize="md"
         eyebrow={<HeroBadge accent={sourced}>{badges.join(' · ')}</HeroBadge>}
         title={copy.headline}

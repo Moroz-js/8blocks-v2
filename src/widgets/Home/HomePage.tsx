@@ -21,7 +21,7 @@ export async function HomePage({ blogEnabled }: { blogEnabled: boolean }) {
   const posts = blogEnabled ? await getLatestArticles(3) : []
   return (
     <>
-      <ServiceHero scene="hand-coin" title={home.hero.title} description={home.hero.description}>
+      <ServiceHero scene="hand-coin-dark" artScale={0.85} artLeft={96} title={home.hero.title} description={home.hero.description}>
         <Button href={home.hero.action.href}>{home.hero.action.label}</Button>
       </ServiceHero>
 

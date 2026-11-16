@@ -42,8 +42,8 @@ html, body {
   print-color-adjust: exact !important;
 }
 
-header,
-footer,
+header:not(article header),
+footer:not(article footer),
 #__replain_widget,
 [id*="replain"],
 [data-no-print],
@@ -62,25 +62,7 @@ body::before {
   justify-content: flex-start;
 }
 
-/* Hero: more internal padding to fill cover height. */
-[data-audit-hero] {
-  margin-top: 0 !important;
-  padding-top: 40px !important;
-  padding-bottom: 28px !important;
-  flex-shrink: 0;
-}
-
-[data-audit-hero] [class*="description"] {
-  margin-top: 28px !important;
-}
-
-[data-audit-hero] [class*="metricsBand"] {
-  margin-top: 40px !important;
-  padding-top: 28px !important;
-  padding-bottom: 20px !important;
-}
-
-/* Takeaways vertically centered in remaining space under hero. */
+/* Takeaways vertically centered in remaining space under the header. */
 [data-pdf-takeaways] {
   flex: 1 1 auto !important;
   display: flex !important;

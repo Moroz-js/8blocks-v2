@@ -1,10 +1,27 @@
 # Состояние
 
-Обновлено: 2026-11-13.
+Обновлено: 2026-11-16.
 
 ## Проверено
 
-- 2026-11-13 (локально, без коммита) правки клиента после staging. Блюр всех стеклянных элементов (шапка, открытое меню, tertiary-кнопка и ещё 8 мест) не работал в Chrome: при порядке `backdrop-filter`, затем `-webkit-backdrop-filter` lightningcss оставлял только префиксное свойство. Ручные `-webkit-` строки удалены, у шапки computed `blur(14px)`, у открытого меню значения макета Claude: 64% и `blur(22px)`. Обложки статей на staging: файлов нет на staging-сервере (`/api/media/file/...` 500, на 8blocks.io 200). При сборке staging добавлен `MEDIA_PROXY_ORIGIN=https://8blocks.io` (deploy.yml → deploy-site.yml → rewrites `beforeFiles` в next.config для `/api/media/file` и `/uploads`). Работу проверить после следующего деплоя staging. Также: `/privacy-policy` и `/terms` перенесены в `(site-v2)` с DS-стилями (метаданные и JSON-LD без изменений); у `Tabs` новый вариант `glass`, им пользуется MiniApp; hero с `layout="spread"` высотой `clamp(600px, 100svh, 781px)`, CTA виден при окне 680px; карточка Real Estate на Digital Assets скрыта флагом `SHOW_REAL_ESTATE` до выпуска страницы; Oksana → Oxana. Typecheck src проходит, страницы сняты на 1280/375.
+- 2026-11-16 (локально, без коммита) исправлены замечания дизайнера из Google-документа, пункты 7–27. Что сделано:
+  - **Digital Assets:** таблица шагов без рамки, номера по центру; флаги на карте юрисдикций переставлены; перенос в заголовке Owners.
+  - **Сцены и иллюстрации:** лампочка в hero аудита (в порте не вызывался `buildBulb`); `coinstacks` заменены на `buckets`; новая сцена Hand Coin Dark в hero главной (`hand-coin-dark`, `ServiceHero artScale`); центры иллюстраций на About и Methodology.
+  - **Блоки страниц:** Cta `md` по вертикальному центру; на калькуляторе блок top fixes с fade и меньшим отступом; на бенчмарках AI-блок с иконками и дивайдерами; на Tokenomics AI анимированное демо `AiDemo` (фазы чата и результата, пауза, reduced-motion); на readiness result фото precedent одно для всех путей (по ответу дизайнера) и заголовок typical route.
+  - **Мобильная версия:**
+    - сцена `ServiceHero` стоит в потоке под текстом, центр задаётся `artCenterX`;
+    - на главной у карточек услуг иллюстрация вынесена в отдельную строку;
+    - `$ds-margin-mobile` увеличен с 12 до 16px;
+    - у MiniApp меньше зазор до телефона, кнопки на всю ширину;
+    - у горизонтального `CoverCard` обрезан пустой верх картинки (Real Estate по-прежнему скрыта).
+  - **Пункт 19:** `/audits/[slug]` перенесён в `(site-v2)` на шаблон статьи. `ArticlePage` разбит на `ArticleRoot`, `ArticleHeader`, `ArticleCover` и `ArticleBody`. Под шапкой `AuditSummary`: PDF, сайт проекта, оценка с метриками, три вывода. Блок рейтинга переведён на токены v2, подписи берутся из `auditDetailContent`. Удалены v1-части (`AuditHero`, `AuditTakeaways`, `AuditToc`, `AuditExpert`, `AuditDocMarker`, `_auditPageLayout.scss`, `html.audit-doc`). Метаданные и JSON-LD не менялись. В CSS PDF-роута шапка сайта скрывается через `header:not(article header)`. PDF проверен скриптом `.playwright-mcp/tools/audit-pdf.mjs`, он повторяет роут на локальном Chromium: у puppeteer локально нет своего Chrome.
+  - **RichText:** на mobile `infoColumns`/`statColumns` с `data-count='3'` оставались в три колонки и давали горизонтальный скролл. Исправлено, это затрагивает и блог.
+  - **Проверки:** typecheck и ESLint изменённых файлов проходят. Каждая правка снята на 1280 и/или 375. На 15 затронутых URL при 375 горизонтального переполнения нет.
+  - **Не исправлено:** в аудитах остаётся hydration-предупреждение recharts в графиках RichText (id `clipPath` и тики). Оно было и до переноса.
+
+- 2026-11-13 правки клиента выложены на staging: коммит `64567df`, [run 43451604448](https://github.com/Moroz-js/8blocks-v2/actions/runs/43451604448) — success (оба staging, production skipped). Обложка `/api/media/file/isd-audit-article-cover.webp` и `/_next/image` отдают 200, у шапки `blur(14px)`, `/privacy-policy` и `/ru/terms` — 200.
+
+- 2026-11-13 правки клиента после staging. Блюр всех стеклянных элементов (шапка, открытое меню, tertiary-кнопка и ещё 8 мест) не работал в Chrome: при порядке `backdrop-filter`, затем `-webkit-backdrop-filter` lightningcss оставлял только префиксное свойство. Ручные `-webkit-` строки удалены, у шапки computed `blur(14px)`, у открытого меню значения макета Claude: 64% и `blur(22px)`. Обложки статей на staging: файлов нет на staging-сервере (`/api/media/file/...` 500, на 8blocks.io 200). При сборке staging добавлен `MEDIA_PROXY_ORIGIN=https://8blocks.io` (deploy.yml → deploy-site.yml → rewrites `beforeFiles` в next.config для `/api/media/file` и `/uploads`). Работу проверить после следующего деплоя staging. Также: `/privacy-policy` и `/terms` перенесены в `(site-v2)` с DS-стилями (метаданные и JSON-LD без изменений); у `Tabs` новый вариант `glass`, им пользуется MiniApp; hero с `layout="spread"` высотой `clamp(600px, 100svh, 781px)`, CTA виден при окне 680px; карточка Real Estate на Digital Assets скрыта флагом `SHOW_REAL_ESTATE` до выпуска страницы; Oksana → Oxana. Typecheck src проходит, страницы сняты на 1280/375.
 
 - 2026-11-13 перенос project 2 выложен по команде владельца на EN/RU-staging: коммит `5824a2b` в `staging`, [run 43446380900](https://github.com/Moroz-js/8blocks-v2/actions/runs/43446380900) — success (deploy-staging-en и deploy-staging-ru success, production jobs skipped). После деплоя `/`, `/product/token-launch`, `/learn/token-vesting-benchmarks`, `/ru` и `/ru/product/tokenomics-ai` отвечают 200, у страниц `data-ds=v2`.
 

@@ -75,6 +75,10 @@
   .row & { flex-shrink: 0; }
 
   @include ds-tablet { margin-top: $ds-space-6; }
+
+  .row & {
+    @include ds-tablet { margin-top: 0; }
+  }
 }
 
 // Lets the art rise above the card while cutting it at the card's bottom and right edges.
@@ -95,6 +99,8 @@
     width: min(var(--art-width), 100%);
     overflow: visible;
     margin-top: $ds-space-6;
+
+    .row & { margin-top: 0; }
   }
 }
 
@@ -117,5 +123,13 @@
     width: 100%;
     height: auto;
     aspect-ratio: var(--art-ratio);
+  }
+
+  .row & {
+    @include ds-tablet {
+      aspect-ratio: var(--art-ratio-cropped);
+
+      img { object-position: 50% 100%; }
+    }
   }
 }

@@ -83,6 +83,13 @@
   max-width: none;
 }
 
+// Short card: the text block and the actions share one vertical centre.
+.md .card {
+  align-items: center;
+
+  @include ds-tablet { align-items: flex-start; }
+}
+
 .md .title {
   @include ds-h4;
 }

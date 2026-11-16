@@ -27,20 +27,32 @@ $column: 595px;
   }
 }
 
+// The brain sits at x 712 of the 1024 × 640 scene: shift so it lands on the page centre,
+// under the text (designer's frame: left −72, radial fade around the brain), a little lower
+// than the frame so the lead never runs into it.
 .heroArt {
   position: absolute;
-  top: 200px;
-  left: 50%;
+  top: 270px;
+  left: calc(50% - 712px);
   z-index: -1;
   width: 1024px;
   height: 640px;
-  transform: translateX(-50%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 15%, #000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 330px 470px at 712px 330px, $ds-black 50%, transparent 92%);
+  mask-image: radial-gradient(ellipse 330px 470px at 712px 330px, $ds-black 50%, transparent 92%);
 
+  // Mobile: in the flow between the text and the byline, the brain centred on the screen.
   @include ds-mobile {
-    top: 220px;
+    position: relative;
+    top: auto;
+    left: auto;
+    order: 1;
+    flex-shrink: 0;
+    align-self: flex-start;
     width: 640px;
     height: 400px;
+    margin: $ds-space-4 0 $ds-space-4 calc(50% - 445px);
+    -webkit-mask-image: radial-gradient(ellipse 206px 294px at 445px 206px, $ds-black 50%, transparent 92%);
+    mask-image: radial-gradient(ellipse 206px 294px at 445px 206px, $ds-black 50%, transparent 92%);
   }
 }
 
@@ -76,6 +88,8 @@ $column: 595px;
   @include ds-text-sm;
   margin-top: auto;
   color: $ds-text-faint;
+
+  @include ds-mobile { order: 2; }
 }
 
 // ── Reading layout ─────────────────────────────────────────────────────

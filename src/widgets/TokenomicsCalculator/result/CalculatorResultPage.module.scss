@@ -17,6 +17,13 @@ $header: 92px; // sticky site header
   @include ds-mobile { padding-top: $ds-space-7; }
 }
 
+// The faded locked row already separates it: the call block follows ~90px below.
+.growthSection {
+  padding-bottom: 0;
+
+  @include ds-mobile { padding-bottom: calc(#{$ds-block-gap-mobile} / 2); }
+}
+
 .top {
   display: flex;
   align-items: flex-start;

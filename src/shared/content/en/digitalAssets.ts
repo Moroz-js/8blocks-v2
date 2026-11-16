@@ -102,7 +102,7 @@ export const digitalAssets: DigitalAssetsContent = {
     note: 'Access widens only when a real buyer side exists: that is exactly what the assessment checks.',
   },
   owners: {
-    title: 'Owners of real assets. Find your situation',
+    title: 'Owners of real assets.\nFind your situation',
     tabs: [
       { path: 'asset_backed', label: 'Commercial real estate' },
       { path: 'credit', label: 'Debt and collateral on the books' },

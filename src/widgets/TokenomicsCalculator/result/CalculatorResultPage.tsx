@@ -228,6 +228,7 @@ export function CalculatorResultPage({
             : content.growth.descriptionLocked
         }
         align="center"
+        className={styles.growthSection}
       >
         <FixCards
           open={openFixes}

@@ -14,7 +14,6 @@ import {
 import { CallSteps } from '@/widgets/ServicePages/blocks/CallSteps'
 import { CoverCard } from '@/widgets/ServicePages/blocks/CoverCard'
 import { ServiceFaq } from '@/widgets/ServicePages/blocks/ServiceFaq'
-import { PATH_ART } from './art'
 import { PencilIcon, SourceIcon, StrengthIcon, ValidateIcon } from './icons'
 import { CHECK_PATH } from './paths'
 import solar from './assets/precedent-solar.webp'
@@ -62,7 +61,8 @@ export function ReadinessResultPage({ answers, content }: { answers: Answers; co
     tone: petalTone(pillars[id]),
   }))
   const encoded = encodeAnswers(answers)
-  const precedent = pathCopy.precedent
+  // The designer's precedent block is the same for every path.
+  const precedent = content.paths.items.asset_backed.precedent
 
   return (
     <>
@@ -122,7 +122,7 @@ export function ReadinessResultPage({ answers, content }: { answers: Answers; co
       <Section title={result.precedent.title}>
         <div className={styles.precedent}>
           <Image
-            src={path === 'asset_backed' ? solar : PATH_ART[path].image}
+            src={solar}
             alt=""
             fill
             sizes="(max-width: 1280px) 100vw, 1200px"
@@ -171,7 +171,11 @@ export function ReadinessResultPage({ answers, content }: { answers: Answers; co
         </div>
       </Section>
 
-      <Section title={result.route.title} description={result.route.description}>
+      <Section>
+        <div className={styles.routeHeading}>
+          <h2 className={styles.routeHeadingTitle}>{result.route.title}</h2>
+          <p className={styles.routeHeadingText}>{result.route.description}</p>
+        </div>
         <div className={styles.route}>
           <AccentSurface />
           <ol className={styles.routeSteps}>

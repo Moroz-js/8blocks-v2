@@ -42,26 +42,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $ds-space-3;
-  max-width: 589px;
+  gap: 10px;
+  width: 595px;
+  max-width: 100%;
   text-align: center;
 }
 
+// Designer's 360 × 360 window over the 589 × 368 scene, object centred in it.
 .principleArt {
-  width: min(589px, 100%);
-  aspect-ratio: 589 / 368;
-  margin-bottom: $ds-space-5;
+  position: relative;
+  flex-shrink: 0;
+  width: min(360px, 100%);
+  height: 360px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.principleScene {
+  position: absolute;
+  top: var(--crop-y);
+  left: calc(50% - var(--crop-x));
+  width: 589px;
+  height: 368px;
 }
 
 .principleTitle {
   @include ds-h5;
-  max-width: 400px;
   color: $ds-text;
 }
 
 .principleText {
-  @include ds-text-sm;
-  max-width: 400px;
+  @include ds-text-md;
+  max-width: 491px;
   color: $ds-text-muted;
 }
 
@@ -236,27 +249,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $ds-space-2;
+  justify-content: flex-end;
+  gap: 5px;
   min-height: 400px;
-  padding: 20px 20px 30px;
+  padding: 30px;
   overflow: hidden;
   border-radius: $ds-radius-card;
   text-align: center;
+
+  @include ds-mobile { padding: 270px 20px $ds-space-5; }
 }
 
+// Designer's 525 × 328 scene centred over the card, fading out towards the text.
 .wayArt {
-  width: 100%;
-  aspect-ratio: 525 / 328;
-  margin-bottom: $ds-space-3;
+  position: absolute;
+  top: -24px;
+  left: calc(50% - 262px);
+  width: 525px;
+  height: 328px;
+  -webkit-mask-image: linear-gradient(180deg, $ds-black 68%, transparent 96%);
+  mask-image: linear-gradient(180deg, $ds-black 68%, transparent 96%);
+  pointer-events: none;
 }
 
 .wayTitle {
   @include ds-text-lg;
+  position: relative;
   color: $ds-text;
 }
 
 .wayText {
   @include ds-text-sm;
+  position: relative;
   max-width: 337px;
   color: $ds-text-faint;
 }

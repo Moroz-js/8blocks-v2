@@ -197,13 +197,104 @@
   }
 }
 
+// Fixed height: the demo swaps scenes inside without moving the page.
+.windowBody {
+  position: relative;
+  height: 330px;
+  overflow: hidden;
+}
+
 .windowChat {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 18px;
-  height: 250px;
+  height: 100%;
+}
+
+// Newest message sits at the bottom; older ones scroll out of the top.
+.messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: $ds-space-2;
+  height: 100%;
+  padding: 14px;
+}
+
+.messageAi,
+.messageUser {
+  @include ds-text-xs;
+  flex-shrink: 0;
+  max-width: 80%;
+  padding: $ds-space-2 $ds-space-3;
+  border-radius: $ds-radius-md;
+}
+
+.messageAi {
+  align-self: flex-start;
+  background-color: rgba($ds-black, 0.28);
+  color: $ds-text;
+}
+
+.messageUser {
+  align-self: flex-end;
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+}
+
+.donut {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: conic-gradient(
+    $ds-pink 0 22%,
+    color-mix(in srgb, $ds-pink 78%, $ds-white) 22% 40%,
+    color-mix(in srgb, $ds-pink 58%, $ds-white) 40% 55%,
+    color-mix(in srgb, $ds-pink 40%, $ds-white) 55% 68%,
+    rgba($ds-white, 0.7) 68% 80%,
+    rgba($ds-white, 0.5) 80% 90%,
+    rgba($ds-white, 0.32) 90% 96%,
+    rgba($ds-white, 0.18) 96% 100%
+  );
+  -webkit-mask-image: radial-gradient(circle, transparent 46%, $ds-black 47%);
+  mask-image: radial-gradient(circle, transparent 46%, $ds-black 47%);
+}
+
+.unlocks {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  width: 260px;
+  height: 120px;
+
+  i {
+    flex: 1;
+    border-radius: 2px 2px 0 0;
+    background-color: rgba($ds-white, 0.35);
+  }
+
+  [data-spike] {
+    background-color: $ds-pink;
+  }
+}
+
+.progress {
+  @include ds-h3;
+  color: $ds-text;
+}
+
+.modelStage {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: $ds-space-5;
+  height: 100%;
+  padding-top: $ds-space-5;
+
+  .model { align-self: stretch; }
 }
 
 .orb {
@@ -280,11 +371,37 @@
   border-radius: $ds-radius-pill;
   background-color: rgba($ds-black, 0.25);
   color: $ds-text-muted;
+
+  &[data-typed] { color: $ds-text; }
+}
+
+.demoFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-4;
 }
 
 .demoNote {
   @include ds-text-xs;
   color: $ds-text-muted;
+}
+
+.demoToggle {
+  @include ds-text-xs;
+  @include ds-focus-visible;
+  @include ds-transition(color);
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  border-radius: $ds-radius-xs;
+  background: none;
+  color: $ds-text-muted;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+
+  &:hover { color: $ds-text; }
 }
 
 // ── Outputs ────────────────────────────────────────────────────────────

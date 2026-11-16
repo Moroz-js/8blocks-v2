@@ -18,10 +18,11 @@ $flip: 500ms ease;
   @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
 }
 
-// The locked row fades into the page like the designer's gradient overlay.
+// The locked row dissolves into the page like the designer's gradient overlay
+// (starts ~95px into the row, fully dark at its bottom edge).
 .lockedRow {
-  -webkit-mask-image: linear-gradient(180deg, $ds-black 25%, rgba($ds-black, 0.2) 100%);
-  mask-image: linear-gradient(180deg, $ds-black 25%, rgba($ds-black, 0.2) 100%);
+  -webkit-mask-image: linear-gradient(180deg, $ds-black 21%, transparent 100%);
+  mask-image: linear-gradient(180deg, $ds-black 21%, transparent 100%);
 
   @include ds-mobile {
     -webkit-mask-image: none;

@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import { AccentSurface, Button, ComparisonTable, Cta, Section, StepNumber } from '@/shared/ds'
 import { tokenomicsAiContent as page } from '@/shared/content/tokenomicsAi'
 import { ServiceHero } from '@/widgets/ServicePages/blocks/ServiceHero'
+import { AiDemo } from './AiDemo'
 import { EarlyAccessDialog } from './EarlyAccessDialog'
 import { EARLY_ACCESS_HASH } from './earlyAccess'
 import { LimitedPill } from './LimitedPill'
@@ -114,39 +115,7 @@ export function TokenomicsAiPage() {
               </ol>
               <Actions />
             </div>
-            <figure className={styles.demo}>
-              <div className={styles.demoStage} role="img" aria-label={steps.demo.label}>
-                <AccentSurface />
-                <div className={styles.window}>
-                  <div className={styles.windowBar}>
-                    <span className={styles.windowDots} aria-hidden="true">
-                      <i />
-                      <i />
-                      <i />
-                    </span>
-                    <span>8Blocks AI</span>
-                  </div>
-                  <div className={styles.windowChat}>
-                    <span className={styles.orb} aria-hidden="true" />
-                    <p className={styles.greeting}>{steps.demo.greeting}</p>
-                  </div>
-                  <div className={styles.model}>
-                    <p className={styles.modelHead}>
-                      <span className={styles.modelName}>{steps.demo.project}</span>
-                      <span className={styles.modelMeta}>{steps.demo.meta}</span>
-                    </p>
-                    <span className={styles.modelBar} aria-hidden="true">
-                      {[18, 14, 10, 22, 16, 20].map((flex, i) => (
-                        <i key={i} style={{ flex }} />
-                      ))}
-                    </span>
-                    <p className={styles.modelMeta}>{steps.demo.ready}</p>
-                  </div>
-                </div>
-                <p className={styles.demoInput}>{steps.demo.input}</p>
-              </div>
-              <figcaption className={styles.demoNote}>{steps.demo.note}</figcaption>
-            </figure>
+            <AiDemo copy={steps.demo} />
           </div>
         </Section>
 

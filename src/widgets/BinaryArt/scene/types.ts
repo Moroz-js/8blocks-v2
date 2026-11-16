@@ -2,6 +2,7 @@ export type SceneSurface = HTMLCanvasElement | OffscreenCanvas
 
 export type BinarySceneId =
   | 'hand-coin'
+  | 'hand-coin-dark'
   | 'coin-stacks'
   | 'hand-coins'
   | 'light-bulb'

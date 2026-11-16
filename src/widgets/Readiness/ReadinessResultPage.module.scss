@@ -310,6 +310,27 @@ $header: 92px; // sticky site header
 }
 
 // ── Route ───────────────────────────────────────────────────────────
+// Designer's route heading: 16px lead 16px under the title, 40px above the card.
+.routeHeading {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
+  margin-bottom: $ds-space-7;
+
+  @include ds-mobile { margin-bottom: $ds-inner-gap-mobile; }
+}
+
+.routeHeadingTitle {
+  @include ds-h3;
+  color: $ds-text;
+}
+
+.routeHeadingText {
+  @include ds-text-md;
+  max-width: 419px;
+  color: $ds-text-faint;
+}
+
 .route {
   position: relative;
   isolation: isolate;
@@ -370,7 +391,7 @@ $header: 92px; // sticky site header
 
 .routeText {
   @include ds-text-sm;
-  color: $ds-text-muted;
+  color: $ds-text-faint;
 }
 
 // ── Broken link ─────────────────────────────────────────────────────

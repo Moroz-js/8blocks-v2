@@ -14,6 +14,10 @@ interface ServiceHeroProps {
   artTop?: number
   /** Horizontal scene shift, px; a shifted scene fades out on the left. */
   artLeft?: number
+  /** Scene scale (the 1280 × 800 box shrinks around its centre; pair with artLeft). */
+  artScale?: number
+  /** Object centre x in the 1280 frame: centred under the text on mobile (default 973). */
+  artCenterX?: number
   /** Line above the title (badges). */
   eyebrow?: ReactNode
   title: ReactNode
@@ -39,6 +43,8 @@ export function ServiceHero({
   image,
   artTop = 0,
   artLeft = 0,
+  artScale = 1,
+  artCenterX,
   eyebrow,
   title,
   description,
@@ -54,7 +60,14 @@ export function ServiceHero({
     <section
       data-under-header
       className={clsx(styles.hero, styles[layout], footnote && styles.withFootnote, image && styles.withImage)}
-      style={{ '--art-top': `${artTop}px`, '--art-left': `${artLeft}px` } as CSSProperties}
+      style={
+        {
+          '--art-top': `${artTop}px`,
+          '--art-left': `${artLeft}px`,
+          '--art-scale': artScale,
+          ...(artCenterX !== undefined && { '--art-cx': `${artCenterX}px` }),
+        } as CSSProperties
+      }
     >
       {scene && (
         <>

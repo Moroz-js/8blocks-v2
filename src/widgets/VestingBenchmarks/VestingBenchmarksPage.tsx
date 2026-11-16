@@ -218,7 +218,9 @@ export function VestingBenchmarksPage({
             <ul className={styles.ctaFeatures}>
               {page.cta.features.map((feature, i) => (
                 <li key={feature.title} className={styles.ctaFeature}>
-                  <Image src={CTA_ICONS[i]} alt="" width={24} height={24} />
+                  <span className={styles.ctaIcon}>
+                    <Image src={CTA_ICONS[i]} alt="" />
+                  </span>
                   <p className={styles.ctaFeatureTitle}>{feature.title}</p>
                   <p className={styles.ctaFeatureText}>{feature.text}</p>
                 </li>
