@@ -4,7 +4,9 @@
 
 ## Проверено
 
-- 2026-11-16 (локально, без коммита) исправлены замечания дизайнера из Google-документа, пункты 7–27. Что сделано:
+- 2026-11-16 замечания дизайнера выложены на staging по команде владельца: коммит `38b34db`, [run 43857257761](https://github.com/Moroz-js/8blocks-v2/actions/runs/43857257761) — success (оба staging, production skipped). Перед пушем `npm run build` прошёл. На staging `/`, `/product/tokenomics-ai`, `/product/tokenization-cases`, `/services/tokenomics`, `/ru`, `/ru/product/digital-assets` и `handCoinDark.webp` отвечают 200; аудиты (`mantra-om`, `lma1`, `isd`, `hes`) — 200, `data-ds=v2`, JSON-LD на месте, сняты на 1280/375. В консоли аудита React #418 — расхождение гидратации графиков recharts в RichText (известно, было и раньше).
+
+- 2026-11-16 (выложено коммитом `38b34db`) исправлены замечания дизайнера из Google-документа, пункты 7–27. Что сделано:
   - **Digital Assets:** таблица шагов без рамки, номера по центру; флаги на карте юрисдикций переставлены; перенос в заголовке Owners.
   - **Сцены и иллюстрации:** лампочка в hero аудита (в порте не вызывался `buildBulb`); `coinstacks` заменены на `buckets`; новая сцена Hand Coin Dark в hero главной (`hand-coin-dark`, `ServiceHero artScale`); центры иллюстраций на About и Methodology.
   - **Блоки страниц:** Cta `md` по вертикальному центру; на калькуляторе блок top fixes с fade и меньшим отступом; на бенчмарках AI-блок с иконками и дивайдерами; на Tokenomics AI анимированное демо `AiDemo` (фазы чата и результата, пауза, reduced-motion); на readiness result фото precedent одно для всех путей (по ответу дизайнера) и заголовок typical route.
