@@ -74,11 +74,12 @@ jobs:
       RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       EMAIL_TEST_RECIPIENT: ${{ secrets.EMAIL_TEST_RECIPIENT }}
       NEXT_PUBLIC_SITE_URL: ${{ inputs.site_url || secrets[format('{0}_NEXT_PUBLIC_SITE_URL', inputs.site)] }}
-      NEXT_PUBLIC_GTM_ID: ${{ secrets[format('{0}_NEXT_PUBLIC_GTM_ID', inputs.site)] }}
+      # Staging builds without analytics: no GTM and no PostHog.
+      NEXT_PUBLIC_GTM_ID: ${{ !inputs.staging && secrets[format('{0}_NEXT_PUBLIC_GTM_ID', inputs.site)] || '' }}
       NEXT_PUBLIC_LANG: ${{ inputs.lang || secrets[format('{0}_LANG', inputs.site)] }}
       NEXT_PUBLIC_REPLAIN_ID: ${{ secrets[format('{0}_NEXT_PUBLIC_REPLAIN_ID', inputs.site)] }}
       NEXT_PUBLIC_CALENDLY_URL: ${{ secrets[format('{0}_NEXT_PUBLIC_CALENDLY_URL', inputs.site)] }}
-      NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}
+      NEXT_PUBLIC_POSTHOG_KEY: ${{ !inputs.staging && secrets.NEXT_PUBLIC_POSTHOG_KEY || '' }}
       NEXT_PUBLIC_STAGING: ${{ inputs.staging }}
       NEXT_PUBLIC_BASE_PATH: ${{ inputs.base_path }}
       NEXT_PUBLIC_STAGING_EN_URL: ${{ inputs.staging && 'https://staging.8blocks.io' || '' }}
