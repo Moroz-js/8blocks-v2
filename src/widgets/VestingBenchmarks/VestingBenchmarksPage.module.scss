@@ -296,8 +296,25 @@
   gap: $ds-space-5;
 }
 
+// Registered so the conic stops interpolate between buckets instead of jumping.
+@property --low {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --high {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
+}
+
 .coneCircle {
   position: relative;
+  transition: --low 900ms cubic-bezier(0.32, 0.72, 0, 1), --high 900ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+
   width: 350px;
   max-width: 100%;
   aspect-ratio: 1;

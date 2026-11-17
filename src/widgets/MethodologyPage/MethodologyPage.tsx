@@ -111,7 +111,7 @@ export function MethodologyPage() {
 
       <header className={styles.hero} data-under-header>
         <BinaryScene scene="brain" className={styles.heroArt} />
-        <div className={styles.heroGlow} aria-hidden="true" />
+        <div className={styles.heroFade} aria-hidden="true" />
         <div className={styles.heroText}>
           <h1 className={styles.title}>{content.title}</h1>
           <p className={styles.lead}>{content.lead}</p>

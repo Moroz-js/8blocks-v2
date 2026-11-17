@@ -1,10 +1,12 @@
 # Состояние
 
-Обновлено: 2026-11-16.
+Обновлено: 2026-11-17.
 
 ## Проверено
 
-- 2026-11-16 на staging выключена аналитика по запросу владельца. Для staging-сборок `deploy-site.yml` передаёт пустые `NEXT_PUBLIC_GTM_ID` и `NEXT_PUBLIC_POSTHOG_KEY` (GTM-скрипт не рендерится, PostHog не инициализируется), а `ArticleViewTracker` не шлёт просмотры (staging пишет в базу EN-прода). Пока правка не попала в `main`, деплой из `main` собирает staging по старому workflow — с аналитикой.
+- 2026-11-17 (выложено на staging) hero `/methodology`: розовое свечение `heroGlow` убрано, внизу вернулось затемнение 200px из макета (`heroFade`, тот же градиент, что в `ServiceHero`), подпись автора над ним. Снято на 1280 и 375 на локальном dev.
+- 2026-11-17 (выложено на staging) на `/learn/token-vesting-benchmarks` вернулась анимация конуса в «Allocation benchmarks by bucket»: `--low`/`--high` зарегистрированы через `@property`, переход 900ms как в макете (puppeteer: на 300ms промежуточное 19.3% между 15% и 20%). На главной заменён текст бегущей строки (`home.tags`) в EN и RU по запросу клиента.
+- 2026-11-16 на staging выключена аналитика по запросу владельца. Для staging-сборок `deploy-site.yml` передаёт пустые `NEXT_PUBLIC_GTM_ID` и `NEXT_PUBLIC_POSTHOG_KEY` (GTM-скрипт не рендерится, PostHog не инициализируется), а `ArticleViewTracker` не шлёт просмотры (staging пишет в базу EN-прода). В `main` перенесено отдельным [PR #10](https://github.com/Moroz-js/8blocks-v2/pull/10) (squash `5dbc360`, слит с `--admin` по подтверждению владельца); [run 43882660645](https://github.com/Moroz-js/8blocks-v2/actions/runs/43882660645) — success, все пять деплоев. После него `8blocks.io`, `tokenomika.ru`, `8blocks.ae` — 200 и аналитика работает; `staging.8blocks.io` и `/ru` — 200, без запросов к GTM/PostHog, staging собран из ветки `staging` (v2 на месте).
 
 - 2026-11-16 замечания дизайнера выложены на staging по команде владельца: коммит `38b34db`, [run 43857257761](https://github.com/Moroz-js/8blocks-v2/actions/runs/43857257761) — success (оба staging, production skipped). Перед пушем `npm run build` прошёл. На staging `/`, `/product/tokenomics-ai`, `/product/tokenization-cases`, `/services/tokenomics`, `/ru`, `/ru/product/digital-assets` и `handCoinDark.webp` отвечают 200; аудиты (`mantra-om`, `lma1`, `isd`, `hes`) — 200, `data-ds=v2`, JSON-LD на месте, сняты на 1280/375. В консоли аудита React #418 — расхождение гидратации графиков recharts в RichText (известно, было и раньше).
 

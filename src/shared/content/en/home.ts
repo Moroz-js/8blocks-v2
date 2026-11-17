@@ -7,7 +7,16 @@ export const home = {
       'We design, stress-test, and audit token economies for Web3 projects and asset owners, from the first model to post-launch.',
     action: { label: 'Get in touch', href: '/contact' },
   },
-  tags: ['Strategic consulting', 'Tokenomics', 'Tokenomics audit', 'Token economy', 'Web3', 'RWA', 'DeFi', 'GameFi'],
+  tags: [
+    'Digital Asset Strategy',
+    'RWA',
+    'Tokenization',
+    'Token Economy Design',
+    'Tokenomics',
+    'Economic Modeling',
+    'Strategic Consulting',
+    'Web3 Launch Strategy',
+  ],
   services: {
     title: 'Economics behind every token',
     more: 'Learn more',
