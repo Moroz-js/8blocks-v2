@@ -1,5 +1,23 @@
 // Token Vesting Benchmarks — texts from the designer's mockup (project 2) that are not in platformPages.
 
+/** 8Blocks tips for the project cards: general advice, spread so a category does not repeat one. */
+const TIPS = {
+  community:
+    'If you leave more than 50% of tokens to the community, weigh two things: the number of users and how much use the token actually has. You need a clear balance between distribution and utility. With few users and nowhere to use the token, all of it will be sold.',
+  treasury:
+    "A treasury's main job is to give tokens a transparent route to the market. It holds tokens that can't reach the market until the stated goals are met.",
+  reserve:
+    "A strategic reserve should stay locked until its stated goal is reached. If it sits in an ordinary wallet, it isn't a reserve, it's an overhang.",
+  vesting:
+    "Copying cliff and vesting periods makes no sense: they should follow the project's roadmap, such as when the product is ready and when the next release ships.",
+  investors:
+    'Tokenomics shows the size of the investor allocation, but not the terms on which investors came in.',
+  rewards:
+    'You can copy the rewards fund allocation, but study how tokens are removed from circulation too. One may not work without the other.',
+  picture:
+    "Splitting tokens into allocations isn't tokenomics yet, so copying it won't give the same result. Look at the whole picture: how the tokens were split, and why.",
+}
+
 export const vestingBenchmarksContent = {
   approach: {
     title: 'A smart approach\nto using benchmarks',
@@ -39,46 +57,27 @@ export const vestingBenchmarksContent = {
   },
   /** 8Blocks advice per project, keyed by the project name in projects.json. */
   advice: {
-    Solana:
-      'A big community reserve suits an L1 that funds validators for a decade. Sale rounds unlocked in under a year, though: copy the reserve, not the unlock speed.',
-    Aptos:
-      'A clean template for insiders: 0% at TGE, 12-month cliff, 4 years in total. The 10-year community vest fits a well-funded L1, not a seed-stage project.',
-    Sui: 'Long cliffs kept early sell pressure low, but over half of supply lands after 2030. Model that overhang before borrowing a back-loaded design.',
-    Celestia:
-      "A 20% public float gave real liquidity at launch. An insider share above 50% with a 2-year backer vest is aggressive without demand like Celestia's.",
-    Arbitrum:
-      'A 4-year lock with a 1-year cliff for team and investors is a strong default. The airdrop was the only float, so early price discovery sat with farmers.',
-    Optimism:
-      'Leaving insider unlock dates to governance created uncertainty for holders. Even if you copy the ecosystem fund, publish a fixed unlock schedule.',
-    Starknet:
-      'Insider unlocks started two months after launch, and the market priced that in. Keep at least a 12-month cliff for team and investors.',
-    ZKsync:
-      'A 1-year cliff plus 3-year monthly vest for insiders is a sound baseline. Keep one official split: conflicting numbers on aggregators cost trust.',
-    Uniswap:
-      'A claimable 15% airdrop and a 4-year insider vest set the DeFi standard. Perpetual inflation only makes sense if governance has a real use for it.',
-    dYdX: 'Half of supply went to insiders, and the amended lockup moved unlocks rather than removing them. Keep the insider share well below 50% from the start.',
-    Ethena:
-      '25% at a 1-year cliff, then 3-year linear, is a common investor structure. Check that trackers model the cliff correctly: DropsTab shows it as linear.',
-    Hyperliquid:
-      'Zero VC allocation and a large day-one airdrop built strong demand. It works because the product already had revenue; without it the float becomes sell pressure.',
-    'STON.fi':
-      'A ~6% TGE float keeps early pressure low. Spread the cliffs so treasury, team and investor unlocks do not overlap in months 24-36.',
-    'Axie Infinity':
-      'A 22% TGE float with most team tokens unlocked at day 0 is risky outside a bull cycle. Gameplay emissions need sinks of the same size.',
-    'The Sandbox':
-      'An unlocked public sale and seed tranches every six months create predictable unlock spikes. Monthly vesting smooths them out.',
-    Immutable:
-      'Re-locking the developer tranche helped, but changing schedules after launch hurts credibility. Set conservative terms at TGE instead.',
-    Beam: 'Re-cliffing contributor tokens to 4 years strengthened alignment. A migration from an older token (MC 1:100) confuses holders, so communicate it early.',
-    'Worldcoin (World)':
-      'A ~1% float at launch is the low-float, high-FDV pattern the market punished in 2024. Aim for a higher initial float.',
-    'io.net':
-      'Supplier emissions over 20 years tie new supply to real network usage. Keep TGE unlocks of large buckets small: 30% of R&D adds early float.',
-    Grass:
-      'Keeping investor tokens non-stakeable while locked is a good alignment detail. A ~24% float at TGE needs real demand from day one to hold the price.',
-    'Render Network':
-      'No vesting worked for a 2017 ICO with tiny sales. An escrow-based supply model is still useful, but sale tokens today need a vesting schedule.',
-    'Virtuals Protocol':
-      'No future unlocks removes vesting risk, but 35% in a treasury without disbursement rules is the open question. Publish treasury spending rules.',
+    Solana: TIPS.picture,
+    Aptos: TIPS.community,
+    Sui: TIPS.reserve,
+    Celestia: TIPS.investors,
+    Arbitrum: TIPS.treasury,
+    Optimism: TIPS.picture,
+    Starknet: TIPS.vesting,
+    ZKsync: TIPS.reserve,
+    Uniswap: TIPS.community,
+    dYdX: TIPS.investors,
+    Ethena: TIPS.vesting,
+    Hyperliquid: TIPS.rewards,
+    'STON.fi': TIPS.treasury,
+    'Axie Infinity': TIPS.rewards,
+    'The Sandbox': TIPS.reserve,
+    Immutable: TIPS.picture,
+    Beam: TIPS.vesting,
+    'Worldcoin (World)': TIPS.community,
+    'io.net': TIPS.rewards,
+    Grass: TIPS.investors,
+    'Render Network': TIPS.treasury,
+    'Virtuals Protocol': TIPS.community,
   } as Record<string, string>,
 }
