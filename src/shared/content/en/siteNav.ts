@@ -36,7 +36,7 @@ export const siteNav = {
     },
     {
       id: 'assets',
-      label: 'Digital Assets',
+      label: 'Asset Tokenization',
       intro: {
         href: '/product/digital-assets',
         title: 'Start with the business case',

@@ -79,3 +79,4 @@
 - 2026-11-16 — Замечания дизайнера (пункты 7–27 Google-документа): правки Digital Assets, сцены (лампочка аудита, buckets, Hand Coin Dark), Cta md, калькулятор, бенчмарки, демо Tokenomics AI, readiness result, About/Methodology; мобильные иллюстрации в потоке, поля 16px, MiniApp, CoverCard; `/audits/[slug]` на шаблоне статьи v2 с рейтингом на токенах и рабочим PDF. Без коммита.
 - 2026-11-17 — Methodology hero: убрано розовое свечение, возвращён нижний fade иллюстрации по макету. Выложено на staging.
 - 2026-11-17 — Анимация конуса на бенчмарках (@property), новый текст бегущей строки на главной (EN/RU). Выложено на staging.
+- 2026-11-18 — Шапка EN: Digital Assets → Asset Tokenization. Выложено на staging.
