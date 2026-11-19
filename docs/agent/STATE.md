@@ -1,8 +1,10 @@
 # Состояние
 
-Обновлено: 2026-11-18.
+Обновлено: 2026-11-19.
 
 ## Проверено
+
+- 2026-11-19 релиз staging в прод по команде владельца: `main` сначала смержен в `staging` (`cf1266b`, единственный конфликт `migrations/index.ts` — оставлены обе миграции по дате: `20261109_notification_settings`, `20261112_seo_content_fixes`), typecheck и build прошли, staging-деплой success. [PR #11](https://github.com/Moroz-js/8blocks-v2/pull/11) слит обычным merge с `--admin` (`d28681f`), [run 44478268139](https://github.com/Moroz-js/8blocks-v2/actions/runs/44478268139) — success, все пять деплоев. На `8blocks.io`, `8blocks.ae`, `tokenomika.ru` страницы `/`, `/methodology`, `/services/tokenomics`, `/product/calculator`, `/learn/token-vesting-benchmarks`, `/blog` — 200, `data-ds=v2`, hreflang (4), JSON-LD и GTM на месте. `staging` после релиза fast-forward до `main`.
 
 - 2026-11-18 (выложено на staging) в шапке EN пункт мегаменю `Digital Assets` переименован в `Asset Tokenization` (`en/siteNav.ts`); RU и тексты внутри меню не менялись.
 
