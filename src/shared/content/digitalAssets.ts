@@ -1,8 +1,7 @@
 import { lang } from '@/shared/i18n'
-import * as ru from './ru/digitalAssets'
 import * as en from './en/digitalAssets'
+import * as ru from './ru/digitalAssets'
 
-const locale = lang === 'ru' ? ru : en
+export type { CountryId, DigitalAssetsContent } from './en/digitalAssets'
 
-export const digitalAssetsContent = locale.digitalAssetsContent
-export const digitalAssetsMeta = locale.digitalAssetsMeta
+export const digitalAssets = lang === 'ru' ? ru.digitalAssets : en.digitalAssets

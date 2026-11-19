@@ -17,9 +17,10 @@ export const contactPageContent = {
       'Пишите по вопросам стратегического консалтинга, токеномики и аудита. Ответим в течение одного рабочего дня.',
     person: {
       name: 'Оксана',
-      role: 'COO',
+      role: 'COO, А8А9',
       tgHref: 'https://t.me/Eight_Blocks',
-      tgLabel: 'Канал в Telegram →',
+      tgLabel: 'Telegram',
+      emailLabel: 'Почта:',
     },
     preferEmailLabel: 'Предпочитаете почту?',
   },
@@ -44,9 +45,11 @@ export const contactPageContent = {
 
 export const contactFormContent = {
   nameLabel: 'Имя',
-  namePlaceholder: 'Иван Иванов',
+  namePlaceholder: 'Ваше имя',
+  emailLabel: 'Email',
+  emailPlaceholder: 'you@company.com',
   messageLabel: 'Сообщение',
-  messagePlaceholder: 'Расскажите о проекте и что вы ищете',
+  messagePlaceholder: 'Расскажите о проекте',
   submitLabel: 'Оставить заявку',
   sendingLabel: 'Отправка…',
   failedError: 'Не удалось отправить',

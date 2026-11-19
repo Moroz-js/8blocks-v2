@@ -1,0 +1,39 @@
+@use '@/shared/ds/styles' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: $ds-gutter;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 240px;
+  padding: $ds-space-7 20px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  text-align: center;
+
+  @include ds-mobile {
+    min-height: 160px;
+    padding: $ds-space-5 $ds-space-3;
+  }
+}
+
+.value {
+  @include ds-h3;
+  color: $ds-text;
+}
+
+.label {
+  @include ds-text-sm;
+  max-width: 200px;
+  color: $ds-text;
+  opacity: 0.5;
+}

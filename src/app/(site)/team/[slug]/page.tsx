@@ -7,7 +7,7 @@ import config from '@payload-config'
 import type { ArticleCard } from '@/entities/article'
 import { ArticleCardUI } from '@/entities/article'
 import type { EventCard } from '@/entities/event'
-import { EventsPage } from '@/widgets/EventsPage'
+import { EventsPage, resolveEventView } from '@/widgets/EventsPage'
 import { eventsContent } from '@/shared/content/eventsPage'
 import { mapEventCard } from '@/shared/lib/event-mappers'
 import { visibleEventWhere } from '@/shared/lib/visible-event-where'
@@ -104,8 +104,7 @@ export default async function TeamMemberPage({ params, searchParams }: PageProps
     .filter((doc) => Array.isArray(doc.author) && doc.author.some((item) => typeof item === 'object' && item && String(item.id) === String(author.id)))
     .map(mapArticle)
     .filter((article): article is ArticleCard => article !== null)
-  const timing = query.when === 'past' ? 'past' : 'upcoming'
-  const format = query.format === 'online' ? 'online' : 'offline'
+  const { timing, format } = resolveEventView(events, query.when, query.format)
 
   return (
     <div className={styles.root}>

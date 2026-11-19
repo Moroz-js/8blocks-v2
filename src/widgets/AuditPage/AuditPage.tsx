@@ -1,38 +1,13 @@
-import { RichText } from '@/shared/render'
-import { buildToc } from '@/shared/lib/buildToc'
-import { ServiceCtaBlock } from '@/widgets/ServiceCtaBlock'
-import { lang, t } from '@/shared/i18n'
-import { auditsArchiveContent } from '@/shared/content/auditsPage'
-import type { AuditHeroData } from './auditMetrics'
-import { AuditHero } from './AuditHero'
-import { AuditTakeaways } from './AuditTakeaways'
+import Link from 'next/link'
+import { estimateReadingTime } from '@/entities/article'
+import { Cta, Section } from '@/shared/ds'
+import { siteConfig } from '@/shared/config/site'
+import { auditDetailContent, auditsArchiveContent } from '@/shared/content/auditsPage'
+import { ShareBlock } from '@/features/shareBlock'
+import { ArticleBody, ArticleCover, ArticleHeader, ArticleRoot } from '@/widgets/ArticlePage'
+import type { AuditExpertData, AuditHeroData } from './auditMetrics'
 import { AuditRating, type RatingBlock } from './AuditRating'
-import { type AuditExpertData } from './AuditExpert'
-import { AuditDocMarker } from './AuditDocMarker'
-import { AuditToc } from './AuditToc'
-import styles from './AuditPage.module.scss'
-
-const AUDIT_DISCLAIMER = t({
-  ru: 'Аудит не является инвестиционной рекомендацией. Используйте его как часть собственного анализа.',
-  en: 'This audit is not investment advice. Use it as part of your own analysis.',
-})
-
-function formatDate(iso?: string | null): string {
-  if (!iso) return ''
-  return new Date(iso).toLocaleDateString(lang === 'en' ? 'en-US' : 'ru-RU', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-}
-
-function formatEyebrowDate(iso?: string | null): string {
-  if (!iso) return ''
-  const d = new Date(iso)
-  const mm = String(d.getMonth() + 1).padStart(2, '0')
-  const yy = String(d.getFullYear()).slice(-2)
-  return `${mm}.${yy}`
-}
+import { AuditSummary } from './AuditSummary'
 
 interface AuditData {
   title: string
@@ -50,67 +25,64 @@ interface AuditData {
 
 interface Props {
   audit: AuditData
+  /** `?print=1` render for the PDF route: no links, share, CTA or table of contents. */
   print?: boolean
 }
 
+/** Public audit on the v2 article template, with the summary under the header and the rating block. */
 export function AuditPage({ audit, print = false }: Props) {
-  const dateLabel = formatDate(audit.publishedAt)
-  const eyebrowDate = formatEyebrowDate(audit.publishedAt)
-  const ratingBlocks = audit.ratingBlocks ?? []
-  const conclusionParas = (audit.excerpt ?? '')
+  const hero = audit.hero ?? {}
+  const expert = audit.expert
+  const ticker = hero.tokenName && hero.tokenName !== audit.title ? hero.tokenName : null
+  const conclusion = (audit.excerpt ?? '')
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean)
-  const tocItems = buildToc(audit.content)
-  const showToc = !print && tocItems.length >= 2
+  const auditUrl = `${siteConfig.url.replace(/\/$/, '')}/audits/${audit.slug}`
 
   return (
-    <>
-      <AuditDocMarker />
-      <div className={styles.printCover} data-pdf-cover>
-        <AuditHero
+    <ArticleRoot>
+      <div data-pdf-cover>
+        <ArticleHeader
+          eyebrow={
+            <>
+              <Link href="/audits">{auditsArchiveContent.labelSection}</Link>
+              {ticker && <span>{` · ${ticker}`}</span>}
+            </>
+          }
           title={audit.title}
-          slug={audit.slug}
-          hero={audit.hero}
-          dateLabel={dateLabel || null}
-          eyebrowDate={eyebrowDate || null}
-          print={print}
+          excerpt={hero.projectDescription}
+          authors={expert?.name ? [{ name: expert.name, position: expert.role ?? null, linkedIn: expert.linkedIn ?? null }] : []}
+          publishedAt={audit.publishedAt}
+          readingTime={estimateReadingTime(audit.content)}
         />
-
-        <AuditTakeaways
-          verdict={audit.hero?.verdict}
-          strength={audit.hero?.strength}
-          weakness={audit.hero?.weakness}
-        />
+        {!print && audit.cover && <ArticleCover src={audit.cover.url} alt={audit.cover.alt} />}
+        <AuditSummary slug={audit.slug} hero={hero} print={print} />
       </div>
 
-      <article className={styles.root}>
-        {audit.content != null ? (
-          <div className={styles.content}>
-            {showToc && <AuditToc items={tocItems} />}
-            <RichText content={audit.content} />
-          </div>
-        ) : null}
-      </article>
+      {audit.content != null && (
+        <ArticleBody content={audit.content} toc={!print}>
+          {!print && <ShareBlock url={auditUrl} title={audit.title} />}
+        </ArticleBody>
+      )}
 
-      {ratingBlocks.length > 0 && (
+      {(audit.ratingBlocks ?? []).length > 0 && (
         <AuditRating
-          blocks={ratingBlocks}
-          letterRating={audit.hero?.letterRating}
-          totalScore={audit.hero?.score}
-          conclusion={conclusionParas}
-          disclaimer={AUDIT_DISCLAIMER}
-          expert={audit.expert}
+          blocks={audit.ratingBlocks ?? []}
+          labels={auditDetailContent.rating}
+          letterRating={hero.letterRating}
+          totalScore={hero.score}
+          conclusion={conclusion}
+          disclaimer={auditDetailContent.disclaimer}
+          expert={expert}
         />
       )}
 
       {!print && audit.relatedArticleSlug && audit.ctaText && (
-        <ServiceCtaBlock
-          headline={audit.ctaText}
-          ctaLabel={auditsArchiveContent.blogArticleLink}
-          ctaHref={`/blog/${audit.relatedArticleSlug}`}
-        />
+        <Section>
+          <Cta size="md" title={audit.ctaText} primary={{ label: auditsArchiveContent.blogArticleLink, href: `/blog/${audit.relatedArticleSlug}` }} />
+        </Section>
       )}
-    </>
+    </ArticleRoot>
   )
 }

@@ -1,0 +1,118 @@
+@use '@/shared/ds/styles' as *;
+
+.layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: $ds-space-7;
+
+  @include ds-tablet {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-8;
+  width: 595px;
+
+  @include ds-tablet {
+    gap: $ds-space-6;
+    width: auto;
+  }
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-2;
+}
+
+.title {
+  @include ds-h4;
+  color: $ds-text;
+}
+
+.description {
+  @include ds-text-sm;
+  max-width: 520px;
+  margin-top: $ds-space-2;
+  color: $ds-text-faint;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+}
+
+.good { --status: var(--ds-success); }
+.medium { --status: var(--ds-warning); }
+.bad { --status: var(--ds-danger); }
+
+.item {
+  @include ds-transition(background-color);
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+}
+
+.open {
+  background-color: color-mix(in srgb, var(--status) 10%, transparent);
+}
+
+.trigger {
+  @include ds-focus-visible;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-4;
+  width: 100%;
+  padding: 20px 25px;
+  border: none;
+  border-radius: $ds-radius-card;
+  background: none;
+  color: $ds-text;
+  text-align: left;
+  cursor: pointer;
+
+  .open & { padding-bottom: 0; }
+
+  @include ds-mobile { padding: $ds-space-4 20px; }
+}
+
+.name {
+  @include ds-text-md;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--status);
+}
+
+.chevron {
+  @include ds-transition(transform);
+  display: flex;
+
+  .open & { transform: rotate(180deg); }
+}
+
+.panel {
+  @include ds-text-sm;
+  padding: 10px 25px 20px;
+  color: $ds-text-muted;
+
+  @include ds-mobile { padding: 10px 20px $ds-space-4; }
+}
+
+.chart {
+  flex-shrink: 0;
+  width: 480px;
+  margin-top: $ds-space-2;
+
+  @include ds-tablet {
+    align-self: center;
+    width: min(480px, 100%);
+  }
+}

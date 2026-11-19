@@ -37,17 +37,50 @@ function buildContentSecurityPolicy(): string {
 
 const CONTENT_SECURITY_POLICY = buildContentSecurityPolicy();
 const IS_STAGING = process.env.NEXT_PUBLIC_STAGING === "true";
+// Staging shares the EN production database, but uploaded files live on production.
+const MEDIA_PROXY_ORIGIN = (process.env.MEDIA_PROXY_ORIGIN || "").replace(/\/$/, "");
 const IS_PROD = process.env.NODE_ENV === "production";
 
 const nextConfig: NextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   allowedDevOrigins: ["localhost", "127.0.0.1"],
 
+  // Метаданные всегда блокирующие (в <head>) для любого UA: иначе Next стримит их в <body>
+  // для краулеров вне встроенного списка (GPTBot, ClaudeBot, PerplexityBot, SEO-краулеры).
+  htmlLimitedBots: /.*/,
+
   async redirects() {
     return [
       { source: '/media', destination: '/press', permanent: true },
       { source: '/media/:path*', destination: '/press/:path*', permanent: true },
+      // Старый i18n-префикс: на /en ссылаются внешние сайты.
+      { source: '/en', destination: '/', permanent: true },
+      { source: '/en/:path*', destination: '/:path*', permanent: true },
+      // Кейсы, на которые статьи ссылались как на посты блога.
+      { source: '/blog/earnpark-weekly-vesting-audit', destination: '/cases/earnpark-weekly-vesting-audit', permanent: true },
+      {
+        source: '/blog/how-we-built-a-web3-game-that-made-4m-on-day-one',
+        destination: '/cases/how-we-built-a-web3-game-that-made-4m-on-day-one',
+        permanent: true,
+      },
+      { source: '/blog/web3-project-case', destination: '/cases/web3-project-case', permanent: true },
+      // 404 с органическим трафиком (GA4 page_not_found, 2026).
+      { source: '/contact1', destination: '/contact', permanent: true },
+      { source: '/audits/quant-qnt-token-audit', destination: '/audits/quant-network-tokenomics-audit', permanent: true },
     ]
+  },
+
+  async rewrites() {
+    return {
+      beforeFiles: MEDIA_PROXY_ORIGIN
+        ? [
+            { source: "/api/media/file/:path*", destination: `${MEDIA_PROXY_ORIGIN}/api/media/file/:path*` },
+            { source: "/uploads/:path*", destination: `${MEDIA_PROXY_ORIGIN}/uploads/:path*` },
+          ]
+        : [],
+      afterFiles: [],
+      fallback: [],
+    };
   },
 
   async headers() {
@@ -87,7 +120,12 @@ const nextConfig: NextConfig = {
       { pathname: "/icons/**" },
       { pathname: "/img/**" },
       ...(process.env.NEXT_PUBLIC_BASE_PATH
-        ? [{ pathname: `${process.env.NEXT_PUBLIC_BASE_PATH}/img/tokenomics-ai/**` }]
+        ? [
+            { pathname: `${process.env.NEXT_PUBLIC_BASE_PATH}/img/tokenomics-ai/**` },
+            // Static image imports (next/image with `import img from './x.webp'`)
+            // get the basePath prefix; without this the optimizer returns 400 on RU.
+            { pathname: `${process.env.NEXT_PUBLIC_BASE_PATH}/_next/static/media/**` },
+          ]
         : []),
       { pathname: "/api/media/file/**" },
     ],

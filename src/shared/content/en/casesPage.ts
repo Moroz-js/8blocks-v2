@@ -1,7 +1,7 @@
 export const casesContent = {
   headline: 'Portfolio',
   description:
-    "Our clients' case studies — from DeFi and GameFi to real-world asset tokenization and international settlements.",
+    "Our clients' case studies, from DeFi and GameFi to real-world asset tokenization and international settlements",
 } as const
 
 export const casesMeta = {
@@ -34,6 +34,10 @@ export const casesUiContent = {
   bookProject: 'Book a similar project',
   relatedArticle: 'Read the related article',
   backToCases: 'Back to all cases',
+  allCases: 'All cases',
   snapshotLabel: 'Project snapshot',
   emptyLabel: 'No cases yet',
+  countSingular: 'case',
+  countFew: 'cases',
+  countMany: 'cases',
 } as const

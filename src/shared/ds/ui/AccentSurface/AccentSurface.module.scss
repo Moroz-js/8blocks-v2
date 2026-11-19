@@ -1,0 +1,93 @@
+@use '@/shared/ds/styles' as *;
+
+// Texture tiles; the PNGs already carry the final (reduced) opacity.
+$grain: 160px;
+$specks: 240px;
+$specks-rise: 4 * $specks;
+$sway: 3px;
+
+.root {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  container-type: size;
+}
+
+.fill {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--accent-angle, 146deg), $ds-accent-stops);
+  background-position: var(--accent-x, 0) var(--accent-y, 0);
+  background-size: var(--accent-w, 100%) var(--accent-h, 100%);
+  background-repeat: no-repeat;
+
+  // Angle from the block's own proportions; groups set --accent-angle from script.
+  @supports (width: calc(1px * cos(0deg))) and (container-type: size) {
+    background-image: linear-gradient(
+      var(--accent-angle, calc(180deg - atan2(1.53 * 100cqh, 100cqw))),
+      $ds-accent-stops
+    );
+  }
+
+  // Grain drifts up slowly; brighter specks rise faster with a slight sway.
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat;
+  }
+
+  &::before {
+    bottom: -$grain;
+    background-image: url('../../assets/accent-noise.png');
+    background-size: $grain $grain;
+    animation: grain 120s linear infinite;
+  }
+
+  &::after {
+    inset: 0 (-$sway) (-$specks-rise);
+    background-image: url('../../assets/accent-bubbles.png');
+    background-size: $specks $specks;
+    animation:
+      specks 120s linear infinite,
+      sway 18s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before,
+    &::after {
+      animation: none;
+    }
+  }
+}
+
+@keyframes grain {
+  to {
+    transform: translateY(-$grain);
+  }
+}
+
+@keyframes specks {
+  to {
+    transform: translateY(-$specks-rise);
+  }
+}
+
+@keyframes sway {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  25% {
+    translate: $sway 0;
+  }
+
+  75% {
+    translate: (-$sway) 0;
+  }
+}

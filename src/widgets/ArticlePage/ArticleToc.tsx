@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useRef, useState } from 'react'
 import { uiStrings } from '@/shared/content/uiStrings'
@@ -38,8 +38,8 @@ export function ArticleToc({ items }: Props) {
   if (!items.length) return null
 
   return (
-    <nav className={styles.toc} aria-label={uiStrings.tableOfContents}>
-      <p className={styles.tocTitle}>{uiStrings.tableOfContents}</p>
+    <nav className={styles.toc} aria-label={uiStrings.onThisPage}>
+      <p className={styles.tocTitle}>{uiStrings.onThisPage}</p>
       <ol className={styles.tocList}>
         {items.map(({ id, text }) => (
           <li key={id} className={styles.tocItem}>

@@ -1,0 +1,8 @@
+@use '@/shared/ds/styles' as *;
+
+// Two rows of cards in one block (audit «What we review»).
+.cardRows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

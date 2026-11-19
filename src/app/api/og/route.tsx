@@ -1,8 +1,6 @@
 import { ImageResponse } from 'next/og'
-import {
-  decodeAnswers,
-  evaluate,
-} from '@/shared/lib/platform/diagnostic/scoring'
+import { decodeAnswers, evaluate, PILLARS } from '@/shared/lib/platform/readiness/scoring'
+import { readiness } from '@/shared/content/readiness'
 import { decodeModel } from '@/shared/lib/platform/tokenlab/urlState'
 import { computeStructureScore } from '@/shared/lib/platform/tokenlab/scoringV3'
 import { calcUnlockPressure12m } from '@/shared/lib/platform/tokenlab/pressure'
@@ -171,7 +169,7 @@ export async function GET(request: Request) {
   if (answers) {
     const result = evaluate(answers)
     return new ImageResponse(
-      <Frame footer="Tokenization Readiness Assessment">
+      <Frame footer={readiness.meta.title}>
         <div
           style={{
             display: 'flex',
@@ -185,17 +183,18 @@ export async function GET(request: Request) {
               color: 'rgba(255,255,255,0.42)',
               fontSize: 30,
               letterSpacing: 4,
+              textTransform: 'uppercase',
             }}
           >
-            [ VERDICT ]
+            {readiness.statuses[result.status].name}
           </span>
           <span style={{ fontSize: 72, fontWeight: 600, lineHeight: 1.05 }}>
-            {result.verdict.name}
+            {readiness.paths.items[result.path].name}
           </span>
           <div style={{ display: 'flex', gap: 16 }}>
-            {result.pillars.map((pillar) => (
+            {PILLARS.map((id) => (
               <div
-                key={pillar.key}
+                key={id}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -205,10 +204,10 @@ export async function GET(request: Request) {
                 }}
               >
                 <span style={{ fontSize: 18, textTransform: 'uppercase' }}>
-                  {pillar.key}
+                  {readiness.pillars[id].label.replace('\n', ' ')}
                 </span>
                 <span style={{ color: '#e84690', fontSize: 30 }}>
-                  {pillar.score}/{pillar.max}
+                  {Math.round(result.pillars[id] * 100)}%
                 </span>
               </div>
             ))}
@@ -220,13 +219,10 @@ export async function GET(request: Request) {
   }
 
   return new ImageResponse(
-    <Frame footer="Tokenization Readiness Assessment">
+    <Frame footer={readiness.meta.title}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         <span style={{ fontSize: 76, fontWeight: 600, lineHeight: 1.08 }}>
-          Can digitizing your assets widen your investor base?
-        </span>
-        <span style={{ color: 'rgba(255,255,255,0.66)', fontSize: 30 }}>
-          Seven questions. One honest verdict.
+          {readiness.hero.title.replace('\n', ' ')}
         </span>
       </div>
     </Frame>,

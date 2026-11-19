@@ -1,0 +1,27 @@
+@use '@/shared/ds/styles' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-4;
+  padding-block: $ds-space-8;
+  text-align: center;
+}
+
+.code {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.title {
+  @include ds-h2;
+  @include ds-title-sheen;
+}
+
+.text {
+  @include ds-text-md;
+  max-width: 400px;
+  margin-bottom: $ds-space-5;
+  color: $ds-text-muted;
+}

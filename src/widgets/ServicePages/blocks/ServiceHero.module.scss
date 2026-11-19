@@ -1,0 +1,255 @@
+@use '@/shared/ds/styles' as *;
+
+// Designer's frame: 1280 × 781 hero under the header (data-under-header), scene 1280 × 800.
+// Offsets inside the hero assume the old 65 / 57px header box.
+$header: 65px;
+$header-mobile: 57px;
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 781px;
+  background-color: $ds-bg;
+
+  // Mobile: text first, the scene below it in the flow (never under the text).
+  @include ds-mobile {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+}
+
+.withImage {
+  @include ds-mobile { min-height: 640px; }
+}
+
+// The hero fade already separates it from the first block.
+.center + :global(section) {
+  padding-top: 22px;
+}
+
+.art {
+  position: absolute;
+  top: var(--art-top);
+  left: 50%;
+  // Sized rather than transformed: the scene measures its box to size the canvas.
+  width: calc(1280px * var(--art-scale, 1));
+  height: calc(800px * var(--art-scale, 1));
+  transform: translateX(calc(-50% + var(--art-left, 0px)));
+  pointer-events: none;
+
+  // Wider than the frame: let the digit field fade out instead of ending on a hard edge.
+  @media (min-width: 1360px) {
+    -webkit-mask-image: linear-gradient(90deg, transparent, $ds-black 12%, $ds-black 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, $ds-black 12%, $ds-black 88%, transparent);
+  }
+
+  &.artShifted {
+    -webkit-mask-image: linear-gradient(90deg, transparent, $ds-black 15%);
+    mask-image: linear-gradient(90deg, transparent, $ds-black 15%);
+  }
+
+  // Half-size frame; --art-cx (the object's centre in the 1280 frame) lands on the screen centre.
+  @include ds-mobile {
+    position: relative;
+    top: auto;
+    left: auto;
+    order: 2;
+    flex-shrink: 0;
+    width: 640px;
+    height: 400px;
+    margin: (-$ds-space-5) 0 0 calc(50% - var(--art-cx, 973px) / 2);
+    transform: none;
+
+    &,
+    &.artShifted {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+}
+
+.scene {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, $ds-black 15%);
+  mask-image: linear-gradient(to bottom, transparent, $ds-black 15%);
+}
+
+// Designer's «audit-glow»: one wide blurred radial glow under the scene.
+.glow {
+  position: absolute;
+  top: 391px;
+  left: calc(50% - 640px - 1781px);
+  width: 2912px;
+  height: 1841px;
+  border-radius: 0 0 28px 28px;
+  opacity: 0.2;
+  filter: blur(37px);
+  pointer-events: none;
+  will-change: transform;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");
+}
+
+.photo {
+  object-fit: cover;
+  object-position: 50% 30%;
+  pointer-events: none;
+}
+
+.fadeImage {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 187px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(180deg, rgba($ds-black, 0) 0%, rgba($ds-black, 0.75) 55%, $ds-bg 100%);
+  pointer-events: none;
+}
+
+.inner {
+  @include ds-container;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 25px;
+  height: 100%;
+  padding-left: calc(#{$ds-margin} + 8px); // designer's x = 48
+
+  @include ds-tablet { padding-left: $ds-margin-tablet; }
+
+  @include ds-mobile {
+    padding-top: $header-mobile + 72px;
+    padding-bottom: 0;
+    padding-left: $ds-margin-mobile;
+  }
+}
+
+.center .inner {
+  justify-content: center;
+
+  @include ds-mobile { justify-content: flex-start; }
+}
+
+// The actions sit at the bottom: keep them on the first screen of short viewports.
+.spread {
+  height: clamp(600px, 100svh, 781px);
+
+  @include ds-mobile { height: auto; }
+}
+
+.spread .inner {
+  padding-top: 162px;
+  padding-bottom: 66px;
+
+  @include ds-mobile {
+    padding-top: $header-mobile + 48px;
+    padding-bottom: 0;
+  }
+}
+
+.spread .actions {
+  margin-top: auto;
+
+  @include ds-mobile { margin-top: 0; }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 600px;
+
+  // Photo heroes carry longer, hand-broken titles.
+  .withImage & { max-width: 760px; }
+
+  &:has(.sm) { max-width: 460px; }
+}
+
+.title {
+  color: $ds-text;
+  white-space: pre-line;
+
+  @include ds-mobile { white-space: normal; }
+}
+
+.lg {
+  @include ds-h2;
+}
+
+.md {
+  @include ds-h3;
+}
+
+.sm {
+  @include ds-h4;
+}
+
+// Partner logos in the designer's frame: right 41, top 671 of the 781 hero.
+.corner {
+  position: absolute;
+  right: $ds-margin;
+  bottom: 78px;
+
+  @include ds-mobile {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    margin-top: $ds-space-2;
+  }
+}
+
+// Designer's facts row: x = 48, 64 above the hero edge.
+.cornerLeft {
+  right: auto;
+  left: calc(#{$ds-margin} + 8px);
+  bottom: 64px;
+
+  @include ds-tablet { left: $ds-margin-tablet; }
+  @include ds-mobile { left: auto; bottom: auto; }
+}
+
+.description {
+  @include ds-text-sm;
+  max-width: 460px;
+  color: $ds-text-faint;
+
+  .md + & {
+    max-width: 347px;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.footnote {
+  @include ds-text-sm;
+  margin-top: -5px; // 20px under the actions
+  color: $ds-text-muted;
+}
+
+.spread.withFootnote .inner {
+  padding-bottom: 30px;
+
+  @include ds-mobile { padding-bottom: 0; }
+}
+
+// Photo heroes keep the photo visible under the text on mobile.
+.hero.withImage .inner {
+  @include ds-mobile { padding-bottom: 260px; }
+}

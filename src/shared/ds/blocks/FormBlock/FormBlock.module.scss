@@ -1,0 +1,31 @@
+@use '@/shared/ds/styles' as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-inner-gap;
+  width: 100%;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
+.status {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+  text-align: center;
+}

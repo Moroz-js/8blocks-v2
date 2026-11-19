@@ -22,6 +22,28 @@ export const auditsArchiveContent = {
   countSingular: 'аудит',
   countFew: 'аудита',
   countMany: 'аудитов',
+  scoreNote: 'независимых аудитов токенов, каждый оценён по шкале от 0 до 100',
+} as const
+
+export const auditDetailContent = {
+  takeaways: 'Ключевые выводы',
+  disclaimer: 'Аудит не является инвестиционной рекомендацией. Используйте его как часть собственного анализа.',
+  rating: {
+    title: 'Итоговый рейтинг',
+    profile: 'Профиль по блокам',
+    breakdown: 'Детализация (0–100)',
+    conclusion: 'Итоговое заключение',
+    ratingWord: 'Рейтинг',
+    leadExpert: 'Главный эксперт',
+    columns: {
+      block: 'Блок',
+      weight: 'Вес',
+      scoreFive: 'Оценка (0–5)',
+      score100: 'Оценка (0–100)',
+      contribution: 'Вклад',
+      total: 'Итого',
+    },
+  },
 } as const
 
 export const methodologyContent = {

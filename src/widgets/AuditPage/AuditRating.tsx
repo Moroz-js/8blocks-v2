@@ -2,29 +2,13 @@
 
 import Image from 'next/image'
 import { useLayoutEffect, useRef, useState } from 'react'
-import {
-  PolarAngleAxis,
-  PolarGrid,
-  PolarRadiusAxis,
-  Radar,
-  RadarChart,
-  Tooltip,
-} from 'recharts'
-import { t } from '@/shared/i18n'
-import type { AuditExpertData } from './AuditExpert'
+import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart, Tooltip } from 'recharts'
+import { Section } from '@/shared/ds'
+import type { AuditExpertData } from './auditMetrics'
 import styles from './AuditRating.module.scss'
 
-const L = {
-  ratingTitle: t({ ru: 'Итоговый рейтинг', en: 'Final rating' }),
-  profile: t({ ru: 'Профиль по блокам', en: 'Block profile' }),
-  breakdown: t({ ru: 'Детализация (0–100)', en: 'Breakdown (0–100)' }),
-  conclusion: t({ ru: 'Итоговое заключение', en: 'Summary' }),
-  ratingWord: t({ ru: 'Рейтинг', en: 'Rating' }),
-  leadExpert: t({ ru: 'Главный эксперт', en: 'Lead expert' }),
-  colBlock: t({ ru: 'Блок', en: 'Block' }),
-  colWeight: t({ ru: 'Вес', en: 'Weight' }),
-  colTotal: t({ ru: 'Итого', en: 'Total' }),
-}
+/** $ds-pink: SVG presentation attributes can't read CSS variables. */
+const RADAR_COLOR = '#ca005a'
 
 export interface RatingBlock {
   block: string
@@ -32,11 +16,21 @@ export interface RatingBlock {
   scoreFive: number
 }
 
+export interface AuditRatingLabels {
+  title: string
+  profile: string
+  breakdown: string
+  conclusion: string
+  ratingWord: string
+  leadExpert: string
+  columns: Record<'block' | 'weight' | 'scoreFive' | 'score100' | 'contribution' | 'total', string>
+}
+
 interface Props {
   blocks: RatingBlock[]
+  labels: AuditRatingLabels
   letterRating?: string | null
   totalScore?: number | null
-  title?: string
   conclusion?: string[] | null
   disclaimer?: string | null
   expert?: AuditExpertData | null
@@ -47,7 +41,7 @@ function round(n: number, digits = 1): number {
   return Math.round(n * f) / f
 }
 
-function useBoxWidth(fallback = 960) {
+function useBoxWidth(fallback = 560) {
   const ref = useRef<HTMLDivElement | null>(null)
   const [width, setWidth] = useState(fallback)
   useLayoutEffect(() => {
@@ -65,15 +59,14 @@ function useBoxWidth(fallback = 960) {
   return [ref, width] as const
 }
 
-export function AuditRating({
-  blocks,
-  letterRating,
-  totalScore,
-  title,
-  conclusion,
-  disclaimer,
-  expert,
-}: Props) {
+const LinkedInIcon = (
+  <svg className={styles.expertLinkedInIcon} width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.55V9h3.57v11.45Z" />
+  </svg>
+)
+
+/** Final rating: block radar, 0–100 bars, summary with the score and the lead expert, score table. */
+export function AuditRating({ blocks, labels, letterRating, totalScore, conclusion, disclaimer, expert }: Props) {
   const [radarRef, radarWidth] = useBoxWidth()
   const rows = (blocks ?? []).filter((b) => b && b.block)
   if (rows.length === 0) return null
@@ -86,14 +79,9 @@ export function AuditRating({
 
   const computedTotal = round(computed.reduce((acc, r) => acc + r.contribution, 0))
   const displayTotal = totalScore != null ? totalScore : Math.round(computedTotal)
-
   const totalWeight = round(computed.reduce((acc, r) => acc + (Number(r.weight) || 0), 0))
-  const avgFive = round(
-    computed.reduce((acc, r) => acc + ((Number(r.weight) || 0) / 100) * (Number(r.scoreFive) || 0), 0),
-  )
-  const avgScore100 = Math.round(
-    computed.reduce((acc, r) => acc + ((Number(r.weight) || 0) / 100) * r.score100, 0),
-  )
+  const avgFive = round(computed.reduce((acc, r) => acc + ((Number(r.weight) || 0) / 100) * (Number(r.scoreFive) || 0), 0))
+  const avgScore100 = Math.round(computed.reduce((acc, r) => acc + ((Number(r.weight) || 0) / 100) * r.score100, 0))
 
   const radarData = computed.map((r) => ({ subject: r.block, value: r.score100, fullMark: 100 }))
   const conclusionParas = (conclusion ?? []).filter(Boolean)
@@ -102,57 +90,33 @@ export function AuditRating({
     .slice(0, 2)
     .map((w) => w[0]?.toUpperCase() ?? '')
     .join('')
+  const { columns } = labels
 
   return (
-    <section
-      className={styles.root}
-      aria-label={title ?? L.ratingTitle}
-      data-pdf-rating
-    >
-      <h2 className={styles.heading}>{title ?? L.ratingTitle}</h2>
-
+    <Section title={labels.title} sheen data-pdf-rating>
       <div className={styles.topGrid} data-pdf-rating-profile>
         <div className={styles.card}>
-          <p className={styles.cardTitle}>{L.profile}</p>
+          <p className={styles.cardTitle}>{labels.profile}</p>
           <div ref={radarRef} className={styles.radarWrap}>
-            <RadarChart
-              width={radarWidth}
-              height={440}
-              data={radarData}
-              outerRadius="82%"
-              title={`${L.profile} — ${title ?? L.ratingTitle}`}
-            >
-              <PolarGrid stroke="currentColor" strokeOpacity={0.18} />
-              <PolarAngleAxis
-                dataKey="subject"
-                tick={{ fill: 'currentColor', fontSize: 12, opacity: 0.75 }}
-              />
+            <RadarChart width={radarWidth} height={400} data={radarData} outerRadius="62%" title={labels.profile}>
+              <PolarGrid stroke="currentColor" strokeOpacity={0.16} />
+              <PolarAngleAxis dataKey="subject" tick={{ fill: 'currentColor', fontSize: 12 }} />
               <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />
               <Tooltip />
-              <Radar
-                name="Score"
-                dataKey="value"
-                stroke="#C24E88"
-                fill="#C24E88"
-                fillOpacity={0.28}
-                isAnimationActive={false}
-              />
+              <Radar name="Score" dataKey="value" stroke={RADAR_COLOR} fill={RADAR_COLOR} fillOpacity={0.3} isAnimationActive={false} />
             </RadarChart>
           </div>
         </div>
 
         <div className={styles.card} data-pdf-detail-bars>
-          <p className={styles.cardTitle}>{L.breakdown}</p>
+          <p className={styles.cardTitle}>{labels.breakdown}</p>
           <div className={styles.bars}>
             {computed.map((r, i) => (
               <div key={`${r.block}-${i}`} className={styles.barRow}>
                 <span className={styles.barLabel}>{r.block}</span>
                 <span className={styles.barValue}>{r.score100}</span>
                 <div className={styles.barTrack}>
-                  <div
-                    className={styles.barFill}
-                    style={{ width: `${Math.max(0, Math.min(100, r.score100))}%` }}
-                  />
+                  <div className={styles.barFill} style={{ width: `${Math.max(0, Math.min(100, r.score100))}%` }} />
                 </div>
               </div>
             ))}
@@ -162,67 +126,53 @@ export function AuditRating({
 
       <div className={styles.ratingTail} data-pdf-rating-tail>
         <div className={styles.summaryPanel}>
-          <div className={styles.conclusion}>
-            <p className={styles.panelLabel}>{L.conclusion}</p>
-            {conclusionParas.map((p, i) => (
-              <p key={`concl-${i}`} className={styles.conclusionText}>
-                {p}
-              </p>
-            ))}
+          <div className={styles.card}>
+            <p className={styles.cardTitle}>{labels.conclusion}</p>
+            <div className={styles.conclusion}>
+              {conclusionParas.map((p, i) => (
+                <p key={i} className={styles.conclusionText}>
+                  {p}
+                </p>
+              ))}
+            </div>
             {disclaimer && <p className={styles.disclaimer}>{disclaimer}</p>}
           </div>
 
           <div className={styles.ratingBox}>
-            <div className={styles.ratingTop}>
-              <p className={styles.ratingBoxLabel}>{L.ratingTitle}</p>
-              <div className={styles.scoreLine}>
+            <div>
+              <p className={styles.cardTitle}>{labels.title}</p>
+              <p className={styles.scoreLine}>
                 <span className={styles.scoreNum}>{displayTotal}</span>
                 <span className={styles.scoreMax}>/100</span>
-              </div>
-              {letterRating && <p className={styles.ratingLetter}>{L.ratingWord} {letterRating}</p>}
+              </p>
+              {letterRating && (
+                <p className={styles.ratingLetter}>
+                  {labels.ratingWord} {letterRating}
+                </p>
+              )}
             </div>
 
             {(expert?.name || expert?.photo) && (
               <div className={styles.expertRow}>
                 <div className={styles.expertAvatar}>
                   {expert?.photo?.url ? (
-                    <Image
-                      src={expert.photo.url}
-                      alt={expert.photo.alt || expert.name || ''}
-                      width={40}
-                      height={40}
-                      className={styles.expertImg}
-                    />
+                    <Image src={expert.photo.url} alt={expert.photo.alt || expert.name || ''} width={40} height={40} className={styles.expertImg} />
                   ) : (
-                    <span className={styles.expertFallback}>{expertInitials}</span>
+                    <span>{expertInitials}</span>
                   )}
                 </div>
                 <div className={styles.expertInfo}>
-                  <span className={styles.expertLabel}>{L.leadExpert}</span>
+                  <span className={styles.expertLabel}>{labels.leadExpert}</span>
                   {expert?.name &&
                     (expert.linkedIn ? (
-                      <a
-                        href={expert.linkedIn}
-                        className={`${styles.expertName} ${styles.expertNameLink}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <a href={expert.linkedIn} className={styles.expertName} target="_blank" rel="noopener noreferrer">
                         {expert.name}
-                        <svg
-                          className={styles.expertLinkedInIcon}
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.55V9h3.57v11.45Z" />
-                        </svg>
+                        {LinkedInIcon}
                       </a>
                     ) : (
                       <span className={styles.expertName}>{expert.name}</span>
                     ))}
-                  {expert?.role && <span className={styles.expertRole}>{expert.role}</span>}
+                  {expert?.role && <span className={styles.expertLabel}>{expert.role}</span>}
                 </div>
               </div>
             )}
@@ -233,11 +183,11 @@ export function AuditRating({
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>{L.colBlock}</th>
-                <th>{L.colWeight}</th>
-                <th>{t({ ru: 'Оценка (0–5)', en: 'Score (0–5)' })}</th>
-                <th>{t({ ru: 'Оценка (0–100)', en: 'Score (0–100)' })}</th>
-                <th>{t({ ru: 'Вклад', en: 'Contribution' })}</th>
+                <th>{columns.block}</th>
+                <th>{columns.weight}</th>
+                <th>{columns.scoreFive}</th>
+                <th>{columns.score100}</th>
+                <th>{columns.contribution}</th>
               </tr>
             </thead>
             <tbody>
@@ -246,23 +196,23 @@ export function AuditRating({
                   <td>{r.block}</td>
                   <td>{r.weight}%</td>
                   <td>{round(Number(r.scoreFive) || 0, 2)}</td>
-                  <td className={styles.scoreCell}>{r.score100}</td>
-                  <td className={styles.contribCell}>{r.contribution}</td>
+                  <td className={styles.accentCell}>{r.score100}</td>
+                  <td>{r.contribution}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr>
-                <td>{L.colTotal}</td>
+                <td>{columns.total}</td>
                 <td>{totalWeight}%</td>
                 <td>{avgFive}</td>
                 <td>{avgScore100}</td>
-                <td className={styles.totalContrib}>{computedTotal}</td>
+                <td className={styles.accentCell}>{computedTotal}</td>
               </tr>
             </tfoot>
           </table>
         </div>
       </div>
-    </section>
+    </Section>
   )
 }

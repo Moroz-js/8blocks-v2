@@ -1,0 +1,83 @@
+@use '@/shared/ds/styles' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  list-style: none;
+}
+
+.row {
+  display: flex;
+  align-items: flex-start;
+  gap: 46px;
+
+  &:not(:last-child) {
+    padding-bottom: $ds-space-7;
+    border-bottom: 1px solid rgba($ds-white, 0.25);
+  }
+
+  @include ds-tablet {
+    flex-direction: column;
+    gap: $ds-space-5;
+  }
+}
+
+.lead {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: 519px;
+  flex-shrink: 0;
+
+  @include ds-tablet { width: auto; }
+}
+
+.label {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.text {
+  @include ds-text-lg;
+  max-width: 400px;
+  color: $ds-text;
+}
+
+.points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: $ds-space-4;
+  width: 595px;
+  padding-top: 21px;
+  list-style: none;
+
+  @include ds-tablet {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.point {
+  @include ds-text-sm;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: $ds-text;
+}
+
+.check {
+  flex-shrink: 0;
+
+  circle { fill: rgba($ds-pink, 0.22); }
+
+  path {
+    fill: none;
+    stroke: $ds-accent;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}

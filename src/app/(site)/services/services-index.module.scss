@@ -74,7 +74,6 @@
   border: 1px solid $border-secondary;
   background: $bg-secondary;
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   text-decoration: none;
   overflow: hidden;
   transition: border-color $transition-base, background $transition-base, box-shadow $transition-base;
@@ -82,7 +81,7 @@
   &:hover {
     border-color: $border-primary;
     background: $bg-tertiary;
-    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 40px rgba($black, 0.2);
 
     .cardTopBorder {
       opacity: 1;

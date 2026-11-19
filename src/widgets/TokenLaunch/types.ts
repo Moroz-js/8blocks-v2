@@ -1,3 +1,5 @@
+import type { tokenLaunchContent } from '@/shared/content/tokenLaunch'
+
 export interface LaunchModulePackageView {
   id: string
   label: string
@@ -17,3 +19,6 @@ export interface LaunchModuleView {
   description: string
   packages: LaunchModulePackageView[]
 }
+
+export type LaunchFormCopy = (typeof tokenLaunchContent)['form']
+export type LaunchCalculatorCopy = (typeof tokenLaunchContent)['calculator']

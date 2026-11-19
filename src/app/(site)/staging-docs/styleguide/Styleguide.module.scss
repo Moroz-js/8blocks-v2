@@ -1,0 +1,387 @@
+@use '@/shared/styles/variables' as *;
+@use '@/shared/styles/mixins' as *;
+
+.page {
+  padding-block: $space-10 $space-11;
+  color: $text-secondary;
+
+  code {
+    font-family: $font-mono;
+    font-size: $text-xs;
+    color: $text-primary;
+  }
+}
+
+.intro {
+  max-width: 760px;
+  margin-bottom: $space-9;
+}
+
+.eyebrow {
+  @include label-small;
+  margin-bottom: $space-3;
+}
+
+.title {
+  @include heading-section;
+  margin-bottom: $space-4;
+}
+
+.lead {
+  @include body-text;
+}
+
+.block {
+  padding-block: $space-8;
+  border-top: 1px solid $border-secondary;
+}
+
+.blockTitle {
+  @include heading-card;
+  margin-bottom: $space-5;
+}
+
+.group + .group {
+  margin-top: $space-6;
+}
+
+.groupTitle {
+  @include label-small;
+  margin-block: $space-5 $space-3;
+}
+
+.note {
+  @include body-text;
+  margin-bottom: $space-5;
+}
+
+// ── Swatches ────────────────────────────────────────────────────────
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: $space-4;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.swatchColor {
+  display: block;
+  height: 64px;
+  margin-bottom: $space-2;
+  border: 1px solid $border-primary;
+  // Checkerboard shows transparency of rgba tokens.
+  background-image:
+    linear-gradient(45deg, $border-secondary 25%, transparent 25%),
+    linear-gradient(-45deg, $border-secondary 25%, transparent 25%);
+  background-size: 12px 12px;
+}
+
+.swatchName {
+  word-break: break-all;
+}
+
+.swatchValue {
+  font-size: $text-xs;
+  color: $text-tertiary;
+  word-break: break-all;
+}
+
+// ── Gradients ───────────────────────────────────────────────────────
+.gradients {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $space-4;
+  margin-top: $space-6;
+}
+
+.gradientItem {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.gradientBar {
+  display: block;
+  height: 48px;
+  margin-bottom: $space-2;
+}
+
+.gradientAccent {
+  background: $gradient-accent;
+}
+
+.gradientWide {
+  background: $gradient-accent-wide;
+}
+
+.gradientH {
+  background: $gradient-accent-h;
+}
+
+.gradientText {
+  margin-top: $space-6;
+  background: $gradient-accent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+// ── Typography ──────────────────────────────────────────────────────
+.typeList {
+  display: flex;
+  flex-direction: column;
+}
+
+.typeRow {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: $space-5;
+  align-items: baseline;
+  padding-block: $space-5;
+  border-bottom: 1px solid $border-secondary;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: $space-2;
+  }
+}
+
+.typeMeta {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  font-size: $text-xs;
+  color: $text-tertiary;
+}
+
+.typeHero {
+  @include heading-hero;
+}
+
+.typeSection {
+  @include heading-section;
+}
+
+.typeCard {
+  @include heading-card;
+}
+
+.typeBody {
+  @include body-text;
+}
+
+.typeLabel {
+  @include label-small;
+}
+
+.typeSectionLabel {
+  @include section-label;
+}
+
+.scale {
+  display: flex;
+  flex-direction: column;
+}
+
+.scaleRow {
+  display: grid;
+  grid-template-columns: 120px 60px minmax(0, 1fr);
+
+  @include mobile {
+    grid-template-columns: 96px 48px minmax(0, 1fr);
+  }
+  align-items: baseline;
+  gap: $space-4;
+  padding-block: $space-2;
+  border-bottom: 1px solid $border-secondary;
+  font-size: $text-xs;
+}
+
+.scaleSample {
+  color: $text-primary;
+  font-weight: 500;
+  line-height: $leading-tight;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── Spacing ─────────────────────────────────────────────────────────
+.spacing {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.spacingRow {
+  display: grid;
+  grid-template-columns: 120px 60px minmax(0, 1fr);
+
+  @include mobile {
+    grid-template-columns: 96px 48px minmax(0, 1fr);
+  }
+  align-items: center;
+  gap: $space-4;
+  font-size: $text-xs;
+}
+
+.spacingBar {
+  display: block;
+  max-width: 100%;
+  height: 12px;
+  background: $accent;
+}
+
+// ── Tables ──────────────────────────────────────────────────────────
+.table {
+  display: flex;
+  flex-direction: column;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 220px 180px 1fr;
+  gap: $space-4;
+  padding-block: $space-3;
+  border-bottom: 1px solid $border-secondary;
+  font-size: $text-sm;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: $space-1;
+  }
+}
+
+// ── Buttons ─────────────────────────────────────────────────────────
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $space-3;
+  padding-block: $space-4;
+  border-bottom: 1px solid $border-secondary;
+}
+
+.buttonLabel {
+  width: 100px;
+  flex-shrink: 0;
+}
+
+// ── Cards ───────────────────────────────────────────────────────────
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: $space-4;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  min-height: 160px;
+  padding: $space-5;
+  font-size: $text-sm;
+}
+
+.cardSurface {
+  @include card-surface;
+}
+
+.cardElevated {
+  @include card-surface-elevated;
+}
+
+.cardCorner {
+  @include card-corner-border;
+}
+
+.cardPanel {
+  background: $card-panel-bg;
+  border: 1px solid $border-secondary;
+  transition: background $transition-base;
+
+  &:hover {
+    background: $card-panel-bg-hover;
+  }
+}
+
+// ── Forms & states ──────────────────────────────────────────────────
+.forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $space-5;
+  align-items: start;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.input {
+  height: 48px;
+  padding-inline: $space-4;
+  font: inherit;
+  color: $text-primary;
+  background: $input-bg;
+  border: 1px solid $border-secondary;
+  border-radius: var(--card-radius);
+  transition: border-color $transition-fast, background $transition-fast;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  &:focus {
+    outline: none;
+    background: $input-bg-focus;
+    border-color: $focus-accent;
+    box-shadow: 0 0 0 3px $focus-accent-glow;
+  }
+}
+
+.inputError {
+  border-color: $error-border;
+  background: $error-bg;
+}
+
+.errorText {
+  font-size: $text-xs;
+  color: $error-fg;
+}
+
+.focusDemo {
+  @include focus-ring;
+  align-self: center;
+  color: $text-primary;
+}
+
+.statuses {
+  display: flex;
+  gap: $space-3;
+  align-self: center;
+}
+
+.statusError,
+.statusSuccess {
+  padding: $space-1 $space-3;
+  font-size: $text-xs;
+  border: 1px solid;
+}
+
+.statusError {
+  color: $error-fg;
+  background: $error-bg;
+  border-color: $error-border;
+}
+
+.statusSuccess {
+  color: $success-fg;
+  background: $success-bg;
+  border-color: $success-border;
+}

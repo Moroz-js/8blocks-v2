@@ -1,203 +1,43 @@
-@use '@/shared/styles/variables' as *;
+@use '@/shared/ds/styles' as *;
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: $space-4;
-  flex: 1;
+  gap: $ds-space-4;
 }
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: $space-4;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $ds-space-4;
 
-  @media (max-width: #{$bp-mobile}) {
-    grid-template-columns: 1fr;
-  }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
 }
 
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: $space-2;
-}
-
-.fieldGrow {
-  flex: 1;
-}
-
-.label {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-xs;
-  color: $text-tertiary;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-%input-base {
-  font-family: $font-base;
-  font-size: $text-base;
-  color: $text-primary;
-  background: $bg-secondary;
-  border: 1px solid $border-secondary;
-  border-radius: 0;
-  padding: $space-3 $space-4;
-  width: 100%;
-  transition: border-color $transition-fast, background $transition-fast;
-  outline: none;
-  -webkit-appearance: none;
-  appearance: none;
-
-  &::placeholder {
-    color: $input-placeholder;
-  }
-
-  &:hover {
-    border-color: $border-primary;
-    background: $border-secondary;
-  }
-
-  &:focus {
-    border-color: $focus-accent;
-    background: $focus-accent-bg;
-    box-shadow: 0 0 0 3px $focus-accent-glow;
-  }
-
-  &:focus-visible {
-    outline: none;
-  }
-}
-
-.input {
-  @extend %input-base;
-  height: 48px;
-}
-
-.textarea {
-  @extend %input-base;
-  resize: none;
-  min-height: 160px;
-  flex: 1;
-  line-height: $leading-relaxed;
-}
-
-.errorMsg {
-  font-family: $font-base;
-  font-size: $text-sm;
-  color: $error-fg;
-  padding: $space-3 $space-4;
-  background: $error-bg;
-  border: 1px solid $error-border;
-  border-radius: 0;
-}
-
-// ── Submit button ──────────────────────────────────────────────────
 .submit {
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: $space-3;
-  height: 52px;
-  padding: 0 $space-7;
-  background: $text-primary;
-  color: $button-primary-fg;
-  border: none;
-  border-radius: 0;
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: $text-base;
-  cursor: pointer;
-  transition: background $transition-base, transform $transition-fast, opacity $transition-fast;
-
-  &:hover:not(:disabled) {
-    background: $button-primary-hover;
-    transform: translateY(-1px);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  &:focus-visible {
-    outline: 2px solid $accent-purple;
-    outline-offset: 3px;
-  }
-
-  @media (max-width: #{$bp-mobile}) {
-    align-self: stretch;
-    justify-content: center;
-  }
+  margin-top: $ds-space-2;
 }
 
-.submitArrow {
-  font-size: 16px;
-  transition: transform $transition-fast;
-
-  .submit:hover:not(:disabled) & {
-    transform: translateX(3px);
-  }
+.error {
+  @include ds-text-sm;
+  color: $ds-danger;
 }
 
-// ── Spinner ────────────────────────────────────────────────────────
-.spinner {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid $border-primary;
-  border-top-color: $button-primary-fg;
-  border-radius: 0;
-  animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-// ── Success state ──────────────────────────────────────────────────
 .success {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: $space-3;
-  padding: $space-6;
-  border: 1px solid $success-border;
-  border-radius: 0;
-  background: $success-bg;
-}
-
-.successIcon {
-  width: 40px;
-  height: 40px;
-  border-radius: 0;
-  background: $success-bg-strong;
-  border: 1px solid $success-border;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  color: $accent-green;
+  gap: $ds-space-2;
+  padding: 30px;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
 }
 
 .successTitle {
-  font-family: $font-base;
-  font-weight: 500;
-  font-size: $text-lg;
-  color: $text-primary;
-  margin: 0;
+  @include ds-h5;
+  color: $ds-text;
 }
 
 .successBody {
-  font-family: $font-base;
-  font-weight: 400;
-  font-size: $text-base;
-  color: $text-secondary;
-  margin: 0;
+  @include ds-text-sm;
+  color: $ds-text-muted;
 }
-

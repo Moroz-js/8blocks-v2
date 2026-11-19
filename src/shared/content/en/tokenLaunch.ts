@@ -8,6 +8,7 @@ const enObject = {
   },
   hero: {
     label: 'Token launch',
+    statBadge: '8Blocks study',
     statValue: '79%',
     statCaption: 'of tokens fall within 90 days of listing',
     statSourceLabel: '8Blocks · High FDV Token Failure Study · 542 listings on top exchanges analyzed',
@@ -107,21 +108,21 @@ const enObject = {
   },
   partners: {
     label: 'the solution',
-    headline: 'Three partners. One launch track',
+    headline: 'Three partners.\nOne launch track',
     description:
       'We put strategy, investors, and listing into a single process, so each decision sets up the next stage instead of opening a new gap.',
     items: [
       {
         name: '8Blocks',
         role: 'Strategy and preparation',
-        subtitle: 'Tokenomics, product logic, positioning',
+        subtitle: 'Tokenomics,\nproduct logic, positioning',
         description:
           "Auditing existing tokenomics or building a new model, working through product logic, and getting the project ready to pitch investors. A tokenomics Workshop to test the key decisions before launch. If a model already exists, we audit it and rebuild it. If it doesn't, we design one so the token supports the business instead of sitting beside it.",
       },
       {
         name: 'Fibonacci',
         role: 'Investor access and liquidity',
-        subtitle: 'Pitch sessions with funds and market making',
+        subtitle: 'Pitch sessions\nwith funds and market making',
         description:
           'Running pitch sessions with funds and private investors, market making, and liquidity support after listing. Together with 8Blocks, prepares the project to raise and stays with it through to the exchange.',
       },
@@ -140,12 +141,12 @@ const enObject = {
     description:
       'Six modules, each with its own fixed price and timeline. Take the whole thing or take one. Plenty of projects come to us only for market making, or only for the audit, and that is a complete engagement. You pay for what you need.',
     step1Title: 'Step 1. Build your track',
-    step2Title: 'Step 2. Tell us about your project',
+    step2Title: 'Tell us about your project',
     detailsLabel: 'Details',
     packagesLabel: 'Package options',
     fromPrefix: 'from',
     customPriceLabel: 'Custom',
-    totalCostLabel: 'Cost',
+    totalCostLabel: 'Total cost',
     totalDurationLabel: 'Timeline',
     weeksTemplate: '~%s wks',
     emptyTotalNote: 'Select modules to see the cost and timeline',
@@ -160,19 +161,19 @@ const enObject = {
   },
   form: {
     nameLabel: 'Full name',
-    namePlaceholder: 'John Smith',
+    namePlaceholder: 'Your name',
     companyLabel: 'Company / project',
     companyPlaceholder: 'Project name',
     emailLabel: 'Email',
-    emailPlaceholder: 'john@company.io',
+    emailPlaceholder: 'you@company.com',
     telegramLabel: 'Telegram',
     telegramPlaceholder: '@username',
     telegramOptional: 'optional',
-    stageLabel: 'Project stage',
+    stageLabel: 'Stage',
     stagePlaceholder: 'Select a stage',
     stageOptions: ['Idea', 'MVP', 'Pre-TGE', 'Post-TGE', 'Re-tokenomics'],
     taskLabel: 'Describe the task',
-    taskPlaceholder: 'A few lines about the project and the goal',
+    taskPlaceholder: 'Tell us about your project',
     submitCalcLabel: 'Price my track',
     submitShortLabel: 'Send request',
     sendingLabel: 'Sending…',
@@ -289,7 +290,7 @@ const enObject = {
       },
     ],
     geographyTitle: 'Locations and clients',
-    geographyText: 'Offices in Dubai and Berlin. Clients across the US, Europe, MENA and LatAm.',
+    geographyText: 'Offices in Zug, Dubai, and Berlin. Clients across Europe, the US, MENA and LatAm.',
     networkLabel: 'partner network',
     networkTitle: 'Our partner network',
     network: [

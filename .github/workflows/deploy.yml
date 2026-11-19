@@ -104,6 +104,7 @@ jobs:
       port: '3001'
       health_path: /
       staging: true
+      media_proxy_origin: https://8blocks.io
       skip_db_maintenance: true
       run_migrations: true
 
@@ -126,5 +127,6 @@ jobs:
       staging: true
       base_path: /ru
       media_base_url: https://staging.8blocks.io
+      media_proxy_origin: https://8blocks.io
       skip_db_maintenance: true
       run_migrations: true

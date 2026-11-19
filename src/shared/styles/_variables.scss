@@ -49,7 +49,6 @@ $cover-scrim: var(--cover-scrim);
 $text-on-media: var(--text-on-media);
 $muted-strong: var(--muted-strong);
 $glass-highlight: var(--glass-highlight);
-$glass-shadow: var(--glass-shadow);
 $cta-solid-hover-fg: var(--cta-solid-hover-fg);
 
 $benefits-card-bg: var(--benefits-card-bg);
@@ -75,11 +74,28 @@ $bloom-bottom: 0.04;
 
 $accent-purple: $pal-magenta;
 $accent: var(--accent);
-$accent-pink-light: $pal-rose;
 $accent-pink-deep: $pal-magenta;
-$accent-purple-deep: $pal-purple;
 $accent-green: #75fb63;
 $accent-blue: #638efb;
+
+// Fixed palette — theme-independent. For blocks that stay dark in both themes,
+// status marks and shadows. Prefer semantic tokens (var(--*)) for anything that
+// should follow the theme.
+$white: #fff;
+$black: #000;
+$on-dark: #f4f1f8; // text on always-dark blocks (audit hero)
+$ink: #08070a; // always-dark panel (audit rating box)
+$ink-soft: #111; // native <option> background in dark selects
+$ink-card: #141414; // research card surface
+$accent-deep: #ad0b58; // audit accent: ratings, takeaways, audit rich text
+
+$status-positive: #3ecf8e;
+$status-positive-solid: #1f9d63;
+$status-negative: #e5484d;
+$status-negative-solid: #b70003;
+$status-warning: #ffb74d;
+$status-warning-deep: #d69e35;
+$status-amber: #f59e0b;
 
 $gradient-accent: var(--gradient-accent);
 $gradient-accent-h: linear-gradient(90deg, #{$pal-magenta} 0%, transparent 80%);
@@ -109,12 +125,7 @@ $container-padding-mobile: 16px;
 $bp-mobile: 640px;
 $bp-tablet: 768px;
 $bp-desktop: 1024px;
-$bp-wide: 1280px;
 
-$radius-sm: 0;
-$radius-md: 0;
-$radius-lg: 0;
-$radius-xl: 0;
 
 $text-xs: 12px;
 $text-sm: 14px;

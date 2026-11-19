@@ -1,0 +1,117 @@
+@use '@/shared/ds/styles' as *;
+
+.grid {
+  display: grid;
+  gap: $ds-gutter;
+  list-style: none;
+}
+
+.cols2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.cols4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.cols3,
+.cols4 {
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.grid {
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+}
+
+// Illustration area. Empty → the 5% placeholder from Figma.
+.art {
+  position: absolute;
+  inset-inline: 0;
+  overflow: hidden;
+
+  &:empty {
+    background-color: rgba($ds-white, 0.05);
+  }
+
+  > * {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.title {
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+.description {
+  color: $ds-text-muted;
+}
+
+// ── compact ─────────────────────────────────────────────────────────
+.compact {
+  justify-content: flex-end;
+  height: 360px;
+  padding: 30px;
+  text-align: center;
+
+  .art { top: 0; height: 200px; }
+  .title { @include ds-text-lg; }
+  .description { @include ds-text-sm; }
+}
+
+.cols4 .compact {
+  padding: 25px;
+}
+
+// ── action ──────────────────────────────────────────────────────────
+.action {
+  align-items: center;
+  justify-content: flex-end;
+  gap: 45px;
+  min-height: 680px;
+  padding: 25px;
+  text-align: center;
+
+  .art { top: 0; height: 380px; }
+  .title { @include ds-h5; }
+  .description { @include ds-text-md; }
+
+  @include ds-mobile {
+    min-height: 520px;
+
+    .art { height: 260px; }
+  }
+}
+
+// Button inside the action card.
+.cta {
+  position: relative;
+}
+
+// ── illustrated ─────────────────────────────────────────────────────
+.illustrated {
+  height: 360px;
+  padding: 25px;
+
+  .art { bottom: 0; height: 200px; }
+  .title { @include ds-h5; }
+  .description { @include ds-text-md; }
+}
+
+.cols3 .illustrated .art {
+  height: 170px;
+}

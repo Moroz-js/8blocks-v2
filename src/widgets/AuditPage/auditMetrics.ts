@@ -16,3 +16,11 @@ export interface AuditHeroData {
   letterRating?: string | null
   score?: number | null
 }
+
+export interface AuditExpertData {
+  name?: string | null
+  role?: string | null
+  linkedIn?: string | null
+  rating?: string | null
+  photo?: { url: string; alt: string } | null
+}

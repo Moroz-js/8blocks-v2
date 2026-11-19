@@ -1,0 +1,21 @@
+@use '@/shared/ds/styles' as *;
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-inner-gap;
+
+  > :last-child {
+    align-self: stretch;
+  }
+
+  @include ds-mobile { gap: $ds-inner-gap-mobile; }
+}
+
+.title {
+  @include ds-h4;
+  max-width: 380px;
+  color: $ds-text;
+  text-align: center;
+}

@@ -1,51 +1,111 @@
-@use '@/shared/styles/variables' as *;
+@use '@/shared/ds/styles' as *;
 
-.root {
-  max-width: 860px;
-  margin-inline: auto;
-  padding-inline: $container-padding;
-  width: 100%;
-  box-sizing: border-box;
-  padding-top: $space-9;
-  padding-bottom: 0;
+// Audit summary under the article header: links, score with key metrics, takeaways.
+.summary {
+  @include ds-container;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+  margin-top: $ds-space-7;
+}
 
-  @media (max-width: #{$bp-tablet}) {
-    padding-top: $space-7;
-    padding-bottom: 0;
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: $ds-space-4 $ds-space-6;
+  margin-bottom: $ds-space-5;
+}
+
+.scorecard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: $ds-space-7;
+  padding: $ds-space-6;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+  @include ds-mobile { padding: $ds-space-5 20px; }
+}
+
+.score {
+  padding-right: $ds-space-7;
+  border-right: 1px solid $ds-border;
+
+  @include ds-tablet {
+    padding: 0 0 $ds-space-5;
+    border-right: 0;
+    border-bottom: 1px solid $ds-border;
   }
-
-  @media (max-width: #{$bp-mobile}) {
-    padding-inline: $container-padding-mobile;
-  }
 }
 
-.coverWrap {
-  margin-bottom: $space-9;
-  border-radius: 0;
-  overflow: hidden;
+.scoreLabel {
+  @include ds-text-sm;
+  color: $ds-text-muted;
 }
 
-.coverImg {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
+.scoreLine {
+  display: flex;
+  align-items: baseline;
+  gap: $ds-space-1;
+  margin-top: $ds-space-2;
 }
 
-.content {
-  min-width: 0;
+.scoreNum {
+  @include ds-h2;
+  color: $ds-accent;
 }
 
-// Hero + takeaways — first PDF page (A4 landscape).
-.printCover {
-  @media print {
-    break-after: page;
-    page-break-after: always;
-    min-height: 100vh;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    // Hero flush to top (no gap / hard line above bloom).
-    justify-content: flex-start;
-  }
+.scoreMax {
+  @include ds-text-lg;
+  color: $ds-text-muted;
+}
+
+.scoreLetter {
+  @include ds-text-md;
+  margin-top: $ds-space-1;
+  color: $ds-text;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: $ds-space-5;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+}
+
+.metricLabel {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.metricValue {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+.takeaways {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-gutter;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
+}
+
+.takeaway {
+  @include ds-text-md;
+  padding: $ds-space-6;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+  color: $ds-text;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
 }

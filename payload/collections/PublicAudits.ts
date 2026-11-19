@@ -315,7 +315,7 @@ export const PublicAudits: CollectionConfig = {
           type: 'text',
           label: 'SEO заголовок',
           admin: {
-            description: 'Если не заполнен, используется заголовок аудита',
+            description: 'Если не заполнен, используется заголовок аудита. До ~50 символов: шаблон добавляет « | бренд», Google обрезает после ~60.',
           },
         },
         {
@@ -323,7 +323,7 @@ export const PublicAudits: CollectionConfig = {
           type: 'textarea',
           label: 'SEO описание',
           admin: {
-            description: 'Если не заполнено, используется краткое описание',
+            description: 'Если не заполнено, используется краткое описание. До ~150 символов: длиннее Google обрезает.',
           },
         },
         {

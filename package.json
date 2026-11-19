@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "test:platform": "vitest run src/shared/lib/platform",
     "test:tokenlab": "vitest run src/shared/lib/platform/tokenlab",
     "validate": "npm run typecheck && npm run lint && npm run build",

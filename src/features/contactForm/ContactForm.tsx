@@ -1,14 +1,28 @@
 ﻿'use client'
 
 import { useState } from 'react'
+import { Button, TextField, Textarea } from '@/shared/ds'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
-import { contactFormContent } from '@/shared/content/contactPage'
 import { apiPath } from '@/shared/lib/apiPath'
 import styles from './ContactForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
-export function ContactForm() {
+export interface ContactFormText {
+  nameLabel: string
+  namePlaceholder: string
+  emailLabel: string
+  emailPlaceholder: string
+  messageLabel: string
+  messagePlaceholder: string
+  submitLabel: string
+  sendingLabel: string
+  failedError: string
+  successTitle: string
+  successBody: string
+}
+
+export function ContactForm({ text }: { text: ContactFormText }) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
@@ -35,11 +49,11 @@ export function ContactForm() {
       try {
         data = JSON.parse(raw) as { success?: boolean; error?: string }
       } catch {
-        throw new Error(contactFormContent.failedError)
+        throw new Error(text.failedError)
       }
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || contactFormContent.failedError)
+        throw new Error(data.error || text.failedError)
       }
 
       setStatus('success')
@@ -47,16 +61,15 @@ export function ContactForm() {
     } catch (err) {
       setStatus('error')
       trackPlatformEvent('form_submit', { form_id: 'contact', status: 'error' })
-      setErrorMsg(err instanceof Error ? err.message : contactFormContent.failedError)
+      setErrorMsg(err instanceof Error ? err.message : text.failedError)
     }
   }
 
   if (status === 'success') {
     return (
       <div className={styles.success} role="status" aria-live="polite">
-        <div className={styles.successIcon} aria-hidden="true">✓</div>
-        <p className={styles.successTitle}>{contactFormContent.successTitle}</p>
-        <p className={styles.successBody}>{contactFormContent.successBody}</p>
+        <p className={styles.successTitle}>{text.successTitle}</p>
+        <p className={styles.successBody}>{text.successBody}</p>
       </div>
     )
   }
@@ -64,66 +77,32 @@ export function ContactForm() {
   return (
     <form className={styles.form} onSubmit={handleSubmit} noValidate>
       <div className={styles.row}>
-        <div className={styles.field}>
-          <label htmlFor="cf-name" className={styles.label}>{contactFormContent.nameLabel}</label>
-          <input
-            id="cf-name"
-            name="name"
-            type="text"
-            className={styles.input}
-            placeholder={contactFormContent.namePlaceholder}
-            required
-            autoComplete="name"
-          />
-        </div>
-        <div className={styles.field}>
-          <label htmlFor="cf-email" className={styles.label}>Email</label>
-          <input
-            id="cf-email"
-            name="email"
-            type="email"
-            className={styles.input}
-            placeholder="ivan@company.io"
-            required
-            autoComplete="email"
-          />
-        </div>
-      </div>
-
-      <div className={`${styles.field} ${styles.fieldGrow}`}>
-        <label htmlFor="cf-message" className={styles.label}>{contactFormContent.messageLabel}</label>
-        <textarea
-          id="cf-message"
-          name="message"
-          className={styles.textarea}
-          placeholder={contactFormContent.messagePlaceholder}
-          rows={4}
+        <TextField
+          label={text.nameLabel}
+          name="name"
+          type="text"
+          placeholder={text.namePlaceholder}
           required
+          autoComplete="name"
+        />
+        <TextField
+          label={text.emailLabel}
+          name="email"
+          type="email"
+          placeholder={text.emailPlaceholder}
+          required
+          autoComplete="email"
         />
       </div>
-
+      <Textarea label={text.messageLabel} name="message" placeholder={text.messagePlaceholder} rows={4} required />
       {status === 'error' && (
-        <p className={styles.errorMsg} role="alert">{errorMsg}</p>
+        <p className={styles.error} role="alert">
+          {errorMsg}
+        </p>
       )}
-
-      <button
-        type="submit"
-        className={styles.submit}
-        disabled={status === 'loading'}
-        aria-busy={status === 'loading'}
-      >
-        {status === 'loading' ? (
-          <>
-            <span className={styles.spinner} aria-hidden="true" />
-            {contactFormContent.sendingLabel}
-          </>
-        ) : (
-          <>
-            {contactFormContent.submitLabel}
-            <span className={styles.submitArrow} aria-hidden="true">→</span>
-          </>
-        )}
-      </button>
+      <Button type="submit" fullWidth disabled={status === 'loading'} aria-busy={status === 'loading'} className={styles.submit}>
+        {status === 'loading' ? text.sendingLabel : `${text.submitLabel} →`}
+      </Button>
     </form>
   )
 }

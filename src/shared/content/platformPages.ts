@@ -53,7 +53,8 @@ export const platformPagesContent = t({
       headline:
         'The largest names in finance already run digital-asset programs.',
       lead:
-        'Funds, loans, stocks, and real estate — with the scale of each program. Every number links to its source.',
+        'Funds, loans, stocks, and real estate, with the scale of each program. Every number links to its source.',
+      sectionTitle: 'Tokenization cases by sectors',
       scaleLabel: 'Not BlackRock? Good.',
       scaleText:
         'You do not need their budget. The same infrastructure is sold as a service. The institutions above prove the approach works; mid-size businesses rent it.',
@@ -226,7 +227,8 @@ export const platformPagesContent = t({
       headline:
         'Крупнейшие финансовые компании уже развивают программы цифровых активов.',
       lead:
-        'Фонды, кредиты, акции и недвижимость — с масштабом каждой программы и ссылками на первоисточники.',
+        'Фонды, кредиты, акции и недвижимость: масштаб каждой программы и ссылки на первоисточники.',
+      sectionTitle: 'Кейсы токенизации по отраслям',
       scaleLabel: 'Вы не BlackRock? Отлично.',
       scaleText:
         'Их бюджет не нужен. Та же инфраструктура продаётся как сервис. Институты доказали работоспособность подхода, а средний бизнес может арендовать его.',

@@ -1,5 +1,9 @@
 @use '@/shared/styles/variables' as *;
 
+// Dark tails of callout gradients (accent and danger callouts).
+$callout-tail: rgb(12, 10, 18);
+$callout-danger-tail: rgb(18, 10, 12);
+
 .richText {
   font-family: $font-base;
   font-size: $text-base;
@@ -108,7 +112,7 @@
     margin: $space-7 0;
     padding: $space-5 $space-6;
     border-left: 3px solid $accent-purple;
-    background: rgba(194, 78, 136, 0.06);
+    background: rgba($pal-magenta, 0.06);
     border-radius: 0;
     font-size: $text-md;
     font-style: italic;
@@ -132,7 +136,7 @@
     color: $accent-pink-deep;
     text-decoration: underline;
     text-underline-offset: 3px;
-    text-decoration-color: rgba(194, 78, 136, 0.5);
+    text-decoration-color: rgba($pal-magenta, 0.5);
     transition: color $transition-fast, text-decoration-color $transition-fast;
 
     &:hover {
@@ -226,12 +230,11 @@
     border-left-color: $accent-purple;
     background: linear-gradient(
       135deg,
-      rgba(142, 74, 189, 0.28) 0%,
-      rgba(194, 78, 136, 0.14) 42%,
-      rgba(12, 10, 18, 0.72) 100%
+      rgba($pal-purple, 0.28) 0%,
+      rgba($pal-magenta, 0.14) 42%,
+      rgba($callout-tail, 0.72) 100%
     );
     backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
     overflow: hidden;
     isolation: isolate;
 
@@ -241,8 +244,8 @@
       inset: 0;
       background: radial-gradient(
         ellipse 90% 80% at 12% 0%,
-        rgba(194, 78, 136, 0.35) 0%,
-        rgba(142, 74, 189, 0.12) 45%,
+        rgba($pal-magenta, 0.35) 0%,
+        rgba($pal-purple, 0.12) 45%,
         transparent 72%
       );
       pointer-events: none;
@@ -257,19 +260,19 @@
 
   // Critical — red-tinted, stronger emphasis
   .callout_critical {
-    border-left-color: #e5484d;
+    border-left-color: $status-negative;
     background: linear-gradient(
       135deg,
-      rgba(229, 72, 77, 0.26) 0%,
-      rgba(229, 72, 77, 0.12) 42%,
-      rgba(18, 10, 12, 0.72) 100%
+      rgba($status-negative, 0.26) 0%,
+      rgba($status-negative, 0.12) 42%,
+      rgba($callout-danger-tail, 0.72) 100%
     );
 
     &::before {
       background: radial-gradient(
         ellipse 90% 80% at 12% 0%,
-        rgba(229, 72, 77, 0.34) 0%,
-        rgba(229, 72, 77, 0.1) 45%,
+        rgba($status-negative, 0.34) 0%,
+        rgba($status-negative, 0.1) 45%,
         transparent 72%
       );
     }
@@ -423,7 +426,6 @@
     border: 1px solid $border-secondary;
     background: $bg-secondary;
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     overflow-x: auto;
     text-align: center;
   }
@@ -436,7 +438,7 @@
 
     :global(.katex) {
       font-size: 1.2em;
-      color: #ad0b58;
+      color: $accent-deep;
     }
 
     :global(.katex-display) {
@@ -496,7 +498,8 @@
     }
 
     @media (max-width: #{$bp-tablet}) {
-      grid-template-columns: 1fr;
+      &,
+      &[data-count='3'] { grid-template-columns: 1fr; }
     }
 
     @media print {
@@ -604,16 +607,16 @@
     font-size: 12px;
     font-weight: 700;
     border-radius: 50%;
-    color: #fff;
+    color: $white;
   }
 
   .mark_check {
-    background: #1f9d63;
+    background: $status-positive-solid;
   }
 
   // Negative (minus) — solid red circle with white glyph
   .mark_cross {
-    background: #b70003;
+    background: $status-negative-solid;
   }
 
   // Risk — amber warning triangle (no circle background)
@@ -649,7 +652,8 @@
     }
 
     @media (max-width: #{$bp-tablet}) {
-      grid-template-columns: 1fr;
+      &,
+      &[data-count='3'] { grid-template-columns: 1fr; }
     }
   }
 
@@ -682,7 +686,7 @@
 
   .statRow {
     padding: $space-3 0;
-    border-top: 1px solid rgba(194, 78, 136, 0.22);
+    border-top: 1px solid rgba($pal-magenta, 0.22);
     font-size: $text-sm;
 
     &:first-of-type {
@@ -701,7 +705,7 @@
   }
 
   .statRowValue {
-    color: #ad0b58;
+    color: $accent-deep;
     font-weight: 600;
     white-space: nowrap;
   }
@@ -738,7 +742,8 @@
     }
 
     @media (max-width: #{$bp-tablet}) {
-      grid-template-columns: 1fr;
+      &,
+      &[data-count='3'] { grid-template-columns: 1fr; }
     }
   }
 
@@ -759,7 +764,7 @@
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #ad0b58;
+    color: $accent-deep;
   }
 
   .infoBody {
@@ -804,8 +809,8 @@
     font-family: $font-mono;
     font-size: $text-md;
     font-weight: 600;
-    color: #fff;
-    background: #b70003;
+    color: $white;
+    background: $status-negative-solid;
     border: none;
   }
 

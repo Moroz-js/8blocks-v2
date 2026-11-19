@@ -90,7 +90,7 @@ export function ShareBlock({ url, title }: Props) {
     {
       id: 'x',
       label: uiStrings.shareOnX,
-      href: `https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
+      href: `https://x.com/intent/tweet?url=${encoded}&text=${encodedTitle}`,
       icon: <IconX />,
     },
     {

@@ -1,0 +1,37 @@
+@use '@/shared/ds/styles' as *;
+
+.badge {
+  @include ds-text-sm;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  min-height: 42px;
+  padding: $ds-space-1 $ds-space-3 $ds-space-1 $ds-space-1;
+  border: 1px solid $ds-border;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+}
+
+.accent {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  min-height: 32px;
+  padding-inline: $ds-space-2 10px;
+  border: 1px solid $ds-border-strong;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-accent;
+  color: $ds-text;
+  white-space: nowrap;
+}
+
+.underline {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text {
+  min-width: 0;
+}

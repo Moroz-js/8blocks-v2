@@ -1,403 +1,252 @@
-@use '@/shared/styles/variables' as *;
-@use '@/shared/styles/auditPageLayout' as layout;
+@use '@/shared/ds/styles' as *;
 
-.root {
-  @include layout.contentContainer;
-  padding-block: $space-9;
-  color: $text-secondary;
-}
-
-.heading {
-  font-size: $text-2xl;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: $text-primary;
-  margin: 0 0 $space-6;
-}
+// Class names topGrid / card / cardTitle / radarWrap / bars / barTrack / ratingBox / scoreLine
+// are matched by the PDF layout CSS (src/app/api/audits/[slug]/pdf/route.ts).
 
 .topGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: $space-5;
-  margin-bottom: $space-5;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: $ds-gutter;
+  margin-bottom: $ds-gutter;
+
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
 }
 
 .card {
-  border: 1px solid $border-secondary;
-  background: $card-panel-bg;
-  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: $ds-space-6;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
 }
 
 .cardTitle {
-  margin: 0 0 $space-4;
-  font-size: $text-xs;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $text-tertiary;
+  @include ds-text-sm;
+  margin-bottom: $ds-space-5;
+  color: $ds-text-muted;
 }
 
 .radarWrap {
   width: 100%;
-  height: 440px;
+  height: 400px;
   min-width: 0;
-  color: $text-secondary;
+  color: $ds-text-muted;
 
-  :global(.recharts-wrapper) {
-    width: 100% !important;
-    height: 100% !important;
-  }
+  @include ds-mobile { height: 320px; }
 
+  :global(.recharts-wrapper),
   :global(.recharts-wrapper > .recharts-surface) {
     width: 100% !important;
     height: 100% !important;
-    display: block;
   }
 }
 
-.ratingTail {
-  display: flex;
-  flex-direction: column;
-  gap: $space-5;
-}
-
-// ── Horizontal score bars ──────────────────────────────────────────
+// ── 0–100 bars ─────────────────────────────────────────────────────────
 .bars {
   display: flex;
   flex-direction: column;
-  gap: $space-4;
-  padding-top: $space-2;
-  padding-right: $space-2;
+  justify-content: center;
+  flex: 1;
+  gap: $ds-space-5;
 }
 
 .barRow {
   display: grid;
   grid-template-columns: 1fr auto;
+  gap: $ds-space-2 $ds-space-3;
   align-items: center;
-  gap: $space-2 $space-3;
 }
 
 .barLabel {
-  font-size: $text-sm;
-  color: $text-secondary;
+  @include ds-text-sm;
+  color: $ds-text-muted;
 }
 
 .barValue {
-  font-size: $text-sm;
-  font-weight: 600;
-  color: $text-primary;
-  text-align: right;
-  min-width: 2.5ch;
-  padding-right: $space-1;
+  @include ds-text-sm;
+  color: $ds-text;
 }
 
 .barTrack {
   grid-column: 1 / -1;
-  height: 7px;
-  background: $bg-secondary;
+  height: 4px;
   overflow: hidden;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-border;
 }
 
 .barFill {
   height: 100%;
-  background: linear-gradient(90deg, #{$pal-magenta} 0%, #{$pal-purple} 100%);
+  border-radius: inherit;
+  background-color: $ds-pink;
 }
 
-// ── Summary panel: conclusion + black rating box (expert inside) ────
+// ── Summary + score, then the table ────────────────────────────────────
+.ratingTail {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-gutter;
+}
+
 .summaryPanel {
   display: grid;
-  grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr);
-  gap: 0;
-  align-items: stretch;
-  margin-bottom: 0;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: $ds-gutter;
 
-  @media (max-width: #{$bp-tablet}) {
-    grid-template-columns: 1fr;
-  }
+  @include ds-tablet { grid-template-columns: minmax(0, 1fr); }
 }
 
 .conclusion {
-  padding: $space-7;
-  background: $card-panel-bg;
-  border: 1px solid $border-secondary;
-  border-right: none;
-
-  @media (max-width: #{$bp-tablet}) {
-    border-right: 1px solid $border-secondary;
-    border-bottom: none;
-  }
-}
-
-.panelLabel {
-  margin: 0 0 $space-5;
-  font-size: $text-xs;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: $text-tertiary;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-4;
 }
 
 .conclusionText {
-  margin: 0 0 $space-4;
-  font-size: $text-md;
-  line-height: $leading-relaxed;
-  color: $text-secondary;
-
-  &:last-of-type {
-    margin-bottom: 0;
-  }
+  @include ds-text-md;
+  color: $ds-text;
 }
 
 .disclaimer {
-  margin: $space-5 0 0;
-  font-size: $text-sm;
-  color: $text-tertiary;
+  @include ds-text-sm;
+  margin-top: $ds-space-5;
+  color: $ds-text-faint;
 }
 
-// Black rating box on the right
 .ratingBox {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: $space-6 $space-7 $space-6 $space-6;
-  background: #08070a;
-  color: #fff;
-}
+  justify-content: space-between;
+  gap: $ds-space-6;
+  padding: $ds-space-6;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
 
-.ratingBoxLabel {
-  margin: 0 0 $space-4;
-  font-size: $text-xs;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  @include ds-mobile { padding: $ds-space-5 20px; }
 }
 
 .scoreLine {
   display: flex;
   align-items: baseline;
-  gap: $space-2;
-  padding-right: $space-2;
+  gap: $ds-space-1;
 }
 
 .scoreNum {
-  font-size: 56px;
-  font-weight: 700;
-  line-height: 1;
-  color: #ad0b58;
+  @include ds-h2;
+  color: $ds-accent;
 }
 
 .scoreMax {
-  font-size: $text-xl;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
+  @include ds-text-lg;
+  color: $ds-text-muted;
 }
 
 .ratingLetter {
-  margin: $space-3 0 0;
-  font-size: $text-sm;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #fff;
+  @include ds-text-md;
+  margin-top: $ds-space-2;
+  color: $ds-text;
 }
 
-// Expert pinned to the bottom of the black box
 .expertRow {
   display: flex;
   align-items: center;
-  gap: $space-3;
-  margin-top: auto;
-  padding-top: $space-6;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-
-  @media (max-width: #{$bp-tablet}) {
-    margin-top: $space-6;
-  }
+  gap: $ds-space-3;
+  padding-top: $ds-space-5;
+  border-top: 1px solid $ds-border;
 }
 
 .expertAvatar {
-  flex: 0 0 auto;
+  @include ds-text-sm;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 50%;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
 }
 
 .expertImg {
-  width: 40px;
-  height: 40px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-}
-
-.expertFallback {
-  font-size: $text-sm;
-  font-weight: 600;
-  color: #fff;
 }
 
 .expertInfo {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
 
 .expertLabel {
-  font-size: $text-xs;
-  color: rgba(255, 255, 255, 0.55);
+  @include ds-text-xs;
+  color: $ds-text-muted;
 }
 
 .expertName {
-  font-size: $text-md;
-  font-weight: 600;
-  color: #fff;
-}
-
-.expertNameLink {
+  @include ds-text-md;
+  @include ds-transition(color);
   display: inline-flex;
   align-items: center;
-  gap: $space-2;
-  text-decoration: none;
+  gap: $ds-space-2;
   width: fit-content;
+  color: $ds-text;
 
-  &:hover {
-    color: $accent-pink-deep;
-  }
+  &:is(a):hover { color: $ds-accent; }
 }
 
 .expertLinkedInIcon {
   flex-shrink: 0;
-  color: rgba(255, 255, 255, 0.55);
-  transition: color 0.15s ease;
-
-  .expertNameLink:hover & {
-    color: $accent-pink-deep;
-  }
+  color: $ds-text-muted;
 }
 
-.expertRole {
-  font-size: $text-xs;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-// ── Detail table (flush under the summary panel) ────────────────────
+// ── Table ──────────────────────────────────────────────────────────────
 .tableWrap {
   overflow-x: auto;
-  margin-top: 0;
-  background: $card-panel-bg;
-  border: 1px solid $border-secondary;
-  border-top: none;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
 }
 
 .table {
+  @include ds-text-sm;
   width: 100%;
+  min-width: 560px;
   border-collapse: collapse;
-  font-size: $text-sm;
 
   th,
   td {
-    padding: $space-4;
+    padding: $ds-space-4 $ds-space-5;
+    border-bottom: 1px solid $ds-border;
     text-align: left;
-    border-bottom: 1px solid $border-secondary;
+    white-space: nowrap;
   }
+
+  td:first-child { white-space: normal; }
+
+  th:last-child,
+  td:last-child { text-align: right; }
 
   th {
-    font-weight: 500;
-    color: $text-tertiary;
-    border-top: 1px solid $border-secondary;
+    font-weight: $ds-weight-regular;
+    color: $ds-text-muted;
   }
 
-  td {
-    color: $text-secondary;
-  }
+  td { color: $ds-text; }
 
-  // last column right-aligned (Вклад)
-  th:last-child,
-  td:last-child {
-    text-align: right;
-  }
-
-  .scoreCell {
-    color: #ad0b58;
-    font-weight: 600;
-  }
-
-  .contribCell {
-    color: $text-primary;
-    font-weight: 600;
-  }
-
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
-
-  // ИТОГО — black row, all columns filled
   tfoot td {
-    font-weight: 700;
-    font-size: $text-md;
-    color: #fff;
-    background: #08070a;
-    border-bottom: none;
-  }
-
-  tfoot .totalContrib {
-    color: #ad0b58;
+    @include ds-text-md;
+    border-bottom: 0;
   }
 }
 
-@media print {
-  .root {
-    break-before: page;
-    page-break-before: always;
-  }
-
-  .ratingTail {
-    break-before: page;
-    page-break-before: always;
-  }
-
-  .topGrid {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  .radarWrap {
-    height: 300px;
-  }
-
-  .topGrid .card {
-    padding: $space-4 $space-5;
-  }
-
-  .bars {
-    gap: $space-3;
-  }
-
-  .topGrid,
-  .summaryPanel,
-  .card,
-  .bars,
-  .barRow,
-  .ratingBox,
-  .tableWrap,
-  .table {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  .table tr,
-  .table thead,
-  .table tbody,
-  .table tfoot {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-
-  .heading {
-    break-after: avoid;
-    page-break-after: avoid;
-  }
-}
+.accentCell { color: $ds-accent; }

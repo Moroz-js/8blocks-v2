@@ -1,0 +1,126 @@
+@use '@/shared/ds/styles' as *;
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-inner-gap;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+}
+
+.item {
+  background-color: $ds-surface;
+
+  &:first-child {
+    border-top-left-radius: $ds-radius-lg;
+    border-top-right-radius: $ds-radius-lg;
+  }
+
+  &:last-child {
+    border-bottom-left-radius: $ds-radius-lg;
+    border-bottom-right-radius: $ds-radius-lg;
+  }
+}
+
+.heading {
+  font: inherit;
+}
+
+// Answer unfolds with height, fade and a slight rise; the chevron turns in step.
+$unfold: calc(#{$ds-duration} * 3);
+
+.question {
+  @include ds-text-md;
+  @include ds-focus-visible;
+  @include ds-transition(color, padding-bottom);
+  transition-duration: $ds-duration, $unfold;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $ds-space-4;
+  width: 100%;
+  padding: 20px 25px;
+  border: none;
+  border-radius: inherit;
+  background: none;
+  color: rgba($ds-white, 0.9);
+  text-align: left;
+  cursor: pointer;
+
+  &:hover { color: $ds-text; }
+
+  .open & {
+    padding-bottom: 0;
+  }
+
+  // Figma 79:130 «FAQ — мобильный»: Text small, 16px padding.
+  @include ds-mobile {
+    @include ds-text-sm;
+    padding: $ds-space-4;
+  }
+}
+
+.chevron {
+  flex-shrink: 0;
+  @include ds-transition(transform);
+  transition-duration: $unfold;
+
+  .open & {
+    transform: rotate(180deg);
+  }
+}
+
+.panel {
+  @include ds-transition(grid-template-rows, opacity, transform);
+  transition-duration: $unfold;
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-#{$ds-space-2});
+
+  .open & {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.answerClip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.answer {
+  @include ds-text-sm;
+  max-width: 482px;
+  padding: 10px 25px 20px;
+  color: $ds-text-muted;
+
+  @include ds-mobile {
+    max-width: none;
+    padding: 10px $ds-space-4 $ds-space-4;
+  }
+}
+
+.footer {
+  @include ds-text-md;
+  color: $ds-text-muted;
+  text-align: center;
+
+  a {
+    @include ds-transition(text-decoration-color);
+    color: $ds-text;
+    margin-left: $ds-space-2;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+
+    &:hover {
+      text-decoration-color: currentColor;
+    }
+  }
+}

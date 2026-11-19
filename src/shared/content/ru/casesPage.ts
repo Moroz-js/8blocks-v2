@@ -1,6 +1,6 @@
 export const casesContent = {
   headline: 'Портфолио',
-  description: 'Кейсы наших клиентов — от DeFi и GameFi до токенизации реальных активов и международных расчетов.',
+  description: 'Кейсы наших клиентов: от DeFi и GameFi до токенизации реальных активов и международных расчетов',
 } as const
 
 export const casesMeta = {
@@ -33,6 +33,10 @@ export const casesUiContent = {
   bookProject: 'Обсудить похожий проект',
   relatedArticle: 'Читать статью по теме',
   backToCases: 'Вернуться ко всем кейсам',
+  allCases: 'Все кейсы',
   snapshotLabel: 'Краткий кейс',
   emptyLabel: 'Кейсов пока нет',
+  countSingular: 'кейс',
+  countFew: 'кейса',
+  countMany: 'кейсов',
 } as const

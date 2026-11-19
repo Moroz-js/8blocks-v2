@@ -1,0 +1,61 @@
+@use '@/shared/ds/styles' as *;
+
+.section {
+  @include ds-block-spacing;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, $ds-black 120px, $ds-black calc(100% - 120px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, $ds-black 120px, $ds-black calc(100% - 120px), transparent 100%);
+
+  @include ds-mobile {
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, $ds-black 40px, $ds-black calc(100% - 40px), transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, $ds-black 40px, $ds-black calc(100% - 40px), transparent 100%);
+  }
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 120s linear infinite;
+
+  &:hover { animation-play-state: paused; }
+
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}
+
+.group {
+  display: flex;
+  align-items: center;
+  gap: $ds-space-4;
+  padding-right: $ds-space-4;
+  list-style: none;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-inline: 32px;
+  opacity: 0.45;
+  @include ds-transition(opacity);
+
+  &:hover { opacity: 0.85; }
+}
+
+.logo {
+  display: block;
+  width: auto;
+  height: 32px;
+  max-width: 140px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.logoTall {
+  height: 52px;
+  max-width: none;
+}

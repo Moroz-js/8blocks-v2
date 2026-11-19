@@ -1,0 +1,27 @@
+@use '@/shared/ds/styles' as *;
+
+// Same step layout as the DS Roadmap.
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding-right: 10px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 3px;
+}
+
+.title {
+  @include ds-text-lg;
+  color: $ds-text;
+  opacity: 0.9;
+}
+
+.description {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}

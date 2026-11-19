@@ -1,1 +1,0 @@
-export { WorkshopExplainer } from './WorkshopExplainer'

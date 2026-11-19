@@ -643,6 +643,7 @@ function renderNode(node: LexNode, key: string, idMap: IdMap): React.ReactNode {
             width={width ?? 1200}
             height={height ?? 675}
             className={styles.img}
+            sizes="(max-width: 1240px) 100vw, 1200px"
           />
           {caption && <figcaption className={styles.figcaption}>{caption}</figcaption>}
           {aiDescription && (

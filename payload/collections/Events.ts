@@ -256,8 +256,8 @@ export const Events: CollectionConfig = {
               type: 'group',
               label: 'SEO',
               fields: [
-                { name: 'seoTitle', type: 'text', label: 'SEO заголовок' },
-                { name: 'seoDescription', type: 'textarea', label: 'SEO описание' },
+                { name: 'seoTitle', type: 'text', label: 'SEO заголовок', admin: { description: 'До ~50 символов: шаблон добавляет « | бренд», Google обрезает после ~60.' } },
+                { name: 'seoDescription', type: 'textarea', label: 'SEO описание', admin: { description: 'До ~150 символов: длиннее Google обрезает.' } },
                 { name: 'ogTitle', type: 'text', label: 'OG title' },
                 { name: 'ogDescription', type: 'textarea', label: 'OG description' },
                 { name: 'ogImage', type: 'upload', relationTo: 'media', label: 'OG изображение' },

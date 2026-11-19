@@ -3,7 +3,7 @@ import { siteSeoPageGlobalFields } from './siteSeoPageFields.ts'
 import { discoverStaticSiteRoutePaths } from '@/shared/lib/site-seo/discover-static-route-paths'
 import { syncSiteSeoPageOverrides } from '@/shared/lib/site-seo/sync-site-seo-page-overrides'
 
-/** SEO статических страниц: строки = статические маршруты из src/app/(site); path только из кода. */
+/** SEO статических страниц: строки = статические маршруты из src/app/(site) и (site-v2); path только из кода. */
 export const SiteSeo: GlobalConfig = {
   slug: 'site-seo',
   label: 'Глобальное SEO',
