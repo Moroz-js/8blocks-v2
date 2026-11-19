@@ -4,6 +4,8 @@ import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
 import { BANNED_EMAILS } from '@/shared/config/banned-emails'
 import { sendNewsletterAdmin, sendNewsletterUser } from '@/shared/lib/email'
+import { notifyTelegram } from '@/shared/lib/telegram'
+import { siteConfig } from '@/shared/config/site'
 import { PUBLIC_FORM_ERRORS, sanitizeNewsletterEmail } from '@/shared/lib/form-sanitize'
 
 export async function POST(req: NextRequest) {
@@ -53,6 +55,14 @@ export async function POST(req: NextRequest) {
       const results = await Promise.allSettled([
         sendNewsletterAdmin(normalizedEmail, source),
         sendNewsletterUser(normalizedEmail),
+        notifyTelegram({
+          title: 'Новый подписчик рассылки',
+          fields: [
+            { label: 'Email', value: normalizedEmail },
+            ...(source ? [{ label: 'Источник', value: source }] : []),
+          ],
+          siteUrl: siteConfig.url,
+        }),
       ])
       results.forEach((r, i) => {
         if (r.status === 'rejected') {

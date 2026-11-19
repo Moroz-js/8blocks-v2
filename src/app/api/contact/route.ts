@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload, ValidationError } from 'payload'
 import config from '@payload-config'
 import { sendContactAdmin, sendContactUser } from '@/shared/lib/email'
+import { notifyTelegram } from '@/shared/lib/telegram'
+import { siteConfig } from '@/shared/config/site'
 import { sanitizeContactForm } from '@/shared/lib/form-sanitize'
 
 export async function POST(req: NextRequest) {
@@ -36,6 +38,15 @@ export async function POST(req: NextRequest) {
       const results = await Promise.allSettled([
         sendContactAdmin({ name, email, message }),
         sendContactUser(email, { name, email, message }),
+        notifyTelegram({
+          title: 'Новая заявка',
+          fields: [
+            { label: 'Имя', value: name },
+            { label: 'Email', value: email },
+            { label: 'Сообщение', value: message },
+          ],
+          siteUrl: siteConfig.url,
+        }),
       ])
       results.forEach((r, i) => {
         if (r.status === 'rejected') {
