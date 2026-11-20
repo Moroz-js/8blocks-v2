@@ -126,22 +126,23 @@ $column: 774px;
   gap: $ds-space-5;
 }
 
-.sectionTitle,
-.story :global(h2),
-.story :global(h3) {
+.sectionTitle {
   @include ds-h5;
   color: $ds-text;
 }
 
 // RichText in the article style (ArticlePage): muted text, pink quote rule and bullets.
-.story {
+// Nested under .body to outrank RichText's own `.root .x` rules.
+.body .story {
   display: flex;
   flex-direction: column;
   gap: $ds-space-5;
 
   :global(h2),
   :global(h3) {
-    margin-top: $ds-space-6;
+    @include ds-h5;
+    margin: $ds-space-6 0 0;
+    color: $ds-text;
   }
 
   > :global(h2):first-child {
@@ -168,9 +169,16 @@ $column: 774px;
 
   :global(blockquote) {
     @include ds-text-md;
-    padding-left: $ds-space-4;
+    margin: 0;
+    padding: 2px 0 2px $ds-space-4;
     border-left: 2px solid $ds-accent;
+    background: none;
     color: $ds-text;
+    font-style: normal;
+  }
+
+  :global(blockquote) :global(p) {
+    color: inherit;
   }
 
   :global(li)::marker {
