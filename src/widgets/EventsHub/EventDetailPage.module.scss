@@ -136,13 +136,23 @@ $column: 774px;
 .body .story {
   display: flex;
   flex-direction: column;
-  gap: $ds-space-5;
 
   :global(h2),
   :global(h3) {
     @include ds-h5;
-    margin: $ds-space-6 0 0;
+    margin: $ds-space-6 0 $ds-space-4;
     color: $ds-text;
+  }
+
+  :global(p),
+  :global(ul),
+  :global(ol),
+  :global(blockquote) {
+    margin: 0 0 $ds-space-4;
+  }
+
+  :global(li) + :global(li) {
+    margin-top: $ds-space-2;
   }
 
   > :global(h2):first-child {
@@ -169,7 +179,6 @@ $column: 774px;
 
   :global(blockquote) {
     @include ds-text-md;
-    margin: 0;
     padding: 2px 0 2px $ds-space-4;
     border-left: 2px solid $ds-accent;
     background: none;
@@ -178,6 +187,7 @@ $column: 774px;
   }
 
   :global(blockquote) :global(p) {
+    margin: 0;
     color: inherit;
   }
 
