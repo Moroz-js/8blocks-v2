@@ -33,6 +33,10 @@
   flex-shrink: 0;
 }
 
+.count {
+  opacity: 0.5;
+}
+
 // Figma: Tab on (63:3169).
 .selected {
   background-color: $ds-text;

@@ -35,6 +35,8 @@ interface ServiceHeroProps {
   aside?: ReactNode
   /** Small muted line under the actions. */
   footnote?: ReactNode
+  /** Pink glow under the scene. */
+  glow?: boolean
 }
 
 /** Full-bleed service hero with a binary scene, sliding under the site header. */
@@ -55,6 +57,7 @@ export function ServiceHero({
   footnote,
   corner,
   cornerAlign = 'right',
+  glow = true,
 }: ServiceHeroProps) {
   return (
     <section
@@ -74,7 +77,7 @@ export function ServiceHero({
           <div className={clsx(styles.art, artLeft !== 0 && styles.artShifted)}>
             <BinaryScene scene={scene} className={styles.scene} />
           </div>
-          <div className={styles.glow} aria-hidden="true" />
+          {glow && <div className={styles.glow} aria-hidden="true" />}
           <Image src={heroFade} alt="" className={styles.fadeImage} sizes="100vw" />
         </>
       )}

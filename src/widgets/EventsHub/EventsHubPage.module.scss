@@ -1,0 +1,204 @@
+@use '@/shared/ds/styles' as *;
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+// ── Upcoming: 400px row card, cover on the left ──
+.featuredList {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-5;
+}
+
+.featured {
+  display: flex;
+  min-height: 400px;
+  overflow: hidden;
+  border-radius: $ds-radius-lg;
+  background-color: $ds-surface;
+
+  @include ds-tablet {
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
+.featuredCover {
+  position: relative;
+  flex-shrink: 0;
+  width: 560px;
+  overflow: hidden;
+  background-color: $ds-surface-raised;
+
+  @include ds-tablet {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.featuredImage {
+  object-fit: cover;
+  transition: transform calc(#{$ds-duration} * 3) $ds-ease;
+
+  .featured:hover & {
+    transform: scale(1.03);
+  }
+}
+
+.featuredTag {
+  position: absolute;
+  top: $ds-space-4;
+  left: $ds-space-4;
+}
+
+.featuredBody {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 36px $ds-space-7;
+
+  @include ds-mobile { padding: $ds-space-5 20px; }
+}
+
+.featuredMeta {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.featuredTitle {
+  @include ds-h4;
+  color: $ds-text;
+
+  a {
+    @include ds-focus-visible;
+  }
+}
+
+.featuredExcerpt {
+  @include ds-text-md;
+  margin-bottom: $ds-space-2;
+  color: $ds-text-muted;
+}
+
+.featuredBody > .actions {
+  margin-top: auto;
+}
+
+// ── Upcoming, empty: accent card with the binary clock ──
+.empty {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $ds-space-2;
+  min-height: 320px;
+  justify-content: center;
+  overflow: hidden;
+  padding: $ds-space-8;
+  border-radius: $ds-radius-lg;
+
+  .actions {
+    margin-top: $ds-space-2;
+  }
+
+  @include ds-mobile { padding: $ds-space-6 20px; }
+}
+
+.emptyGlyph {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 0;
+  width: 620px;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent, $ds-black 30%);
+  mask-image: linear-gradient(90deg, transparent, $ds-black 30%);
+  pointer-events: none;
+
+  @include ds-mobile { opacity: 0.4; }
+}
+
+.emptyText {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  max-width: 600px;
+
+  p {
+    @include ds-text-md;
+    color: $ds-text-faint;
+  }
+}
+
+.emptyTitle {
+  @include ds-h4;
+  color: $ds-text;
+}
+
+.empty > .actions {
+  position: relative;
+}
+
+// ── Highlights: two drifting rows of photos, full width ──
+.strip {
+  @include ds-bleed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  padding-left: $ds-margin;
+  animation: drift 50s ease-in-out infinite alternate;
+
+  &:nth-child(2) {
+    animation-direction: alternate-reverse;
+  }
+
+  .strip:hover & {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+
+  @include ds-mobile { padding-left: $ds-margin-mobile; }
+}
+
+// Runs until the row's end meets the right edge of the screen.
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(min(0px, calc(100vw - 100%))); }
+}
+
+.tile {
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--w) * 1px);
+  height: 280px;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  img {
+    object-fit: cover;
+  }
+
+  // Shorter rows keep the designer's tile proportions.
+  @include ds-mobile {
+    width: calc(var(--w) * 180px / 280);
+    height: 180px;
+  }
+}

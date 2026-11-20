@@ -1,8 +1,10 @@
 # Состояние
 
-Обновлено: 2026-11-19.
+Обновлено: 2026-11-20.
 
 ## Проверено
+
+- 2026-11-20 `/events` и `/events/[slug]` переведены на DS v2 по макетам из корня репо `events/` (Events.dc.html, Event.dc.html, Binary Globe.dc.html). Маршруты перенесены в `src/app/(site-v2)/events/**` (метаданные, hreflang, JSON-LD и `calendar.ics` без изменений); новый виджет `src/widgets/EventsHub/` (hub: hero с глобусом через `ServiceHero scene="globe" glow={false}`, предстоящие строкой 400px либо акцентный empty state, прошедшие — карта стран + фильтр страны (native select) + формат на `Tabs ghost` + сетка с «Show all»; лента фото `public/img/events/highlight-*.webp`; страница события — шапка, обложка + сетка фактов, RichText, команда, организаторы, галерея, «More events»). Новая сцена BinaryArt `globe` (`scenes/globe.js`, атлас `public/img/binary/globe.webp`). Пины карты: `src/shared/config/countryPoints.ts` (ISO → хаб-город), проекция подобрана по пинам макета. В `Tabs` добавлен `count`, в `ServiceHero` — `glow`, в `EventPerson` — `position`. Удалён v1-виджет `EventPage`; `EventsPage` (v1) оставлен — его использует `/team/[slug]`. typecheck, build, eslint по новым файлам — ок; скриншоты 1280/375 локально сверены с макетом.
 
 - 2026-11-19 релиз staging в прод по команде владельца: `main` сначала смержен в `staging` (`cf1266b`, единственный конфликт `migrations/index.ts` — оставлены обе миграции по дате: `20261109_notification_settings`, `20261112_seo_content_fixes`), typecheck и build прошли, staging-деплой success. [PR #11](https://github.com/Moroz-js/8blocks-v2/pull/11) слит обычным merge с `--admin` (`d28681f`), [run 44478268139](https://github.com/Moroz-js/8blocks-v2/actions/runs/44478268139) — success, все пять деплоев. На `8blocks.io`, `8blocks.ae`, `tokenomika.ru` страницы `/`, `/methodology`, `/services/tokenomics`, `/product/calculator`, `/learn/token-vesting-benchmarks`, `/blog` — 200, `data-ds=v2`, hreflang (4), JSON-LD и GTM на месте. `staging` после релиза fast-forward до `main`.
 

@@ -16,6 +16,7 @@ export interface EventPerson {
   slug?: string | null
   showProfile?: boolean
   photo?: EventMedia | null
+  position?: string | null
   bio?: string | null
   bioOverride?: string | null
   socialLinks: { id: string; href: string }[]

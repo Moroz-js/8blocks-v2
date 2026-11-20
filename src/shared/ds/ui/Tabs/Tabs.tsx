@@ -10,6 +10,8 @@ export interface TabItem<V extends string = string> {
   label: string
   /** 20px white icon before the label; inverted on the selected tab. */
   icon?: StaticImageData
+  /** Muted counter after the label (filters). */
+  count?: number
 }
 
 interface TabsProps<V extends string> {
@@ -120,6 +122,7 @@ export function Tabs<V extends string>({
           >
             {item.icon && <Image src={item.icon} alt="" width={20} height={20} className={styles.icon} />}
             {item.label}
+            {item.count !== undefined && <span className={styles.count}>{item.count}</span>}
           </button>
         )
       })}

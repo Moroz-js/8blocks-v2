@@ -1,0 +1,177 @@
+@use '@/shared/ds/styles' as *;
+
+// Designer's frame: 1200 × 545 map; the arctic rows under the title stay empty.
+.map {
+  position: relative;
+  aspect-ratio: 1200 / 545;
+  margin-top: -$ds-space-7;
+
+  @include ds-mobile { margin-top: 0; }
+}
+
+.mapArt {
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.pin {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.point {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  width: $ds-space-2;
+  height: $ds-space-2;
+  border-radius: 50%;
+  background-color: $ds-accent;
+  box-shadow: 0 0 0 $ds-space-1 rgba($ds-pink, 0.25);
+  transform: translate(-50%, -50%);
+}
+
+// 70px cover + country label, 10px above the point.
+.thumb {
+  @include ds-focus-visible;
+  position: absolute;
+  top: var(--y);
+  left: var(--thumb-x);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 110px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: $ds-white;
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translate(-50%, calc(-100% - 10px));
+
+  // The thumbnails need the full frame; smaller maps keep the points only.
+  @include ds-tablet { display: none; }
+}
+
+.thumbImage {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  border: 2px solid $ds-white;
+  border-radius: $ds-radius-badge;
+  background-color: $ds-surface;
+  @include ds-transition(transform);
+
+  img {
+    object-fit: cover;
+  }
+
+  .thumb:hover & {
+    transform: translateY(-2px);
+  }
+}
+
+.thumbLabel {
+  @include ds-text-xs;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+
+  svg {
+    width: 5px;
+    height: 8px;
+  }
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $ds-space-2;
+  margin-top: $ds-space-6;
+  scroll-margin-top: 116px;
+}
+
+// Pill select in the tab chrome: charcoal off, white once a country is picked.
+.select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  select {
+    @include ds-text-sm;
+    @include ds-focus-visible;
+    @include ds-transition(background-color, color, box-shadow);
+    height: 44px;
+    padding: 10px 40px 10px 18px;
+    border: none;
+    border-radius: $ds-radius-pill;
+    background-color: $ds-surface-raised;
+    color: $ds-text;
+    font-family: inherit;
+    cursor: pointer;
+    appearance: none;
+
+    &:hover {
+      @include ds-overlay($ds-overlay-lighten);
+    }
+
+    &[data-active] {
+      background-color: $ds-text;
+      color: $ds-text-inverse;
+    }
+
+    option {
+      background-color: $ds-surface-raised;
+      color: $ds-text;
+    }
+  }
+
+  svg {
+    position: absolute;
+    right: 18px;
+    color: $ds-text;
+    pointer-events: none;
+  }
+
+  select[data-active] + svg {
+    color: $ds-text-inverse;
+  }
+}
+
+// Segmented control: the ghost tabs on a charcoal track.
+.segments {
+  flex-wrap: nowrap;
+  gap: 0;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-space-8 $ds-space-5;
+  margin-top: $ds-space-7;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: $ds-space-7;
+  }
+}
+
+.empty {
+  @include ds-text-md;
+  margin-top: $ds-space-7;
+  color: $ds-text-muted;
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  margin-top: $ds-space-8;
+}

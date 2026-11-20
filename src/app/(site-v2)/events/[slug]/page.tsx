@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import type { Event } from '@/entities/event'
-import { EventPage } from '@/widgets/EventPage'
-import { mapEvent } from '@/shared/lib/event-mappers'
-import { visibleEventConditions } from '@/shared/lib/visible-event-where'
+import type { Event, EventCard } from '@/entities/event'
+import { EventDetailPage } from '@/widgets/EventsHub'
+import { mapEvent, mapEventCard } from '@/shared/lib/event-mappers'
+import { visibleEventConditions, visibleEventWhere } from '@/shared/lib/visible-event-where'
 import { mediaToAbsoluteUrl, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { eventCityLabel } from '@/shared/config/eventCities'
 import { ORG_ID, organizationNode, websiteNode } from '@/shared/lib/content-schema'
@@ -26,6 +26,23 @@ async function getEvent(slug: string) {
     depth: 2,
   })
   return result.docs[0] ? mapEvent(result.docs[0]) : null
+}
+
+/** Three events closest in time to this one. */
+async function getMoreEvents(event: Event) {
+  const payload = await getPayload({ config })
+  const result = await payload.find({
+    collection: 'events',
+    where: { and: [visibleEventWhere, { id: { not_equals: event.id } }] },
+    limit: 100,
+    depth: 1,
+  })
+  const at = new Date(event.startsAt).getTime()
+  return result.docs
+    .map(mapEventCard)
+    .filter((item): item is EventCard => item !== null)
+    .sort((a, b) => Math.abs(new Date(a.startsAt).getTime() - at) - Math.abs(new Date(b.startsAt).getTime() - at))
+    .slice(0, 3)
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -137,10 +154,11 @@ export default async function EventSlugRoute({ params }: PageProps) {
   const { slug } = await params
   const event = await getEvent(slug)
   if (!event) notFound()
+  const more = await getMoreEvents(event)
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildEventSchema(event)) }} />
-      <EventPage event={event} />
+      <EventDetailPage event={event} more={more} />
     </>
   )
 }

@@ -1,0 +1,327 @@
+@use '@/shared/ds/styles' as *;
+
+// Designer's frame: one centred 774px column for the cover, facts and story.
+$column: 774px;
+
+.top {
+  @include ds-container;
+  padding-top: $ds-space-6;
+}
+
+.header {
+  @include ds-container;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $ds-space-4;
+  max-width: calc(800px + 2 * #{$ds-margin});
+  margin-top: -$ds-space-5;
+  text-align: center;
+
+  @include ds-mobile { margin-top: $ds-space-6; }
+}
+
+.eyebrow {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.title {
+  @include ds-h3;
+  @include ds-title-sheen;
+}
+
+.meta {
+  @include ds-text-sm;
+  color: $ds-text-faint;
+}
+
+.column {
+  @include ds-container;
+  max-width: calc(#{$column} + 2 * #{$ds-margin});
+  margin-top: $ds-space-7;
+}
+
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: $ds-radius-card $ds-radius-card 0 0;
+  background-color: $ds-surface;
+}
+
+.coverImage {
+  object-fit: cover;
+}
+
+// 3 × 2 facts under the cover; 4px seams show the page through.
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-space-1;
+  margin-top: $ds-space-1;
+  overflow: hidden;
+  border-radius: 0 0 $ds-radius-card $ds-radius-card;
+
+  @include ds-mobile { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.factsAlone {
+  border-radius: $ds-radius-card;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+  padding: $ds-space-4;
+  background-color: $ds-surface;
+
+  dt {
+    @include ds-text-xs;
+    color: $ds-text-muted;
+  }
+
+  dd {
+    @include ds-text-sm;
+    margin: 0;
+    color: $ds-text;
+  }
+
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: $ds-space-6;
+}
+
+// ── Story ──
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: calc(#{$ds-block-gap} / 3);
+  margin-top: calc(#{$ds-block-gap} / 3);
+
+  @include ds-mobile {
+    gap: $ds-space-8;
+    margin-top: $ds-space-8;
+  }
+}
+
+.lead {
+  @include ds-text-md;
+  color: $ds-text;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-5;
+}
+
+.sectionTitle,
+.story :global(h2),
+.story :global(h3) {
+  @include ds-h5;
+  color: $ds-text;
+}
+
+// RichText in the article style (ArticlePage): muted text, pink quote rule and bullets.
+.story {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-5;
+
+  :global(h2),
+  :global(h3) {
+    margin-top: $ds-space-6;
+  }
+
+  > :global(h2):first-child {
+    margin-top: 0;
+  }
+
+  :global(p),
+  :global(li) {
+    @include ds-text-md;
+    color: $ds-text-muted;
+  }
+
+  :global(strong),
+  :global(b) {
+    color: $ds-text;
+    font-weight: $ds-weight;
+  }
+
+  :global(a) {
+    color: $ds-text;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  :global(blockquote) {
+    @include ds-text-md;
+    padding-left: $ds-space-4;
+    border-left: 2px solid $ds-accent;
+    color: $ds-text;
+  }
+
+  :global(li)::marker {
+    color: $ds-accent;
+  }
+}
+
+// ── Team: stacked plates ──
+.team {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-1;
+}
+
+.person {
+  display: flex;
+  gap: $ds-space-4;
+  padding: $ds-space-5;
+  background-color: $ds-surface;
+
+  &:first-child { border-radius: $ds-radius-card $ds-radius-card 0 0; }
+  &:last-child { border-radius: 0 0 $ds-radius-card $ds-radius-card; }
+  &:only-child { border-radius: $ds-radius-card; }
+
+  @include ds-mobile { padding: $ds-space-4; }
+}
+
+.personPhoto {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: $ds-surface-raised;
+  object-fit: cover;
+}
+
+.personBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: $ds-space-1;
+  min-width: 0;
+}
+
+.personName {
+  @include ds-text-md;
+  color: $ds-text;
+}
+
+.personRole {
+  @include ds-text-sm;
+  color: $ds-accent;
+}
+
+.personBio {
+  @include ds-text-sm;
+  color: $ds-text-muted;
+}
+
+.personLink {
+  @include ds-text-sm;
+  @include ds-transition(color);
+  margin-top: $ds-space-2;
+  color: $ds-text-link;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover { color: $ds-text; }
+}
+
+// ── Partners: chip boxes side by side ──
+.partners {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: $ds-space-1;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+}
+
+.partnerBox {
+  display: flex;
+  flex-direction: column;
+  gap: $ds-space-3;
+  padding: $ds-space-4;
+  background-color: $ds-surface;
+}
+
+.partnerTitle {
+  @include ds-text-xs;
+  color: $ds-text-muted;
+}
+
+.chips {
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  @include ds-text-xs;
+  @include ds-overlay(transparent);
+  @include ds-transition(box-shadow);
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding-inline: $ds-space-3;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+
+  @at-root a#{&}:hover {
+    @include ds-overlay($ds-surface-glass);
+  }
+}
+
+// ── Photos: first one wide, the rest in pairs ──
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+
+  &:first-child {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  img,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.more {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: $ds-space-8 $ds-space-5;
+
+  @include ds-tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @include ds-mobile { grid-template-columns: minmax(0, 1fr); }
+}
