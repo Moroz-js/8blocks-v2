@@ -7,10 +7,13 @@ import { sendNewsletterAdmin, sendNewsletterUser } from '@/shared/lib/email'
 import { notifyTelegram } from '@/shared/lib/telegram'
 import { siteConfig } from '@/shared/config/site'
 import { PUBLIC_FORM_ERRORS, sanitizeNewsletterEmail } from '@/shared/lib/form-sanitize'
+import { checkCaptcha, readPublicForm } from '@/shared/lib/captcha/form-guard'
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
+    const form = await readPublicForm(req, 'newsletter')
+    if ('response' in form) return form.response
+    const body = form.body
     const parsed = sanitizeNewsletterEmail(body)
     if (!parsed.ok) {
       return NextResponse.json({ error: parsed.error }, { status: 400 })
@@ -19,8 +22,10 @@ export async function POST(req: NextRequest) {
     if (BANNED_EMAILS.has(normalizedEmail)) {
       return NextResponse.json({ error: 'This email address cannot be used.' }, { status: 400 })
     }
+    const captchaRejected = await checkCaptcha(req, body, 'newsletter')
+    if (captchaRejected) return captchaRejected
 
-    const rawSource = (body as Record<string, unknown>).source
+    const rawSource = body.source
     const source =
       typeof rawSource === 'string' && rawSource.trim()
         ? rawSource.replace(/\0/g, '').replace(/[\r\n]+/g, ' ').trim().slice(0, 200)
