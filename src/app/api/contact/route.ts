@@ -6,19 +6,18 @@ import { sendContactAdmin, sendContactUser } from '@/shared/lib/email'
 import { notifyTelegram } from '@/shared/lib/telegram'
 import { siteConfig } from '@/shared/config/site'
 import { sanitizeContactForm } from '@/shared/lib/form-sanitize'
+import { checkCaptcha, readPublicForm } from '@/shared/lib/captcha/form-guard'
 
 export async function POST(req: NextRequest) {
   try {
-    let body: unknown
-    try {
-      body = await req.json()
-    } catch {
-      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
-    }
-    const parsed = sanitizeContactForm(body)
+    const form = await readPublicForm(req, 'contact')
+    if ('response' in form) return form.response
+    const parsed = sanitizeContactForm(form.body)
     if (!parsed.ok) {
       return NextResponse.json({ error: parsed.error }, { status: 400 })
     }
+    const captchaRejected = await checkCaptcha(req, form.body, 'contact')
+    if (captchaRejected) return captchaRejected
     const { name, email, message } = parsed
 
     const payload = await getPayload({ config })

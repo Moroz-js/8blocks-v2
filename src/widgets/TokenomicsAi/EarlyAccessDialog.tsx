@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Button, SelectField, TextField } from '@/shared/ds'
 import { apiPath } from '@/shared/lib/apiPath'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
+import { Honeypot, readHoneypot, useCaptcha } from '@/shared/lib/captcha/client'
 import type { TokenomicsAiContent } from '@/shared/content/tokenomicsAi'
 import { EARLY_ACCESS_HASH } from './earlyAccess'
 import { LimitedPill } from './LimitedPill'
@@ -17,6 +18,8 @@ export function EarlyAccessDialog({ copy, limited }: { copy: TokenomicsAiContent
   const viewed = useRef(false)
   const submitting = useRef(false)
   const [status, setStatus] = useState<Status>('idle')
+  const [errorText, setErrorText] = useState('')
+  const captcha = useCaptcha()
 
   useEffect(() => {
     const open = (event: MouseEvent) => {
@@ -40,6 +43,7 @@ export function EarlyAccessDialog({ copy, limited }: { copy: TokenomicsAiContent
     if (submitting.current) return
     submitting.current = true
     setStatus('sending')
+    const website = readHoneypot(event.currentTarget)
     const data = new FormData(event.currentTarget)
     const value = (key: string) => String(data.get(key) ?? '').trim()
     const project = value('project')
@@ -48,12 +52,15 @@ export function EarlyAccessDialog({ copy, limited }: { copy: TokenomicsAiContent
     const stage = value('stage')
     const heard = value('heard')
     try {
+      const captchaToken = await captcha.getToken()
       const response = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
           name: project,
           email,
+          website,
+          captchaToken,
           message: [
             copy.messageTitle,
             `${copy.messageProject}: ${project}`,
@@ -63,13 +70,18 @@ export function EarlyAccessDialog({ copy, limited }: { copy: TokenomicsAiContent
           ].join('\n'),
         }),
       })
-      if (!response.ok) throw new Error('Unable to send request')
+      if (!response.ok) {
+        const result = (await response.json().catch(() => ({}))) as { error?: string }
+        throw new Error(result.error || copy.error)
+      }
       setStatus('done')
       trackPlatformEvent('lead_form_submit', { tool: 'tokenomics_ai', form: 'tokenomics_ai_early_access', goal, stage, heard })
-    } catch {
+    } catch (err) {
+      setErrorText(err instanceof Error ? err.message : copy.error)
       setStatus('error')
     } finally {
       submitting.current = false
+      captcha.reset()
     }
   }
 
@@ -97,7 +109,8 @@ export function EarlyAccessDialog({ copy, limited }: { copy: TokenomicsAiContent
             <p className={styles.dialogNote}>{copy.successText}</p>
           </div>
         ) : (
-          <form className={styles.dialogForm} onSubmit={submit}>
+          <form className={styles.dialogForm} onSubmit={submit} onFocus={captcha.preload}>
+            <Honeypot />
             <LimitedPill>{limited}</LimitedPill>
             <h2 id="ai-access-title" className={styles.dialogTitle}>
               {copy.title}
@@ -115,9 +128,10 @@ export function EarlyAccessDialog({ copy, limited }: { copy: TokenomicsAiContent
             <SelectField name="goal" label={copy.goal} placeholder={copy.goalPlaceholder} options={copy.goals} required />
             <SelectField name="stage" label={copy.stage} placeholder={copy.stagePlaceholder} options={copy.stages} />
             <SelectField name="heard" label={copy.heard} placeholder={copy.heardPlaceholder} options={copy.sources} />
+            {captcha.widget}
             {status === 'error' && (
               <p className={styles.dialogError} role="alert">
-                {copy.error}
+                {errorText}
               </p>
             )}
             <Button type="submit" fullWidth disabled={status === 'sending'}>
