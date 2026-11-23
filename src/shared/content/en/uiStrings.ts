@@ -58,4 +58,7 @@ export const uiStrings = {
   downloadGateSending: 'Sending…',
   downloadGateError: 'Something went wrong. Please try again.',
   downloadGateEmailPlaceholder: 'your@email.io',
+  captchaFailed: 'We could not confirm you are not a bot. Please try again.',
+  captchaLoadError: 'The spam check did not load. Turn off your ad blocker and try again, or email us.',
+  formWrongContentType: 'Unsupported request format.',
 } as const

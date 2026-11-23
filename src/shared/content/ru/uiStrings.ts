@@ -58,4 +58,7 @@ export const uiStrings = {
   downloadGateSending: 'Отправляем…',
   downloadGateError: 'Не удалось отправить. Попробуйте ещё раз.',
   downloadGateEmailPlaceholder: 'your@email.io',
+  captchaFailed: 'Не удалось подтвердить, что вы не робот. Попробуйте ещё раз.',
+  captchaLoadError: 'Проверка от спама не загрузилась. Отключите блокировщик рекламы и попробуйте ещё раз или напишите нам на почту.',
+  formWrongContentType: 'Неподдерживаемый формат запроса.',
 } as const

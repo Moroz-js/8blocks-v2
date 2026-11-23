@@ -6,6 +6,7 @@ import { uiStrings } from '@/shared/content/uiStrings'
 import { Button } from '@/shared/ui'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { apiPath } from '@/shared/lib/apiPath'
+import { Honeypot, readHoneypot, useCaptcha } from '@/shared/lib/captcha/client'
 import styles from './ArticleDownloadCta.module.scss'
 
 type Status = 'idle' | 'loading' | 'error'
@@ -30,6 +31,7 @@ export function ArticleDownloadCta({ cta, source }: Props) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const captcha = useCaptcha()
 
   const close = useCallback(() => {
     setOpen(false)
@@ -61,12 +63,14 @@ export function ArticleDownloadCta({ cta, source }: Props) {
     setErrorMsg('')
 
     const email = (new FormData(e.currentTarget).get('email') as string)?.trim()
+    const website = readHoneypot(e.currentTarget)
 
     try {
+      const captchaToken = await captcha.getToken()
       const res = await fetch(apiPath('/api/newsletter'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source }),
+        body: JSON.stringify({ email, source, website, captchaToken }),
       })
       const data = (await res.json().catch(() => ({}))) as {
         success?: boolean
@@ -84,6 +88,8 @@ export function ArticleDownloadCta({ cta, source }: Props) {
       setStatus('error')
       trackPlatformEvent('form_submit', { form_id: 'article_download', status: 'error', source })
       setErrorMsg(err instanceof Error ? err.message : uiStrings.downloadGateError)
+    } finally {
+      captcha.reset()
     }
   }
 
@@ -128,7 +134,8 @@ export function ArticleDownloadCta({ cta, source }: Props) {
             <h3 id="download-gate-title" className={styles.modalTitle}>
               {uiStrings.downloadGateTitle}
             </h3>
-            <form className={styles.form} onSubmit={handleSubmit} noValidate>
+            <form className={styles.form} onSubmit={handleSubmit} onFocus={captcha.preload} noValidate>
+              <Honeypot />
               <input
                 ref={inputRef}
                 name="email"
@@ -142,6 +149,7 @@ export function ArticleDownloadCta({ cta, source }: Props) {
               <Button type="submit" variant="primary" fullWidth loading={status === 'loading'}>
                 {status === 'loading' ? uiStrings.downloadGateSending : uiStrings.downloadGateSubmit}
               </Button>
+              {captcha.widget}
             </form>
             {status === 'error' && (
               <p className={styles.error} role="alert">

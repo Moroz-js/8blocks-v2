@@ -4,6 +4,7 @@ import { useState, type FormEvent } from 'react'
 import { FormBlock, FormRow, SelectField, TextField, Textarea } from '@/shared/ds'
 import { apiPath } from '@/shared/lib/apiPath'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
+import { Honeypot, readHoneypot, useCaptcha } from '@/shared/lib/captcha/client'
 import type { LaunchFormCopy } from './types'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -20,12 +21,14 @@ interface LaunchLeadFormProps {
 export function LaunchLeadForm({ copy, idPrefix, submitLabel, extraMessage }: LaunchLeadFormProps) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const captcha = useCaptcha()
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
 
+    const website = readHoneypot(e.currentTarget)
     const formData = new FormData(e.currentTarget)
     const value = (key: string) => ((formData.get(key) as string) || '').trim()
     const name = value('name')
@@ -51,10 +54,11 @@ export function LaunchLeadForm({ copy, idPrefix, submitLabel, extraMessage }: La
     lines.push(copy.sourceLine)
 
     try {
+      const captchaToken = await captcha.getToken()
       const res = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message: lines.join('\n') }),
+        body: JSON.stringify({ name, email, message: lines.join('\n'), website, captchaToken }),
       })
       let data: { success?: boolean; error?: string } = {}
       try {
@@ -70,6 +74,8 @@ export function LaunchLeadForm({ copy, idPrefix, submitLabel, extraMessage }: La
       setStatus('error')
       trackPlatformEvent('form_submit', { form_id: 'token_launch', status: 'error' })
       setErrorMsg(err instanceof Error ? err.message : copy.errorFallback)
+    } finally {
+      captcha.reset()
     }
   }
 
@@ -84,6 +90,7 @@ export function LaunchLeadForm({ copy, idPrefix, submitLabel, extraMessage }: La
   return (
     <FormBlock
       onSubmit={handleSubmit}
+      onFocus={captcha.preload}
       noValidate
       submitLabel={status === 'loading' ? copy.sendingLabel : submitLabel}
       pending={status === 'loading'}
@@ -125,6 +132,8 @@ export function LaunchLeadForm({ copy, idPrefix, submitLabel, extraMessage }: La
         options={copy.stageOptions}
       />
       <Textarea id={`${idPrefix}-task`} name="task" label={copy.taskLabel} placeholder={copy.taskPlaceholder} rows={3} />
+      <Honeypot />
+      {captcha.widget}
     </FormBlock>
   )
 }

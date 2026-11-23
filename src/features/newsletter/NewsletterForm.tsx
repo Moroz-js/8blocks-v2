@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { apiPath } from '@/shared/lib/apiPath'
+import { Honeypot, readHoneypot, useCaptcha } from '@/shared/lib/captcha/client'
 import styles from './NewsletterForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -18,17 +19,20 @@ export function NewsletterForm({ text }: { text: NewsletterFormText }) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [email, setEmail] = useState('')
+  const captcha = useCaptcha()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
 
+    const website = readHoneypot(e.currentTarget)
     try {
+      const captchaToken = await captcha.getToken()
       const res = await fetch(apiPath('/api/newsletter'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email: email.trim(), website, captchaToken }),
       })
       const raw = await res.text()
       let data: { success?: boolean; error?: string } = {}
@@ -48,6 +52,8 @@ export function NewsletterForm({ text }: { text: NewsletterFormText }) {
       setStatus('error')
       trackPlatformEvent('form_submit', { form_id: 'newsletter', status: 'error' })
       setErrorMsg(err instanceof Error ? err.message : text.error)
+    } finally {
+      captcha.reset()
     }
   }
 
@@ -60,7 +66,8 @@ export function NewsletterForm({ text }: { text: NewsletterFormText }) {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form className={styles.form} onSubmit={handleSubmit} onFocus={captcha.preload} noValidate>
+      <Honeypot />
       <div className={styles.row}>
         <input
           name="email"
@@ -84,6 +91,7 @@ export function NewsletterForm({ text }: { text: NewsletterFormText }) {
           {status === 'loading' ? <span className={styles.spinner} aria-hidden="true" /> : <span aria-hidden="true">→</span>}
         </button>
       </div>
+      {captcha.widget}
       {status === 'error' && (
         <p className={styles.error} role="alert">
           {errorMsg}

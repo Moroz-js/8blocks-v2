@@ -20,7 +20,8 @@ export const Leads: CollectionConfig = {
     description: 'Заявки с формы обратной связи',
   },
   access: {
-    create: () => true,
+    // Сайт пишет через /api/contact (Local API, overrideAccess); прямой REST — только из админки.
+    create: ({ req }) => Boolean(req.user),
     read: ({ req }) => Boolean(req.user),
     update: ({ req }) => Boolean(req.user),
     delete: ({ req }) => Boolean(req.user),

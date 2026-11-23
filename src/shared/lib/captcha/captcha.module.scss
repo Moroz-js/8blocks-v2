@@ -1,0 +1,13 @@
+// Ловушка для ботов: за экраном, а не display:none — часть ботов пропускает скрытые поля.
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+// Контейнер Turnstile: пустой, пока Cloudflare не попросит действие (interaction-only).
+.widget:empty {
+  display: none;
+}
