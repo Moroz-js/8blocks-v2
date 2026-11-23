@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="./binary-glyph.js?v=22"></script>
+<script src="./result-chart.js?v=24"></script>
+<script src="./unlock-chart.js?v=7"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+image-slot::part(ring){display:none;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+</style>
+<style>
+/* FAQ: answer unfolds smoothly (height + fade + slight rise), chevron turns in step */
+.faq-a{display:grid;grid-template-rows:0fr;opacity:0;margin-top:-10px;transform:translateY(-6px);transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
+.faq-a[data-st="open"]{grid-template-rows:1fr;opacity:1;margin-top:0;transform:none;transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .45s ease .12s;}
+.faq-a-in{min-height:0;overflow:hidden;}
+.faq-chev{transition:transform .55s cubic-bezier(.22,1,.36,1)!important;}
+</style>
+<script>
+/* FAQ toggling happens right in the page (no re-render), so the CSS transition of the same element always plays smoothly */
+(function () { if (window.__faqBound) return; window.__faqBound = true;
+  function set(row, open) { var a = row.querySelector('.faq-a'); if (a) a.setAttribute('data-st', open ? 'open' : 'closed'); var c = row.querySelector('.faq-chev'); if (c) c.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)'; }
+  document.addEventListener('click', function (e) { var row = e.target && e.target.closest ? e.target.closest('[data-faq-row]') : null; if (!row) return;
+    var a = row.querySelector('.faq-a'), wasOpen = a && a.getAttribute('data-st') === 'open';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-faq-row]'), function (r) { if (r !== row) set(r, false); });
+    set(row, !wasOpen); }, true);
+})();
+</script>
+<style>
+/* Accent cards: grain drifts up slowly, brighter specks rise faster with a slight sway, like champagne bubbles */
+@property --acc-y{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-y2{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-x{syntax:'<length>';inherits:false;initial-value:0px}
+@keyframes accRise{from{--acc-y:0px;--acc-y2:0px}to{--acc-y:-160px;--acc-y2:-960px}}
+@keyframes accSway{0%,100%{--acc-x:0px}25%{--acc-x:3px}75%{--acc-x:-3px}}
+[style*="accent-noise.png"]{animation:accRise 120s linear infinite,accSway 18s ease-in-out infinite;}
+@media (prefers-reduced-motion:reduce){[style*="accent-noise.png"]{animation:none;}}
+</style>
+<style data-site-nav>
+[data-sn-hdr]{position:sticky !important;top:0 !important;left:auto !important;z-index:30 !important;}
+[data-sn-hdr]::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:rgba(2,2,2,.42);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:opacity .35s ease .15s;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within)::before{opacity:0;transition:opacity .3s ease;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within){border-color:transparent !important;}
+.sn{display:flex;flex-direction:row;gap:40px;align-items:center;font-size:15px;line-height:26px;}
+.sn-btn{position:relative;display:flex;flex-direction:row;gap:7px;align-items:center;padding:0;border:0;background:none;color:rgb(255,255,255);font:inherit;cursor:pointer;border-bottom:1px solid transparent;}
+.sn-chev{transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .3s;opacity:.6;}
+.sn-sheet{position:absolute;left:0;right:0;top:0;height:372px;z-index:-1;pointer-events:none;background:rgba(2,2,2,.64);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-bottom:.881px solid rgba(255,255,255,.17);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .5s cubic-bezier(.65,0,.35,1) .12s,visibility 0s linear .62s;}
+.sn:has(.sn-item:hover,.sn-item:focus-within) .sn-sheet{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path .65s cubic-bezier(.22,1,.36,1),visibility 0s;}
+.sn-panel{position:absolute;left:0;right:0;top:0;z-index:-1;box-sizing:border-box;min-height:372px;padding:122px 40px 30px;display:grid;grid-template-columns:420px 1fr 1fr;gap:5px 60px;cursor:default;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;}
+.sn-panel>*{opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .3s cubic-bezier(.65,0,.35,1);}
+.sn-item:hover .sn-panel,.sn-item:focus-within .sn-panel{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .3s ease .1s,visibility 0s;}
+.sn-item:hover .sn-panel>*,.sn-item:focus-within .sn-panel>*{opacity:1;transform:none;transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+.sn-item:hover .sn-panel>:nth-child(1),.sn-item:focus-within .sn-panel>:nth-child(1){transition-delay:.14s;}
+.sn-item:hover .sn-panel>:nth-child(2),.sn-item:focus-within .sn-panel>:nth-child(2){transition-delay:.2s;}
+.sn-item:hover .sn-panel>:nth-child(3),.sn-item:focus-within .sn-panel>:nth-child(3){transition-delay:.26s;}
+.sn-item:hover .sn-chev,.sn-item:focus-within .sn-chev{transform:rotate(180deg);opacity:1;}
+.sn-intro{position:relative;display:block;width:420px;height:220px;border-radius:10px;overflow:hidden;isolation:isolate;color:rgb(255,255,255);background:linear-gradient(141.36deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);}
+.sn-intro::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:url(./assets/accent-noise.png) 0 0 / 160px 160px repeat;opacity:.6;}
+.sn-txt,.sn-more{z-index:2;}
+a.sn-intro:hover{opacity:1;color:rgb(255,255,255);}
+.sn-ill{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.sn-acc .sn-ill{inset:auto;left:204px;top:-2px;width:292px;height:223px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%);}.sn-acc .sn-ill.sn-house{left:189px;top:-4px;width:345px;height:228px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%);}.sn-acc .sn-ill.sn-prof{left:150px;top:0;width:272px;height:230px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 25%);mask-image:linear-gradient(90deg,transparent 0,#000 25%);}
+.sn-intro:hover .sn-ill{transform:scale(1.03);}
+.sn-txt{position:absolute;left:15px;top:15px;display:flex;flex-direction:column;gap:10px;}
+.sn-h{width:214px;font-size:24px;line-height:30px;opacity:.9;}
+.sn-p{width:249px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;}
+.sn-more{position:absolute;left:15px;bottom:15px;padding:10px 16px;border-radius:50px;background:rgba(255,255,255,.15);font-size:12px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);white-space:nowrap;transition:background .25s;}
+.sn-intro:hover .sn-more{background:rgba(255,255,255,.25);}
+.sn-col{display:flex;flex-direction:column;gap:0;padding-top:0;}
+.sn-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:12px;}
+.sn-a{font-size:16px;line-height:25px;padding:6px 0;color:rgb(255,255,255);opacity:.85;transition:opacity .2s,color .2s;}
+.sn-a:hover{opacity:1;color:rgb(202,0,90);}
+@media (prefers-reduced-motion: reduce){.sn-sheet,.sn-panel,.sn-panel>*,.sn-chev{transition:none !important;}}
+</style>
+<style data-site-footer>
+.ft{display:block;box-sizing:border-box;width:1280px;padding:0 40px 32px;color:rgb(255,255,255);}
+.ft-top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;column-gap:72px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08);}
+.ft-brand{display:flex;flex-direction:column;}
+.ft-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+.ft-col{display:flex;flex-direction:column;gap:12px;}
+.ft-mapcol{display:flex;flex-direction:column;gap:12px;}
+.ft-sh{font-size:18px;line-height:20px;}
+.ft-sp{margin-top:8px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-form{position:relative;margin-top:20px;width:100%;}
+.ft-in{width:100%;height:44px;box-sizing:border-box;border-radius:64px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 52px 0 18px;outline:none;transition:border-color .2s;}
+.ft-in::placeholder{color:rgba(255,255,255,.4);}
+.ft-in:focus{border-color:rgba(255,255,255,.35);}
+.ft-go{position:absolute;right:4px;top:4px;width:36px;height:36px;border:0;padding:0;border-radius:18px;background:rgb(58,58,60);color:rgb(140,140,142);display:flex;align-items:center;justify-content:center;font-family:Manrope,sans-serif;font-size:16px;cursor:default;pointer-events:none;transition:background .25s,color .25s;}
+.ft-form:has(.ft-in:not(:placeholder-shown)) .ft-go{background:rgb(255,255,255);color:rgb(0,0,0);cursor:pointer;pointer-events:auto;}
+.ft-icons{display:flex;flex-direction:row;gap:18px;align-items:center;height:20px;margin-top:28px;}
+.ft-ic{display:flex;align-items:center;opacity:.55;transition:opacity .2s;}
+.ft-ic:hover{opacity:1;}
+.ft-ic svg{display:block;}
+.ft-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:8px;}
+.ft-a{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);opacity:.75;transition:opacity .2s,color .2s;width:max-content;}
+.ft-a:hover{opacity:1;color:rgb(202,0,90);}
+.ft-map{position:relative;height:208px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);}
+.ft-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(1) invert(.92) contrast(.85) brightness(.85);}
+.ft-addr{margin-top:4px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-addr:hover{color:rgb(255,255,255);opacity:1;}
+.ft-bottom{margin-top:56px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:row;justify-content:space-between;align-items:center;font-size:13px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-legal{display:flex;flex-direction:row;gap:24px;}
+.ft-legal a{color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;}
+.ft-legal a:hover{color:rgb(255,255,255);opacity:1;}
+</style>
+<style data-btn-hover>
+/* pill / filled buttons: on hover only the fill changes, the label keeps its colour */
+.hm-tab,.ab-btn,.ar-btn,a[style*="border-radius:64px"],a[style*="border-radius: 64px"],a[style*="border-radius:6px"][style*="background"],a[style*="border-radius: 6px"][style*="background"]{transition:box-shadow .2s ease,background-color .2s ease;}
+a.hm-tab:hover,a.ab-btn:hover,a.ar-btn:hover,a[style*="border-radius:64px"]:hover,a[style*="border-radius: 64px"]:hover,a[style*="border-radius:6px"][style*="background"]:hover,a[style*="border-radius: 6px"][style*="background"]:hover{opacity:1 !important;box-shadow:inset 0 0 0 999px rgba(255,255,255,.14);}
+a.hm-tab:hover{color:rgb(255,255,255) !important;background:rgb(52,52,54) !important;box-shadow:none;}
+a.ab-white:hover,a[style*="background:rgb(255,255,255)"]:hover,a[style*="background: rgb(255, 255, 255)"]:hover{box-shadow:inset 0 0 0 999px rgba(0,0,0,.1);}
+</style>
+</helmet>
+<div data-screen-label="Tokenomics Results" style="position:relative;width:1280px;margin:0 auto;overflow:clip;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;">
+
+<!-- HEADER (sticky) -->
+<div data-sn-hdr class="sn-sticky" style="position:sticky;top:0;z-index:30;margin-bottom:-92px;width:1280px;height:92px;box-sizing:border-box;border:.881px solid rgba(255,255,255,.17);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 40px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><a href="Home.dc.html" style="display:block;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></a></div>
+  <nav class="sn" aria-label="Main">
+      <div class="sn-sheet" aria-hidden="true"></div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Tokenomics<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Tokenomics.dc.html"><img class="sn-ill" src="./assets/nav-ill-tokenomics-coin.png?v=2" alt=""><div class="sn-txt"><div class="sn-h">Build a working token economy</div><div class="sn-p">Design, validate and improve the economics behind your product.</div></div><span class="sn-more">Explore Tokenomics</span></a>
+        <div class="sn-col"><div class="sn-ch">Expertise</div><a class="sn-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="sn-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="sn-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="sn-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="sn-a" href="Token Launch.dc.html">Token Launch</a></div>
+        <div class="sn-col"><div class="sn-ch">Tools &amp; Research</div><a class="sn-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="sn-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="sn-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="sn-a" href="Audits.dc.html">Public Audits</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Asset Tokenization<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Landing.dc.html"><img class="sn-ill sn-house" src="./assets/nav-ill-assets-house.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Start with the business case</div><div class="sn-p">Explore asset tokenization, assess readiness and plan your next step.</div></div><span class="sn-more">Explore Asset Tokenization</span></a>
+        <div class="sn-col"><div class="sn-ch">Strategy</div><a class="sn-a" href="Landing.dc.html">Asset Tokenization</a></div>
+        <div class="sn-col"><div class="sn-ch">Explore &amp; Assess</div><a class="sn-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="sn-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Company<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="About.dc.html"><img class="sn-ill sn-prof" src="./assets/nav-ill-company-profiles.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Meet 8Blocks</div><div class="sn-p">Our team, client work,<br>events and ideas.</div></div><span class="sn-more">About 8Blocks</span></a>
+        <div class="sn-col"><div class="sn-ch">8Blocks</div><a class="sn-a" href="About.dc.html">About us</a><a class="sn-a" href="Methodology.dc.html">Our Methodology</a><a class="sn-a" href="Cases.dc.html">Client Cases</a><a class="sn-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="sn-a" href="Contact.dc.html">Contact</a></div>
+        <div class="sn-col"><div class="sn-ch">Insights &amp; Media</div><a class="sn-a" href="Blog.dc.html">Blog</a><a class="sn-a" href="Research.dc.html">Research</a><a class="sn-a" href="Press.dc.html">Press</a></div>
+      </div>
+    </div>
+  </nav>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <a href="Contact.dc.html" style="height:48px;border-radius:6px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;;color:rgb(255,255,255);">Contact us</a>
+  </div>
+</div>
+
+
+<!-- HERO LEFT (sticky until the right column ends) -->
+<div ref="{{ pinOuter }}" style="position:absolute;left:42px;top:160px;width:457px;height:991px;z-index:1;">
+<div ref="{{ pinInner }}" style="position:relative;width:457px;height:551px;will-change:transform;">
+<div style="position:absolute;left:0;top:0px;width:457px;opacity:.9;font-size:56px;line-height:64px;white-space:pre-line;">Tokenomics
+Calculator</div>
+<div style="position:absolute;left:0;top:144px;width:389px;opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">Your readiness: <span style="color:rgb(52,199,89);">strong potential</span></div>
+<div style="position:absolute;left:0;top:182px;width:389px;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">Team allocation and vesting sit inside market norms and no structural blocker shows up. The weak spots are day-one float and the first-year unlocks — both worth recalculating before TGE.</div>
+<a href="#" style="position:absolute;left:0;top:495px;height:56px;border-radius:64px;background:rgba(255,255,255,.15);backdrop-filter:blur(24px);display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12"></path></svg>Download report
+</a>
+</div>
+</div>
+
+<!-- RADAR CARD -->
+<div style="position:absolute;left:645px;top:160px;width:595px;height:426px;border-radius:10px;background:rgb(16,17,19);">
+  <result-chart flat="" values="0.56,1,0.34,0.56,0.78" color="#34C759" style="position:absolute;left:127.5px;top:30px;width:340px;height:340px;display:block;"></result-chart>
+  <div style="position:absolute;left:30px;top:30px;right:30px;bottom:30px;pointer-events:none;">
+    <span data-tip="Share of supply reserved for the community and public distribution" style="position:absolute;left:0;top:0;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);pointer-events:auto;cursor:help;">Community<br>Allocation</span>
+    <span data-tip="Volume of future emissions that will press on the price" style="position:absolute;right:0;top:0;text-align:right;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);pointer-events:auto;cursor:help;">Supply<br>Overhang</span>
+    <span data-tip="Size of single unlocks relative to circulating supply" style="position:absolute;left:0;bottom:0;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);pointer-events:auto;cursor:help;">Unlock<br>Shock</span>
+    <span data-tip="Share of tokens freely circulating at listing" style="position:absolute;left:50%;bottom:0;transform:translateX(-50%);white-space:nowrap;text-align:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);pointer-events:auto;cursor:help;">Day-One Float</span>
+    <span data-tip="How strict lockups and vesting are for the team and early investors" style="position:absolute;right:0;bottom:0;text-align:right;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);pointer-events:auto;cursor:help;">Insider Lock<br>Discipline</span>
+  </div>
+</div>
+
+<!-- BEST-FIT PATH -->
+<div style="position:absolute;left:645px;top:596px;width:595px;height:240px;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;left:30px;top:30px;font-size:18px;line-height:25px;letter-spacing:.01em;">Best-fit path</div>
+  <div style="position:absolute;left:30px;top:85px;width:540px;display:flex;flex-direction:column;">
+    <sc-for list="{{ bestFit }}" as="r" hint-placeholder-count="3">
+    <div style="height:20px;padding:{{ r.pad }};border-top:{{ r.border }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+      <div style="display:flex;flex-direction:row;gap:8px;align-items:center;">
+        <div data-tip="{{ r.tip }}" style="cursor:help;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.11);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;line-height:1;">?</div>
+        <span style="font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">{{ r.k }}</span>
+      </div>
+      <span style="font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;color:{{ r.c }};">{{ r.v }}</span>
+    </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- YOUR INPUTS -->
+<div style="position:absolute;left:645px;top:846px;width:595px;height:120px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;left:30px;top:30px;font-size:18px;line-height:25px;letter-spacing:.01em;">Your inputs</div>
+  <div style="position:absolute;left:30px;top:70px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);white-space:nowrap;">Total supply: 1,000,000,000 ·  +8 parameters</div>
+  <a href="Tokenomics Calculator.dc.html" style="position:absolute;right:25px;top:30px;display:flex;flex-direction:row;gap:6px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M11.873 6.62695L4.5 14H2V11.5L9.37305 4.12695L11.873 6.62695ZM11.3066 2.19336C11.5666 1.93336 11.9871 1.93336 12.2471 2.19336L13.8066 3.75293C14.0666 4.01293 14.0666 4.43336 13.8066 4.69336L12.5869 5.91309L10.0869 3.41309L11.3066 2.19336Z" fill="white"></path></svg>Edit
+  </a>
+</div>
+
+<!-- TIRED CTA -->
+<div style="position:absolute;left:645px;top:976px;width:595px;height:175px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:row;gap:40px;padding:30px;box-sizing:border-box;align-items:flex-end;">
+  <div style="position:absolute;inset:0;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(155.8deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);pointer-events:none;"></div>
+  <div style="position:relative;flex-grow:1;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:18px;line-height:25px;letter-spacing:.01em;">Tired of modelling all of this yourself?</div>
+    <div style="opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">We build the model around your case: allocations, vesting, the unlock schedule and demand scenarios — with sell pressure calculated and every number checked against market benchmarks.</div>
+  </div>
+  <a href="#" style="position:relative;flex-shrink:0;width:151px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Book a meeting</a>
+</div>
+
+<!-- UNLOCK SCHEDULE -->
+<div style="position:absolute;left:40px;top:1331px;font-size:32px;line-height:40px;">Unlock schedule</div>
+<div style="position:absolute;left:40px;top:1411px;width:1200px;height:576px;box-sizing:border-box;padding:36px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;align-items:flex-start;gap:28px;">
+  <unlock-chart strict="" style="width:100%;height:420px;display:block;"></unlock-chart>
+  <a href="#" style="align-self:flex-start;height:56px;border-radius:64px;background:rgb(27,27,27);display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12"></path></svg>Discuss your property
+  </a>
+</div>
+
+<!-- BENCHMARKS -->
+<div style="position:absolute;left:0;top:2167px;width:1280px;display:flex;flex-direction:column;gap:40px;">
+  <div style="height:48px;display:flex;flex-direction:row;gap:8px;align-items:center;padding:0 40px;">
+    <div data-tip="We benchmark tokenomics only. A project's outcome depends on far more than its token model — these conclusions come from performance analysis across hundreds of crypto projects over the market's history." style="cursor:help;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.11);display:flex;align-items:center;justify-content:center;font-size:17.5px;font-weight:700;line-height:1;">?</div>
+    <span style="font-size:40px;line-height:48px;">Benchmarks</span>
+  </div>
+  <div style="display:flex;flex-direction:column;">
+    <div style="height:70.195px;display:flex;flex-direction:row;border-bottom:.936px solid rgba(255,255,255,.1);">
+      <div style="width:232px;flex-shrink:0;border-right:.936px solid rgba(255,255,255,.1);"></div>
+      <div style="flex-grow:1;flex-basis:0;border-right:.936px solid rgba(255,255,255,.1);display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px;font-size:16px;line-height:22px;letter-spacing:.01em;text-align:center;">Average</div>
+      <div style="flex-grow:1;flex-basis:0;border-right:.936px solid rgba(255,255,255,.1);display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px;font-size:16px;line-height:22px;letter-spacing:.01em;text-align:center;">Your model</div>
+      <div style="flex-grow:1;flex-basis:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:14px;font-size:16px;line-height:22px;letter-spacing:.01em;text-align:center;white-space:pre-line;">Top in category:
+Hyperliquid</div>
+    </div>
+    <sc-for list="{{ bench }}" as="r" hint-placeholder-count="5">
+    <div style="height:70.195px;display:flex;flex-direction:row;border-bottom:{{ r.bb }};">
+      <div style="width:232px;flex-shrink:0;box-sizing:border-box;border-right:.936px solid rgba(255,255,255,.1);display:flex;flex-direction:row;gap:8px;align-items:center;padding:0 9.359px 0 40px;">
+        <div data-tip="{{ r.tip }}" style="cursor:help;width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.11);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;line-height:1;">?</div>
+        <span style="font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">{{ r.k }}</span>
+      </div>
+      <div style="flex-grow:1;flex-basis:0;border-right:.936px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;">{{ r.avg }}</div>
+      <div style="flex-grow:1;flex-basis:0;border-right:.936px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ r.c }};">{{ r.you }}</div>
+      <div style="flex-grow:1;flex-basis:0;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;">{{ r.top }}</div>
+    </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- GROWTH POINTS -->
+<div style="position:absolute;left:241px;top:2856px;width:799px;text-align:center;font-size:40px;line-height:48px;white-space:pre-line;">We found 14 growth
+points in your model</div>
+<div style="position:absolute;left:380px;top:2972px;width:520px;opacity:.4;text-align:center;font-size:14px;line-height:20px;letter-spacing:.01em;">Each one is a concrete fix: allocations, vesting, the unlock schedule or listing terms. Three are open below, the rest we walk through on the call.</div>
+<div style="position:absolute;left:40px;top:3072px;width:1202px;display:grid;grid-template-columns:repeat(3,394px);gap:5px 10px;">
+  <sc-for list="{{ fixes }}" as="f" hint-placeholder-count="6">
+  <div style="position:relative;width:394px;height:450px;overflow:hidden;border-radius:10px;background:{{ f.bg }};box-shadow:0px 1px 2px 0px rgba(20,21,26,0.05);transition:background 500ms ease;">
+    <div style="position:absolute;left:-4px;top:-4px;right:-4px;bottom:-4px;background-image:{{ f.bgImg }};background-size:100% 100%;background-position:center;pointer-events:none;opacity:{{ f.op }};transition:opacity 500ms ease;"></div>
+    <div style="opacity:{{ f.op }};transition:opacity 500ms ease;"><binary-glyph deep shape="{{ f.shape }}" ox="0.5" oy="0.5" os="0.93" style="position:absolute;left:0;top:150px;width:394px;height:200px;pointer-events:none;"></binary-glyph></div>
+    <div style="position:absolute;left:30px;top:30px;width:336px;display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center;color:{{ f.fg }};transition:color 500ms ease;">
+      <div style="opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">{{ f.n }}</div>
+      <div ref="{{ f.tref }}" style="opacity:.9;font-size:24px;line-height:30px;min-height:60px;"></div>
+    </div>
+    <div onClick="{{ f.toggle }}" style="position:absolute;left:0;top:364px;width:394px;display:flex;justify-content:center;">
+      <div style="height:56px;border-radius:64px;background:{{ f.btnBg }};box-shadow:{{ f.btnRing }};backdrop-filter:blur(24px);display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;color:{{ f.fg }};cursor:pointer;transition:background 500ms ease, box-shadow 500ms ease, color 500ms ease;">
+        <sc-if value="{{ f.iLock }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5.83337 8.33317V5.83317C5.83337 4.7281 6.27236 3.66829 7.05376 2.88689C7.83516 2.10549 8.89497 1.6665 10 1.6665C11.1051 1.6665 12.1649 2.10549 12.9463 2.88689C13.7277 3.66829 14.1667 4.7281 14.1667 5.83317V8.33317" stroke-width="1.35" stroke-linecap="round" stroke="currentColor"></path><path d="M13.75 8.3335H6.25C4.86929 8.3335 3.75 9.45278 3.75 10.8335V14.5835C3.75 15.9642 4.86929 17.0835 6.25 17.0835H13.75C15.1307 17.0835 16.25 15.9642 16.25 14.5835V10.8335C16.25 9.45278 15.1307 8.3335 13.75 8.3335Z" fill="currentColor"></path></svg></sc-if><sc-if value="{{ f.iOff }}" hint-placeholder-val="{{ false }}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5009 1.32153L18.6794 17.5001L17.5009 18.6786L14.3362 15.5139C12.1278 16.7452 9.64904 16.9953 7.31871 16.238C4.78654 15.4152 2.50313 13.4295 0.927143 10.3825L0.729126 9.99967L0.927143 9.61683C1.8325 7.8664 2.97058 6.46644 4.25739 5.43504L1.32238 2.50004L2.5009 1.32153ZM6.66733 9.99967C6.66733 9.38192 6.8359 8.80275 7.12893 8.30659L8.39029 9.56792C8.35354 9.70558 8.33404 9.85025 8.33404 9.99967C8.33404 10.9202 9.08021 11.6663 10.0007 11.6663C10.1501 11.6663 10.2948 11.6468 10.4324 11.6101L11.6938 12.8714C11.1976 13.1645 10.6185 13.333 10.0007 13.333C8.15973 13.333 6.66733 11.8407 6.66733 9.99967Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"></path><path d="M19.0741 10.3828C18.4667 11.5571 17.7537 12.5735 16.9626 13.4264L7.30225 3.76605C8.18031 3.47894 9.0865 3.33326 10.0005 3.33325C13.5332 3.33323 16.9494 5.50924 19.0741 9.617L19.2721 9.99983L19.0741 10.3828Z" fill="currentColor"></path></svg></sc-if><sc-if value="{{ f.iEye }}" hint-placeholder-val="{{ true }}"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10.0004 3.75C14.1669 3.75013 17.7247 6.34182 19.1664 10C17.7247 13.6582 14.1669 16.2499 10.0004 16.25C5.8337 16.25 2.27504 13.6583 0.833374 10C2.27504 6.34167 5.8337 3.75 10.0004 3.75ZM10.0004 5.83301C7.70037 5.83301 5.83337 7.7 5.83337 10C5.83337 12.3 7.70037 14.167 10.0004 14.167C12.3002 14.1668 14.1664 12.2999 14.1664 10C14.1664 7.70011 12.3002 5.83318 10.0004 5.83301ZM10.0004 7.5C11.3835 7.50018 12.5004 8.61678 12.5004 10C12.5004 11.3832 11.3835 12.4998 10.0004 12.5C8.61703 12.5 7.50037 11.3833 7.50037 10C7.50037 8.61667 8.61703 7.5 10.0004 7.5Z" fill="currentColor"></path></svg></sc-if>{{ f.btn }}
+      </div>
+    </div>
+  </div>
+  </sc-for>
+</div>
+<div style="position:absolute;left:0;top:3622px;width:1280px;height:362px;background:linear-gradient(0deg,rgb(10,1,4) 0%,rgba(10,1,4,0) 100%);pointer-events:none;"></div>
+
+<!-- CALL CTA -->
+<div style="position:absolute;left:241px;top:4064px;width:799px;text-align:center;font-size:40px;line-height:48px;white-space:pre-line;">11 more top fixes on a 45-minute
+call with the 8Blocks team</div>
+<div style="position:absolute;left:341px;top:4200px;width:596px;height:358px;"><img src="./assets/call-zoom.png" alt="8Blocks team on a call" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+<div style="position:absolute;left:0;top:4298px;width:1280px;height:279px;background:linear-gradient(0deg,rgb(10,1,4) 4.45%,rgba(10,1,4,0) 100%);pointer-events:none;"></div>
+<div style="position:absolute;left:0;top:4542px;width:1280px;height:125px;display:flex;flex-direction:row;gap:20px;padding:0 40px;box-sizing:border-box;justify-content:center;">
+  <sc-for list="{{ callSteps }}" as="s" hint-placeholder-count="3">
+  <div style="width:386.667px;display:flex;flex-direction:column;gap:15px;align-items:center;">
+    <div style="width:32px;height:32px;border-radius:5px;background:rgb(0,0,0);box-shadow:inset 0 0 0 1px rgba(202,0,90,0.5);display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;letter-spacing:.01em;color:rgb(202,0,90);">{{ s.n }}</div>
+    <div style="display:flex;flex-direction:column;gap:10px;padding:3px 0;align-items:center;text-align:center;">
+      <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">We build for change</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">We design models that can evolve with new mechanics, product changes, and ecosystem growth</div>
+    </div>
+  </div>
+  </sc-for>
+</div>
+<a href="#" style="position:absolute;left:573px;top:4727px;width:134px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Book the call</a>
+
+<!-- CHECKLIST -->
+<div style="position:absolute;left:40px;top:4963px;width:1200px;height:364px;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;left:32px;top:30px;width:573px;display:flex;flex-direction:column;gap:13.79px;">
+    <div style="width:382px;font-size:32px;line-height:40px;">Calculating tokenomics is just one of the eight stages of token issuance.</div>
+    <div style="width:468.83px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Check it before you spend money on legal or technical implementation.</div>
+  </div>
+  <a href="#" style="position:absolute;left:31px;top:278px;width:205px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Download full Checklist</a>
+  <div style="position:absolute;left:632px;top:-25px;width:440px;height:389px;"><img src="./assets/checklist-cover.png" alt="The Complete Tokenomics Audit Checklist" style="width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block;"></div>
+</div>
+
+<!-- FAQ -->
+<div style="position:absolute;left:0;top:5507px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div>
+  <div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+    <div data-faq-row style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <div class="faq-a" data-st="{{ f.st }}"><div class="faq-a-in"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></div></div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" class="faq-chev" style="transform:{{ f.rot }};transition:transform .55s cubic-bezier(.22,1,.36,1);flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div>
+  <div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+</div>
+
+
+<div aria-hidden="true" style="height:6301px;"></div>
+<!-- FOOTER -->
+<footer class="ft" style="margin-top:0;">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-sh">Subscribe</div>
+      <div class="ft-sp">A newsletter for those<br>who want to go deeper.</div>
+      <div class="ft-form"><input class="ft-in" type="email" required placeholder="Your email" aria-label="Your email"><button class="ft-go" type="button" aria-label="Subscribe">→</button></div>
+      <div class="ft-icons"><a href="https://x.com/8BlocksLabs" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.3263 1.90391H21.6998L14.3297 10.3274L23 21.7899H16.2112L10.894 14.8379L4.80995 21.7899H1.43443L9.31743 12.78L1 1.90391H7.96111L12.7674 8.25824L18.3263 1.90391ZM17.1423 19.7707H19.0116L6.94539 3.81704H4.93946L17.1423 19.7707Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://www.linkedin.com/company/8blocksio" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://t.me/eightblocks" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.43 8.85893C11.2628 9.3444 8.93014 10.3492 5.43189 11.8733C4.86383 12.0992 4.56626 12.3202 4.53917 12.5363C4.49339 12.9015 4.95071 13.0453 5.57348 13.2411C5.65819 13.2678 5.74596 13.2954 5.83594 13.3246C6.44864 13.5238 7.27283 13.7568 7.70129 13.766C8.08994 13.7744 8.52373 13.6142 9.00264 13.2853C12.2712 11.079 13.9584 9.96381 14.0643 9.93977C14.139 9.92281 14.2426 9.90148 14.3128 9.96385C14.3829 10.0262 14.376 10.1443 14.3686 10.176C14.3233 10.3691 12.5281 12.0381 11.5991 12.9018C11.3095 13.171 11.1041 13.362 11.0621 13.4056C10.968 13.5034 10.8721 13.5958 10.78 13.6846C10.2108 14.2333 9.78391 14.6448 10.8036 15.3168C11.2936 15.6397 11.6858 15.9067 12.0769 16.1731C12.5042 16.4641 12.9303 16.7543 13.4816 17.1157C13.6221 17.2078 13.7562 17.3034 13.8869 17.3965C14.3841 17.751 14.8307 18.0694 15.3826 18.0186C15.7032 17.9891 16.0345 17.6876 16.2027 16.7884C16.6002 14.6632 17.3816 10.0585 17.5622 8.16098C17.578 7.99473 17.5581 7.78197 17.5422 7.68857C17.5262 7.59518 17.4928 7.46211 17.3714 7.3636C17.2276 7.24694 17.0056 7.22234 16.9064 7.22408C16.455 7.23203 15.7626 7.47282 12.43 8.85893Z" fill-rule="evenodd" clip-rule="evenodd" fill="rgb(255,255,255)"></path></svg></a><a href="https://base.app/profile/8blocks" target="_blank" rel="noopener" aria-label="Base" title="Base" class="ft-ic"><svg width="16" height="16" viewBox="0 0 1280 1280" fill="none"><path d="M0,101.12c0-34.64,0-51.95,6.53-65.28,6.25-12.76,16.56-23.07,29.32-29.32C49.17,0,66.48,0,101.12,0h1077.76C1213.51,0,1230.84,0,1244.16,6.53c12.75,6.25,23.06,16.56,29.32,29.32,6.52,13.32,6.52,30.64,6.52,65.28v1077.76c0,34.63,0,51.96-6.52,65.28-6.26,12.75-16.57,23.06-29.32,29.32-13.32,6.52-30.65,6.52-65.28,6.52H101.12c-34.64,0-51.95,0-65.28-6.52-12.76-6.26-23.07-16.57-29.32-29.32-6.53-13.32-6.53-30.65-6.53-65.28V101.12Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://clutch.co/profile/8blocks-fzco" target="_blank" rel="noopener" aria-label="Clutch" title="Clutch" class="ft-ic"><svg width="56" height="16" viewBox="0 0 202.761 57.7631" fill="none"><path d="M62.1626 0.000131153H52.8467V57.7594H62.1626V0.000131153Z" fill="rgb(255,255,255)"></path><path d="M94.5149 57.7593H103.831V18.6319H94.5149V39.2957H94.683C94.683 47.9355 87.231 48.7796 85.199 48.7796C79.779 48.7796 78.595 43.5278 78.595 40.3117V18.6319H69.2791V40.6516C69.2791 46.0715 71.143 50.4755 73.8511 53.6953C76.3911 56.2353 80.4551 57.7593 85.0309 57.7593C88.2507 57.7593 92.4829 56.9114 94.5149 54.5395V57.7593Z" fill="rgb(255,255,255)"></path><path d="M112.806 57.7595H122.122V27.948H128.898V18.6321H122.122V4.74414H112.806V18.6321H105.862V27.948H112.806V57.7595Z" fill="rgb(255,255,255)"></path><path d="M150.577 57.5913C155.829 57.5913 160.741 55.7274 164.465 52.3395L165.821 50.9836L159.385 44.5476L158.029 46.2397C155.997 48.1036 153.457 49.1196 150.577 49.1196C144.141 49.1196 139.397 44.5476 139.397 37.7717C139.397 30.9959 143.969 26.5919 150.577 26.5919C153.457 26.5919 155.997 27.4398 158.029 29.4718L159.385 30.6559L165.481 24.5599L164.125 23.204C160.229 19.9841 155.657 17.9521 150.573 17.9521C139.057 17.784 130.586 26.0839 130.586 37.768C130.59 48.7835 139.229 57.5913 150.577 57.5913Z" fill="rgb(255,255,255)"></path><path d="M179.541 35.9078C179.541 27.268 185.977 26.4238 188.009 26.4238C193.429 26.4238 193.429 31.6757 193.429 34.8918V57.7594H202.745V34.7237C202.913 29.6436 201.729 25.0679 198.681 22.0199C196.141 19.4798 192.753 17.9558 188.517 17.9558C185.298 17.9558 181.913 18.8037 179.37 21.1757V0.00387801H170.054V57.7631H179.37V35.9115H179.541V35.9078Z" fill="rgb(255,255,255)"></path><path d="M143.466 37.772C143.466 41.4999 146.514 44.3761 150.07 44.3761C153.798 44.3761 156.674 41.328 156.674 37.772C156.674 34.0442 153.626 31.168 150.07 31.168C146.514 31.168 143.466 34.0479 143.466 37.772Z" fill="rgb(255,255,255)"></path><path d="M26.5917 57.5915C34.0437 57.5915 41.1595 54.7115 45.8996 49.4597L47.2555 48.1037L41.1595 41.6678L39.9754 43.3599C36.5875 46.7478 31.5074 48.7798 26.5955 48.7798C16.0955 48.7798 8.63979 40.648 8.63979 29.6401C8.63979 18.4602 16.0918 10.5003 26.4237 10.5003C31.3356 10.5003 35.9076 12.5323 39.8036 15.9202L41.1595 17.2761L47.2555 11.1801L45.8996 9.82418C40.8196 4.40423 33.8719 1.69238 26.5917 1.69238C11.3479 1.86047 0 13.7201 0 29.6401C0 45.56 11.3479 57.5915 26.5917 57.5915Z" fill="rgb(255,255,255)"></path></svg></a></div>
+    </div>
+    <div class="ft-nav"><div class="ft-col"><div class="ft-ch">Tokenomics</div><a class="ft-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="ft-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="ft-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="ft-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="ft-a" href="Token Launch.dc.html">Token Launch</a><a class="ft-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="ft-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="ft-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="ft-a" href="Audits.dc.html">Public Audits</a></div><div class="ft-col"><div class="ft-ch">Asset Tokenization</div><a class="ft-a" href="Landing.dc.html">Asset Tokenization</a><a class="ft-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="ft-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div><div class="ft-col"><div class="ft-ch">Company</div><a class="ft-a" href="About.dc.html">About us</a><a class="ft-a" href="Methodology.dc.html">Our Methodology</a><a class="ft-a" href="Cases.dc.html">Client Cases</a><a class="ft-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="ft-a" href="Contact.dc.html">Contact</a><a class="ft-a" href="Blog.dc.html">Blog</a><a class="ft-a" href="Research.dc.html">Research</a><a class="ft-a" href="Press.dc.html">Press</a></div></div>
+    <div class="ft-mapcol">
+      <div class="ft-ch">Office</div>
+      <div class="ft-map"><iframe src="https://www.google.com/maps?q=8BLOCKS+FZCO&amp;ll=25.0607775%2C55.1412167&amp;hl=en&amp;z=15&amp;output=embed" title="8BLOCKS FZCO on the map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="ft-a" href="mailto:hello@8blocks.io">hello@8blocks.io</a>
+      <a class="ft-a" href="tel:+971562865188">+971 56 286 5188</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div>© 2026 8BLOCKS FZCO. All rights reserved.</div>
+    <div class="ft-legal"><a href="https://8blocks.io/privacy-policy" target="_blank" rel="noopener">Privacy policy</a><a href="https://8blocks.io/terms" target="_blank" rel="noopener">Terms of Service</a></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: 0, fix: -1 };
+  _t = [];
+  TITLES = ['Add a 12-month cliff<br>to the investor bucket', 'Lift community share<br>above the 30% floor', 'Flatten the month-13<br>unlock spike', 'Raise day-one float<br>out of the danger zone', 'Stretch team vesting<br>to a 48-month tail', 'Cut the treasury slice<br>into milestone tranches'];
+  RESULTS = ['the math on your asset, structure options, a roadmap, or a reasoned &ldquo;not yet&rdquo;.', 'a community share that clears the floor without diluting the treasury.', 'a flattened unlock curve with no single month above 2% of supply.'];
+  scramble = (el, html) => {
+    if (!el) return;
+    cancelAnimationFrame(el._graf);
+    const tmp = document.createElement('div'); tmp.innerHTML = html.replace(/<br>/g, ' ');
+    const final = tmp.textContent;
+    const POOL = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+    const start = performance.now(); let last = -1e9;
+    const tick = (now) => {
+      const pr = (now - start) / 900;
+      if (pr >= 1) { el.innerHTML = html; return; }
+      if (now - last > 95) {
+        last = now;
+        const reveal = Math.max(0, (pr - 0.35) / 0.65);
+        let out = '';
+        for (let k = 0; k < final.length; k++) { const ch = final[k]; out += (ch === ' ' || k / final.length < reveal) ? ch : POOL[(Math.random() * POOL.length) | 0]; }
+        el.textContent = out;
+      }
+      el._graf = requestAnimationFrame(tick);
+    };
+    el._graf = requestAnimationFrame(tick);
+  };
+  onPin = () => {
+    const o = this._pinO, i = this._pinI; if (!o || !i) return;
+    const top = o.getBoundingClientRect().top;
+    const y = Math.max(0, Math.min(o.offsetHeight - i.offsetHeight, 40 - top));
+    i.style.transform = 'translateY(' + y + 'px)';
+  };
+  initTips = () => {
+    if (window.__tipEl) return;
+    const tip = document.createElement('div');
+    tip.style.cssText = 'position:fixed;z-index:9999;max-width:260px;padding:10px 12px;border-radius:10px;background:#1C1C1C;border:1px solid rgba(255,255,255,0.12);box-shadow:0 12px 30px rgba(0,0,0,0.55);font-family:Manrope,sans-serif;font-weight:500;font-size:14px;line-height:20px;letter-spacing:.01em;color:#ffffff;opacity:0;transform:translateY(4px);transition:opacity 140ms ease,transform 140ms ease;pointer-events:none;';
+    document.body.appendChild(tip); window.__tipEl = tip;
+    const show = (el) => {
+      tip.textContent = el.getAttribute('data-tip');
+      const r = el.getBoundingClientRect();
+      tip.style.opacity = '0'; tip.style.left = '0px'; tip.style.top = '0px';
+      requestAnimationFrame(() => {
+        const w = tip.offsetWidth, hh = tip.offsetHeight;
+        let x = Math.max(12, Math.min(window.innerWidth - w - 12, r.left + r.width / 2 - w / 2));
+        let y = r.top - hh - 10; if (y < 12) y = r.bottom + 10;
+        tip.style.left = x + 'px'; tip.style.top = y + 'px'; tip.style.opacity = '1'; tip.style.transform = 'translateY(0)';
+      });
+    };
+    const hide = () => { tip.style.opacity = '0'; tip.style.transform = 'translateY(4px)'; };
+    document.addEventListener('mouseover', (e) => { const el = e.target.closest && e.target.closest('[data-tip]'); if (el) show(el); });
+    document.addEventListener('mouseout', (e) => { if (e.target.closest && e.target.closest('[data-tip]')) hide(); });
+    window.addEventListener('scroll', hide, { passive: true, capture: true });
+  };
+  componentDidMount() { this.initTips(); window.addEventListener('scroll', this.onPin, { passive: true, capture: true }); window.addEventListener('resize', this.onPin); this.onPin(); }
+  componentWillUnmount() { window.removeEventListener('scroll', this.onPin, { capture: true }); window.removeEventListener('resize', this.onPin); }
+  renderVals() {
+    const { open, fix } = this.state;
+    // radar: 5 axes, vertex at bottom; order: Day-One (bottom), Unlock (bottom-left), Community (top-left), Supply (top-right), Insider (bottom-right)
+    const cx = 176.5, cy = 170, R = 150;
+    const angs = [90, 162, 234, 306, 18].map((a) => a * Math.PI / 180);
+    const vals = [0.38, 0.5, 0.82, 0.58, 0.86];
+    const poly = (k) => angs.map((a) => (cx + Math.cos(a) * R * k).toFixed(1) + "," + (cy + Math.sin(a) * R * k).toFixed(1)).join(" ");
+    const pts = angs.map((a, i) => ({ x: +(cx + Math.cos(a) * R * vals[i]).toFixed(1), y: +(cy + Math.sin(a) * R * vals[i]).toFixed(1) }));
+    const radar = {
+      g1: poly(0.25), g2: poly(0.5), g3: poly(0.75), g4: poly(1),
+      axes: angs.map((a) => ({ x: +(cx + Math.cos(a) * R).toFixed(1), y: +(cy + Math.sin(a) * R).toFixed(1) })),
+      data: pts.map((p) => p.x + "," + p.y).join(" "), pts,
+    };
+    const bestFit = [
+      { k: "TGE float", v: "13.1%", c: "rgb(255,56,60)", tip: "Share of supply circulating at listing" },
+      { k: "12m unlock pressure", v: "29.1% · High", c: "rgb(255,56,60)", tip: "New supply unlocking over the first 12 months" },
+      { k: "Supply", v: "13.1%", c: "rgb(52,199,89)", tip: "Total token supply structure" },
+    ].map((r, i) => Object.assign(r, { pad: i ? "15px 0 0" : "0 0 15px", border: i ? "1px solid rgb(27,27,27)" : "0 solid transparent" }));
+    // fix row paddings so rows are 15px apart with a divider between
+    bestFit.forEach((r, i) => { r.pad = i === 0 ? "0 0 15px" : (i === bestFit.length - 1 ? "15px 0 0" : "15px 0"); });
+    const grid = [["100%", 54.302], ["75%", 131.412], ["50%", 208.523], ["25%", 285.633]].map(([l, t]) => ({ l, top: t + "px", ltop: (t - 12.151) + "px" }));
+    const base = 362.744, step = 17.634;
+    const spec = [[1, 283.767, 0]].concat(
+      Array(6).fill([0, 119.171, 1]), Array(5).fill([0, 184.131, 1]), [[0, 184.131, 0]],
+      Array(6).fill([0, 227.406, 1]), Array(11).fill([0, 119.171, 0]),
+      Array(12).fill([0, 51.968, 0]), Array(11).fill([0, 36.826, 0]), Array(8).fill([0, 30.283, 0])
+    );
+    const bars = spec.map((s, i) => {
+      const h = s[1];
+      const major = i % 12 === 0, mid = i % 3 === 0;
+      return {
+        x: (44.208 + i * step).toFixed(3) + "px", top: (base - h).toFixed(3) + "px", h: h.toFixed(3) + "px",
+        c: s[2] ? "rgb(230,230,230)" : "rgb(112,113,114)",
+        tx: (40.196 + i * step).toFixed(3) + "px", th: (major ? 9.347 : mid ? 5.608 : 2.804) + "px",
+        tc: major ? "rgb(255,255,255)" : "rgb(112,113,114)",
+      };
+    });
+    let cum = 0; const tot = spec.reduce((a, s) => a + s[1], 0);
+    const curve = spec.map((s, i) => { cum += s[1]; const y = 362.744 - (cum / tot) * (362.744 - 54.302); return (49.06 + i * step).toFixed(1) + "," + y.toFixed(1); }).join(" ");
+    const xl = ["TGE", "M6", "Y1", "M18", "Y2", "M30", "Y3", "M42", "Y4", "M54", "Y5"];
+    const xlabels = xl.map((t, i) => ({ t, x: (40.196 + i * 6 * step).toFixed(1) + "px", c: i % 2 ? "rgb(112,113,114)" : "rgb(255,255,255)" }));
+    const bench = [
+      { tip: "Share of total supply allocated to the founding team", k: "Team share", avg: "15–25%", you: "25%", c: "rgb(52,199,89)", top: "18%" },
+      { tip: "Share of total supply held by private and seed investors", k: "Investor share", avg: "0–20%", you: "38%, below", c: "rgb(255,56,60)", top: "14%" },
+      { tip: "Share of supply circulating at the token generation event", k: "TGE float", avg: "6–20%", you: "5%, below", c: "rgb(255,56,60)", top: "14%" },
+      { tip: "Period before any team tokens start unlocking", k: "Team cliff", avg: "12mo", you: "6mo, below", c: "rgb(255,56,60)", top: "18mo" },
+      { tip: "Total length of the team unlock schedule after the cliff", k: "Team vesting", avg: "36–48mo", you: "24mo, below", c: "rgb(255,56,60)", top: "48mo" },
+    ].map((r, i, a) => Object.assign(r, { bb: i === a.length - 1 ? "0 solid transparent" : ".936px solid rgba(255,255,255,.1)" }));
+    const EYE = "M1.7 10S4.6 4.6 10 4.6 18.3 10 18.3 10 15.4 15.4 10 15.4 1.7 10 1.7 10Zm8.3 2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z";
+    const EYEOFF = "M2.5 2.5l15 15M8.2 8.3a2.5 2.5 0 0 0 3.5 3.5M5.4 5.6C3.2 7 1.7 10 1.7 10s2.9 5.4 8.3 5.4c1.5 0 2.8-.4 3.9-1M8 4.8c.6-.1 1.3-.2 2-.2 5.4 0 8.3 5.4 8.3 5.4s-.6 1.1-1.7 2.4";
+    const LOCK = "M6 9V6.5a4 4 0 0 1 8 0V9M4.5 9h11v8h-11Z";
+    const shapes = ["padlock", "team", "scales", "buoy", "hourglass", "stairs"];
+    const gxy = [[0, 0], [0, 0], [-890, -71], [-111, -511], [-111, -511], [-111, -511]];
+    const fixes = [0, 1, 2, 3, 4, 5].map((i) => {
+      const locked = i >= 3, isOpen = !locked && fix === i;
+      return {
+        n: isOpen ? "You leave with:" : "Improvement #" + (i + 1) + ":",
+        tref: (el) => { this._t[i] = el; if (el && !el._init) { el._init = 1; el.innerHTML = this.TITLES[i]; } },
+        bg: isOpen ? "rgb(255,255,255)" : "rgb(27,28,29)", grad: !isOpen, op: isOpen ? 0 : 1, shape: shapes[i], bgImg: "url(./assets/fix-bg-" + (i + 1) + ".png)", gx: gxy[i][0] + "px", gy: gxy[i][1] + "px",
+        fg: isOpen ? "rgb(0,0,0)" : "rgb(255,255,255)",
+        btn: locked ? "Book a call to unlock" : (isOpen ? "Hide" : "See result"),
+        iLock: locked, iOff: !locked && isOpen, iEye: !locked && !isOpen,
+        btnBg: isOpen ? "transparent" : "rgba(255,255,255,0.15)",
+        btnRing: isOpen ? "inset 0 0 0 1px rgb(112,113,114)" : "none",
+        toggle: () => {
+          if (locked) return;
+          const prev = this.state.fix, next = isOpen ? -1 : i;
+          this.setState({ fix: next });
+          if (prev >= 0 && prev !== next) this.scramble(this._t[prev], this.TITLES[prev]);
+          this.scramble(this._t[i], next === i ? this.RESULTS[i] : this.TITLES[i]);
+        },
+      };
+    });
+    const callSteps = [{ n: "1" }, { n: "2" }, { n: "3" }];
+    const qa = [
+      ["How do you calculate my readiness verdict?","We run five checks: community allocation, day-one float, supply overhang, insider lock discipline, and unlock shock. Each check uses norms for your launch archetype: VC-backed, community-led, fair launch, or utility/enterprise."],
+      ["My verdict looks strong. Do I still need the fixes?","A strong verdict means your model has no structural blockers. The fixes target weak spots that tend to surface after TGE, like first-year unlocks. Investors usually catch them in due diligence."],
+      ["Can I apply the fixes myself?","The three open fixes work as a starting point. The other 11 depend on your round terms, listing plans, and market, and the right order matters, since one fix can shift another. We work through them with you on the call."],
+      ["What doesn’t the calculator cover?","It tests supply structure. Demand, token utility, liquidity depth, and listing terms sit outside the model, and they often decide how unlocks play out after TGE."],
+      ["What do I get from the free 45-minute call?","We’ll walk you through the 11 remaining fixes, show which ones matter most for your launch, and agree on a clear next step."],
+    ];
+    const faq = qa.map(([q, a], i) => ({
+      q, a, open: open === i, st: open === i ? 'open' : 'closed',
+      radius: i === 0 ? "10px 10px 0 0" : (i === qa.length - 1 ? "0 0 10px 10px" : "0px"),
+      rot: open === i ? "rotate(180deg)" : "rotate(0deg)",
+      toggle: () => this.setState({ open: open === i ? -1 : i }),
+    }));
+    const pinOuter = (n) => { this._pinO = n; this.onPin(); }, pinInner = (n) => { this._pinI = n; this.onPin(); };
+    return { pinOuter, pinInner, radar, bestFit, grid, bars, curve, xlabels, bench, fixes, callSteps, faq };
+  }
+}
+</script>
+</body>
+</html>

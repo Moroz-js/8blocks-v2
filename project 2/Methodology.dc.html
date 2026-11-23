@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>8Blocks Methodology</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.85;}
+@keyframes wsMarquee{0%{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ws-track{display:flex;align-items:center;gap:16px;width:max-content;animation:120s linear infinite wsMarquee;}
+.ws-track:hover{animation-play-state:paused;}
+.hm-tags{display:flex;align-items:center;gap:28px;width:max-content;animation:60s linear infinite wsMarquee;}
+.ws-slot{opacity:.45;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0 32px;transition:opacity .25s;}
+.ws-slot:hover{opacity:.85;}
+.hm-grad{background:linear-gradient(90deg,rgba(255,255,255,.75) 0%,rgb(255,255,255) 50%,rgba(255,255,255,.75) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hm-tab{height:44px;padding:10px 10px 10px 16px;box-sizing:border-box;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;gap:2px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);white-space:nowrap;}
+@property --vb-lo{syntax:"<percentage>";inherits:false;initial-value:0%;}
+@property --vb-hi{syntax:"<percentage>";inherits:false;initial-value:0%;}
+.vb-cone{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 300deg, rgb(202,0,90) 0% var(--vb-lo), rgba(202,0,90,.45) var(--vb-lo) var(--vb-hi), transparent var(--vb-hi) 100%);transition:--vb-lo 900ms cubic-bezier(0.32,0.72,0,1), --vb-hi 900ms cubic-bezier(0.32,0.72,0,1);}
+.vb-track{display:flex;flex-direction:row;gap:10px;transition:transform 500ms cubic-bezier(0.32,0.72,0,1);}
+.vb-arrow{width:48px;height:48px;border-radius:24px;background:rgb(27,27,27);display:flex;align-items:center;justify-content:center;cursor:pointer;}
+html{scroll-behavior:smooth;}
+.mt-sec{scroll-margin-top:40px;}
+.mt-cell{transition:background 400ms cubic-bezier(0.32,0.72,0,1);}
+.mt-cell:hover{background:rgb(27,27,29) !important;}
+.rs-in{height:56px;box-sizing:border-box;border-radius:64px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.25);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 24px;outline:none;width:100%;}
+.rs-in::placeholder{color:rgba(255,255,255,.45);}
+.audit-glow{background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");}
+</style>
+<style>
+/* FAQ: answer unfolds smoothly (height + fade + slight rise), chevron turns in step */
+.faq-a{display:grid;grid-template-rows:0fr;opacity:0;margin-top:-10px;transform:translateY(-6px);transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
+.faq-a[data-st="open"]{grid-template-rows:1fr;opacity:1;margin-top:0;transform:none;transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .45s ease .12s;}
+.faq-a-in{min-height:0;overflow:hidden;}
+.faq-chev{transition:transform .55s cubic-bezier(.22,1,.36,1)!important;}
+</style>
+<script>
+/* FAQ toggling happens right in the page (no re-render), so the CSS transition of the same element always plays smoothly */
+(function () { if (window.__faqBound) return; window.__faqBound = true;
+  function set(row, open) { var a = row.querySelector('.faq-a'); if (a) a.setAttribute('data-st', open ? 'open' : 'closed'); var c = row.querySelector('.faq-chev'); if (c) c.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)'; }
+  document.addEventListener('click', function (e) { var row = e.target && e.target.closest ? e.target.closest('[data-faq-row]') : null; if (!row) return;
+    var a = row.querySelector('.faq-a'), wasOpen = a && a.getAttribute('data-st') === 'open';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-faq-row]'), function (r) { if (r !== row) set(r, false); });
+    set(row, !wasOpen); }, true);
+})();
+</script>
+<style>
+/* Accent cards: grain drifts up slowly, brighter specks rise faster with a slight sway, like champagne bubbles */
+@property --acc-y{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-y2{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-x{syntax:'<length>';inherits:false;initial-value:0px}
+@keyframes accRise{from{--acc-y:0px;--acc-y2:0px}to{--acc-y:-160px;--acc-y2:-960px}}
+@keyframes accSway{0%,100%{--acc-x:0px}25%{--acc-x:3px}75%{--acc-x:-3px}}
+[style*="accent-noise.png"]{animation:accRise 120s linear infinite,accSway 18s ease-in-out infinite;}
+@media (prefers-reduced-motion:reduce){[style*="accent-noise.png"]{animation:none;}}
+</style>
+<style data-site-nav>
+[data-sn-hdr]{position:sticky !important;top:0 !important;left:auto !important;z-index:30 !important;}
+[data-sn-hdr]::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:rgba(2,2,2,.42);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:opacity .35s ease .15s;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within)::before{opacity:0;transition:opacity .3s ease;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within){border-color:transparent !important;}
+.sn{display:flex;flex-direction:row;gap:40px;align-items:center;font-size:15px;line-height:26px;}
+.sn-btn{position:relative;display:flex;flex-direction:row;gap:7px;align-items:center;padding:0;border:0;background:none;color:rgb(255,255,255);font:inherit;cursor:pointer;border-bottom:1px solid transparent;}
+.sn-chev{transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .3s;opacity:.6;}
+.sn-sheet{position:absolute;left:0;right:0;top:0;height:372px;z-index:-1;pointer-events:none;background:rgba(2,2,2,.64);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-bottom:.881px solid rgba(255,255,255,.17);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .5s cubic-bezier(.65,0,.35,1) .12s,visibility 0s linear .62s;}
+.sn:has(.sn-item:hover,.sn-item:focus-within) .sn-sheet{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path .65s cubic-bezier(.22,1,.36,1),visibility 0s;}
+.sn-panel{position:absolute;left:0;right:0;top:0;z-index:-1;box-sizing:border-box;min-height:372px;padding:122px 40px 30px;display:grid;grid-template-columns:420px 1fr 1fr;gap:5px 60px;cursor:default;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;}
+.sn-panel>*{opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .3s cubic-bezier(.65,0,.35,1);}
+.sn-item:hover .sn-panel,.sn-item:focus-within .sn-panel{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .3s ease .1s,visibility 0s;}
+.sn-item:hover .sn-panel>*,.sn-item:focus-within .sn-panel>*{opacity:1;transform:none;transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+.sn-item:hover .sn-panel>:nth-child(1),.sn-item:focus-within .sn-panel>:nth-child(1){transition-delay:.14s;}
+.sn-item:hover .sn-panel>:nth-child(2),.sn-item:focus-within .sn-panel>:nth-child(2){transition-delay:.2s;}
+.sn-item:hover .sn-panel>:nth-child(3),.sn-item:focus-within .sn-panel>:nth-child(3){transition-delay:.26s;}
+.sn-item:hover .sn-chev,.sn-item:focus-within .sn-chev{transform:rotate(180deg);opacity:1;}
+.sn-intro{position:relative;display:block;width:420px;height:220px;border-radius:10px;overflow:hidden;isolation:isolate;color:rgb(255,255,255);background:linear-gradient(141.36deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);}
+.sn-intro::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:url(./assets/accent-noise.png) 0 0 / 160px 160px repeat;opacity:.6;}
+.sn-txt,.sn-more{z-index:2;}
+a.sn-intro:hover{opacity:1;color:rgb(255,255,255);}
+.sn-ill{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.sn-acc .sn-ill{inset:auto;left:204px;top:-2px;width:292px;height:223px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%);}.sn-acc .sn-ill.sn-house{left:189px;top:-4px;width:345px;height:228px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%);}.sn-acc .sn-ill.sn-prof{left:150px;top:0;width:272px;height:230px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 25%);mask-image:linear-gradient(90deg,transparent 0,#000 25%);}
+.sn-intro:hover .sn-ill{transform:scale(1.03);}
+.sn-txt{position:absolute;left:15px;top:15px;display:flex;flex-direction:column;gap:10px;}
+.sn-h{width:214px;font-size:24px;line-height:30px;opacity:.9;}
+.sn-p{width:249px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;}
+.sn-more{position:absolute;left:15px;bottom:15px;padding:10px 16px;border-radius:50px;background:rgba(255,255,255,.15);font-size:12px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);white-space:nowrap;transition:background .25s;}
+.sn-intro:hover .sn-more{background:rgba(255,255,255,.25);}
+.sn-col{display:flex;flex-direction:column;gap:0;padding-top:0;}
+.sn-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:12px;}
+.sn-a{font-size:16px;line-height:25px;padding:6px 0;color:rgb(255,255,255);opacity:.85;transition:opacity .2s,color .2s;}
+.sn-a:hover{opacity:1;color:rgb(202,0,90);}
+@media (prefers-reduced-motion: reduce){.sn-sheet,.sn-panel,.sn-panel>*,.sn-chev{transition:none !important;}}
+</style>
+<style data-site-footer>
+.ft{display:block;box-sizing:border-box;width:1280px;padding:0 40px 32px;color:rgb(255,255,255);}
+.ft-top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;column-gap:72px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08);}
+.ft-brand{display:flex;flex-direction:column;}
+.ft-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+.ft-col{display:flex;flex-direction:column;gap:12px;}
+.ft-mapcol{display:flex;flex-direction:column;gap:12px;}
+.ft-sh{font-size:18px;line-height:20px;}
+.ft-sp{margin-top:8px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-form{position:relative;margin-top:20px;width:100%;}
+.ft-in{width:100%;height:44px;box-sizing:border-box;border-radius:64px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 52px 0 18px;outline:none;transition:border-color .2s;}
+.ft-in::placeholder{color:rgba(255,255,255,.4);}
+.ft-in:focus{border-color:rgba(255,255,255,.35);}
+.ft-go{position:absolute;right:4px;top:4px;width:36px;height:36px;border:0;padding:0;border-radius:18px;background:rgb(58,58,60);color:rgb(140,140,142);display:flex;align-items:center;justify-content:center;font-family:Manrope,sans-serif;font-size:16px;cursor:default;pointer-events:none;transition:background .25s,color .25s;}
+.ft-form:has(.ft-in:not(:placeholder-shown)) .ft-go{background:rgb(255,255,255);color:rgb(0,0,0);cursor:pointer;pointer-events:auto;}
+.ft-icons{display:flex;flex-direction:row;gap:18px;align-items:center;height:20px;margin-top:28px;}
+.ft-ic{display:flex;align-items:center;opacity:.55;transition:opacity .2s;}
+.ft-ic:hover{opacity:1;}
+.ft-ic svg{display:block;}
+.ft-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:8px;}
+.ft-a{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);opacity:.75;transition:opacity .2s,color .2s;width:max-content;}
+.ft-a:hover{opacity:1;color:rgb(202,0,90);}
+.ft-map{position:relative;height:208px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);}
+.ft-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(1) invert(.92) contrast(.85) brightness(.85);}
+.ft-addr{margin-top:4px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-addr:hover{color:rgb(255,255,255);opacity:1;}
+.ft-bottom{margin-top:56px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:row;justify-content:space-between;align-items:center;font-size:13px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-legal{display:flex;flex-direction:row;gap:24px;}
+.ft-legal a{color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;}
+.ft-legal a:hover{color:rgb(255,255,255);opacity:1;}
+</style>
+<style data-btn-hover>
+/* pill / filled buttons: on hover only the fill changes, the label keeps its colour */
+.hm-tab,.ab-btn,.ar-btn,a[style*="border-radius:64px"],a[style*="border-radius: 64px"],a[style*="border-radius:6px"][style*="background"],a[style*="border-radius: 6px"][style*="background"]{transition:box-shadow .2s ease,background-color .2s ease;}
+a.hm-tab:hover,a.ab-btn:hover,a.ar-btn:hover,a[style*="border-radius:64px"]:hover,a[style*="border-radius: 64px"]:hover,a[style*="border-radius:6px"][style*="background"]:hover,a[style*="border-radius: 6px"][style*="background"]:hover{opacity:1 !important;box-shadow:inset 0 0 0 999px rgba(255,255,255,.14);}
+a.hm-tab:hover{color:rgb(255,255,255) !important;background:rgb(52,52,54) !important;box-shadow:none;}
+a.ab-white:hover,a[style*="background:rgb(255,255,255)"]:hover,a[style*="background: rgb(255, 255, 255)"]:hover{box-shadow:inset 0 0 0 999px rgba(0,0,0,.1);}
+</style>
+</helmet>
+<div data-screen-label="8Blocks Methodology" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:0;">
+
+<!-- HEADER (sticky) -->
+<div data-sn-hdr class="sn-sticky" style="position:sticky;top:0;z-index:30;margin-bottom:-92px;width:1280px;height:92px;background:rgba(0,0,0,.01);box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 40px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><a href="Home.dc.html" style="display:block;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></a></div>
+  <nav class="sn" aria-label="Main">
+      <div class="sn-sheet" aria-hidden="true"></div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Tokenomics<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Tokenomics.dc.html"><img class="sn-ill" src="./assets/nav-ill-tokenomics-coin.png?v=2" alt=""><div class="sn-txt"><div class="sn-h">Build a working token economy</div><div class="sn-p">Design, validate and improve the economics behind your product.</div></div><span class="sn-more">Explore Tokenomics</span></a>
+        <div class="sn-col"><div class="sn-ch">Expertise</div><a class="sn-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="sn-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="sn-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="sn-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="sn-a" href="Token Launch.dc.html">Token Launch</a></div>
+        <div class="sn-col"><div class="sn-ch">Tools &amp; Research</div><a class="sn-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="sn-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="sn-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="sn-a" href="Audits.dc.html">Public Audits</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Asset Tokenization<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Landing.dc.html"><img class="sn-ill sn-house" src="./assets/nav-ill-assets-house.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Start with the business case</div><div class="sn-p">Explore asset tokenization, assess readiness and plan your next step.</div></div><span class="sn-more">Explore Asset Tokenization</span></a>
+        <div class="sn-col"><div class="sn-ch">Strategy</div><a class="sn-a" href="Landing.dc.html">Asset Tokenization</a></div>
+        <div class="sn-col"><div class="sn-ch">Explore &amp; Assess</div><a class="sn-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="sn-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Company<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="About.dc.html"><img class="sn-ill sn-prof" src="./assets/nav-ill-company-profiles.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Meet 8Blocks</div><div class="sn-p">Our team, client work,<br>events and ideas.</div></div><span class="sn-more">About 8Blocks</span></a>
+        <div class="sn-col"><div class="sn-ch">8Blocks</div><a class="sn-a" href="About.dc.html">About us</a><a class="sn-a" href="Methodology.dc.html">Our Methodology</a><a class="sn-a" href="Cases.dc.html">Client Cases</a><a class="sn-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="sn-a" href="Contact.dc.html">Contact</a></div>
+        <div class="sn-col"><div class="sn-ch">Insights &amp; Media</div><a class="sn-a" href="Blog.dc.html">Blog</a><a class="sn-a" href="Research.dc.html">Research</a><a class="sn-a" href="Press.dc.html">Press</a></div>
+      </div>
+    </div>
+  </nav>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <a href="Contact.dc.html" style="height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;;color:rgb(255,255,255);">Contact us</a>
+  </div>
+</div>
+
+
+<!-- HERO -->
+<div style="position:relative;width:1280px;height:781px;overflow:hidden;">
+  <div style="position:absolute;left:-72px;top:222px;width:1024px;height:640px;pointer-events:none;-webkit-mask-image:radial-gradient(ellipse 330px 470px at 712px 330px,#000 50%,transparent 92%);mask-image:radial-gradient(ellipse 330px 470px at 712px 330px,#000 50%,transparent 92%);"><dc-import name="Binary Brain" hint-size="1024px,640px" style="width:1024px;height:640px;"></dc-import></div>
+  <div class="audit-glow" style="position:absolute;left:-1781px;top:391px;width:2912px;height:1841px;opacity:.2;filter:blur(37px);border-radius:0 0 28px 28px;pointer-events:none;"></div>
+  <img src="./assets/audit-hero-fade.png" alt="" style="position:absolute;left:0;top:594px;width:1280px;height:187px;object-fit:cover;pointer-events:none;">
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;left:253px;top:133px;width:774px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;">
+    <div class="hm-grad" style="font-size:48px;line-height:56px;">The 8Blocks Methodology</div>
+    <div style="width:534px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">The 8Blocks Methodology is a tokenomics design framework of eight blocks used to build Token Economic Models since 2017. It connects token supply, utility and circulation to the goals and economics of a real product.</div>
+  </div>
+  <div style="position:absolute;left:0;right:0;bottom:56px;text-align:center;font-size:13px;line-height:18px;letter-spacing:.01em;color:rgba(255,255,255,.45);">By: 8Blocks methodology team · Published: August 19, 2026 · Updated: August 19, 2026</div>
+</div>
+
+<!-- BODY -->
+<div style="margin-top:20px;padding:0 40px;display:flex;flex-direction:row;align-items:flex-start;">
+  <div style="position:sticky;top:132px;width:233px;flex-shrink:0;display:flex;flex-direction:column;gap:20px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">On this page</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <a href="#mt-s1" onClick="{{ toc0.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc0.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc0.fg }};transition:color 300ms,border-color 300ms;">Why 8Blocks starts with logic, not projections</a>
+      <a href="#mt-s2" onClick="{{ toc1.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc1.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc1.fg }};transition:color 300ms,border-color 300ms;">What is a Token Economic Model?</a>
+      <a href="#mt-s3" onClick="{{ toc2.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc2.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc2.fg }};transition:color 300ms,border-color 300ms;">Why classic tokenomics fails</a>
+      <a href="#mt-s4" onClick="{{ toc3.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc3.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc3.fg }};transition:color 300ms,border-color 300ms;">How to tell if a token economic model works</a>
+      <a href="#mt-s5" onClick="{{ toc4.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc4.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc4.fg }};transition:color 300ms,border-color 300ms;">The eight blocks of the 8Blocks methodology</a>
+      <a href="#mt-s6" onClick="{{ toc5.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc5.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc5.fg }};transition:color 300ms,border-color 300ms;">The token lifecycle through Treasury</a>
+      <a href="#mt-s7" onClick="{{ toc6.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc6.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc6.fg }};transition:color 300ms,border-color 300ms;">What is a Closed Economic Loop?</a>
+      <a href="#mt-ex" onClick="{{ toc7.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc7.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc7.fg }};transition:color 300ms,border-color 300ms;">Examples and evidence</a>
+      <a href="#mt-faq" onClick="{{ toc8.go }}" style="padding:2px 0 2px 12px;border-left:2px solid {{ toc8.bc }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ toc8.fg }};transition:color 300ms,border-color 300ms;">Tokenomics methodology FAQ</a>
+    </div>
+  </div>
+  <div style="margin-left:70px;width:595px;display:flex;flex-direction:column;gap:60px;">
+  <div id="mt-s1" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">01 · 8Blocks</div>
+    <div style="font-size:24px;line-height:30px;">Why 8Blocks starts with logic, not projections</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">Classic tokenomics reduced the work to allocations, lockups and vesting. Those numbers are useful, but a distribution schedule detached from business goals cannot explain why a token should exist or who will buy it.</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">The 8Blocks methodology treats a token as a product whose demand must be earned. Instead of presenting speculative price forecasts as certainty, it maps the product, buyers, utility, circulation and sources of scarcity into one testable economic logic.</div>
+
+  </div>
+  <div id="mt-s2" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">02 · TEM</div>
+    <div style="font-size:24px;line-height:30px;">What is a Token Economic Model?</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">A Token Economic Model (TEM) is a single, public description of how a token is issued, acquired, used, circulated, retained and removed from circulation. It gives founders, users, partners and investors the same account of the token lifecycle.</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">In the 8Blocks methodology, classic tokenomics is one part of the TEM rather than the whole document. The model covers the complete path from initial distribution to utility, Treasury flows, recurring demand and supply reduction.</div>
+    <div style="margin-top:15px;font-size:16px;line-height:22px;letter-spacing:.01em;">Tokenomics vs Token Economic Model</div>
+    <div style="position:relative;margin-top:10px;">
+      <div style="position:absolute;left:360px;top:0;bottom:0;width:235px;box-sizing:border-box;border-radius:10px;background:rgb(13,13,14);border:1px solid rgba(255,255,255,.1);pointer-events:none;"></div>
+      <div style="position:relative;display:grid;grid-template-columns:145px 215px 235px;">
+        <div style="min-height:60px;display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Property</div>
+        <div style="min-height:60px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;opacity:.9;">Classic tokenomics</div>
+        <div style="min-height:60px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;opacity:.9;">Token Economic Model</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;padding-right:12px;color:rgb(112,113,114);">Primary focus</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(112,113,114);">Allocations, unlocks and vesting</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(255,255,255);">The complete token lifecycle</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;padding-right:12px;color:rgb(112,113,114);">Business connection</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(112,113,114);">Often indirect</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(255,255,255);">Demand is tied to product use</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;padding-right:12px;color:rgb(112,113,114);">Time horizon</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(112,113,114);">Usually through TGE</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(255,255,255);">From issuance through repeated circulation</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;padding-right:12px;color:rgb(112,113,114);">Core question</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(112,113,114);">How are tokens distributed?</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(255,255,255);">Who buys the token, why and what happens next?</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;padding-right:12px;color:rgb(112,113,114);">Output</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(112,113,114);">Tables and schedules</div>
+        <div style="min-height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;justify-content:center;text-align:center;padding:12px 16px;color:rgb(255,255,255);">A shared operating logic for the token economy</div>
+      </div>
+    </div>
+
+  </div>
+  <div id="mt-s3" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">03 · Problem</div>
+    <div style="font-size:24px;line-height:30px;">Why classic tokenomics fails</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">A token can have a polished allocation chart and still have no reason to be purchased. When teams plan only for fundraising and TGE, utility, staking yield, burns and post-use token flows remain ambiguous. Users form false expectations and teams lose a common decision framework.</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">A Token Economic Model reduces this uncertainty by making demand, monetization and circulation explicit. It does not guarantee market performance; it makes the assumptions visible enough to inspect, test and revise.</div>
+
+  </div>
+  <div id="mt-s4" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">04 · Test</div>
+    <div style="font-size:24px;line-height:30px;">How to tell if a token economic model works</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">A workable model should connect every source of supply with a credible source of demand and a transparent destination after the token is used.</div>
+    <div style="margin-top:15px;display:flex;flex-direction:column;gap:5px;">
+      <div style="border-radius:10px 10px 0 0;background:rgb(16,17,19);padding:20px 25px;display:flex;flex-direction:row;gap:18px;"><div style="width:18px;flex-shrink:0;font-size:16px;line-height:22px;color:rgb(202,0,90);">1</div><div style="display:flex;flex-direction:column;gap:5px;"><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">A dated utility milestone</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">The model states when a product function becomes available and how many tokens a user must acquire or lock.</div></div></div>
+      <div style="border-radius:0;background:rgb(16,17,19);padding:20px 25px;display:flex;flex-direction:row;gap:18px;"><div style="width:18px;flex-shrink:0;font-size:16px;line-height:22px;color:rgb(202,0,90);">2</div><div style="display:flex;flex-direction:column;gap:5px;"><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Transparent revenue sources</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Rewards come from named business revenue or another disclosed source, not from unexplained new issuance.</div></div></div>
+      <div style="border-radius:0;background:rgb(16,17,19);padding:20px 25px;display:flex;flex-direction:row;gap:18px;"><div style="width:18px;flex-shrink:0;font-size:16px;line-height:22px;color:rgb(202,0,90);">3</div><div style="display:flex;flex-direction:column;gap:5px;"><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">More than one demand source</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Product access, discounts, B2B use, buybacks or partner integrations create independent reasons to acquire tokens.</div></div></div>
+      <div style="border-radius:0;background:rgb(16,17,19);padding:20px 25px;display:flex;flex-direction:row;gap:18px;"><div style="width:18px;flex-shrink:0;font-size:16px;line-height:22px;color:rgb(202,0,90);">4</div><div style="display:flex;flex-direction:column;gap:5px;"><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">A complete circulation mechanism</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">The model shows where spent tokens go, how long they remain locked and under which rules they can return to market.</div></div></div>
+      <div style="border-radius:0 0 10px 10px;background:rgb(16,17,19);padding:20px 25px;display:flex;flex-direction:row;gap:18px;"><div style="width:18px;flex-shrink:0;font-size:16px;line-height:22px;color:rgb(202,0,90);">5</div><div style="display:flex;flex-direction:column;gap:5px;"><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Supply aligned with market size</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Expected annual token use is compared with unlocks, emissions and rewards to expose structural imbalance.</div></div></div>
+    </div>
+    <div style="margin-top:15px;height:90px;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(173.5deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);display:flex;align-items:center;justify-content:center;font-size:24px;line-height:30px;">Who will buy this token, and why?</div>
+
+  </div>
+  <div id="mt-s5" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">05 · Framework</div>
+    <div style="font-size:24px;line-height:30px;">The eight blocks of the 8Blocks methodology</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">Each block answers a decision founders must make before launch. Together they form one Token Economic Model rather than eight isolated calculations.</div>
+    <div style="margin-top:15px;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:5px;">
+      <sc-for list="{{ cells }}" as="cl" hint-placeholder-count="9">
+        <a class="mt-cell" href="{{ cl.href }}" style="height:140px;border-radius:{{ cl.r }};background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;cursor:{{ cl.cur }};color:rgb(255,255,255);">
+          <sc-if value="{{ cl.isLogo }}" hint-placeholder-val="{{ false }}"><img src="./assets/logo.svg" alt="8Blocks" style="width:128px;height:33px;display:block;"></sc-if>
+          <sc-if value="{{ cl.isBlock }}" hint-placeholder-val="{{ true }}"><div style="font-size:13px;line-height:18px;color:rgb(202,0,90);">{{ cl.n }}</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ cl.t }}</div></sc-if>
+        </a>
+      </sc-for>
+    </div>
+    <div style="margin-top:20px;display:flex;flex-direction:column;gap:50px;">
+      <sc-for list="{{ blks }}" as="blk" hint-placeholder-count="8">
+      <div id="{{ blk.id }}" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">{{ blk.n }} · {{ blk.t }}</div>
+        <div style="font-size:24px;line-height:30px;">{{ blk.q }}</div>
+        <div style="display:flex;flex-direction:row;gap:15px;"><div style="width:2px;flex-shrink:0;background:rgb(202,0,90);"></div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">{{ blk.a }}</div></div>
+        <sc-for list="{{ blk.ps }}" as="bp" hint-placeholder-count="2"><div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">{{ bp }}</div></sc-for>
+        <div style="margin-top:5px;display:flex;flex-direction:column;gap:12px;">
+          <sc-for list="{{ blk.b }}" as="bb" hint-placeholder-count="3"><div style="display:flex;flex-direction:row;gap:12px;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="color:rgb(202,0,90);">•</span><span>{{ bb }}</span></div></sc-for>
+        </div>
+      </div>
+      </sc-for>
+    </div>
+
+  </div>
+  <div id="mt-s6" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">06 · Treasury</div>
+    <div style="font-size:24px;line-height:30px;">The token lifecycle through Treasury</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">A complete circulation design shows each transition and the rules that control it.</div>
+    <div style="margin-top:15px;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:5px;">
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">01</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Initial distribution</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">02</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Market acquisition</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">03</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Product utility</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">04</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Treasury</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">05</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Lock, reuse or burn</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">06</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Return to market</div></div>
+    </div>
+    <div style="font-size:13px;line-height:18px;letter-spacing:.01em;color:rgb(112,113,114);">Token Treasury mechanism: tokens move from distribution to users, through product utility into Treasury, then follow disclosed lock, reuse, burn or market-release rules.</div>
+
+  </div>
+  <div id="mt-s7" class="mt-sec" style="display:flex;flex-direction:column;gap:15px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">07 · CEL</div>
+    <div style="font-size:24px;line-height:30px;">What is a Closed Economic Loop?</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">A Closed Economic Loop (CEL) is a system that generates recurring cash flow from real product users rather than depending only on market hype or the initial token sale.</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">Users acquire tokens, use them in the product and send them into a disclosed Treasury flow. Eligible tokens may later return to the market for the next user, while the project monetizes repeated circulation.</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">A CEL is not a separate feature. It is a design principle connecting utility, storage, release and monetization across the model. It can make the business more resilient during broad crypto-market downturns, but it does not make a token independent of all market risk.</div>
+    <div style="margin-top:15px;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:5px;">
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">01</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Product demand</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">02</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Token purchase</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">03</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Use in product</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">04</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Treasury flow</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">05</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Controlled reissue</div></div>
+      <div style="height:120px;border-radius:10px;background:rgb(16,17,19);padding:20px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;"><div style="font-size:14px;line-height:20px;color:rgb(202,0,90);">06</div><div style="font-size:16px;line-height:22px;letter-spacing:.01em;">Recurring demand</div></div>
+    </div>
+    <div style="margin-top:25px;font-size:24px;line-height:30px;">Does the choice of exchange determine token price?</div>
+    <div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(112,113,114);">No exchange can replace product demand, community access and a coherent Token Economic Model. Exchange quality still matters for custody, access and liquidity, but a recognizable brand alone does not guarantee post-listing performance.</div>
+    <div style="margin-top:10px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;flex-direction:row;gap:12px;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="color:rgb(202,0,90);">•</span><span>The project community can register and trade</span></div>
+      <div style="display:flex;flex-direction:row;gap:12px;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="color:rgb(202,0,90);">•</span><span>No material history of fraud or arbitrary seizure</span></div>
+      <div style="display:flex;flex-direction:row;gap:12px;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="color:rgb(202,0,90);">•</span><span>Healthy, verifiable trading activity</span></div>
+      <div style="display:flex;flex-direction:row;gap:12px;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="color:rgb(202,0,90);">•</span><span>Access for professional market participants</span></div>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<!-- EXAMPLES -->
+<div id="mt-ex" class="mt-sec" style="margin:180px 40px 0;display:flex;flex-direction:column;gap:15px;">
+  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">08 · Evidence</div>
+  <div class="hm-grad" style="font-size:40px;line-height:48px;">Examples and evidence</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:10px;">
+  <div style="height:488px;border-radius:16px;background:rgb(16,17,19);padding:25px;box-sizing:border-box;display:flex;flex-direction:column;">
+    <div style="height:36px;display:flex;align-items:center;"><img src="./assets/vb-src-binance.svg" alt="" style="height:33px;width:auto;display:block;"></div>
+    <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px;"><div style="font-size:24px;line-height:30px;opacity:.9;">BNB: utility that expanded with the ecosystem</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">BNB began with exchange-fee utility and later gained uses across Launchpool, services and BNB Chain. It illustrates how an extensible model can add new demand sources as the business develops.</div></div>
+    <a href="https://www.bnbchain.org/en/bnb-chain-whitepaper" target="_blank" rel="noopener" style="margin-top:auto;align-self:flex-start;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;">Official BNB documentation</a>
+  </div>
+  <div style="height:488px;border-radius:16px;background:rgb(16,17,19);padding:25px;box-sizing:border-box;display:flex;flex-direction:column;">
+    <div style="height:36px;display:flex;align-items:center;"><div style="display:flex;flex-direction:row;gap:10px;align-items:center;opacity:.35;"><img src="./assets/vb-logo-hype.svg" alt="" style="height:36px;width:36px;display:block;"><span style="font-size:26px;line-height:33px;">Hyperliquid</span></div></div>
+    <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px;"><div style="font-size:24px;line-height:30px;opacity:.9;">Hyperliquid: product demand and protocol expansion</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">HYPE combines protocol utility with ecosystem development. Its design is a useful reference for studying how professional and B2B participants can become distinct demand groups.</div></div>
+    <a href="https://hyperliquid.gitbook.io/hyperliquid-docs" target="_blank" rel="noopener" style="margin-top:auto;align-self:flex-start;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;">Hyperliquid documentation</a>
+  </div>
+  <div style="height:488px;border-radius:16px;background:rgb(16,17,19);padding:25px;box-sizing:border-box;display:flex;flex-direction:column;">
+    <div style="height:36px;display:flex;align-items:center;"><div style="font-size:26px;line-height:33px;letter-spacing:.08em;opacity:.3;">STEPN</div></div>
+    <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px;"><div style="font-size:24px;line-height:30px;opacity:.9;">STEPN: emissions without enough external demand</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">STEPN demonstrates the risk of a loop where users earn and spend tokens mainly to earn more. When progression matures, emissions can exceed demand from new or existing users.</div></div>
+    <a href="https://whitepaper.stepn.com/" target="_blank" rel="noopener" style="margin-top:auto;align-self:flex-start;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;">STEPN whitepaper</a>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div id="mt-faq" class="mt-sec" style="margin-top:180px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="text-align:center;font-size:32px;line-height:40px;">Tokenomics methodology FAQ</div>
+  <div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="4">
+    <div data-faq-row style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:560px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <div class="faq-a" data-st="{{ f.st }}"><div class="faq-a-in"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></div></div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" class="faq-chev" style="margin-top:3px;transform:{{ f.rot }};transition:transform .55s cubic-bezier(.22,1,.36,1);flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div>
+  <div style="font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.5;">Have other questions not mentioned?</span> <a href="#" style="color:rgb(255,255,255);">Contact us</a></div>
+</div>
+
+
+<div style="margin:60px auto 0;width:720px;text-align:center;">
+  <div style="font-size:13px;line-height:19px;letter-spacing:.01em;color:rgb(112,113,114);">This material is educational and does not constitute investment, legal, tax or financial advice. Token issuance, distribution, buybacks, staking and listings may be regulated differently across jurisdictions. Obtain qualified advice before implementing a token economic model.</div>
+</div>
+
+
+<!-- FOOTER -->
+<footer class="ft" style="margin-top:130px;">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-sh">Subscribe</div>
+      <div class="ft-sp">A newsletter for those<br>who want to go deeper.</div>
+      <div class="ft-form"><input class="ft-in" type="email" required placeholder="Your email" aria-label="Your email"><button class="ft-go" type="button" aria-label="Subscribe">→</button></div>
+      <div class="ft-icons"><a href="https://x.com/8BlocksLabs" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.3263 1.90391H21.6998L14.3297 10.3274L23 21.7899H16.2112L10.894 14.8379L4.80995 21.7899H1.43443L9.31743 12.78L1 1.90391H7.96111L12.7674 8.25824L18.3263 1.90391ZM17.1423 19.7707H19.0116L6.94539 3.81704H4.93946L17.1423 19.7707Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://www.linkedin.com/company/8blocksio" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://t.me/eightblocks" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.43 8.85893C11.2628 9.3444 8.93014 10.3492 5.43189 11.8733C4.86383 12.0992 4.56626 12.3202 4.53917 12.5363C4.49339 12.9015 4.95071 13.0453 5.57348 13.2411C5.65819 13.2678 5.74596 13.2954 5.83594 13.3246C6.44864 13.5238 7.27283 13.7568 7.70129 13.766C8.08994 13.7744 8.52373 13.6142 9.00264 13.2853C12.2712 11.079 13.9584 9.96381 14.0643 9.93977C14.139 9.92281 14.2426 9.90148 14.3128 9.96385C14.3829 10.0262 14.376 10.1443 14.3686 10.176C14.3233 10.3691 12.5281 12.0381 11.5991 12.9018C11.3095 13.171 11.1041 13.362 11.0621 13.4056C10.968 13.5034 10.8721 13.5958 10.78 13.6846C10.2108 14.2333 9.78391 14.6448 10.8036 15.3168C11.2936 15.6397 11.6858 15.9067 12.0769 16.1731C12.5042 16.4641 12.9303 16.7543 13.4816 17.1157C13.6221 17.2078 13.7562 17.3034 13.8869 17.3965C14.3841 17.751 14.8307 18.0694 15.3826 18.0186C15.7032 17.9891 16.0345 17.6876 16.2027 16.7884C16.6002 14.6632 17.3816 10.0585 17.5622 8.16098C17.578 7.99473 17.5581 7.78197 17.5422 7.68857C17.5262 7.59518 17.4928 7.46211 17.3714 7.3636C17.2276 7.24694 17.0056 7.22234 16.9064 7.22408C16.455 7.23203 15.7626 7.47282 12.43 8.85893Z" fill-rule="evenodd" clip-rule="evenodd" fill="rgb(255,255,255)"></path></svg></a><a href="https://base.app/profile/8blocks" target="_blank" rel="noopener" aria-label="Base" title="Base" class="ft-ic"><svg width="16" height="16" viewBox="0 0 1280 1280" fill="none"><path d="M0,101.12c0-34.64,0-51.95,6.53-65.28,6.25-12.76,16.56-23.07,29.32-29.32C49.17,0,66.48,0,101.12,0h1077.76C1213.51,0,1230.84,0,1244.16,6.53c12.75,6.25,23.06,16.56,29.32,29.32,6.52,13.32,6.52,30.64,6.52,65.28v1077.76c0,34.63,0,51.96-6.52,65.28-6.26,12.75-16.57,23.06-29.32,29.32-13.32,6.52-30.65,6.52-65.28,6.52H101.12c-34.64,0-51.95,0-65.28-6.52-12.76-6.26-23.07-16.57-29.32-29.32-6.53-13.32-6.53-30.65-6.53-65.28V101.12Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://clutch.co/profile/8blocks-fzco" target="_blank" rel="noopener" aria-label="Clutch" title="Clutch" class="ft-ic"><svg width="56" height="16" viewBox="0 0 202.761 57.7631" fill="none"><path d="M62.1626 0.000131153H52.8467V57.7594H62.1626V0.000131153Z" fill="rgb(255,255,255)"></path><path d="M94.5149 57.7593H103.831V18.6319H94.5149V39.2957H94.683C94.683 47.9355 87.231 48.7796 85.199 48.7796C79.779 48.7796 78.595 43.5278 78.595 40.3117V18.6319H69.2791V40.6516C69.2791 46.0715 71.143 50.4755 73.8511 53.6953C76.3911 56.2353 80.4551 57.7593 85.0309 57.7593C88.2507 57.7593 92.4829 56.9114 94.5149 54.5395V57.7593Z" fill="rgb(255,255,255)"></path><path d="M112.806 57.7595H122.122V27.948H128.898V18.6321H122.122V4.74414H112.806V18.6321H105.862V27.948H112.806V57.7595Z" fill="rgb(255,255,255)"></path><path d="M150.577 57.5913C155.829 57.5913 160.741 55.7274 164.465 52.3395L165.821 50.9836L159.385 44.5476L158.029 46.2397C155.997 48.1036 153.457 49.1196 150.577 49.1196C144.141 49.1196 139.397 44.5476 139.397 37.7717C139.397 30.9959 143.969 26.5919 150.577 26.5919C153.457 26.5919 155.997 27.4398 158.029 29.4718L159.385 30.6559L165.481 24.5599L164.125 23.204C160.229 19.9841 155.657 17.9521 150.573 17.9521C139.057 17.784 130.586 26.0839 130.586 37.768C130.59 48.7835 139.229 57.5913 150.577 57.5913Z" fill="rgb(255,255,255)"></path><path d="M179.541 35.9078C179.541 27.268 185.977 26.4238 188.009 26.4238C193.429 26.4238 193.429 31.6757 193.429 34.8918V57.7594H202.745V34.7237C202.913 29.6436 201.729 25.0679 198.681 22.0199C196.141 19.4798 192.753 17.9558 188.517 17.9558C185.298 17.9558 181.913 18.8037 179.37 21.1757V0.00387801H170.054V57.7631H179.37V35.9115H179.541V35.9078Z" fill="rgb(255,255,255)"></path><path d="M143.466 37.772C143.466 41.4999 146.514 44.3761 150.07 44.3761C153.798 44.3761 156.674 41.328 156.674 37.772C156.674 34.0442 153.626 31.168 150.07 31.168C146.514 31.168 143.466 34.0479 143.466 37.772Z" fill="rgb(255,255,255)"></path><path d="M26.5917 57.5915C34.0437 57.5915 41.1595 54.7115 45.8996 49.4597L47.2555 48.1037L41.1595 41.6678L39.9754 43.3599C36.5875 46.7478 31.5074 48.7798 26.5955 48.7798C16.0955 48.7798 8.63979 40.648 8.63979 29.6401C8.63979 18.4602 16.0918 10.5003 26.4237 10.5003C31.3356 10.5003 35.9076 12.5323 39.8036 15.9202L41.1595 17.2761L47.2555 11.1801L45.8996 9.82418C40.8196 4.40423 33.8719 1.69238 26.5917 1.69238C11.3479 1.86047 0 13.7201 0 29.6401C0 45.56 11.3479 57.5915 26.5917 57.5915Z" fill="rgb(255,255,255)"></path></svg></a></div>
+    </div>
+    <div class="ft-nav"><div class="ft-col"><div class="ft-ch">Tokenomics</div><a class="ft-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="ft-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="ft-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="ft-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="ft-a" href="Token Launch.dc.html">Token Launch</a><a class="ft-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="ft-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="ft-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="ft-a" href="Audits.dc.html">Public Audits</a></div><div class="ft-col"><div class="ft-ch">Asset Tokenization</div><a class="ft-a" href="Landing.dc.html">Asset Tokenization</a><a class="ft-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="ft-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div><div class="ft-col"><div class="ft-ch">Company</div><a class="ft-a" href="About.dc.html">About us</a><a class="ft-a" href="Methodology.dc.html">Our Methodology</a><a class="ft-a" href="Cases.dc.html">Client Cases</a><a class="ft-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="ft-a" href="Contact.dc.html">Contact</a><a class="ft-a" href="Blog.dc.html">Blog</a><a class="ft-a" href="Research.dc.html">Research</a><a class="ft-a" href="Press.dc.html">Press</a></div></div>
+    <div class="ft-mapcol">
+      <div class="ft-ch">Office</div>
+      <div class="ft-map"><iframe src="https://www.google.com/maps?q=8BLOCKS+FZCO&amp;ll=25.0607775%2C55.1412167&amp;hl=en&amp;z=15&amp;output=embed" title="8BLOCKS FZCO on the map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="ft-a" href="mailto:hello@8blocks.io">hello@8blocks.io</a>
+      <a class="ft-a" href="tel:+971562865188">+971 56 286 5188</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div>© 2026 8BLOCKS FZCO. All rights reserved.</div>
+    <div class="ft-legal"><a href="https://8blocks.io/privacy-policy" target="_blank" rel="noopener">Privacy policy</a><a href="https://8blocks.io/terms" target="_blank" rel="noopener">Terms of Service</a></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":10750}}'>
+class Component extends DCLogic {
+  state = { b: 0, open: 0, sec: 0 };
+  BLOCKS = [["Positioning", "Does my project need a token?", "Only when the token performs a necessary role that existing money or stablecoins cannot perform as effectively. If a credible Token Economic Model cannot connect the token to product demand, issuing it can add cost and risk without adding value.", ["Positioning defines the purpose, legal and functional format, and initial network. The goal may be product access, loyalty, cross-border coordination, community participation or fundraising, but the chosen format must fit the applicable legal framework.", "The launch chain affects distribution, cost and compliance exposure, but it need not limit future expansion to compatible networks."], ["Purpose of issuance", "Token format", "Launch network and expansion path"]], ["Pricing", "How big should token supply be?", "Supply should be calculated after utility and circulation are known. It must be large enough for users to access the product, yet proportionate to expected demand, unlocks and the scale of the addressable market.", ["The block covers target Fully Diluted Valuation (FDV) at Token Generation Event (TGE), launch price, round pricing and maximum supply. There is no universal correct FDV or standard supply: the assumptions behind the number matter more than convention.", "Oversupply is usually more damaging than an unconventional token count because healthy product demand may still be unable to absorb emissions."], ["Evidence-based FDV", "Utility-sized supply", "Demand and emission balance"]], ["Initial token distribution", "Should early investors get a discount?", "The discount should be minimal or absent. A deep discount gives early buyers a profitable exit below the TGE price and creates structural sell pressure that later users must absorb.", ["The 8Blocks methodology groups supply into team-controlled, investor-controlled and ecosystem tokens. The objective is to avoid price control by any one group while keeping enough supply available for users to earn and use.", "Community distributions are not free: the project should estimate acquisition cost, reserve the corresponding liquidity and plan how released tokens will be absorbed."], ["Limited early-investor concentration", "Limited team concentration", "More earnable ecosystem supply"]], ["Token utility", "How many utilities should a token launch with?", "Start with one function that a clearly defined user group genuinely needs. Preserve the ability to add new functions as the product and ecosystem grow.", ["A simple first utility makes the reason to buy understandable. Later utilities should reach new buyer groups instead of multiplying features for the same users.", "A flexible model does not lock the token into one product forever; it creates an extensible demand layer around the business."], ["One clear launch utility", "New utilities for new buyer groups", "Continuous product-led expansion"]], ["Token circulation", "What is a Treasury in tokenomics?", "A Treasury is the transparent mechanism that receives, stores and redistributes tokens under disclosed conditions. It can include stabilization, buyback and reward funds governed by smart contracts.", ["The circulation map follows tokens from allocation and market supply through acquisition, use, storage and eventual release or removal. Every monetization point must be visible.", "Since 2019, 8Blocks models have used Treasury logic to hold tokens after use and return part of them to the market only under predetermined conditions."], ["Post-use destination", "Lock and release rules", "Transparent monetization points"]], ["Ecosystem approach", "Why build an ecosystem around one token?", "An ecosystem lets multiple products and participant groups create demand for the same token. That makes demand less dependent on one feature or one market cycle.", ["A platform that supports many product instances can create more utility than a single isolated launch. Direct customers, partners and B2B networks can each contribute distinct demand.", "The ecosystem is therefore an operating model, not a marketing label: products must share meaningful token flows and value creation."], []], ["Token retention", "Why is TVL not always a good metric?", "Total Value Locked (TVL) is useful only when locking serves a business purpose. Reward-only staking can inflate TVL temporarily while creating future sell pressure from newly issued rewards.", ["Retention can bridge the time until utility launches, power loyalty benefits, secure a protocol or determine voting weight. The benefit must justify the lock.", "The model should track what users receive, where rewards come from and what happens when locked supply returns to the market."], ["Purpose-led locking", "Funded rewards", "Known unlock consequences"]], ["Creating scarcity", "How does a token become scarce?", "Scarcity appears when credible demand exceeds available supply. Burns and locks cannot create durable scarcity for a token nobody needs.", ["Scarcity is not the same as demand or monetary deflation. It can emerge when product use grows faster than emissions, useful tokens are locked or removed, or new utilities attract new buyer groups.", "The 8Blocks methodology uses scarcity to connect the token to commercial success: stronger product use should increase token demand or reduce liquid supply through explicit mechanisms."], ["Demand before supply reduction", "Emissions below useful demand", "Product growth linked to token demand"]]];
+  QA = [["How is a Token Economic Model different from tokenomics?", "Classic tokenomics usually describes supply, allocations, unlocks and vesting. A Token Economic Model covers the full lifecycle: why the token exists, who buys it, how it is used, where it goes afterward, how demand recurs and how liquid supply changes. Tokenomics is therefore one block inside the broader model."], ["Does every business need a token?", "No. Many Web3 businesses work better with existing money or stablecoins. A token is justified when it performs a necessary role in product access, coordination, incentives or value circulation that another instrument cannot provide as effectively. If that role cannot be explained clearly, issuing a token may increase cost and risk."], ["What is a Closed Economic Loop?", "A Closed Economic Loop is a recurring flow in which users acquire tokens, use them in a real product and send them into a transparent Treasury mechanism. Some tokens can later return to circulation under disclosed rules, creating repeat demand and monetization beyond the initial sale."], ["Does the exchange choice affect token price?", "Exchange access, liquidity quality, custody practices and reputation matter, but the exchange name alone cannot create durable demand. Post-listing performance depends more fundamentally on product utility, circulating supply, unlocks, communication and the project’s ability to attract and retain real token users."], ["How many tokens should a project issue?", "There is no universal supply. The number should be calculated after utility, expected customer volume, token consumption, unlocks and emissions are known. Supply must let users access the product without creating a persistent surplus that even healthy demand cannot absorb."], ["Should early investors receive a token discount?", "A discount may compensate early risk, but it should be small and modeled against post-TGE liquidity. Deep discounts let early investors sell profitably below the public launch price, creating structural sell pressure and unequal break-even points for later participants."], ["What is a Treasury in tokenomics?", "A Treasury is the mechanism that receives, holds and redistributes tokens according to public rules. It may contain stabilization, buyback and reward funds. Smart-contract enforcement can make lock periods, release conditions, burns and market returns auditable for users and investors."], ["Why is TVL not always a good metric?", "TVL measures value locked, not whether the lock creates useful demand or sustainable revenue. Reward-only staking can raise TVL while issuing tokens that later reach the market as sell pressure. The metric is useful only alongside the lock’s purpose, reward source and unlock consequences."]];
+  TOC = ["mt-s1", "mt-s2", "mt-s3", "mt-s4", "mt-s5", "mt-s6", "mt-s7", "mt-ex", "mt-faq"];
+  componentDidMount() {
+    try {
+      this._io = new IntersectionObserver((ents) => {
+        ents.forEach((e) => { if (e.isIntersecting) { const k = this.TOC.indexOf(e.target.id); if (k >= 0 && k !== this.state.sec) this.setState({ sec: k }); } });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+      setTimeout(() => { this.TOC.forEach((id) => { const el = document.getElementById(id); if (el) this._io.observe(el); }); }, 300);
+    } catch (e) {}
+  }
+  componentWillUnmount() { try { this._io && this._io.disconnect(); } catch (e) {} }
+  renderVals() {
+    const { b, open, sec } = this.state;
+    const order = [0, 1, 2, 3, -1, 4, 5, 6, 7];
+    const rad = ['10px 0 0 0', '0', '0 10px 0 0', '0', '0', '0', '0 0 0 10px', '0', '0 0 10px 0'];
+    const toc = {};
+    this.TOC.forEach((id, i) => { toc['toc' + i] = { fg: i === sec ? 'rgb(255,255,255)' : 'rgb(112,113,114)', bc: i === sec ? 'rgb(202,0,90)' : 'transparent', go: () => this.setState({ sec: i }) }; });
+    return {
+      ...toc,
+      cells: order.map((k, i) => k < 0 ? { isLogo: true, isBlock: false, r: rad[i], cur: 'default', href: '#mt-s5', n: '', t: '' } : { isLogo: false, isBlock: true, r: rad[i], cur: 'pointer', href: '#mt-b' + (k + 1), n: String(k + 1).padStart(2, '0'), t: this.BLOCKS[k][0] }),
+      blks: this.BLOCKS.map((B, k) => ({ id: 'mt-b' + (k + 1), n: String(k + 1).padStart(2, '0'), t: B[0], q: B[1], a: B[2], ps: B[3], b: B[4] })),
+      faq: this.QA.map(([q, a], i, arr) => ({ q, a, open: open === i, st: open === i ? 'open' : 'closed', radius: i === 0 ? '10px 10px 0 0' : (i === arr.length - 1 ? '0 0 10px 10px' : '0px'), rot: open === i ? 'rotate(180deg)' : 'rotate(0deg)', toggle: () => this.setState({ open: open === i ? -1 : i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="./hero-digits.js"></script>
+<script src="./binary-glyph.js?v=1793797906223"></script>
+<script src="./result-chart.js?v=24"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+image-slot::part(ring){display:none;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+</style>
+</helmet>
+<div data-screen-label="Readiness Check" style="position:relative;width:1280px;height:5700px;margin:0 auto;overflow:clip;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;">
+
+<!-- HERO -->
+<div style="position:absolute;left:0;top:-11px;width:1280px;height:781px;overflow:hidden;background:rgb(0,0,0);">
+  <div style="position:absolute;left:-17px;top:-62px;width:1280px;height:800px;mix-blend-mode:screen;pointer-events:none;"><dc-import name="Binary Skyline" hint-size="1280px,800px" style="width:1280px;height:800px;"></dc-import></div>
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+</div>
+<!-- HEADER -->
+<div style="position:absolute;z-index:3;left:0;top:0;width:1280px;height:92.267px;box-sizing:border-box;border:.881px solid rgba(255,255,255,.17);backdrop-filter:blur(13.208px);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+  <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+    <a href="#">Services</a><a href="#">Cases</a><a href="#">Blog</a><a href="#">Team</a>
+  </div>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <span style="font-size:15px;line-height:1.7;">EN</span>
+    <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+  </div>
+</div>
+
+
+<div style="position:absolute;left:42px;top:160px;width:560px;opacity:.9;font-size:40px;line-height:48px;">Is tokenization actually a fit for your business?</div>
+<div style="position:absolute;left:42px;top:278px;width:389px;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">Answer seven questions about your goal, asset, economics and execution readiness. Get an honest assessment of whether tokenization is worth exploring, what path may fit, and what needs validation first.</div>
+<div style="position:absolute;left:42px;top:655px;display:flex;flex-direction:row;gap:10px;">
+  <a href="#quiz" onClick="{{ goQuiz }}" style="height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Check my readiness</a>
+  <a href="Readiness Result.dc.html" style="height:56px;border-radius:64px;background:rgba(255,255,255,.15);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">See a sample result</a>
+</div>
+<div style="position:absolute;left:42px;top:731px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Nothing is sent anywhere — the assessment is computed in your browser.</div>
+
+<!-- READINESS STATUS -->
+<div style="position:absolute;left:40px;top:922px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Two answers, instantly</div>
+<div style="position:absolute;left:40px;top:950px;font-size:32px;line-height:40px;">Readiness status</div>
+<div style="position:absolute;left:40px;top:1006px;width:520px;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">Seven questions cannot make anyone “ready to tokenize”. The assessment only determines whether going deeper is justified.</div>
+<div style="position:absolute;left:40px;top:1106px;width:595px;display:flex;flex-direction:column;gap:10px;">
+  <sc-for list="{{ statuses }}" as="s" hint-placeholder-count="3">
+  <div onClick="{{ s.pick }}" style="border-radius:10px;background:{{ s.bg }};box-shadow:{{ s.ring }};padding:20px 25px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:background 300ms ease, box-shadow 300ms ease;">
+    <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+      <div style="display:flex;flex-direction:row;gap:10px;align-items:center;font-size:16px;line-height:22px;letter-spacing:.01em;color:{{ s.c }};">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="{{ s.icon }}" fill-rule="evenodd"></path></svg>{{ s.t }}
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="transform:{{ s.rot }};transition:transform .2s;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    <sc-if value="{{ s.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ s.d }}</div></sc-if>
+  </div>
+  </sc-for>
+</div>
+<div style="position:absolute;left:760px;top:930px;width:480px;height:480px;">
+  <result-chart flat="" values="{{ chartVals }}" style="position:absolute;left:0;top:0;width:480px;height:480px;display:block;"></result-chart>
+  <span style="position:absolute;left:0;top:0;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:pre-line;">Objective
+fit</span>
+  <span style="position:absolute;right:0;top:0;text-align:right;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:pre-line;">Asset
+&amp; rights</span>
+  <span style="position:absolute;left:0;bottom:0;font-size:14px;line-height:20px;letter-spacing:.01em;">Execution</span>
+  <span style="position:absolute;right:0;bottom:0;text-align:right;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:pre-line;">Demand
+&amp; economics</span>
+</div>
+
+<!-- BEST-FIT PATH -->
+<div style="position:absolute;left:0;top:1621px;width:1280px;text-align:center;font-size:32px;line-height:40px;">Best-fit path</div>
+<div style="position:absolute;left:0;top:1677px;width:1280px;text-align:center;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">The second answer: which structure is worth testing first. Four possible directions.</div>
+<div ref="{{ tabsRef }}" style="position:absolute;left:40px;top:1736px;width:1200px;height:44px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;">
+  <div style="position:absolute;left:0;top:0;height:44px;width:{{ pillW }};border-radius:64px;background:rgb(255,255,255);transform:translateX({{ pillX }});transition:transform 480ms cubic-bezier(0.32,0.72,0,1),width 480ms cubic-bezier(0.32,0.72,0,1);z-index:0;"></div>
+  <div onClick="{{ pickAsset0 }}" ref="{{ tab0ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab0fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-house.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab0filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">Asset-backed financing
+  </div>
+  <div onClick="{{ pickAsset1 }}" ref="{{ tab1ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab1fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-book.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab1filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">Credit &amp; receivables
+  </div>
+  <div onClick="{{ pickAsset2 }}" ref="{{ tab2ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab2fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-car.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab2filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">Funds &amp; securities
+  </div>
+  <div onClick="{{ pickAsset3 }}" ref="{{ tab3ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab3fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-moneybag.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab3filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">Other / needs discovery
+  </div>
+</div>
+<div style="position:absolute;left:40px;top:1822px;width:1202px;height:536.332px;display:flex;flex-direction:row;gap:5px;align-items:center;">
+  <div style="position:relative;width:595px;height:536px;border-radius:10px;flex-shrink:0;overflow:hidden;background:rgb(15,15,15);">
+    <div style="position:absolute;inset:0;opacity:{{ img0d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-realestate" shape="rect" src="./assets/asset-realestate.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;opacity:{{ img1d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-debt" shape="rect" src="./assets/asset-debt.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;opacity:{{ img2d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-movables" shape="rect" src="./assets/asset-movables.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;opacity:{{ img3d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-securities" shape="rect" src="./assets/asset-securities.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.22;background-image:url(./assets/grain.svg);background-size:120px 120px;"></div>
+  </div>
+  <div style="flex-grow:1;height:536.332px;display:flex;flex-direction:column;gap:5px;">
+    <div style="display:flex;flex-direction:row;gap:5px;flex-grow:1;">
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">You get</div>
+        <div ref="{{ gRef0 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ assetHeadline }}</div>
+      </div>
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ card0label }}</div>
+        <div ref="{{ gRef1 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ card0body }}</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:5px;flex-grow:1;">
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ card1label }}</div>
+        <div ref="{{ gRef2 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ card1body }}</div>
+      </div>
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ card2label }}</div>
+        <div ref="{{ gRef3 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ card2body }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="position:absolute;left:40px;top:2398px;width:1200px;display:flex;flex-direction:column;gap:8px;">
+  <div style="font-size:16px;line-height:22px;letter-spacing:.01em;">{{ exTitle }}</div>
+  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ exBody }}</div>
+</div>
+
+
+<!-- QUESTIONNAIRE -->
+<div id="quiz" data-screen-label="Question" ref="{{ quizRef }}" style="position:absolute;left:40px;top:2648px;width:1200px;min-height:640px;box-sizing:border-box;padding:30px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;gap:24px;">
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">Question {{ stepNo }} of 7</div>
+    <div style="display:flex;flex-direction:row;gap:6px;">
+      <sc-for list="{{ segments }}" as="sg" hint-placeholder-count="7">
+        <div onClick="{{ sg.jump }}" style="flex:1;height:4px;border-radius:100px;background:{{ sg.bg }};cursor:{{ sg.cursor }};transition:background 420ms ease;"></div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start;">
+    <div style="height:28px;padding:0 12px;box-sizing:border-box;border-radius:100px;background:rgba(148,255,77,.1);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(148,255,77);">{{ qChip }}</div>
+    <div style="max-width:900px;font-size:24px;line-height:30px;">{{ qTitle }}</div>
+    <sc-if value="{{ qSub }}" hint-placeholder-val="{{ true }}"><div style="max-width:700px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ qSub }}</div></sc-if>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <sc-for list="{{ options }}" as="op" hint-placeholder-count="6">
+      <div onClick="{{ op.pick }}" style="box-sizing:border-box;height:52px;padding:0 16px;border-radius:10px;background:{{ op.bg }};display:flex;flex-direction:row;align-items:center;gap:14px;cursor:pointer;transition:background 320ms ease;" style-hover="background:rgb(36,37,39);">
+        <div style="width:28px;height:28px;flex-shrink:0;box-sizing:border-box;border:1px solid {{ op.keyBorder }};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;color:{{ op.keyFg }};transition:border-color 320ms ease,color 320ms ease;">{{ op.key }}</div>
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ op.fg }};transition:color 320ms ease;">{{ op.label }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div onClick="{{ goBack }}" style="align-self:flex-start;margin-top:auto;font-size:14px;line-height:20px;letter-spacing:.01em;cursor:pointer;opacity:{{ backOpacity }};pointer-events:{{ backEvents }};transition:opacity 300ms ease;">← Previous</div>
+</div>
+
+<!-- FOUR THINGS -->
+<div style="position:absolute;left:0;top:3468px;width:1280px;text-align:center;font-size:32px;line-height:40px;white-space:pre-line;">Four things determine whether
+the case is worth exploring</div>
+<div style="position:absolute;left:340px;top:3564px;width:600px;text-align:center;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">The assessment does not determine whether you can legally issue a token. It identifies whether there is enough economic and structural substance to justify deeper feasibility work.</div>
+<div style="position:absolute;left:40px;top:3644px;width:1200px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;">
+  <sc-for list="{{ four }}" as="c" hint-placeholder-count="4">
+  <div style="position:relative;height:360px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:10px;padding:30px;box-sizing:border-box;text-align:center;">
+    <binary-glyph shape="{{ c.shape }}" ox="0.5" oy="0.36" os="0.6" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></binary-glyph>
+    <div style="position:relative;opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ c.t }}</div>
+    <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ c.d }}</div>
+  </div>
+  </sc-for>
+</div>
+<div style="position:absolute;left:340px;top:4034px;width:600px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+  <div onClick="{{ toggleMeans }}" style="display:flex;flex-direction:row;gap:6px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;cursor:pointer;">What “tokenization” means here<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="transform:{{ meansRot }};transition:transform .2s;"><path d="M5 8l5 5 5-5"></path></svg></div>
+  <sc-if value="{{ meansOpen }}" hint-placeholder-val="{{ false }}"><div style="text-align:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Here, tokenization means representing ownership, a financial claim or another defined economic right through digital infrastructure. The legal and financial structure comes first; blockchain is the implementation layer. Liquidity, a secondary market or a wider investor pool are outcomes some structures earn — not automatic effects.</div></sc-if>
+</div>
+
+<!-- CTA -->
+<div style="position:absolute;left:40px;top:4264px;width:1200px;height:364px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;left:30px;top:30px;width:573px;display:flex;flex-direction:column;gap:13.79px;">
+    <div style="width:627px;font-size:32px;line-height:40px;white-space:pre-line;">We are trying
+to determine whether
+a real business case exists</div>
+    <div style="width:468.83px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">before you spend money on legal or technical implementation.</div>
+  </div>
+  <div style="position:absolute;left:31px;top:278px;display:flex;flex-direction:row;gap:10px;align-items:center;">
+    <div style="width:214px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Book the free 45-min call</div>
+    <div style="width:239px;height:56px;border-radius:64px;background:rgba(255,255,255,.15);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Or check your readiness first</div>
+  </div>
+  <div style="position:absolute;left:698px;top:36px;width:234px;height:235px;"><image-slot id="person-1" shape="circle" placeholder="Sergei"></image-slot></div>
+  <div style="position:absolute;left:924px;top:36px;width:234px;height:235px;border-radius:50%;box-shadow:0 0 0 5px rgb(16,17,19);"><image-slot id="person-2" shape="circle" placeholder="Anton"></image-slot></div>
+  <div style="position:absolute;left:698px;top:291px;width:234px;display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;">
+    <div style="font-size:16px;line-height:22px;">Sergei Novikov</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">CPO, 8Blocks</div>
+  </div>
+  <div style="position:absolute;left:924px;top:291px;width:234px;display:flex;flex-direction:column;gap:4px;align-items:center;text-align:center;">
+    <div style="font-size:16px;line-height:22px;">Anton Efimenko</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Co-founder, 8Blocks</div>
+  </div>
+</div>
+
+
+<!-- FAQ -->
+<div style="position:absolute;left:0;top:4808px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div>
+  <div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+    <div onClick="{{ f.toggle }}" style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></sc-if>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="transform:{{ f.rot }};transition:transform .2s;flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div>
+  <div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+</div>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: 0, asset: 0, status: 0, means: false, step: 0, answers: {} };
+  GDUR = 520;
+  startGlitch = () => {
+    cancelAnimationFrame(this._graf);
+    const els = [this._g0, this._g1, this._g2, this._g3].filter(Boolean);
+    if (!els.length) return;
+    const finals = els.map((el) => el.textContent);
+    const POOL = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+    const start = performance.now();
+    let last = -1e9;
+    const tick = (now) => {
+      const p = (now - start) / this.GDUR;
+      if (p >= 1) { els.forEach((el, i) => { el.textContent = finals[i]; }); return; }
+      if (now - last > 95) {
+        last = now;
+        const reveal = Math.max(0, (p - 0.35) / 0.65);
+        els.forEach((el, i) => {
+          const t = finals[i]; let out = '';
+          for (let k = 0; k < t.length; k++) {
+            const ch = t[k];
+            if (ch === ' ' || k / t.length < reveal) { out += ch; continue; }
+            out += POOL[(Math.random() * POOL.length) | 0];
+          }
+          el.textContent = out;
+        });
+      }
+      this._graf = requestAnimationFrame(tick);
+    };
+    this._graf = requestAnimationFrame(tick);
+  };
+  measurePill = (retries) => {
+    const tab = this["tab" + this.state.asset + "El"];
+    const again = () => { const n = retries == null ? 60 : retries; if (n > 0) requestAnimationFrame(() => this.measurePill(n - 1)); };
+    if (!tab || !this.tabsEl || !tab.getBoundingClientRect().width) { again(); return; }
+    const tr = this.tabsEl.getBoundingClientRect(), r = tab.getBoundingClientRect();
+    const z = tr.width / this.tabsEl.offsetWidth || 1;
+    const rect = { x: Math.round((r.left - tr.left) / z), w: Math.round(r.width / z) };
+    const prev = this.state.pillRect;
+    if (!prev || prev.x !== rect.x || prev.w !== rect.w) this.setState({ pillRect: rect });
+  };
+  componentDidMount() {
+    requestAnimationFrame(() => this.measurePill());
+    import('./country-info.js').then(m => { this.COUNTRY_INFO = m.COUNTRY_INFO; }).catch(() => {});
+  }
+  componentDidUpdate() { this.measurePill(); }
+  componentWillUnmount() { cancelAnimationFrame(this._graf); }
+  renderVals() {
+    const open = this.state.open;
+    const sel = this.state.asset;
+    const content = [
+      { headline: "Capital without selling the asset", ex: ["Working example from commercial real estate.", "In May 2025 the Dubai Land Department — a government body — launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes."], cards: [["Holders get", "Designed to be enforceable and reviewed by your counsel"], ["You keep", "Operation, management, the decision to sell"], ["First we check", "Who buys the fractions, at what minimum ticket"]] },
+      { headline: "Liquidity against what is already pledged", ex: ["Working example from debt and collateral.", "Private credit funds now issue tokenised notes against loan books already pledged to a bank, with holders ranked behind the senior lender. The mechanics are ordinary subordinated debt; only the register and the settlement rail are new."], cards: [["Holders get", "A claim on the cash flow, ranked behind your existing lender"], ["You keep", "The loan, the covenants, the banking relationship"], ["First we check", "What your credit agreement permits without a waiver"]] },
+      { headline: "Financing the fleet, not the balance sheet", ex: ["Working example from high-value movables.", "Aircraft and yacht operators have financed fleets by selling income shares per unit rather than equity in the company. Payouts follow utilisation data, so investors price the asset's actual working life instead of the operator's balance sheet."], cards: [["Holders get", "A share of rental income, measured per unit"], ["You keep", "The fleet, the contracts, the operating margin"], ["First we check", "Utilisation history and how residual value is proven"]] },
+      { headline: "A tradable wrapper for an existing interest", ex: ["Working example from securities and fund interests.", "Several regulated funds have issued tokenised feeder interests in Luxembourg and Singapore, cutting minimum tickets from six figures to four. The economics mirror the underlying interest exactly; the wrapper only changes transferability."], cards: [["Holders get", "The same economics as the underlying interest, in smaller units"], ["You keep", "The mandate, the governance, the exit decision"], ["First we check", "Which exemption the offer relies on, and where"]] },
+    ];
+    const c = content[sel] || content[0];
+    const sit = {
+      assetHeadline: c.headline, exTitle: c.ex[0], exBody: c.ex[1],
+      card0label: c.cards[0][0], card0body: c.cards[0][1],
+      card1label: c.cards[1][0], card1body: c.cards[1][1],
+      card2label: c.cards[2][0], card2body: c.cards[2][1],
+      gRef0: (n) => { this._g0 = n; }, gRef1: (n) => { this._g1 = n; }, gRef2: (n) => { this._g2 = n; }, gRef3: (n) => { this._g3 = n; },
+      img0d: sel === 0 ? 1 : 0, img1d: sel === 1 ? 1 : 0, img2d: sel === 2 ? 1 : 0, img3d: sel === 3 ? 1 : 0,
+      tabsRef: (n) => { this.tabsEl = n; if (n) requestAnimationFrame(() => this.measurePill()); },
+      pillX: (this.state.pillRect ? this.state.pillRect.x : 0) + "px",
+      pillW: (this.state.pillRect ? this.state.pillRect.w : 0) + "px",
+    };
+    const countries = ["Russia", "United Kingdom", "European Union", "Switzerland", "Kazakhstan", "UAE", "Japan", "Singapore", "United States", "British Virgin Islands"];
+    sit.modalOpen = !!this.state.modalCountry;
+    sit.modalTitle = this.state.modalCountry || '';
+    sit.modalParas = (this.COUNTRY_INFO && this.COUNTRY_INFO[this.state.modalCountry]) || [];
+    sit.closeModal = () => this.setState({ modalCountry: null });
+    sit.stopClick = (e) => e.stopPropagation();
+    countries.forEach((name, i) => { sit["open" + i] = () => this.setState({ modalCountry: name }); });
+    for (let i = 0; i < 4; i++) {
+      const on = i === sel;
+      sit["tab" + i + "fg"] = on ? "rgb(0,0,0)" : "rgb(255,255,255)";
+      sit["tab" + i + "filter"] = on ? "invert(1)" : "none";
+      sit["tab" + i + "ref"] = (n) => { this["tab" + i + "El"] = n; if (n && i === sel) requestAnimationFrame(() => this.measurePill()); };
+      sit["pickAsset" + i] = () => { this.setState({ asset: i }); setTimeout(this.startGlitch, 16); };
+    }
+
+    const st = this.state.status;
+    const ICONS_OLD = ["M4 17V3.5m0 0h10l-2 3.5 2 3.5H4", "M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.2-11.2-1.9 4.5-4.5 1.9 1.9-4.5 4.5-1.9Z", "M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm0-12v4l2.5 2.5"];
+    const ICONS = [
+      "M4 2.5h1.5v15H4zM6.5 3.5h9.5l-2.2 3.6 2.2 3.6H6.5z",
+      "M16.8 3.2 12.4 12.4 3.2 16.8 7.6 7.6 16.8 3.2ZM10 11.3a1.3 1.3 0 1 0 0-2.6 1.3 1.3 0 0 0 0 2.6Z",
+      "M7 1.5h6l.6 3.2A6 6 0 0 1 16 10a6 6 0 0 1-2.4 5.3L13 18.5H7l-.6-3.2A6 6 0 0 1 4 10a6 6 0 0 1 2.4-5.3L7 1.5Zm3 4.3a.8.8 0 0 0-.8.8V10c0 .2.1.4.2.6l2 2 1.1-1.1-1.7-1.8V6.6a.8.8 0 0 0-.8-.8Z",
+    ];
+    const SD = [
+      ["Strong candidate", "rgb(52,199,89)", "There is a clear business objective, a credible underlying asset or financial right, and no obvious structural blocker. Worth validating seriously.", "rgba(52,199,89,.10)"],
+      ["Explore first", "rgb(255,141,40)", "There may be a viable case, but one or more critical assumptions still need validation before committing to structuring or implementation.", "rgba(255,141,40,.10)"],
+      ["Not yet", "rgb(255,56,60)", "The current objective, economics or execution conditions do not justify tokenization today. The result explains what would need to change.", "rgba(255,56,60,.10)"],
+    ];
+    const statuses = SD.map(([t, c, d, tint], i) => ({ t, c, d, icon: ICONS[i], open: st === i, bg: st === i ? tint : "rgb(16,17,19)", ring: "none", rot: st === i ? "rotate(180deg)" : "rotate(0deg)", pick: () => this.setState({ status: st === i ? -1 : i }) }));
+    const chartVals = ["1,1,1,1", "0.78,1,0.56,0.78", "0.56,0.34,0.34,0.56"][st] || "1,0.56,1,1";
+    const four = [
+      { shape: "target", t: "Objective", d: "A problem tokenization can realistically solve" },
+      { shape: "deed", t: "Asset & rights", d: "Something clearly defined and enforceable" },
+      { shape: "coin", t: "Demand & economics", d: "A plausible buyer side and viable economics" },
+      { shape: "gear", t: "Execution", d: "Enough clarity, time and commitment to structure it properly" },
+    ];
+    const qa = [["What does tokenization mean, in plain terms?","Tokenization puts ownership, a financial claim, or another defined economic right on digital infrastructure. Think of a share in a building, a pool of invoices, or a revenue stream. We design the legal and financial structure first and use blockchain to implement it. The first question we answer is which form fits your case, if any."],["Is tokenization legal?","The rules are clearer today than ever, and legal feasibility still depends on your case. Specialized counsel and regulated partners in your jurisdiction make that call. We hand them a design that’s built to pass their review."],["How long does it take?","Timelines depend on your structure and jurisdiction. You’ll get a feasibility view in one call and a written diagnosis after the Workshop. Structuring and implementation usually take 3 to 12 months, and legal work takes the longest."],["Will tokenization make my asset liquid?","Liquidity comes from investor demand and a working secondary market. Tokenization can open both when the structure, distribution route, and buyer side are in place. That’s why the assessment asks who could realistically buy or fund your instrument."],["What happens on the free 45-minute call?","Our co-founder and CPO review your case, check whether a real business case exists, and name the one or two questions your project depends on. You’ll leave knowing which data to collect next and whether a Workshop makes sense for you."],["Is this assessment advice?","It’s an educational self-assessment. It shows whether deeper feasibility work makes sense. For legal, financial, or investment advice, talk to licensed advisors in your jurisdiction."]];
+    const faq = qa.map(([q, a], i) => ({
+      q, a, open: open === i,
+      radius: i === 0 ? "10px 10px 0 0" : (i === qa.length - 1 ? "0 0 10px 10px" : "0px"),
+      rot: open === i ? "rotate(180deg)" : "rotate(0deg)",
+      toggle: () => this.setState({ open: open === i ? -1 : i }),
+    }));
+    const STEPS = [
+      { t: "What are you trying to achieve?", s: "The objective decides which structure is worth testing — not the industry you are in.", o: ["Raise capital against an asset or cash flow", "Finance working capital", "Broaden investor access to an existing fund or security", "Improve transferability or administration of an investment instrument", "Explore whether digital assets could create value", "Something else"] },
+      { t: "What would sit behind the digital instrument?", s: "", o: ["Real estate, infrastructure or equipment", "Receivables, loans or contracted revenue", "Fund interests or existing securities", "Inventory or commodities", "Another clearly defined asset or financial right", "Nothing specific yet"] },
+      { t: "How clearly is ownership or the financial right documented?", s: "", o: ["Clear and fully documented", "Mostly clear, some structuring is still needed", "Complex or unclear", "Not documented yet"] },
+      { t: "What is the approximate size of the asset or financing opportunity?", s: "Size does not disqualify a case by itself — it shapes whether structuring costs pay off.", o: ["Under $250k", "$250k – $1m", "$1m – $5m", "$5m+", "Not sure yet"] },
+      { t: "What evidence supports the underlying economics?", s: "", o: ["Established performance and reliable financial records", "Operating history with usable internal records", "Limited operating history or incomplete data", "Mostly projections / pre-revenue"] },
+      { t: "Who could realistically buy or fund this instrument?", s: "Tokenization does not create liquidity or investor demand by itself.", o: ["Existing investors, clients or counterparties", "Identified professional / institutional investors", "We know the target investor type but have not validated demand", "Broad retail investors", "We do not know yet"] },
+      { t: "How prepared are you to explore implementation?", s: "", o: ["Decision-maker involved, realistic timeline and resources available", "Serious interest, but several execution questions remain", "Early exploration", "We need capital immediately / within the next few months"] },
+    ];
+    const step = Math.max(0, Math.min(6, this.state.step || 0));
+    const answers = this.state.answers || {};
+    const cur = STEPS[step];
+    const quiz = {
+      stepNo: step + 1, qTitle: cur.t, qSub: cur.s,
+      qChip: ["Objective", "Underlying asset", "Legal clarity", "Economics", "Track record", "Demand", "Execution"][step],
+      options: cur.o.map((label, k) => {
+        const on = answers[step] === k;
+        return { key: "ABCDEF"[k], label,
+          bg: on ? "rgba(148,255,77,.1)" : "rgb(27,27,27)",
+          fg: on ? "rgb(255,255,255)" : "rgba(255,255,255,.86)",
+          keyBorder: on ? "rgba(148,255,77,.5)" : "rgba(255,255,255,.16)",
+          keyFg: on ? "rgb(148,255,77)" : "rgb(112,113,114)",
+          pick: () => {
+            this.setState({ answers: Object.assign({}, answers, { [step]: k }) });
+            if (step < 6) setTimeout(() => this.setState({ step: step + 1 }), 260);
+            else setTimeout(() => { window.location.href = "Readiness Result.dc.html"; }, 420);
+          } };
+      }),
+      segments: STEPS.map((_, k) => ({
+        bg: k < step ? "rgba(148,255,77,.7)" : (k === step ? "rgb(148,255,77)" : "rgba(255,255,255,.12)"),
+        cursor: (k <= step || answers[k] !== undefined) ? "pointer" : "default",
+        jump: () => { if (k <= step || answers[k] !== undefined) this.setState({ step: k }); },
+      })),
+      backOpacity: step > 0 ? 1 : 0.3, backEvents: step > 0 ? "auto" : "none",
+      goBack: () => this.setState({ step: Math.max(0, step - 1) }),
+      quizRef: (n) => { this.quizEl = n; },
+      goQuiz: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!this.quizEl) return; window.scrollTo({ top: this.quizEl.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" }); },
+    };
+    return Object.assign({ statuses, chartVals, four, faq, meansOpen: this.state.means, meansRot: this.state.means ? "rotate(180deg)" : "rotate(0deg)", toggleMeans: () => this.setState({ means: !this.state.means }) }, sit, quiz);
+  }
+}
+</script>
+</body>
+</html>

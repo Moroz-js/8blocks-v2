@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategic Consulting</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph-wide.js?v=22"></script>
+<script src="./hero-digits.js"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+.audit-field{background:radial-gradient(320px 240px at 1210px -10px, rgba(205,140,165,.45) 0%, rgba(205,140,165,0) 75%), radial-gradient(520px 620px at 1240px 330px, rgba(150,6,72,.75) 0%, rgba(150,6,72,0) 75%), radial-gradient(1400px 700px at 1150px -30px, rgba(170,6,82,1) 0%, rgba(165,6,80,.75) 30%, rgba(150,6,72,.3) 60%, rgba(150,6,72,0) 85%), linear-gradient(180deg, rgb(54,5,27) 0%, rgb(31,5,18) 50%, rgb(29,5,16) 100%);}
+.audit-glow{background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");}
+.tok-hscroll{scrollbar-width:none;}
+.tok-hscroll::-webkit-scrollbar{display:none;}
+</style>
+<style>
+/* FAQ: answer unfolds smoothly (height + fade + slight rise), chevron turns in step */
+.faq-a{display:grid;grid-template-rows:0fr;opacity:0;margin-top:-10px;transform:translateY(-6px);transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
+.faq-a[data-st="open"]{grid-template-rows:1fr;opacity:1;margin-top:0;transform:none;transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .45s ease .12s;}
+.faq-a-in{min-height:0;overflow:hidden;}
+.faq-chev{transition:transform .55s cubic-bezier(.22,1,.36,1)!important;}
+</style>
+<script>
+/* FAQ toggling happens right in the page (no re-render), so the CSS transition of the same element always plays smoothly */
+(function () { if (window.__faqBound) return; window.__faqBound = true;
+  function set(row, open) { var a = row.querySelector('.faq-a'); if (a) a.setAttribute('data-st', open ? 'open' : 'closed'); var c = row.querySelector('.faq-chev'); if (c) c.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)'; }
+  document.addEventListener('click', function (e) { var row = e.target && e.target.closest ? e.target.closest('[data-faq-row]') : null; if (!row) return;
+    var a = row.querySelector('.faq-a'), wasOpen = a && a.getAttribute('data-st') === 'open';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-faq-row]'), function (r) { if (r !== row) set(r, false); });
+    set(row, !wasOpen); }, true);
+})();
+</script>
+<style>
+/* Accent cards: grain drifts up slowly, brighter specks rise faster with a slight sway, like champagne bubbles */
+@property --acc-y{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-y2{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-x{syntax:'<length>';inherits:false;initial-value:0px}
+@keyframes accRise{from{--acc-y:0px;--acc-y2:0px}to{--acc-y:-160px;--acc-y2:-960px}}
+@keyframes accSway{0%,100%{--acc-x:0px}25%{--acc-x:3px}75%{--acc-x:-3px}}
+[style*="accent-noise.png"]{animation:accRise 120s linear infinite,accSway 18s ease-in-out infinite;}
+@media (prefers-reduced-motion:reduce){[style*="accent-noise.png"]{animation:none;}}
+</style>
+<style data-site-nav>
+[data-sn-hdr]{position:sticky !important;top:0 !important;left:auto !important;z-index:30 !important;}
+[data-sn-hdr]::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:rgba(2,2,2,.42);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:opacity .35s ease .15s;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within)::before{opacity:0;transition:opacity .3s ease;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within){border-color:transparent !important;}
+.sn{display:flex;flex-direction:row;gap:40px;align-items:center;font-size:15px;line-height:26px;}
+.sn-btn{position:relative;display:flex;flex-direction:row;gap:7px;align-items:center;padding:0;border:0;background:none;color:rgb(255,255,255);font:inherit;cursor:pointer;border-bottom:1px solid transparent;}
+.sn-chev{transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .3s;opacity:.6;}
+.sn-sheet{position:absolute;left:0;right:0;top:0;height:372px;z-index:-1;pointer-events:none;background:rgba(2,2,2,.64);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-bottom:.881px solid rgba(255,255,255,.17);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .5s cubic-bezier(.65,0,.35,1) .12s,visibility 0s linear .62s;}
+.sn:has(.sn-item:hover,.sn-item:focus-within) .sn-sheet{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path .65s cubic-bezier(.22,1,.36,1),visibility 0s;}
+.sn-panel{position:absolute;left:0;right:0;top:0;z-index:-1;box-sizing:border-box;min-height:372px;padding:122px 40px 30px;display:grid;grid-template-columns:420px 1fr 1fr;gap:5px 60px;cursor:default;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;}
+.sn-panel>*{opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .3s cubic-bezier(.65,0,.35,1);}
+.sn-item:hover .sn-panel,.sn-item:focus-within .sn-panel{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .3s ease .1s,visibility 0s;}
+.sn-item:hover .sn-panel>*,.sn-item:focus-within .sn-panel>*{opacity:1;transform:none;transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+.sn-item:hover .sn-panel>:nth-child(1),.sn-item:focus-within .sn-panel>:nth-child(1){transition-delay:.14s;}
+.sn-item:hover .sn-panel>:nth-child(2),.sn-item:focus-within .sn-panel>:nth-child(2){transition-delay:.2s;}
+.sn-item:hover .sn-panel>:nth-child(3),.sn-item:focus-within .sn-panel>:nth-child(3){transition-delay:.26s;}
+.sn-item:hover .sn-chev,.sn-item:focus-within .sn-chev{transform:rotate(180deg);opacity:1;}
+.sn-intro{position:relative;display:block;width:420px;height:220px;border-radius:10px;overflow:hidden;isolation:isolate;color:rgb(255,255,255);background:linear-gradient(141.36deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);}
+.sn-intro::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:url(./assets/accent-noise.png) 0 0 / 160px 160px repeat;opacity:.6;}
+.sn-txt,.sn-more{z-index:2;}
+a.sn-intro:hover{opacity:1;color:rgb(255,255,255);}
+.sn-ill{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.sn-acc .sn-ill{inset:auto;left:204px;top:-2px;width:292px;height:223px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%);}.sn-acc .sn-ill.sn-house{left:189px;top:-4px;width:345px;height:228px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%);}.sn-acc .sn-ill.sn-prof{left:150px;top:0;width:272px;height:230px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 25%);mask-image:linear-gradient(90deg,transparent 0,#000 25%);}
+.sn-intro:hover .sn-ill{transform:scale(1.03);}
+.sn-txt{position:absolute;left:15px;top:15px;display:flex;flex-direction:column;gap:10px;}
+.sn-h{width:214px;font-size:24px;line-height:30px;opacity:.9;}
+.sn-p{width:249px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;}
+.sn-more{position:absolute;left:15px;bottom:15px;padding:10px 16px;border-radius:50px;background:rgba(255,255,255,.15);font-size:12px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);white-space:nowrap;transition:background .25s;}
+.sn-intro:hover .sn-more{background:rgba(255,255,255,.25);}
+.sn-col{display:flex;flex-direction:column;gap:0;padding-top:0;}
+.sn-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:12px;}
+.sn-a{font-size:16px;line-height:25px;padding:6px 0;color:rgb(255,255,255);opacity:.85;transition:opacity .2s,color .2s;}
+.sn-a:hover{opacity:1;color:rgb(202,0,90);}
+@media (prefers-reduced-motion: reduce){.sn-sheet,.sn-panel,.sn-panel>*,.sn-chev{transition:none !important;}}
+</style>
+<style data-site-footer>
+.ft{display:block;box-sizing:border-box;width:1280px;padding:0 40px 32px;color:rgb(255,255,255);}
+.ft-top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;column-gap:72px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08);}
+.ft-brand{display:flex;flex-direction:column;}
+.ft-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+.ft-col{display:flex;flex-direction:column;gap:12px;}
+.ft-mapcol{display:flex;flex-direction:column;gap:12px;}
+.ft-sh{font-size:18px;line-height:20px;}
+.ft-sp{margin-top:8px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-form{position:relative;margin-top:20px;width:100%;}
+.ft-in{width:100%;height:44px;box-sizing:border-box;border-radius:64px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 52px 0 18px;outline:none;transition:border-color .2s;}
+.ft-in::placeholder{color:rgba(255,255,255,.4);}
+.ft-in:focus{border-color:rgba(255,255,255,.35);}
+.ft-go{position:absolute;right:4px;top:4px;width:36px;height:36px;border:0;padding:0;border-radius:18px;background:rgb(58,58,60);color:rgb(140,140,142);display:flex;align-items:center;justify-content:center;font-family:Manrope,sans-serif;font-size:16px;cursor:default;pointer-events:none;transition:background .25s,color .25s;}
+.ft-form:has(.ft-in:not(:placeholder-shown)) .ft-go{background:rgb(255,255,255);color:rgb(0,0,0);cursor:pointer;pointer-events:auto;}
+.ft-icons{display:flex;flex-direction:row;gap:18px;align-items:center;height:20px;margin-top:28px;}
+.ft-ic{display:flex;align-items:center;opacity:.55;transition:opacity .2s;}
+.ft-ic:hover{opacity:1;}
+.ft-ic svg{display:block;}
+.ft-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:8px;}
+.ft-a{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);opacity:.75;transition:opacity .2s,color .2s;width:max-content;}
+.ft-a:hover{opacity:1;color:rgb(202,0,90);}
+.ft-map{position:relative;height:208px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);}
+.ft-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(1) invert(.92) contrast(.85) brightness(.85);}
+.ft-addr{margin-top:4px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-addr:hover{color:rgb(255,255,255);opacity:1;}
+.ft-bottom{margin-top:56px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:row;justify-content:space-between;align-items:center;font-size:13px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-legal{display:flex;flex-direction:row;gap:24px;}
+.ft-legal a{color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;}
+.ft-legal a:hover{color:rgb(255,255,255);opacity:1;}
+</style>
+<style data-btn-hover>
+/* pill / filled buttons: on hover only the fill changes, the label keeps its colour */
+.hm-tab,.ab-btn,.ar-btn,a[style*="border-radius:64px"],a[style*="border-radius: 64px"],a[style*="border-radius:6px"][style*="background"],a[style*="border-radius: 6px"][style*="background"]{transition:box-shadow .2s ease,background-color .2s ease;}
+a.hm-tab:hover,a.ab-btn:hover,a.ar-btn:hover,a[style*="border-radius:64px"]:hover,a[style*="border-radius: 64px"]:hover,a[style*="border-radius:6px"][style*="background"]:hover,a[style*="border-radius: 6px"][style*="background"]:hover{opacity:1 !important;box-shadow:inset 0 0 0 999px rgba(255,255,255,.14);}
+a.hm-tab:hover{color:rgb(255,255,255) !important;background:rgb(52,52,54) !important;box-shadow:none;}
+a.ab-white:hover,a[style*="background:rgb(255,255,255)"]:hover,a[style*="background: rgb(255, 255, 255)"]:hover{box-shadow:inset 0 0 0 999px rgba(0,0,0,.1);}
+</style>
+</helmet>
+<div data-screen-label="Strategic Consulting" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:0;overflow:clip;">
+
+<!-- HEADER (sticky) -->
+<div data-sn-hdr class="sn-sticky" style="position:sticky;top:0;z-index:30;margin-bottom:-92px;width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 40px;">
+    <div style="width:205px;height:30px;display:flex;align-items:center;"><a href="Home.dc.html" style="display:block;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></a></div>
+    <nav class="sn" aria-label="Main">
+        <div class="sn-sheet" aria-hidden="true"></div>
+      <div class="sn-item">
+        <button class="sn-btn" type="button" aria-haspopup="true">Tokenomics<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="sn-panel">
+          <a class="sn-intro sn-acc" href="Tokenomics.dc.html"><img class="sn-ill" src="./assets/nav-ill-tokenomics-coin.png?v=2" alt=""><div class="sn-txt"><div class="sn-h">Build a working token economy</div><div class="sn-p">Design, validate and improve the economics behind your product.</div></div><span class="sn-more">Explore Tokenomics</span></a>
+          <div class="sn-col"><div class="sn-ch">Expertise</div><a class="sn-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="sn-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="sn-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="sn-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="sn-a" href="Token Launch.dc.html">Token Launch</a></div>
+          <div class="sn-col"><div class="sn-ch">Tools &amp; Research</div><a class="sn-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="sn-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="sn-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="sn-a" href="Audits.dc.html">Public Audits</a></div>
+        </div>
+      </div>
+      <div class="sn-item">
+        <button class="sn-btn" type="button" aria-haspopup="true">Asset Tokenization<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="sn-panel">
+          <a class="sn-intro sn-acc" href="Landing.dc.html"><img class="sn-ill sn-house" src="./assets/nav-ill-assets-house.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Start with the business case</div><div class="sn-p">Explore asset tokenization, assess readiness and plan your next step.</div></div><span class="sn-more">Explore Asset Tokenization</span></a>
+          <div class="sn-col"><div class="sn-ch">Strategy</div><a class="sn-a" href="Landing.dc.html">Asset Tokenization</a></div>
+          <div class="sn-col"><div class="sn-ch">Explore &amp; Assess</div><a class="sn-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="sn-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div>
+        </div>
+      </div>
+      <div class="sn-item">
+        <button class="sn-btn" type="button" aria-haspopup="true">Company<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="sn-panel">
+          <a class="sn-intro sn-acc" href="About.dc.html"><img class="sn-ill sn-prof" src="./assets/nav-ill-company-profiles.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Meet 8Blocks</div><div class="sn-p">Our team, client work,<br>events and ideas.</div></div><span class="sn-more">About 8Blocks</span></a>
+          <div class="sn-col"><div class="sn-ch">8Blocks</div><a class="sn-a" href="About.dc.html">About us</a><a class="sn-a" href="Methodology.dc.html">Our Methodology</a><a class="sn-a" href="Cases.dc.html">Client Cases</a><a class="sn-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="sn-a" href="Contact.dc.html">Contact</a></div>
+          <div class="sn-col"><div class="sn-ch">Insights &amp; Media</div><a class="sn-a" href="Blog.dc.html">Blog</a><a class="sn-a" href="Research.dc.html">Research</a><a class="sn-a" href="Press.dc.html">Press</a></div>
+        </div>
+      </div>
+    </nav>
+    <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+      <a href="Contact.dc.html" style="height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;;color:rgb(255,255,255);">Contact us</a>
+    </div>
+  </div>
+
+
+<!-- HERO -->
+<div style="position:relative;width:1280px;height:781px;overflow:hidden;">
+  <div style="position:absolute;left:0;top:-110px;width:1280px;height:800px;pointer-events:none;"><dc-import name="Binary Hand Coins" hint-size="1280px,800px" style="width:1280px;height:800px;"></dc-import></div>
+  <div class="audit-glow" style="position:absolute;left:-1781px;top:391px;width:2912px;height:1841px;opacity:.2;filter:blur(37px);border-radius:0 0 28px 28px;pointer-events:none;"></div>
+  <img src="./assets/audit-hero-fade.png" alt="" style="position:absolute;left:0;top:594px;width:1280px;height:187px;object-fit:cover;pointer-events:none;">
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;left:48px;top:267px;width:460px;display:flex;flex-direction:column;gap:25px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="width:460px;font-size:40px;line-height:48px;opacity:.9;">Strategic Consulting:<br>from idea to listing</div>
+      <div style="width:347px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We help Web3 and Web2 teams build the project’s economic model, prepare for investment, and move all the way to bringing the token to market</div>
+    </div>
+    <div style="align-self:flex-start;height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+  </div>
+</div>
+
+<!-- PAINS -->
+<div style="margin:22px 40px 0;display:flex;flex-direction:column;gap:20px;width:595px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Launching a token takes<br>more than tokenomics</div>
+  <div style="width:309px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Teams often underestimate how much has to be planned, aligned, and ready before launch</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ pains }}" as="p" hint-placeholder-count="4">
+    <div style="position:relative;height:300px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;overflow:hidden;">
+      <binary-glyph-wide deep shape="{{ p.shape }}" ox="0.5" oy="{{ p.oy }}" os="{{ p.os }}" style="position:absolute;left:0;top:0;width:100%;height:215px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ p.t }}</div>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ p.d }}</div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- CTA TGE -->
+<div style="margin:180px 40px 0;height:160px;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(168.5deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);padding:0 40px;box-sizing:border-box;display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:24px;line-height:30px;opacity:.9;">Your project gets one real shot at a successful TGE</div>
+    <div style="width:400px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;">A launch needs more than a model. It needs the external players who help make it work</div>
+  </div>
+  <div style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+</div>
+
+<!-- UNIFIED STRATEGY -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+  <div style="width:595px;display:flex;flex-direction:column;gap:20px;">
+    <div style="width:503px;font-size:40px;line-height:48px;opacity:.9;">We turn token launch<br>into one unified strategy</div>
+    <div style="width:309px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We connect the business model, tokenomics, investment logic, partner ecosystem, and TGE preparation into one working path</div>
+  </div>
+  <div style="position:relative;width:595px;height:525px;flex-shrink:0;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(126.5deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);">
+    <svg width="595" height="525" viewBox="0 0 595 525" style="position:absolute;left:0;top:0;pointer-events:none;">
+      <defs><marker id="scArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" stroke="rgba(255,255,255,.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path></marker></defs>
+      <path d="M197 180H220" stroke="rgba(255,255,255,.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#scArrow)"></path>
+      <path d="M374 180H398" stroke="rgba(255,255,255,.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#scArrow)"></path>
+      <path d="M552 180C578 180 578 345 552 345" stroke="rgba(255,255,255,.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#scArrow)"></path>
+      <path d="M398 345H374" stroke="rgba(255,255,255,.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#scArrow)"></path>
+      <path d="M220 345H197" stroke="rgba(255,255,255,.55)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#scArrow)"></path>
+    </svg>
+    <div style="position:absolute;left:63px;top:126px;font-size:12px;line-height:16px;letter-spacing:.02em;color:rgba(255,255,255,.55);">01</div><div style="position:absolute;left:45px;top:150px;width:150px;height:60px;box-sizing:border-box;border-radius:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14px;font-size:14px;line-height:18px;letter-spacing:.01em;background:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 100%);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:rgb(255,255,255);">Business model</div><div style="position:absolute;left:240px;top:126px;font-size:12px;line-height:16px;letter-spacing:.02em;color:rgba(255,255,255,.55);">02</div><div style="position:absolute;left:222px;top:150px;width:150px;height:60px;box-sizing:border-box;border-radius:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14px;font-size:14px;line-height:18px;letter-spacing:.01em;background:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 100%);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:rgb(255,255,255);">Tokenomics</div><div style="position:absolute;left:418px;top:126px;font-size:12px;line-height:16px;letter-spacing:.02em;color:rgba(255,255,255,.55);">03</div><div style="position:absolute;left:400px;top:150px;width:150px;height:60px;box-sizing:border-box;border-radius:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14px;font-size:14px;line-height:18px;letter-spacing:.01em;background:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 100%);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:rgb(255,255,255);">Investor narrative</div><div style="position:absolute;left:418px;top:291px;font-size:12px;line-height:16px;letter-spacing:.02em;color:rgba(255,255,255,.55);">04</div><div style="position:absolute;left:400px;top:315px;width:150px;height:60px;box-sizing:border-box;border-radius:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14px;font-size:14px;line-height:18px;letter-spacing:.01em;background:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 100%);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:rgb(255,255,255);">Partner ecosystem</div><div style="position:absolute;left:240px;top:291px;font-size:12px;line-height:16px;letter-spacing:.02em;color:rgba(255,255,255,.55);">05</div><div style="position:absolute;left:222px;top:315px;width:150px;height:60px;box-sizing:border-box;border-radius:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14px;font-size:14px;line-height:18px;letter-spacing:.01em;background:linear-gradient(180deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.05) 100%);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 30px rgba(0,0,0,.25);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:rgb(255,255,255);">TGE preparation</div><div style="position:absolute;left:63px;top:291px;font-size:12px;line-height:16px;letter-spacing:.02em;color:rgba(255,255,255,.55);">06</div><div style="position:absolute;left:45px;top:315px;width:150px;height:60px;box-sizing:border-box;border-radius:64px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14px;font-size:14px;line-height:18px;letter-spacing:.01em;background:rgba(255,255,255,.92);color:rgb(0,0,0);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 30px rgba(0,0,0,.25);">Launch</div>
+  </div>
+</div>
+
+<!-- WALK AWAY -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:40px;">
+  <div style="width:326px;font-size:40px;line-height:48px;opacity:.9;">What you’ll walk away with</div>
+  <div style="display:flex;flex-direction:column;gap:25px;">
+    <sc-for list="{{ deliver }}" as="dv" hint-placeholder-count="6">
+      <div style="padding-bottom:40px;border-bottom:1px solid {{ dv.line }};display:flex;flex-direction:row;gap:46px;align-items:flex-start;">
+        <div style="width:519px;flex-shrink:0;display:flex;flex-direction:column;gap:9px;">
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">{{ dv.label }}</div>
+          <div style="width:400px;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ dv.t }}</div>
+        </div>
+        <div style="padding-top:21px;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));column-gap:0;row-gap:16px;width:595px;">
+          <sc-for list="{{ dv.items }}" as="ck" hint-placeholder-count="4">
+            <div style="display:flex;flex-direction:row;gap:11px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0;"><circle cx="9" cy="9" r="9" fill="rgba(202,0,90,.22)"></circle><path d="M5.2 9.3l2.4 2.4 5-5.2" stroke="rgb(202,0,90)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>{{ ck }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- CTA UTILITY -->
+<div style="margin: 120px 40px 0; border-radius: 10px; overflow: hidden; background: url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(166.2deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%); padding: 40px; box-sizing: border-box; display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end">
+  <div style="width:636px;display:flex;flex-direction:column;gap:10px;">
+    <div style="width:520px;font-size:32px;line-height:40px;opacity:.9;">A token utility is only limited by the way you think about it</div>
+    <div style="font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.5;">If you haven’t found the right use case yet, we’ll gladly do that part for you</div>
+  </div>
+  <div style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+</div>
+
+<!-- HOW WE WORK -->
+<div style="margin:180px 0 0;display:flex;flex-direction:column;gap:40px;">
+  <div style="padding:0 40px;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;">
+    <div style="font-size:40px;line-height:48px;opacity:.9;">How we work</div>
+    <div style="display:flex;flex-direction:row;gap:8px;"><div onClick="{{ stepsPrev }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none" style="transform:rotate(180deg);"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div onClick="{{ stepsNext }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none" style="transform:none;"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div>
+  </div>
+  <div ref="{{ stepsRef }}" class="tok-hscroll" style="display:flex;flex-direction:row;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:40px;padding:0 40px 4px;">
+    <sc-for list="{{ steps }}" as="st" hint-placeholder-count="6">
+      <div style="width:386px;flex-shrink:0;scroll-snap-align:start;display:flex;flex-direction:row;gap:15px;align-items:flex-start;">
+        <div style="width:32px;height:32px;flex-shrink:0;box-sizing:border-box;border:1px solid rgb(202,0,90);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;color:rgb(202,0,90);">{{ st.n }}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;padding-top:3px;">
+          <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ st.t }}</div>
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ st.d }}</div>
+        </div>
+      </div>
+    </sc-for>
+    <div style="width:20px;flex-shrink:0;"></div>
+  </div>
+</div>
+
+<!-- WHERE IT MATTERS -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:40px;align-items:center;">
+  <div style="font-size:32px;line-height:40px;text-align:center;opacity:.9;">Where strategic consulting matters most</div>
+  <div style="display:flex;flex-direction:row;gap:12px;justify-content:center;">
+    <sc-for list="{{ uTabs }}" as="ut" hint-placeholder-count="4">
+      <div onClick="{{ ut.pick }}" style="height:44px;padding:12px 16px;box-sizing:border-box;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;background:{{ ut.bg }};color:{{ ut.fg }};transition:background 300ms,color 300ms;">
+        <img src="{{ ut.icon }}" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ ut.filter }};">{{ ut.label }}
+      </div>
+    </sc-for>
+  </div>
+  <div style="align-self:stretch;display:flex;flex-direction:row;gap:5px;height:536px;">
+    <div style="position:relative;width:595px;height:536px;flex-shrink:0;border-radius:10px;overflow:hidden;background:rgb(15,15,15);">
+      <sc-for list="{{ uShots }}" as="us" hint-placeholder-count="4">
+        <img src="{{ us.src }}" alt="{{ us.alt }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:{{ us.op }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);">
+      </sc-for>
+      <hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits>
+      <div style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.22;background-image:url(./assets/grain.svg);background-size:120px 120px;"></div>
+    </div>
+    <div style="flex-grow:1;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+      <sc-for list="{{ uCards }}" as="uc" hint-placeholder-count="4">
+        <div style="border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ uc.t }}</div>
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ uc.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<!-- MINI APP -->
+<div style="position:relative;margin:180px 40px 0;height:525px;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(146.2deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);">
+  <sc-for list="{{ shots }}" as="sh" hint-placeholder-count="4">
+    <img src="{{ sh.src }}" alt="{{ sh.alt }}" style="position:absolute;left:741px;top:3px;width:476px;height:852px;pointer-events:none;opacity:{{ sh.op }};transition:opacity 450ms cubic-bezier(0.32,0.72,0,1);">
+  </sc-for>
+  <div style="position:absolute;left:40px;top:40px;width:549px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:56px;line-height:64px;opacity:.9;">Pressure-test<br>your tokenomics</div>
+    <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.5;">In our mini app, you can quickly build a basic model, set up vesting, review unlock schedules, and spot the first risks in your tokenomics.</div>
+  </div>
+  <div style="position:absolute;left:40px;top:377px;width:768px;display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:row;gap:12px;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <div onClick="{{ t.pick }}" style="height:44px;padding:12px 16px;box-sizing:border-box;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};transition:background 300ms,color 300ms;">
+          <img src="{{ t.icon }}" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ t.filter }};">{{ t.label }}
+        </div>
+      </sc-for>
+    </div>
+    <div style="width:741px;font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.5;">{{ tabText }}</div>
+  </div>
+</div>
+<div style="margin-top:40px;display:flex;flex-direction:row;gap:10px;justify-content:center;">
+  <a href="https://base.app/app/https:/app.8blocks.io" target="_blank" rel="noopener" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open in Base App</a>
+  <a href="https://t.me/eightblocks_tokenlab_bot/tokenlab" target="_blank" rel="noopener" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open in Telegram</a>
+</div>
+
+<!-- FAQ -->
+<div style="margin-top:180px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div><div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="11">
+    <div data-faq-row style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <div class="faq-a" data-st="{{ f.st }}"><div class="faq-a-in"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></div></div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" class="faq-chev" style="transform:{{ f.rot }};transition:transform .55s cubic-bezier(.22,1,.36,1);flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div><div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+  
+  
+</div>
+
+
+<!-- FOOTER -->
+<footer class="ft" style="margin-top:130px;">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-sh">Subscribe</div>
+      <div class="ft-sp">A newsletter for those<br>who want to go deeper.</div>
+      <div class="ft-form"><input class="ft-in" type="email" required placeholder="Your email" aria-label="Your email"><button class="ft-go" type="button" aria-label="Subscribe">→</button></div>
+      <div class="ft-icons"><a href="https://x.com/8BlocksLabs" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.3263 1.90391H21.6998L14.3297 10.3274L23 21.7899H16.2112L10.894 14.8379L4.80995 21.7899H1.43443L9.31743 12.78L1 1.90391H7.96111L12.7674 8.25824L18.3263 1.90391ZM17.1423 19.7707H19.0116L6.94539 3.81704H4.93946L17.1423 19.7707Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://www.linkedin.com/company/8blocksio" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://t.me/eightblocks" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.43 8.85893C11.2628 9.3444 8.93014 10.3492 5.43189 11.8733C4.86383 12.0992 4.56626 12.3202 4.53917 12.5363C4.49339 12.9015 4.95071 13.0453 5.57348 13.2411C5.65819 13.2678 5.74596 13.2954 5.83594 13.3246C6.44864 13.5238 7.27283 13.7568 7.70129 13.766C8.08994 13.7744 8.52373 13.6142 9.00264 13.2853C12.2712 11.079 13.9584 9.96381 14.0643 9.93977C14.139 9.92281 14.2426 9.90148 14.3128 9.96385C14.3829 10.0262 14.376 10.1443 14.3686 10.176C14.3233 10.3691 12.5281 12.0381 11.5991 12.9018C11.3095 13.171 11.1041 13.362 11.0621 13.4056C10.968 13.5034 10.8721 13.5958 10.78 13.6846C10.2108 14.2333 9.78391 14.6448 10.8036 15.3168C11.2936 15.6397 11.6858 15.9067 12.0769 16.1731C12.5042 16.4641 12.9303 16.7543 13.4816 17.1157C13.6221 17.2078 13.7562 17.3034 13.8869 17.3965C14.3841 17.751 14.8307 18.0694 15.3826 18.0186C15.7032 17.9891 16.0345 17.6876 16.2027 16.7884C16.6002 14.6632 17.3816 10.0585 17.5622 8.16098C17.578 7.99473 17.5581 7.78197 17.5422 7.68857C17.5262 7.59518 17.4928 7.46211 17.3714 7.3636C17.2276 7.24694 17.0056 7.22234 16.9064 7.22408C16.455 7.23203 15.7626 7.47282 12.43 8.85893Z" fill-rule="evenodd" clip-rule="evenodd" fill="rgb(255,255,255)"></path></svg></a><a href="https://base.app/profile/8blocks" target="_blank" rel="noopener" aria-label="Base" title="Base" class="ft-ic"><svg width="16" height="16" viewBox="0 0 1280 1280" fill="none"><path d="M0,101.12c0-34.64,0-51.95,6.53-65.28,6.25-12.76,16.56-23.07,29.32-29.32C49.17,0,66.48,0,101.12,0h1077.76C1213.51,0,1230.84,0,1244.16,6.53c12.75,6.25,23.06,16.56,29.32,29.32,6.52,13.32,6.52,30.64,6.52,65.28v1077.76c0,34.63,0,51.96-6.52,65.28-6.26,12.75-16.57,23.06-29.32,29.32-13.32,6.52-30.65,6.52-65.28,6.52H101.12c-34.64,0-51.95,0-65.28-6.52-12.76-6.26-23.07-16.57-29.32-29.32-6.53-13.32-6.53-30.65-6.53-65.28V101.12Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://clutch.co/profile/8blocks-fzco" target="_blank" rel="noopener" aria-label="Clutch" title="Clutch" class="ft-ic"><svg width="56" height="16" viewBox="0 0 202.761 57.7631" fill="none"><path d="M62.1626 0.000131153H52.8467V57.7594H62.1626V0.000131153Z" fill="rgb(255,255,255)"></path><path d="M94.5149 57.7593H103.831V18.6319H94.5149V39.2957H94.683C94.683 47.9355 87.231 48.7796 85.199 48.7796C79.779 48.7796 78.595 43.5278 78.595 40.3117V18.6319H69.2791V40.6516C69.2791 46.0715 71.143 50.4755 73.8511 53.6953C76.3911 56.2353 80.4551 57.7593 85.0309 57.7593C88.2507 57.7593 92.4829 56.9114 94.5149 54.5395V57.7593Z" fill="rgb(255,255,255)"></path><path d="M112.806 57.7595H122.122V27.948H128.898V18.6321H122.122V4.74414H112.806V18.6321H105.862V27.948H112.806V57.7595Z" fill="rgb(255,255,255)"></path><path d="M150.577 57.5913C155.829 57.5913 160.741 55.7274 164.465 52.3395L165.821 50.9836L159.385 44.5476L158.029 46.2397C155.997 48.1036 153.457 49.1196 150.577 49.1196C144.141 49.1196 139.397 44.5476 139.397 37.7717C139.397 30.9959 143.969 26.5919 150.577 26.5919C153.457 26.5919 155.997 27.4398 158.029 29.4718L159.385 30.6559L165.481 24.5599L164.125 23.204C160.229 19.9841 155.657 17.9521 150.573 17.9521C139.057 17.784 130.586 26.0839 130.586 37.768C130.59 48.7835 139.229 57.5913 150.577 57.5913Z" fill="rgb(255,255,255)"></path><path d="M179.541 35.9078C179.541 27.268 185.977 26.4238 188.009 26.4238C193.429 26.4238 193.429 31.6757 193.429 34.8918V57.7594H202.745V34.7237C202.913 29.6436 201.729 25.0679 198.681 22.0199C196.141 19.4798 192.753 17.9558 188.517 17.9558C185.298 17.9558 181.913 18.8037 179.37 21.1757V0.00387801H170.054V57.7631H179.37V35.9115H179.541V35.9078Z" fill="rgb(255,255,255)"></path><path d="M143.466 37.772C143.466 41.4999 146.514 44.3761 150.07 44.3761C153.798 44.3761 156.674 41.328 156.674 37.772C156.674 34.0442 153.626 31.168 150.07 31.168C146.514 31.168 143.466 34.0479 143.466 37.772Z" fill="rgb(255,255,255)"></path><path d="M26.5917 57.5915C34.0437 57.5915 41.1595 54.7115 45.8996 49.4597L47.2555 48.1037L41.1595 41.6678L39.9754 43.3599C36.5875 46.7478 31.5074 48.7798 26.5955 48.7798C16.0955 48.7798 8.63979 40.648 8.63979 29.6401C8.63979 18.4602 16.0918 10.5003 26.4237 10.5003C31.3356 10.5003 35.9076 12.5323 39.8036 15.9202L41.1595 17.2761L47.2555 11.1801L45.8996 9.82418C40.8196 4.40423 33.8719 1.69238 26.5917 1.69238C11.3479 1.86047 0 13.7201 0 29.6401C0 45.56 11.3479 57.5915 26.5917 57.5915Z" fill="rgb(255,255,255)"></path></svg></a></div>
+    </div>
+    <div class="ft-nav"><div class="ft-col"><div class="ft-ch">Tokenomics</div><a class="ft-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="ft-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="ft-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="ft-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="ft-a" href="Token Launch.dc.html">Token Launch</a><a class="ft-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="ft-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="ft-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="ft-a" href="Audits.dc.html">Public Audits</a></div><div class="ft-col"><div class="ft-ch">Asset Tokenization</div><a class="ft-a" href="Landing.dc.html">Asset Tokenization</a><a class="ft-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="ft-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div><div class="ft-col"><div class="ft-ch">Company</div><a class="ft-a" href="About.dc.html">About us</a><a class="ft-a" href="Methodology.dc.html">Our Methodology</a><a class="ft-a" href="Cases.dc.html">Client Cases</a><a class="ft-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="ft-a" href="Contact.dc.html">Contact</a><a class="ft-a" href="Blog.dc.html">Blog</a><a class="ft-a" href="Research.dc.html">Research</a><a class="ft-a" href="Press.dc.html">Press</a></div></div>
+    <div class="ft-mapcol">
+      <div class="ft-ch">Office</div>
+      <div class="ft-map"><iframe src="https://www.google.com/maps?q=8BLOCKS+FZCO&amp;ll=25.0607775%2C55.1412167&amp;hl=en&amp;z=15&amp;output=embed" title="8BLOCKS FZCO on the map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="ft-a" href="mailto:hello@8blocks.io">hello@8blocks.io</a>
+      <a class="ft-a" href="tel:+971562865188">+971 56 286 5188</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div>© 2026 8BLOCKS FZCO. All rights reserved.</div>
+    <div class="ft-legal"><a href="https://8blocks.io/privacy-policy" target="_blank" rel="noopener">Privacy policy</a><a href="https://8blocks.io/terms" target="_blank" rel="noopener">Terms of Service</a></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":7233}}'>
+class Component extends DCLogic {
+  state = { tab: 0, open: 0, u: 0 };
+  PAINS = [["No clear token strategy", "The token is not properly tied to the product or the business"], ["The story doesn’t land with investors", "The model may make sense internally, but it’s hard to explain clearly to the market"], ["The right partners aren’t in place", "A launch needs more than a model. It needs the external players who help make it work"], ["TGE prep is all over the place", "Your project gets one real shot at a successful TGE"]];
+  DELIVER = [["Project tokenomics", "We build a full token model covering utility, allocation, cliffs, vesting, and issuance", ["Token economic model", "Allocation and vesting structure", "Utility mechanics", "Issuance projections"]], ["White Paper", "We define the project concept, token logic, and the principles behind the ecosystem", ["Technical documentation", "Project roadmap", "Economic model overview", "Legal considerations"]], ["Pitch Deck", "We prepare the investor presentation and supporting materials", ["Investor presentation", "Data visualization", "Financial projections", "Meeting materials"]], ["Partner strategy", "We identify the right partners across key areas and help organize the process around them", ["Market making", "Smart contract development", "Marketing and PR", "Legal support"]], ["Listing and go-to-market", "We help prepare the token for exchange listing and market entry", ["TGE preparation", "Launch strategy", "Exchange introductions", "Post-launch support"]], ["Ongoing advisory support", "Up to 10 calls per month, 90 minutes each, with our experts throughout the project", ["Strategic questions", "Investor meeting preparation", "Partner coordination"]]];
+  STEPS = [["We get deep into the project", "Looking at the business model, team, goals, and broader potential helps us understand what the project is really building toward."], ["We shape the strategy", "From there, we define the key growth paths and build the economic architecture around them."], ["We work through the partner ecosystem", "That includes identifying, evaluating, and aligning with the key partners the project needs."], ["We create the full set of materials", "This covers the tokenomics, white paper, pitch deck, and supporting investor materials."], ["We stay involved through execution", "Support continues across every stage of implementation, including work with partners and exchanges."], ["We stay close to the team", "Up to 10 calls per month, 90 minutes each."]];
+  USE = [["Invest", "./assets/ic-house.svg", "./assets/sc-usecase-invest2.jpg", [["The tokenomics starts to conflict with the business model", "As the token price rises, using it can become less attractive and create a mismatch between the value of the product and the cost to the user."], ["The token doesn't strengthen the core product", "If its role comes down to yield or fee payments alone, the model becomes fragile very quickly."], ["The user gets too little real utility", "A token should unlock something extra inside the product, not just duplicate what is already available without it."], ["The token economy starts working against growth", "The model has to help the business scale, not create constraints that slow it down."]]], ["RWA", "./assets/ic-book.svg", "./assets/sc-usecase-rwa.png", [["Tokenization on its own doesn't solve the business problem", "Wrapping an asset in a token doesn't automatically create demand or make the product stronger."], ["It's not clear why the project needs a token", "Before launch, the team needs to define the purpose of tokenization and understand the role the token plays in the broader business strategy."], ["The RWA token sits outside the ecosystem", "Without utility mechanics, partner logic, or a broader product model around it, it remains an isolated instrument."], ["The business doesn't gain new demand", "In many cases, growth doesn't come from the RWA token itself, but from the system built around it, including the utility layer."]]], ["DeFi", "./assets/ic-moneybag.svg", "./assets/sc-usecase-defi.jpg", [["The blockchain choice works against the product", "A bad choice here affects gas costs, scalability, security, and the size of the user base you can realistically reach."], ["The token doesn't strengthen the financial model", "In DeFi, adding a token on top isn't enough. It needs to reinforce the product and support real demand."], ["The user journey is underdesigned", "You need a clear view of who the user is, what problem they're solving, and why they'd choose your product over anything else."], ["The market can't clearly see the model's value", "Even a strong product gets harder to trust if its financial logic and token utility don't come together in a system people can clearly understand."]]], ["GameFi", "./assets/ic-grid-search.svg", "./assets/sc-usecase-gamefi.jpg", [["The economy breaks when earning and spending fall out of balance", "If the model is built around earning and selling the token instead of using it, the system quickly becomes unstable."], ["Players get more value from selling than using", "When selling the token feels more rewarding than using it inside the game, the in-game economy starts working against the project."], ["The token doesn't support the gameplay loop", "The economy should reinforce progression, engagement, and retention, not turn the product into a short-term farm."], ["The mechanics don't scale with the audience", "Even a working model can break under growth if the balance between issuance, utility, and burning isn't thought through."]]]];
+  TABS = [
+    ['Base model','./assets/ic-house.svg','Enter token supply, price, circulating supply, and allocations to get a quick read on the overall structure of your tokenomics','./assets/audit-app-1.png'],
+    ['Vesting and unlocks','./assets/ic-book.svg','Set unlock schedules for each pool, review the unlock chart, spot possible spikes, and assess the model’s overall condition','./assets/audit-app-2.png'],
+    ['Final score','./assets/ic-moneybag.svg','Get a model snapshot with a short summary of tokenomics quality and key risk areas','./assets/audit-app-3.png'],
+    ['Daily practice','./assets/ic-grid-search.svg','Come back to the app every day, answer short questions, and build a stronger understanding of tokenomics step by step','./assets/audit-app-4.png']
+  ];
+  QA = [["Who is strategic consulting for?", "Strategic consulting is for teams that need more than just tokenomics. It’s for projects that want to build the full launch logic, from the project’s economics and investor-ready materials to the partner ecosystem and TGE preparation. In most cases, it’s the right fit for teams going to market for the first time or getting ready for the next stage of growth."], ["At what project stage should we engage you?", "The earlier, the better. The ideal moment is when the team already has an idea, product logic, or some early materials, but the key decisions around the token, investor packaging, and go-to-market strategy still haven’t been locked in. That said, we can also step in later if the project is already actively preparing for launch."], ["Can we engage if we already have tokenomics or a white paper?", "Absolutely. If you already have some of the materials in place, we don’t duplicate work just for the sake of it. We look at what can be kept, what needs refining, and what makes more sense to rebuild. From there, we pull everything into one strategy and close the gaps between the documents, the economics, and the launch plan."], ["What should we prepare before kickoff?", "At the start, we’ll want to see everything the project already has: presentations, draft white papers, a product overview, roadmap, the current token model, and any available information on rounds, team structure, and project goals. Even if the materials are still incomplete, that’s usually enough to get started and see where deeper working sessions with the team will be needed."], ["Who from our side should be involved?", "Usually, it’s the founders and the key team members who shape the product, strategy, and project economics. Depending on how the project is structured, that might include the CEO, COO, CFO, product lead, marketing team, and technical team. What matters most is that decisions can be discussed quickly with the people who influence the launch."], ["Do you only consult, or also support implementation?", "We go well beyond recommendations. As part of strategic consulting, we work through the model, prepare the key materials, help shape the partner ecosystem, and stay involved as the project moves into execution. It’s not a one-call format. It’s an active working process where we’re built into the team’s real tasks."], ["Do you help with partner selection?", "Yes. We help define which partners the project needs at the launch prep stage, and we stay involved throughout the selection process across key areas such as market making, marketing, smart contracts, and other functions that matter for taking the token to market. We don’t just pass along contacts or make introductions. We stay in the process, join the calls, help shape the brief for each contractor, and make sure the whole thing moves toward a clearer, more manageable outcome."], ["How long does the work take, and can it be accelerated?", "Strategic consulting usually takes between 2 and 4 months. The exact timing depends on the stage of the project, the quality of the source materials, how quickly the team communicates internally, and how long coordination takes with outside partners. If needed, the process can be accelerated. The engagement is broken into key workstreams that are defined in the contract, and we can move faster through each of them. In that case, payment is tied to completed work blocks rather than billed monthly."], ["What is not included in strategic consulting?", "Strategic consulting doesn’t include legal work, smart contract development, marketing production, technical execution by outside contractors, or recommendations on how to expand or redesign the product line. That said, we can help identify which specialists the project needs and make sure their work fits into the broader launch strategy."], ["What is the final outcome?", "By the end, you won’t just have a stack of documents. You’ll have a complete launch preparation system: tokenomics, a white paper, a pitch deck, a partner strategy, and a go-to-market plan. That gives the team a much stronger foundation for investor conversations, TGE preparation, and the operational steps that come next."], ["Is modeling included?", "No. Modeling is a separate service available as Monte Carlo simulation in Python or visual simulation in Machinations."]];
+  renderVals() {
+    const { tab, open } = this.state;
+    const { u } = this.state;
+    const P = [['compass', '0.5', '0.9'], ['target', '0.5', '0.9'], ['team', '0.5', '0.9'], ['clock', '0.5', '0.85']];
+    return {
+      pains: this.PAINS.map(([t, d], i) => ({ t, d, shape: P[i][0], oy: P[i][1], os: P[i][2] })),
+      deliver: this.DELIVER.map(([label, t, items], i, arr) => ({ label, t, items, line: i === arr.length - 1 ? 'transparent' : 'rgba(255,255,255,.25)' })),
+      steps: this.STEPS.map(([t, d], i) => ({ t, d, n: String(i + 1).padStart(2, '0') })),
+      stepsRef: (el) => { this._steps = el; },
+      stepsPrev: () => { this._steps && this._steps.scrollBy({ left: -406, behavior: 'smooth' }); },
+      stepsNext: () => { this._steps && this._steps.scrollBy({ left: 406, behavior: 'smooth' }); },
+      uTabs: this.USE.map(([label, icon], i) => ({ label, icon, bg: i === u ? 'rgb(255,255,255)' : 'rgba(255,255,255,.12)', fg: i === u ? 'rgb(0,0,0)' : 'rgb(255,255,255)', filter: i === u ? 'invert(1)' : 'none', pick: () => this.setState({ u: i }) })),
+      uShots: this.USE.map(([label, , src], i) => ({ src, alt: label, op: i === u ? '1' : '0' })),
+      uCards: this.USE[u][3].map(([t, d]) => ({ t, d })),
+      tabs: this.TABS.map(([label, icon], i) => ({ label, icon, bg: i === tab ? 'rgb(255,255,255)' : 'rgba(255,255,255,.12)', fg: i === tab ? 'rgb(0,0,0)' : 'rgb(255,255,255)', filter: i === tab ? 'invert(1)' : 'none', pick: () => this.setState({ tab: i }) })),
+      tabText: this.TABS[tab][2],
+      shots: this.TABS.map(([label, , , src], i) => ({ src, alt: 'Token Lab: ' + label, op: i === tab ? '1' : '0' })),
+      faq: this.QA.map(([q, a], i, arr) => ({ q, a, open: open === i, st: open === i ? 'open' : 'closed', radius: i === 0 ? '10px 10px 0 0' : (i === arr.length - 1 ? '0 0 10px 10px' : '0px'), rot: open === i ? 'rotate(180deg)' : 'rotate(0deg)', toggle: () => this.setState({ open: open === i ? -1 : i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

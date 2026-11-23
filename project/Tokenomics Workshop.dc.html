@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tokenomics Workshop</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph-wide.js?v=12"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+.audit-glow{background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");}
+.tok-hscroll{scrollbar-width:none;}
+.tok-hscroll::-webkit-scrollbar{display:none;}
+@keyframes wsMarquee{0%{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ws-track{display:flex;align-items:center;gap:16px;width:max-content;animation:120s linear infinite wsMarquee;}
+.ws-track:hover{animation-play-state:paused;}
+.ws-slot{opacity:.45;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0 32px;transition:opacity .25s;}
+.ws-slot:hover{opacity:.85;}
+</style>
+</helmet>
+<div data-screen-label="Tokenomics Workshop" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:130px;overflow:clip;">
+
+<!-- HERO -->
+<div style="position:relative;width:1280px;height:781px;overflow:hidden;">
+  <div style="position:absolute;left:0;top:0;width:1280px;height:800px;pointer-events:none;"><dc-import name="Binary Coin Pedestal" hint-size="1280px,800px" style="width:1280px;height:800px;"></dc-import></div>
+  <div class="audit-glow" style="position:absolute;left:-1781px;top:391px;width:2912px;height:1841px;opacity:.2;filter:blur(37px);border-radius:0 0 28px 28px;pointer-events:none;"></div>
+  <img src="./assets/audit-hero-fade.png" alt="" style="position:absolute;left:0;top:594px;width:1280px;height:187px;object-fit:cover;pointer-events:none;">
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;left:48px;top:162px;width:600px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:40px;line-height:48px;opacity:.9;">Who needs your token?<br>And why should anyone buy it?</div>
+    <div style="width:347px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">An interactive workshop with an individual scenario. Leave with concrete tokenomics concepts — not theory, but a foundation for real design.</div>
+  </div>
+  <div style="position:absolute;left:40px;top:368px;height:42px;padding:0 13px 0 4px;box-sizing:border-box;border-radius:64px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;flex-direction:row;gap:12px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">
+    <a href="https://mementoresearch.com/state-of-2025-token-launches-year-in-review" target="_blank" rel="noopener" title="Memento Research, State of 2025 Token Launches" style="height:32px;padding:0 8px;box-sizing:border-box;border-radius:64px;background:rgb(202,0,90);color:rgb(255,255,255);display:flex;flex-direction:row;gap:6px;align-items:center;">Memento Research<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgb(255,255,255)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h4v4"></path><path d="M12 2L6.5 7.5"></path><path d="M10 8.5V11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h2.5"></path></svg></a>
+    <span>85% of tokens trade below their TGE price</span>
+  </div>
+  <div style="position:absolute;left:48px;top:659px;display:flex;flex-direction:row;gap:10px;align-items:center;">
+    <a href="#" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a workshop</a>
+    <a href="#ws-pain" style="color:rgb(255,255,255);height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgba(255,255,255,.14);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">See what failure looks like</a>
+    <div style="margin-left:27px;display:flex;flex-direction:row;gap:15px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.9;white-space:nowrap;"><span>$2,500</span><span style="width:1px;height:20px;background:rgba(255,255,255,.2);"></span><span>1–3 hours</span><span style="width:1px;height:20px;background:rgba(255,255,255,.2);"></span><span>full team</span></div>
+  </div>
+  <!-- HEADER -->
+  <div style="position:absolute;left:0;top:0;width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);backdrop-filter:blur(6.6px);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+    <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+    <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+      <a href="Landing.dc.html" style="color:rgb(255,255,255);border-bottom:1px solid rgb(255,255,255);">Services</a><a href="#" style="color:rgb(255,255,255);">Cases</a><a href="Blog.dc.html" style="color:rgb(255,255,255);">Blog</a><a href="#" style="color:rgb(255,255,255);">Team</a>
+    </div>
+    <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+      <span style="font-size:15px;line-height:1.7;">EN</span>
+      <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+    </div>
+  </div>
+</div>
+
+<!-- TWO PEOPLE -->
+<div id="ws-pain" style="margin:90px 40px 0;width:595px;display:flex;flex-direction:column;gap:20px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Two people. One mistake.</div>
+  <div style="width:475px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Tokenomics gets skipped — not because teams don't know about it — but because everyone assumes someone else already handled it.</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ people }}" as="pp" hint-placeholder-count="2">
+    <div style="position:relative;height:400px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;">
+      <binary-glyph-wide shape="{{ pp.shape }}" ox="0.5" oy="0.5" os="{{ pp.os }}" style="position:absolute;left:0;top:50px;width:100%;height:220px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">{{ pp.role }}</div>
+      <div style="position:relative;display:flex;flex-direction:column;gap:5px;">
+        <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ pp.q }}</div>
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ pp.d }}</div>
+      </div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- TRAJECTORY -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:40px;">
+  <div style="width:474px;font-size:40px;line-height:48px;opacity:.9;">Typical trajectory without tokenomics work</div>
+  <div style="display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:20px;">
+    <sc-for list="{{ traj }}" as="tj" hint-placeholder-count="4">
+      <div style="display:flex;flex-direction:row;gap:15px;align-items:flex-start;">
+        <div style="width:32px;height:32px;flex-shrink:0;box-sizing:border-box;border:1px solid rgb(202,0,90);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;color:rgb(202,0,90);">{{ tj.n }}</div>
+        <div style="width:238px;display:flex;flex-direction:column;gap:10px;padding-top:3px;">
+          <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ tj.t }}</div>
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ tj.d }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- WHAT IS A WORKSHOP -->
+<div style="margin:180px 40px 0;width:595px;display:flex;flex-direction:column;gap:20px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">What is a tokenomics workshop</div>
+  <div style="width:434px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">A structured session with your project team: in 1–3 hours you surface the key assumptions in your token design and shape 2–3 working concepts to build on.</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ what }}" as="wh" hint-placeholder-count="3">
+    <div style="position:relative;height:400px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;overflow:hidden;">
+      <binary-glyph-wide shape="{{ wh.shape }}" ox="0.5" oy="{{ wh.oy }}" os="{{ wh.os }}" style="position:absolute;left:0;top:10px;width:100%;height:240px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ wh.t }}</div>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ wh.d }}</div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- WHO IS THIS FOR -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:40px;align-items:center;">
+  <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">Who is this for?</div>
+    <div style="width:794px;text-align:center;font-size:40px;line-height:48px;opacity:.9;">Teams before a token launch —<br>or facing retokenomics</div>
+  </div>
+  <div style="display:flex;flex-direction:row;gap:30px;align-items:center;">
+    <sc-for list="{{ facts }}" as="fc" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:row;gap:30px;align-items:center;">
+        <div style="width:1px;height:68px;background:rgba(255,255,255,.2);display:{{ fc.sep }};"></div>
+        <div style="width:230px;display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;">
+          <img src="{{ fc.icon }}" alt="" style="width:24px;height:24px;">
+          <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ fc.t }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- THREE RESULTS -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:10px;align-items:center;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Three concrete results</div>
+  <div style="width:461px;text-align:center;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Everything you need to move to full tokenomics design — or to make an informed decision not to.</div>
+</div>
+<div style="margin:36px 40px 0;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ results }}" as="rs" hint-placeholder-count="3">
+    <div style="position:relative;height:400px;border-radius:10px;overflow:hidden;background:rgb(29,5,16) url({{ rs.bg }}) center / cover no-repeat;padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;text-align:center;">
+      <binary-glyph-wide shape="{{ rs.shape }}" ox="0.5" oy="0.5" os="{{ rs.os }}" style="position:absolute;left:0;top:20px;width:100%;height:260px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ rs.t }}</div>
+      <div style="position:relative;width:260px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;">{{ rs.d }}</div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- CREDIT CTA -->
+<div style="margin:90px 40px 0;height:160px;border-radius:10px;background:rgb(16,17,19);padding:0 40px;box-sizing:border-box;display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+  <div style="width:636px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:24px;line-height:30px;opacity:.9;">$2,500 is credited toward the full project</div>
+    <div style="width:520px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;">If you continue with full tokenomics design at 8Blocks, the workshop fee is deducted from the project cost. This is not an expense — it's a deposit.</div>
+  </div>
+  <a href="Tokenomics.dc.html" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Learn about full tokenomics design</a>
+</div>
+
+<!-- THREE STEPS -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:40px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Three steps to ready concepts</div>
+  <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:20px;">
+    <sc-for list="{{ steps }}" as="st" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:row;gap:15px;align-items:flex-start;">
+        <div style="width:32px;height:32px;flex-shrink:0;box-sizing:border-box;border:1px solid rgb(202,0,90);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;color:rgb(202,0,90);">{{ st.n }}</div>
+        <div style="width:340px;display:flex;flex-direction:column;gap:10px;padding-top:3px;">
+          <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ st.t }}</div>
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ st.d }}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- 15 QUESTIONS -->
+<div style="margin:180px 0 0;display:flex;flex-direction:column;gap:40px;">
+  <div style="padding:0 40px;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;">
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div style="font-size:40px;line-height:48px;opacity:.9;">15 questions that change everything</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">The real scenario is built for you — but these questions run through every case.</div>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:8px;"><div onClick="{{ qPrev }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:24px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none" style="transform:rotate(180deg);"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div onClick="{{ qNext }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:24px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div>
+  </div>
+  <div ref="{{ qRef }}" class="tok-hscroll" style="display:grid;grid-template-rows:repeat(2, 160px);grid-auto-flow:column;grid-auto-columns:298.5px;gap:5px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:40px;padding:0 40px;">
+    <sc-for list="{{ qs }}" as="qq" hint-placeholder-count="15">
+      <div style="scroll-snap-align:start;border-radius:10px;background:{{ qq.bg }};padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ qq.nc }};">{{ qq.n }}</div>
+        <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ qq.t }}</div>
+      </div>
+    </sc-for>
+    <div style="width:35px;"></div>
+  </div>
+</div>
+
+<!-- WORKSHOP VS ALTERNATIVES -->
+<div style="margin:180px 0 0;display:flex;flex-direction:column;gap:50px;">
+  <div style="padding:0 40px;font-size:40px;line-height:48px;opacity:.9;">Workshop vs alternatives</div>
+  <div style="position:relative;">
+    <div style="position:absolute;left:232px;top:0;bottom:0;width:262px;box-sizing:border-box;border-radius:10px;background:rgb(13,13,14);border:1px solid rgba(255,255,255,.1);pointer-events:none;"></div>
+    <div style="position:relative;display:grid;grid-template-columns:232px repeat(4, 262px);">
+      <sc-for list="{{ cmpHead }}" as="ch" hint-placeholder-count="5">
+        <div style="height:70px;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:22px;letter-spacing:.01em;opacity:.9;border-left:{{ ch.bl }};">{{ ch.t }}</div>
+      </sc-for>
+      <sc-for list="{{ cmpCells }}" as="cc" hint-placeholder-count="35">
+        <div style="height:70px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);border-left:{{ cc.bl }};display:flex;align-items:center;justify-content:{{ cc.jc }};padding:{{ cc.pad }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ cc.c }};">{{ cc.t }}</div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<!-- PROOF -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:row;gap:35px;align-items:stretch;">
+  <div style="position:relative;width:595px;height:536px;flex-shrink:0;border-radius:10px;overflow:hidden;background:rgb(29,5,16) url(./assets/ws-quote-bg.jpg) center / cover no-repeat;padding:40px 40px 40px 30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+    <svg width="46" height="44" viewBox="0 0 45.88 43.72" fill="none" style="margin-left:10px;opacity:.2;"><path d="M45.88 0.43L44.82 8.42C42.19 8.22 40.2 8.74 38.86 9.96C37.51 11.17 36.65 12.84 36.26 14.96C35.88 17.07 35.78 19.41 35.97 21.98H45.88V43.72H27.03V19.09C27.03 12.36 28.66 7.29 31.93 3.9C35.27 0.43 39.92 -0.72 45.88 0.43ZM18.85 0.43L17.79 8.42C15.17 8.22 13.18 8.74 11.83 9.96C10.48 11.17 9.62 12.84 9.23 14.96C8.85 17.07 8.75 19.41 8.95 21.98H18.85V43.72H0V19.09C0 12.36 1.64 7.29 4.91 3.9C8.24 0.43 12.89 -0.72 18.85 0.43Z" fill="white"></path></svg>
+    <div style="margin-left:10px;width:473px;font-size:40px;line-height:48px;opacity:.9;">"Their suggestions were practical and actionable, not just theoretical observations."</div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">Vera Yurkova</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Apr 28, 2026. Brand &amp; Communications Lead, EarnPark</div>
+    </div>
+  </div>
+  <div style="flex-grow:1;display:flex;flex-direction:column;justify-content:space-between;">
+    <div style="display:flex;flex-direction:column;gap:30px;">
+      <div style="display:flex;flex-direction:column;gap:10px;padding-top:5px;">
+        <div style="font-size:24px;line-height:30px;opacity:.9;">Maximum 6 workshops per month.</div>
+        <div style="width:400px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Each one requires a custom scenario — that takes real time. Currently 4 slots available in September.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+        <sc-for list="{{ stats }}" as="sx" hint-placeholder-count="4">
+          <div style="height:180px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:10px;">
+            <div style="font-size:48px;line-height:56px;color:rgb(202,0,90);">{{ sx.v }}</div>
+            <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.9;">{{ sx.l }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Offices in Dubai and Berlin. Clients across the US, Europe, and MENA.</div>
+  </div>
+</div>
+
+<!-- PARTNERS -->
+<div aria-label="Partners" style="margin-top:132px;padding:48px 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 120px,#000 1160px,transparent 1280px);mask-image:linear-gradient(90deg,transparent 0,#000 120px,#000 1160px,transparent 1280px);">
+  <div class="ws-track">
+    <sc-for list="{{ partners }}" as="pt" hint-placeholder-count="26">
+      <a href="{{ pt.href }}" target="_blank" rel="noopener" class="ws-slot"><img src="{{ pt.src }}" alt="{{ pt.alt }}" style="height:{{ pt.h }};width:auto;max-width:{{ pt.mw }};object-fit:contain;filter:brightness(0) invert(1);display:block;"></a>
+    </sc-for>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div style="margin-top:132px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div><div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="5">
+    <div onClick="{{ f.toggle }}" style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></sc-if>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="margin-top:3px;transform:{{ f.rot }};transition:transform .2s;flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div><div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="color:rgb(255,255,255);text-decoration:underline;">Contact us</a></div>
+</div>
+
+<!-- BOOK CTA -->
+<div style="margin:180px 40px 0;height:152px;border-radius:10px;overflow:hidden;background:rgb(29,5,16) url(./assets/ws-cta-bg.jpg) center / cover no-repeat;padding:0 40px;box-sizing:border-box;display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+  <div style="font-size:32px;line-height:40px;opacity:.9;">Book a workshop</div>
+  <a href="#" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Apply</a>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":8010}}'>
+class Component extends DCLogic {
+  state = { open: 0 };
+  PEOPLE = [["CEO / Co-founder", "\"Once we launch the token, investors will come on their own.\"", "The round is closed, the listing is agreed. But the question — why would anyone hold the token for more than two weeks — has no answer. Within a month of TGE, the dump begins. Investors lose confidence. The team blames the market.", "dumpchart", "0.85"], ["CPO / Product Lead", "\"We'll integrate the token into the product later.\"", "The architecture is ready, users are there. Then it turns out the token doesn't fit into the product logic without rewriting half the mechanics. Two months of refactoring, a delayed TGE, and competitors move ahead.", "misfit", "0.85"]];
+  TRAJ = [["TGE + Listing", "Hype, volume, price rise. The team thinks: \"everything is working.\""], ["Week 2–3", "No real demand-side. Early investors take profits. Price starts to fall."], ["Month 2", "Team is \"working on utility.\" Community is waiting. Price at −70% from ATH."], ["Month 4+", "Retokenomics. A new round of consultants, lost time, and reputational damage."]];
+  WHAT = [["Where we focus", "Not on building the full model end-to-end, but on the strategic foundation: why the token matters to the product, who creates demand, and how the token fits into product logic.", "target", "0.5", "1.15"], ["Who it is for", "Teams planning a TGE in the next 3–6 months, and projects that have already seen a post-launch token drawdown and need a path to redesign the model.", "rocketpad", "0.5", "1.05"], ["Why it matters", "In our experience, 95% of teams that skip this step come back to it within 2–4 months after TGE — when the cost of mistakes is higher: time is gone and community trust is damaged.", "returnloop", "0.5", "1.05"]];
+  FACTS = [["60–180 minutes · brainstorm format", "./assets/ws-ic-clock.svg"], ["1–3 days from first call to workshop", "./assets/ws-ic-calendar.svg"], ["Individual scenario tailored to your product", "./assets/ws-ic-scenario.svg"]];
+  RESULTS = [["Session recording", "Rewatch and share with your team and investors at any time.", "playbtn", "1.0", "./assets/ws-result-1.jpg"], ["Insights document", "What works for your model, what doesn't, and exactly why.", "docpage", "1.0", "./assets/ws-result-2.jpg"], ["2–3 tokenomics concepts", "Described concepts ready to serve as the foundation for full design.", "concepts", "1.0", "./assets/ws-result-3.jpg"]];
+  STEPS = [["First call · 30 min, free", "You tell us about the product, the team, and your plans. We decide if the workshop is right for you — and if so, we schedule a date and send the invoice."], ["Scenario prep · 1–2 days", "We study your product, market, and competitors. We build a custom scenario for your case — no templates."], ["Workshop · 60–180 min", "Your team + our experts. We work through the scenario, surface assumptions, and form concepts. Afterwards: recording, insights, tokenomics concepts."]];
+  QS = ["What is your product?", "Who is your user?", "Who else interacts with the product?", "Why does your project need a token?", "How does the token interact with the product?", "Will the token trade on an exchange?", "How will the token reach customers?", "How can customers use the token?", "What do customers get from using it?", "Who will create the most demand?", "What if customers don't come?", "What if people only sell the token?", "What happens when strong competitors appear?", "What if customers don't use the token?", "Why should anyone buy your token?"];
+  CMP_HEAD = ["", "Workshop 8blocks", "Full consulting", "Template solutions", "Self-managed"];
+  CMP = [["Timeline", "1–3 hours", "4–12 weeks", "Instant", "1–6 months"], ["Price", "$2,500", "$30,000–$150,000", "$0–$5,000", "Team time"], ["Customization", "Full", "Full", "Zero", "Full"], ["Depth", "Concepts", "Full model", "Basic", "Varies"], ["Risk of failure", "Low", "Minimal", "High", "Very high"], ["Best for", "Pre-TGE, retokenomics", "Pre-TGE with budget", "Hackathons, MVP", "In-house expert"]];
+  PARTNERS = [["Bitmaker", "https://bitmaker.fi/", "./assets/partner-2.svg"], ["CEDRO", "#", "./assets/partner-3.svg"], ["Lodes.tech", "https://lodestech.ru", "./assets/partner-4.svg"], ["Meta Lamp", "https://metalamp.io/", "./assets/partner-5.svg"], ["Fibonacci", "https://fibonacci.market/", "./assets/partner-fibonacci.png"], ["ICODA", "https://icoda.io/", "./assets/partner-8.svg"], ["Peanut", "https://peanut.trade/", "./assets/partner-11.svg"], ["Generis", "https://generis.agency/", "./assets/partner-12.svg"], ["D&A", "https://dna.partners/", "./assets/partner-13.svg"], ["Listing Help", "https://listing.help/", "./assets/partner-15.svg"], ["Cicada", "https://www.cicada-mm.com/", "./assets/partner-16.svg"], ["Anogem", "https://anogem.io", "./assets/partner-17.svg"], ["CertiK", "https://www.certik.com/", "./assets/partner-certik.svg"]];
+  STATS = [["2017", "Building token economies"], ["$180M+", "Raised by clients before TGE"], ["100%", "Token as part of the product"], ["5", "Verticals: DeFi, GameFi, RWA, infrastructure, finance"]];
+  QA = [["What is a tokenomics workshop and how is it different from consulting?", "A workshop is a 1–3 hour structured session focused on strategic foundations: who needs your token and why. Unlike full consulting — which produces a complete economic model over 4–12 weeks — the workshop surfaces core assumptions and delivers 2–3 ready concepts. It is ideal when you need direction quickly rather than a finished document."], ["How much does the workshop cost?", "The workshop costs $2,500. This fee is fully credited toward full tokenomics design if you continue with 8Blocks. The first discovery call is free and takes about 30 minutes — no commitment required."], ["How long does the process take from first contact to results?", "Typically 3–5 days: one day to confirm fit on a free call, 1–2 days for us to prepare your custom scenario, and 1–3 hours for the workshop. You receive the recording, insights document, and concept descriptions within 24 hours after the session."], ["Who should attend from our team?", "The workshop is designed for the full founding or core team: CEO, CPO, CTO, and anyone responsible for product economics or community. The more context participants bring, the more concrete the resulting concepts."], ["Is the workshop suitable if we already launched our token?", "Yes. Retokenomics is one of the main use cases. If your token is trading significantly below TGE price or community demand is stalling, the workshop identifies the structural gaps and gives you viable paths forward — without months of additional consulting."]];
+  renderVals() {
+    const { open } = this.state;
+    const n2 = (i) => String(i + 1).padStart(2, '0');
+    return {
+      people: this.PEOPLE.map(([role, q, d, shape, os]) => ({ role, q, d, shape, os })),
+      traj: this.TRAJ.map(([t, d], i) => ({ t, d, n: n2(i) })),
+      what: this.WHAT.map(([t, d, shape, oy, os]) => ({ t, d, shape, oy, os })),
+      facts: this.FACTS.map(([t, icon], i) => ({ t, icon, sep: i === 0 ? 'none' : 'block' })),
+      results: this.RESULTS.map(([t, d, shape, os, bg]) => ({ t, d, shape, os, bg })),
+      steps: this.STEPS.map(([t, d], i) => ({ t, d, n: n2(i) })),
+      qs: this.QS.map((t, i, arr) => ({ t, n: i === arr.length - 1 ? n2(i) + ' →' : n2(i), bg: i === arr.length - 1 ? 'rgb(202,0,90)' : 'rgb(16,17,19)', nc: i === arr.length - 1 ? 'rgba(255,255,255,.7)' : 'rgb(202,0,90)' })),
+      qRef: (el) => { this._q = el; },
+      qPrev: () => { this._q && this._q.scrollBy({ left: -303.5 * 2, behavior: 'smooth' }); },
+      qNext: () => { this._q && this._q.scrollBy({ left: 303.5 * 2, behavior: 'smooth' }); },
+      cmpHead: this.CMP_HEAD.map((t, i) => ({ t, bl: i >= 3 ? '1px solid rgba(255,255,255,.1)' : 'none' })),
+      cmpCells: this.CMP.flatMap((row) => row.map((t, j) => ({ t, bl: j >= 3 ? '1px solid rgba(255,255,255,.1)' : 'none', jc: j === 0 ? 'flex-start' : 'center', pad: j === 0 ? '0 0 0 40px' : '0 16px', c: j === 1 ? 'rgb(255,255,255)' : (j === 0 ? 'rgba(255,255,255,.9)' : 'rgba(255,255,255,.7)') }))),
+      partners: [...this.PARTNERS, ...this.PARTNERS].map(([alt, href, src]) => ({ alt, href, src, h: alt === 'Fibonacci' ? '52px' : '32px', mw: alt === 'Fibonacci' ? 'none' : '140px' })),
+      stats: this.STATS.map(([v, l]) => ({ v, l })),
+      faq: this.QA.map(([q, a], i, arr) => ({ q, a, open: open === i, radius: i === 0 ? '10px 10px 0 0' : (i === arr.length - 1 ? '0 0 10px 10px' : '0px'), rot: open === i ? 'rotate(180deg)' : 'rotate(0deg)', toggle: () => this.setState({ open: open === i ? -1 : i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

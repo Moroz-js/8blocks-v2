@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tokenomics AI</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph-wide.js?v=22"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+.audit-field{background:radial-gradient(320px 240px at 1210px -10px, rgba(205,140,165,.45) 0%, rgba(205,140,165,0) 75%), radial-gradient(520px 620px at 1240px 330px, rgba(150,6,72,.75) 0%, rgba(150,6,72,0) 75%), radial-gradient(1400px 700px at 1150px -30px, rgba(170,6,82,1) 0%, rgba(165,6,80,.75) 30%, rgba(150,6,72,.3) 60%, rgba(150,6,72,0) 85%), linear-gradient(180deg, rgb(54,5,27) 0%, rgb(31,5,18) 50%, rgb(29,5,16) 100%);}
+.audit-glow{background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");}
+.tok-hscroll{scrollbar-width:none;}
+.tok-hscroll::-webkit-scrollbar{display:none;}
+</style>
+<style>
+/* FAQ: answer unfolds smoothly (height + fade + slight rise), chevron turns in step */
+.faq-a{display:grid;grid-template-rows:0fr;opacity:0;margin-top:-10px;transform:translateY(-6px);transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
+.faq-a[data-st="open"]{grid-template-rows:1fr;opacity:1;margin-top:0;transform:none;transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .45s ease .12s;}
+.faq-a-in{min-height:0;overflow:hidden;}
+.faq-chev{transition:transform .55s cubic-bezier(.22,1,.36,1)!important;}
+</style>
+<script>
+/* FAQ toggling happens right in the page (no re-render), so the CSS transition of the same element always plays smoothly */
+(function () { if (window.__faqBound) return; window.__faqBound = true;
+  function set(row, open) { var a = row.querySelector('.faq-a'); if (a) a.setAttribute('data-st', open ? 'open' : 'closed'); var c = row.querySelector('.faq-chev'); if (c) c.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)'; }
+  document.addEventListener('click', function (e) { var row = e.target && e.target.closest ? e.target.closest('[data-faq-row]') : null; if (!row) return;
+    var a = row.querySelector('.faq-a'), wasOpen = a && a.getAttribute('data-st') === 'open';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-faq-row]'), function (r) { if (r !== row) set(r, false); });
+    set(row, !wasOpen); }, true);
+})();
+</script>
+<style>
+/* Accent cards: grain drifts up slowly, brighter specks rise faster with a slight sway, like champagne bubbles */
+@property --acc-y{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-y2{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-x{syntax:'<length>';inherits:false;initial-value:0px}
+@keyframes accRise{from{--acc-y:0px;--acc-y2:0px}to{--acc-y:-160px;--acc-y2:-960px}}
+@keyframes accSway{0%,100%{--acc-x:0px}25%{--acc-x:3px}75%{--acc-x:-3px}}
+[style*="accent-noise.png"]{animation:accRise 120s linear infinite,accSway 18s ease-in-out infinite;}
+@media (prefers-reduced-motion:reduce){[style*="accent-noise.png"]{animation:none;}}
+</style>
+<style data-site-nav>
+[data-sn-hdr]{position:sticky !important;top:0 !important;left:auto !important;z-index:30 !important;}
+[data-sn-hdr]::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:rgba(2,2,2,.42);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:opacity .35s ease .15s;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within)::before{opacity:0;transition:opacity .3s ease;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within){border-color:transparent !important;}
+.sn{display:flex;flex-direction:row;gap:40px;align-items:center;font-size:15px;line-height:26px;}
+.sn-btn{position:relative;display:flex;flex-direction:row;gap:7px;align-items:center;padding:0;border:0;background:none;color:rgb(255,255,255);font:inherit;cursor:pointer;border-bottom:1px solid transparent;}
+.sn-chev{transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .3s;opacity:.6;}
+.sn-sheet{position:absolute;left:0;right:0;top:0;height:372px;z-index:-1;pointer-events:none;background:rgba(2,2,2,.64);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-bottom:.881px solid rgba(255,255,255,.17);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .5s cubic-bezier(.65,0,.35,1) .12s,visibility 0s linear .62s;}
+.sn:has(.sn-item:hover,.sn-item:focus-within) .sn-sheet{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path .65s cubic-bezier(.22,1,.36,1),visibility 0s;}
+.sn-panel{position:absolute;left:0;right:0;top:0;z-index:-1;box-sizing:border-box;min-height:372px;padding:122px 40px 30px;display:grid;grid-template-columns:420px 1fr 1fr;gap:5px 60px;cursor:default;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;}
+.sn-panel>*{opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .3s cubic-bezier(.65,0,.35,1);}
+.sn-item:hover .sn-panel,.sn-item:focus-within .sn-panel{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .3s ease .1s,visibility 0s;}
+.sn-item:hover .sn-panel>*,.sn-item:focus-within .sn-panel>*{opacity:1;transform:none;transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+.sn-item:hover .sn-panel>:nth-child(1),.sn-item:focus-within .sn-panel>:nth-child(1){transition-delay:.14s;}
+.sn-item:hover .sn-panel>:nth-child(2),.sn-item:focus-within .sn-panel>:nth-child(2){transition-delay:.2s;}
+.sn-item:hover .sn-panel>:nth-child(3),.sn-item:focus-within .sn-panel>:nth-child(3){transition-delay:.26s;}
+.sn-item:hover .sn-chev,.sn-item:focus-within .sn-chev{transform:rotate(180deg);opacity:1;}
+.sn-intro{position:relative;display:block;width:420px;height:220px;border-radius:10px;overflow:hidden;isolation:isolate;color:rgb(255,255,255);background:linear-gradient(141.36deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);}
+.sn-intro::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:url(./assets/accent-noise.png) 0 0 / 160px 160px repeat;opacity:.6;}
+.sn-txt,.sn-more{z-index:2;}
+a.sn-intro:hover{opacity:1;color:rgb(255,255,255);}
+.sn-ill{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.sn-acc .sn-ill{inset:auto;left:204px;top:-2px;width:292px;height:223px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%);}.sn-acc .sn-ill.sn-house{left:189px;top:-4px;width:345px;height:228px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%);}.sn-acc .sn-ill.sn-prof{left:150px;top:0;width:272px;height:230px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 25%);mask-image:linear-gradient(90deg,transparent 0,#000 25%);}
+.sn-intro:hover .sn-ill{transform:scale(1.03);}
+.sn-txt{position:absolute;left:15px;top:15px;display:flex;flex-direction:column;gap:10px;}
+.sn-h{width:214px;font-size:24px;line-height:30px;opacity:.9;}
+.sn-p{width:249px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;}
+.sn-more{position:absolute;left:15px;bottom:15px;padding:10px 16px;border-radius:50px;background:rgba(255,255,255,.15);font-size:12px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);white-space:nowrap;transition:background .25s;}
+.sn-intro:hover .sn-more{background:rgba(255,255,255,.25);}
+.sn-col{display:flex;flex-direction:column;gap:0;padding-top:0;}
+.sn-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:12px;}
+.sn-a{font-size:16px;line-height:25px;padding:6px 0;color:rgb(255,255,255);opacity:.85;transition:opacity .2s,color .2s;}
+.sn-a:hover{opacity:1;color:rgb(202,0,90);}
+@media (prefers-reduced-motion: reduce){.sn-sheet,.sn-panel,.sn-panel>*,.sn-chev{transition:none !important;}}
+</style>
+<style data-site-footer>
+.ft{display:block;box-sizing:border-box;width:1280px;padding:0 40px 32px;color:rgb(255,255,255);}
+.ft-top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;column-gap:72px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08);}
+.ft-brand{display:flex;flex-direction:column;}
+.ft-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+.ft-col{display:flex;flex-direction:column;gap:12px;}
+.ft-mapcol{display:flex;flex-direction:column;gap:12px;}
+.ft-sh{font-size:18px;line-height:20px;}
+.ft-sp{margin-top:8px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-form{position:relative;margin-top:20px;width:100%;}
+.ft-in{width:100%;height:44px;box-sizing:border-box;border-radius:64px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 52px 0 18px;outline:none;transition:border-color .2s;}
+.ft-in::placeholder{color:rgba(255,255,255,.4);}
+.ft-in:focus{border-color:rgba(255,255,255,.35);}
+.ft-go{position:absolute;right:4px;top:4px;width:36px;height:36px;border:0;padding:0;border-radius:18px;background:rgb(58,58,60);color:rgb(140,140,142);display:flex;align-items:center;justify-content:center;font-family:Manrope,sans-serif;font-size:16px;cursor:default;pointer-events:none;transition:background .25s,color .25s;}
+.ft-form:has(.ft-in:not(:placeholder-shown)) .ft-go{background:rgb(255,255,255);color:rgb(0,0,0);cursor:pointer;pointer-events:auto;}
+.ft-icons{display:flex;flex-direction:row;gap:18px;align-items:center;height:20px;margin-top:28px;}
+.ft-ic{display:flex;align-items:center;opacity:.55;transition:opacity .2s;}
+.ft-ic:hover{opacity:1;}
+.ft-ic svg{display:block;}
+.ft-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:8px;}
+.ft-a{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);opacity:.75;transition:opacity .2s,color .2s;width:max-content;}
+.ft-a:hover{opacity:1;color:rgb(202,0,90);}
+.ft-map{position:relative;height:208px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);}
+.ft-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(1) invert(.92) contrast(.85) brightness(.85);}
+.ft-addr{margin-top:4px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-addr:hover{color:rgb(255,255,255);opacity:1;}
+.ft-bottom{margin-top:56px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:row;justify-content:space-between;align-items:center;font-size:13px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-legal{display:flex;flex-direction:row;gap:24px;}
+.ft-legal a{color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;}
+.ft-legal a:hover{color:rgb(255,255,255);opacity:1;}
+</style>
+<style data-btn-hover>
+/* pill / filled buttons: on hover only the fill changes, the label keeps its colour */
+.hm-tab,.ab-btn,.ar-btn,a[style*="border-radius:64px"],a[style*="border-radius: 64px"],a[style*="border-radius:6px"][style*="background"],a[style*="border-radius: 6px"][style*="background"]{transition:box-shadow .2s ease,background-color .2s ease;}
+a.hm-tab:hover,a.ab-btn:hover,a.ar-btn:hover,a[style*="border-radius:64px"]:hover,a[style*="border-radius: 64px"]:hover,a[style*="border-radius:6px"][style*="background"]:hover,a[style*="border-radius: 6px"][style*="background"]:hover{opacity:1 !important;box-shadow:inset 0 0 0 999px rgba(255,255,255,.14);}
+a.hm-tab:hover{color:rgb(255,255,255) !important;background:rgb(52,52,54) !important;box-shadow:none;}
+a.ab-white:hover,a[style*="background:rgb(255,255,255)"]:hover,a[style*="background: rgb(255, 255, 255)"]:hover{box-shadow:inset 0 0 0 999px rgba(0,0,0,.1);}
+</style>
+<script src="./binary-illustrations.js?v=21"></script>
+<style data-tai>
+.tai-pill{align-self:flex-start;height:28px;padding:0 12px;border-radius:64px;background:rgba(202,0,90,.14);display:inline-flex;align-items:center;gap:8px;font-size:13px;line-height:18px;letter-spacing:.02em;color:rgb(230,80,150);}
+.tai-pill::before{content:"";width:6px;height:6px;border-radius:50%;background:rgb(202,0,90);box-shadow:0 0 8px rgb(202,0,90);}
+.tai-btn{align-self:flex-start;height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;display:inline-flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;border:0;font-family:inherit;}
+.tai-white{background:rgb(255,255,255);color:rgb(0,0,0);}
+.tai-dark{background:rgba(255,255,255,.14);color:rgb(255,255,255);}
+.tai-btn:hover{opacity:1;box-shadow:inset 0 0 0 999px rgba(255,255,255,.08);}
+.tai-white:hover{color:rgb(0,0,0);box-shadow:inset 0 0 0 999px rgba(0,0,0,.08);}
+.tai-in{width:100%;height:48px;box-sizing:border-box;border-radius:6px;border:1px solid rgba(255,255,255,.12);background:rgb(10,10,11);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;padding:0 14px;outline:none;-webkit-appearance:none;appearance:none;}
+.tai-in:focus{border-color:rgba(255,255,255,.35);}
+select.tai-in{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='white' stroke-opacity='.6' stroke-width='1.5' fill='none'/></svg>");background-repeat:no-repeat;background-position:right 14px center;}
+.tai-lbl{display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:18px;letter-spacing:.01em;color:rgb(140,140,142);}
+.tai-orb{width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 50% 70%, rgb(255,220,240) 0%, rgb(232,120,175) 28%, rgb(202,0,90) 58%, rgb(40,4,20) 100%);box-shadow:0 0 40px rgba(202,0,90,.45);animation:taiPulse 3.6s ease-in-out infinite;}
+@keyframes taiPulse{0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(202,0,90,.45);}50%{transform:scale(1.05);box-shadow:0 0 64px rgba(202,0,90,.6);}}
+@media (prefers-reduced-motion: reduce){.tai-orb{animation:none;}}
+</style>
+</helmet>
+<div data-screen-label="Tokenomics AI" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:0;overflow:clip;">
+
+<!-- HEADER (sticky) -->
+<div data-sn-hdr class="sn-sticky" style="position:sticky;top:0;z-index:30;margin-bottom:-92px;width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 40px;">
+    <div style="width:205px;height:30px;display:flex;align-items:center;"><a href="Home.dc.html" style="display:block;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></a></div>
+    <nav class="sn" aria-label="Main">
+        <div class="sn-sheet" aria-hidden="true"></div>
+      <div class="sn-item">
+        <button class="sn-btn" type="button" aria-haspopup="true">Tokenomics<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="sn-panel">
+          <a class="sn-intro sn-acc" href="Tokenomics.dc.html"><img class="sn-ill" src="./assets/nav-ill-tokenomics-coin.png?v=2" alt=""><div class="sn-txt"><div class="sn-h">Build a working token economy</div><div class="sn-p">Design, validate and improve the economics behind your product.</div></div><span class="sn-more">Explore Tokenomics</span></a>
+          <div class="sn-col"><div class="sn-ch">Expertise</div><a class="sn-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="sn-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="sn-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="sn-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="sn-a" href="Token Launch.dc.html">Token Launch</a></div>
+          <div class="sn-col"><div class="sn-ch">Tools &amp; Research</div><a class="sn-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="sn-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="sn-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="sn-a" href="Audits.dc.html">Public Audits</a></div>
+        </div>
+      </div>
+      <div class="sn-item">
+        <button class="sn-btn" type="button" aria-haspopup="true">Asset Tokenization<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="sn-panel">
+          <a class="sn-intro sn-acc" href="Landing.dc.html"><img class="sn-ill sn-house" src="./assets/nav-ill-assets-house.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Start with the business case</div><div class="sn-p">Explore asset tokenization, assess readiness and plan your next step.</div></div><span class="sn-more">Explore Asset Tokenization</span></a>
+          <div class="sn-col"><div class="sn-ch">Strategy</div><a class="sn-a" href="Landing.dc.html">Asset Tokenization</a></div>
+          <div class="sn-col"><div class="sn-ch">Explore &amp; Assess</div><a class="sn-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="sn-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div>
+        </div>
+      </div>
+      <div class="sn-item">
+        <button class="sn-btn" type="button" aria-haspopup="true">Company<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+        <div class="sn-panel">
+          <a class="sn-intro sn-acc" href="About.dc.html"><img class="sn-ill sn-prof" src="./assets/nav-ill-company-profiles.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Meet 8Blocks</div><div class="sn-p">Our team, client work,<br>events and ideas.</div></div><span class="sn-more">About 8Blocks</span></a>
+          <div class="sn-col"><div class="sn-ch">8Blocks</div><a class="sn-a" href="About.dc.html">About us</a><a class="sn-a" href="Methodology.dc.html">Our Methodology</a><a class="sn-a" href="Cases.dc.html">Client Cases</a><a class="sn-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="sn-a" href="Contact.dc.html">Contact</a></div>
+          <div class="sn-col"><div class="sn-ch">Insights &amp; Media</div><a class="sn-a" href="Blog.dc.html">Blog</a><a class="sn-a" href="Research.dc.html">Research</a><a class="sn-a" href="Press.dc.html">Press</a></div>
+        </div>
+      </div>
+    </nav>
+    <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+      <a href="Contact.dc.html" style="height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;;color:rgb(255,255,255);">Contact us</a>
+    </div>
+  </div>
+
+
+<!-- HERO -->
+<div style="position:relative;width:1280px;height:781px;overflow:hidden;">
+  <div style="position:absolute;left:0;top:0;width:1280px;height:800px;pointer-events:none;"><dc-import name="Binary Unicorn" hint-size="1280px,800px" style="width:1280px;height:800px;"></dc-import></div>
+  <div class="audit-glow" style="position:absolute;left:-1781px;top:391px;width:2912px;height:1841px;opacity:.2;filter:blur(37px);border-radius:0 0 28px 28px;pointer-events:none;"></div>
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;left:48px;top:226px;width:640px;display:flex;flex-direction:column;gap:25px;">
+    <div class="tai-pill">Limited slots available</div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:48px;line-height:56px;"><span style="opacity:.45;">Tokenomics AI:</span><br><span style="opacity:.9;">Your token model.<br>Investor-ready in 48 hours.</span></div>
+      <div style="width:460px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">AI drafts allocations and vesting. The 8Blocks scoring engine flags structural risks and refines the model. You get the refined design and a report for your data room.</div>
+    </div>
+    <div onClick="{{ openForm }}" class="tai-btn tai-white">Request early access</div>
+  </div>
+  <div style="position:absolute;left:48px;bottom:64px;display:flex;flex-direction:row;align-items:center;gap:20px;font-size:14px;line-height:20px;letter-spacing:.01em;">
+    <span style="opacity:.9;">Early access</span><span style="width:1px;height:16px;background:rgba(255,255,255,.2);"></span>
+    <span style="opacity:.9;">From $299</span><span style="width:1px;height:16px;background:rgba(255,255,255,.2);"></span>
+    <span style="opacity:.9;">48h turnaround</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div style="margin:120px 40px 0;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;">
+  <div style="width:520px;display:flex;flex-direction:column;gap:40px;">
+    <div style="font-size:40px;line-height:48px;opacity:.9;">From brief to model<br>in four steps</div>
+    <div style="display:flex;flex-direction:column;">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:row;gap:20px;padding:24px 0;border-top:1px solid rgba(255,255,255,.1);">
+          <div style="width:32px;height:32px;flex-shrink:0;box-sizing:border-box;border:1px solid rgb(202,0,90);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:22px;color:rgb(202,0,90);">{{ s.n }}</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ s.t }}</div>
+            <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">{{ s.sub }}</div>
+            <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ s.d }}</div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:10px;">
+      <div onClick="{{ openForm }}" class="tai-btn tai-white">Request early access</div>
+      <a href="Contact.dc.html" class="tai-btn tai-dark">Contact sales</a>
+    </div>
+  </div>
+  <div style="position:sticky;top:132px;width:595px;display:flex;flex-direction:column;gap:12px;">
+    <div style="position:relative;height:560px;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(150deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0 64px;box-sizing:border-box;">
+      <div style="width:100%;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);overflow:hidden;">
+        <div style="height:36px;padding:0 14px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.1);">
+          <div style="display:flex;flex-direction:row;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);"></span><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);"></span><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);"></span></div>
+          <div style="font-size:12px;line-height:16px;opacity:.6;">8Blocks AI</div>
+        </div>
+        <div style="height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;">
+          <div class="tai-orb"></div>
+          <div style="text-align:center;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.9;">Hi there! What’s<br>on your mind?</div>
+        </div>
+        <div style="margin:0 14px 14px;padding:14px 16px;border-radius:8px;background:rgba(0,0,0,.28);display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;flex-direction:row;justify-content:space-between;font-size:12px;line-height:16px;"><span style="letter-spacing:.06em;">NOVA PROTOCOL</span><span style="opacity:.55;">DeFi · Pre-seed · $2M</span></div>
+          <div style="display:flex;flex-direction:row;height:8px;border-radius:4px;overflow:hidden;gap:2px;"><span style="flex:18;background:rgb(202,0,90);"></span><span style="flex:14;background:rgb(225,90,150);"></span><span style="flex:10;background:rgb(240,160,195);"></span><span style="flex:22;background:rgba(255,255,255,.55);"></span><span style="flex:16;background:rgba(255,255,255,.3);"></span><span style="flex:20;background:rgba(255,255,255,.16);"></span></div>
+          <div style="font-size:12px;line-height:16px;opacity:.55;">Your model is ready</div>
+        </div>
+      </div>
+      <div style="width:100%;height:44px;box-sizing:border-box;border-radius:64px;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.14);padding:0 18px;display:flex;align-items:center;font-size:13px;letter-spacing:.01em;opacity:.7;">Describe your project…</div>
+    </div>
+    <div style="font-size:13px;line-height:18px;letter-spacing:.01em;color:rgb(112,113,114);">Illustrative demo. No live model is being generated.</div>
+  </div>
+</div>
+
+<!-- OUTPUTS -->
+<div style="margin:180px auto 0;width:760px;text-align:center;font-size:40px;line-height:48px;"><span style="opacity:.9;">Your investor-ready AI model:</span><br><span style="opacity:.4;">AI drafts allocations and vesting</span></div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:5px;">
+  <div style="height:480px;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(150deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+    <div style="display:flex;flex-direction:column;gap:8px;"><div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">Allocation and vesting</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgba(255,255,255,.55);">Who receives how many tokens, and the conditions for them to enter circulation</div></div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div style="height:190px;display:flex;flex-direction:row;align-items:flex-end;gap:5px;">
+        <sc-for list="{{ vest }}" as="v" hint-placeholder-count="12">
+          <div style="flex:1;display:flex;flex-direction:column-reverse;gap:2px;height:{{ v.h }};">
+            <sc-for list="{{ v.seg }}" as="g" hint-placeholder-count="6"><div style="flex:{{ g.f }};background:{{ g.c }};border-radius:2px;"></div></sc-for>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:row;flex-wrap:wrap;gap:6px 14px;">
+        <sc-for list="{{ legend }}" as="l" hint-placeholder-count="6"><div style="display:flex;flex-direction:row;align-items:center;gap:6px;font-size:12px;line-height:16px;color:rgba(255,255,255,.65);"><span style="width:8px;height:8px;border-radius:2px;background:{{ l.c }};"></span>{{ l.t }}</div></sc-for>
+      </div>
+    </div>
+  </div>
+  <div style="height:480px;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(160deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+    <div style="display:flex;flex-direction:column;gap:8px;"><div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">Circulation scheme</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgba(255,255,255,.55);">How tokens are issued, circulate, are withdrawn, and burned</div></div>
+    <div style="position:relative;height:260px;">
+      <svg width="100%" height="260" viewBox="0 0 334 260" fill="none" style="position:absolute;inset:0;"><g stroke="rgba(255,255,255,.22)" stroke-width="1"><path d="M167 34V56M57 56H277M57 56V78M167 56V78M277 56V78M57 110V150M57 150V170M167 110V150M277 110V150M57 150H277M222 150V170M57 202V226"/></g></svg>
+      <sc-for list="{{ flow }}" as="f" hint-placeholder-count="8">
+        <div style="position:absolute;left:{{ f.x }};top:{{ f.y }};width:{{ f.w }};height:32px;border-radius:6px;background:{{ f.bg }};display:flex;align-items:center;justify-content:center;font-size:12px;line-height:16px;letter-spacing:.01em;color:rgb(255,255,255);">{{ f.t }}</div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="position:relative;height:480px;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(170deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+    <div style="display:flex;flex-direction:column;gap:8px;"><div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">Token utility logic</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;">Incentives to buy and use the token</div></div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <sc-for list="{{ checks }}" as="c" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:row;gap:12px;align-items:flex-start;font-size:14px;line-height:20px;letter-spacing:.01em;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0;margin-top:1px;"><circle cx="9" cy="9" r="9" fill="rgba(255,255,255,.18)"></circle><path d="M5.2 9.2l2.5 2.4 5-5.1" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="opacity:.9;">{{ c }}</span></div>
+      </sc-for>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARE -->
+<div style="margin:180px auto 0;width:640px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;">
+  <div class="tai-pill" style="align-self:center;">Limited slots available</div>
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Trust a tuned model</div>
+  <div style="width:500px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">A generic AI picks a formula, explains it, and might guess right. It still cannot give an individual approach.</div>
+  <div style="display:flex;flex-direction:row;gap:10px;margin-top:10px;">
+      <div onClick="{{ openForm }}" class="tai-btn tai-white">Request early access</div>
+      <a href="Contact.dc.html" class="tai-btn tai-dark">Contact sales</a>
+    </div>
+</div>
+<div style="position:relative;margin:56px 40px 0;">
+  <div style="position:absolute;left:560px;top:0;bottom:0;width:320px;box-sizing:border-box;border-radius:10px;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(165deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);pointer-events:none;"></div>
+  <div style="position:relative;display:grid;grid-template-columns:240px 320px 320px 320px;">
+    <div style="min-height:72px;"></div>
+    <sc-for list="{{ cols }}" as="h" hint-placeholder-count="3"><div style="min-height:72px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ h }}</div></sc-for>
+    <sc-for list="{{ cells }}" as="c" hint-placeholder-count="40">
+      <div style="min-height:64px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:{{ c.jc }};padding:12px {{ c.px }};font-size:14px;line-height:20px;letter-spacing:.01em;color:{{ c.fg }};">
+        <sc-if value="{{ c.yes }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="9" fill="{{ c.dot }}"></circle><path d="M5.2 9.2l2.5 2.4 5-5.1" stroke="white" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></sc-if>
+        <sc-if value="{{ c.no }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8.5" stroke="rgba(255,255,255,.18)"></circle><path d="M6.3 6.3l5.4 5.4M11.7 6.3l-5.4 5.4" stroke="rgba(255,255,255,.4)" stroke-width="1.4" stroke-linecap="round"></path></svg></sc-if>
+        <sc-if value="{{ c.txt }}" hint-placeholder-val="{{ true }}"><span>{{ c.txt }}</span></sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- CTA -->
+<div style="margin:120px 40px 0;border-radius:10px;overflow:hidden;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(169deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);padding:56px 40px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:28px;text-align:center;">
+  <div style="width:560px;font-size:32px;line-height:40px;opacity:.95;">Hand your ideas to the agent and get a first proposal for free</div>
+  <div style="display:flex;flex-direction:row;gap:10px;">
+    <div onClick="{{ openForm }}" class="tai-btn tai-white">Request early access</div>
+    <a href="Contact.dc.html" class="tai-btn tai-dark">Contact sales</a>
+  </div>
+</div>
+
+<!-- ACCESS FORM -->
+<sc-if value="{{ formOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:60;background:rgba(2,2,2,.7);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;">
+    <div style="position:relative;width:480px;border-radius:10px;background:rgb(16,17,19);border:1px solid rgba(255,255,255,.08);padding:36px;box-sizing:border-box;display:flex;flex-direction:column;gap:22px;">
+      <div onClick="{{ closeForm }}" aria-label="Close" style="position:absolute;right:16px;top:16px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="white" stroke-width="1.5" stroke-linecap="round"></path></svg></div>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:10px;padding:20px 0;">
+          <div style="font-size:24px;line-height:30px;">Thanks, request received</div>
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(140,140,142);">We’ll confirm scope and timing with you before payment.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <div class="tai-pill">Limited slots available</div>
+        <div style="font-size:24px;line-height:30px;margin-top:-8px;">Request early access</div>
+        <label class="tai-lbl">Email<input class="tai-in" type="email" placeholder="you@company.com"></label>
+        <label class="tai-lbl">Project name<input class="tai-in" type="text" placeholder="Your project"></label>
+        <label class="tai-lbl">Your goal<select class="tai-in"><option>Select a goal</option><option>Investor round</option><option>Token launch</option><option>Refine an existing model</option><option>Explore a token model</option></select></label>
+        <label class="tai-lbl">Project stage (optional)<select class="tai-in"><option>Select a stage</option><option>Pre-seed</option><option>Private Sale</option><option>Pre-TGE</option><option>TGE</option><option>Post-TGE</option></select></label>
+        <label class="tai-lbl">How did you hear about us? (optional)<select class="tai-in"><option>Select a source</option><option>Search</option><option>Social media</option><option>Referral</option><option>Event</option><option>Other</option></select></label>
+        <div onClick="{{ submit }}" class="tai-btn tai-white" style="justify-content:center;">Request early access</div>
+        <div style="font-size:13px;line-height:18px;letter-spacing:.01em;color:rgb(112,113,114);">Early access starts from $299. We’ll confirm scope and timing with you before payment.</div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<!-- FOOTER -->
+<footer class="ft" style="margin-top:130px;">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-sh">Subscribe</div>
+      <div class="ft-sp">A newsletter for those<br>who want to go deeper.</div>
+      <div class="ft-form"><input class="ft-in" type="email" required placeholder="Your email" aria-label="Your email"><button class="ft-go" type="button" aria-label="Subscribe">→</button></div>
+      <div class="ft-icons"><a href="https://x.com/8BlocksLabs" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.3263 1.90391H21.6998L14.3297 10.3274L23 21.7899H16.2112L10.894 14.8379L4.80995 21.7899H1.43443L9.31743 12.78L1 1.90391H7.96111L12.7674 8.25824L18.3263 1.90391ZM17.1423 19.7707H19.0116L6.94539 3.81704H4.93946L17.1423 19.7707Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://www.linkedin.com/company/8blocksio" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://t.me/eightblocks" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.43 8.85893C11.2628 9.3444 8.93014 10.3492 5.43189 11.8733C4.86383 12.0992 4.56626 12.3202 4.53917 12.5363C4.49339 12.9015 4.95071 13.0453 5.57348 13.2411C5.65819 13.2678 5.74596 13.2954 5.83594 13.3246C6.44864 13.5238 7.27283 13.7568 7.70129 13.766C8.08994 13.7744 8.52373 13.6142 9.00264 13.2853C12.2712 11.079 13.9584 9.96381 14.0643 9.93977C14.139 9.92281 14.2426 9.90148 14.3128 9.96385C14.3829 10.0262 14.376 10.1443 14.3686 10.176C14.3233 10.3691 12.5281 12.0381 11.5991 12.9018C11.3095 13.171 11.1041 13.362 11.0621 13.4056C10.968 13.5034 10.8721 13.5958 10.78 13.6846C10.2108 14.2333 9.78391 14.6448 10.8036 15.3168C11.2936 15.6397 11.6858 15.9067 12.0769 16.1731C12.5042 16.4641 12.9303 16.7543 13.4816 17.1157C13.6221 17.2078 13.7562 17.3034 13.8869 17.3965C14.3841 17.751 14.8307 18.0694 15.3826 18.0186C15.7032 17.9891 16.0345 17.6876 16.2027 16.7884C16.6002 14.6632 17.3816 10.0585 17.5622 8.16098C17.578 7.99473 17.5581 7.78197 17.5422 7.68857C17.5262 7.59518 17.4928 7.46211 17.3714 7.3636C17.2276 7.24694 17.0056 7.22234 16.9064 7.22408C16.455 7.23203 15.7626 7.47282 12.43 8.85893Z" fill-rule="evenodd" clip-rule="evenodd" fill="rgb(255,255,255)"></path></svg></a><a href="https://base.app/profile/8blocks" target="_blank" rel="noopener" aria-label="Base" title="Base" class="ft-ic"><svg width="16" height="16" viewBox="0 0 1280 1280" fill="none"><path d="M0,101.12c0-34.64,0-51.95,6.53-65.28,6.25-12.76,16.56-23.07,29.32-29.32C49.17,0,66.48,0,101.12,0h1077.76C1213.51,0,1230.84,0,1244.16,6.53c12.75,6.25,23.06,16.56,29.32,29.32,6.52,13.32,6.52,30.64,6.52,65.28v1077.76c0,34.63,0,51.96-6.52,65.28-6.26,12.75-16.57,23.06-29.32,29.32-13.32,6.52-30.65,6.52-65.28,6.52H101.12c-34.64,0-51.95,0-65.28-6.52-12.76-6.26-23.07-16.57-29.32-29.32-6.53-13.32-6.53-30.65-6.53-65.28V101.12Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://clutch.co/profile/8blocks-fzco" target="_blank" rel="noopener" aria-label="Clutch" title="Clutch" class="ft-ic"><svg width="56" height="16" viewBox="0 0 202.761 57.7631" fill="none"><path d="M62.1626 0.000131153H52.8467V57.7594H62.1626V0.000131153Z" fill="rgb(255,255,255)"></path><path d="M94.5149 57.7593H103.831V18.6319H94.5149V39.2957H94.683C94.683 47.9355 87.231 48.7796 85.199 48.7796C79.779 48.7796 78.595 43.5278 78.595 40.3117V18.6319H69.2791V40.6516C69.2791 46.0715 71.143 50.4755 73.8511 53.6953C76.3911 56.2353 80.4551 57.7593 85.0309 57.7593C88.2507 57.7593 92.4829 56.9114 94.5149 54.5395V57.7593Z" fill="rgb(255,255,255)"></path><path d="M112.806 57.7595H122.122V27.948H128.898V18.6321H122.122V4.74414H112.806V18.6321H105.862V27.948H112.806V57.7595Z" fill="rgb(255,255,255)"></path><path d="M150.577 57.5913C155.829 57.5913 160.741 55.7274 164.465 52.3395L165.821 50.9836L159.385 44.5476L158.029 46.2397C155.997 48.1036 153.457 49.1196 150.577 49.1196C144.141 49.1196 139.397 44.5476 139.397 37.7717C139.397 30.9959 143.969 26.5919 150.577 26.5919C153.457 26.5919 155.997 27.4398 158.029 29.4718L159.385 30.6559L165.481 24.5599L164.125 23.204C160.229 19.9841 155.657 17.9521 150.573 17.9521C139.057 17.784 130.586 26.0839 130.586 37.768C130.59 48.7835 139.229 57.5913 150.577 57.5913Z" fill="rgb(255,255,255)"></path><path d="M179.541 35.9078C179.541 27.268 185.977 26.4238 188.009 26.4238C193.429 26.4238 193.429 31.6757 193.429 34.8918V57.7594H202.745V34.7237C202.913 29.6436 201.729 25.0679 198.681 22.0199C196.141 19.4798 192.753 17.9558 188.517 17.9558C185.298 17.9558 181.913 18.8037 179.37 21.1757V0.00387801H170.054V57.7631H179.37V35.9115H179.541V35.9078Z" fill="rgb(255,255,255)"></path><path d="M143.466 37.772C143.466 41.4999 146.514 44.3761 150.07 44.3761C153.798 44.3761 156.674 41.328 156.674 37.772C156.674 34.0442 153.626 31.168 150.07 31.168C146.514 31.168 143.466 34.0479 143.466 37.772Z" fill="rgb(255,255,255)"></path><path d="M26.5917 57.5915C34.0437 57.5915 41.1595 54.7115 45.8996 49.4597L47.2555 48.1037L41.1595 41.6678L39.9754 43.3599C36.5875 46.7478 31.5074 48.7798 26.5955 48.7798C16.0955 48.7798 8.63979 40.648 8.63979 29.6401C8.63979 18.4602 16.0918 10.5003 26.4237 10.5003C31.3356 10.5003 35.9076 12.5323 39.8036 15.9202L41.1595 17.2761L47.2555 11.1801L45.8996 9.82418C40.8196 4.40423 33.8719 1.69238 26.5917 1.69238C11.3479 1.86047 0 13.7201 0 29.6401C0 45.56 11.3479 57.5915 26.5917 57.5915Z" fill="rgb(255,255,255)"></path></svg></a></div>
+    </div>
+    <div class="ft-nav"><div class="ft-col"><div class="ft-ch">Tokenomics</div><a class="ft-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="ft-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="ft-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="ft-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="ft-a" href="Token Launch.dc.html">Token Launch</a><a class="ft-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="ft-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="ft-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="ft-a" href="Audits.dc.html">Public Audits</a></div><div class="ft-col"><div class="ft-ch">Asset Tokenization</div><a class="ft-a" href="Landing.dc.html">Asset Tokenization</a><a class="ft-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="ft-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div><div class="ft-col"><div class="ft-ch">Company</div><a class="ft-a" href="About.dc.html">About us</a><a class="ft-a" href="Methodology.dc.html">Our Methodology</a><a class="ft-a" href="Cases.dc.html">Client Cases</a><a class="ft-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="ft-a" href="Contact.dc.html">Contact</a><a class="ft-a" href="Blog.dc.html">Blog</a><a class="ft-a" href="Research.dc.html">Research</a><a class="ft-a" href="Press.dc.html">Press</a></div></div>
+    <div class="ft-mapcol">
+      <div class="ft-ch">Office</div>
+      <div class="ft-map"><iframe src="https://www.google.com/maps?q=8BLOCKS+FZCO&amp;ll=25.0607775%2C55.1412167&amp;hl=en&amp;z=15&amp;output=embed" title="8BLOCKS FZCO on the map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="ft-a" href="mailto:hello@8blocks.io">hello@8blocks.io</a>
+      <a class="ft-a" href="tel:+971562865188">+971 56 286 5188</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div>© 2026 8BLOCKS FZCO. All rights reserved.</div>
+    <div class="ft-legal"><a href="https://8blocks.io/privacy-policy" target="_blank" rel="noopener">Privacy policy</a><a href="https://8blocks.io/terms" target="_blank" rel="noopener">Terms of Service</a></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":5200}}'>
+class Component extends DCLogic {
+  state = { open: false, sent: false };
+  componentDidMount() { const wait = () => { if (window.BINARY_ILLUSTRATIONS) this.setState({ illReady: true }); else this.illT = setTimeout(wait, 100); }; wait(); }
+  componentWillUnmount() { clearTimeout(this.illT); }
+  STEPS = [
+    ['You describe the project', 'Name, sector, stage, goal', 'The 8Blocks scoring engine flags structural risks and refines the model. You get the refined design and a report for your data room.'],
+    ['AI asks what matters', 'A short dialogue fills the gaps', 'Tell us about your planned raise, funding rounds, and any allocations already promised. AI asks the questions a form cannot.'],
+    ['Model is generated', 'Allocations + vesting', 'AI drafts eight allocation buckets and vesting schedules. The scoring engine tests unlock spikes and refines the model against category benchmarks.'],
+    ['You get the package', 'Ready for your data room', 'Your refined model, Structure Score, and branded investor PDF, together in one investor-ready package.']
+  ];
+  LEGEND = [['Team', 'rgb(255,255,255)'], ['Public', 'rgba(255,255,255,.8)'], ['Advisors', 'rgba(255,255,255,.62)'], ['Seed', 'rgba(255,255,255,.45)'], ['Pre-Seed', 'rgba(255,255,255,.3)'], ['Lead VC', 'rgba(255,255,255,.18)']];
+  FLOW = [
+    ['Emission', 117, 2, 100, 'rgba(255,255,255,.4)'],
+    ['Investors', 12, 78, 90, 'rgba(255,255,255,.12)'], ['Team', 122, 78, 90, 'rgba(255,255,255,.12)'], ['Treasury', 232, 78, 90, 'rgba(255,255,255,.12)'],
+    ['Users', 12, 118, 90, 'rgba(255,255,255,.12)'],
+    ['Utility', 12, 170, 90, 'rgba(255,255,255,.28)'], ['Market', 177, 170, 90, 'rgba(255,255,255,.12)'],
+    ['Burn', 12, 226, 90, 'rgba(255,255,255,.2)']
+  ];
+  CHECKS = ['Who will buy your token, and why?', 'How can the token be used to get an extra benefit?', 'If the token pays no income, what does it give?', 'Staking is not a utility. It only delays a sale.'];
+  COLS = ['ChatGPT', 'Tokenomics AI', 'Consulting'];
+  ROWS = [
+    ['Price', '$0', '$300/m', '$15000'],
+    ['Allocations', 'y', 'y', 'y'], ['Vesting and cliffs', 'y', 'y', 'y'],
+    ['Burn', 'Possible', 'y', 'y'], ['Buyback', 'Possible', 'y', 'y'],
+    ['Staking (formulas and logic)', 'Possible', 'y', 'y'], ['Treasury (accumulation and turnover)', 'n', 'y', 'y'],
+    ['Token utilities', 'Possible', 'y', 'y'], ['Answer to “who will buy your token, and why”', 'n', 'y', 'y']
+  ];
+  renderVals() {
+    const { open, sent } = this.state;
+    const legend = this.LEGEND.map(([t, c]) => ({ t, c }));
+    const vest = Array.from({ length: 12 }, (_, m) => {
+      const k = (m + 1) / 12;
+      const parts = [0.10 + 0.05 * k, 0.12, 0.05 * k, 0.12 * Math.min(1, k * 1.6), 0.10 * Math.min(1, k * 2), 0.16 * Math.min(1, k * 1.3)];
+      const tot = parts.reduce((a, b) => a + b, 0);
+      return { h: Math.round(30 + 70 * tot / 0.9) + '%', seg: parts.map((f, i) => ({ f: f.toFixed(3), c: legend[i].c })) };
+    });
+    const cells = [];
+    this.ROWS.forEach(([f, ...vals]) => {
+      cells.push({ txt: f, jc: 'flex-start', px: '20px', fg: 'rgb(140,140,142)', yes: false, no: false });
+      vals.forEach((v, i) => cells.push({ yes: v === 'y', no: v === 'n', txt: v === 'y' || v === 'n' ? '' : v, jc: 'center', px: '16px', fg: i === 1 ? 'rgb(255,255,255)' : (v === 'Possible' ? 'rgb(140,140,142)' : 'rgb(255,255,255)'), dot: i === 1 ? 'rgba(255,255,255,.22)' : 'rgba(202,0,90,.55)' }));
+    });
+    return {
+      ill: (window.BINARY_ILLUSTRATIONS || {}).orbit || {},
+      steps: this.STEPS.map(([t, sub, d], i) => ({ n: String(i + 1), t, sub, d })),
+      legend, vest,
+      flow: this.FLOW.map(([t, x, y, w, bg]) => ({ t, x: x + 'px', y: y + 'px', w: w + 'px', bg })),
+      checks: this.CHECKS, cols: this.COLS, cells,
+      formOpen: open, sent, notSent: !sent,
+      openForm: () => this.setState({ open: true, sent: false }),
+      closeForm: () => this.setState({ open: false }),
+      submit: () => this.setState({ sent: true })
+    };
+  }
+}
+</script>
+</body>
+</html>

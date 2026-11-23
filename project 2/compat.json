@@ -1,0 +1,310 @@
+{
+  "v": 1,
+  "mode": "omelette",
+  "root": "project/",
+  "title": "Верстка страницы сайта",
+  "entry": "Tokenomics Results.dc.html",
+  "pages": [
+    {
+      "path": "Tokenomics Results.dc.html",
+      "title": "Tokenomics Results",
+      "kind": "page",
+      "name": "✓ Tokenomics Results"
+    },
+    {
+      "path": "Readiness Result.dc.html",
+      "title": "Readiness Result",
+      "kind": "page",
+      "name": "✓ Readiness Result"
+    },
+    {
+      "path": "Readiness Check.dc.html",
+      "title": "Readiness Check",
+      "kind": "page",
+      "name": "✓ Readiness Check"
+    },
+    {
+      "path": "Binary Skyline.dc.html",
+      "title": "Binary Skyline",
+      "kind": "component"
+    },
+    {
+      "path": "Tokenomics Calculator.dc.html",
+      "title": "Tokenomics Calculator",
+      "kind": "page",
+      "name": "✓ Tokenomics Calculator"
+    },
+    {
+      "path": "Calculator Widget.dc.html",
+      "title": "Calculator Widget",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Hand Coin.dc.html",
+      "title": "Binary Hand Coin",
+      "kind": "component"
+    },
+    {
+      "path": "Landing.dc.html",
+      "title": "Landing",
+      "kind": "page",
+      "name": "✓ Landing"
+    },
+    {
+      "path": "Blog.dc.html",
+      "title": "Blog",
+      "kind": "page",
+      "name": "✓ Blog"
+    },
+    {
+      "path": "Press.dc.html",
+      "title": "Press",
+      "kind": "page",
+      "name": "✓ Press"
+    },
+    {
+      "path": "Article.dc.html",
+      "title": "Article",
+      "kind": "page",
+      "name": "✓ Article"
+    },
+    {
+      "path": "Tokenomics Audit.dc.html",
+      "title": "Tokenomics Audit",
+      "kind": "page",
+      "name": "✓ Tokenomics Audit"
+    },
+    {
+      "path": "Tokenomics.dc.html",
+      "title": "Tokenomics",
+      "kind": "page",
+      "name": "✓ Tokenomics"
+    },
+    {
+      "path": "Tokenomics AI.dc.html",
+      "title": "Tokenomics AI",
+      "kind": "page",
+      "name": "✓ Tokenomics AI"
+    },
+    {
+      "path": "Strategic Consulting.dc.html",
+      "title": "Strategic Consulting",
+      "kind": "page",
+      "name": "✓ Strategic Consulting"
+    },
+    {
+      "path": "Tokenomics Workshop.dc.html",
+      "title": "Tokenomics Workshop",
+      "kind": "page",
+      "name": "✓ Tokenomics Workshop"
+    },
+    {
+      "path": "Token Launch.dc.html",
+      "title": "Token Launch",
+      "kind": "page",
+      "name": "✓ Token Launch"
+    },
+    {
+      "path": "Research.dc.html",
+      "title": "Research",
+      "kind": "page",
+      "name": "✓ Research"
+    },
+    {
+      "path": "Research Article.dc.html",
+      "title": "Research Article",
+      "kind": "page",
+      "name": "✓ Research Article"
+    },
+    {
+      "path": "Tokenization Cases.dc.html",
+      "title": "Tokenization Cases",
+      "kind": "page",
+      "name": "✓ Tokenization Cases"
+    },
+    {
+      "path": "Token Vesting Benchmarks.dc.html",
+      "title": "Token Vesting Benchmarks",
+      "kind": "page",
+      "name": "✓ Token Vesting Benchmarks"
+    },
+    {
+      "path": "Cases.dc.html",
+      "title": "Cases",
+      "kind": "page",
+      "name": "✓ Cases"
+    },
+    {
+      "path": "Case Hadronica.dc.html",
+      "title": "Case Hadronica",
+      "kind": "page",
+      "name": "✓ Case Hadronica"
+    },
+    {
+      "path": "Home.dc.html",
+      "title": "Home",
+      "kind": "page",
+      "name": "✓ Home"
+    },
+    {
+      "path": "Contact.dc.html",
+      "title": "Contact",
+      "kind": "page",
+      "name": "✓ Contact"
+    },
+    {
+      "path": "Methodology.dc.html",
+      "title": "Methodology",
+      "kind": "page",
+      "name": "✓ Methodology"
+    },
+    {
+      "path": "About.dc.html",
+      "title": "About",
+      "kind": "page",
+      "name": "✓ About"
+    },
+    {
+      "path": "Binary Coin Stacks.dc.html",
+      "title": "Binary Coin Stacks",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Hand Coins.dc.html",
+      "title": "Binary Hand Coins",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Coin Pedestal.dc.html",
+      "title": "Binary Coin Pedestal",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Light Bulb.dc.html",
+      "title": "Binary Light Bulb",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Brain.dc.html",
+      "title": "Binary Brain",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Profiles.dc.html",
+      "title": "Binary Profiles",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Gold Coin.dc.html",
+      "title": "Binary Gold Coin",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Bulb.dc.html",
+      "title": "Binary Bulb",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Briefcase.dc.html",
+      "title": "Binary Briefcase",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Broken Coin.dc.html",
+      "title": "Binary Broken Coin",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Way File.dc.html",
+      "title": "Binary Way File",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Way Scales.dc.html",
+      "title": "Binary Way Scales",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Way Puzzle.dc.html",
+      "title": "Binary Way Puzzle",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Office.dc.html",
+      "title": "Binary Office",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Pink Object.dc.html",
+      "title": "Binary Pink Object",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Shuttle.dc.html",
+      "title": "Binary Shuttle",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Unicorn.dc.html",
+      "title": "Binary Unicorn",
+      "kind": "component"
+    },
+    {
+      "path": "Binary City Coins.dc.html",
+      "title": "Binary City Coins",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Engine.dc.html",
+      "title": "Binary Engine",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Trail.dc.html",
+      "title": "Binary Trail",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Target.dc.html",
+      "title": "Binary Target",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Puzzle.dc.html",
+      "title": "Binary Puzzle",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Hand Coin Dark.dc.html",
+      "title": "Binary Hand Coin Dark",
+      "kind": "component"
+    },
+    {
+      "path": "Audits.dc.html",
+      "title": "Audits",
+      "kind": "page",
+      "name": "✓ Audits"
+    }
+  ],
+  "migratorVersion": "artifact-migrator (claude-design-backend ed667f7ac9c1)",
+  "createdAt": "2026-11-05T11:45:40.159Z",
+  "source": {
+    "v": 1,
+    "app": "claude-design",
+    "url": "https://claude.ai/design/p/67728df6-dcbb-40d6-9f39-c3e5a5176de5",
+    "projectId": "67728df6-dcbb-40d6-9f39-c3e5a5176de5",
+    "exportedAt": "2026-11-05T11:45:40.159Z"
+  },
+  "report": {
+    "itemsVersion": 2,
+    "pages": {
+      "total": 5,
+      "ok": 5,
+      "partial": 0,
+      "notMigrated": 0
+    },
+    "items": [],
+    "truncated": 0,
+    "truncatedLeftOut": 0
+  }
+}

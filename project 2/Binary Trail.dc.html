@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Binary Trail</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./binary-illustrations.js?v=21"></script>
+<style>
+html,body{margin:0;}
+</style>
+</helmet>
+<div data-screen-label="Binary Trail" style="width:672px;height:444px;background:rgb(16,17,19);">
+  <dc-import name="Binary Engine" src="{{ ill.src }}" accents="{{ ill.accents }}" punch="{{ ill.punch }}" detail="{{ ill.detail }}" board-circle="{{ ill.boardCircle }}" board-gradient="{{ ill.boardGradient }}" sparkle="{{ ill.sparkle }}" reveal="{{ ill.reveal }}" weight="{{ ill.weight }}" body-dim="{{ ill.bodyDim }}" contrast="{{ ill.contrast }}" tone="{{ ill.tone }}" edge-feather="{{ ill.edgeFeather }}" w="1344" h="888" density="2" hint-size="672px,444px" style="width:672px;height:444px;"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":672,"height":444}}'>
+class Component extends DCLogic {
+  // binary-illustrations.js (helmet) may load after the first render: re-render once its data is there
+  componentDidMount() { const wait = () => { if (window.BINARY_ILLUSTRATIONS) this.setState({ illReady: true }); else this.illT = setTimeout(wait, 100); }; wait(); }
+  componentWillUnmount() { clearTimeout(this.illT); }
+  renderVals() { return { ill: (window.BINARY_ILLUSTRATIONS || {})["trail"] || {} }; }
+}
+</script>
+</body>
+</html>

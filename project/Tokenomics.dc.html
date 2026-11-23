@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tokenomics</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph-wide.js?v=6"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+.audit-field{background:radial-gradient(320px 240px at 1210px -10px, rgba(205,140,165,.45) 0%, rgba(205,140,165,0) 75%), radial-gradient(520px 620px at 1240px 330px, rgba(150,6,72,.75) 0%, rgba(150,6,72,0) 75%), radial-gradient(1400px 700px at 1150px -30px, rgba(170,6,82,1) 0%, rgba(165,6,80,.75) 30%, rgba(150,6,72,.3) 60%, rgba(150,6,72,0) 85%), linear-gradient(180deg, rgb(54,5,27) 0%, rgb(31,5,18) 50%, rgb(29,5,16) 100%);}
+.audit-glow{background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");}
+.tok-hscroll{scrollbar-width:none;}
+.tok-hscroll::-webkit-scrollbar{display:none;}
+</style>
+</helmet>
+<div data-screen-label="Tokenomics" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:130px;overflow:clip;">
+
+<!-- HERO -->
+<div style="position:relative;width:1280px;height:781px;overflow:hidden;">
+  <div style="position:absolute;left:0;top:90px;width:1280px;height:800px;pointer-events:none;"><dc-import name="Binary Coin Stacks" hint-size="1280px,800px" style="width:1280px;height:800px;"></dc-import></div>
+  <div class="audit-glow" style="position:absolute;left:-1781px;top:391px;width:2912px;height:1841px;opacity:.2;filter:blur(37px);border-radius:0 0 28px 28px;pointer-events:none;"></div>
+  <img src="./assets/audit-hero-fade.png" alt="" style="position:absolute;left:0;top:594px;width:1280px;height:187px;object-fit:cover;pointer-events:none;">
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;left:48px;top:283px;width:460px;display:flex;flex-direction:column;gap:25px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="width:513px;font-size:56px;line-height:64px;opacity:.9;">Tokenomics</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We design token models for projects that need to connect business logic, user behavior, and technical systems into one coherent framework</div>
+    </div>
+    <div style="align-self:flex-start;height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+  </div>
+  <!-- HEADER -->
+  <div style="position:absolute;left:0;top:0;width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);backdrop-filter:blur(6.6px);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+    <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+    <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+      <a href="Landing.dc.html" style="border-bottom:1px solid rgb(255,255,255);">Services</a><a href="#">Cases</a><a href="Blog.dc.html">Blog</a><a href="#">Team</a>
+    </div>
+    <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+      <span style="font-size:15px;line-height:1.7;">EN</span>
+      <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINS -->
+<div style="margin:22px 40px 0;display:flex;flex-direction:column;gap:20px;width:595px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Why most token models<br>fail after launch</div>
+  <div style="width:476px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Because a polished diagram in a white paper doesn't mean the token will create value, sustain demand, or support the project's economics</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ pains }}" as="p" hint-placeholder-count="4">
+    <div style="position:relative;height:300px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;overflow:hidden;">
+      <binary-glyph-wide shape="{{ p.shape }}" ox="0.5" oy="{{ p.oy }}" os="{{ p.os }}" style="position:absolute;left:0;top:0;width:100%;height:215px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ p.t }}</div>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ p.d }}</div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- WHAT WE DO -->
+<div style="margin:180px auto 0;width:595px;display:flex;flex-direction:column;gap:20px;text-align:center;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">What we review in the model</div>
+  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We don't just look at the tokenomics itself. We look at the context it has to work in: the product, the business processes, the market, and the project's internal logic</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(4, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ approach }}" as="r" hint-placeholder-count="4">
+    <div style="position:relative;height:560px;border-radius:10px;overflow:hidden;background:rgb(29,5,16);padding:395px 30px 30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;gap:5px;text-align:center;">
+      <div style="position:absolute;inset:0;background:url({{ r.bg }}) center / cover no-repeat;pointer-events:none;"></div>
+      <binary-glyph-wide shape="{{ r.shape }}" ox="0.5" oy="{{ r.oy }}" os="{{ r.os }}" style="position:absolute;left:0;top:0;width:100%;height:380px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ r.t }}</div>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;">{{ r.d }}</div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- WHAT GOES INTO -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;">
+  <div style="position:sticky;top:120px;align-self:flex-start;width:382px;display:flex;flex-direction:column;gap:20px;">
+    <div style="width:326px;font-size:40px;line-height:48px;opacity:.9;">What goes into your tokenomics</div>
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">This is not just a document. It is a working economic model built to support token sales, fundraising, strategic partnerships, and the long-term growth of the project</div>
+  </div>
+  <div style="width:746px;display:flex;flex-direction:column;">
+    <sc-for list="{{ parts }}" as="g" hint-placeholder-count="8">
+      <div style="min-height:96px;display:flex;flex-direction:row;border-bottom:1px solid {{ g.line }};">
+        <div style="width:94px;flex-shrink:0;box-sizing:border-box;padding-left:40px;border-right:1px solid rgba(255,255,255,.25);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;">{{ g.n }}</div>
+        <div style="padding:18px 40px 18px 35px;display:flex;align-items:center;"><div style="width:482px;font-size:14px;line-height:20px;letter-spacing:.01em;"><span>{{ g.lead }}</span> <span style="color:rgb(112,113,114);">{{ g.t }}</span></div></div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- HOW WE WORK -->
+<div style="margin:180px 0 0;display:flex;flex-direction:column;gap:40px;">
+  <div style="padding:0 40px;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;">
+    <div style="font-size:40px;line-height:48px;opacity:.9;">How we work</div>
+    <div style="display:flex;flex-direction:row;gap:8px;"><div onClick="{{ stepsPrev }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none" style="transform:rotate(180deg);"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div onClick="{{ stepsNext }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none" style="transform:none;"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div></div>
+  </div>
+  <div ref="{{ stepsRef }}" class="tok-hscroll" style="display:flex;flex-direction:row;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:40px;padding:0 40px 4px;">
+    <sc-for list="{{ steps }}" as="st" hint-placeholder-count="9">
+      <div style="width:386px;flex-shrink:0;scroll-snap-align:start;display:flex;flex-direction:row;gap:15px;align-items:flex-start;">
+        <div style="width:32px;height:32px;flex-shrink:0;box-sizing:border-box;border:1px solid rgb(202,0,90);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;color:rgb(202,0,90);">{{ st.n }}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;padding-top:3px;">
+          <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ st.t }}</div>
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ st.d }}</div>
+        </div>
+      </div>
+    </sc-for>
+    <div style="width:20px;flex-shrink:0;"></div>
+  </div>
+</div>
+
+<!-- MINI APP -->
+<div style="position:relative;margin:180px 40px 0;height:525px;border-radius:10px;overflow:hidden;background:rgb(16,17,19) url(./assets/audit-app-bg.jpg) center / cover no-repeat;">
+  <sc-for list="{{ shots }}" as="sh" hint-placeholder-count="4">
+    <img src="{{ sh.src }}" alt="{{ sh.alt }}" style="position:absolute;left:741px;top:3px;width:476px;height:852px;pointer-events:none;opacity:{{ sh.op }};transition:opacity 450ms cubic-bezier(0.32,0.72,0,1);">
+  </sc-for>
+  <div style="position:absolute;left:40px;top:40px;width:549px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:56px;line-height:64px;opacity:.9;">Pressure-test your tokenomics</div>
+    <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.5;">In our mini app, you can quickly build a basic model, set up vesting, review unlock schedules, and spot the first risks in your tokenomics.</div>
+  </div>
+  <div style="position:absolute;left:40px;top:377px;width:768px;display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:row;gap:12px;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <div onClick="{{ t.pick }}" style="height:44px;padding:12px 16px;box-sizing:border-box;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};transition:background 300ms,color 300ms;">
+          <img src="{{ t.icon }}" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ t.filter }};">{{ t.label }}
+        </div>
+      </sc-for>
+    </div>
+    <div style="width:741px;font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.5;">{{ tabText }}</div>
+  </div>
+</div>
+<div style="margin-top:40px;display:flex;flex-direction:row;gap:10px;justify-content:center;">
+  <a href="https://base.app/app/https:/app.8blocks.io" target="_blank" rel="noopener" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open in Base App</a>
+  <a href="https://t.me/eightblocks_tokenlab_bot/tokenlab" target="_blank" rel="noopener" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open in Telegram</a>
+</div>
+
+<!-- CTA 2 -->
+<div style="margin: 120px 40px 0; height: 152px; border-radius: 10px; overflow: hidden; background: rgb(16,17,19) url(./assets/audit-cta2-bg.jpg) center / cover no-repeat; padding: 40px; box-sizing: border-box; display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end">
+  <div style="width:636px;display:flex;flex-direction:column;gap:10px;">
+    <div style="white-space:nowrap;font-size:32px;line-height:40px;opacity:.9;">Sometimes a token doesn’t need a bear market to die</div>
+    <div style="font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.5;">Bad tokenomics will do the job just fine</div>
+  </div>
+  <div style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+</div>
+
+<!-- FAQ -->
+<div style="margin-top:160px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div><div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="11">
+    <div onClick="{{ f.toggle }}" style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></sc-if>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="transform:{{ f.rot }};transition:transform .2s;flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div><div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+  
+  
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":6061}}'>
+class Component extends DCLogic {
+  state = { tab: 0, open: 0 };
+  PAINS = [
+    ['The token is disconnected from the product','It creates no real value inside the ecosystem'],
+    ['Demand has no mechanism behind it','People buy the product, then sell the token'],
+    ['Fast distribution kills the token','Investors won’t wait forever'],
+    ['Giving out the token isn’t enough','It’s not clear why anyone should buy it']
+  ];
+  APPROACH = [
+    ['We go deep into the product','We look beyond the token itself to understand the project’s business logic, user roles, and usage scenarios'],
+    ['We design flows across the ecosystem','We map how the token moves across products, users, pools, and treasury'],
+    ['We account for financial and technical systems','We connect tokenomics to on-chain and off-chain logic, liquidity, and the internal rules the system runs on'],
+    ['We build for change','We design models that can evolve with new mechanics, product changes, and ecosystem growth']
+  ];
+  PARTS = [
+    ['Optimal supply.','We define the total token supply and choose the right issuance model, whether fixed or uncapped'],
+    ['Allocation structure.','We map out how tokens are distributed across sales, rewards, incentives, and other parts of the ecosystem'],
+    ['White paper visuals.','We prepare diagrams, charts, and tables that help translate the tokenomics into clear project documentation'],
+    ['Financial and utility mechanics.','We develop credit pools, derivatives, deflationary mechanics, as well as NFTs, services, and subscriptions that shift value toward the ecosystem'],
+    ['Closed-loop ecosystem.','We design how tokens are used, accumulated in internal funds, redistributed, and brought back into circulation'],
+    ['Treasury, reserves, and hedging.','We build in mechanisms to protect the model from manipulation, large sell-offs, and scenarios that can quickly crush the price'],
+    ['Pools, lockups, and vesting.','We break tokens into pools, set lockup periods, and design vesting schedules for different participant groups'],
+    ['Issuance mechanics.','We determine how the token enters the system, whether through mining, purchase flows, or algorithmic distribution']
+  ];
+  STEPS = [
+    ['We dive into the project','We review the materials, goals, and context to understand the project’s challenges and product logic'],
+    ['We benchmark the market','We analyze competing token models, compare approaches, and identify the strongest solutions'],
+    ['We work closely with the team','We run working sessions to capture product nuance and build a stronger model together'],
+    ['We define how the token is used','We shape the utility mechanics, holder rights, and vesting structure inside the ecosystem'],
+    ['We design the ecosystem around it','We connect the token to the product, interfaces, and technical logic of the project'],
+    ['We map token flows','We build token flow scenarios across every part of the ecosystem'],
+    ['We plan the sale structure','We define the number of rounds, sale format, timing, and target ticket size'],
+    ['We adapt the model as new mechanics appear','We test new functions and adjust the model as the project evolves'],
+    ['We finalize and defend the model','We package the final tokenomics, prepare the presentation, and walk your team through the reasoning behind it']
+  ];
+  TABS = [
+    ['Base model','./assets/ic-house.svg','Enter token supply, price, circulating supply, and allocations to get a quick read on the overall structure of your tokenomics','./assets/audit-app-1.png'],
+    ['Vesting and unlocks','./assets/ic-book.svg','Set unlock schedules for each pool, review the unlock chart, spot possible spikes, and assess the model’s overall condition','./assets/audit-app-2.png'],
+    ['Final score','./assets/ic-moneybag.svg','Get a model snapshot with a short summary of tokenomics quality and key risk areas','./assets/audit-app-3.png'],
+    ['Daily practice','./assets/ic-grid-search.svg','Come back to the app every day, answer short questions, and build a stronger understanding of tokenomics step by step','./assets/audit-app-4.png']
+  ];
+  QA = [
+    ["Can we come to you with an existing tokenomics draft?", "Yes. If you already have calculations, a white paper, a product deck, or a draft model, we don’t start from scratch for no reason. We first look at what can be used, what needs refinement, and what makes more sense to rebuild so the final model works as one coherent system."],
+    ["When do we need an audit instead of tokenomics development?", "If you already have a model and the goal is to test it for mistakes, risks, and weak spots, then you need an audit. If the model is still taking shape, doesn’t answer the core questions, or needs a deeper rebuild, then it makes more sense to go into full tokenomics development."],
+    ["What do you need from us at the start?", "Anything you already have on the project: a white paper, product deck, roadmap, token or NFT description, round data, team allocation structure, and any other working materials. Even if some of it isn’t finalized yet, that’s usually enough to get started."],
+    ["Do you only work with utility tokens, or with NFTs as well?", "Not just utility tokens. We also work with NFT models and more complex hybrid structures, as long as the asset is built into the product’s economics and plays a real role in how the ecosystem works."],
+    ["Does the engagement include token sale logic?", "Yes. We work through the number of rounds, their structure, timing, and target check size so the model isn’t built in isolation from the sale logic or the project’s path to market."],
+    ["Is modeling included in the scope of work?", "No. Modeling is a separate service. It can be done in two formats: software-based Monte Carlo modeling in Python, or visual modeling in Machinations."],
+    ["What isn’t included in tokenomics development?", "This format doesn’t include legal work, smart contract development, marketing production, or technical implementation by outside contractors. But if needed, we can bring in additional sessions with lawyers, market makers, and other specialized experts to go deeper on specific parts of the model."],
+    ["How long does the work usually take?", "Tokenomics development usually takes between 3 and 7 weeks. The exact timing depends on the amount of material available, the complexity of the model, how quickly the team communicates, and how deep the work needs to go."],
+    ["Can the process be accelerated if timing is critical?", "Yes, in some cases that can be discussed. The pace depends on how quickly the team provides input, signs off on decisions, and moves through each stage with us."],
+    ["Can the tokenomics be updated later if the product changes?", "Yes. If new mechanics, use cases, or additional products appear, the model can be adapted and expanded over time. That matters especially for projects where the economics need to evolve alongside the product."],
+    ["What exactly will we get at the end?", "You won’t just get a token description. You’ll get a full economic model built to support the token sale, fundraising, strategic partnerships, and the long-term growth of the ecosystem. It includes the core parameters around supply, issuance, allocation, vesting, treasury, protective mechanisms, and visuals for the white paper."]
+  ];
+  renderVals() {
+    const { tab, open } = this.state;
+    const P = [['plugout', '0.5', '0.92'], ['buysell', '0.5', '0.95'], ['drain', '0.47', '0.98'], ['crackedcoin', '0.48', '0.9']];
+    const A = [['cube', '0.533', '0.93'], ['orbit', '0.5', '0.88'], ['gear', '0.5', '0.9'], ['crane', '0.484', '0.74']];
+    return {
+      pains: this.PAINS.map(([t, d], i) => ({ t, d, shape: P[i][0], oy: P[i][1], os: P[i][2] })),
+      approach: this.APPROACH.map(([t, d], i) => ({ t, d, bg: './assets/tok-card-' + (i + 1) + '.jpg', shape: A[i][0], oy: A[i][1], os: A[i][2] })),
+      parts: this.PARTS.map(([lead, t], i, arr) => ({ lead, t, n: String(i + 1).padStart(2, '0'), line: i === arr.length - 1 ? 'transparent' : 'rgba(255,255,255,.25)' })),
+      steps: this.STEPS.map(([t, d], i) => ({ t, d, n: String(i + 1) })),
+      stepsRef: (el) => { this._steps = el; },
+      stepsPrev: () => { this._steps && this._steps.scrollBy({ left: -406, behavior: 'smooth' }); },
+      stepsNext: () => { this._steps && this._steps.scrollBy({ left: 406, behavior: 'smooth' }); },
+      tabs: this.TABS.map(([label, icon], i) => ({ label, icon, bg: i === tab ? 'rgb(255,255,255)' : 'rgba(255,255,255,.12)', fg: i === tab ? 'rgb(0,0,0)' : 'rgb(255,255,255)', filter: i === tab ? 'invert(1)' : 'none', pick: () => this.setState({ tab: i }) })),
+      tabText: this.TABS[tab][2],
+      shots: this.TABS.map(([label, , , src], i) => ({ src, alt: 'Token Lab: ' + label, op: i === tab ? '1' : '0' })),
+      faq: this.QA.map(([q, a], i, arr) => ({ q, a, open: open === i, radius: i === 0 ? '10px 10px 0 0' : (i === arr.length - 1 ? '0 0 10px 10px' : '0px'), rot: open === i ? 'rotate(180deg)' : 'rotate(0deg)', toggle: () => this.setState({ open: open === i ? -1 : i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

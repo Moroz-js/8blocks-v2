@@ -1,0 +1,125 @@
+{
+  "v": 1,
+  "mode": "omelette",
+  "root": "project/",
+  "title": "Верстка страницы сайта",
+  "entry": "Tokenomics Results.dc.html",
+  "pages": [
+    {
+      "path": "Tokenomics Results.dc.html",
+      "title": "Tokenomics Results",
+      "kind": "page"
+    },
+    {
+      "path": "Readiness Result.dc.html",
+      "title": "Readiness Result",
+      "kind": "page"
+    },
+    {
+      "path": "Readiness Check.dc.html",
+      "title": "Readiness Check",
+      "kind": "page"
+    },
+    {
+      "path": "Binary Skyline.dc.html",
+      "title": "Binary Skyline",
+      "kind": "component"
+    },
+    {
+      "path": "Tokenomics Calculator.dc.html",
+      "title": "Tokenomics Calculator",
+      "kind": "page"
+    },
+    {
+      "path": "Calculator Widget.dc.html",
+      "title": "Calculator Widget",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Hand Coin.dc.html",
+      "title": "Binary Hand Coin",
+      "kind": "component"
+    },
+    {
+      "path": "Landing.dc.html",
+      "title": "Landing",
+      "kind": "page"
+    },
+    {
+      "path": "Blog.dc.html",
+      "title": "Blog",
+      "kind": "page"
+    },
+    {
+      "path": "Article.dc.html",
+      "title": "Article",
+      "kind": "page"
+    },
+    {
+      "path": "Tokenomics Audit.dc.html",
+      "title": "Tokenomics Audit",
+      "kind": "page"
+    },
+    {
+      "path": "Tokenomics.dc.html",
+      "title": "Tokenomics",
+      "kind": "page"
+    },
+    {
+      "path": "Strategic Consulting.dc.html",
+      "title": "Strategic Consulting",
+      "kind": "page"
+    },
+    {
+      "path": "Tokenomics Workshop.dc.html",
+      "title": "Tokenomics Workshop",
+      "kind": "page"
+    },
+    {
+      "path": "Token Launch.dc.html",
+      "title": "Token Launch",
+      "kind": "page"
+    },
+    {
+      "path": "Binary Coin Stacks.dc.html",
+      "title": "Binary Coin Stacks",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Hand Coins.dc.html",
+      "title": "Binary Hand Coins",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Coin Pedestal.dc.html",
+      "title": "Binary Coin Pedestal",
+      "kind": "component"
+    },
+    {
+      "path": "Binary Light Bulb.dc.html",
+      "title": "Binary Light Bulb",
+      "kind": "component"
+    }
+  ],
+  "migratorVersion": "artifact-migrator (claude-design-backend ed667f7ac9c1)",
+  "createdAt": "2026-11-05T11:45:40.159Z",
+  "source": {
+    "v": 1,
+    "app": "claude-design",
+    "url": "https://claude.ai/design/p/67728df6-dcbb-40d6-9f39-c3e5a5176de5",
+    "projectId": "67728df6-dcbb-40d6-9f39-c3e5a5176de5",
+    "exportedAt": "2026-11-05T11:45:40.159Z"
+  },
+  "report": {
+    "itemsVersion": 2,
+    "pages": {
+      "total": 5,
+      "ok": 5,
+      "partial": 0,
+      "notMigrated": 0
+    },
+    "items": [],
+    "truncated": 0,
+    "truncatedLeftOut": 0
+  }
+}

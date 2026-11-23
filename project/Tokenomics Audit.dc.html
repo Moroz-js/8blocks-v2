@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tokenomics Audit</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph-wide.js?v=6"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+.audit-field{background:radial-gradient(320px 240px at 1210px -10px, rgba(205,140,165,.45) 0%, rgba(205,140,165,0) 75%), radial-gradient(520px 620px at 1240px 330px, rgba(150,6,72,.75) 0%, rgba(150,6,72,0) 75%), radial-gradient(1400px 700px at 1150px -30px, rgba(170,6,82,1) 0%, rgba(165,6,80,.75) 30%, rgba(150,6,72,.3) 60%, rgba(150,6,72,0) 85%), linear-gradient(180deg, rgb(54,5,27) 0%, rgb(31,5,18) 50%, rgb(29,5,16) 100%);}
+.audit-glow{background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");}
+</style>
+</helmet>
+<div data-screen-label="Tokenomics Audit" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:130px;overflow:clip;">
+
+<!-- HERO -->
+<div style="position:relative;width:1280px;height:781px;overflow:hidden;">
+  <div style="position:absolute;left:0;top:0;width:1280px;height:800px;pointer-events:none;"><dc-import name="Binary Light Bulb" hint-size="1280px,800px" style="width:1280px;height:800px;"></dc-import></div>
+  <div class="audit-glow" style="position:absolute;left:-1781px;top:391px;width:2912px;height:1841px;opacity:.2;filter:blur(37px);border-radius:0 0 28px 28px;pointer-events:none;"></div>
+  <img src="./assets/audit-hero-fade.png" alt="" style="position:absolute;left:0;top:594px;width:1280px;height:187px;object-fit:cover;pointer-events:none;">
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;left:48px;top:293px;width:460px;display:flex;flex-direction:column;gap:25px;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="width:513px;font-size:56px;line-height:64px;opacity:.9;">Tokenomics audit</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We run a deep review of the current token model, identify weak spots, and provide practical recommendations on how to improve it</div>
+    </div>
+    <div style="align-self:flex-start;height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+  </div>
+  <!-- HEADER -->
+  <div style="position:absolute;left:0;top:0;width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);backdrop-filter:blur(6.6px);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+    <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+    <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+      <a href="Landing.dc.html" style="border-bottom:1px solid rgb(255,255,255);">Services</a><a href="#">Cases</a><a href="Blog.dc.html">Blog</a><a href="#">Team</a>
+    </div>
+    <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+      <span style="font-size:15px;line-height:1.7;">EN</span>
+      <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINS -->
+<div style="margin:45px 40px 0;display:flex;flex-direction:column;gap:20px;width:595px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">A finished token model<br>can still fall apart</div>
+  <div style="width:441px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">A polished document doesn't guarantee a model that can hold up, earn trust, or support the project as it grows</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ pains }}" as="p" hint-placeholder-count="4">
+    <div style="position:relative;height:300px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;overflow:hidden;">
+      <binary-glyph-wide shape="{{ p.shape }}" ox="0.5" oy="{{ p.oy }}" os="{{ p.os }}" style="position:absolute;left:0;top:0;width:100%;height:215px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ p.t }}</div>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ p.d }}</div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- WHEN -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+  <div style="width:293px;display:flex;flex-direction:column;gap:20px;">
+    <div style="font-size:40px;line-height:48px;opacity:.9;">When an audit stops being optional</div>
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Most teams come in for an audit when the model is already built, but no one feels fully comfortable relying on it before a TGE, investor conversations, or the market itself</div>
+  </div>
+  <div style="width:705px;height:300px;display:flex;flex-direction:row;gap:5px;">
+    <sc-for list="{{ whens }}" as="w" hint-placeholder-count="7">
+      <div onClick="{{ w.pick }}" style="flex:{{ w.flex }};min-width:0;height:300px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;cursor:pointer;transition:flex 480ms cubic-bezier(0.32,0.72,0,1);">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ w.n }}</div>
+        <sc-if value="{{ w.on }}" hint-placeholder-val="{{ false }}"><div style="width:233px;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ w.t }}</div></sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- WHAT WE REVIEW -->
+<div style="margin:180px auto 0;width:595px;display:flex;flex-direction:column;gap:20px;text-align:center;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">What we review in the model</div>
+  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We don't just look at the tokenomics itself. We look at the context it has to work in: the product, the business processes, the market, and the project's internal logic</div>
+</div>
+<div style="margin:40px 40px 0;display:flex;flex-direction:column;gap:10px;">
+  <div style="display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:10px;">
+    <sc-for list="{{ reviewTop }}" as="r" hint-placeholder-count="3">
+      <div style="position:relative;height:360px;border-radius:10px;overflow:hidden;background:rgb(29,5,16);padding:250px 30px 30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-start;gap:10px;">
+        <div style="position:absolute;inset:0;background:url({{ r.bg }}) center / cover no-repeat;pointer-events:none;"></div>
+        <binary-glyph-wide shape="{{ r.shape }}" ox="0.5" oy="{{ r.oy2 }}" os="{{ r.os }}" style="position:absolute;left:0;top:0;width:100%;height:245px;pointer-events:none;"></binary-glyph-wide>
+        <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ r.t }}</div>
+        <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;">{{ r.d }}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:10px;">
+    <sc-for list="{{ reviewBottom }}" as="r" hint-placeholder-count="2">
+      <div style="position:relative;height:360px;border-radius:10px;overflow:hidden;background:rgb(29,5,16);padding:25px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;">
+        <div style="position:absolute;inset:0;background:url({{ r.bg }}) center / cover no-repeat;pointer-events:none;"></div>
+        <binary-glyph-wide shape="{{ r.shape }}" ox="0.5" oy="{{ r.oy2 }}" os="{{ r.os }}" style="position:absolute;left:0;top:0;width:100%;height:245px;pointer-events:none;"></binary-glyph-wide>
+        <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ r.t }}</div>
+        <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;">{{ r.d }}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- CTA 1 -->
+<div style="margin:180px 40px 0;height:206px;border-radius:10px;overflow:hidden;background:rgb(16,17,19) url(./assets/audit-cta-bg.jpg) center / cover no-repeat;padding:40px;box-sizing:border-box;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;">
+  <div style="width:636px;display:flex;flex-direction:column;gap:20px;">
+    <div style="font-size:32px;line-height:40px;opacity:.9;">What becomes clear after the audit</div>
+    <div style="font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.5;">You see where the current tokenomics is losing strength, clarity, and investor trust, and what needs to be corrected for the model to support growth instead of constant manual intervention</div>
+  </div>
+  <div style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+</div>
+
+<!-- PROBLEMS -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;">
+  <div style="position:sticky;top:120px;align-self:flex-start;width:380px;font-size:32px;line-height:40px;opacity:.9;">An audit often reveals a different problem than the one everyone was looking for</div>
+  <div style="width:746px;display:flex;flex-direction:column;gap:40px;">
+    <sc-for list="{{ problems }}" as="p" hint-placeholder-count="6">
+      <div style="padding:0 40px {{ p.pb }} 0;border-bottom:1px solid {{ p.line }};display:flex;flex-direction:column;gap:9px;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);padding-left:7px;">{{ p.label }}</div>
+        <div style="width:519px;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ p.t }}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- MINI APP -->
+<div style="position:relative;margin:180px 40px 0;height:525px;border-radius:10px;overflow:hidden;background:rgb(16,17,19) url(./assets/audit-app-bg.jpg) center / cover no-repeat;">
+  <sc-for list="{{ shots }}" as="sh" hint-placeholder-count="4">
+    <img src="{{ sh.src }}" alt="{{ sh.alt }}" style="position:absolute;left:741px;top:3px;width:476px;height:852px;pointer-events:none;opacity:{{ sh.op }};transition:opacity 450ms cubic-bezier(0.32,0.72,0,1);">
+  </sc-for>
+  <div style="position:absolute;left:40px;top:40px;width:549px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:56px;line-height:64px;opacity:.9;">Pressure-test your tokenomics</div>
+    <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.5;">In our mini app, you can quickly build a basic model, set up vesting, review unlock schedules, and spot the first risks in your tokenomics.</div>
+  </div>
+  <div style="position:absolute;left:40px;top:377px;width:768px;display:flex;flex-direction:column;gap:20px;">
+    <div style="display:flex;flex-direction:row;gap:12px;">
+      <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
+        <div onClick="{{ t.pick }}" style="height:44px;padding:12px 16px;box-sizing:border-box;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }};transition:background 300ms,color 300ms;">
+          <img src="{{ t.icon }}" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ t.filter }};">{{ t.label }}
+        </div>
+      </sc-for>
+    </div>
+    <div style="width:741px;font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.5;">{{ tabText }}</div>
+  </div>
+</div>
+<div style="margin-top:80px;display:flex;flex-direction:row;gap:10px;justify-content:center;">
+  <a href="https://base.app/app/https:/app.8blocks.io" target="_blank" rel="noopener" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open in Base App</a>
+  <a href="https://t.me/eightblocks_tokenlab_bot/tokenlab" target="_blank" rel="noopener" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open in Telegram</a>
+</div>
+
+<!-- CTA 2 -->
+<div style="margin:180px 40px 0;height:202px;border-radius:10px;overflow:hidden;background:rgb(16,17,19) url(./assets/audit-cta2-bg.jpg) center / cover no-repeat;padding:40px;box-sizing:border-box;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;">
+  <div style="width:636px;display:flex;flex-direction:column;gap:20px;">
+    <div style="width:520px;font-size:32px;line-height:40px;opacity:.9;">Before launch, it’s better to hear the hard truth from experts</div>
+    <div style="font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.5;">Than to hear it later from investors and the market</div>
+  </div>
+  <div style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Book a consultation</div>
+</div>
+
+<!-- FAQ -->
+<div style="margin-top:320px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div>
+  <div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="11">
+    <div onClick="{{ f.toggle }}" style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></sc-if>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="transform:{{ f.rot }};transition:transform .2s;flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div>
+  <div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":7050}}'>
+class Component extends DCLogic {
+  state = { when: 0, tab: 0, open: 0 };
+  PAINS = [
+    ['The model already has structural cracks','They may not be obvious at first, but sooner or later they start pulling the project in the wrong direction'],
+    ['Growth exposes the weak points','What looks fine in a static model often stops working once the product and ecosystem begin to scale'],
+    ['The logic doesn’t hold up in investor conversations','If the model is hard to explain, confidence drops fast'],
+    ['The problems surface too late','Usually at the point when they’re already slowing the project down']
+  ];
+  WHENS = [
+    'If the tokenomics is already built, but confidence still isn’t there',
+    'If the model exists, but you still wouldn’t want to stand behind it in front of investors',
+    'If the product has changed, but the tokenomics is still stuck in an older version of the project',
+    'If the team feels something is off in the model, but can’t clearly point to where',
+    'If you’d rather fix weak spots before the token sale than discover them after launch',
+    'If you want to know in advance what’s most likely to break first',
+    'If the tokenomics looks perfect on paper, but you still want an outside expert view before moving forward'
+  ];
+  REVIEW = [
+    ['The current token structure','We review supply, utility, vesting, pool allocation, and the economic relationships built into the model.'],
+    ['Calculations, forecasts, and scenarios','We revisit the formulas, assumptions, and key scenarios to spot mistakes and weak points.'],
+    ['How the model fits the project’s goals','We look at how well the tokenomics supports the product logic, the core metrics, and the business priorities right now.'],
+    ['The market and competing models','We compare the model against strong market benchmarks to see where it gives the project an edge and where it falls short.'],
+    ['Critical business processes','We work through the details with the CEO, CTO, CFO, and other process owners to uncover risks that don’t show up in the documents alone.']
+  ];
+  PROBLEMS = [
+    ['It looks like the model is already finished','In practice, the audit shows which parts of the tokenomics no longer match the project in its current form'],
+    ['It looks like the allocation is fine','The review shows where it starts creating unnecessary pressure on the token'],
+    ['It looks like the issue is just in the numbers','In reality, the weak spot is often in the token logic, its utility, or the way it connects to the product'],
+    ['It looks like the product just needs better marketing','In reality, the issue is often not external demand, but weak economics inside the model'],
+    ['It looks like investors simply didn’t understand the model','After the audit, it becomes clear where the tokenomics lost clarity and trust'],
+    ['It looks like the utility works','But once we test it, it turns out some of the mechanics create no real value and only make the structure more complicated']
+  ];
+  TABS = [
+    ['Base model','./assets/ic-house.svg','Enter token supply, price, circulating supply, and allocations to get a quick read on the overall structure of your tokenomics','./assets/audit-app-1.png'],
+    ['Vesting and unlocks','./assets/ic-book.svg','Set unlock schedules for each pool, review the unlock chart, spot possible spikes, and assess the model’s overall condition','./assets/audit-app-2.png'],
+    ['Final score','./assets/ic-moneybag.svg','Get a model snapshot with a short summary of tokenomics quality and key risk areas','./assets/audit-app-3.png'],
+    ['Daily practice','./assets/ic-grid-search.svg','Come back to the app every day, answer short questions, and build a stronger understanding of tokenomics step by step','./assets/audit-app-4.png']
+  ];
+  QA = [
+    ["We already have tokenomics. Why do we need an audit?", "Because a finished tokenomics model can still fail in real conditions. An audit helps you verify whether the logic is strong enough before the token sale, investor conversations, and market pressure expose weak spots."],
+    ["Can you audit a model that was not built by your team?", "Yes. We often audit models built by in-house teams or other advisors. The goal isn’t to rewrite everything by default, but to identify what works, what doesn’t, and what should be fixed first."],
+    ["Can we run the audit right before TGE or token sale?", "Yes. That is one of the most common moments to do it. The audit helps reduce avoidable mistakes before launch, when the cost of being wrong is already high."],
+    ["Do you assess whether the model is clear to investors?", "Absolutely. If the logic is hard to explain, trust drops quickly. We check not only the internal math, but also how clearly the model can be defended externally."],
+    ["Will the audit show if tokenomics no longer matches the product?", "Yes. This is a frequent case. We identify where the current model is out of sync with product changes and where that mismatch creates risk."],
+    ["What do you need from us at the start?", "Any existing materials: white paper, product deck, current token model, spreadsheets, issuance and allocation schemes, plus context on product and business logic."],
+    ["What do we receive at the end?", "You receive a structured audit outcome with clear findings, priority weak spots, and practical recommendations on what to improve and in what order."],
+    ["How long does the audit usually take?", "Typically 1 to 2 weeks, depending on model complexity, amount of source material, and response speed from the team."],
+    ["Can the process be accelerated if timing is critical?", "Yes, in many cases. Fast material sharing and quick alignment sessions usually shorten the timeline."],
+    ["What isn’t included in the audit scope?", "The audit does not include legal services, full tokenomics redevelopment from scratch, smart contract implementation, marketing production, or standalone modeling."],
+    ["If the audit shows a major rebuild is needed, is that normal?", "Yes. That is often the most valuable outcome. It is better to discover structural issues before launch than after the market does it for you."]
+  ];
+  renderVals() {
+    const { when, tab, open } = this.state;
+    const offs = [[0, 0], [-403.33, 0], [-806.67, 0], [0, -370], [-605, -370]];
+    const shapes = ['buckets', 'bars', 'target', 'scales', 'gear'];
+    const review = this.REVIEW.map(([t, d], i) => ({ t, d, shape: shapes[i], bg: './assets/audit-rv-' + (i + 1) + '.jpg', os: ['1.25', '1.12', '0.74', '0.92', '0.97'][i], oy2: ['0.51', '0.385', '0.514', '0.5', '0.5'][i], ox: offs[i][0] + 'px', oy: offs[i][1] + 'px' }));
+    return {
+      pains: this.PAINS.map(([t, d], i) => ({ t, d, shape: ['slabcrack', 'barsweak', 'chainbreak', 'timelate'][i], oy: i === 1 ? '0.44' : '0.52', os: i === 1 ? '0.78' : '1' })),
+      whens: this.WHENS.map((t, i) => ({ t, n: String(i + 1).padStart(2, '0'), on: i === when, flex: i === when ? '0 0 293px' : '1 1 0', pick: () => this.setState({ when: i }) })),
+      reviewTop: review.slice(0, 3),
+      reviewBottom: review.slice(3),
+      problems: this.PROBLEMS.map(([l, t], i, arr) => ({ label: (i + 1) + '. ' + l, t, line: i === arr.length - 1 ? 'transparent' : 'rgba(255,255,255,.25)', pb: i === arr.length - 1 ? '0px' : '40px' })),
+      tabs: this.TABS.map(([label, icon], i) => ({ label, icon, bg: i === tab ? 'rgb(255,255,255)' : 'rgba(255,255,255,.12)', fg: i === tab ? 'rgb(0,0,0)' : 'rgb(255,255,255)', filter: i === tab ? 'invert(1)' : 'none', pick: () => this.setState({ tab: i }) })),
+      tabText: this.TABS[tab][2],
+      shots: this.TABS.map(([label, , , src], i) => ({ src, alt: 'Token Lab: ' + label, op: i === tab ? '1' : '0' })),
+      faq: this.QA.map(([q, a], i, arr) => ({ q, a, open: open === i, radius: i === 0 ? '10px 10px 0 0' : (i === arr.length - 1 ? '0 0 10px 10px' : '0px'), rot: open === i ? 'rotate(180deg)' : 'rotate(0deg)', toggle: () => this.setState({ open: open === i ? -1 : i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>
