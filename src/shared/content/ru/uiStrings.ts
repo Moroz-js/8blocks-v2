@@ -60,5 +60,13 @@ export const uiStrings = {
   downloadGateEmailPlaceholder: 'your@email.io',
   captchaFailed: 'Не удалось подтвердить, что вы не робот. Попробуйте ещё раз.',
   captchaLoadError: 'Проверка от спама не загрузилась. Отключите блокировщик рекламы и попробуйте ещё раз или напишите нам на почту.',
+  formRequired: 'Пожалуйста, заполните все обязательные поля',
+  formInvalidEmail: 'Пожалуйста, введите корректный email',
+  formLongName: 'Имя слишком длинное',
+  formLongMessage: 'Сообщение слишком длинное',
+  formInvalidBody: 'Некорректный запрос',
+  formDuplicateLead: 'Заявка с этим email уже получена.',
+  formInvalidInput: 'Проверьте введённые данные и попробуйте ещё раз.',
+  formSendFailed: 'Не удалось отправить заявку. Попробуйте ещё раз.',
   formWrongContentType: 'Неподдерживаемый формат запроса.',
 } as const

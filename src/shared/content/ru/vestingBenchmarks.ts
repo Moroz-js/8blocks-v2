@@ -41,7 +41,7 @@ export const vestingBenchmarksContent = {
       ],
     },
   },
-  adviceLabel: 'Совет 8Blocks',
+  adviceLabel: 'Совет А8А9',
   medianLabel: 'медиана',
   carousel: { prev: 'Назад', next: 'Вперёд' },
   vestingTitle: 'Нормы\nвестинга',

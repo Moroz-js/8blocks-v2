@@ -19,6 +19,7 @@ export interface ContactFormText {
   submitLabel: string
   sendingLabel: string
   failedError: string
+  requiredError: string
   successTitle: string
   successBody: string
 }
@@ -43,6 +44,9 @@ export function ContactForm({ text }: { text: ContactFormText }) {
     }
 
     try {
+      if (![body.name, body.email, body.message].every((value) => value?.trim())) {
+        throw new Error(text.requiredError)
+      }
       const captchaToken = await captcha.getToken()
       const res = await fetch(apiPath('/api/contact'), {
         method: 'POST',

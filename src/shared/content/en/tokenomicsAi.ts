@@ -36,6 +36,7 @@ export const tokenomicsAiContent = {
     ],
     demo: {
       label: 'Tokenomics AI product preview',
+      windowTitle: '8Blocks AI',
       greeting: 'Hi there! What’s\non your mind?',
       project: 'NOVA PROTOCOL',
       meta: 'DeFi · Pre-seed · $2M',

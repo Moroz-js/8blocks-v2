@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Tabs } from '@/shared/ds'
+import { lang } from '@/shared/i18n'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import styles from './TokenizationCasesPage.module.scss'
 
@@ -32,6 +33,8 @@ export interface CasesData {
   cases: CaseItem[]
 }
 
+const decimalStat = new Intl.NumberFormat(lang, { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: false })
+
 function CountUp({ value, prefix, suffix }: { value: number; prefix: string; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null)
   const [display, setDisplay] = useState(value)
@@ -61,7 +64,7 @@ function CountUp({ value, prefix, suffix }: { value: number; prefix: string; suf
   return (
     <span ref={ref}>
       {prefix}
-      {Number.isInteger(value) ? Math.round(display) : display.toFixed(2)}
+      {Number.isInteger(value) ? Math.round(display) : decimalStat.format(display)}
       {suffix}
     </span>
   )

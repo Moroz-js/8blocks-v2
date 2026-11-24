@@ -37,6 +37,7 @@ export const tokenomicsAiContent: TokenomicsAiContent = {
     ],
     demo: {
       label: 'Демонстрация ИИ-токеномики',
+      windowTitle: 'ИИ-токеномика',
       greeting: 'Привет! Что хотите\nобсудить?',
       project: 'NOVA PROTOCOL',
       meta: 'DeFi · Предпосевная стадия · $2 млн',

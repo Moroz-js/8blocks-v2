@@ -60,5 +60,13 @@ export const uiStrings = {
   downloadGateEmailPlaceholder: 'your@email.io',
   captchaFailed: 'We could not confirm you are not a bot. Please try again.',
   captchaLoadError: 'The spam check did not load. Turn off your ad blocker and try again, or email us.',
+  formRequired: 'Please fill in all required fields',
+  formInvalidEmail: 'Please enter a valid email address',
+  formLongName: 'Name is too long',
+  formLongMessage: 'Message is too long',
+  formInvalidBody: 'Invalid request body',
+  formDuplicateLead: 'A submission with this email was already received.',
+  formInvalidInput: 'Please check your input and try again.',
+  formSendFailed: 'Failed to send. Please try again.',
   formWrongContentType: 'Unsupported request format.',
 } as const

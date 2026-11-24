@@ -25,7 +25,7 @@ export function Footer({ nav: fullNav, ...flags }: FooterProps) {
               <NewsletterForm text={footer.newsletter} />
             </div>
             <div className={styles.socials}>
-              {socialLinks.map((link) => (
+              {socialLinks.filter((link) => link.id !== 'youtube').map((link) => (
                 <a
                   key={link.id}
                   href={link.href}
@@ -66,6 +66,9 @@ export function Footer({ nav: fullNav, ...flags }: FooterProps) {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
+            <a href={siteConfig.addressUrl} className={styles.link} target="_blank" rel="noopener noreferrer">
+              {siteConfig.address}
+            </a>
             <a href={`mailto:${siteConfig.email}`} className={styles.link}>
               {siteConfig.email}
             </a>

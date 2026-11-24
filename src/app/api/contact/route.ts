@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { sendContactAdmin, sendContactUser } from '@/shared/lib/email'
 import { notifyTelegram } from '@/shared/lib/telegram'
 import { siteConfig } from '@/shared/config/site'
+import { uiStrings } from '@/shared/content/uiStrings'
 import { sanitizeContactForm } from '@/shared/lib/form-sanitize'
 import { checkCaptcha, readPublicForm } from '@/shared/lib/captcha/form-guard'
 
@@ -59,11 +60,11 @@ export async function POST(req: NextRequest) {
     if (error instanceof ValidationError) {
       const first = error.data?.errors?.[0]?.message
       return NextResponse.json(
-        { error: first ?? 'Please check your input and try again.' },
+        { error: first ?? uiStrings.formInvalidInput },
         { status: 400 },
       )
     }
     console.error('[contact form]', error)
-    return NextResponse.json({ error: 'Failed to send. Please try again.' }, { status: 500 })
+    return NextResponse.json({ error: uiStrings.formSendFailed }, { status: 500 })
   }
 }

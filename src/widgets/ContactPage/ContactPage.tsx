@@ -3,6 +3,7 @@ import { Button, Section } from '@/shared/ds'
 import { siteConfig, socialLinks } from '@/shared/config/site'
 import { lang } from '@/shared/i18n'
 import { contactFormContent, contactPageContent } from '@/shared/content/contactPage'
+import { uiStrings } from '@/shared/content/uiStrings'
 import { ContactForm } from '@/features/contactForm/ContactForm'
 import { SocialIcon } from '@/widgets/Footer/SocialIcon'
 import oxana from './assets/oxana.webp'
@@ -47,7 +48,7 @@ export function ContactPage() {
               <h1 className={styles.title}>{hero.headline}</h1>
               <p className={styles.faint}>{hero.description}</p>
             </div>
-            <ContactForm text={contactFormContent} />
+            <ContactForm text={{ ...contactFormContent, requiredError: uiStrings.formRequired }} />
           </div>
           <div className={styles.person}>
             <Image src={oxana} alt={`${hero.person.name}, ${hero.person.role}`} className={styles.photo} sizes="247px" />

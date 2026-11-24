@@ -20,10 +20,10 @@ export async function readPublicForm(
   try {
     body = await req.json()
   } catch {
-    return { response: NextResponse.json({ error: 'Invalid request body' }, { status: 400 }) }
+    return { response: NextResponse.json({ error: uiStrings.formInvalidBody }, { status: 400 }) }
   }
   if (body === null || typeof body !== 'object' || Array.isArray(body)) {
-    return { response: NextResponse.json({ error: 'Invalid request body' }, { status: 400 }) }
+    return { response: NextResponse.json({ error: uiStrings.formInvalidBody }, { status: 400 }) }
   }
   if (isHoneypotFilled(body)) {
     console.warn(`[honeypot] ${logTag}: dropped bot submission from ${clientIp(req.headers) ?? 'unknown ip'}`)
