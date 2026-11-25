@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="./result-chart.js?v=24"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+image-slot::part(ring){display:none;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+</style>
+</helmet>
+<div data-screen-label="Readiness Result" style="position:relative;width:1280px;height:6538px;margin:0 auto;overflow:clip;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;">
+
+<!-- HEADER -->
+<div style="position:absolute;z-index:3;left:0;top:0;width:1280px;height:92.267px;box-sizing:border-box;border:.881px solid rgba(255,255,255,.17);backdrop-filter:blur(13.208px);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+  <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+    <a href="#">Services</a><a href="#">Cases</a><a href="#">Blog</a><a href="#">Team</a>
+  </div>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <span style="font-size:15px;line-height:1.7;">EN</span>
+    <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+  </div>
+</div>
+
+<!-- RESULT HERO -->
+<div style="position:absolute;left:40px;top:160px;width:560px;height:954px;z-index:1;">
+<div style="position:sticky;top:160px;width:560px;">
+<div style="position:relative;width:560px;display:flex;flex-direction:column;gap:8px;">
+  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">Suggested direction:</div>
+  <div style="width:457px;opacity:.9;font-size:56px;line-height:64px;">{{ dirTitle }}</div>
+  <div style="margin-top:14px;font-size:14px;line-height:20px;letter-spacing:.01em;">Your readiness: <span style="color:{{ statusColor }};">{{ statusText }}</span></div>
+  <div style="margin-top:24px;width:457px;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">{{ summary }}</div>
+</div>
+</div>
+</div>
+
+<!-- CHART CARD -->
+<div style="position:absolute;left:645px;top:160px;width:595px;height:426px;border-radius:10px;background:rgb(16,17,19);overflow:hidden;">
+  <result-chart flat="" values="{{ chartVals }}" style="position:absolute;left:104px;top:20px;width:386px;height:386px;display:block;"></result-chart>
+  <div style="position:absolute;left:30px;top:28px;display:flex;flex-direction:column;gap:11px;align-items:flex-start;">
+    <span style="font-size:14px;line-height:20px;letter-spacing:.01em;white-space:pre-line;">Objective
+fit</span>
+    <img src="./assets/icon-help.svg" alt="?" title="Is there a problem tokenization can realistically solve?" style="width:16px;height:16px;display:block;cursor:help;">
+  </div>
+  <div style="position:absolute;right:30px;top:28px;display:flex;flex-direction:column;gap:11px;align-items:flex-end;">
+    <span style="text-align:right;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:pre-line;">Asset
+&amp; rights</span>
+    <img src="./assets/icon-help.svg" alt="?" title="Is the asset or right clearly defined and enforceable?" style="width:16px;height:16px;display:block;cursor:help;">
+  </div>
+  <div style="position:absolute;left:30px;bottom:30px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;">
+    <img src="./assets/icon-help.svg" alt="?" title="Enough clarity, time and commitment to structure it properly?" style="width:16px;height:16px;display:block;cursor:help;">
+    <span style="font-size:14px;line-height:20px;letter-spacing:.01em;">Execution</span>
+  </div>
+  <div style="position:absolute;right:30px;bottom:30px;width:80px;display:flex;flex-direction:column;gap:10px;align-items:flex-end;">
+    <img src="./assets/icon-help.svg" alt="?" title="A plausible buyer side and viable economics?" style="width:16px;height:16px;display:block;cursor:help;">
+    <span style="text-align:right;font-size:14px;line-height:20px;letter-spacing:.01em;">Demand &amp; economics</span>
+  </div>
+</div>
+
+<!-- STRENGTHS CARD -->
+<div style="position:absolute;left:645px;top:596px;width:595px;height:388px;border-radius:10px;background:rgb(16,17,19);box-sizing:border-box;padding:30px;display:flex;flex-direction:column;gap:0;">
+  <div style="font-size:18px;line-height:25px;letter-spacing:.01em;">Project strengths</div>
+  <div style="display:flex;flex-direction:column;margin-top:2px;">
+    <sc-for list="{{ strengths }}" as="s" hint-placeholder-count="4">
+    <div style="display:flex;flex-direction:row;gap:8px;align-items:center;padding:14px 0;border-top:{{ s.border }};">
+      <img src="./assets/ic-strength.svg" alt="" style="width:20px;height:20px;flex-shrink:0;display:block;">
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ s.t }}</div>
+    </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:16px;margin-top:26px;">
+    <div style="font-size:18px;line-height:25px;letter-spacing:.01em;">Worth validating before you commit</div>
+    <sc-for list="{{ validate }}" as="v" hint-placeholder-count="1">
+    <div style="display:flex;flex-direction:row;gap:8px;align-items:center;">
+      <div style="width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;"><img src="./assets/ic-validate.svg" alt="" style="width:16px;height:16px;display:block;"></div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ v }}</div>
+    </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- INPUTS CARD -->
+<div style="position:absolute;left:645px;top:994px;width:595px;height:120px;border-radius:10px;background:rgb(16,17,19);overflow:hidden;">
+  <div style="position:absolute;left:30px;top:30px;font-size:18px;line-height:25px;letter-spacing:.01em;">Your inputs</div>
+  <div style="position:absolute;left:30px;top:70px;width:470px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ inputsLine }}</div>
+  <a href="Readiness Check.dc.html#quiz" style="position:absolute;left:522px;top:30px;width:48px;height:20px;display:flex;flex-direction:row;justify-content:space-between;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="rgb(255,255,255)"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>Edit
+  </a>
+</div>
+
+<!-- PRECEDENT -->
+<div style="position:absolute;left:40px;top:1338px;font-size:32px;line-height:40px;white-space:nowrap;">A similar structure already exists</div>
+<div style="position:absolute;left:40px;top:1411px;width:1200px;height:428px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);">
+  <img src="./assets/precedent-solar.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;">
+  <div style="position:absolute;left:30px;top:30px;width:458px;opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);white-space:pre-line;">Regulated pilot
+<span style="color:rgb(255,255,255);">Dubai Land Department + Ctrl Alt</span></div>
+  <div style="position:absolute;left:30px;top:110px;width:458px;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:pre-line;">Give investors regulated fractional access to Dubai real estate.
+A government-backed tokenization pilot: title-deed-linked fractions issued through a licensed platform, with a controlled secondary-market phase introduced afterwards.</div>
+  <div style="position:absolute;left:30px;top:378px;display:flex;flex-direction:row;gap:8px;align-items:center;">
+    <img src="./assets/ic-source.svg" alt="" style="width:20px;height:20px;flex-shrink:0;display:block;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">10 properties, $5M+ tokenized in the initial phase</div>
+  </div>
+</div>
+<div style="position:absolute;left:40px;top:1869px;width:1200px;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">A precedent shows the structure class exists — it does not prove your project is legally feasible or commercially viable.</div>
+
+<!-- FEASIBILITY CTA -->
+<div style="position:absolute;left:40px;top:2089px;width:1200px;height:184px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;padding:40px;box-sizing:border-box;">
+  <div style="position:absolute;inset:0;background:url(./assets/card-gradient-wide.png) center / cover no-repeat;pointer-events:none;"></div>
+  <div style="position:relative;width:636px;display:flex;flex-direction:column;gap:20px;">
+    <div style="width:452px;opacity:.9;font-size:32px;line-height:40px;">45-minute feasibility call</div>
+    <div style="width:462px;opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;">Not a sales call — the next diagnostic step. Your case → structure → blockers → next step.</div>
+  </div>
+  <div style="position:relative;display:flex;flex-direction:row;gap:16px;align-items:center;">
+    <a href="#" style="width:230px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Discuss my asset structure</a>
+    <a href="Readiness Check.dc.html#quiz" style="width:115px;height:56px;border-radius:64px;background:rgba(255,255,255,.15);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Start over</a>
+  </div>
+</div>
+
+<!-- WIDEN ACCESS -->
+<div style="position:absolute;left:40px;top:2453px;width:563px;font-size:40px;line-height:48px;">Widen access to capital without selling the asset</div>
+<div style="position:absolute;left:40px;top:2589px;width:595px;height:223px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);box-sizing:border-box;padding:30px;display:flex;flex-direction:column;justify-content:space-between;">
+  <div style="font-size:18px;line-height:25px;letter-spacing:.01em;">Conventional financing</div>
+  <div style="display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:40px;line-height:48px;">1–2 sources of capital</div>
+    <div style="opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;">A bank or a single buyer sets the terms.</div>
+  </div>
+</div>
+<div style="position:absolute;left:645px;top:2589px;width:595px;height:223px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);box-sizing:border-box;padding:30px;display:flex;flex-direction:column;justify-content:space-between;">
+  <div style="position:absolute;inset:0;background:url(./assets/card-gradient-half.png) center / 100% 100% no-repeat;pointer-events:none;"></div>
+  <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;">Digital structuring</div>
+  <div style="position:relative;display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:40px;line-height:48px;">Many holders</div>
+    <div style="opacity:.6;font-size:14px;line-height:20px;letter-spacing:.01em;">One asset, fractions sold to the audience you validate. Terms stay yours.</div>
+  </div>
+</div>
+
+<!-- ROUTE -->
+<div style="position:absolute;left:40px;top:2992px;font-size:32px;line-height:40px;">The typical route, step by step</div>
+<div style="position:absolute;left:40px;top:3047px;width:419px;opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;">Timelines depend on the structure and jurisdiction — the Workshop puts dates on your case.</div>
+<div style="position:absolute;left:40px;top:3133px;width:1200px;height:148px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;inset:0;background:url(./assets/card-gradient-wide.png) center / cover no-repeat;pointer-events:none;"></div>
+  <div style="position:absolute;left:30px;top:30px;width:1140px;height:88px;display:flex;flex-direction:row;align-items:center;">
+    <sc-for list="{{ route }}" as="r" hint-placeholder-count="4">
+    <div style="flex:1 1 0;min-width:0;height:88px;display:flex;flex-direction:row;align-items:center;gap:22px;">
+      <sc-if value="{{ r.sep }}" hint-placeholder-val="{{ false }}"><div style="width:0;height:88px;border-left:1px solid rgba(255,255,255,.1);flex-shrink:0;"></div></sc-if>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ r.t }}</div>
+        <div style="opacity:.6;font-size:14px;line-height:20px;letter-spacing:.01em;">{{ r.d }}</div>
+      </div>
+    </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- CASEWORK -->
+<div style="position:absolute;left:40px;top:3461px;font-size:32px;line-height:40px;">From our casework</div>
+<div style="position:absolute;left:0;top:3541px;width:1280px;display:flex;flex-direction:column;gap:40px;padding:0 40px;box-sizing:border-box;">
+  <sc-for list="{{ cases }}" as="c" hint-placeholder-count="3">
+  <div style="display:flex;flex-direction:column;gap:40px;">
+    <div style="height:148px;display:flex;flex-direction:row;gap:30px;align-items:center;">
+      <div style="width:230px;height:148px;border-radius:15px;flex-shrink:0;overflow:hidden;"><div style="width:100%;height:100%;background-image:{{ c.bg }};background-size:cover;background-position:center;"></div></div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;">
+        <div style="opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;margin-bottom:-10px;">{{ c.tag }}</div>
+        <div style="display:flex;flex-direction:column;gap:15px;">
+          <div style="height:56px;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;">
+            <div style="font-size:24px;line-height:30px;white-space:nowrap;">{{ c.title }}</div>
+            <div style="width:115px;height:56px;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">View case</div>
+          </div>
+          <div style="height:22px;display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+            <div style="width:468.83px;opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ c.desc }}</div>
+            <div style="display:flex;flex-direction:row;gap:5.947px;align-items:center;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="rgb(255,255,255)"><path d="M9 1 2.5 9.5H7.5L7 15l6.5-8.5H8.5L9 1Z"></path></svg>
+              <div style="opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;white-space:nowrap;">Читать 12 минут</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <sc-if value="{{ c.divider }}" hint-placeholder-val="{{ true }}"><div style="height:0;border-top:1px solid rgb(27,27,27);"></div></sc-if>
+  </div>
+  </sc-for>
+</div>
+
+<!-- CALL CTA -->
+<div style="position:absolute;left:341px;top:4337px;width:596px;height:358px;"><img src="./assets/call-zoom.png" alt="8Blocks team on a call" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+<div style="position:absolute;left:0;top:4435px;width:1280px;height:279px;background:linear-gradient(0deg,rgb(10,1,4) 4.45%,rgba(10,1,4,0) 100%);pointer-events:none;"></div>
+<div style="position:absolute;left:174px;top:4730px;width:933px;text-align:center;font-size:40px;line-height:48px;">In 45 minutes we'll figure out whether tokenization fits your asset — and what to do next</div>
+<div style="position:absolute;left:0;top:4866px;width:1280px;height:125px;display:flex;flex-direction:row;gap:20px;padding:0 40px;box-sizing:border-box;justify-content:center;">
+  <sc-for list="{{ callSteps }}" as="s" hint-placeholder-count="3">
+  <div style="width:386.667px;display:flex;flex-direction:column;gap:15px;align-items:center;">
+    <div style="width:32px;height:32px;border-radius:5px;background:rgb(0,0,0);box-shadow:inset 0 0 0 1px rgba(202,0,90,0.5);display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;letter-spacing:.01em;color:rgb(202,0,90);">{{ s.n }}</div>
+    <div style="display:flex;flex-direction:column;gap:10px;padding:3px 0;align-items:center;text-align:center;">
+      <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">We build for change</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">We design models that can evolve with new mechanics, product changes, and ecosystem growth</div>
+    </div>
+  </div>
+  </sc-for>
+</div>
+<a href="#" style="position:absolute;left:573px;top:5031px;width:134px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Book the call</a>
+
+<!-- OWNER'S GUIDE -->
+<div style="position:absolute;left:40px;top:5267px;width:1200px;height:364px;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;left:32px;top:30px;width:573px;display:flex;flex-direction:column;gap:13.79px;">
+    <div style="width:382px;font-size:32px;line-height:40px;white-space:pre-line;">The owner’s guide,
+on one page.</div>
+    <div style="width:364px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Seven questions to ask before tokenizing an asset — the same ones we ask on the call. No email required.</div>
+  </div>
+  <a href="#" style="position:absolute;left:31px;top:278px;width:151px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Open the guide</a>
+  <div style="position:absolute;left:608px;top:-119px;width:587px;height:483px;"><img src="./assets/guide-envelope.png" alt="" style="width:587px;height:483px;display:block;pointer-events:none;"></div>
+</div>
+
+<!-- FAQ -->
+<div style="position:absolute;left:0;top:5811px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div>
+  <div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+    <div onClick="{{ f.toggle }}" style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></sc-if>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="transform:{{ f.rot }};transition:transform .2s;flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div>
+  <div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: 0 };
+  onPin = () => {
+    const o = this._pinO, i = this._pinI; if (!o || !i) return;
+    const top = o.getBoundingClientRect().top;
+    const y = Math.max(0, Math.min(o.offsetHeight - i.offsetHeight, 160 - top));
+    i.style.transform = 'translateY(' + y + 'px)';
+  };
+    renderVals() {
+    const open = this.state.open;
+    const strengths = [
+      "A concrete business objective, not tokenization for its own sake",
+      "A recognizable underlying asset: a real-estate, infrastructure or equipment asset",
+      "Ownership and the financial right are already documented",
+      "Established performance behind the economics",
+    ].map((t, i) => ({ t, border: i === 0 ? "none" : "1px solid rgb(27,27,27)" }));
+    const route = [
+      ["Research & model", "Define the objective, run the math"],
+      ["Structuring", "Rights, vehicle, jurisdiction"],
+      ["Infrastructure", "Issuance, custody, distribution"],
+      ["Launch", "Issue, place, operate"],
+    ].map(([t, d], i) => ({ t: (i + 1) + ". " + t, d, sep: i > 0 }));
+    const cases = [
+      { bg: "url(./assets/case-gold.jpg)", tag: "RWA · COMMODITIES", title: "Gold as collateral", desc: "High-purity metal structured across three jurisdictions." },
+      { bg: "url(./assets/case-harvest.jpg)", tag: "RWA · TRADE FINANCE", title: "Exports without bank credit", desc: "Wild-harvest receivables turned into an investable instrument." },
+      { bg: "url(./assets/case-mill.jpg)", tag: "RWA · COMMODITIES", title: "An illiquid metal, made investable", desc: "High-purity metal structured across three jurisdictions." },
+    ].map((c, i) => Object.assign(c, { divider: i < 2 }));
+    const qa = [["How do you reach my verdict?","We score your answers across four pillars: objective fit, asset and rights, demand and economics, and execution. The verdict reflects how all four hold together, and the strengths and open questions above show which answers drove it."],["What does my verdict mean for next steps?","Your verdict shows whether deeper feasibility work makes sense today. A strong result points to the structure worth testing first and the question to resolve before you commit. “Explore first” and “Not yet” show what to fix and when to reassess."],["How accurate can seven questions be?","Seven questions give a first read on whether your case has enough substance to explore. They can’t confirm legal feasibility or investor demand. Those come from deeper work with your facts, your counsel, and real buyer conversations."],["Who would buy fractions of my asset?","That depends on your asset, ticket size, and jurisdiction. Typical buyers include qualified investors, family offices, and investors outside your home market. Confirming a real buyer side for your case comes first, before any structuring."],["What happens after the call?","If the case holds, the Workshop comes next: we collect your asset facts, run a working session, and send a written diagnosis with the math, structure options, and a roadmap. If it doesn’t hold, we’ll tell you what to fix or which financing fits better."]];
+    const faq = qa.map(([q, a], i) => ({
+      q, a, open: open === i,
+      radius: i === 0 ? "10px 10px 0 0" : (i === qa.length - 1 ? "0 0 10px 10px" : "0px"),
+      rot: open === i ? "rotate(180deg)" : "rotate(0deg)",
+      toggle: () => this.setState({ open: open === i ? -1 : i }),
+    }));
+    return {
+      dirTitle: "Asset-backed financing",
+      statusText: "strong potential",
+      statusColor: "rgb(52,199,89)",
+      summary: "You are looking to raise capital in the $1m–$5m range, with a real-estate, infrastructure or equipment asset and documented ownership behind it. That makes asset-backed financing the first structure worth testing. The main unresolved question is jurisdiction and the regulated distribution route.",
+      chartVals: "1,1,0.78,0.78",
+      strengths,
+      validate: ["Jurisdiction and the regulated route for distribution"],
+      inputsLine: "Raise capital against an asset or cash flow",
+      route, cases, faq,
+      callSteps: [{ n: "1" }, { n: "2" }, { n: "3" }],
+    };
+  }
+}
+</script>
+</body>
+</html>

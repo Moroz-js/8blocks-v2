@@ -6,3 +6,5 @@ const locale = lang === 'ru' ? ru : en
 
 export const eventsMeta = locale.eventsMeta
 export const eventsContent = locale.eventsContent
+export const eventsHubContent = locale.eventsHubContent
+export const pastEventsStrings = locale.pastEventsStrings

@@ -7,7 +7,6 @@ import { estimateReadingTime } from '@/entities/article'
 import { blogMeta } from '@/shared/content/blogPage'
 import { visiblePublishedArticleWhere } from '@/shared/lib/visible-article-where'
 import { paginatedListingSeo, withPaginatedListing, withPayloadPageMetadata } from '@/shared/lib/site-seo'
-import { getNonEmptyBlogCategories } from '@/shared/lib/blog-nav-categories'
 
 export async function generateMetadata({ searchParams }: PageProps): Promise<Metadata> {
   const { page } = await searchParams
@@ -52,8 +51,6 @@ export default async function BlogPage({ searchParams }: PageProps) {
     depth: 1,
   })
 
-  // Filter nav: only categories that have published articles
-  const categories = await getNonEmptyBlogCategories(payload)
 
   // Map Payload docs → ArticleCard type
   const articles: ArticleCardType[] = articlesResult.docs.map((doc) => {
@@ -87,10 +84,8 @@ export default async function BlogPage({ searchParams }: PageProps) {
   return (
     <BlogArchive
       articles={articles}
-      categories={categories}
       totalPages={articlesResult.totalPages}
       currentPage={currentPage}
-      totalDocs={articlesResult.totalDocs}
     />
   )
 }

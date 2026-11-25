@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="./hero-digits.js"></script>
+<script src="./binary-glyph.js?v=22"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+image-slot::part(ring){display:none;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+</style>
+<style>
+/* FAQ: answer unfolds smoothly (height + fade + slight rise), chevron turns in step */
+.faq-a{display:grid;grid-template-rows:0fr;opacity:0;margin-top:-10px;transform:translateY(-6px);transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .25s ease;}
+.faq-a[data-st="open"]{grid-template-rows:1fr;opacity:1;margin-top:0;transform:none;transition:grid-template-rows .55s cubic-bezier(.22,1,.36,1),margin-top .55s cubic-bezier(.22,1,.36,1),transform .55s cubic-bezier(.22,1,.36,1),opacity .45s ease .12s;}
+.faq-a-in{min-height:0;overflow:hidden;}
+.faq-chev{transition:transform .55s cubic-bezier(.22,1,.36,1)!important;}
+</style>
+<script>
+/* FAQ toggling happens right in the page (no re-render), so the CSS transition of the same element always plays smoothly */
+(function () { if (window.__faqBound) return; window.__faqBound = true;
+  function set(row, open) { var a = row.querySelector('.faq-a'); if (a) a.setAttribute('data-st', open ? 'open' : 'closed'); var c = row.querySelector('.faq-chev'); if (c) c.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)'; }
+  document.addEventListener('click', function (e) { var row = e.target && e.target.closest ? e.target.closest('[data-faq-row]') : null; if (!row) return;
+    var a = row.querySelector('.faq-a'), wasOpen = a && a.getAttribute('data-st') === 'open';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-faq-row]'), function (r) { if (r !== row) set(r, false); });
+    set(row, !wasOpen); }, true);
+})();
+</script>
+<style>
+/* Accent cards: grain drifts up slowly, brighter specks rise faster with a slight sway, like champagne bubbles */
+@property --acc-y{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-y2{syntax:'<length>';inherits:false;initial-value:0px}
+@property --acc-x{syntax:'<length>';inherits:false;initial-value:0px}
+@keyframes accRise{from{--acc-y:0px;--acc-y2:0px}to{--acc-y:-160px;--acc-y2:-960px}}
+@keyframes accSway{0%,100%{--acc-x:0px}25%{--acc-x:3px}75%{--acc-x:-3px}}
+[style*="accent-noise.png"]{animation:accRise 120s linear infinite,accSway 18s ease-in-out infinite;}
+@media (prefers-reduced-motion:reduce){[style*="accent-noise.png"]{animation:none;}}
+</style>
+<style data-site-nav>
+[data-sn-hdr]{position:sticky !important;top:0 !important;left:auto !important;z-index:30 !important;}
+[data-sn-hdr]::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:rgba(2,2,2,.42);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:opacity .35s ease .15s;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within)::before{opacity:0;transition:opacity .3s ease;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within){border-color:transparent !important;}
+.sn{display:flex;flex-direction:row;gap:40px;align-items:center;font-size:15px;line-height:26px;}
+.sn-btn{position:relative;display:flex;flex-direction:row;gap:7px;align-items:center;padding:0;border:0;background:none;color:rgb(255,255,255);font:inherit;cursor:pointer;border-bottom:1px solid transparent;}
+.sn-chev{transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .3s;opacity:.6;}
+.sn-sheet{position:absolute;left:0;right:0;top:0;height:372px;z-index:-1;pointer-events:none;background:rgba(2,2,2,.64);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-bottom:.881px solid rgba(255,255,255,.17);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .5s cubic-bezier(.65,0,.35,1) .12s,visibility 0s linear .62s;}
+.sn:has(.sn-item:hover,.sn-item:focus-within) .sn-sheet{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path .65s cubic-bezier(.22,1,.36,1),visibility 0s;}
+.sn-panel{position:absolute;left:0;right:0;top:0;z-index:-1;box-sizing:border-box;min-height:372px;padding:122px 40px 30px;display:grid;grid-template-columns:420px 1fr 1fr;gap:5px 60px;cursor:default;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;}
+.sn-panel>*{opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .3s cubic-bezier(.65,0,.35,1);}
+.sn-item:hover .sn-panel,.sn-item:focus-within .sn-panel{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .3s ease .1s,visibility 0s;}
+.sn-item:hover .sn-panel>*,.sn-item:focus-within .sn-panel>*{opacity:1;transform:none;transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+.sn-item:hover .sn-panel>:nth-child(1),.sn-item:focus-within .sn-panel>:nth-child(1){transition-delay:.14s;}
+.sn-item:hover .sn-panel>:nth-child(2),.sn-item:focus-within .sn-panel>:nth-child(2){transition-delay:.2s;}
+.sn-item:hover .sn-panel>:nth-child(3),.sn-item:focus-within .sn-panel>:nth-child(3){transition-delay:.26s;}
+.sn-item:hover .sn-chev,.sn-item:focus-within .sn-chev{transform:rotate(180deg);opacity:1;}
+.sn-intro{position:relative;display:block;width:420px;height:220px;border-radius:10px;overflow:hidden;isolation:isolate;color:rgb(255,255,255);background:linear-gradient(141.36deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);}
+.sn-intro::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:url(./assets/accent-noise.png) 0 0 / 160px 160px repeat;opacity:.6;}
+.sn-txt,.sn-more{z-index:2;}
+a.sn-intro:hover{opacity:1;color:rgb(255,255,255);}
+.sn-ill{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.sn-acc .sn-ill{inset:auto;left:204px;top:-2px;width:292px;height:223px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%);}.sn-acc .sn-ill.sn-house{left:189px;top:-4px;width:345px;height:228px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%);}.sn-acc .sn-ill.sn-prof{left:150px;top:0;width:272px;height:230px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 25%);mask-image:linear-gradient(90deg,transparent 0,#000 25%);}
+.sn-intro:hover .sn-ill{transform:scale(1.03);}
+.sn-txt{position:absolute;left:15px;top:15px;display:flex;flex-direction:column;gap:10px;}
+.sn-h{width:214px;font-size:24px;line-height:30px;opacity:.9;}
+.sn-p{width:249px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;}
+.sn-more{position:absolute;left:15px;bottom:15px;padding:10px 16px;border-radius:50px;background:rgba(255,255,255,.15);font-size:12px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);white-space:nowrap;transition:background .25s;}
+.sn-intro:hover .sn-more{background:rgba(255,255,255,.25);}
+.sn-col{display:flex;flex-direction:column;gap:0;padding-top:0;}
+.sn-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:12px;}
+.sn-a{font-size:16px;line-height:25px;padding:6px 0;color:rgb(255,255,255);opacity:.85;transition:opacity .2s,color .2s;}
+.sn-a:hover{opacity:1;color:rgb(202,0,90);}
+@media (prefers-reduced-motion: reduce){.sn-sheet,.sn-panel,.sn-panel>*,.sn-chev{transition:none !important;}}
+</style>
+<style data-site-footer>
+.ft{display:block;box-sizing:border-box;width:1280px;padding:0 40px 32px;color:rgb(255,255,255);}
+.ft-top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;column-gap:72px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08);}
+.ft-brand{display:flex;flex-direction:column;}
+.ft-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+.ft-col{display:flex;flex-direction:column;gap:12px;}
+.ft-mapcol{display:flex;flex-direction:column;gap:12px;}
+.ft-sh{font-size:18px;line-height:20px;}
+.ft-sp{margin-top:8px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-form{position:relative;margin-top:20px;width:100%;}
+.ft-in{width:100%;height:44px;box-sizing:border-box;border-radius:64px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 52px 0 18px;outline:none;transition:border-color .2s;}
+.ft-in::placeholder{color:rgba(255,255,255,.4);}
+.ft-in:focus{border-color:rgba(255,255,255,.35);}
+.ft-go{position:absolute;right:4px;top:4px;width:36px;height:36px;border:0;padding:0;border-radius:18px;background:rgb(58,58,60);color:rgb(140,140,142);display:flex;align-items:center;justify-content:center;font-family:Manrope,sans-serif;font-size:16px;cursor:default;pointer-events:none;transition:background .25s,color .25s;}
+.ft-form:has(.ft-in:not(:placeholder-shown)) .ft-go{background:rgb(255,255,255);color:rgb(0,0,0);cursor:pointer;pointer-events:auto;}
+.ft-icons{display:flex;flex-direction:row;gap:18px;align-items:center;height:20px;margin-top:28px;}
+.ft-ic{display:flex;align-items:center;opacity:.55;transition:opacity .2s;}
+.ft-ic:hover{opacity:1;}
+.ft-ic svg{display:block;}
+.ft-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:8px;}
+.ft-a{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);opacity:.75;transition:opacity .2s,color .2s;width:max-content;}
+.ft-a:hover{opacity:1;color:rgb(202,0,90);}
+.ft-map{position:relative;height:208px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);}
+.ft-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(1) invert(.92) contrast(.85) brightness(.85);}
+.ft-addr{margin-top:4px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-addr:hover{color:rgb(255,255,255);opacity:1;}
+.ft-bottom{margin-top:56px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:row;justify-content:space-between;align-items:center;font-size:13px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-legal{display:flex;flex-direction:row;gap:24px;}
+.ft-legal a{color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;}
+.ft-legal a:hover{color:rgb(255,255,255);opacity:1;}
+</style>
+<style data-btn-hover>
+/* pill / filled buttons: on hover only the fill changes, the label keeps its colour */
+.hm-tab,.ab-btn,.ar-btn,a[style*="border-radius:64px"],a[style*="border-radius: 64px"],a[style*="border-radius:6px"][style*="background"],a[style*="border-radius: 6px"][style*="background"]{transition:box-shadow .2s ease,background-color .2s ease;}
+a.hm-tab:hover,a.ab-btn:hover,a.ar-btn:hover,a[style*="border-radius:64px"]:hover,a[style*="border-radius: 64px"]:hover,a[style*="border-radius:6px"][style*="background"]:hover,a[style*="border-radius: 6px"][style*="background"]:hover{opacity:1 !important;box-shadow:inset 0 0 0 999px rgba(255,255,255,.14);}
+a.hm-tab:hover{color:rgb(255,255,255) !important;background:rgb(52,52,54) !important;box-shadow:none;}
+a.ab-white:hover,a[style*="background:rgb(255,255,255)"]:hover,a[style*="background: rgb(255, 255, 255)"]:hover{box-shadow:inset 0 0 0 999px rgba(0,0,0,.1);}
+</style>
+</helmet>
+<div data-screen-label="Landing" style="position:relative;width:1280px;margin:0 auto;overflow:clip;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;">
+
+<!-- HEADER (sticky) -->
+<div data-sn-hdr class="sn-sticky" style="position:sticky;top:0;z-index:30;margin-bottom:-92px;width:1280px;height:92px;box-sizing:border-box;border:.881px solid rgba(255,255,255,.17);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 40px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><a href="Home.dc.html" style="display:block;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></a></div>
+  <nav class="sn" aria-label="Main">
+      <div class="sn-sheet" aria-hidden="true"></div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Tokenomics<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Tokenomics.dc.html"><img class="sn-ill" src="./assets/nav-ill-tokenomics-coin.png?v=2" alt=""><div class="sn-txt"><div class="sn-h">Build a working token economy</div><div class="sn-p">Design, validate and improve the economics behind your product.</div></div><span class="sn-more">Explore Tokenomics</span></a>
+        <div class="sn-col"><div class="sn-ch">Expertise</div><a class="sn-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="sn-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="sn-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="sn-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="sn-a" href="Token Launch.dc.html">Token Launch</a></div>
+        <div class="sn-col"><div class="sn-ch">Tools &amp; Research</div><a class="sn-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="sn-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="sn-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="sn-a" href="Audits.dc.html">Public Audits</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Asset Tokenization<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Landing.dc.html"><img class="sn-ill sn-house" src="./assets/nav-ill-assets-house.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Start with the business case</div><div class="sn-p">Explore asset tokenization, assess readiness and plan your next step.</div></div><span class="sn-more">Explore Asset Tokenization</span></a>
+        <div class="sn-col"><div class="sn-ch">Strategy</div><a class="sn-a" href="Landing.dc.html">Asset Tokenization</a></div>
+        <div class="sn-col"><div class="sn-ch">Explore &amp; Assess</div><a class="sn-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="sn-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Company<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="About.dc.html"><img class="sn-ill sn-prof" src="./assets/nav-ill-company-profiles.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Meet 8Blocks</div><div class="sn-p">Our team, client work,<br>events and ideas.</div></div><span class="sn-more">About 8Blocks</span></a>
+        <div class="sn-col"><div class="sn-ch">8Blocks</div><a class="sn-a" href="About.dc.html">About us</a><a class="sn-a" href="Methodology.dc.html">Our Methodology</a><a class="sn-a" href="Cases.dc.html">Client Cases</a><a class="sn-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="sn-a" href="Contact.dc.html">Contact</a></div>
+        <div class="sn-col"><div class="sn-ch">Insights &amp; Media</div><a class="sn-a" href="Blog.dc.html">Blog</a><a class="sn-a" href="Research.dc.html">Research</a><a class="sn-a" href="Press.dc.html">Press</a></div>
+      </div>
+    </div>
+  </nav>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <a href="Contact.dc.html" style="height:48px;border-radius:6px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;;color:rgb(255,255,255);">Contact us</a>
+  </div>
+</div>
+
+
+<!-- HERO -->
+<div style="position:absolute;left:0;top:-11px;width:1280px;height:781px;overflow:hidden;background:rgb(0,0,0);">
+  <img src="./assets/hero.png" alt="" style="position:absolute;left:-1px;top:-57px;width:1281px;height:854px;object-fit:cover;">
+  <div style="position:absolute;z-index:1;left:42px;top:171px;width:630px;opacity:.9;font-size:56px;line-height:64px;pointer-events:none;">Turn a real asset into a&nbsp;financing instrument. Without selling control.</div>
+  <div style="position:absolute;z-index:1;left:42px;top:410px;width:119px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Book a call</div>
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+</div>
+
+<!-- WIDEN ACCESS -->
+<div style="position:absolute;left:0;top:880px;width:1280px;text-align:center;font-size:32px;line-height:40px;">Widen access to capital without selling the asset</div>
+<div style="position:absolute;left:40px;top:960px;width:1200px;height:288px;display:flex;flex-direction:row;gap:5px;align-items:center;">
+  <div style="width:296.25px;height:288px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;gap:16px;padding:30px;box-sizing:border-box;flex-shrink:0;">
+    <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Bank financing</div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">
+      <div>Asset is typically used as collateral</div><div>Cost of capital depends heavily on your local market</div><div>Default can put the underlying asset at risk</div>
+    </div>
+  </div>
+  <div style="width:296.25px;height:288px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;gap:16px;padding:30px;box-sizing:border-box;flex-shrink:0;">
+    <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Bonds / traditional debt</div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">
+      <div>Fixed repayment obligations</div><div>Principal has to be repaid on schedule</div><div>Less flexibility if the project underperforms</div>
+    </div>
+  </div>
+  <div style="width:296.25px;height:288px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;gap:16px;padding:30px;box-sizing:border-box;flex-shrink:0;">
+    <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Equity</div>
+    <div style="display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">
+      <div>You dilute ownership</div><div>Investors receive governance rights</div><div>You may lose part of the operational control over the business</div>
+    </div>
+  </div>
+  <div style="position:relative;flex-grow:1;height:288px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);display:flex;flex-direction:column;gap:10px;padding:30px;box-sizing:border-box;">
+    <div style="position:absolute;inset:0;background:url(./assets/accent-bubbles.png) var(--acc-x) var(--acc-y2) / 240px 240px repeat, url(./assets/accent-noise.png) 0 var(--acc-y) / 160px 160px repeat, linear-gradient(123.9deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);pointer-events:none;"></div>
+    <div style="position:relative;opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Asset Tokenization</div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">
+      <div>Reach investors beyond your home market</div><div>Structure returns around specific asset cash flows</div><div>Keep operational control of the asset</div><div>Choose a structure that fits both the business and investors</div>
+    </div>
+  </div>
+</div>
+<div style="position:absolute;left:288px;top:1288px;width:704px;opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;text-align:center;">Access widens only when a real buyer side exists: that is exactly what the assessment checks.</div>
+
+<!-- OWNERS -->
+<div style="position:absolute;left:0;top:1488px;width:1280px;text-align:center;font-size:32px;line-height:40px;">Owners of real assets. Find your situation</div>
+<div ref="{{ tabsRef }}" style="position:absolute;left:40px;top:1568px;width:1200px;height:44px;display:flex;flex-direction:row;gap:12px;align-items:center;justify-content:center;">
+  <div style="position:absolute;left:0;top:0;height:44px;width:{{ pillW }};border-radius:64px;background:rgb(255,255,255);transform:translateX({{ pillX }});transition:transform 480ms cubic-bezier(0.32,0.72,0,1),width 480ms cubic-bezier(0.32,0.72,0,1);z-index:0;"></div>
+  <div onClick="{{ pickAsset0 }}" ref="{{ tab0ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab0fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-house.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab0filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">Commercial real estate
+  </div>
+  <div onClick="{{ pickAsset1 }}" ref="{{ tab1ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab1fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-book.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab1filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">Debt and collateral on the books
+  </div>
+  <div onClick="{{ pickAsset2 }}" ref="{{ tab2ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab2fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-car.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab2filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">High-value movables people rent
+  </div>
+  <div onClick="{{ pickAsset3 }}" ref="{{ tab3ref }}" style="position:relative;z-index:1;height:44px;border-radius:64px;display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;padding:10px 16px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;color:{{ tab3fg }};transition:color 480ms cubic-bezier(0.32,0.72,0,1);">
+    <img src="./assets/ic-moneybag.svg" alt="" style="width:20px;height:20px;flex-shrink:0;filter:{{ tab3filter }};transition:filter 480ms cubic-bezier(0.32,0.72,0,1);">Securities or fund interests
+  </div>
+</div>
+<div style="position:absolute;left:40px;top:1654px;width:1202px;height:536.332px;display:flex;flex-direction:row;gap:5px;align-items:center;">
+  <div style="position:relative;width:595px;height:536px;border-radius:10px;flex-shrink:0;overflow:hidden;background:rgb(15,15,15);">
+    <div style="position:absolute;inset:0;opacity:{{ img0d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-realestate" shape="rect" src="./assets/asset-realestate.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;opacity:{{ img1d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-debt" shape="rect" src="./assets/asset-debt.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;opacity:{{ img2d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-movables" shape="rect" src="./assets/asset-movables.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;opacity:{{ img3d }};transition:opacity 600ms cubic-bezier(0.32,0.72,0,1);"><image-slot id="asset-securities" shape="rect" src="./assets/asset-securities.jpg" placeholder="Asset image"></image-slot><hero-digits radius="130" step="11" style="position:absolute;left:0;top:0;width:595px;height:536px;pointer-events:none;"></hero-digits></div>
+    <div style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay;opacity:.22;background-image:url(./assets/grain.svg);background-size:120px 120px;"></div>
+  </div>
+  <div style="flex-grow:1;height:536.332px;display:flex;flex-direction:column;gap:5px;">
+    <div style="display:flex;flex-direction:row;gap:5px;flex-grow:1;">
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">You get</div>
+        <div ref="{{ gRef0 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ assetHeadline }}</div>
+      </div>
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ card0label }}</div>
+        <div ref="{{ gRef1 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ card0body }}</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:5px;flex-grow:1;">
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ card1label }}</div>
+        <div ref="{{ gRef2 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ card1body }}</div>
+      </div>
+      <div style="flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(15,15,15);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:7.413px;overflow:hidden;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">{{ card2label }}</div>
+        <div ref="{{ gRef3 }}" style="opacity:.9;font-size:24px;line-height:30px;color:rgb(112,113,114);">{{ card2body }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="position:absolute;left:40px;top:2230px;width:1200px;display:flex;flex-direction:column;gap:8px;">
+  <div style="font-size:16px;line-height:22px;letter-spacing:.01em;">{{ exTitle }}</div>
+  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ exBody }}</div>
+</div>
+
+<!-- REAL ESTATE (hidden on request; layout below shifted up by 398px) -->
+<div style="display:none;">
+
+<div style="position:absolute;left:40px;top:2410px;width:1200px;height:268px;border-radius:10px;background:rgb(16,17,19);overflow:hidden;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;padding:40px;box-sizing:border-box;">
+  
+  <div style="position:relative;width:768px;display:flex;flex-direction:column;gap:20px;pointer-events:none;">
+    <div style="width:452px;opacity:.9;font-size:32px;line-height:40px;">Real Estate Tokenization is already working worldwide</div>
+    <div style="width:741px;opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;">Working example from commercial real estate: in May 2025 the Dubai Land Department, a government body, launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes.</div>
+  </div>
+  <div style="position:relative;z-index:2;width:270px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;flex-shrink:0;">Explore Real Estate Tokenozation</div>
+</div>
+
+<div style="position:absolute;left:40px;top:2150px;width:1200px;height:528px;overflow:hidden;border-radius:0 0 10px 0;pointer-events:none;"><img src="./assets/tower.png" alt="" style="position:absolute;left:848px;bottom:-40px;width:396px;height:509px;"></div>
+
+</div>
+
+<!-- STEPS -->
+<div style="position:absolute;left:40px;top:2470px;font-size:32px;line-height:40px;">From asset to instrument, step by step.</div>
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+<div style="position:absolute;left:0;top:{{ s.top }};width:1280px;height:96px;box-sizing:border-box;border:.936px solid rgba(255,255,255,.1);display:flex;flex-direction:row;align-items:center;padding:0 40px 0 0;">
+  <div style="width:94px;align-self:stretch;box-sizing:border-box;border:.936px solid rgba(255,255,255,.1);display:flex;align-items:center;padding:0 9.359px 0 40px;flex-shrink:0;font-size:14px;line-height:20px;letter-spacing:.01em;">{{ s.n }}</div>
+  <div style="flex-grow:1;flex-basis:0;align-self:stretch;display:flex;align-items:center;justify-content:center;"><div style="width:388px;font-size:14px;line-height:20px;letter-spacing:.01em;"><span style="color:rgb(255,255,255);">{{ s.aLead }}</span> <span style="color:rgb(112,113,114);">{{ s.a }}</span></div></div>
+  <div style="flex-grow:1;flex-basis:0;align-self:stretch;display:flex;align-items:center;"><div style="width:388px;font-size:14px;line-height:20px;letter-spacing:.01em;"><span style="color:rgb(255,255,255);">You leave with:</span> <span style="color:rgb(112,113,114);">{{ s.b }}</span></div></div>
+  <div style="width:115px;height:56px;flex-shrink:0;display:flex;justify-content:flex-end;">
+    <sc-if value="{{ s.btn }}" hint-placeholder-val="{{ true }}">
+    <div style="height:56px;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">{{ s.btn }}</div>
+    </sc-if>
+  </div>
+</div>
+</sc-for>
+<div style="position:absolute;left:0;top:3020px;width:1280px;height:96px;background:rgb(16,17,19);"></div>
+<div style="position:absolute;left:40px;top:3053px;font-size:24px;line-height:30px;">Prefer self-serve first?</div>
+<div style="position:absolute;left:729px;top:3040px;width:511px;height:56px;display:flex;flex-direction:row;gap:10px;align-items:center;">
+  <div style="width:276px;height:56px;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Run the 3-minute readiness check</div>
+  <div style="width:225px;height:56px;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Browse institutional cases</div>
+</div>
+
+<!-- DUBAI / MARKET -->
+<div style="position:absolute;left:33px;top:3296px;width:596.51px;height:533.13px;overflow:hidden;border-radius:13.98px;background:rgb(15,15,15);">
+  <img src="./assets/dubai.png" alt="" style="position:absolute;left:0;top:0;width:596.51px;height:533.13px;">
+  
+  <div style="position:absolute;left:0;top:27.961px;width:596.51px;display:flex;justify-content:center;pointer-events:none;">
+    <div style="display:flex;flex-direction:row;gap:7.456px;align-items:center;font-size:13.98px;line-height:1.6;font-weight:400;">
+      <div style="width:23.3px;height:23.3px;border-radius:50%;background:linear-gradient(180deg,rgb(0,115,47) 0 33%,rgb(255,255,255) 33% 66%,rgb(0,0,0) 66%);position:relative;overflow:hidden;"><div style="position:absolute;left:0;top:0;width:7px;height:100%;background:rgb(206,17,38);"></div></div>
+      <span>Dubai</span><span>·</span><span>May 2025</span>
+    </div>
+  </div>
+  <div style="position:absolute;left:56.855px;top:62.447px;width:482.8px;text-align:center;font-size:37.28px;line-height:49.864px;letter-spacing:-.01em;pointer-events:none;">First government-run platform for tokenized property title deeds</div>
+  <div style="position:absolute;left:68.039px;top:233.012px;width:461.363px;text-align:center;font-size:13.05px;line-height:1.5;pointer-events:none;">dirham payments, entry from AED 2,000, real title deeds on record.</div>
+  <a href="https://dubailand.gov.ae/en/news-media/dld-launches-the-mena-s-first-tokenized-real-estate-project-through-the-prypco-mint-platform" target="_blank" rel="noopener" style="position:absolute;left:219.963px;top:445.518px;width:157.107px;height:59.651px;border-radius:93.2px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:1.35;color:rgb(0,0,0);white-space:nowrap;">View source</a>
+</div>
+<div style="position:absolute;left:643.49px;top:3296px;width:596.51px;height:533.13px;display:flex;flex-direction:column;gap:13.98px;">
+  <div style="position:relative;flex-grow:1;flex-basis:0;overflow:hidden;border-radius:13.98px;background:rgb(15,15,15);display:flex;flex-direction:column;justify-content:space-between;padding:27.961px;box-sizing:border-box;">
+    <div style="position:absolute;inset:0;"><image-slot id="market-img-1" shape="rect" src="./assets/src-money.png" placeholder="Photo"></image-slot></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(474.6px 563.3px at 97.38% 40.68%,rgba(15,15,15,0) 29.49%,rgb(15,15,15) 100%);pointer-events:none;"></div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:9.32px;pointer-events:none;">
+      <div style="font-size:24.52px;line-height:1.35;">Real money, early market</div>
+      <div style="width:338.333px;opacity:.5;font-size:13.05px;line-height:1.5;">Tokenized U.S. Treasuries grew from $104 million to roughly $5 billion in two years. Real estate on the same rails is still under 0.1% of the global market. Both facts shape how we size your case.</div>
+    </div>
+    <div style="position:relative;display:flex;flex-direction:row;gap:22.369px;align-items:center;">
+      <a href="https://reports.weforum.org/docs/WEF_Asset_Tokenization_in_Financial_Markets_2025.pdf" target="_blank" rel="noopener" style="width:157.107px;height:59.651px;border-radius:93.2px;background:rgba(227,230,232,.15);display:flex;align-items:center;justify-content:center;font-size:14px;white-space:nowrap;">View source</a>
+      <div style="display:flex;flex-direction:row;gap:7.456px;align-items:center;font-size:13.98px;line-height:1.6;font-weight:400;">
+        <div style="width:23.3px;height:23.3px;border-radius:50%;background:repeating-linear-gradient(180deg,rgb(178,34,52) 0 2.5px,rgb(255,255,255) 2.5px 5px);position:relative;overflow:hidden;"><div style="position:absolute;left:0;top:0;width:11px;height:12px;background:rgb(60,59,110);"></div></div>
+        <span>USA</span><span>·</span><span>2023–2025</span>
+      </div>
+    </div>
+  </div>
+  <div style="position:relative;flex-grow:1;flex-basis:0;overflow:hidden;border-radius:13.98px;background:rgb(15,15,15);display:flex;flex-direction:column;justify-content:space-between;padding:27.961px;box-sizing:border-box;">
+    <div style="position:absolute;inset:0;"><image-slot id="market-img-2" shape="rect" src="./assets/src-justice.png" placeholder="Photo"></image-slot></div>
+    <div style="position:absolute;inset:0;background:radial-gradient(728.2px 1007.7px at 97.38% 40.68%,rgba(15,15,15,0) 29.49%,rgb(15,15,15) 100%);pointer-events:none;"></div>
+    <div style="position:relative;display:flex;flex-direction:column;gap:9.32px;pointer-events:none;">
+      <div style="font-size:24.52px;line-height:1.35;">The rules are now explicit</div>
+      <div style="width:382.139px;opacity:.5;font-size:13.05px;line-height:1.5;">SEC staff clarified that a tokenized security is still a security: the technology changes the format, not the law. In the EU, MiCA, the Markets in Crypto-Assets regulation, has been in force since 2024.</div>
+    </div>
+    <div style="position:relative;display:flex;flex-direction:row;gap:22.369px;align-items:center;">
+      <a href="https://www.morganlewis.com/pubs/2026/02/sec-clarifies-federal-securities-law-treatment-of-tokenized-securities" target="_blank" rel="noopener" style="width:157.107px;height:59.651px;border-radius:93.2px;background:rgba(227,230,232,.15);display:flex;align-items:center;justify-content:center;font-size:14px;white-space:nowrap;">View source</a>
+      <div style="display:flex;flex-direction:row;gap:7.456px;align-items:center;font-size:13.98px;line-height:1.6;font-weight:400;">
+        <div style="width:23.3px;height:23.3px;border-radius:50%;background:rgb(0,51,153);display:flex;align-items:center;justify-content:center;"><div style="width:11px;height:11px;border-radius:50%;border:1.5px dotted rgb(255,204,0);"></div></div>
+        <span>EU</span><span>·</span><span>2023–2025</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHERE RWA -->
+<div style="position:absolute;left:0;top:4002px;width:1280px;text-align:center;font-size:32px;line-height:40px;z-index:2;">Where RWA tokens can be issued</div>
+<div style="position:absolute;left:406.5px;top:4052px;width:467px;opacity:.4;z-index:2;text-align:center;font-size:14px;line-height:20px;letter-spacing:.01em;">There is no single “RWA law”. Each jurisdiction combines securities, fund and digital-asset rules: here is how the main ones work today.</div>
+<div style="position:absolute;left:0;top:4022px;width:1280px;height:778px;overflow:visible;">
+      <div style="position:absolute;inset:0;overflow:hidden;"><img src="./assets/globe.png" alt="" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%;"></div>
+      <div style="position: absolute; left: 0; right: 0; top: 0; height: 30%; background: linear-gradient(180deg, #000000 0%, rgba(0,0,0,0) 100%);"></div>
+      <div style="position: absolute; left: 0; right: 0; bottom: -1px; height: 28%; background: linear-gradient(180deg, rgba(0,0,0,0) 0%, #000000 100%);"></div>
+      <div style="pointer-events: auto; position: absolute; left: 5%; top: 404px; display: flex; flex-direction: column; align-items: center">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><svg viewBox="0 0 60 36" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="36" fill="#012169"></rect><path d="M0 0l60 36M60 0L0 36" stroke="#ffffff" stroke-width="7"></path><path d="M0 0l60 36M60 0L0 36" stroke="#C8102E" stroke-width="4"></path><path d="M30 0v36M0 18h60" stroke="#ffffff" stroke-width="12"></path><path d="M30 0v36M0 18h60" stroke="#C8102E" stroke-width="7"></path></svg></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">United Kingdom</span>
+        <span onClick="{{ open1 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="pointer-events: auto; position: absolute; left: 222px; top: 482px; display: flex; flex-direction: column; align-items: center">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><svg viewBox="0 0 30 20" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#003399"></rect><polygon points="15.00,1.65 15.30,2.58 16.28,2.58 15.49,3.16 15.79,4.09 15.00,3.52 14.21,4.09 14.51,3.16 13.72,2.58 14.70,2.58" fill="#FFCC00"></polygon><polygon points="18.50,2.59 18.80,3.52 19.78,3.52 18.99,4.10 19.29,5.03 18.50,4.45 17.71,5.03 18.01,4.10 17.22,3.52 18.20,3.52" fill="#FFCC00"></polygon><polygon points="21.06,5.15 21.37,6.08 22.35,6.08 21.55,6.66 21.86,7.59 21.06,7.02 20.27,7.59 20.57,6.66 19.78,6.08 20.76,6.08" fill="#FFCC00"></polygon><polygon points="22.00,8.65 22.30,9.58 23.28,9.58 22.49,10.16 22.79,11.09 22.00,10.52 21.21,11.09 21.51,10.16 20.72,9.58 21.70,9.58" fill="#FFCC00"></polygon><polygon points="21.06,12.15 21.37,13.08 22.35,13.08 21.55,13.66 21.86,14.59 21.06,14.02 20.27,14.59 20.57,13.66 19.78,13.08 20.76,13.08" fill="#FFCC00"></polygon><polygon points="18.50,14.71 18.80,15.64 19.78,15.65 18.99,16.22 19.29,17.15 18.50,16.58 17.71,17.15 18.01,16.22 17.22,15.65 18.20,15.64" fill="#FFCC00"></polygon><polygon points="15.00,15.65 15.30,16.58 16.28,16.58 15.49,17.16 15.79,18.09 15.00,17.52 14.21,18.09 14.51,17.16 13.72,16.58 14.70,16.58" fill="#FFCC00"></polygon><polygon points="11.50,14.71 11.80,15.64 12.78,15.65 11.99,16.22 12.29,17.15 11.50,16.58 10.71,17.15 11.01,16.22 10.22,15.65 11.20,15.64" fill="#FFCC00"></polygon><polygon points="8.94,12.15 9.24,13.08 10.22,13.08 9.43,13.66 9.73,14.59 8.94,14.02 8.14,14.59 8.45,13.66 7.65,13.08 8.63,13.08" fill="#FFCC00"></polygon><polygon points="8.00,8.65 8.30,9.58 9.28,9.58 8.49,10.16 8.79,11.09 8.00,10.52 7.21,11.09 7.51,10.16 6.72,9.58 7.70,9.58" fill="#FFCC00"></polygon><polygon points="8.94,5.15 9.24,6.08 10.22,6.08 9.43,6.66 9.73,7.59 8.94,7.02 8.14,7.59 8.45,6.66 7.65,6.08 8.63,6.08" fill="#FFCC00"></polygon><polygon points="11.50,2.59 11.80,3.52 12.78,3.52 11.99,4.10 12.29,5.03 11.50,4.45 10.71,5.03 11.01,4.10 10.22,3.52 11.20,3.52" fill="#FFCC00"></polygon></svg></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">European Union</span>
+        <span onClick="{{ open2 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="position: absolute; left: 128px; top: 525px; display: flex; flex-direction: column; align-items: center">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><div style="position: absolute; inset: 0; display: flex; flex-direction: column;"><div style="flex: 1 1 0; background: #D52B1E;"></div></div><div style="position: absolute; left: 50%; top: 50%; width: 22px; height: 6px; margin: -3px 0 0 -11px; background: #ffffff;"></div><div style="pointer-events: auto; position: absolute; left: 50%; top: 50%; width: 6px; height: 22px; margin: -11px 0 0 -3px; background: #ffffff;"></div></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Switzerland</span>
+        <span onClick="{{ open3 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="position: absolute; left: 40%; top: 67%; display: flex; flex-direction: column; align-items: center;">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><div style="position: absolute; inset: 0; display: flex; flex-direction: column;"><div style="flex: 1 1 0; background: #00AFCA;"></div></div><div style="pointer-events: auto; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; background: #FEC50C;"></div></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Kazakhstan</span>
+        <span onClick="{{ open4 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="position: absolute; left: 25%; top: 84%; display: flex; flex-direction: column; align-items: center;">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><div style="position: absolute; inset: 0; display: flex; flex-direction: column;"><div style="flex: 1 1 0; background: #00732F;"></div><div style="flex: 1 1 0; background: #ffffff;"></div><div style="flex: 1 1 0; background: #000000;"></div></div><div style="pointer-events: auto; position: absolute; left: 0; top: 0; bottom: 0; width: 14px; background: #FF0000;"></div></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">UAE</span>
+        <span onClick="{{ open5 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="position: absolute; left: 80%; top: 67%; display: flex; flex-direction: column; align-items: center;">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><div style="position: absolute; inset: 0; display: flex; flex-direction: column;"><div style="flex: 1 1 0; background: #ffffff;"></div></div><div style="pointer-events: auto; position: absolute; left: 50%; top: 50%; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: #BC002D;"></div></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Japan</span>
+        <span onClick="{{ open6 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="pointer-events: auto; position: absolute; left: 60%; top: 88%; display: flex; flex-direction: column; align-items: center;">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><img src="./assets/flag-sg.png" alt="Singapore" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Singapore</span>
+        <span onClick="{{ open7 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="pointer-events: auto; position: absolute; left: 1.5%; top: 522px; display: flex; flex-direction: column; align-items: center">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><img src="./assets/flag-us.png" alt="United States" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">United States</span>
+        <span onClick="{{ open8 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+      <div style="pointer-events: auto; position: absolute; left: 3%; top: 90%; display: flex; flex-direction: column; align-items: center;">
+        <div style="margin-bottom: 12px; width: 52px; height: 52px; box-sizing: border-box; border: 2px solid #ffffff; border-radius: 15px; overflow: hidden; background: #ffffff; box-shadow: 0 14px 34px rgba(0,0,0,0.55); position: relative;"><img src="./assets/flag-bvi.png" alt="British Virgin Islands" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></div>
+        <span style="margin-bottom: 4px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">British Virgin Islands</span>
+        <span onClick="{{ open9 }}" style="pointer-events: auto; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 500; font-size: 12px; line-height: 1.2; color: #707172;">Learn more <svg width="6" height="10" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+      </div>
+    </div>
+
+<!-- THREE DEPTHS -->
+<div style="position:absolute;left:0;top:5062px;width:1280px;text-align:center;font-size:32px;line-height:40px;">Three depths of involvement</div>
+<div style="position:absolute;left:40px;top:5142.56px;width:1200px;height:680px;display:flex;flex-direction:row;gap:5px;align-items:center;">
+  <sc-for list="{{ depths }}" as="d" hint-placeholder-count="3">
+  <div style="position:relative;width:396.667px;height:680px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:30px;box-sizing:border-box;">
+    <sc-if value="{{ d.badge }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:50%;top:-14px;transform:translateX(-50%);height:28px;padding:0 16px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(16,17,19);white-space:nowrap;">Most popular option</div></sc-if>
+    <div style="height:100px;display:flex;flex-direction:column;gap:10px;align-items:center;align-self:stretch;">
+      <div style="font-size:24px;line-height:30px;text-align:center;white-space:pre-line;">{{ d.title }}</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;text-align:center;">{{ d.sub }}</div>
+    </div>
+    <div style="position:relative;width:222px;height:222px;flex-shrink:0;pointer-events:none;"><div style="position:absolute;left:0px;top:0px;width:222px;height:222px;pointer-events:none;"><dc-import name="Binary Engine" src="{{ d.ref }}" sparkle="{{ d.sparkle }}" reveal="{{ d.reveal }}" contrast="{{ d.contrast }}" tone="{{ d.tone }}" edge-feather="{{ d.edgeFeather }}" punch="{{ d.punch }}" detail="{{ d.detail }}" weight="{{ d.weight }}" w="444" h="444" density="2" hint-size="222px,222px" style="width:222px;height:222px;"></dc-import></div></div>
+    <div style="position:relative;height:238px;display:flex;flex-direction:column;gap:20px;align-items:center;align-self:stretch;">
+      <div style="width:336px;display:flex;flex-direction:column;gap:7.413px;text-align:center;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">You provide</div>
+        <div style="opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;white-space:nowrap;">{{ d.p1 }}</div>
+      </div>
+      <div style="width:336px;display:flex;flex-direction:column;gap:7.413px;text-align:center;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">Who executes</div>
+        <div style="opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;white-space:nowrap;">{{ d.p2 }}</div>
+      </div>
+      <div style="width:336.667px;height:0;border-top:1px solid rgb(27,27,27);margin:4px 0;"></div>
+      <div style="width:336px;display:flex;flex-direction:column;gap:7.413px;text-align:center;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">Ends with</div>
+        <div style="opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;white-space:nowrap;">{{ d.p3 }}</div>
+      </div>
+    </div>
+    <div style="align-self:stretch;height:56px;margin-top:4px;border-radius:64px;background:{{ d.btnBg }};color:{{ d.btnColor }};display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;">Book a call</div>
+  </div>
+  </sc-for>
+</div>
+
+<!-- 8 BLOCKS -->
+<div style="position:absolute;left:40px;top:6002px;font-size:32px;line-height:40px;">8Blocks in 8 blocks</div>
+<div style="position:absolute;left:40px;top:6082.56px;width:797px;height:295px;display:flex;flex-direction:row;gap:10px;">
+  <div style="position:relative;flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:flex-end;gap:5px;padding:30px;box-sizing:border-box;overflow:hidden;">
+    <div style="position:absolute;left:5px;top:10px;width:190px;height:190px;pointer-events:none;"><dc-import name="Binary Engine" src="./assets/ill-clock.png" sparkle="{{ eng.sparkle }}" reveal="{{ eng.reveal }}" contrast="{{ eng.contrast }}" tone="{{ eng.tone }}" edge-feather="{{ eng.edgeFeather }}" punch="{{ eng.punch }}" detail="{{ eng.detail }}" weight="{{ eng.weight }}" w="380" h="380" density="2" hint-size="190px,190px" style="width:190px;height:190px;"></dc-import></div>
+    <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Since 2017</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Token economies designed through every market cycle.</div>
+  </div>
+  <div style="position:relative;flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:flex-end;gap:5px;padding:30px;box-sizing:border-box;overflow:hidden;">
+    <div style="position:absolute;left:5px;top:10px;width:190px;height:190px;pointer-events:none;"><dc-import name="Binary Engine" src="./assets/ill-coin.png" sparkle="{{ eng.sparkle }}" reveal="{{ eng.reveal }}" contrast="{{ eng.contrast }}" tone="{{ eng.tone }}" edge-feather="{{ eng.edgeFeather }}" punch="{{ eng.punch }}" detail="{{ eng.detail }}" weight="{{ eng.weight }}" w="380" h="380" density="2" hint-size="190px,190px" style="width:190px;height:190px;"></dc-import></div>
+    <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Economics first</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">A structure must pay off as a business before it exists as software.</div>
+  </div>
+</div>
+<div style="position:absolute;left:40px;top:6387.56px;width:797px;height:295px;display:flex;flex-direction:row;gap:10px;">
+  <div style="position:relative;flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:flex-end;gap:5px;padding:30px;box-sizing:border-box;overflow:hidden;">
+    <div style="position:absolute;left:5px;top:10px;width:190px;height:190px;pointer-events:none;"><dc-import name="Binary Engine" src="./assets/ill-flag.png" sparkle="{{ eng.sparkle }}" reveal="{{ eng.reveal }}" contrast="{{ eng.contrast }}" tone="{{ eng.tone }}" edge-feather="{{ eng.edgeFeather }}" punch="{{ eng.punch }}" detail="{{ eng.detail }}" weight="{{ eng.weight }}" w="380" h="380" density="2" hint-size="190px,190px" style="width:190px;height:190px;"></dc-import></div>
+    <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Jurisdiction-specific</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Every structure is drawn for your counsel’s review.</div>
+  </div>
+  <div style="position:relative;flex-grow:1;flex-basis:0;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:flex-end;gap:5px;padding:30px;box-sizing:border-box;overflow:hidden;">
+    <div style="position:absolute;left:5px;top:10px;width:190px;height:190px;pointer-events:none;"><dc-import name="Binary Engine" src="./assets/ill-kettlebell.png" sparkle="{{ eng.sparkle }}" reveal="{{ eng.reveal }}" contrast="{{ eng.contrast }}" tone="{{ eng.tone }}" edge-feather="{{ eng.edgeFeather }}" punch="{{ eng.punch }}" detail="{{ eng.detail }}" weight="{{ eng.weight }}" w="380" h="380" density="2" hint-size="190px,190px" style="width:190px;height:190px;"></dc-import></div>
+    <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">Stress-tested</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Models are pressure-tested before anything launches.</div>
+  </div>
+</div>
+<div style="position:absolute;left:847px;top:6082.56px;width:393px;height:600px;display:flex;flex-direction:column;gap:10px;">
+  <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="4">
+  <div style="position:relative;width:393px;height:142.5px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:center;align-items:flex-end;gap:10px;padding:30px;box-sizing:border-box;overflow:hidden;">
+    <div style="position:absolute;left:9px;top:1px;width:140px;height:140px;pointer-events:none;"><dc-import name="Binary Engine" src="{{ b.ref }}" sparkle="{{ b.sparkle }}" reveal="{{ b.reveal }}" contrast="{{ b.contrast }}" tone="{{ b.tone }}" edge-feather="{{ b.edgeFeather }}" punch="{{ b.punch }}" detail="{{ b.detail }}" weight="{{ b.weight }}" w="280" h="280" density="2" hint-size="140px,140px" style="width:140px;height:140px;"></dc-import></div>
+    <div style="width:60%;display:flex;flex-direction:column;gap:5px;">
+      <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ b.t }}</div><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ b.d }}</div>
+    </div>
+  </div>
+  </sc-for>
+</div>
+
+<!-- CASEWORK -->
+<div style="position:absolute;left:40px;top:6862.56px;font-size:32px;line-height:40px;">From our casework</div>
+<div style="position:absolute;left:0;top:6942.56px;width:1280px;display:flex;flex-direction:column;gap:40px;padding:0 40px;box-sizing:border-box;">
+  <sc-for list="{{ cases }}" as="c" hint-placeholder-count="3">
+  <div style="display:flex;flex-direction:column;gap:40px;">
+    <div style="height:148px;display:flex;flex-direction:row;gap:30px;align-items:center;">
+      <div style="width:230px;height:148px;border-radius:15px;flex-shrink:0;overflow:hidden;"><div style="width:100%;height:100%;background-image:{{ c.bg }};background-size:cover;background-position:center;"></div></div>
+      <div style="flex-grow:1;display:flex;flex-direction:column;">
+        <div style="opacity:.4;font-size:14px;line-height:20px;letter-spacing:.01em;margin-bottom:-10px;">{{ c.tag }}</div>
+        <div style="display:flex;flex-direction:column;gap:15px;">
+          <div style="height:56px;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-end;">
+            <div style="font-size:24px;line-height:30px;white-space:nowrap;">{{ c.title }}</div>
+            <a href="Cases.dc.html" style="width:115px;height:56px;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">View case</a>
+          </div>
+          <div style="height:22px;display:flex;flex-direction:row;justify-content:space-between;align-items:center;">
+            <div style="width:468.83px;opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ c.desc }}</div>
+            <div style="display:flex;flex-direction:row;gap:5.947px;align-items:center;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="rgb(255,255,255)"><path d="M9 1 2.5 9.5H7.5L7 15l6.5-8.5H8.5L9 1Z"></path></svg>
+              <div style="opacity:.4;font-size:16px;line-height:22px;letter-spacing:.01em;white-space:nowrap;">12 min read</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <sc-if value="{{ c.divider }}" hint-placeholder-val="{{ true }}"><div style="height:0;border-top:1px solid rgb(27,27,27);"></div></sc-if>
+  </div>
+  </sc-for>
+</div>
+
+<!-- CTA -->
+<div style="position:absolute;left:40px;top:7817.57px;width:1200px;height:214px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;left:30px;top:30px;width:573px;display:flex;flex-direction:column;gap:13.79px;">
+    <div style="width:627px;font-size:32px;line-height:40px;white-space:pre-line;">We are trying
+to determine whether
+a real business case exists</div>
+    <div style="width:468.83px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">before you spend money on legal or technical implementation.</div>
+  </div>
+  <div style="position:absolute;right:30px;top:79px;display:flex;flex-direction:row;gap:10px;align-items:center;">
+    <div style="width:214px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Book the free 45-min call</div>
+    <div style="width:239px;height:56px;border-radius:64px;background:rgba(255,255,255,.15);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Or check your readiness first</div>
+  </div>
+</div>
+
+<!-- RESOURCES -->
+<div style="position:absolute;left:40px;top:8211.57px;width:1200px;height:385px;display:flex;flex-direction:row;justify-content:space-between;">
+  <div style="position:relative;width:597px;height:385px;border-radius:10px;background:rgb(255,255,255);color:rgb(0,0,0);">
+    <div style="position:absolute;left:39.729px;top:43.617px;width:517.381px;display:flex;flex-direction:column;gap:13.79px;">
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">Self-serve</div>
+      <div style="font-size:32px;line-height:40px;">Check your asset in Token Lab.</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">A few questions about the asset and the goal: a first read on what might fit, before you talk to anyone. Three minutes, free, no registration</div>
+    </div>
+    <div style="position:absolute;left:29.729px;top:299px;width:154px;height:56px;border-radius:64px;background:rgb(0,0,0);color:rgb(255,255,255);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open Token Lab</div>
+  </div>
+  <div style="position:relative;width:597px;height:385px;border-radius:10px;background:rgb(15,15,15);">
+    <div style="position:absolute;left:40.792px;top:44.617px;width:517.381px;display:flex;flex-direction:column;gap:13.79px;">
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;">For the busy owner</div>
+      <div style="font-size:32px;line-height:40px;">The owner’s guide, on one page.</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Seven questions to ask before tokenizing an asset, the same ones we ask on the call. No email required.</div>
+    </div>
+    <div style="position:absolute;left:29.89px;top:299px;width:151px;height:56px;border-radius:64px;background:rgba(255,255,255,.15);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Open the guide</div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div style="position:absolute;left:0;top:8776.57px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div>
+  <div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+    <div data-faq-row style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <div class="faq-a" data-st="{{ f.st }}"><div class="faq-a-in"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></div></div>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" class="faq-chev" style="transform:{{ f.rot }};transition:transform .55s cubic-bezier(.22,1,.36,1);flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div>
+  <div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+</div>
+
+
+<sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeModal }}" style="position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:48px;">
+    <div onClick="{{ stopClick }}" style="position:relative;box-sizing:border-box;width:720px;max-height:80vh;overflow-y:auto;padding:44px 48px 48px;border-radius:24px;background:rgb(18,18,18);border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.7);display:flex;flex-direction:column;gap:28px;">
+      <div style="display:flex;flex-direction:row;align-items:flex-start;justify-content:space-between;gap:24px;">
+        <div style="font-size:32px;line-height:40px;">{{ modalTitle }}</div>
+        <div onClick="{{ closeModal }}" style="flex-shrink:0;width:40px;height:40px;border-radius:50%;cursor:pointer;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round"></path></svg></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px;">
+        <sc-for list="{{ modalParas }}" as="para" hint-placeholder-count="2"><div style="font-size:16px;line-height:22px;letter-spacing:.01em;color:rgb(167,168,169);">{{ para }}</div></sc-for>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<div aria-hidden="true" style="height:9735px;"></div>
+<!-- FOOTER -->
+<footer class="ft" style="margin-top:0;">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-sh">Subscribe</div>
+      <div class="ft-sp">A newsletter for those<br>who want to go deeper.</div>
+      <div class="ft-form"><input class="ft-in" type="email" required placeholder="Your email" aria-label="Your email"><button class="ft-go" type="button" aria-label="Subscribe">→</button></div>
+      <div class="ft-icons"><a href="https://x.com/8BlocksLabs" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.3263 1.90391H21.6998L14.3297 10.3274L23 21.7899H16.2112L10.894 14.8379L4.80995 21.7899H1.43443L9.31743 12.78L1 1.90391H7.96111L12.7674 8.25824L18.3263 1.90391ZM17.1423 19.7707H19.0116L6.94539 3.81704H4.93946L17.1423 19.7707Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://www.linkedin.com/company/8blocksio" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://t.me/eightblocks" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.43 8.85893C11.2628 9.3444 8.93014 10.3492 5.43189 11.8733C4.86383 12.0992 4.56626 12.3202 4.53917 12.5363C4.49339 12.9015 4.95071 13.0453 5.57348 13.2411C5.65819 13.2678 5.74596 13.2954 5.83594 13.3246C6.44864 13.5238 7.27283 13.7568 7.70129 13.766C8.08994 13.7744 8.52373 13.6142 9.00264 13.2853C12.2712 11.079 13.9584 9.96381 14.0643 9.93977C14.139 9.92281 14.2426 9.90148 14.3128 9.96385C14.3829 10.0262 14.376 10.1443 14.3686 10.176C14.3233 10.3691 12.5281 12.0381 11.5991 12.9018C11.3095 13.171 11.1041 13.362 11.0621 13.4056C10.968 13.5034 10.8721 13.5958 10.78 13.6846C10.2108 14.2333 9.78391 14.6448 10.8036 15.3168C11.2936 15.6397 11.6858 15.9067 12.0769 16.1731C12.5042 16.4641 12.9303 16.7543 13.4816 17.1157C13.6221 17.2078 13.7562 17.3034 13.8869 17.3965C14.3841 17.751 14.8307 18.0694 15.3826 18.0186C15.7032 17.9891 16.0345 17.6876 16.2027 16.7884C16.6002 14.6632 17.3816 10.0585 17.5622 8.16098C17.578 7.99473 17.5581 7.78197 17.5422 7.68857C17.5262 7.59518 17.4928 7.46211 17.3714 7.3636C17.2276 7.24694 17.0056 7.22234 16.9064 7.22408C16.455 7.23203 15.7626 7.47282 12.43 8.85893Z" fill-rule="evenodd" clip-rule="evenodd" fill="rgb(255,255,255)"></path></svg></a><a href="https://base.app/profile/8blocks" target="_blank" rel="noopener" aria-label="Base" title="Base" class="ft-ic"><svg width="16" height="16" viewBox="0 0 1280 1280" fill="none"><path d="M0,101.12c0-34.64,0-51.95,6.53-65.28,6.25-12.76,16.56-23.07,29.32-29.32C49.17,0,66.48,0,101.12,0h1077.76C1213.51,0,1230.84,0,1244.16,6.53c12.75,6.25,23.06,16.56,29.32,29.32,6.52,13.32,6.52,30.64,6.52,65.28v1077.76c0,34.63,0,51.96-6.52,65.28-6.26,12.75-16.57,23.06-29.32,29.32-13.32,6.52-30.65,6.52-65.28,6.52H101.12c-34.64,0-51.95,0-65.28-6.52-12.76-6.26-23.07-16.57-29.32-29.32-6.53-13.32-6.53-30.65-6.53-65.28V101.12Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://clutch.co/profile/8blocks-fzco" target="_blank" rel="noopener" aria-label="Clutch" title="Clutch" class="ft-ic"><svg width="56" height="16" viewBox="0 0 202.761 57.7631" fill="none"><path d="M62.1626 0.000131153H52.8467V57.7594H62.1626V0.000131153Z" fill="rgb(255,255,255)"></path><path d="M94.5149 57.7593H103.831V18.6319H94.5149V39.2957H94.683C94.683 47.9355 87.231 48.7796 85.199 48.7796C79.779 48.7796 78.595 43.5278 78.595 40.3117V18.6319H69.2791V40.6516C69.2791 46.0715 71.143 50.4755 73.8511 53.6953C76.3911 56.2353 80.4551 57.7593 85.0309 57.7593C88.2507 57.7593 92.4829 56.9114 94.5149 54.5395V57.7593Z" fill="rgb(255,255,255)"></path><path d="M112.806 57.7595H122.122V27.948H128.898V18.6321H122.122V4.74414H112.806V18.6321H105.862V27.948H112.806V57.7595Z" fill="rgb(255,255,255)"></path><path d="M150.577 57.5913C155.829 57.5913 160.741 55.7274 164.465 52.3395L165.821 50.9836L159.385 44.5476L158.029 46.2397C155.997 48.1036 153.457 49.1196 150.577 49.1196C144.141 49.1196 139.397 44.5476 139.397 37.7717C139.397 30.9959 143.969 26.5919 150.577 26.5919C153.457 26.5919 155.997 27.4398 158.029 29.4718L159.385 30.6559L165.481 24.5599L164.125 23.204C160.229 19.9841 155.657 17.9521 150.573 17.9521C139.057 17.784 130.586 26.0839 130.586 37.768C130.59 48.7835 139.229 57.5913 150.577 57.5913Z" fill="rgb(255,255,255)"></path><path d="M179.541 35.9078C179.541 27.268 185.977 26.4238 188.009 26.4238C193.429 26.4238 193.429 31.6757 193.429 34.8918V57.7594H202.745V34.7237C202.913 29.6436 201.729 25.0679 198.681 22.0199C196.141 19.4798 192.753 17.9558 188.517 17.9558C185.298 17.9558 181.913 18.8037 179.37 21.1757V0.00387801H170.054V57.7631H179.37V35.9115H179.541V35.9078Z" fill="rgb(255,255,255)"></path><path d="M143.466 37.772C143.466 41.4999 146.514 44.3761 150.07 44.3761C153.798 44.3761 156.674 41.328 156.674 37.772C156.674 34.0442 153.626 31.168 150.07 31.168C146.514 31.168 143.466 34.0479 143.466 37.772Z" fill="rgb(255,255,255)"></path><path d="M26.5917 57.5915C34.0437 57.5915 41.1595 54.7115 45.8996 49.4597L47.2555 48.1037L41.1595 41.6678L39.9754 43.3599C36.5875 46.7478 31.5074 48.7798 26.5955 48.7798C16.0955 48.7798 8.63979 40.648 8.63979 29.6401C8.63979 18.4602 16.0918 10.5003 26.4237 10.5003C31.3356 10.5003 35.9076 12.5323 39.8036 15.9202L41.1595 17.2761L47.2555 11.1801L45.8996 9.82418C40.8196 4.40423 33.8719 1.69238 26.5917 1.69238C11.3479 1.86047 0 13.7201 0 29.6401C0 45.56 11.3479 57.5915 26.5917 57.5915Z" fill="rgb(255,255,255)"></path></svg></a></div>
+    </div>
+    <div class="ft-nav"><div class="ft-col"><div class="ft-ch">Tokenomics</div><a class="ft-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="ft-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="ft-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="ft-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="ft-a" href="Token Launch.dc.html">Token Launch</a><a class="ft-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="ft-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="ft-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="ft-a" href="Audits.dc.html">Public Audits</a></div><div class="ft-col"><div class="ft-ch">Asset Tokenization</div><a class="ft-a" href="Landing.dc.html">Asset Tokenization</a><a class="ft-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="ft-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div><div class="ft-col"><div class="ft-ch">Company</div><a class="ft-a" href="About.dc.html">About us</a><a class="ft-a" href="Methodology.dc.html">Our Methodology</a><a class="ft-a" href="Cases.dc.html">Client Cases</a><a class="ft-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="ft-a" href="Contact.dc.html">Contact</a><a class="ft-a" href="Blog.dc.html">Blog</a><a class="ft-a" href="Research.dc.html">Research</a><a class="ft-a" href="Press.dc.html">Press</a></div></div>
+    <div class="ft-mapcol">
+      <div class="ft-ch">Office</div>
+      <div class="ft-map"><iframe src="https://www.google.com/maps?q=8BLOCKS+FZCO&amp;ll=25.0607775%2C55.1412167&amp;hl=en&amp;z=15&amp;output=embed" title="8BLOCKS FZCO on the map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="ft-a" href="mailto:hello@8blocks.io">hello@8blocks.io</a>
+      <a class="ft-a" href="tel:+971562865188">+971 56 286 5188</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div>© 2026 8BLOCKS FZCO. All rights reserved.</div>
+    <div class="ft-legal"><a href="https://8blocks.io/privacy-policy" target="_blank" rel="noopener">Privacy policy</a><a href="https://8blocks.io/terms" target="_blank" rel="noopener">Terms of Service</a></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: 0, asset: 0 };
+  GDUR = 520;
+  startGlitch = () => {
+    cancelAnimationFrame(this._graf);
+    const els = [this._g0, this._g1, this._g2, this._g3].filter(Boolean);
+    if (!els.length) return;
+    const finals = els.map((el) => el.textContent);
+    const POOL = '0123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+    const start = performance.now();
+    let last = -1e9;
+    const tick = (now) => {
+      const p = (now - start) / this.GDUR;
+      if (p >= 1) { els.forEach((el, i) => { el.textContent = finals[i]; }); return; }
+      if (now - last > 95) {
+        last = now;
+        const reveal = Math.max(0, (p - 0.35) / 0.65);
+        els.forEach((el, i) => {
+          const t = finals[i]; let out = '';
+          for (let k = 0; k < t.length; k++) {
+            const ch = t[k];
+            if (ch === ' ' || k / t.length < reveal) { out += ch; continue; }
+            out += POOL[(Math.random() * POOL.length) | 0];
+          }
+          el.textContent = out;
+        });
+      }
+      this._graf = requestAnimationFrame(tick);
+    };
+    this._graf = requestAnimationFrame(tick);
+  };
+  measurePill = (retries) => {
+    const tab = this["tab" + this.state.asset + "El"];
+    const again = () => { const n = retries == null ? 60 : retries; if (n > 0) requestAnimationFrame(() => this.measurePill(n - 1)); };
+    if (!tab || !this.tabsEl || !tab.getBoundingClientRect().width) { again(); return; }
+    const tr = this.tabsEl.getBoundingClientRect(), r = tab.getBoundingClientRect();
+    const z = tr.width / this.tabsEl.offsetWidth || 1;
+    const rect = { x: Math.round((r.left - tr.left) / z), w: Math.round(r.width / z) };
+    const prev = this.state.pillRect;
+    if (!prev || prev.x !== rect.x || prev.w !== rect.w) this.setState({ pillRect: rect });
+  };
+  componentDidMount() {
+    requestAnimationFrame(() => this.measurePill());
+    import('./country-info.js').then(m => { this.COUNTRY_INFO = m.COUNTRY_INFO; }).catch(() => {});
+  }
+  componentDidUpdate() { this.measurePill(); }
+  componentWillUnmount() { cancelAnimationFrame(this._graf); }
+  renderVals() {
+    const open = this.state.open;
+    const sel = this.state.asset;
+    const content = [
+      { headline: "Capital without selling the asset", ex: ["Working example from commercial real estate.", "In May 2025 the Dubai Land Department, a government body, launched a platform selling fractions of property title deeds, entry from AED 2,000 (about $540), with no crypto wallets for buyers. Structures differ: some never touch wallets, others use them behind the scenes."], cards: [["Holders get", "Designed to be enforceable and reviewed by your counsel"], ["You keep", "Operation, management, the decision to sell"], ["First we check", "Who buys the fractions, at what minimum ticket"]] },
+      { headline: "Liquidity against what is already pledged", ex: ["Working example from debt and collateral.", "Private credit funds now issue tokenised notes against loan books already pledged to a bank, with holders ranked behind the senior lender. The mechanics are ordinary subordinated debt; only the register and the settlement rail are new."], cards: [["Holders get", "A claim on the cash flow, ranked behind your existing lender"], ["You keep", "The loan, the covenants, the banking relationship"], ["First we check", "What your credit agreement permits without a waiver"]] },
+      { headline: "Financing the fleet, not the balance sheet", ex: ["Working example from high-value movables.", "Aircraft and yacht operators have financed fleets by selling income shares per unit rather than equity in the company. Payouts follow utilisation data, so investors price the asset's actual working life instead of the operator's balance sheet."], cards: [["Holders get", "A share of rental income, measured per unit"], ["You keep", "The fleet, the contracts, the operating margin"], ["First we check", "Utilisation history and how residual value is proven"]] },
+      { headline: "A tradable wrapper for an existing interest", ex: ["Working example from securities and fund interests.", "Several regulated funds have issued tokenised feeder interests in Luxembourg and Singapore, cutting minimum tickets from six figures to four. The economics mirror the underlying interest exactly; the wrapper only changes transferability."], cards: [["Holders get", "The same economics as the underlying interest, in smaller units"], ["You keep", "The mandate, the governance, the exit decision"], ["First we check", "Which exemption the offer relies on, and where"]] },
+    ];
+    const c = content[sel] || content[0];
+    const sit = {
+      assetHeadline: c.headline, exTitle: c.ex[0], exBody: c.ex[1],
+      card0label: c.cards[0][0], card0body: c.cards[0][1],
+      card1label: c.cards[1][0], card1body: c.cards[1][1],
+      card2label: c.cards[2][0], card2body: c.cards[2][1],
+      gRef0: (n) => { this._g0 = n; }, gRef1: (n) => { this._g1 = n; }, gRef2: (n) => { this._g2 = n; }, gRef3: (n) => { this._g3 = n; },
+      img0d: sel === 0 ? 1 : 0, img1d: sel === 1 ? 1 : 0, img2d: sel === 2 ? 1 : 0, img3d: sel === 3 ? 1 : 0,
+      tabsRef: (n) => { this.tabsEl = n; if (n) requestAnimationFrame(() => this.measurePill()); },
+      pillX: (this.state.pillRect ? this.state.pillRect.x : 0) + "px",
+      pillW: (this.state.pillRect ? this.state.pillRect.w : 0) + "px",
+    };
+    const countries = ["Russia", "United Kingdom", "European Union", "Switzerland", "Kazakhstan", "UAE", "Japan", "Singapore", "United States", "British Virgin Islands"];
+    sit.modalOpen = !!this.state.modalCountry;
+    sit.modalTitle = this.state.modalCountry || '';
+    sit.modalParas = (this.COUNTRY_INFO && this.COUNTRY_INFO[this.state.modalCountry]) || [];
+    sit.closeModal = () => this.setState({ modalCountry: null });
+    sit.stopClick = (e) => e.stopPropagation();
+    countries.forEach((name, i) => { sit["open" + i] = () => this.setState({ modalCountry: name }); });
+    for (let i = 0; i < 4; i++) {
+      const on = i === sel;
+      sit["tab" + i + "fg"] = on ? "rgb(0,0,0)" : "rgb(255,255,255)";
+      sit["tab" + i + "filter"] = on ? "invert(1)" : "none";
+      sit["tab" + i + "ref"] = (n) => { this["tab" + i + "El"] = n; if (n && i === sel) requestAnimationFrame(() => this.measurePill()); };
+      sit["pickAsset" + i] = () => { this.setState({ asset: i }); setTimeout(this.startGlitch, 16); };
+    }
+    const steps = [
+      { top: "2540px", n: "01", aLead: "Free 45-minute call.", a: "You describe the asset and the goal. No deck, no preparation.", b: "You describe the asset and the goal. No deck, no preparation.", btn: "Book a call" },
+      { top: "2636px", n: "02", aLead: "The Workshop.", a: "We collect the facts, work the session, and send the written diagnosis after internal review.", b: "the math on your asset, structure options, a roadmap, or a reasoned “not yet”.", btn: "Explore Workshops" },
+      { top: "2732px", n: "03", aLead: "Architecture.", a: "The full design: economics, rights, payout logic, partner brief.", b: "a fit / no-fit read, the likely path, and whether the Workshop is worth it.", btn: "" },
+      { top: "2828px", n: "04", aLead: "Build coordination.", a: "Legal, technical, and market partners coordinated around your decisions.", b: "a working system, accepted by you.", btn: "" },
+      { top: "2924px", n: "05", aLead: "Launch and operate.", a: "Monitoring, reporting, holder communication, until the agreed handoff.", b: "a fit / no-fit read, the likely path, and whether the Workshop is worth it.", btn: "" },
+    ];
+    const depths = [
+      { shape: "compass", ref: "./assets/ill-compass.png", title: "The architect", sub: "Full structure spec, rights model, partner brief", p1: "Asset facts, decisions, your counsel", p2: "You, with partners you contract directly", p3: "A build-ready specification", btnBg: "rgb(27,27,27)", btnColor: "rgb(255,255,255)" },
+      { shape: "crane", ref: "./assets/ill-crane.png", title: "Architect +\ngeneral contractor", sub: "Everything in Essential, plus the coordinated build", badge: true, p1: "Decisions at weekly checkpoints", p2: "Vetted partners: legal, technical", p3: "A working system, accepted by you", btnBg: "rgb(255,255,255)", btnColor: "rgb(0,0,0)" },
+      { shape: "team", ref: "./assets/ill-team.png", title: "Your external team", sub: "End-to-end delivery, through launch and the agreed period after", p1: "The mandate and sign-offs", p2: "We own the outcome across all partners", p3: "Launch, then a planned handoff", btnBg: "rgb(27,27,27)", btnColor: "rgb(255,255,255)" },
+    ];
+    const blocks = [
+      { shape: "gear", ref: "./assets/ill-gear2.png", t: "Built into the business", d: "Instruments that work inside your operation, not beside it." },
+      { shape: "blueprint", ref: "./assets/ill-blueprint.png", t: "Design and build", d: "From a model on paper to a live, running instrument." },
+      { shape: "orbit", ref: "./assets/ill-orbit.png", t: "One point of contact", d: "We coordinate every partner; you deal with one team." },
+      { shape: "twin", ref: "./assets/ill-twin.png", t: "Two worlds, one team", d: "We translate between your business and the on-chain rails." },
+    ];
+    const cases = [
+      { src: "./assets/case-gold.jpg", tag: "RWA · COMMODITIES", title: "Gold as collateral", desc: "Tokenised gold as collateral to fund residential construction." },
+      { src: "./assets/case-harvest.jpg", tag: "RWA · TRADE FINANCE", title: "Exports without bank credit", desc: "A financing instrument for wild-harvest exports, with buyback." },
+      { src: "./assets/case-mill.jpg", tag: "RWA · COMMODITIES", title: "An illiquid metal, made investable", desc: "High-purity metal turned liquid across three jurisdictions." },
+    ].map((c, i) => Object.assign(c, { divider: i < 2, bg: "url(" + c.src + ")" }));
+    const qa = [["What does tokenization mean, in plain terms?","Tokenization puts ownership, a financial claim, or another defined economic right on digital infrastructure. Think of a share in a building, a pool of invoices, or a revenue stream. We design the legal and financial structure first and use blockchain to implement it. The first question we answer is which form fits your case, if any."],
+      ["Is tokenization legal?","The rules are clearer today than ever, and legal feasibility still depends on your case. Specialized counsel and regulated partners in your jurisdiction make that call. We hand them a design that’s built to pass their review."],
+      ["Do I keep control of my asset?","Yes. You keep operations, management, and the decision to sell. Holders get the economic rights your structure defines, such as a share of income or repayment, written into enforceable documents that your counsel reviews."],
+      ["Will this unsettle my bank or existing investors?","Before we design anything, we map your existing loans, covenants, and shareholder agreements. If a structure would breach a covenant or affect current investors, the Workshop flags it early, and we adjust the design or recommend waiting."],
+      ["Who holds the licenses and legal responsibility?","Licensed partners issue and distribute the instrument, and your counsel signs off on the legal structure in your jurisdiction. 8Blocks designs the economics and rights, then coordinates every partner, so you deal with one team."],
+      ["Who buys the fractions?","Typically qualified investors, family offices, and investors outside your home market, plus retail buyers where local rules allow it. Your jurisdiction and structure define who’s eligible. We confirm a real buyer side and the minimum ticket before any build starts."],
+      ["What does it cost to work with you?","The first 45-minute call is free. The Workshop has a fixed fee, and we credit it in full toward further work. We scope and price architecture and build around your asset after the Workshop."]];
+    const qs = qa.map((p) => p[0]);
+    const faq = qa.map(([q, a], i) => ({
+      q, a,
+      open: open === i, st: open === i ? 'open' : 'closed',
+      radius: i === 0 ? "10px 10px 0 0" : (i === qs.length - 1 ? "0 0 10px 10px" : "0px"),
+      rot: open === i ? "rotate(180deg)" : "rotate(0deg)",
+      toggle: () => this.setState({ open: open === i ? -1 : i }),
+    }));
+    // Binary Engine look of the home-page coin: deeper body, bright edges
+    const eng = { sparkle: 0.1, reveal: 2.2, contrast: 3.4, tone: 0.52, edgeFeather: 0.6, punch: 0.8, detail: 1, weight: 0.34 };
+    depths.forEach((d) => Object.assign(d, eng)); blocks.forEach((b) => Object.assign(b, eng));
+    return Object.assign({ steps, depths, blocks, cases, faq, eng }, sit);
+  }
+}
+</script>
+</body>
+</html>

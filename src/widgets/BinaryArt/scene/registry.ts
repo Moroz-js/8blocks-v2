@@ -23,6 +23,7 @@ export const SCENE_IMAGES: Record<BinarySceneId, string | null> = {
   'city-coins': '/img/binary/cityCoins.webp',
   office: '/img/binary/office.webp',
   unicorn: '/img/binary/unicorn.webp',
+  globe: '/img/binary/globe.webp',
 }
 
 const builders: Record<Exclude<BinarySceneId, 'hand-coin'>, () => Promise<{ buildScene: SceneBuilder }>> = {
@@ -45,6 +46,7 @@ const builders: Record<Exclude<BinarySceneId, 'hand-coin'>, () => Promise<{ buil
   'city-coins': () => import('./scenes/cityCoins.js'),
   office: () => import('./scenes/office.js'),
   unicorn: () => import('./scenes/unicorn.js'),
+  globe: () => import('./scenes/globe.js'),
 }
 
 /** Prefers WebGL where a scene has a GPU renderer, otherwise Canvas 2D. */

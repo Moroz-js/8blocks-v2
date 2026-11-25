@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<script src="./binary-glyph.js?v=13"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+image-slot::part(ring){display:none;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+</style>
+</helmet>
+<div data-screen-label="Tokenomics Calculator" style="position:relative;width:1280px;height:4133px;margin:0 auto;overflow:hidden;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;">
+
+<!-- HERO -->
+<div style="position:absolute;left:0;top:-11px;width:1280px;height:781px;overflow:hidden;background:rgb(0,0,0);">
+  <div style="position:absolute;left:-118px;top:-33px;width:1519px;height:816px;mix-blend-mode:screen;pointer-events:none;"><dc-import name="Binary Hand Coin" hint-size="100%,100%" style="position:absolute;left:192px;top:29px;width:1152px;height:720px;"></dc-import></div>
+  <div style="position:absolute;z-index:1;left:42px;top:160px;width:468px;opacity:.9;font-size:40px;line-height:48px;white-space:pre-line;pointer-events:none;"><span style="opacity:.5;">Tokenomics calculator:</span>
+Catch the red flags while they're still cheap to fix.</div>
+  <a href="#" style="position:absolute;z-index:1;left:42px;top:655px;width:203px;height:56px;border-radius:64px;background:rgb(255,255,255);display:flex;align-items:center;justify-content:center;padding:10px 24px;box-sizing:border-box;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(0,0,0);white-space:nowrap;">Check my token design</a>
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+</div>
+
+<!-- HEADER -->
+<div style="position:absolute;z-index:3;left:0;top:0;width:1280px;height:92.267px;box-sizing:border-box;border:.881px solid rgba(255,255,255,.17);backdrop-filter:blur(13.208px);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+  <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+    <a href="#">Services</a><a href="#">Cases</a><a href="#">Blog</a><a href="#">Team</a>
+  </div>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <span style="font-size:15px;line-height:1.7;">EN</span>
+    <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+  </div>
+</div>
+
+<!-- PRODUCT SHOT -->
+<div style="position:absolute;z-index:2;left:40px;top:860px;width:1200px;height:525px;"><dc-import name="Calculator Widget" hint-size="1200px,525px" style="width:1200px;height:525px;"></dc-import></div>
+
+<!-- THREE STEPS -->
+<div style="position:absolute;left:40px;top:1565px;width:314px;font-size:32px;line-height:40px;">Three steps from zero to a structured token model</div>
+<div style="position:absolute;left:443px;top:1565px;width:797px;height:445px;overflow:hidden;border-radius:10px;background:rgb(16,17,19);">
+  <div style="position:absolute;inset:0;opacity:.7;background:url(./assets/brand-gradient-card.png) center / 100% 100% no-repeat;"></div>
+  <div style="position:relative;height:100%;display:flex;flex-direction:column;padding:0 30px;box-sizing:border-box;">
+    <sc-for list="{{ steps }}" as="s" hint-placeholder-count="3">
+    <div style="flex-grow:1;flex-basis:0;display:flex;flex-direction:column;justify-content:center;gap:10px;border-top:{{ s.border }};">
+      <div style="opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ s.title }}</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <sc-for list="{{ s.items }}" as="it" hint-placeholder-count="2">
+        <div style="display:flex;flex-direction:row;gap:8px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgba(255,255,255,.5);"><span>•</span><span>{{ it }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div style="position:absolute;left:40px;top:2190px;width:520px;font-size:32px;line-height:40px;">Everything you need to validate your token design.</div>
+<div style="position:absolute;left:40px;top:2310px;width:1200px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;">
+  <sc-for list="{{ cards }}" as="c" hint-placeholder-count="6">
+  <div style="position:relative;height:360px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:{{ c.pad }};box-sizing:border-box;">
+    <binary-glyph shape="{{ c.shape }}" ox="0.5" oy="0.34" os="0.42" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></binary-glyph>
+    <div style="position:relative;opacity:.9;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ c.t }}</div>
+    <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ c.d }}</div>
+  </div>
+  </sc-for>
+</div>
+
+<!-- FAQ -->
+<div style="position:absolute;left:0;top:3215px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">The questions owners ask us first.</div>
+  <div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="6">
+    <div onClick="{{ f.toggle }}" style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:482px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></sc-if>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="transform:{{ f.rot }};transition:transform .2s;flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div>
+  <div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#" style="text-decoration:underline;">Contact us</a></div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { open: 0 };
+  renderVals() {
+    const open = this.state.open;
+    const steps = [
+      { title: "1. Set token basics & allocations", items: ["Enter token name, ticker, and total supply.", "Split across up to 8 allocation buckets with real-time 100% validation."] },
+      { title: "2. Configure vesting schedules", items: ["Set TGE unlock, cliff, and linear vesting per bucket.", "See the full unlock chart with spike detection warnings."] },
+      { title: "3. Get structural scoring & export", items: ["See where your design would raise questions — community share, day-one float, supply overhang, insider locks, unlock spikes.", "Fixes ranked by impact. Export the PDF or hand it to 8Blocks for a full audit."] },
+    ].map((s, i) => Object.assign(s, { border: i ? "1px solid rgba(255,255,255,.1)" : "0 solid transparent" }));
+    const cards = [
+      { shape: "buckets", t: "Up to 8 allocation buckets", d: "Team, investors, community, ecosystem, treasury, liquidity, foundation, public sale." },
+      { shape: "bars", t: "Dynamic vesting chart", d: "Full unlock horizon with spike detection when monthly unlocks exceed thresholds." },
+      { shape: "gauge", t: "Structure Score", d: "One number for structural sell-pressure risk, judged against launches like yours. Five checks: community allocation, day-one float, supply overhang, insider lock discipline, unlock shock." },
+      { shape: "warn", t: "Risk signal detection", d: "Flags when unlocks exceed 3% of supply or 10% of circulating in a single month." },
+      { shape: "file", t: "Branded PDF export", d: "Allocation donut, vesting chart, grades, and 8Blocks watermark. Ready to share." },
+      { shape: "tag", t: "No signup, no cost", d: "Runs right here in your browser. Free for any team, any stage." },
+    ].map((c, i) => Object.assign(c, { pad: i < 3 ? "30px" : "25px" }));
+    const qa = [
+      ["Which template should I start with?","Pick the one closest to how you’ll raise. VC-backed fits a venture round with long team locks. Community-led and Fair launch fit projects with little or no insider allocation. Utility/Enterprise fits product-first tokens. You can edit every value afterward."],
+      ["How long does it take?","About five minutes with a template. Adjust allocations and vesting, and your Structure Score updates instantly."],
+      ["What is the Structure Score?","It’s a 0–100 score for structural sell-pressure risk. It checks five areas: community allocation, day-one float, supply overhang, insider lock discipline, and unlock shock. Norms adapt to your launch archetype, so a fair launch gets judged against fair launches. See the vesting benchmarks."],
+      ["My score is low. What should I fix first?","Start with your lowest-graded check. Low scores usually trace back to a thin day-one float or short insider locks. Each flagged spike shows the month and the bucket that caused it."],
+      ["Can I share and export the model?","Yes. You’ll get a shareable link your team can open and edit, plus a branded PDF with your score, risks, allocation, and unlock schedule."],
+      ["What does a full tokenomics audit add?","The calculator covers supply structure. A full audit adds demand modeling, product fit, incentives, user behavior, and legal constraints, along with scenario analysis from 8Blocks consultants. Request an audit and bring your shared model."],
+    ];
+    const faq = qa.map(([q, a], i) => ({
+      q, a, open: open === i,
+      radius: i === 0 ? "10px 10px 0 0" : (i === qa.length - 1 ? "0 0 10px 10px" : "0px"),
+      rot: open === i ? "rotate(180deg)" : "rotate(0deg)",
+      toggle: () => this.setState({ open: open === i ? -1 : i }),
+    }));
+    return { steps, cards, faq };
+  }
+}
+</script>
+</body>
+</html>

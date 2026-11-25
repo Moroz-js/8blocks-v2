@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph.js?v=22"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+</style>
+<style data-site-nav>
+[data-sn-hdr]{position:sticky !important;top:0 !important;left:auto !important;z-index:30 !important;}
+[data-sn-hdr]::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background:rgba(2,2,2,.42);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);transition:opacity .35s ease .15s;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within)::before{opacity:0;transition:opacity .3s ease;}
+[data-sn-hdr]:has(.sn-item:hover,.sn-item:focus-within){border-color:transparent !important;}
+.sn{display:flex;flex-direction:row;gap:40px;align-items:center;font-size:15px;line-height:26px;}
+.sn-btn{position:relative;display:flex;flex-direction:row;gap:7px;align-items:center;padding:0;border:0;background:none;color:rgb(255,255,255);font:inherit;cursor:pointer;border-bottom:1px solid transparent;}
+.sn-chev{transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .3s;opacity:.6;}
+.sn-sheet{position:absolute;left:0;right:0;top:0;height:372px;z-index:-1;pointer-events:none;background:rgba(2,2,2,.64);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-bottom:.881px solid rgba(255,255,255,.17);visibility:hidden;clip-path:inset(0 0 100% 0);transition:clip-path .5s cubic-bezier(.65,0,.35,1) .12s,visibility 0s linear .62s;}
+.sn:has(.sn-item:hover,.sn-item:focus-within) .sn-sheet{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path .65s cubic-bezier(.22,1,.36,1),visibility 0s;}
+.sn-panel{position:absolute;left:0;right:0;top:0;z-index:-1;box-sizing:border-box;min-height:372px;padding:122px 40px 30px;display:grid;grid-template-columns:420px 1fr 1fr;gap:5px 60px;cursor:default;visibility:hidden;opacity:0;pointer-events:none;transition:opacity .22s ease,visibility 0s linear .22s;}
+.sn-panel>*{opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .3s cubic-bezier(.65,0,.35,1);}
+.sn-item:hover .sn-panel,.sn-item:focus-within .sn-panel{visibility:visible;opacity:1;pointer-events:auto;transition:opacity .3s ease .1s,visibility 0s;}
+.sn-item:hover .sn-panel>*,.sn-item:focus-within .sn-panel>*{opacity:1;transform:none;transition:opacity .45s ease,transform .6s cubic-bezier(.22,1,.36,1);}
+.sn-item:hover .sn-panel>:nth-child(1),.sn-item:focus-within .sn-panel>:nth-child(1){transition-delay:.14s;}
+.sn-item:hover .sn-panel>:nth-child(2),.sn-item:focus-within .sn-panel>:nth-child(2){transition-delay:.2s;}
+.sn-item:hover .sn-panel>:nth-child(3),.sn-item:focus-within .sn-panel>:nth-child(3){transition-delay:.26s;}
+.sn-item:hover .sn-chev,.sn-item:focus-within .sn-chev{transform:rotate(180deg);opacity:1;}
+.sn-intro{position:relative;display:block;width:420px;height:220px;border-radius:10px;overflow:hidden;isolation:isolate;color:rgb(255,255,255);background:linear-gradient(141.36deg, rgb(18,2,9) 9.9%, rgb(33,3,17) 23.8%, rgb(49,5,25) 37.7%, rgb(75,5,36) 51.7%, rgb(118,3,55) 65.6%, rgb(162,0,73) 80.3%, rgb(166,54,105) 97.9%, rgb(198,105,147) 107.3%);}
+.sn-intro::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:url(./assets/accent-noise.png) 0 0 / 160px 160px repeat;opacity:.6;}
+.sn-txt,.sn-more{z-index:2;}
+a.sn-intro:hover{opacity:1;color:rgb(255,255,255);}
+.sn-ill{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .8s cubic-bezier(.22,1,.36,1);}
+.sn-acc .sn-ill{inset:auto;left:204px;top:-2px;width:292px;height:223px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%);}.sn-acc .sn-ill.sn-house{left:189px;top:-4px;width:345px;height:228px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%);}.sn-acc .sn-ill.sn-prof{left:150px;top:0;width:272px;height:230px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 25%);mask-image:linear-gradient(90deg,transparent 0,#000 25%);}
+.sn-intro:hover .sn-ill{transform:scale(1.03);}
+.sn-txt{position:absolute;left:15px;top:15px;display:flex;flex-direction:column;gap:10px;}
+.sn-h{width:214px;font-size:24px;line-height:30px;opacity:.9;}
+.sn-p{width:249px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.5;}
+.sn-more{position:absolute;left:15px;bottom:15px;padding:10px 16px;border-radius:50px;background:rgba(255,255,255,.15);font-size:12px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);white-space:nowrap;transition:background .25s;}
+.sn-intro:hover .sn-more{background:rgba(255,255,255,.25);}
+.sn-col{display:flex;flex-direction:column;gap:0;padding-top:0;}
+.sn-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:12px;}
+.sn-a{font-size:16px;line-height:25px;padding:6px 0;color:rgb(255,255,255);opacity:.85;transition:opacity .2s,color .2s;}
+.sn-a:hover{opacity:1;color:rgb(202,0,90);}
+@media (prefers-reduced-motion: reduce){.sn-sheet,.sn-panel,.sn-panel>*,.sn-chev{transition:none !important;}}
+</style>
+<style data-site-footer>
+.ft{display:block;box-sizing:border-box;width:1280px;padding:0 40px 32px;color:rgb(255,255,255);}
+.ft-top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;column-gap:72px;padding-top:56px;border-top:1px solid rgba(255,255,255,.08);}
+.ft-brand{display:flex;flex-direction:column;}
+.ft-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+.ft-col{display:flex;flex-direction:column;gap:12px;}
+.ft-mapcol{display:flex;flex-direction:column;gap:12px;}
+.ft-sh{font-size:18px;line-height:20px;}
+.ft-sp{margin-top:8px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-form{position:relative;margin-top:20px;width:100%;}
+.ft-in{width:100%;height:44px;box-sizing:border-box;border-radius:64px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 52px 0 18px;outline:none;transition:border-color .2s;}
+.ft-in::placeholder{color:rgba(255,255,255,.4);}
+.ft-in:focus{border-color:rgba(255,255,255,.35);}
+.ft-go{position:absolute;right:4px;top:4px;width:36px;height:36px;border:0;padding:0;border-radius:18px;background:rgb(58,58,60);color:rgb(140,140,142);display:flex;align-items:center;justify-content:center;font-family:Manrope,sans-serif;font-size:16px;cursor:default;pointer-events:none;transition:background .25s,color .25s;}
+.ft-form:has(.ft-in:not(:placeholder-shown)) .ft-go{background:rgb(255,255,255);color:rgb(0,0,0);cursor:pointer;pointer-events:auto;}
+.ft-icons{display:flex;flex-direction:row;gap:18px;align-items:center;height:20px;margin-top:28px;}
+.ft-ic{display:flex;align-items:center;opacity:.55;transition:opacity .2s;}
+.ft-ic:hover{opacity:1;}
+.ft-ic svg{display:block;}
+.ft-ch{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);margin-bottom:8px;}
+.ft-a{font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);opacity:.75;transition:opacity .2s,color .2s;width:max-content;}
+.ft-a:hover{opacity:1;color:rgb(202,0,90);}
+.ft-map{position:relative;height:208px;border-radius:10px;overflow:hidden;background:rgb(16,17,19);}
+.ft-map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;filter:grayscale(1) invert(.92) contrast(.85) brightness(.85);}
+.ft-addr{margin-top:4px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-addr:hover{color:rgb(255,255,255);opacity:1;}
+.ft-bottom{margin-top:56px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:row;justify-content:space-between;align-items:center;font-size:13px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);}
+.ft-legal{display:flex;flex-direction:row;gap:24px;}
+.ft-legal a{color:rgb(112,113,114);text-decoration:underline;text-underline-offset:3px;}
+.ft-legal a:hover{color:rgb(255,255,255);opacity:1;}
+</style>
+<style data-btn-hover>
+/* pill / filled buttons: on hover only the fill changes, the label keeps its colour */
+.hm-tab,.ab-btn,.ar-btn,a[style*="border-radius:64px"],a[style*="border-radius: 64px"],a[style*="border-radius:6px"][style*="background"],a[style*="border-radius: 6px"][style*="background"]{transition:box-shadow .2s ease,background-color .2s ease;}
+a.hm-tab:hover,a.ab-btn:hover,a.ar-btn:hover,a[style*="border-radius:64px"]:hover,a[style*="border-radius: 64px"]:hover,a[style*="border-radius:6px"][style*="background"]:hover,a[style*="border-radius: 6px"][style*="background"]:hover{opacity:1 !important;box-shadow:inset 0 0 0 999px rgba(255,255,255,.14);}
+a.hm-tab:hover{color:rgb(255,255,255) !important;background:rgb(52,52,54) !important;box-shadow:none;}
+a.ab-white:hover,a[style*="background:rgb(255,255,255)"]:hover,a[style*="background: rgb(255, 255, 255)"]:hover{box-shadow:inset 0 0 0 999px rgba(0,0,0,.1);}
+</style>
+</helmet>
+<div data-screen-label="Blog" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:0;">
+
+<!-- HEADER (sticky) -->
+<div data-sn-hdr class="sn-sticky" style="position:sticky;top:0;z-index:30;width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 40px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><a href="Home.dc.html" style="display:block;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></a></div>
+  <nav class="sn" aria-label="Main">
+      <div class="sn-sheet" aria-hidden="true"></div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Tokenomics<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Tokenomics.dc.html"><img class="sn-ill" src="./assets/nav-ill-tokenomics-coin.png?v=2" alt=""><div class="sn-txt"><div class="sn-h">Build a working token economy</div><div class="sn-p">Design, validate and improve the economics behind your product.</div></div><span class="sn-more">Explore Tokenomics</span></a>
+        <div class="sn-col"><div class="sn-ch">Expertise</div><a class="sn-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="sn-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="sn-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="sn-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="sn-a" href="Token Launch.dc.html">Token Launch</a></div>
+        <div class="sn-col"><div class="sn-ch">Tools &amp; Research</div><a class="sn-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="sn-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="sn-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="sn-a" href="Audits.dc.html">Public Audits</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Asset Tokenization<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="Landing.dc.html"><img class="sn-ill sn-house" src="./assets/nav-ill-assets-house.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Start with the business case</div><div class="sn-p">Explore asset tokenization, assess readiness and plan your next step.</div></div><span class="sn-more">Explore Asset Tokenization</span></a>
+        <div class="sn-col"><div class="sn-ch">Strategy</div><a class="sn-a" href="Landing.dc.html">Asset Tokenization</a></div>
+        <div class="sn-col"><div class="sn-ch">Explore &amp; Assess</div><a class="sn-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="sn-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div>
+      </div>
+    </div>
+    <div class="sn-item">
+      <button class="sn-btn" type="button" aria-haspopup="true">Company<svg class="sn-chev" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="rgb(255,255,255)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+      <div class="sn-panel">
+        <a class="sn-intro sn-acc" href="About.dc.html"><img class="sn-ill sn-prof" src="./assets/nav-ill-company-profiles.png?v=1" alt=""><div class="sn-txt"><div class="sn-h">Meet 8Blocks</div><div class="sn-p">Our team, client work,<br>events and ideas.</div></div><span class="sn-more">About 8Blocks</span></a>
+        <div class="sn-col"><div class="sn-ch">8Blocks</div><a class="sn-a" href="About.dc.html">About us</a><a class="sn-a" href="Methodology.dc.html">Our Methodology</a><a class="sn-a" href="Cases.dc.html">Client Cases</a><a class="sn-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="sn-a" href="Contact.dc.html">Contact</a></div>
+        <div class="sn-col"><div class="sn-ch">Insights &amp; Media</div><a class="sn-a" href="Blog.dc.html">Blog</a><a class="sn-a" href="Research.dc.html">Research</a><a class="sn-a" href="Press.dc.html">Press</a></div>
+      </div>
+    </div>
+  </nav>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <a href="Contact.dc.html" style="height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;;color:rgb(255,255,255);">Contact us</a>
+  </div>
+</div>
+
+
+<!-- HERO -->
+<div style="position:relative;height:200px;overflow:hidden;">
+  <div style="position:absolute;left:40px;top:96px;display:flex;flex-direction:column;gap:16px;">
+    <div style="font-size:56px;line-height:64px;opacity:.9;">Articles and insights</div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div style="padding:0 40px;display:flex;flex-direction:row;flex-wrap:wrap;gap:8px;">
+  <sc-for list="{{ cats }}" as="c" hint-placeholder-count="11">
+    <div onClick="{{ c.pick }}" style="height:44px;border-radius:64px;padding:10px 18px;box-sizing:border-box;display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }};transition:background 300ms,color 300ms;">{{ c.label }}</div>
+  </sc-for>
+</div>
+
+<!-- GRID -->
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));column-gap:24px;row-gap:56px;">
+  <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+  <div style="display:flex;flex-direction:column;cursor:pointer;">
+    <img src="{{ p.img }}" alt="" style="display:block;width:100%;height:auto;aspect-ratio:828 / 466;object-fit:contain;background:rgb(16,17,19);">
+    <div style="padding:24px 0 0;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;flex-grow:1;">
+      <div style="font-size:13px;line-height:20px;letter-spacing:.01em;opacity:.4;">{{ p.meta }}</div>
+      <div style="font-size:20px;line-height:27px;opacity:.9;">{{ p.title }}</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);flex-grow:1;">{{ p.ex }}</div>
+      <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-top:8px;">
+        <div style="font-size:14px;opacity:.4;">{{ p.read }}</div>
+        <div style="height:40px;padding:0 18px;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;font-size:14px;letter-spacing:.01em;">Read →</div>
+      </div>
+    </div>
+  </div>
+  </sc-for>
+</div>
+<sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+  <div style="margin:40px 40px 0;height:240px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;">
+    <div style="font-size:24px;line-height:30px;">No articles in this category yet</div>
+    <div style="font-size:14px;color:rgb(112,113,114);">New articles in this category are on the way.</div>
+  </div>
+</sc-if>
+
+<!-- PAGINATION -->
+<div style="margin-top:48px;display:flex;flex-direction:row;gap:8px;justify-content:center;">
+  <sc-for list="{{ pages }}" as="pg" hint-placeholder-count="4">
+    <div onClick="{{ pg.pick }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;background:transparent;color:rgb(255,255,255);border:1px solid {{ pg.border }};">{{ pg.n }}</div>
+  </sc-for>
+  <div onClick="{{ nextPage }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:1px solid transparent;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+</div>
+
+
+
+<!-- FOOTER -->
+<footer class="ft" style="margin-top:120px;">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <div class="ft-sh">Subscribe</div>
+      <div class="ft-sp">A newsletter for those<br>who want to go deeper.</div>
+      <div class="ft-form"><input class="ft-in" type="email" required placeholder="Your email" aria-label="Your email"><button class="ft-go" type="button" aria-label="Subscribe">→</button></div>
+      <div class="ft-icons"><a href="https://x.com/8BlocksLabs" target="_blank" rel="noopener" aria-label="X (Twitter)" title="X (Twitter)" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18.3263 1.90391H21.6998L14.3297 10.3274L23 21.7899H16.2112L10.894 14.8379L4.80995 21.7899H1.43443L9.31743 12.78L1 1.90391H7.96111L12.7674 8.25824L18.3263 1.90391ZM17.1423 19.7707H19.0116L6.94539 3.81704H4.93946L17.1423 19.7707Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://www.linkedin.com/company/8blocksio" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22.2234 0H1.77187C0.792187 0 0 0.773438 0 1.72969V22.2656C0 23.2219 0.792187 24 1.77187 24H22.2234C23.2031 24 24 23.2219 24 22.2703V1.72969C24 0.773438 23.2031 0 22.2234 0ZM7.12031 20.4516H3.55781V8.99531H7.12031V20.4516ZM5.33906 7.43438C4.19531 7.43438 3.27188 6.51094 3.27188 5.37187C3.27188 4.23281 4.19531 3.30937 5.33906 3.30937C6.47813 3.30937 7.40156 4.23281 7.40156 5.37187C7.40156 6.50625 6.47813 7.43438 5.33906 7.43438ZM20.4516 20.4516H16.8937V14.8828C16.8937 13.5562 16.8703 11.8453 15.0422 11.8453C13.1906 11.8453 12.9094 13.2937 12.9094 14.7891V20.4516H9.35625V8.99531H12.7687V10.5609H12.8156C13.2891 9.66094 14.4516 8.70938 16.1813 8.70938C19.7859 8.70938 20.4516 11.0813 20.4516 14.1656V20.4516V20.4516Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://t.me/eightblocks" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram" class="ft-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M24 12C24 18.6274 18.6274 24 12 24C5.37258 24 0 18.6274 0 12C0 5.37258 5.37258 0 12 0C18.6274 0 24 5.37258 24 12ZM12.43 8.85893C11.2628 9.3444 8.93014 10.3492 5.43189 11.8733C4.86383 12.0992 4.56626 12.3202 4.53917 12.5363C4.49339 12.9015 4.95071 13.0453 5.57348 13.2411C5.65819 13.2678 5.74596 13.2954 5.83594 13.3246C6.44864 13.5238 7.27283 13.7568 7.70129 13.766C8.08994 13.7744 8.52373 13.6142 9.00264 13.2853C12.2712 11.079 13.9584 9.96381 14.0643 9.93977C14.139 9.92281 14.2426 9.90148 14.3128 9.96385C14.3829 10.0262 14.376 10.1443 14.3686 10.176C14.3233 10.3691 12.5281 12.0381 11.5991 12.9018C11.3095 13.171 11.1041 13.362 11.0621 13.4056C10.968 13.5034 10.8721 13.5958 10.78 13.6846C10.2108 14.2333 9.78391 14.6448 10.8036 15.3168C11.2936 15.6397 11.6858 15.9067 12.0769 16.1731C12.5042 16.4641 12.9303 16.7543 13.4816 17.1157C13.6221 17.2078 13.7562 17.3034 13.8869 17.3965C14.3841 17.751 14.8307 18.0694 15.3826 18.0186C15.7032 17.9891 16.0345 17.6876 16.2027 16.7884C16.6002 14.6632 17.3816 10.0585 17.5622 8.16098C17.578 7.99473 17.5581 7.78197 17.5422 7.68857C17.5262 7.59518 17.4928 7.46211 17.3714 7.3636C17.2276 7.24694 17.0056 7.22234 16.9064 7.22408C16.455 7.23203 15.7626 7.47282 12.43 8.85893Z" fill-rule="evenodd" clip-rule="evenodd" fill="rgb(255,255,255)"></path></svg></a><a href="https://base.app/profile/8blocks" target="_blank" rel="noopener" aria-label="Base" title="Base" class="ft-ic"><svg width="16" height="16" viewBox="0 0 1280 1280" fill="none"><path d="M0,101.12c0-34.64,0-51.95,6.53-65.28,6.25-12.76,16.56-23.07,29.32-29.32C49.17,0,66.48,0,101.12,0h1077.76C1213.51,0,1230.84,0,1244.16,6.53c12.75,6.25,23.06,16.56,29.32,29.32,6.52,13.32,6.52,30.64,6.52,65.28v1077.76c0,34.63,0,51.96-6.52,65.28-6.26,12.75-16.57,23.06-29.32,29.32-13.32,6.52-30.65,6.52-65.28,6.52H101.12c-34.64,0-51.95,0-65.28-6.52-12.76-6.26-23.07-16.57-29.32-29.32-6.53-13.32-6.53-30.65-6.53-65.28V101.12Z" fill="rgb(255,255,255)"></path></svg></a><a href="https://clutch.co/profile/8blocks-fzco" target="_blank" rel="noopener" aria-label="Clutch" title="Clutch" class="ft-ic"><svg width="56" height="16" viewBox="0 0 202.761 57.7631" fill="none"><path d="M62.1626 0.000131153H52.8467V57.7594H62.1626V0.000131153Z" fill="rgb(255,255,255)"></path><path d="M94.5149 57.7593H103.831V18.6319H94.5149V39.2957H94.683C94.683 47.9355 87.231 48.7796 85.199 48.7796C79.779 48.7796 78.595 43.5278 78.595 40.3117V18.6319H69.2791V40.6516C69.2791 46.0715 71.143 50.4755 73.8511 53.6953C76.3911 56.2353 80.4551 57.7593 85.0309 57.7593C88.2507 57.7593 92.4829 56.9114 94.5149 54.5395V57.7593Z" fill="rgb(255,255,255)"></path><path d="M112.806 57.7595H122.122V27.948H128.898V18.6321H122.122V4.74414H112.806V18.6321H105.862V27.948H112.806V57.7595Z" fill="rgb(255,255,255)"></path><path d="M150.577 57.5913C155.829 57.5913 160.741 55.7274 164.465 52.3395L165.821 50.9836L159.385 44.5476L158.029 46.2397C155.997 48.1036 153.457 49.1196 150.577 49.1196C144.141 49.1196 139.397 44.5476 139.397 37.7717C139.397 30.9959 143.969 26.5919 150.577 26.5919C153.457 26.5919 155.997 27.4398 158.029 29.4718L159.385 30.6559L165.481 24.5599L164.125 23.204C160.229 19.9841 155.657 17.9521 150.573 17.9521C139.057 17.784 130.586 26.0839 130.586 37.768C130.59 48.7835 139.229 57.5913 150.577 57.5913Z" fill="rgb(255,255,255)"></path><path d="M179.541 35.9078C179.541 27.268 185.977 26.4238 188.009 26.4238C193.429 26.4238 193.429 31.6757 193.429 34.8918V57.7594H202.745V34.7237C202.913 29.6436 201.729 25.0679 198.681 22.0199C196.141 19.4798 192.753 17.9558 188.517 17.9558C185.298 17.9558 181.913 18.8037 179.37 21.1757V0.00387801H170.054V57.7631H179.37V35.9115H179.541V35.9078Z" fill="rgb(255,255,255)"></path><path d="M143.466 37.772C143.466 41.4999 146.514 44.3761 150.07 44.3761C153.798 44.3761 156.674 41.328 156.674 37.772C156.674 34.0442 153.626 31.168 150.07 31.168C146.514 31.168 143.466 34.0479 143.466 37.772Z" fill="rgb(255,255,255)"></path><path d="M26.5917 57.5915C34.0437 57.5915 41.1595 54.7115 45.8996 49.4597L47.2555 48.1037L41.1595 41.6678L39.9754 43.3599C36.5875 46.7478 31.5074 48.7798 26.5955 48.7798C16.0955 48.7798 8.63979 40.648 8.63979 29.6401C8.63979 18.4602 16.0918 10.5003 26.4237 10.5003C31.3356 10.5003 35.9076 12.5323 39.8036 15.9202L41.1595 17.2761L47.2555 11.1801L45.8996 9.82418C40.8196 4.40423 33.8719 1.69238 26.5917 1.69238C11.3479 1.86047 0 13.7201 0 29.6401C0 45.56 11.3479 57.5915 26.5917 57.5915Z" fill="rgb(255,255,255)"></path></svg></a></div>
+    </div>
+    <div class="ft-nav"><div class="ft-col"><div class="ft-ch">Tokenomics</div><a class="ft-a" href="Strategic Consulting.dc.html">Strategic Consulting</a><a class="ft-a" href="Tokenomics.dc.html">Tokenomics Design</a><a class="ft-a" href="Tokenomics Audit.dc.html">Tokenomics Audit</a><a class="ft-a" href="Tokenomics Workshop.dc.html">Workshop</a><a class="ft-a" href="Token Launch.dc.html">Token Launch</a><a class="ft-a" href="Tokenomics Calculator.dc.html">Calculator</a><a class="ft-a" href="Token Vesting Benchmarks.dc.html">Vesting Benchmarks</a><a class="ft-a" href="Tokenomics AI.dc.html">Tokenomics AI</a><a class="ft-a" href="Audits.dc.html">Public Audits</a></div><div class="ft-col"><div class="ft-ch">Asset Tokenization</div><a class="ft-a" href="Landing.dc.html">Asset Tokenization</a><a class="ft-a" href="Readiness Check.dc.html">Tokenization Readiness</a><a class="ft-a" href="Tokenization Cases.dc.html">Tokenization Cases</a></div><div class="ft-col"><div class="ft-ch">Company</div><a class="ft-a" href="About.dc.html">About us</a><a class="ft-a" href="Methodology.dc.html">Our Methodology</a><a class="ft-a" href="Cases.dc.html">Client Cases</a><a class="ft-a" href="https://8blocks.io/events" target="_blank" rel="noopener">Events</a><a class="ft-a" href="Contact.dc.html">Contact</a><a class="ft-a" href="Blog.dc.html">Blog</a><a class="ft-a" href="Research.dc.html">Research</a><a class="ft-a" href="Press.dc.html">Press</a></div></div>
+    <div class="ft-mapcol">
+      <div class="ft-ch">Office</div>
+      <div class="ft-map"><iframe src="https://www.google.com/maps?q=8BLOCKS+FZCO&amp;ll=25.0607775%2C55.1412167&amp;hl=en&amp;z=15&amp;output=embed" title="8BLOCKS FZCO on the map" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+      <a class="ft-a" href="mailto:hello@8blocks.io">hello@8blocks.io</a>
+      <a class="ft-a" href="tel:+971562865188">+971 56 286 5188</a>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <div>© 2026 8BLOCKS FZCO. All rights reserved.</div>
+    <div class="ft-legal"><a href="https://8blocks.io/privacy-policy" target="_blank" rel="noopener">Privacy policy</a><a href="https://8blocks.io/terms" target="_blank" rel="noopener">Terms of Service</a></div>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2900}}'>
+class Component extends DCLogic {
+  state = { cat: 'All', page: 1 };
+  CATS = ['All','Audits','Blockchain','DeFi','Finance','GameFi','Games & Reviews','NFT & In-game Assets','Tokenomics','Trading','Web Development'];
+  POSTS = [
+    { cat:'Tokenomics', date:'Nov 3, 2026', title:'The Land Is Real. The Holder Owns None of It', ex:'What the token holder actually gets on paper, and where the legal link to the plot breaks.', read:'9 min read', img:'./assets/blog-cover-1.jpg' },
+    { cat:'Tokenomics', date:'Oct 28, 2026', title:'Hacken Sold 13 Equity Slots for Tokens. The Cap Table Doesn’t Show Them', ex:'How equity-for-token swaps stay invisible to holders, and what to check before you buy in.', read:'8 min read', img:'./assets/blog-cover-2.jpg' },
+    { cat:'Tokenomics', date:'Oct 24, 2026', title:'KNTQ Has More Supply Waiting Than Trading', ex:'Unlock schedule versus float: why the overhang matters more than the chart.', read:'7 min read', img:'./assets/blog-cover-3.jpg' },
+    { cat:'Tokenomics', date:'Oct 22, 2026', title:'HECTARE Audit: The Land Is Real, the Contract Is Missing', ex:'A land-backed token with a real plot and no enforceable link between plot and holder.', read:'10 min read', img:'./assets/blog-cover-4.jpg' },
+    { cat:'Tokenomics', date:'Oct 15, 2026', title:'Your Product Can Grow 27x While Your Token Falls 85%', ex:'When product traction and token value decouple, and how to design so they do not.', read:'9 min read', img:'./assets/blog-cover-5.jpg' },
+    { cat:'Tokenomics', date:'Oct 13, 2026', title:'Tether Gold Audit: The Gold Checks Out, the Chain Does Not', ex:'Reserves are verified. On-chain controls and redemption mechanics are another story.', read:'11 min read', img:'./assets/blog-cover-6.jpg' },
+    { cat:'Tokenomics', date:'Oct 7, 2026', title:'GromaCoin Audit: A Real REIT in a Weak Wrapper', ex:'Solid underlying asset, thin token rights. Our scoring, block by block.', read:'10 min read', img:'./assets/blog-cover-7.jpg' },
+    { cat:'Tokenomics', date:'Oct 6, 2026', title:'Issuing an RWA Token on a Structured Product in Singapore: A Checklist', ex:'MAS rules, SPV setup and investor eligibility in one practical list.', read:'12 min read', img:'./assets/blog-cover-8.jpg' },
+    { cat:'Tokenomics', date:'Oct 4, 2026', title:'BCAP Passes the Compliance Test. Its $973m Price Doesn’t', ex:'Regulated does not mean fairly valued. We break down the gap.', read:'8 min read', img:'./assets/blog-cover-9.jpg' }
+  ];
+  renderVals() {
+    const { cat, page } = this.state;
+    const list = this.POSTS.filter(p => cat === 'All' || p.cat === cat);
+    return {
+      cats: this.CATS.map(l => ({ label: l, bg: l === cat ? 'rgb(255,255,255)' : 'rgb(27,27,27)', fg: l === cat ? 'rgb(0,0,0)' : 'rgb(255,255,255)', pick: () => this.setState({ cat: l, page: 1 }) })),
+      posts: list.map(p => ({ ...p, meta: p.cat + ' · ' + p.date, bg: 'url(' + p.img + ')' })),
+      empty: list.length === 0,
+      pages: [1,2,3,4].map(n => ({ n, border: n === page ? 'rgba(255,255,255,.3)' : 'transparent', pick: () => this.setState({ page: n }) })),
+      nextPage: () => this.setState({ page: page < 4 ? page + 1 : 4 })
+    };
+  }
+}
+</script>
+</body>
+</html>

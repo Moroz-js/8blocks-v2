@@ -1,0 +1,47 @@
+{
+ "v": 1,
+ "mode": "omelette",
+ "root": "project/",
+ "title": "8Blocks Events",
+ "entry": "Events.dc.html",
+ "pages": [
+  {
+   "path": "Binary Globe.dc.html",
+   "title": "Binary Globe",
+   "kind": "component"
+  },
+  {
+   "path": "Events.dc.html",
+   "title": "Events",
+   "kind": "page",
+   "name": "✓ Events"
+  },
+  {
+   "path": "Event.dc.html",
+   "title": "Event",
+   "kind": "page",
+   "name": "✓ Event"
+  }
+ ],
+ "migratorVersion": "artifact-migrator (claude-design-backend ed667f7ac9c1)",
+ "createdAt": "2026-11-05T11:45:40.159Z",
+ "source": {
+  "v": 1,
+  "app": "claude-design",
+  "url": "https://claude.ai/design/p/67728df6-dcbb-40d6-9f39-c3e5a5176de5",
+  "projectId": "67728df6-dcbb-40d6-9f39-c3e5a5176de5",
+  "exportedAt": "2026-11-05T11:45:40.159Z"
+ },
+ "report": {
+  "itemsVersion": 2,
+  "pages": {
+   "total": 5,
+   "ok": 5,
+   "partial": 0,
+   "notMigrated": 0
+  },
+  "items": [],
+  "truncated": 0,
+  "truncatedLeftOut": 0
+ }
+}

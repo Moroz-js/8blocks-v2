@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph.js?v=11"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+</style>
+</helmet>
+<div data-screen-label="Blog" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:120px;">
+
+<!-- HEADER -->
+<div style="width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+  <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+  <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+    <a href="Landing.dc.html">Services</a><a href="#">Cases</a><a href="#" style="opacity:1;border-bottom:1px solid rgb(255,255,255);">Blog</a><a href="#">Team</a>
+  </div>
+  <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+    <span style="font-size:15px;line-height:1.7;">EN</span>
+    <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div style="position:relative;height:200px;overflow:hidden;">
+  <div style="position:absolute;left:40px;top:96px;display:flex;flex-direction:column;gap:16px;">
+    <div style="font-size:56px;line-height:64px;opacity:.9;">Articles and insights</div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div style="padding:0 40px;display:flex;flex-direction:row;flex-wrap:wrap;gap:8px;">
+  <sc-for list="{{ cats }}" as="c" hint-placeholder-count="11">
+    <div onClick="{{ c.pick }}" style="height:44px;border-radius:64px;padding:10px 18px;box-sizing:border-box;display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;background:{{ c.bg }};color:{{ c.fg }};transition:background 300ms,color 300ms;">{{ c.label }}</div>
+  </sc-for>
+</div>
+
+<!-- GRID -->
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));column-gap:24px;row-gap:56px;">
+  <sc-for list="{{ posts }}" as="p" hint-placeholder-count="6">
+  <div style="display:flex;flex-direction:column;cursor:pointer;">
+    <div style="position:relative;height:240px;border-radius:10px;overflow:hidden;background-image:{{ p.bg }};background-size:cover;background-position:center;"></div>
+    <div style="padding:24px 0 0;box-sizing:border-box;display:flex;flex-direction:column;gap:12px;flex-grow:1;">
+      <div style="font-size:13px;line-height:20px;letter-spacing:.01em;opacity:.4;">{{ p.meta }}</div>
+      <div style="font-size:20px;line-height:27px;opacity:.9;">{{ p.title }}</div>
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);flex-grow:1;">{{ p.ex }}</div>
+      <div style="display:flex;flex-direction:row;justify-content:space-between;align-items:center;margin-top:8px;">
+        <div style="font-size:14px;opacity:.4;">{{ p.read }}</div>
+        <div style="height:40px;padding:0 18px;border-radius:64px;background:rgb(27,27,27);display:flex;align-items:center;font-size:14px;letter-spacing:.01em;">Read →</div>
+      </div>
+    </div>
+  </div>
+  </sc-for>
+</div>
+<sc-if value="{{ empty }}" hint-placeholder-val="{{ false }}">
+  <div style="margin:40px 40px 0;height:240px;border-radius:10px;background:rgb(16,17,19);display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;">
+    <div style="font-size:24px;line-height:30px;">No articles in this category yet</div>
+    <div style="font-size:14px;color:rgb(112,113,114);">New articles in this category are on the way.</div>
+  </div>
+</sc-if>
+
+<!-- PAGINATION -->
+<div style="margin-top:48px;display:flex;flex-direction:row;gap:8px;justify-content:center;">
+  <sc-for list="{{ pages }}" as="pg" hint-placeholder-count="4">
+    <div onClick="{{ pg.pick }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;background:transparent;color:rgb(255,255,255);border:1px solid {{ pg.border }};">{{ pg.n }}</div>
+  </sc-for>
+  <div onClick="{{ nextPage }}" style="width:48px;height:48px;box-sizing:border-box;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;background:transparent;border:1px solid transparent;"><svg width="8" height="14" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="rgb(255,255,255)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+</div>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":2900}}'>
+class Component extends DCLogic {
+  state = { cat: 'All', page: 1 };
+  CATS = ['All','Audits','Blockchain','DeFi','Finance','GameFi','Games & Reviews','NFT & In-game Assets','Tokenomics','Trading','Web Development'];
+  POSTS = [
+    { cat:'Tokenomics', date:'Nov 3, 2026', title:'The Land Is Real. The Holder Owns None of It', ex:'What the token holder actually gets on paper, and where the legal link to the plot breaks.', read:'9 min read', img:'./assets/asset-realestate.jpg' },
+    { cat:'Tokenomics', date:'Oct 28, 2026', title:'Hacken Sold 13 Equity Slots for Tokens. The Cap Table Doesn’t Show Them', ex:'How equity-for-token swaps stay invisible to holders, and what to check before you buy in.', read:'8 min read', img:'./assets/asset-securities.jpg' },
+    { cat:'Tokenomics', date:'Oct 24, 2026', title:'KNTQ Has More Supply Waiting Than Trading', ex:'Unlock schedule versus float: why the overhang matters more than the chart.', read:'7 min read', img:'./assets/brand-gradient-card.png' },
+    { cat:'Tokenomics', date:'Oct 22, 2026', title:'HECTARE Audit: The Land Is Real, the Contract Is Missing', ex:'A land-backed token with a real plot and no enforceable link between plot and holder.', read:'10 min read', img:'./assets/globe.png' },
+    { cat:'Tokenomics', date:'Oct 15, 2026', title:'Your Product Can Grow 27x While Your Token Falls 85%', ex:'When product traction and token value decouple, and how to design so they do not.', read:'9 min read', img:'./assets/hero.png' },
+    { cat:'Tokenomics', date:'Oct 13, 2026', title:'Tether Gold Audit: The Gold Checks Out, the Chain Does Not', ex:'Reserves are verified. On-chain controls and redemption mechanics are another story.', read:'11 min read', img:'./assets/src-money.png' },
+    { cat:'Tokenomics', date:'Oct 7, 2026', title:'GromaCoin Audit: A Real REIT in a Weak Wrapper', ex:'Solid underlying asset, thin token rights. Our scoring, block by block.', read:'10 min read', img:'./assets/tower.png' },
+    { cat:'Tokenomics', date:'Oct 6, 2026', title:'Issuing an RWA Token on a Structured Product in Singapore: A Checklist', ex:'MAS rules, SPV setup and investor eligibility in one practical list.', read:'12 min read', img:'./assets/dubai.png' },
+    { cat:'Tokenomics', date:'Oct 4, 2026', title:'BCAP Passes the Compliance Test. Its $973m Price Doesn’t', ex:'Regulated does not mean fairly valued. We break down the gap.', read:'8 min read', img:'./assets/src-justice.png' }
+  ];
+  renderVals() {
+    const { cat, page } = this.state;
+    const list = this.POSTS.filter(p => cat === 'All' || p.cat === cat);
+    return {
+      cats: this.CATS.map(l => ({ label: l, bg: l === cat ? 'rgb(255,255,255)' : 'rgb(27,27,27)', fg: l === cat ? 'rgb(0,0,0)' : 'rgb(255,255,255)', pick: () => this.setState({ cat: l, page: 1 }) })),
+      posts: list.map(p => ({ ...p, meta: p.cat + ' · ' + p.date, bg: 'url(' + p.img + ')' })),
+      empty: list.length === 0,
+      pages: [1,2,3,4].map(n => ({ n, border: n === page ? 'rgba(255,255,255,.3)' : 'transparent', pick: () => this.setState({ page: n }) })),
+      nextPage: () => this.setState({ page: page < 4 ? page + 1 : 4 })
+    };
+  }
+}
+</script>
+</body>
+</html>

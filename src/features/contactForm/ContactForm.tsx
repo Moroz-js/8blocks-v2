@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button, TextField, Textarea } from '@/shared/ds'
 import { trackPlatformEvent } from '@/shared/lib/platform-analytics'
 import { apiPath } from '@/shared/lib/apiPath'
+import { Honeypot, readHoneypot, useCaptcha } from '@/shared/lib/captcha/client'
 import styles from './ContactForm.module.scss'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
@@ -18,6 +19,7 @@ export interface ContactFormText {
   submitLabel: string
   sendingLabel: string
   failedError: string
+  requiredError: string
   successTitle: string
   successBody: string
 }
@@ -25,24 +27,31 @@ export interface ContactFormText {
 export function ContactForm({ text }: { text: ContactFormText }) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
+  const captcha = useCaptcha()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
 
-    const formData = new FormData(e.currentTarget)
+    const form = e.currentTarget
+    const formData = new FormData(form)
     const body = {
       name: formData.get('name') as string,
       email: formData.get('email') as string,
       message: formData.get('message') as string,
+      website: readHoneypot(form),
     }
 
     try {
+      if (![body.name, body.email, body.message].every((value) => value?.trim())) {
+        throw new Error(text.requiredError)
+      }
+      const captchaToken = await captcha.getToken()
       const res = await fetch(apiPath('/api/contact'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, captchaToken }),
       })
       const raw = await res.text()
       let data: { success?: boolean; error?: string } = {}
@@ -62,6 +71,8 @@ export function ContactForm({ text }: { text: ContactFormText }) {
       setStatus('error')
       trackPlatformEvent('form_submit', { form_id: 'contact', status: 'error' })
       setErrorMsg(err instanceof Error ? err.message : text.failedError)
+    } finally {
+      captcha.reset()
     }
   }
 
@@ -75,7 +86,8 @@ export function ContactForm({ text }: { text: ContactFormText }) {
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} noValidate>
+    <form className={styles.form} onSubmit={handleSubmit} onFocus={captcha.preload} noValidate>
+      <Honeypot />
       <div className={styles.row}>
         <TextField
           label={text.nameLabel}
@@ -95,6 +107,7 @@ export function ContactForm({ text }: { text: ContactFormText }) {
         />
       </div>
       <Textarea label={text.messageLabel} name="message" placeholder={text.messagePlaceholder} rows={4} required />
+      {captcha.widget}
       {status === 'error' && (
         <p className={styles.error} role="alert">
           {errorMsg}

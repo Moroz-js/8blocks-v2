@@ -1,10 +1,12 @@
+import { uiStrings } from '@/shared/content/uiStrings'
+
 /**
  * Санитизация и ограничения для публичных форм (XSS, CRLF в заголовках писем, control chars, перегруз по длине).
  */
 
 /** Тексты для API и ValidationError в Payload (как существующие ответы форм). */
 export const PUBLIC_FORM_ERRORS = {
-  leadDuplicateEmail: 'A submission with this email was already received.',
+  leadDuplicateEmail: uiStrings.formDuplicateLead,
   newsletterDuplicateEmail: 'This email is already subscribed.',
 } as const
 
@@ -46,33 +48,33 @@ export function sanitizeContactForm(body: unknown):
   | { ok: true; name: string; email: string; message: string }
   | { ok: false; error: string } {
   if (body === null || typeof body !== 'object' || Array.isArray(body)) {
-    return { ok: false, error: 'Invalid request body' }
+    return { ok: false, error: uiStrings.formInvalidBody }
   }
   const o = body as Record<string, unknown>
   if (typeof o.name !== 'string' || typeof o.email !== 'string' || typeof o.message !== 'string') {
-    return { ok: false, error: 'Please fill in all required fields' }
+    return { ok: false, error: uiStrings.formRequired }
   }
 
   let name = o.name.replace(/\0/g, '').trim()
-  let email = o.email.replace(/\0/g, '').trim().toLowerCase()
-  let message = o.message.replace(/\0/g, '').trim()
+  const email = o.email.replace(/\0/g, '').trim().toLowerCase()
+  const message = o.message.replace(/\0/g, '').trim()
 
   name = name.replace(/[\r\n]+/g, ' ').replace(/\s+/g, ' ').trim()
 
   if (!name || !email || !message) {
-    return { ok: false, error: 'Please fill in all required fields' }
+    return { ok: false, error: uiStrings.formRequired }
   }
   if (name.length > FORM_LIMITS.nameMax) {
-    return { ok: false, error: 'Name is too long' }
+    return { ok: false, error: uiStrings.formLongName }
   }
   if (message.length > FORM_LIMITS.messageMax) {
-    return { ok: false, error: 'Message is too long' }
+    return { ok: false, error: uiStrings.formLongMessage }
   }
   if (email.length > FORM_LIMITS.emailMax || /[\r\n]/.test(o.email)) {
-    return { ok: false, error: 'Please enter a valid email address' }
+    return { ok: false, error: uiStrings.formInvalidEmail }
   }
   if (!EMAIL_REGEX.test(email)) {
-    return { ok: false, error: 'Please enter a valid email address' }
+    return { ok: false, error: uiStrings.formInvalidEmail }
   }
 
   return { ok: true, name, email, message }

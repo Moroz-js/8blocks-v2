@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: transparent; }
+  span, div, h1, h2, p { text-wrap: pretty; }
+  a { color: #ffffff; text-decoration: none; }
+  a:hover { color: #707172; }
+  input::placeholder { color: rgb(112,113,114); }
+  [data-scroll] { scrollbar-gutter: stable; }
+  [data-scroll]::-webkit-scrollbar { width: 8px; }
+  [data-scroll]::-webkit-scrollbar-track { background: rgba(255,255,255,0.06); border-radius: 4px; }
+  [data-scroll]::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.28); border-radius: 4px; }
+  [data-scroll]::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.42); }
+  input[type=range] { -webkit-appearance: none; appearance: none; background: transparent; }
+  input[type=range]::-webkit-slider-runnable-track { height: 2px; border-radius: 2px; background: rgba(255,255,255,0.22); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; margin-top: -8px; width: 18px; height: 18px; border-radius: 50%; background: #ffffff; box-shadow: 0 0 0 1px rgba(0,0,0,0.4); cursor: pointer; }
+  input[type=range]::-moz-range-track { height: 2px; border-radius: 2px; background: rgba(255,255,255,0.22); }
+  input[type=range]::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 50%; background: #ffffff; cursor: pointer; }
+</style>
+<script src="./unlock-chart.js?v=3"></script>
+<script src="./pie-chart.js?v=8"></script>
+</helmet>
+<div ref="{{ rootRef }}" style="position: relative; width: 1200px; margin: 0 auto; font-family: Manrope, sans-serif; -webkit-font-smoothing: antialiased;">
+  <div ref="{{ builderRef }}" data-screen-label="Builder" style="display: flex; flex-direction: column; gap: 40px;">
+    
+    <div ref="{{ calcIntroRef }}" style="position: relative; display: flex; flex-direction: row; gap: 12px; align-items: stretch; height: 525px; transform-origin: 50% 0%;">
+        <div ref="{{ loadWrap }}" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 0 120px; border-radius: 8px; background: #101113;">
+          <div ref="{{ loadPct }}" style="display: flex; flex-direction: row; align-items: flex-end; height: 72px; overflow: hidden; font-family: Manrope, sans-serif; font-weight: 500; font-size: 64px; line-height: 72px; letter-spacing: -0.03em; color: #ffffff;"></div>
+          <div style="position: relative; width: 100%; max-width: 420px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.12); overflow: hidden;">
+            <div ref="{{ loadBar }}" style="position: absolute; left: 0; top: 0; height: 100%; width: 0%; border-radius: 2px; background: #CA005A; box-shadow: 0 0 12px rgba(202,0,90,0.7); transition: width 320ms ease;"></div>
+          </div>
+          <span ref="{{ loadTxt }}" style="min-height: 24px; text-align: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.5; color: #707172; transition: opacity 200ms ease;">Reading allocation table…</span>
+        </div>
+
+      <div style="position: relative; flex: 1 1 0; min-width: 0; height: 100%; box-sizing: border-box; padding: 28px 32px; border-radius: 8px; background: #101113; overflow: hidden; display: flex; flex-direction: column; gap: 20px;">
+        <div style="display: flex; flex-direction: row; gap: 0;">
+        <div ref="{{ tabRef0 }}" style="flex: 1 1 0; padding-bottom: 12px; border-bottom: 1px solid #ffffff;">
+          <span ref="{{ tabTxt0 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">1. Basics</span>
+        </div>
+        <div ref="{{ tabRef1 }}" style="flex: 1 1 0; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.14);">
+          <span ref="{{ tabTxt1 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: rgba(255,255,255,0.42);">2. Allocation</span>
+        </div>
+        <div ref="{{ tabRef2 }}" style="flex: 1 1 0; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.14);">
+          <span ref="{{ tabTxt2 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: rgba(255,255,255,0.42);">3. Vesting</span>
+        </div>
+        <div ref="{{ tabRef3 }}" style="flex: 1 1 0; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.14);">
+          <span ref="{{ tabTxt3 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: rgba(255,255,255,0.42);">4. Results</span>
+        </div>
+        </div>
+        <div ref="{{ panel0 }}" style="flex: 1 1 auto; min-height: 0; overflow: hidden; display: flex; flex-direction: column; gap: 18px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Token name</span>
+            <input ref="{{ nameInput }}" placeholder="e.g. 8Blocks" style="width: 100%; height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Ticker</span>
+            <input ref="{{ tickerInput }}" onInput="{{ onTicker }}" maxLength="4" placeholder="e.g. BLCK" style="width: 100%; height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+          </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">Template</span>
+            <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;">
+            <div ref="{{ tpl0 }}" onClick="{{ pickTpl0 }}" style="height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #ffffff;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">VC-backed</span>
+            </div>
+            <div ref="{{ tpl1 }}" onClick="{{ pickTpl1 }}" style="height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #ffffff;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">Community-led</span>
+            </div>
+            <div ref="{{ tpl2 }}" onClick="{{ pickTpl2 }}" style="height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #ffffff;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">Fair launch</span>
+            </div>
+            <div ref="{{ tpl3 }}" onClick="{{ pickTpl3 }}" style="height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #ffffff;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">Utility / Enterprise</span>
+            </div>
+            </div>
+            <span ref="{{ tplNote }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.6; color: #707172;">Templates prefill allocations and vesting with defensible defaults — everything stays editable.</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+              <span data-tip="Total number of tokens that will ever exist" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">Total supply</span>
+            </div>
+            <div style="display: flex; flex-direction: row; gap: 12px;">
+            <div ref="{{ sup0 }}" onClick="{{ pickSup0 }}" style="min-width: 104px; height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid transparent; border-radius: 8px; background: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #0d0d0d;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">10M</span>
+            </div>
+            <div ref="{{ sup1 }}" onClick="{{ pickSup1 }}" style="min-width: 104px; height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #ffffff;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">100M</span>
+            </div>
+            <div ref="{{ sup2 }}" onClick="{{ pickSup2 }}" style="min-width: 104px; height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #ffffff;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">1B</span>
+            </div>
+            <div ref="{{ sup3 }}" onClick="{{ pickSup3 }}" style="height: 44px; padding: 0 20px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 200ms ease, border-color 200ms ease, color 200ms ease; color: #ffffff;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">Custom value</span>
+            </div>
+            </div>
+          </div>
+          <a href="#allocation" onClick="{{ goStep1 }}" style="position: relative; z-index: 2; margin-top: auto; align-self: flex-end; display: inline-flex; align-items: center; justify-content: center; height: 56px; padding: 10px 24px; box-sizing: border-box; border-radius: 64px; background: rgb(255,255,255); color: rgb(0,0,0); font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; white-space: nowrap; transition: background 220ms ease;" style-hover="background: #e6e6e6;">Continue to allocation</a>
+        </div>
+        <div data-scroll="" ref="{{ panel1 }}" style="flex: 1 1 auto; min-height: 0; overflow-y: scroll; padding-right: 20px; display: none; flex-direction: column; gap: 28px;">
+          <div style="display: flex; flex-direction: column;">
+        <div ref="{{ arow0 }}" style="height: 64px; box-sizing: border-box; border-radius: 8px; transition: background 180ms ease; display: grid; grid-template-columns: 200px 1fr 96px; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+            <div ref="{{ cb0 }}" onClick="{{ onToggle0 }}" style="width: 18px; height: 18px; flex-shrink: 0; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #CA005A; background: #CA005A; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 160ms ease;"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4.2 3.9 7 10 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: #ffffff;">Investors</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,0.42);">Insider</span>
+            </div>
+          </div>
+          <input type="range" min="0" max="60" defaultValue="38" ref="{{ rng0 }}" onInput="{{ onRange0 }}" style="width: 100%; height: 20px; accent-color: #CA005A;">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px;">
+            <span ref="{{ val0 }}" style="min-width: 44px; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">38</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; color: #707172;">%</span>
+          </div>
+        </div>
+        <div ref="{{ arow1 }}" style="height: 64px; box-sizing: border-box; border-radius: 8px; transition: background 180ms ease; border-top: 1px solid rgba(255,255,255,0.10); display: grid; grid-template-columns: 200px 1fr 96px; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+            <div ref="{{ cb1 }}" onClick="{{ onToggle1 }}" style="width: 18px; height: 18px; flex-shrink: 0; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #4A8CFF; background: #4A8CFF; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 160ms ease;"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4.2 3.9 7 10 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: #ffffff;">Community</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,0.42);">External</span>
+            </div>
+          </div>
+          <input type="range" min="0" max="60" defaultValue="25" ref="{{ rng1 }}" onInput="{{ onRange1 }}" style="width: 100%; height: 20px; accent-color: #CA005A;">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px;">
+            <span ref="{{ val1 }}" style="min-width: 44px; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">25</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; color: #707172;">%</span>
+          </div>
+        </div>
+        <div ref="{{ arow2 }}" style="height: 64px; box-sizing: border-box; border-radius: 8px; transition: background 180ms ease; border-top: 1px solid rgba(255,255,255,0.10); display: grid; grid-template-columns: 200px 1fr 96px; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+            <div ref="{{ cb2 }}" onClick="{{ onToggle2 }}" style="width: 18px; height: 18px; flex-shrink: 0; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #3DD68C; background: #3DD68C; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 160ms ease;"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4.2 3.9 7 10 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: #ffffff;">Ecosystem</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,0.42);">Infrastructure</span>
+            </div>
+          </div>
+          <input type="range" min="0" max="60" defaultValue="10" ref="{{ rng2 }}" onInput="{{ onRange2 }}" style="width: 100%; height: 20px; accent-color: #CA005A;">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px;">
+            <span ref="{{ val2 }}" style="min-width: 44px; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">10</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; color: #707172;">%</span>
+          </div>
+        </div>
+        <div ref="{{ arow3 }}" style="height: 64px; box-sizing: border-box; border-radius: 8px; transition: background 180ms ease; border-top: 1px solid rgba(255,255,255,0.10); display: grid; grid-template-columns: 200px 1fr 96px; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+            <div ref="{{ cb3 }}" onClick="{{ onToggle3 }}" style="width: 18px; height: 18px; flex-shrink: 0; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #FFAC4D; background: #FFAC4D; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 160ms ease;"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4.2 3.9 7 10 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: #ffffff;">Treasury</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,0.42);">Infrastructure</span>
+            </div>
+          </div>
+          <input type="range" min="0" max="60" defaultValue="8" ref="{{ rng3 }}" onInput="{{ onRange3 }}" style="width: 100%; height: 20px; accent-color: #CA005A;">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px;">
+            <span ref="{{ val3 }}" style="min-width: 44px; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">8</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; color: #707172;">%</span>
+          </div>
+        </div>
+        <div ref="{{ arow4 }}" style="height: 64px; box-sizing: border-box; border-radius: 8px; transition: background 180ms ease; border-top: 1px solid rgba(255,255,255,0.10); display: grid; grid-template-columns: 200px 1fr 96px; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+            <div ref="{{ cb4 }}" onClick="{{ onToggle4 }}" style="width: 18px; height: 18px; flex-shrink: 0; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #9B6DFF; background: #9B6DFF; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 160ms ease;"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4.2 3.9 7 10 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: #ffffff;">Liquidity</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,0.42);">Infrastructure</span>
+            </div>
+          </div>
+          <input type="range" min="0" max="60" defaultValue="6" ref="{{ rng4 }}" onInput="{{ onRange4 }}" style="width: 100%; height: 20px; accent-color: #CA005A;">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px;">
+            <span ref="{{ val4 }}" style="min-width: 44px; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">6</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; color: #707172;">%</span>
+          </div>
+        </div>
+        <div ref="{{ arow5 }}" style="height: 64px; box-sizing: border-box; border-radius: 8px; transition: background 180ms ease; border-top: 1px solid rgba(255,255,255,0.10); display: grid; grid-template-columns: 200px 1fr 96px; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+            <div ref="{{ cb5 }}" onClick="{{ onToggle5 }}" style="width: 18px; height: 18px; flex-shrink: 0; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #37C9D9; background: #37C9D9; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 160ms ease;"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4.2 3.9 7 10 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: #ffffff;">Foundation</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,0.42);">Insider</span>
+            </div>
+          </div>
+          <input type="range" min="0" max="60" defaultValue="8" ref="{{ rng5 }}" onInput="{{ onRange5 }}" style="width: 100%; height: 20px; accent-color: #CA005A;">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px;">
+            <span ref="{{ val5 }}" style="min-width: 44px; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">8</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; color: #707172;">%</span>
+          </div>
+        </div>
+        <div ref="{{ arow6 }}" style="height: 64px; box-sizing: border-box; border-radius: 8px; transition: background 180ms ease; border-top: 1px solid rgba(255,255,255,0.10); display: grid; grid-template-columns: 200px 1fr 96px; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+            <div ref="{{ cb6 }}" onClick="{{ onToggle6 }}" style="width: 18px; height: 18px; flex-shrink: 0; box-sizing: border-box; border-radius: 5px; border: 1.5px solid #F2564D; background: #F2564D; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 160ms ease;"><svg width="11" height="8" viewBox="0 0 11 8" fill="none"><path d="M1 4.2 3.9 7 10 1" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: #ffffff;">Public sale</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.3; color: rgba(255,255,255,0.42);">External</span>
+            </div>
+          </div>
+          <input type="range" min="0" max="60" defaultValue="5" ref="{{ rng6 }}" onInput="{{ onRange6 }}" style="width: 100%; height: 20px; accent-color: #CA005A;">
+          <div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 8px;">
+            <span ref="{{ val6 }}" style="min-width: 44px; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">5</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; color: #707172;">%</span>
+          </div>
+        </div>
+          </div>
+          <div style="position: sticky; bottom: 0; z-index: 3; margin-top: auto; padding: 16px 0 4px; background: linear-gradient(180deg, rgba(17,17,17,0) 0%, #101113 34%, #101113 100%); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 16px;">
+            <a href="#basics" onClick="{{ goStep0 }}" style="display: inline-flex; align-items: center; justify-content: center; height: 56px; padding: 10px 24px; box-sizing: border-box; border: 0; border-radius: 64px; background: rgba(255,255,255,.15); backdrop-filter: blur(24px); color: rgb(255,255,255); font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; white-space: nowrap; transition: background 220ms ease, border-color 220ms ease;" style-hover="background: rgba(255,255,255,.22);">Basics</a>
+            <a href="#vesting" ref="{{ nextAlloc }}" onClick="{{ goStep2 }}" style="display: inline-flex; align-items: center; justify-content: center; height: 56px; padding: 10px 24px; box-sizing: border-box; border-radius: 64px; background: rgb(255,255,255); color: rgb(0,0,0); font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; white-space: nowrap; transition: background 220ms ease;" style-hover="background: #e6e6e6;">Continue to vesting</a>
+          </div>
+        </div>
+        <div data-scroll="" ref="{{ panel2 }}" style="flex: 1 1 auto; min-height: 0; overflow-y: scroll; padding-right: 20px; display: none; flex-direction: column; gap: 28px;">
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; background: #CA005A;"></div>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">Investors</span>
+              <span ref="{{ vpct0 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: rgba(255,255,255,0.42);">38%</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <div ref="{{ vp0_0 }}" onClick="{{ pickVest0_0 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 15 H58" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">No lock</span>
+              </div>
+              <div ref="{{ vp0_1 }}" onClick="{{ pickVest0_1 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 13 L18 13 L44 5 L58 5" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">10% TGE + 18m linear</span>
+              </div>
+              <div ref="{{ vp0_2 }}" onClick="{{ pickVest0_2 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L20 16 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">6m cliff + 2y linear</span>
+              </div>
+              <div ref="{{ vp0_3 }}" onClick="{{ pickVest0_3 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid #ffffff; border-radius: 8px; background: #ffffff; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 17 L16 17 L50 3 L58 3" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">1y cliff + 3y linear</span>
+              </div>
+              <div ref="{{ vp0_4 }}" onClick="{{ pickVest0_4 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 14 L14 14 L22 14 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">5% TGE + 6m cliff + 2y</span>
+              </div>
+              <div ref="{{ vp0_5 }}" onClick="{{ pickVest0_5 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L26 11 L58 6" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Long-haul 4y</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">TGE unlock</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vtge0 }}" onInput="{{ onVest0 }}" defaultValue="0" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">%</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Cliff</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vcliff0 }}" onInput="{{ onVest0 }}" defaultValue="12" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Vesting</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vvest0 }}" onInput="{{ onVest0 }}" defaultValue="36" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; background: #4A8CFF;"></div>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">Community</span>
+              <span ref="{{ vpct1 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: rgba(255,255,255,0.42);">25%</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <div ref="{{ vp1_0 }}" onClick="{{ pickVest1_0 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 15 H58" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">No lock</span>
+              </div>
+              <div ref="{{ vp1_1 }}" onClick="{{ pickVest1_1 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 13 L18 13 L44 5 L58 5" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">10% TGE + 18m linear</span>
+              </div>
+              <div ref="{{ vp1_2 }}" onClick="{{ pickVest1_2 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L20 16 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">6m cliff + 2y linear</span>
+              </div>
+              <div ref="{{ vp1_3 }}" onClick="{{ pickVest1_3 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid #ffffff; border-radius: 8px; background: #ffffff; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 17 L16 17 L50 3 L58 3" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">1y cliff + 3y linear</span>
+              </div>
+              <div ref="{{ vp1_4 }}" onClick="{{ pickVest1_4 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 14 L14 14 L22 14 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">5% TGE + 6m cliff + 2y</span>
+              </div>
+              <div ref="{{ vp1_5 }}" onClick="{{ pickVest1_5 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L26 11 L58 6" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Long-haul 4y</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">TGE unlock</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vtge1 }}" onInput="{{ onVest1 }}" defaultValue="0" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">%</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Cliff</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vcliff1 }}" onInput="{{ onVest1 }}" defaultValue="12" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Vesting</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vvest1 }}" onInput="{{ onVest1 }}" defaultValue="36" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; background: #3DD68C;"></div>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">Ecosystem</span>
+              <span ref="{{ vpct2 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: rgba(255,255,255,0.42);">10%</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <div ref="{{ vp2_0 }}" onClick="{{ pickVest2_0 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 15 H58" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">No lock</span>
+              </div>
+              <div ref="{{ vp2_1 }}" onClick="{{ pickVest2_1 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 13 L18 13 L44 5 L58 5" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">10% TGE + 18m linear</span>
+              </div>
+              <div ref="{{ vp2_2 }}" onClick="{{ pickVest2_2 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L20 16 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">6m cliff + 2y linear</span>
+              </div>
+              <div ref="{{ vp2_3 }}" onClick="{{ pickVest2_3 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid #ffffff; border-radius: 8px; background: #ffffff; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 17 L16 17 L50 3 L58 3" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">1y cliff + 3y linear</span>
+              </div>
+              <div ref="{{ vp2_4 }}" onClick="{{ pickVest2_4 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 14 L14 14 L22 14 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">5% TGE + 6m cliff + 2y</span>
+              </div>
+              <div ref="{{ vp2_5 }}" onClick="{{ pickVest2_5 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L26 11 L58 6" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Long-haul 4y</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">TGE unlock</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vtge2 }}" onInput="{{ onVest2 }}" defaultValue="0" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">%</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Cliff</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vcliff2 }}" onInput="{{ onVest2 }}" defaultValue="12" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Vesting</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vvest2 }}" onInput="{{ onVest2 }}" defaultValue="36" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; background: #FFAC4D;"></div>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">Treasury</span>
+              <span ref="{{ vpct3 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: rgba(255,255,255,0.42);">8%</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <div ref="{{ vp3_0 }}" onClick="{{ pickVest3_0 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 15 H58" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">No lock</span>
+              </div>
+              <div ref="{{ vp3_1 }}" onClick="{{ pickVest3_1 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 13 L18 13 L44 5 L58 5" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">10% TGE + 18m linear</span>
+              </div>
+              <div ref="{{ vp3_2 }}" onClick="{{ pickVest3_2 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L20 16 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">6m cliff + 2y linear</span>
+              </div>
+              <div ref="{{ vp3_3 }}" onClick="{{ pickVest3_3 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid #ffffff; border-radius: 8px; background: #ffffff; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 17 L16 17 L50 3 L58 3" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">1y cliff + 3y linear</span>
+              </div>
+              <div ref="{{ vp3_4 }}" onClick="{{ pickVest3_4 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 14 L14 14 L22 14 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">5% TGE + 6m cliff + 2y</span>
+              </div>
+              <div ref="{{ vp3_5 }}" onClick="{{ pickVest3_5 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L26 11 L58 6" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Long-haul 4y</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">TGE unlock</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vtge3 }}" onInput="{{ onVest3 }}" defaultValue="0" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">%</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Cliff</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vcliff3 }}" onInput="{{ onVest3 }}" defaultValue="12" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Vesting</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vvest3 }}" onInput="{{ onVest3 }}" defaultValue="36" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; background: #9B6DFF;"></div>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">Liquidity</span>
+              <span ref="{{ vpct4 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: rgba(255,255,255,0.42);">6%</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <div ref="{{ vp4_0 }}" onClick="{{ pickVest4_0 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 15 H58" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">No lock</span>
+              </div>
+              <div ref="{{ vp4_1 }}" onClick="{{ pickVest4_1 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 13 L18 13 L44 5 L58 5" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">10% TGE + 18m linear</span>
+              </div>
+              <div ref="{{ vp4_2 }}" onClick="{{ pickVest4_2 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L20 16 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">6m cliff + 2y linear</span>
+              </div>
+              <div ref="{{ vp4_3 }}" onClick="{{ pickVest4_3 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid #ffffff; border-radius: 8px; background: #ffffff; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 17 L16 17 L50 3 L58 3" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">1y cliff + 3y linear</span>
+              </div>
+              <div ref="{{ vp4_4 }}" onClick="{{ pickVest4_4 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 14 L14 14 L22 14 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">5% TGE + 6m cliff + 2y</span>
+              </div>
+              <div ref="{{ vp4_5 }}" onClick="{{ pickVest4_5 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L26 11 L58 6" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Long-haul 4y</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">TGE unlock</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vtge4 }}" onInput="{{ onVest4 }}" defaultValue="0" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">%</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Cliff</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vcliff4 }}" onInput="{{ onVest4 }}" defaultValue="12" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Vesting</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vvest4 }}" onInput="{{ onVest4 }}" defaultValue="36" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; background: #37C9D9;"></div>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">Foundation</span>
+              <span ref="{{ vpct5 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: rgba(255,255,255,0.42);">8%</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <div ref="{{ vp5_0 }}" onClick="{{ pickVest5_0 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 15 H58" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">No lock</span>
+              </div>
+              <div ref="{{ vp5_1 }}" onClick="{{ pickVest5_1 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 13 L18 13 L44 5 L58 5" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">10% TGE + 18m linear</span>
+              </div>
+              <div ref="{{ vp5_2 }}" onClick="{{ pickVest5_2 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L20 16 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">6m cliff + 2y linear</span>
+              </div>
+              <div ref="{{ vp5_3 }}" onClick="{{ pickVest5_3 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid #ffffff; border-radius: 8px; background: #ffffff; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 17 L16 17 L50 3 L58 3" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">1y cliff + 3y linear</span>
+              </div>
+              <div ref="{{ vp5_4 }}" onClick="{{ pickVest5_4 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 14 L14 14 L22 14 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">5% TGE + 6m cliff + 2y</span>
+              </div>
+              <div ref="{{ vp5_5 }}" onClick="{{ pickVest5_5 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L26 11 L58 6" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Long-haul 4y</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">TGE unlock</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vtge5 }}" onInput="{{ onVest5 }}" defaultValue="0" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">%</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Cliff</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vcliff5 }}" onInput="{{ onVest5 }}" defaultValue="12" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Vesting</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vvest5 }}" onInput="{{ onVest5 }}" defaultValue="36" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="box-sizing: border-box; display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <div style="width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; background: #F2564D;"></div>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: #ffffff;">Public sale</span>
+              <span ref="{{ vpct6 }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 1.2; color: rgba(255,255,255,0.42);">5%</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+              <div ref="{{ vp6_0 }}" onClick="{{ pickVest6_0 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 15 H58" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">No lock</span>
+              </div>
+              <div ref="{{ vp6_1 }}" onClick="{{ pickVest6_1 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 13 L18 13 L44 5 L58 5" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">10% TGE + 18m linear</span>
+              </div>
+              <div ref="{{ vp6_2 }}" onClick="{{ pickVest6_2 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L20 16 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">6m cliff + 2y linear</span>
+              </div>
+              <div ref="{{ vp6_3 }}" onClick="{{ pickVest6_3 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid #ffffff; border-radius: 8px; background: #ffffff; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 17 L16 17 L50 3 L58 3" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">1y cliff + 3y linear</span>
+              </div>
+              <div ref="{{ vp6_4 }}" onClick="{{ pickVest6_4 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 14 L14 14 L22 14 L46 4 L58 4" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">5% TGE + 6m cliff + 2y</span>
+              </div>
+              <div ref="{{ vp6_5 }}" onClick="{{ pickVest6_5 }}" style="height: 44px; padding: 0 14px; box-sizing: border-box; border: 1px solid rgba(255,255,255,0.14); border-radius: 8px; background: transparent; display: flex; flex-direction: row; align-items: center; gap: 10px; cursor: pointer; transition: border-color 180ms ease, background 180ms ease;">
+                <svg width="60" height="20" viewBox="0 0 60 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0;"><path d="M2 16 L26 11 L58 6" stroke="#A7A8A9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; color: #ffffff;">Long-haul 4y</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">TGE unlock</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vtge6 }}" onInput="{{ onVest6 }}" defaultValue="0" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">%</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Cliff</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vcliff6 }}" onInput="{{ onVest6 }}" defaultValue="12" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; color: rgb(112,113,114);">Vesting</span>
+              <div style="height: 44px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: rgb(16,17,19); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.14); outline: none; transition: background 160ms ease, box-shadow 160ms ease; display: flex; flex-direction: row; align-items: center; justify-content: flex-end; gap: 6px;" style-hover="background: rgb(27,27,27); box-shadow: inset 0 0 0 1px rgb(112,113,114);" style-focus-within="background: rgb(16,17,19); box-shadow: inset 0 0 0 1.5px rgb(255,255,255), 0px 0px 0px 3px rgba(255,255,255,0.1255);">
+                <input ref="{{ vvest6 }}" onInput="{{ onVest6 }}" defaultValue="36" style="width: 100%; min-width: 0; height: 100%; box-sizing: border-box; padding: 0; border: 0; background: transparent; outline: none; text-align: right; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(255,255,255);">
+                <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: rgb(112,113,114);">mo</span>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div style="position: sticky; bottom: 0; z-index: 3; margin-top: auto; padding: 16px 0 4px; background: linear-gradient(180deg, rgba(17,17,17,0) 0%, #101113 34%, #101113 100%); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 16px;">
+            <a href="#allocation" onClick="{{ goStep1 }}" style="display: inline-flex; align-items: center; justify-content: center; height: 56px; padding: 10px 24px; box-sizing: border-box; border: 0; border-radius: 64px; background: rgba(255,255,255,.15); backdrop-filter: blur(24px); color: rgb(255,255,255); font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; white-space: nowrap; transition: background 220ms ease, border-color 220ms ease;" style-hover="background: rgba(255,255,255,.22);">Allocation</a>
+            <a href="03 Token Lab Results.dc.html" onClick="{{ runCalc }}" style="display: inline-flex; align-items: center; justify-content: center; height: 56px; padding: 10px 24px; box-sizing: border-box; border-radius: 64px; background: rgb(255,255,255); color: rgb(0,0,0); font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 20px; letter-spacing: .01em; white-space: nowrap; transition: background 220ms ease;" style-hover="background: #e6e6e6;">See results</a>
+          </div>
+        </div>
+        <div style="position: absolute; left: 0; right: 48px; bottom: 0; height: 88px; pointer-events: none; background: linear-gradient(180deg, rgba(17,17,17,0) 0%, rgba(17,17,17,0.85) 55%, #101113 100%);"></div>
+      </div>
+      <div style="width: 520px; flex-shrink: 0; height: 100%; box-sizing: border-box; padding: 18px 32px; border-radius: 8px; background: #101113; overflow: hidden; display: flex; flex-direction: column; gap: 8px;">
+        <div ref="{{ pieWrap }}" style="position: relative; width: 100%; height: 250px;">
+          <pie-chart ref="{{ pieRef }}" bare="" inner="0.885" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%;"></pie-chart>
+          <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none;">
+            <span ref="{{ tickerRef }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 40px; letter-spacing: -0.02em; color: rgba(255,255,255,0.42);">TICKER</span>
+            <span ref="{{ ringSub }}" style="display: none; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.42);">Allocation</span>
+          </div>
+        </div>
+        <div ref="{{ totalWrap }}" style="box-sizing: border-box; padding: 14px 20px; border-radius: 8px; background: #0b0b0b; display: flex; flex-direction: column; gap: 10px;">
+          <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #707172;">Total allocated</span>
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 12px;">
+              <span ref="{{ balanceBtn }}" onClick="{{ autoBalance }}" style="display: none; align-items: center; height: 30px; padding: 0 14px; border-radius: 64px; background: #ffffff; cursor: pointer; font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1; color: #101113; white-space: nowrap; transition: background 200ms ease;" style-hover="background: rgba(255,255,255,0.85);">Auto-balance to 100%</span>
+              <span ref="{{ totalTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #34C759;">100%</span>
+            </div>
+          </div>
+          <div style="position: relative; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.12); overflow: hidden;">
+            <div ref="{{ totalBar }}" style="position: absolute; left: 0; top: 0; height: 100%; width: 100%; border-radius: 2px; background: #34C759; transition: width 200ms ease, background 200ms ease;"></div>
+          </div>
+        </div>
+        <div ref="{{ statsWrap }}" style="display: flex; flex-direction: column;">
+          <div ref="{{ scoreRow }}" style="height: 48px; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+              <span data-tip="Structure Score from the current allocation" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">Live score</span>
+            </div>
+            <span ref="{{ scoreTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #F2564D;">18 · Red flag</span>
+          </div>
+        <div ref="{{ supplyRow }}" style="height: 48px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+            <span data-tip="Total number of tokens that will ever exist" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">Supply</span>
+          </div>
+          <span ref="{{ supplyTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #ffffff;">10M</span>
+        </div>
+        <div style="height: 48px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+            <span data-tip="Share of supply held by the team and private investors" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">Insider share</span>
+          </div>
+          <span ref="{{ insiderTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #FFAC4D;">46%</span>
+        </div>
+        <div style="height: 48px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px;">
+          <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+            <span data-tip="Share of supply circulating at listing" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+            <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">TGE float</span>
+          </div>
+          <span ref="{{ floatTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #F2564D;">5.0%</span>
+        </div>
+        </div>
+        <div ref="{{ vestWrap }}" style="display: none; flex-direction: column; gap: 16px;">
+          <unlock-chart ref="{{ unlockRef }}" accent="#CA005A" style="width: 100%; height: 272px;"></unlock-chart>
+          <div style="display: flex; flex-direction: column;">
+          <div style="height: 44px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+              <span data-tip="Share of total supply unlocked in the first 12 months" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">12m pressure</span>
+            </div>
+            <span ref="{{ pressTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #ffffff;">28.5%</span>
+          </div>
+          <div style="height: 44px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+              <span data-tip="Largest single-month unlock" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">Peak unlock</span>
+            </div>
+            <span ref="{{ peakTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #ffffff;">M0 · 136M</span>
+          </div>
+          <div style="height: 44px; border-top: 1px solid rgba(255,255,255,0.10); display: flex; flex-direction: row; justify-content: space-between; align-items: center; gap: 24px;">
+            <div style="display: flex; flex-direction: row; align-items: center; gap: 8px;">
+              <span data-tip="Months where the unlock exceeds twice the running average" style="width: 16px; height: 16px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-family: Manrope, sans-serif; font-weight: 500; font-size: 10px; line-height: 1; color: #ffffff; cursor: help;">?</span>
+              <span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.4; color: #ffffff;">Spike months</span>
+            </div>
+            <span ref="{{ spikeTxt }}" style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 18px; line-height: 25px; letter-spacing: 0.01em; color: #ffffff;">1</span>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:700}}">
+class Component extends DCLogic {
+  W = 1200;
+  ALLOC = [
+    { name: 'Investors', color: '#CA005A', insider: true, v: 38 },
+    { name: 'Community', color: '#4A8CFF', insider: false, v: 25 },
+    { name: 'Ecosystem', color: '#3DD68C', insider: false, v: 10 },
+    { name: 'Treasury', color: '#FFAC4D', insider: false, v: 8 },
+    { name: 'Liquidity', color: '#9B6DFF', insider: false, v: 6 },
+    { name: 'Foundation', color: '#37C9D9', insider: true, v: 8 },
+    { name: 'Public sale', color: '#F2564D', insider: false, v: 5 },
+  ];
+  step = 0;
+  fit = () => {
+    const el = this.rootEl;
+    if (!el) return;
+    const avail = (el.parentElement ? el.parentElement.clientWidth : 0) || window.innerWidth || document.documentElement.clientWidth;
+    if (!avail) return;
+    const sc = Math.min(1, avail / this.W);
+    if (!(sc > 0)) return;
+    el.style.zoom = sc;
+    el.style.margin = '0 auto';
+    const bleedW = avail / sc;
+    const off = (bleedW - this.W) / 2;
+    if (this.headerEl) {
+      this.headerEl.style.width = bleedW + 'px';
+      this.headerEl.style.paddingLeft = off + 50 + 'px';
+      this.headerEl.style.paddingRight = off + 50 + 'px';
+    }
+    if (this.digitZone) {
+      this.digitZone.style.width = bleedW + 'px';
+      this.digitZone.style.marginLeft = -off + 'px';
+    }
+  };
+  HERO_SEQ = [
+    { v: '0.92,0.44,0.92,0.44', c: '0.86,0.34,0.86,0.34', glow: 'radial-gradient(closest-side, rgba(224,110,47,0.22), rgba(230,150,61,0.07) 55%, rgba(224,110,47,0) 100%)' },
+    { v: '0.92,0.72,0.92,0.72', c: '0.86,0.56,0.86,0.56', glow: 'radial-gradient(closest-side, rgba(224,138,47,0.22), rgba(120,205,150,0.07) 55%, rgba(224,138,47,0) 100%)' },
+    { v: '0.92,0.92,0.92,0.92', c: '0.86,0.86,0.86,0.86', glow: 'radial-gradient(closest-side, rgba(61,214,140,0.2), rgba(46,197,160,0.07) 55%, rgba(61,214,140,0) 100%)' },
+  ];
+  heroSnap = (e) => {
+    if (this._snapped || !this.builderEl) return;
+    if (window.scrollY > 160 || (e && e.deltaY <= 0)) { if (window.scrollY > 400) this._snapped = true; return; }
+    this._snapped = true;
+    const to = this.builderEl.getBoundingClientRect().top + window.scrollY - 92;
+    const from = window.scrollY, t0 = performance.now(), DUR = 1600;
+    const step = () => {
+      const p = Math.min(1, (performance.now() - t0) / DUR);
+      const e = 1 - Math.pow(1 - p, 4);
+      window.scrollTo(0, from + (to - from) * e);
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  playHeroSeq = () => {
+    if (this._heroPlayed || !this.heroChart) return;
+    this._heroPlayed = true;
+    this.HERO_SEQ.forEach((st, i) => {
+      setTimeout(() => {
+        if (!this.heroChart) return;
+        this.heroChart.setAttribute('values', st.v);
+        this.heroChart.setAttribute('color-values', st.c);
+        if (this.heroGlow) this.heroGlow.style.background = st.glow;
+        const c = this.heroChart;
+        if (c && c._down && c._up) { c._down(); setTimeout(() => c._up(), 260); }
+        if (i === this.HERO_SEQ.length - 1) {
+          setTimeout(() => {
+            const gr = this.digitZone && this.digitZone.querySelector('glow-rocket');
+            if (gr && gr.pulse && this.heroChart) { const b = this.heroChart.getBoundingClientRect(); gr.pulse(b.left + b.width / 2, b.top + b.height / 2); }
+          }, 2000);
+        }
+      }, 3000 + i * 2000);
+    });
+  };
+  redrawCharts = () => {
+    if (!this.rootEl) return;
+    this.rootEl.querySelectorAll('result-chart, unlock-chart, pie-chart').forEach((el) => { if (el.draw) el.draw(); });
+  };
+  setChipActive = (el, on) => {
+    if (!el) return;
+    el.style.background = on ? '#ffffff' : 'transparent';
+    el.style.borderColor = on ? 'transparent' : 'rgba(255,255,255,0.14)';
+    el.style.color = on ? '#0d0d0d' : '#ffffff';
+  };
+  TPL_NOTES = [
+    'Classic venture path: investors in, long team locks.',
+    'DAO-style: majority to community, small insider share.',
+    'No investor round, wide distribution from day one.',
+    'Product-first token: heavy ecosystem and treasury.',
+  ];
+  TPL_DEFAULT = 'Templates prefill allocations and vesting with defensible defaults — everything stays editable.';
+  pick = (group, i) => {
+    if (group === 'tpl') {
+      const off = this.tplActive === i;
+      this.tplActive = off ? null : i;
+      for (let k = 0; k < 4; k++) this.setChipActive(this['_tpl' + k], k === this.tplActive);
+      if (this._tplNote) this._tplNote.textContent = this.tplActive == null ? this.TPL_DEFAULT : this.TPL_NOTES[i];
+      return;
+    }
+    for (let k = 0; k < 4; k++) this.setChipActive(this['_' + group + k], k === i);
+    if (group === 'sup') {
+      const labels = ['10M', '100M', '1B', 'Custom'];
+      if (this._supplyTxt && i < 3) this._supplyTxt.textContent = labels[i];
+      const custom = this._sup3;
+      if (!custom) return;
+      if (i === 3) {
+        if (custom.dataset.editing === '1') return;
+        custom.dataset.editing = '1';
+        custom.style.padding = '0';
+        custom.innerHTML = '<input placeholder="Enter supply" style="width: 180px; height: 54px; box-sizing: border-box; padding: 0 16px; border: 0; border-radius: 10px; background: transparent; outline: none; font-family: Manrope, sans-serif; font-weight: 500; font-size: 16px; line-height: 22px; letter-spacing: .01em; color: #0d0d0d;">';
+        const input = custom.querySelector('input');
+        if (input) {
+          input.addEventListener('pointerdown', (e) => e.stopPropagation());
+          input.addEventListener('input', (e) => { if (this._supplyTxt) this._supplyTxt.textContent = e.target.value || '—'; });
+          requestAnimationFrame(() => input.focus());
+        }
+      } else if (custom.dataset.editing === '1') {
+        custom.dataset.editing = '';
+        custom.style.padding = '0 24px';
+        custom.innerHTML = '<span style="font-family: Manrope, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.2; white-space: nowrap; color: inherit;">Custom value</span>';
+      }
+    }
+  };
+  VEST_PRESETS = [
+    { tge: 100, cliff: 0, vest: 0 },
+    { tge: 10, cliff: 0, vest: 18 },
+    { tge: 0, cliff: 6, vest: 24 },
+    { tge: 0, cliff: 12, vest: 36 },
+    { tge: 5, cliff: 6, vest: 24 },
+    { tge: 0, cliff: 0, vest: 48 },
+  ];
+  VEST = [3, 1, 1, 3, 0, 3, 0].map((p) => ({ preset: p }));
+  pickVest = (ci, pi) => {
+    this.VEST[ci].preset = pi;
+    for (let k = 0; k < 6; k++) {
+      const el = this['_vp' + ci + '_' + k];
+      if (!el) continue;
+      el.style.borderColor = k === pi ? '#ffffff' : 'rgba(255,255,255,0.14)';
+      el.style.background = k === pi ? '#ffffff' : 'transparent';
+      const lbl = el.querySelector('span');
+      if (lbl) lbl.style.color = k === pi ? '#0d0d0d' : '#ffffff';
+      const path = el.querySelector('path');
+      if (path) path.setAttribute('stroke', k === pi ? 'rgba(0,0,0,0.72)' : '#A7A8A9');
+    }
+    const p = this.VEST_PRESETS[pi];
+    if (this['_vtge' + ci]) this['_vtge' + ci].value = p.tge;
+    if (this['_vcliff' + ci]) this['_vcliff' + ci].value = p.cliff;
+    if (this['_vvest' + ci]) this['_vvest' + ci].value = p.vest;
+  };
+  syncVestPcts = () => {
+    this.ALLOC.forEach((d, i) => { const el = this['_vpct' + i]; if (el) el.textContent = d.v + '%'; });
+  };
+  onPlanScroll = () => {
+    const track = this.planTrack, sticky = this.planSticky;
+    if (!track || !sticky) return;
+    const tr = track.getBoundingClientRect();
+    const span = tr.height - sticky.getBoundingClientRect().height;
+    const raw = Math.max(0, Math.min(1, -tr.top / Math.max(1, span)));
+    const p = Math.max(0, Math.min(1, raw / 0.9));
+    if (this.planFill) this.planFill.style.width = (p * 100) + '%';
+    if (this.planGlow) {
+      const steps = [0, 0.35, 0.7, 1];
+      this.planGlow.style.opacity = String(steps[Math.min(3, Math.floor(p * 3 + 1e-6))]);
+    }
+    const root = this.planRoot;
+    if (!root) return;
+    const N = 3;
+    const sp = Math.min(N - 0.0001, p * N);
+    const active = Math.floor(sp);
+    const within = sp - active;
+    root.querySelectorAll('[data-dot]').forEach((d) => {
+      const i = +d.dataset.dot, on = i <= active;
+      d.style.background = on ? '#CA005A' : '#000000';
+      d.style.borderColor = on ? '#CA005A' : 'rgba(255,255,255,0.3)';
+      d.style.boxShadow = i === active ? '0 0 14px rgba(202,0,90,0.85)' : 'none';
+    });
+    root.querySelectorAll('[data-stage]').forEach((el) => {
+      el.style.opacity = +el.dataset.stage > active ? '0.25' : '1';
+    });
+    root.querySelectorAll('[data-col]').forEach((c) => { c.style.opacity = +c.dataset.col === active ? '1' : '0'; c.style.pointerEvents = 'none'; });
+    const subs = root.querySelectorAll('[data-sub="' + active + '"]');
+    const cur = Math.min(subs.length - 1, Math.floor(within * subs.length));
+    subs.forEach((el) => {
+      const on = +el.dataset.i === cur;
+      el.style.opacity = on ? '1' : '0';
+      el.style.transform = on ? 'translateY(0)' : 'translateY(8px)';
+    });
+  };
+  fadePanel = (el, show) => {
+    if (!el) return;
+    if (show) {
+      el.style.display = 'flex';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(10px)';
+      requestAnimationFrame(() => {
+        el.style.transition = 'opacity 420ms ease, transform 420ms cubic-bezier(0.22,1,0.36,1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    } else {
+      el.style.display = 'none';
+    }
+  };
+  showStep = (n) => {
+    this.step = n;
+    for (let i = 0; i < 4; i++) {
+      const tabEl = this['_tab' + i], txt = this['_tabTxt' + i];
+      if (tabEl) tabEl.style.borderBottomColor = i === n ? '#ffffff' : 'rgba(255,255,255,0.14)';
+      if (txt) txt.style.color = i === n ? '#ffffff' : 'rgba(255,255,255,0.42)';
+      this.fadePanel(this['_panel' + i], i === n);
+    }
+    if (this._ringSub) this._ringSub.style.display = n === 1 ? 'block' : 'none';
+    if (this._scoreRow) this._scoreRow.style.display = n === 1 ? 'flex' : 'none';
+    if (this._supplyRow) this._supplyRow.style.borderTopColor = n === 1 ? 'rgba(255,255,255,0.10)' : 'transparent';
+    if (n === 1) this.syncAlloc();
+    const vesting = n === 2;
+    if (this._pieWrap) this._pieWrap.style.display = vesting ? 'none' : 'block';
+    if (this._totalWrap) this._totalWrap.style.display = vesting ? 'none' : 'flex';
+    if (this._statsWrap) this._statsWrap.style.display = vesting ? 'none' : 'flex';
+    if (this._vestWrap) {
+      this.fadePanel(this._vestWrap, vesting);
+      if (vesting && this._unlockEl && this._unlockEl.draw) requestAnimationFrame(() => this._unlockEl.draw());
+    }
+    if (n === 2) { this.syncVestPcts(); if (!this._vestInit) { this._vestInit = 1; this.VEST.forEach((d, i) => this.pickVest(i, d.preset)); } }
+  };
+  syncAlloc = () => {
+    const total = this.ALLOC.reduce((a, d) => a + d.v, 0);
+    this.ALLOC.forEach((d, i) => { const el = this['_val' + i]; if (el) el.textContent = String(d.v); });
+    if (this._totalTxt) {
+      this._totalTxt.textContent = total + '%';
+      this._totalTxt.style.color = total === 100 ? '#34C759' : (total > 100 ? '#F2564D' : '#FFAC4D');
+    }
+    if (this._balanceBtn) this._balanceBtn.style.display = total > 100 ? 'inline-flex' : 'none';
+    if (this._nextAlloc) {
+      const ok = total === 100;
+      this._nextAlloc.style.opacity = ok ? '1' : '0.35';
+      this._nextAlloc.style.pointerEvents = ok ? 'auto' : 'none';
+      this._nextAlloc.title = ok ? '' : 'Allocations must add up to 100%';
+    }
+    if (this._totalBar) {
+      this._totalBar.style.width = Math.min(100, total) + '%';
+      this._totalBar.style.background = total === 100 ? '#34C759' : (total > 100 ? '#F2564D' : '#FFAC4D');
+    }
+    if (this._pie) {
+      const data = this.ALLOC.filter((d) => d.v > 0).map((d) => ({ label: d.name, value: d.v, color: d.color }));
+      this._pie.setAttribute('data', JSON.stringify(data));
+    }
+    const insider = this.ALLOC.filter((d) => d.insider).reduce((a, d) => a + d.v, 0);
+    const ins = total ? Math.round((insider / total) * 100) : 0;
+    if (this._insiderTxt) {
+      this._insiderTxt.textContent = ins + '%';
+      this._insiderTxt.style.color = ins > 30 ? '#F2564D' : (ins > 25 ? '#FFAC4D' : '#34C759');
+    }
+    const publicSale = this.ALLOC[6].v, liquidity = this.ALLOC[4].v;
+    const flt = Math.round((publicSale + liquidity * 0.5) * 10) / 10;
+    if (this._floatTxt) {
+      this._floatTxt.textContent = flt.toFixed(1) + '%';
+      this._floatTxt.style.color = flt < 6 ? '#F2564D' : (flt < 10 ? '#FFAC4D' : '#34C759');
+    }
+    if (this._scoreTxt) {
+      let score = 100 - Math.max(0, ins - 25) * 1.6 - Math.max(0, 10 - flt) * 2.2 - Math.abs(100 - total) * 1.2;
+      score = Math.max(0, Math.min(100, Math.round(score)));
+      const band = score >= 70 ? 'Solid' : (score >= 45 ? 'Watch' : 'Red flag');
+      this._scoreTxt.textContent = score + ' · ' + band;
+      this._scoreTxt.style.color = score >= 70 ? '#34C759' : (score >= 45 ? '#FFAC4D' : '#F2564D');
+    }
+  };
+  buildOdo = () => {
+    const host = this._loadPct;
+    if (!host || host._built) return;
+    host._built = true;
+    host.innerHTML = '';
+    this._reels = [];
+    for (let d = 0; d < 3; d++) {
+      const col = document.createElement('div');
+      col.style.cssText = 'height:72px;overflow:hidden;width:0;opacity:0;transition:width 260ms ease,opacity 260ms ease;';
+      const strip = document.createElement('div');
+      strip.style.cssText = 'transition:transform 840ms cubic-bezier(0.22,1,0.36,1);will-change:transform;';
+      for (let n = 0; n < 10; n++) {
+        const s = document.createElement('div');
+        s.textContent = String(n);
+        s.style.cssText = 'height:72px;line-height:72px;text-align:center;';
+        strip.appendChild(s);
+      }
+      col.appendChild(strip);
+      host.appendChild(col);
+      this._reels.push({ col, strip });
+    }
+    const pct = document.createElement('div');
+    pct.textContent = '%';
+    pct.style.cssText = 'height:72px;line-height:72px;';
+    host.appendChild(pct);
+    this.setOdo(0);
+  };
+  setOdo = (v) => {
+    if (!this._reels) return;
+    const s = String(Math.max(0, Math.min(100, Math.round(v))));
+    const digits = s.padStart(3, ' ').split('');
+    digits.forEach((ch, i) => {
+      const r = this._reels[i];
+      const on = ch !== ' ';
+      r.col.style.width = on ? '42px' : '0px';
+      r.col.style.opacity = on ? '1' : '0';
+      if (on) r.strip.style.transform = 'translateY(' + (-72 * Number(ch)) + 'px)';
+    });
+  };
+  initTips = () => {
+    if (this._tipEl) return;
+    const tip = document.createElement('div');
+    tip.style.cssText = 'position:fixed;z-index:9999;max-width:260px;padding:10px 12px;border-radius:10px;background:#1C1C1C;border:1px solid rgba(255,255,255,0.12);box-shadow:0 12px 30px rgba(0,0,0,0.55);font-family:Manrope,sans-serif;font-weight: 500;font-size: 14px;line-height:1.45;color:#ffffff;opacity:0;transform:translateY(4px);transition:opacity 140ms ease,transform 140ms ease;pointer-events:none;';
+    document.body.appendChild(tip);
+    this._tipEl = tip;
+    const show = (el) => {
+      tip.textContent = el.getAttribute('data-tip');
+      const r = el.getBoundingClientRect();
+      tip.style.opacity = '0';
+      tip.style.left = '0px'; tip.style.top = '0px';
+      requestAnimationFrame(() => {
+        const w = tip.offsetWidth, h = tip.offsetHeight;
+        let x = r.left + r.width / 2 - w / 2;
+        x = Math.max(12, Math.min(window.innerWidth - w - 12, x));
+        let y = r.top - h - 10;
+        if (y < 12) y = r.bottom + 10;
+        tip.style.left = x + 'px'; tip.style.top = y + 'px';
+        tip.style.opacity = '1'; tip.style.transform = 'translateY(0)';
+      });
+    };
+    const hide = () => { tip.style.opacity = '0'; tip.style.transform = 'translateY(4px)'; };
+    document.addEventListener('mouseover', (e) => {
+      const el = e.target.closest && e.target.closest('[data-tip]');
+      if (el) show(el);
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest && e.target.closest('[data-tip]')) hide();
+    });
+    window.addEventListener('scroll', hide, { passive: true });
+  };
+  playCalcIntro = () => {
+    const el = this.calcIntro;
+    if (!el || this._introAnim || !el.animate) return;
+    const anim = el.animate([
+      { transform: 'translateY(140px) scale(0.94)', opacity: 0.55 },
+      { transform: 'translateY(0) scale(1)', opacity: 1 }
+    ], { duration: 2300, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' });
+    anim.pause();
+    anim.onfinish = () => anim.cancel();
+    this._introAnim = anim;
+    const start = () => { if (anim.playState === 'paused') setTimeout(() => anim.play(), 250); };
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
+    setTimeout(start, 1500);
+  };
+  componentDidMount() {
+    this.initTips();
+    this.fit();
+    window.addEventListener('resize', this.fit);
+    let frames = 0;
+    const warm = () => { this.redrawCharts(); if (++frames < 90) requestAnimationFrame(warm); };
+    requestAnimationFrame(warm);
+    this.syncAlloc();
+    window.addEventListener('scroll', this.onPlanScroll, { passive: true });
+    this.onPlanScroll();
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.fit);
+    window.removeEventListener('scroll', this.onPlanScroll);
+    this._ro && this._ro.disconnect();
+  }
+  componentDidUpdate() { this.fit(); }
+  renderVals() {
+    const vals = {
+      rootRef: (n) => {
+        this.rootEl = n;
+        if (!n) return;
+        if (this._ro) this._ro.disconnect();
+        if (window.ResizeObserver) {
+          this._ro = new ResizeObserver(this.fit);
+          if (n.parentElement) this._ro.observe(n.parentElement);
+          this._ro.observe(document.documentElement);
+        }
+        let tries = 0;
+        const tick = () => {
+          this.fit();
+          this.redrawCharts();
+          if (!(parseFloat(n.style.zoom) > 0) && ++tries < 300) requestAnimationFrame(tick);
+        };
+        tick();
+        setTimeout(tick, 0);
+        setTimeout(tick, 250);
+      },
+      headerRef: (n) => { this.headerEl = n; },
+      digitZoneRef: (n) => { this.digitZone = n; this.fit(); },
+      heroChartRef: (el) => { this.heroChart = el; if (el) setTimeout(this.playHeroSeq, 60); },
+      heroGlowRef: (el) => { this.heroGlow = el; },
+      builderRef: (el) => { this.builderEl = el; },
+      calcIntroRef: (el) => { this.calcIntro = el; if (el) this.playCalcIntro(); },
+      pulseDigits: (ev) => {
+        const gr = this.digitZone && this.digitZone.querySelector('glow-rocket');
+        const box = ev.currentTarget.getBoundingClientRect();
+        if (gr && gr.pulse) gr.pulse(box.left + box.width / 2, box.top + box.height / 2);
+      },
+      planTrackRef: (el) => { this.planTrack = el; },
+      planStickyRef: (el) => { this.planSticky = el; },
+      planFillRef: (el) => { this.planFill = el; },
+      planGlowRef: (el) => { this.planGlow = el; },
+      planRootRef: (el) => { this.planRoot = el; if (el) this.onPlanScroll(); },
+      nameInput: (el) => { this._name = el; },
+      tickerInput: (el) => { this._ticker = el; },
+      tickerRef: (el) => { this._tickerOut = el; },
+      ringSub: (el) => { this._ringSub = el; },
+      scoreRow: (el) => { this._scoreRow = el; },
+      tplNote: (el) => { this._tplNote = el; },
+      supplyRow: (el) => { this._supplyRow = el; if (el) el.style.borderTopColor = this.step === 1 ? 'rgba(255,255,255,0.10)' : 'transparent'; },
+      scoreTxt: (el) => { this._scoreTxt = el; this.syncAlloc(); },
+      supplyTxt: (el) => { this._supplyTxt = el; },
+      insiderTxt: (el) => { this._insiderTxt = el; },
+      floatTxt: (el) => { this._floatTxt = el; },
+      pieWrap: (el) => { this._pieWrap = el; },
+      totalWrap: (el) => { this._totalWrap = el; },
+      statsWrap: (el) => { this._statsWrap = el; },
+      vestWrap: (el) => { this._vestWrap = el; },
+      unlockRef: (el) => { this._unlockEl = el; },
+      pressTxt: (el) => { this._pressTxt = el; },
+      peakTxt: (el) => { this._peakTxt = el; },
+      spikeTxt: (el) => { this._spikeTxt = el; },
+      loadWrap: (el) => { this._loadWrap = el; },
+      loadBar: (el) => { this._loadBar = el; },
+      loadPct: (el) => { this._loadPct = el; this.buildOdo(); },
+      loadTxt: (el) => { this._loadTxt = el; },
+      runCalc: (ev) => {
+        if (this._calcRunning) { ev.preventDefault(); return; }
+        ev.preventDefault();
+        this._calcRunning = true;
+        const steps = [
+          [8, 'Reading allocation table…'],
+          [22, 'Building the unlock schedule…'],
+          [38, 'Simulating month-by-month circulating supply…'],
+          [54, 'Measuring day-one float and insider share…'],
+          [70, 'Scanning for unlock spikes…'],
+          [86, 'Benchmarking against comparable launches…'],
+          [100, 'Scoring the structure…'],
+        ];
+        this._odoVal = 0; this.setOdo(0);
+        if (this._loadWrap) this._loadWrap.style.display = 'flex';
+        steps.forEach(([v, t], i) => setTimeout(() => {
+          if (this._loadBar) this._loadBar.style.width = v + '%';
+          const from = this._odoVal || 0;
+          this._odoVal = v;
+          const t0 = performance.now(), DUR = 880;
+          const tick = () => {
+            const k = Math.min(1, (performance.now() - t0) / DUR);
+            const e = 1 - Math.pow(1 - k, 3);
+            this.setOdo(from + (v - from) * e);
+            if (k < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          if (this._loadTxt) {
+            this._loadTxt.style.opacity = '0';
+            setTimeout(() => { this._loadTxt.textContent = t; this._loadTxt.style.opacity = '1'; }, 180);
+          }
+        }, i * 960));
+        setTimeout(() => { this._calcRunning = false; if (this._loadWrap) this._loadWrap.style.display = 'none'; }, steps.length * 960 + 900);
+      },
+      totalTxt: (el) => { this._totalTxt = el; },
+      nextAlloc: (el) => { this._nextAlloc = el; this.syncAlloc(); },
+      balanceBtn: (el) => { this._balanceBtn = el; },
+      autoBalance: (ev) => {
+        ev.preventDefault();
+        const total = this.ALLOC.reduce((a, d) => a + d.v, 0);
+        if (total <= 100) return;
+        let over = total - 100;
+        // shave proportionally from the largest buckets first
+        const order = this.ALLOC.map((d, i) => i).sort((a, b) => this.ALLOC[b].v - this.ALLOC[a].v);
+        while (over > 0) {
+          let moved = false;
+          for (const i of order) {
+            if (over <= 0) break;
+            if (this.ALLOC[i].v > 0) { this.ALLOC[i].v -= 1; over -= 1; moved = true; }
+          }
+          if (!moved) break;
+        }
+        this.ALLOC.forEach((d, i) => { const r = this['_rng' + i]; if (r) r.value = String(d.v); });
+        this.syncAlloc();
+      },
+      totalBar: (el) => { this._totalBar = el; },
+      pieRef: (el) => {
+        this._pie = el;
+        if (el && !el._hooked) {
+          el._hooked = true;
+          el.addEventListener('slicehover', (e) => {
+            const item = e.detail.item;
+            const active = this.ALLOC.filter((d) => d.v > 0);
+            const name = item ? item.label : null;
+            if (this._tickerOut) {
+              if (name) {
+                this._tickerOut.dataset.base = this._tickerOut.dataset.base || this._tickerOut.textContent;
+                this._tickerOut.textContent = name;
+                this._tickerOut.style.fontSize = '28px';
+              } else if (this._tickerOut.dataset.base) {
+                this._tickerOut.textContent = this._tickerOut.dataset.base;
+                this._tickerOut.style.fontSize = '40px';
+              }
+            }
+            if (this._ringSub && this.step === 1) this._ringSub.textContent = item ? item.value + '% of supply' : 'Allocation';
+            this.ALLOC.forEach((d, i) => {
+              const row = this['_arow' + i];
+              if (row) row.style.background = name === d.name ? 'rgba(255,255,255,0.03)' : 'transparent';
+            });
+          });
+        }
+        this.syncAlloc();
+      },
+      onTicker: (ev) => {
+        const v = (ev.target.value || '').trim().toUpperCase();
+        if (this._tickerOut) this._tickerOut.textContent = v || 'TICKER';
+      },
+    };
+    for (let i = 0; i < 4; i++) {
+      vals['tpl' + i] = (el) => { this['_tpl' + i] = el; };
+      vals['sup' + i] = (el) => { this['_sup' + i] = el; };
+      vals['pickTpl' + i] = (ev) => { ev.preventDefault(); this.pick('tpl', i); };
+      vals['pickSup' + i] = (ev) => { ev.preventDefault(); this.pick('sup', i); };
+      vals['tabRef' + i] = (el) => { this['_tab' + i] = el; };
+      vals['tabTxt' + i] = (el) => { this['_tabTxt' + i] = el; };
+      vals['panel' + i] = (el) => { this['_panel' + i] = el; };
+      vals['goStep' + i] = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); if (i >= 2 && this.ALLOC.reduce((a, d) => a + d.v, 0) !== 100) return; if (i < 3) this.showStep(i); };
+    }
+    for (let i = 0; i < 7; i++) {
+      vals['vpct' + i] = (el) => { this['_vpct' + i] = el; };
+      vals['vtge' + i] = (el) => { this['_vtge' + i] = el; };
+      vals['vcliff' + i] = (el) => { this['_vcliff' + i] = el; };
+      vals['vvest' + i] = (el) => { this['_vvest' + i] = el; };
+      vals['onVest' + i] = () => {};
+      for (let k = 0; k < 6; k++) {
+        vals['vp' + i + '_' + k] = (el) => { this['_vp' + i + '_' + k] = el; };
+        vals['pickVest' + i + '_' + k] = (ev) => { if (ev && ev.preventDefault) ev.preventDefault(); this.pickVest(i, k); };
+      }
+      vals['arow' + i] = (el) => { this['_arow' + i] = el; };
+      vals['rng' + i] = (el) => { this['_rng' + i] = el; };
+      vals['cb' + i] = (el) => { this['_cb' + i] = el; };
+      vals['onToggle' + i] = () => {
+        const cb = this['_cb' + i], rng = this['_rng' + i];
+        const on = !(this.ALLOC[i].off);
+        this.ALLOC[i].off = on;
+        if (on) { this.ALLOC[i].prev = this.ALLOC[i].v; this.ALLOC[i].v = 0; }
+        else { this.ALLOC[i].v = this.ALLOC[i].prev || 0; }
+        if (rng) { rng.value = String(this.ALLOC[i].v); rng.disabled = on; rng.style.opacity = on ? '0.35' : '1'; }
+        if (cb) {
+          cb.style.background = on ? 'transparent' : this.ALLOC[i].color;
+          const svg = cb.querySelector('svg');
+          if (svg) svg.style.opacity = on ? '0' : '1';
+        }
+        this.syncAlloc();
+      };
+      vals['val' + i] = (el) => { this['_val' + i] = el; };
+      vals['onRange' + i] = (ev) => { this.ALLOC[i].v = parseInt(ev.target.value, 10) || 0; this.syncAlloc(); };
+    }
+    return vals;
+  }
+}
+</script>
+</body>
+</html>

@@ -89,7 +89,7 @@ function FeaturedCase({ item, copy, reversed }: { item: CaseCardData; copy: Case
 function MiniCase({ item, copy }: { item: CaseCardData; copy: CasesPageCopy }) {
   const tag = item.category ?? item.industry
   return (
-    <article className={styles.mini}>
+    <article id={item.slug} className={styles.mini}>
       <div className={styles.miniHead}>
         {tag && <span className={styles.tag}>{tag}</span>}
         <h2 className={styles.cardTitle}>{item.title}</h2>

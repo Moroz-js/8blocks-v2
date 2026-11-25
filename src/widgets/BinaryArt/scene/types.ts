@@ -21,6 +21,7 @@ export type BinarySceneId =
   | 'city-coins'
   | 'office'
   | 'unicorn'
+  | 'globe'
 
 /** Buffer covers only visible columns; scale/offset retain the full scene's pixel grid. */
 export type SceneViewport = {

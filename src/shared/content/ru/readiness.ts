@@ -478,25 +478,25 @@ export const readiness: ReadinessContent = {
           category: 'RWA · Сырьё',
           title: 'Золото как залог',
           description: 'Токенизированное золото как залог для финансирования жилого строительства.',
-          href: '/cases',
+          href: '/cases#legacy-case-08',
         },
         {
           category: 'RWA · Торговое финансирование',
           title: 'Экспорт без банковского кредита',
           description: 'Инструмент финансирования экспорта дикоросов с обратным выкупом.',
-          href: '/cases',
+          href: '/cases#legacy-case-10',
         },
         {
           category: 'RWA · Сырьё',
           title: 'Неликвидный металл стал инвестиционным',
           description: 'Высокочистый металл стал ликвидным в трёх юрисдикциях.',
-          href: '/cases',
+          href: '/cases#legacy-case-07',
         },
       ],
     },
     call: {
       title: 'За 45 минут поймём, подходит ли токенизация вашему активу, — и что делать дальше',
-      imageAlt: 'Команда 8Blocks на видеозвонке',
+      imageAlt: 'Команда А8А9 на видеозвонке',
       steps: [
         {
           title: 'Ваш кейс вашими словами',

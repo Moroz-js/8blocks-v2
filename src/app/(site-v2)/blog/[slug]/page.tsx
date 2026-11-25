@@ -13,14 +13,12 @@ import { estimateReadingTime, mapArticleCta } from '@/entities/article'
 import { siteConfig } from '@/shared/config/site'
 import {
   visiblePublishedArticleConditions,
-  visiblePublishedArticleWhere,
 } from '@/shared/lib/visible-article-where'
 import { mediaToAbsoluteUrl, paginatedListingSeo, withPaginatedListing, withPayloadPageMetadata } from '@/shared/lib/site-seo'
 import { ArticlePage } from '@/widgets/ArticlePage'
 import { BlogArchive } from '@/widgets/BlogArchive'
 import { lang } from '@/shared/i18n'
 import { buildPageGraph } from '@/shared/lib/page-schema'
-import { getNonEmptyBlogCategories } from '@/shared/lib/blog-nav-categories'
 
 const ARTICLES_PER_PAGE = 9
 
@@ -286,7 +284,6 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
     depth: 1,
   })
 
-  const categories = await getNonEmptyBlogCategories(payload)
 
   const articles = articlesResult.docs
     .map((doc) => mapArticleCard(doc))
@@ -314,11 +311,8 @@ export default async function BlogSlugPage({ params, searchParams }: PageProps) 
       />
       <BlogArchive
         articles={articles}
-        categories={categories}
         totalPages={articlesResult.totalPages}
         currentPage={currentPage}
-        totalDocs={articlesResult.totalDocs}
-        activeCategory={category.slug}
         categoryTitle={category.title}
         paginationBase={`/blog/${category.slug}`}
       />

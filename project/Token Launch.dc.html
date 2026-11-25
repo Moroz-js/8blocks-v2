@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./binary-glyph-wide.js?v=12"></script>
+<style>
+html,body{margin:0;padding:0;background:rgb(2,2,2);}
+body{font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+a{color:rgb(255,255,255);text-decoration:none;} a:hover{color:rgb(255,255,255);opacity:.8;}
+.audit-glow{background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 2912 1841' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none'><rect x='0' y='0' height='100%' width='100%' fill='url(%23grad)'/><defs><radialGradient id='grad' gradientUnits='userSpaceOnUse' cx='0' cy='0' r='10' gradientTransform='matrix(-173.72 154.57 -18.16 -45.431 1885.8 546.42)'><stop stop-color='rgba(215,31,113,1)' offset='0.10815'/><stop stop-color='rgba(161,23,85,0.75)' offset='0.33111'/><stop stop-color='rgba(108,16,57,0.5)' offset='0.55407'/><stop stop-color='rgba(54,8,28,0.25)' offset='0.77704'/><stop stop-color='rgba(0,0,0,0)' offset='1'/></radialGradient></defs></svg>");}
+@keyframes wsMarquee{0%{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ws-track{display:flex;align-items:center;gap:16px;width:max-content;animation:120s linear infinite wsMarquee;}
+.ws-track:hover{animation-play-state:paused;}
+.ws-slot{opacity:.45;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:0 32px;transition:opacity .25s;}
+.ws-slot:hover{opacity:.85;}
+.tl-in{height:52px;box-sizing:border-box;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-size:14px;letter-spacing:.01em;padding:0 16px;outline:none;width:100%;}
+.tl-in::placeholder{color:rgba(255,255,255,.4);}
+.tl-in:focus{border-color:rgba(202,0,90,.8);}
+textarea.tl-in{height:104px;padding:14px 16px;resize:none;}
+select.tl-in{appearance:none;-webkit-appearance:none;color:rgba(255,255,255,.4);background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='white' stroke-width='1.5'><path d='M3 6l5 5 5-5'/></svg>");background-repeat:no-repeat;background-position:right 16px center;}
+select.tl-in option{color:rgb(0,0,0);}
+</style>
+</helmet>
+<div data-screen-label="Token Launch" style="position:relative;width:1280px;margin:0 auto;background:rgb(2,2,2);color:rgb(255,255,255);font-family:Manrope,sans-serif;font-weight:500;padding-bottom:130px;overflow:clip;">
+
+<!-- HERO -->
+<div style="position:relative;width:1280px;height:781px;overflow:hidden;">
+  <img src="./assets/ws-hero.jpg" alt="" style="position:absolute;left:-156px;top:36px;width:1436px;height:826px;object-fit:cover;pointer-events:none;">
+  <div class="audit-glow" style="position:absolute;left:-1781px;top:391px;width:2912px;height:1841px;opacity:.2;filter:blur(37px);border-radius:0 0 28px 28px;pointer-events:none;"></div>
+  <img src="./assets/audit-hero-fade.png" alt="" style="position:absolute;left:0;top:594px;width:1280px;height:187px;object-fit:cover;pointer-events:none;">
+  <div data-hero-fade style="position:absolute;left:0;bottom:0;width:1280px;height:200px;background:linear-gradient(180deg,rgba(2,2,2,0) 0%,rgba(2,2,2,.75) 55%,rgb(2,2,2) 100%);pointer-events:none;"></div>
+  <div style="position:absolute;left:48px;top:162px;width:640px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:40px;line-height:48px;opacity:.9;">End-to-End Token Launch: Tokenomics, Funding, Market Making &amp; Listing in One Track</div>
+    <div style="width:460px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">One modular track from 8Blocks, Fibonacci, and BingX: tokenomics audit and design, investor prep, market making, and listing. Take only the modules your project needs.</div>
+  </div>
+  <div style="position:absolute;left:40px;top:430px;height:42px;padding:0 13px 0 4px;box-sizing:border-box;border-radius:64px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;flex-direction:row;gap:12px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">
+    <a href="https://8blocks.io/research/high-fdv-token-failure-study" target="_blank" rel="noopener" title="8Blocks · High FDV Token Failure Study · 542 listings on top exchanges analyzed" style="height:32px;padding:0 8px;box-sizing:border-box;border-radius:64px;background:rgb(202,0,90);color:rgb(255,255,255);display:flex;flex-direction:row;gap:6px;align-items:center;">8Blocks study<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="rgb(255,255,255)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h4v4"></path><path d="M12 2L6.5 7.5"></path><path d="M10 8.5V11a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h2.5"></path></svg></a>
+    <span>79% of tokens fall within 90 days of listing</span>
+  </div>
+  <div style="position:absolute;left:48px;top:659px;display:flex;flex-direction:row;gap:10px;align-items:center;">
+    <a href="#tl-calc" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;flex-direction:row;gap:8px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Price my track <span>→</span></a>
+    <a href="#tl-form" style="height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgba(255,255,255,.14);color:rgb(255,255,255);display:flex;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;">Skip to the form</a>
+    <div style="margin-left:27px;display:flex;flex-direction:row;gap:15px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.9;white-space:nowrap;"><span>8Blocks</span><span style="width:1px;height:20px;background:rgba(255,255,255,.2);"></span><span>Fibonacci</span><span style="width:1px;height:20px;background:rgba(255,255,255,.2);"></span><span>BingX</span></div>
+  </div>
+  <!-- HEADER -->
+  <div style="position:absolute;left:0;top:0;width:1280px;height:92px;box-sizing:border-box;border-bottom:.881px solid rgba(255,255,255,.17);backdrop-filter:blur(6.6px);background:rgba(0,0,0,.01);display:flex;flex-direction:row;justify-content:space-between;align-items:center;padding:25px 72px;">
+    <div style="width:205px;height:30px;display:flex;align-items:center;"><img src="./assets/logo.svg" alt="8Blocks" style="width:100px;height:26px;display:block;"></div>
+    <div style="display:flex;flex-direction:row;gap:48px;align-items:center;font-size:15px;line-height:26px;">
+      <a href="Landing.dc.html" style="color:rgb(255,255,255);border-bottom:1px solid rgb(255,255,255);">Services</a><a href="#" style="color:rgb(255,255,255);">Cases</a><a href="Blog.dc.html" style="color:rgb(255,255,255);">Blog</a><a href="#" style="color:rgb(255,255,255);">Team</a>
+    </div>
+    <div style="width:205px;display:flex;flex-direction:row;gap:32px;justify-content:flex-end;align-items:center;">
+      <span style="font-size:15px;line-height:1.7;">EN</span>
+      <div style="width:151px;height:48px;border-radius:6px;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;padding:12px 20px;box-sizing:border-box;font-size:15px;line-height:1.5;white-space:nowrap;">Talk to the team</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEAD -->
+<div style="margin:90px 40px 0;display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;">
+  <div style="width:595px;font-size:24px;line-height:32px;opacity:.9;">Of 542 listings on top exchanges in 2025, 79% went underwater within 90 days. 22% fell more than 80%.</div>
+  <div style="width:520px;display:flex;flex-direction:column;gap:14px;padding-top:4px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">Only the sub-$10M FDV segment grew, averaging +35%. This isn't the market's fault. It's the gap between launches that did the work and launches that didn't.</div>
+    <a href="https://8blocks.io/research/high-fdv-token-failure-study" target="_blank" rel="noopener" style="align-self:flex-start;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgba(255,255,255,.7);">8Blocks · High FDV Token Failure Study ↗</a>
+  </div>
+</div>
+
+<!-- FOUR GAPS -->
+<div style="margin:180px 40px 0;width:640px;display:flex;flex-direction:column;gap:20px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Four gaps where a token launch breaks</div>
+  <div style="width:520px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">A token launch isn't one job. It's a chain: tokenomics → investors → exchange → liquidity → growth. A gap at any point costs months of work, capital already raised, and the market's trust.</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ gaps }}" as="gp" hint-placeholder-count="4">
+    <div style="position:relative;height:480px;border-radius:10px;background:rgb(16,17,19);padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;overflow:hidden;">
+      <binary-glyph-wide shape="{{ gp.shape }}" ox="0.5" oy="0.5" os="{{ gp.os }}" style="position:absolute;left:0;top:20px;width:100%;height:190px;pointer-events:none;"></binary-glyph-wide>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">{{ gp.label }}</div>
+      <div style="position:relative;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ gp.t }}</div>
+      <div style="position:relative;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ gp.d }}</div>
+      <div style="position:relative;margin-top:6px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);"><span style="color:rgba(255,255,255,.9);">Result: </span>{{ gp.r }}</div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- COST OF A MISTAKE -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:40px;">
+  <div style="display:flex;flex-direction:column;gap:20px;">
+    <div style="width:520px;font-size:40px;line-height:48px;opacity:.9;">Each gap costs more than the whole track</div>
+    <div style="width:430px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">One mistake in a token launch can cost more than the entire track. Four questions below, answered with public market research from 2024–2025.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:25px;">
+    <sc-for list="{{ costs }}" as="cs" hint-placeholder-count="4">
+      <div style="padding-bottom:40px;border-bottom:1px solid {{ cs.line }};display:flex;flex-direction:row;gap:46px;align-items:flex-start;">
+        <div style="width:519px;flex-shrink:0;display:flex;flex-direction:column;gap:9px;">
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">{{ cs.n }}</div>
+          <div style="width:400px;font-size:18px;line-height:25px;letter-spacing:.01em;">{{ cs.q }}</div>
+        </div>
+        <div style="width:595px;padding-top:29px;display:flex;flex-direction:column;gap:10px;">
+          <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ cs.a }}</div>
+          <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ cs.d }}</div>
+          <a href="{{ cs.href }}" target="_blank" rel="noopener" style="align-self:flex-start;margin-top:4px;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgba(255,255,255,.7);">{{ cs.src }} ↗</a>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- THREE PARTNERS -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:10px;align-items:center;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Three partners. One launch track</div>
+  <div style="width:520px;text-align:center;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We put strategy, investors, and listing into a single process, so each decision sets up the next stage instead of opening a new gap.</div>
+</div>
+<div style="margin:36px 40px 0;display:grid;grid-template-columns:repeat(3, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ trio }}" as="pr" hint-placeholder-count="3">
+    <div style="position:relative;height:460px;border-radius:10px;overflow:hidden;background:rgb(29,5,16) url({{ pr.bg }}) center / cover no-repeat;padding:30px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;">
+      <div style="display:flex;flex-direction:column;gap:22px;">
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.6;">{{ pr.role }}</div>
+        <img src="{{ pr.logo }}" alt="{{ pr.name }}" style="height:{{ pr.lh }};width:auto;align-self:flex-start;display:block;">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ pr.t }}</div>
+        <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.55;">{{ pr.d }}</div>
+      </div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- CALCULATOR -->
+<div id="tl-calc" style="margin:180px 40px 0;display:flex;flex-direction:column;gap:20px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">Build your track in 60 seconds</div>
+  <div style="width:560px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Six modules, each with its own fixed price and timeline. Take the whole thing or take one. Plenty of projects come to us only for market making, or only for the audit, and that is a complete engagement. You pay for what you need.</div>
+</div>
+<div style="margin:40px 40px 0;display:flex;flex-direction:row;gap:20px;align-items:flex-start;">
+  <div style="width:745px;flex-shrink:0;display:flex;flex-direction:column;gap:12px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);">Step 1. Build your track</div>
+    <div style="display:flex;flex-direction:column;gap:5px;">
+      <sc-for list="{{ mods }}" as="m" hint-placeholder-count="6">
+        <div style="border-radius:10px;background:rgb(16,17,19);border:1px solid {{ m.bd }};padding:22px 25px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;transition:border-color .2s;">
+          <div onClick="{{ m.toggle }}" style="display:flex;flex-direction:row;gap:16px;align-items:center;cursor:pointer;">
+            <div style="width:24px;height:24px;flex-shrink:0;box-sizing:border-box;border-radius:6px;border:1px solid {{ m.cbd }};background:{{ m.cbg }};display:flex;align-items:center;justify-content:center;transition:background .2s;"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="opacity:{{ m.cop }};"><path d="M3 7.3l2.6 2.6L11 4.4" stroke="rgb(255,255,255)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+            <div style="flex-grow:1;display:flex;flex-direction:column;gap:2px;">
+              <div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ m.t }}</div>
+              <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ m.time }}</div>
+            </div>
+            <div style="font-size:18px;line-height:25px;letter-spacing:.01em;white-space:nowrap;">{{ m.price }}</div>
+          </div>
+          <div onClick="{{ m.more }}" style="padding-left:40px;display:flex;flex-direction:row;gap:6px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgba(255,255,255,.6);cursor:pointer;">Details<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="1.5" style="transform:{{ m.rot }};transition:transform .2s;"><path d="M3 6l5 5 5-5"></path></svg></div>
+          <sc-if value="{{ m.open }}" hint-placeholder-val="{{ false }}">
+            <div style="padding-left:40px;display:flex;flex-direction:column;gap:14px;">
+              <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ m.d }}</div>
+              <sc-if value="{{ m.hasPk }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:0;">
+                  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.9;padding-bottom:6px;">Package options</div>
+                  <sc-for list="{{ m.pk }}" as="pk" hint-placeholder-count="2">
+                    <div style="display:flex;flex-direction:row;justify-content:space-between;gap:20px;padding:10px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14px;line-height:20px;letter-spacing:.01em;"><span style="color:rgb(112,113,114);">{{ pk.l }}</span><span style="white-space:nowrap;">{{ pk.p }}</span></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="position:sticky;top:20px;flex-grow:1;border-radius:10px;overflow:hidden;background:rgb(16,17,19);display:flex;flex-direction:column;">
+    <div style="position:relative;padding:30px;box-sizing:border-box;background:rgb(29,5,16) url(./assets/ws-result-3.jpg) center / cover no-repeat;display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.6;">Your track</div>
+      <sc-if value="{{ empty }}" hint-placeholder-val="{{ true }}"><div style="font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">Select modules to see the cost and timeline</div></sc-if>
+      <sc-if value="{{ notEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:14px;">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <sc-for list="{{ picked }}" as="pc" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:row;justify-content:space-between;gap:12px;font-size:14px;line-height:20px;letter-spacing:.01em;"><span style="opacity:.75;">{{ pc.t }} · {{ pc.time }}</span><span style="white-space:nowrap;">{{ pc.price }}</span></div>
+            </sc-for>
+          </div>
+          <div style="padding-top:14px;border-top:1px solid rgba(255,255,255,.2);display:flex;flex-direction:column;gap:2px;">
+            <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.6;">Estimated total</div>
+            <div style="font-size:32px;line-height:40px;">{{ total }}</div>
+            <div style="font-size:13px;line-height:18px;letter-spacing:.01em;opacity:.6;">{{ totalNote }}</div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+    <div id="tl-step2" style="padding:30px;box-sizing:border-box;display:flex;flex-direction:column;gap:10px;">
+      <div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(202,0,90);padding-bottom:4px;">Step 2. Tell us about your project</div>
+      <input class="tl-in" placeholder="Full name">
+      <input class="tl-in" placeholder="Company / project">
+      <input class="tl-in" placeholder="Email">
+      <input class="tl-in" placeholder="Telegram (optional)">
+      <select class="tl-in"><option>Select a stage</option><option>Idea</option><option>MVP</option><option>Pre-TGE</option><option>Post-TGE</option><option>Re-tokenomics</option></select>
+      <textarea class="tl-in" placeholder="Describe the task"></textarea>
+      <div style="margin-top:6px;height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;flex-direction:row;gap:8px;align-items:center;justify-content:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;">Price my track <span>→</span></div>
+      <div style="font-size:12px;line-height:17px;letter-spacing:.01em;opacity:.4;">The estimate is indicative. Final cost and timeline are fixed after an initial review of your materials. The listing module is priced separately, subject to exchange approval.</div>
+      <div style="padding-top:6px;font-size:14px;line-height:20px;letter-spacing:.01em;"><span style="opacity:.4;">Want to discuss without calculating?</span> <a href="#tl-form" style="color:rgb(255,255,255);text-decoration:underline;">Leave a short request</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT JOURNEY -->
+<div style="margin:180px 0 0;display:flex;flex-direction:column;gap:50px;">
+  <div style="padding:0 40px;display:flex;flex-direction:column;gap:20px;">
+    <div style="width:560px;font-size:40px;line-height:48px;opacity:.9;">Six steps, from application to post-listing support</div>
+    <div style="width:560px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Come in wherever you are. Already have the tokenomics and the money raised? Go straight to listing. Building a Web2 product with no token yet? Start with the Workshop. Not sure which modules you need? The configurator will tell you.</div>
+  </div>
+  <div style="display:flex;flex-direction:column;">
+    <div style="display:grid;grid-template-columns:112px 300px 220px 1fr;height:56px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">
+      <div style="padding-left:40px;">#</div><div>Stage</div><div>Timeline</div><div style="padding-right:40px;">What happens</div>
+    </div>
+    <sc-for list="{{ journey }}" as="jr" hint-placeholder-count="6">
+      <div style="display:grid;grid-template-columns:112px 300px 220px 1fr;padding:26px 0;border-top:1px solid rgba(255,255,255,.1);align-items:flex-start;">
+        <div style="padding-left:40px;"><div style="width:32px;height:32px;box-sizing:border-box;border:1px solid rgb(202,0,90);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;line-height:25px;color:rgb(202,0,90);">{{ jr.n }}</div></div>
+        <div style="padding-top:3px;font-size:18px;line-height:25px;letter-spacing:.01em;opacity:.9;">{{ jr.t }}</div>
+        <div style="padding-top:5px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.9;">{{ jr.time }}</div>
+        <div style="padding:5px 40px 0 0;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ jr.d }}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+
+<!-- WHO IT FITS -->
+<div style="margin:180px 40px 0;display:flex;flex-direction:column;gap:20px;">
+  <div style="font-size:40px;line-height:48px;opacity:.9;">We do not take every project</div>
+  <div style="width:520px;font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">We build a custom track for every project we take, which means we can only take on so many each month. This works best for teams that are hands-on and responsive throughout the process.</div>
+</div>
+<div style="margin:40px 40px 0;display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:5px;">
+  <sc-for list="{{ fits }}" as="ft" hint-placeholder-count="2">
+    <div style="border-radius:10px;background:rgb(16,17,19);padding:40px;box-sizing:border-box;display:flex;flex-direction:column;gap:28px;">
+      <div style="display:flex;flex-direction:row;gap:12px;align-items:center;">
+        <div style="width:32px;height:32px;border-radius:16px;background:{{ ft.ibg }};display:flex;align-items:center;justify-content:center;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="{{ ft.ic }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{ ft.path }}"></path></svg></div>
+        <div style="font-size:24px;line-height:30px;opacity:.9;">{{ ft.t }}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <sc-for list="{{ ft.items }}" as="fi" hint-placeholder-count="6">
+          <div style="display:flex;flex-direction:row;gap:11px;align-items:flex-start;font-size:14px;line-height:20px;letter-spacing:.01em;"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0;margin-top:1px;"><circle cx="9" cy="9" r="9" fill="{{ ft.dot }}"></circle><path d="{{ ft.mini }}" stroke="{{ ft.ic }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="opacity:{{ ft.op }};">{{ fi }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </sc-for>
+</div>
+
+<!-- PARTNER NETWORK -->
+<div style="margin-top:180px;display:flex;flex-direction:column;gap:10px;align-items:center;">
+  <div style="font-size:32px;line-height:40px;opacity:.9;">Our partner network</div>
+  <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.4;">Offices in Dubai and Berlin. Clients across the US, Europe, MENA and LatAm.</div>
+</div>
+<div aria-label="Partners" style="margin-top:12px;padding:48px 0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 120px,#000 1160px,transparent 1280px);mask-image:linear-gradient(90deg,transparent 0,#000 120px,#000 1160px,transparent 1280px);">
+  <div class="ws-track">
+    <sc-for list="{{ partners }}" as="pt" hint-placeholder-count="26">
+      <a href="{{ pt.href }}" target="_blank" rel="noopener" class="ws-slot" style="color:rgb(255,255,255);"><img src="{{ pt.src }}" alt="{{ pt.alt }}" style="height:{{ pt.h }};width:auto;max-width:{{ pt.mw }};object-fit:contain;filter:brightness(0) invert(1);display:block;"></a>
+    </sc-for>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div style="margin-top:132px;width:1280px;display:flex;flex-direction:column;gap:40px;align-items:center;padding:0 280px;box-sizing:border-box;">
+  <div style="width:380px;text-align:center;font-size:32px;line-height:40px;">Frequently asked questions</div><div style="align-self:stretch;display:flex;flex-direction:column;gap:2px;">
+    <sc-for list="{{ faq }}" as="f" hint-placeholder-count="7">
+    <div onClick="{{ f.toggle }}" style="background:rgb(16,17,19);border-radius:{{ f.radius }};display:flex;flex-direction:row;justify-content:space-between;align-items:flex-start;padding:20px 25px;box-sizing:border-box;cursor:pointer;">
+      <div style="width:560px;display:flex;flex-direction:column;gap:10px;justify-content:center;">
+        <div style="opacity:.9;font-size:16px;line-height:22px;letter-spacing:.01em;">{{ f.q }}</div>
+        <sc-if value="{{ f.open }}" hint-placeholder-val="{{ false }}"><div style="font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(112,113,114);">{{ f.a }}</div></sc-if>
+      </div>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="rgb(255,255,255)" stroke-width="1.5" style="margin-top:3px;transform:{{ f.rot }};transition:transform .2s;flex-shrink:0;"><path d="M3 6l5 5 5-5"></path></svg>
+    </div>
+    </sc-for>
+  </div><div style="align-self:stretch;text-align:center;font-size:16px;line-height:22px;letter-spacing:.01em;"><span style="opacity:.4;">Have other questions not mentioned?</span>  <a href="#tl-form" style="color:rgb(255,255,255);text-decoration:underline;">Contact us</a></div>
+</div>
+
+<!-- FINAL FORM -->
+<div id="tl-form" style="margin:180px 40px 0;border-radius:10px;overflow:hidden;background:rgb(29,5,16) url(./assets/ws-quote-bg.jpg) center / cover no-repeat;padding:40px;box-sizing:border-box;display:flex;flex-direction:row;justify-content:space-between;gap:40px;">
+  <div style="width:480px;display:flex;flex-direction:column;justify-content:space-between;gap:30px;">
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="font-size:40px;line-height:48px;opacity:.9;">Ready to talk through your track?</div>
+      <div style="font-size:14px;line-height:22px;letter-spacing:.01em;opacity:.6;">Tell us about the project, and we'll go through the application, the materials, and where you're at. You'll have a module recommendation in your inbox within 24 hours. The initial review doesn't commit you to anything.</div>
+    </div>
+    <a href="#tl-calc" style="align-self:flex-start;font-size:14px;line-height:20px;letter-spacing:.01em;color:rgb(255,255,255);text-decoration:underline;">Price my track</a>
+  </div>
+  <div style="width:560px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-size:14px;line-height:20px;letter-spacing:.01em;opacity:.6;padding-bottom:4px;">Short request, no calculator</div>
+    <div style="display:grid;grid-template-columns:repeat(2, minmax(0, 1fr));gap:10px;">
+      <input class="tl-in" placeholder="Full name" style="background:rgba(0,0,0,.25);">
+      <input class="tl-in" placeholder="Company / project" style="background:rgba(0,0,0,.25);">
+      <input class="tl-in" placeholder="Email" style="background:rgba(0,0,0,.25);">
+      <input class="tl-in" placeholder="Telegram (optional)" style="background:rgba(0,0,0,.25);">
+    </div>
+    <select class="tl-in" style="background-color:rgba(0,0,0,.25);"><option>Select a stage</option><option>Idea</option><option>MVP</option><option>Pre-TGE</option><option>Post-TGE</option><option>Re-tokenomics</option></select>
+    <textarea class="tl-in" placeholder="Describe the task" style="background:rgba(0,0,0,.25);"></textarea>
+    <div style="margin-top:6px;align-self:flex-start;height:56px;padding:10px 24px;box-sizing:border-box;border-radius:64px;background:rgb(255,255,255);color:rgb(0,0,0);display:flex;flex-direction:row;gap:8px;align-items:center;font-size:14px;line-height:20px;letter-spacing:.01em;white-space:nowrap;cursor:pointer;">Send request <span>→</span></div>
+  </div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":9580}}'>
+class Component extends DCLogic {
+  state = { open: 0, sel: [false, false, false, false, false, false], det: -1 };
+  GAPS = [
+    ["Gap 1 · Tokenomics → investors", "Why do funds pass after the pitch?", "The model looks finished, but it doesn't survive due diligence. Utility is vague, demand has nothing behind it, and vesting doesn't hold the price through the unlock. The fund sees it on the call and no term sheet follows.", "the round is gone, 3–6 months to rebuild the model, competitors move ahead.", "bubbles", "0.85"],
+    ["Gap 2 · Investors → exchange", "Why does the listing stall after the round closes?", "The round is closed and the listing will not move. The exchange turns the project away: the model is raw, no market maker is in place, the legal structure is unfinished. The listing sits in limbo with no date in sight.", "TGE slips by months, the market moment is gone, and early investors start pushing the team.", "timelate", "0.8"],
+    ["Gap 3 · Exchange → liquidity", "Why does the token dump right after listing?", "The listing goes through, and two weeks later the price is down 70%. Market making was never synced to the model: liquidity is thin, early holders exit first, and there's nobody holding the price up.", "community trust is broken, investors push back, and you're rebuilding tokenomics four months in.", "dumpchart", "0.8"],
+    ["Gap 4 · Vendors → launch", "Why do five vendors derail one launch?", "A tokenomics consultant, a pitch agency, a market maker, a listing agent, lawyers. Five contracts, five areas of responsibility, not one of them shared. Something gets dropped at every handoff, and there's nobody to hold accountable.", "months go into coordination instead of launch, and the failure belongs to everyone and no one.", "chaos", "0.85"]
+  ];
+  COSTS = [
+    ["What did a failed round cost in 2025?", "One failed round can cost a project up to a year of runway.", "The average Web3 seed round in 2025 was $4M, pre-seed $2.6M. Deal count fell 34% against Q4 2024: investors were writing fewer checks, but bigger ones.", "Outlier Ventures · Web3 Fundraising Q1 2025", "https://outlierventures.io/article/web3-fundraising-in-q1-2025-what-founders-investors-need-to-know/"],
+    ["How many projects die between tokenomics and listing?", "More than half – and the cause is almost always the same.", "53.2% of crypto projects launched since 2021 have been declared dead (11.6M projects). The main causes are weak tokenomics and a lack of readiness for exchange due diligence.", "CoinGecko · Dead Coins Report 2025", "https://www.coingecko.com/research/publications/how-many-cryptocurrencies-failed"],
+    ["What happens to a token after listing?", "Four out of five tokens fall within the first 90 days.", "The average change in token FDV 90 days after listing was −14%. Of 542 listings in 2025, 79% went underwater and 22% fell more than 80%. Only 21% held or grew their market cap.", "8Blocks · High FDV Token Failure Study", "https://8blocks.io/research/high-fdv-token-failure-study"],
+    ["Does a \"prestige\" listing protect against a drop?", "The opposite – the bigger the exchange, the higher the chance of failure.", "Binance listings went up in one case out of fifteen. On OKX, not one did. The only tokens that gained were the small ones, priced under $10M FDV, which averaged +35%. Where you list matters far less than what you list at.", "8Blocks · High FDV Token Failure Study", "https://8blocks.io/research/high-fdv-token-failure-study"]
+  ];
+  TRIO = [
+    ["Strategy and preparation", "8Blocks", "./assets/logo.svg", "30px", "Tokenomics, product logic, positioning", "Auditing existing tokenomics or building a new model, working through product logic, and getting the project ready to pitch investors. A tokenomics Workshop to test the key decisions before launch. If a model already exists, we audit it and rebuild it. If it doesn't, we design one so the token supports the business instead of sitting beside it.", "./assets/ws-result-1.jpg"],
+    ["Investor access and liquidity", "Fibonacci", "./assets/partner-fibonacci.png", "56px", "Pitch sessions with funds and market making", "Running pitch sessions with funds and private investors, market making, and liquidity support after listing. Together with 8Blocks, prepares the project to raise and stays with it through to the exchange.", "./assets/ws-result-2.jpg"],
+    ["Exchange and listing", "BingX", "./assets/partner-bingx.svg", "30px", "The exchange track", "BingX takes the project through its own due diligence and runs the listing from approval to launch. If a different exchange suits the project better, we open that door instead.", "./assets/ws-result-3.jpg"]
+  ];
+  // [title, timeline, price label, min, max (null = open-ended), details, packages]
+  MODS = [
+    ["Workshop", "1–3 hours", "$2,500", 2500, 2500, "A strategy session for early-stage projects and Web2 teams moving into Web3. We work out what the token is for, who creates demand for it, and how it fits into the product. You leave with two or three developed concepts, a recording of the session, and a written summary of the key conclusions. If you go on to build the tokenomics with us, the $2,500 comes off the project price.", []],
+    ["Tokenomics audit", "10 working days", "from $5,000", 5000, null, "For projects that already have a model. We go deep on emission, vesting, distribution, utility, and the defences against manipulation. You get a full report with the analysis and practical fixes, so the tokenomics works for the project's growth instead of needing to be propped up from outside.", []],
+    ["Tokenomics design", "3–7 weeks", "from $18,000", 18000, null, "Building the model from scratch, or rebuilding one that did not work. We design the emission, distribution, vesting, utility, treasury, liquidity, safeguards, and price stability. What you end up with is a model the business can launch on, along with the white paper and the materials you put in front of investors.", []],
+    ["Pitch and preparation", "10 working days", "$2,000 – $3,500", 2000, 3500, "8Blocks gets the project ready for the room, Fibonacci opens the door. We shape the project around what funds are looking for, build the materials, and write the meeting to your specifics. You present to investors who work in your space. Everything up to that moment is on us.", [["One pitch session", "$2,000"], ["Two pitch sessions", "$3,500"]]],
+    ["Market making", "1–3 months", "$3,500 – $16,200", 3500, 16200, "We launch market making alongside the token model, not after it, and hold liquidity on one or two exchanges, CEX and DEX, for the length of the package. Every package includes pitch sessions.", [["One exchange, one month, includes one pitch session", "$3,500"], ["One exchange, three months, includes two pitch sessions", "$10,000"], ["Two exchanges, one month, includes one pitch session", "$6,000"], ["Two exchanges, three months, includes two pitch sessions", "$16,200"]]],
+    ["Listing", "by agreement", "Custom", 0, 0, "We take the project through the exchange's due diligence and run the listing from approval to launch. BingX is our main listing partner. If a different exchange suits the project better, we open that door instead.", []]
+  ];
+  JOURNEY = [
+    ["Initial review", "24–48 hours", "We look at the application, the materials, and where the project stands. Then we work out the right track and which modules make sense. Everything gets confirmed by email."],
+    ["Tokenomics audit / design", "1–12 weeks", "We audit what exists or build the model from scratch. Product logic and prep for the next stage run alongside it."],
+    ["Preparation", "1–2 weeks", "We finish the materials, get the project ready for meetings with funds, and line up the partners you'll need to launch: exchange, infrastructure, legal."],
+    ["Investor pitch sessions", "on schedule", "We run pitch sessions with funds and private investors through Fibonacci. This is a real shot in front of investors, not a formality."],
+    ["Listing", "by agreement", "We take the project through due diligence with BingX and coordinate the launch. If BingX isn't the right fit, we bring in another exchange through our partner network."],
+    ["Market making / post-listing support", "from 1 month", "Market making starts the moment the token lists. We hold liquidity and stay with the project after it is live."]
+  ];
+  GOOD = ["Web2 teams with an MVP, moving into Web3", "Web3 projects at MVP or near-MVP, heading toward TGE", "Projects with tokenomics already built that need an audit before TGE", "Teams ready to work the pitch process with investors", "Teams considering a listing", "Projects rebuilding tokenomics after a TGE that didn't work"];
+  BAD = ["An idea with no product or MVP yet", "Teams not set up for a structured process with regular feedback", "Anyone expecting guaranteed funding", "Anyone expecting a guaranteed listing on a specific exchange", "Teams unwilling to pay for the prep work upfront"];
+  PARTNERS = [["Bitmaker", "https://bitmaker.fi/", "./assets/partner-2.svg"], ["CEDRO", "#", "./assets/partner-3.svg"], ["Lodes.tech", "https://lodestech.ru", "./assets/partner-4.svg"], ["Meta Lamp", "https://metalamp.io/", "./assets/partner-5.svg"], ["Fibonacci", "https://fibonacci.market/", "./assets/partner-fibonacci.png"], ["ICODA", "https://icoda.io/", "./assets/partner-8.svg"], ["Peanut", "https://peanut.trade/", "./assets/partner-11.svg"], ["Generis", "https://generis.agency/", "./assets/partner-12.svg"], ["D&A", "https://dna.partners/", "./assets/partner-13.svg"], ["Listing Help", "https://listing.help/", "./assets/partner-15.svg"], ["Cicada", "https://www.cicada-mm.com/", "./assets/partner-16.svg"], ["Anogem", "https://anogem.io", "./assets/partner-17.svg"], ["CertiK", "https://www.certik.com/", "./assets/partner-certik.svg"]];
+  QA = [
+    ["Can I take just one module?", "Yes. Every module stands on its own. Order the tokenomics audit, the Workshop, or market making by itself, no need for the rest. The configurator builds whatever combination you need."],
+    ["What do you guarantee, and what don't you?", "We stand behind our own work completely: the Workshop, the tokenomics audit and design, pitch prep, market making, and running the pitch sessions. Timelines and delivery on all of that are on us. What we can't promise is what happens once the decision leaves our hands, whether a fund invests or an exchange lists you. Those calls belong to them, not us. What we can promise is that by the time your project reaches that table, it's as ready as it can possibly be."],
+    ["What if BingX won't list my project?", "Then we go elsewhere. We've got other exchanges in the partner network, and we bring one in. This is exactly why the initial review exists, we're checking how ready the project is and pointing it at whichever exchange track fits, without locking you into BingX from the start."],
+    ["Who runs client communication, and how?", "Initial contact runs over email. Once the project starts, we set up one shared working chat with 8Blocks, Fibonacci, and BingX, where day-to-day coordination happens. Responsibilities are split by stage: 8Blocks covers tokenomics and preparation, Fibonacci covers pitch sessions and market making, BingX covers the exchange track."],
+    ["How soon do you start after payment?", "The Workshop begins 1–3 days after confirmation. The tokenomics audit starts within 2–3 working days, tokenomics design within 3–5. Market making and listing depend on the exchange's schedule."],
+    ["Can I get an NDA before sharing project details?", "Yes. If the project requires it, we sign a standard NDA before the initial review."],
+    ["Does this work for a product with no token yet?", "Yes. That's the exact question the Workshop answers, whether your product needs a token at all, and what kind. A lot of Web2 teams start here, before sinking months into building a token that ends up not fitting the product."]
+  ];
+  renderVals() {
+    const { open, sel, det } = this.state;
+    const n2 = (i) => String(i + 1).padStart(2, '0');
+    const fmt = (v) => '$' + v.toLocaleString('en-US');
+    const picked = this.MODS.map((m, i) => [m, i]).filter(([, i]) => sel[i]);
+    let min = 0, max = 0, open2 = false, listing = false;
+    for (const [m] of picked) { if (m[0] === 'Listing') { listing = true; continue; } min += m[3]; if (m[4] === null) open2 = true; else max += m[4]; }
+    const onlyListing = picked.length > 0 && picked.every(([m]) => m[0] === 'Listing');
+    const total = onlyListing ? 'Custom' : (open2 ? 'from ' + fmt(min) : (min === max ? fmt(min) : fmt(min) + ' – ' + fmt(max)));
+    const notes = [];
+    if (open2) notes.push('Audit and design are priced from the base rate.');
+    if (listing) notes.push('Listing is priced separately, subject to exchange approval.');
+    return {
+      gaps: this.GAPS.map(([label, t, d, r, shape, os]) => ({ label, t, d, r, shape, os })),
+      costs: this.COSTS.map(([q, a, d, src, href], i, arr) => ({ n: n2(i), q, a, d, src, href, line: i === arr.length - 1 ? 'transparent' : 'rgba(255,255,255,.25)' })),
+      trio: this.TRIO.map(([role, name, logo, lh, t, d, bg]) => ({ role, name, logo, lh, t, d, bg })),
+      mods: this.MODS.map(([t, time, price, , , d, pk], i) => ({
+        t, time, price, d, pk: pk.map(([l, p]) => ({ l, p })), hasPk: pk.length > 0,
+        open: det === i, rot: det === i ? 'rotate(180deg)' : 'rotate(0deg)',
+        bd: sel[i] ? 'rgba(202,0,90,.7)' : 'transparent',
+        cbg: sel[i] ? 'rgb(202,0,90)' : 'transparent', cbd: sel[i] ? 'rgb(202,0,90)' : 'rgba(255,255,255,.3)', cop: sel[i] ? '1' : '0',
+        toggle: () => { const s = sel.slice(); s[i] = !s[i]; this.setState({ sel: s }); },
+        more: () => this.setState({ det: det === i ? -1 : i })
+      })),
+      empty: picked.length === 0, notEmpty: picked.length > 0,
+      picked: picked.map(([m]) => ({ t: m[0], time: m[1], price: m[2] })),
+      total, totalNote: notes.join(' '),
+      journey: this.JOURNEY.map(([t, time, d], i) => ({ n: String(i + 1), t, time, d })),
+      fits: [
+        { t: 'Good fit', items: this.GOOD, ibg: 'rgba(202,0,90,.22)', ic: 'rgb(236,57,135)', dot: 'rgba(202,0,90,.22)', path: 'M3.5 8.3l3 3L12.5 5', mini: 'M5.2 9.3l2.4 2.4 5-5.2', op: '1' },
+        { t: 'Not a fit', items: this.BAD, ibg: 'rgba(255,255,255,.1)', ic: 'rgba(255,255,255,.6)', dot: 'rgba(255,255,255,.08)', path: 'M4.5 4.5l7 7M11.5 4.5l-7 7', mini: 'M6.2 6.2l5.6 5.6M11.8 6.2l-5.6 5.6', op: '.6' }
+      ],
+      partners: [...this.PARTNERS, ...this.PARTNERS].map(([alt, href, src]) => ({ alt, href, src, h: alt === 'Fibonacci' ? '52px' : '32px', mw: alt === 'Fibonacci' ? 'none' : '140px' })),
+      faq: this.QA.map(([q, a], i, arr) => ({ q, a, open: open === i, radius: i === 0 ? '10px 10px 0 0' : (i === arr.length - 1 ? '0 0 10px 10px' : '0px'), rot: open === i ? 'rotate(180deg)' : 'rotate(0deg)', toggle: () => this.setState({ open: open === i ? -1 : i }) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

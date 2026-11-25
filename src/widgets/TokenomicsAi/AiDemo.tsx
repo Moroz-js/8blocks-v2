@@ -69,7 +69,7 @@ export function AiDemo({ copy }: { copy: DemoCopy }) {
               <i />
               <i />
             </span>
-            <span>8Blocks AI</span>
+            <span>{copy.windowTitle}</span>
           </div>
           <div className={styles.windowBody} aria-hidden="true">
             <AnimatePresence mode="wait" initial={false}>

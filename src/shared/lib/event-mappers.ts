@@ -56,6 +56,7 @@ function representative(value: unknown): EventPerson | null {
     slug: typeof person.slug === 'string' ? person.slug : null,
     showProfile: person.showProfile === true,
     photo: media(person.photo, person.name),
+    position: typeof person.position === 'string' ? person.position : null,
     bio: typeof person.bio === 'string' ? person.bio : null,
     bioOverride: typeof row.bioOverride === 'string' ? row.bioOverride : null,
     socialLinks: linkList(person, ['instagram', 'x', 'telegram', 'linkedIn', 'website', 'email'])

@@ -5,20 +5,20 @@ import config from '@payload-config'
 import { sendContactAdmin, sendContactUser } from '@/shared/lib/email'
 import { notifyTelegram } from '@/shared/lib/telegram'
 import { siteConfig } from '@/shared/config/site'
+import { uiStrings } from '@/shared/content/uiStrings'
 import { sanitizeContactForm } from '@/shared/lib/form-sanitize'
+import { checkCaptcha, readPublicForm } from '@/shared/lib/captcha/form-guard'
 
 export async function POST(req: NextRequest) {
   try {
-    let body: unknown
-    try {
-      body = await req.json()
-    } catch {
-      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 })
-    }
-    const parsed = sanitizeContactForm(body)
+    const form = await readPublicForm(req, 'contact')
+    if ('response' in form) return form.response
+    const parsed = sanitizeContactForm(form.body)
     if (!parsed.ok) {
       return NextResponse.json({ error: parsed.error }, { status: 400 })
     }
+    const captchaRejected = await checkCaptcha(req, form.body, 'contact')
+    if (captchaRejected) return captchaRejected
     const { name, email, message } = parsed
 
     const payload = await getPayload({ config })
@@ -60,11 +60,11 @@ export async function POST(req: NextRequest) {
     if (error instanceof ValidationError) {
       const first = error.data?.errors?.[0]?.message
       return NextResponse.json(
-        { error: first ?? 'Please check your input and try again.' },
+        { error: first ?? uiStrings.formInvalidInput },
         { status: 400 },
       )
     }
     console.error('[contact form]', error)
-    return NextResponse.json({ error: 'Failed to send. Please try again.' }, { status: 500 })
+    return NextResponse.json({ error: uiStrings.formSendFailed }, { status: 500 })
   }
 }

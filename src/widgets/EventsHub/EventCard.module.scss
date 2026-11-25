@@ -1,0 +1,149 @@
+@use '@/shared/ds/styles' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: $ds-text;
+}
+
+.cover {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: $ds-radius-card;
+  background-color: $ds-surface;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform calc(#{$ds-duration} * 3) $ds-ease;
+
+  .card:hover & {
+    transform: scale(1.03);
+  }
+}
+
+.tag {
+  @include ds-text-xs;
+  display: inline-flex;
+  align-items: center;
+  gap: $ds-space-2;
+  height: 28px;
+  padding-inline: $ds-space-3;
+  border-radius: $ds-radius-pill;
+  background-color: rgba($ds-black, 0.6);
+  color: $ds-white;
+  backdrop-filter: blur(10px);
+}
+
+.coverTag {
+  position: absolute;
+  top: $ds-space-3;
+  left: $ds-space-3;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: $ds-white;
+}
+
+.dotOnline {
+  background-color: $ds-accent;
+}
+
+.body {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: $ds-space-3;
+  padding-top: $ds-space-5;
+}
+
+.when {
+  @include ds-text-sm;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $ds-space-1 $ds-space-4;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: $ds-space-2;
+  }
+
+  svg {
+    flex-shrink: 0;
+    color: $ds-accent;
+  }
+}
+
+.date {
+  color: $ds-text;
+}
+
+.where {
+  color: $ds-text-muted;
+}
+
+.title {
+  @include ds-text-lg;
+  color: $ds-text;
+
+  a {
+    @include ds-focus-visible;
+    @include ds-transition(opacity);
+  }
+
+  a:hover {
+    opacity: 0.8;
+  }
+}
+
+.excerpt {
+  @include ds-text-sm;
+  flex-grow: 1;
+  color: $ds-text-muted;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $ds-space-2;
+  margin-top: $ds-space-2;
+}
+
+// Same 40px pill as the listing cards' «Read» action.
+.pill {
+  @include ds-text-sm;
+  @include ds-focus-visible;
+  @include ds-overlay(transparent);
+  @include ds-transition(box-shadow);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: $ds-space-7;
+  padding-inline: $ds-space-4;
+  border-radius: $ds-radius-pill;
+  background-color: $ds-surface-raised;
+  color: $ds-text;
+  white-space: nowrap;
+
+  &:hover {
+    @include ds-overlay($ds-surface-glass);
+  }
+}
+
+.pillPrimary {
+  background-color: $ds-text;
+  color: $ds-text-inverse;
+
+  &:hover {
+    @include ds-overlay($ds-overlay-darken);
+  }
+}
