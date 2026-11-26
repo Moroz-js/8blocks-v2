@@ -1,0 +1,76 @@
+name: Import event artwork in Payload
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Review the plan first; apply only to the same deployed revision'
+        type: choice
+        options: [plan, apply, verify]
+        default: plan
+      plan_run:
+        description: 'Reviewed plan run ID (required for apply)'
+        type: string
+        required: false
+      site:
+        description: 'Production instance owning the uploads'
+        type: choice
+        options: [all, RU, EN, AE]
+        default: all
+permissions:
+  contents: read
+concurrency:
+  group: deploy-sites
+  cancel-in-progress: false
+jobs:
+  import:
+    if: github.ref == 'refs/heads/main' && github.actor == 'Moroz-js' && github.triggering_actor == 'Moroz-js'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        site: [RU, EN, AE]
+    steps:
+      - name: Manage twelve event assets on the deployed production instance
+        if: inputs.site == 'all' || inputs.site == matrix.site
+        uses: appleboy/ssh-action@v1.2.5
+        env:
+          PROJECT_NAME: ${{ secrets[format('{0}_PROJECT_NAME', matrix.site)] }}
+          EXPECTED_SHA: ${{ github.sha }}
+          MODE: ${{ inputs.mode }}
+          PLAN_RUN: ${{ inputs.plan_run }}
+          RUN_ID: ${{ github.run_id }}
+        with:
+          host: ${{ secrets[format('{0}_SSH_HOST', matrix.site)] }}
+          username: ${{ secrets[format('{0}_SSH_USER', matrix.site)] }}
+          key: ${{ secrets[format('{0}_SSH_KEY', matrix.site)] }}
+          port: ${{ secrets[format('{0}_SSH_PORT', matrix.site)] || 22 }}
+          envs: PROJECT_NAME,EXPECTED_SHA,MODE,PLAN_RUN,RUN_ID
+          command_timeout: 8m
+          script: |
+            set -eu
+            cd "/var/www/${PROJECT_NAME:?}"
+            test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+            test -d public/uploads && test -f .env
+            umask 077
+            records="$HOME/.8blocks-release-backups/$PROJECT_NAME/event-artwork/$EXPECTED_SHA"
+            mkdir -p "$records"
+            run_import() { NODE_ENV=production PAYLOAD_CONFIG_PATH=payload.config.ts node --env-file=.env -r ./scripts/payload-next-env-shim.cjs -r tsx/cjs scripts/import-event-artwork.ts "$@"; }
+            case "$MODE" in
+              plan)
+                run_import > "$records/$RUN_ID.log"
+                grep '^{"source":' "$records/$RUN_ID.log" > "$records/$RUN_ID.plan"
+                test "$(wc -l < "$records/$RUN_ID.plan")" -eq 12
+                cat "$records/$RUN_ID.plan" ;;
+              apply)
+                case "$PLAN_RUN" in ''|*[!0-9]*) exit 2;; esac
+                test -s "$records/$PLAN_RUN.plan"
+                run_import > "$records/$RUN_ID.before"
+                grep '^{"source":' "$records/$RUN_ID.before" > "$records/$RUN_ID.plancheck"
+                cmp "$records/$PLAN_RUN.plan" "$records/$RUN_ID.plancheck"
+                run_import --apply --replace-existing > "$records/$RUN_ID.applied"
+                grep '^{"event":' "$records/$RUN_ID.applied" || true
+                run_import --verify ;;
+              verify) run_import --verify ;;
+              *) exit 2 ;;
+            esac

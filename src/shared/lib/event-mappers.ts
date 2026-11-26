@@ -89,6 +89,7 @@ export function mapEventCard(value: unknown): EventCard | null {
     slug: item.slug,
     subtitle: typeof item.subtitle === 'string' ? item.subtitle : null,
     cover: media(item.cover, title),
+    mapPhoto: item.format === 'offline' ? media(item.mapPhoto, title) : null,
     featured: item.featured === true,
     format: item.format,
     startsAt: item.startsAt,

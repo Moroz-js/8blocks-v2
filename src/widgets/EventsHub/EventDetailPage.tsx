@@ -9,7 +9,6 @@ import { lang } from '@/shared/i18n'
 import { RichText } from '@/shared/render'
 import { ArticleRoot } from '@/widgets/ArticlePage/ArticleParts'
 import { ChevronIcon, EventCard } from './EventCard'
-import { eventCover } from './eventArtwork'
 import { eventWhere, isPastEvent, timeRange, toEventCardData } from './model'
 import cardStyles from './EventCard.module.scss'
 import styles from './EventDetailPage.module.scss'
@@ -81,7 +80,7 @@ interface EventDetailPageProps {
 /** /events/[slug]: centred header, cover with the facts grid, the story, team, partners, photos. */
 export function EventDetailPage({ event, more }: EventDetailPageProps) {
   const past = isPastEvent(event)
-  const cover = event.poster ?? eventCover(event)
+  const cover = event.poster ?? event.cover
   const role = event.badges[0]
   const time = timeRange(event)
   const formatLabel = event.format === 'online' ? eventsContent.online : eventsContent.offline

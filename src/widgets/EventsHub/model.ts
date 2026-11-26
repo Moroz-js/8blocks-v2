@@ -1,6 +1,5 @@
 import type { EventCard, EventFormat } from '@/entities/event'
 import { lang } from '@/shared/i18n'
-import { countryPhoto, eventCover } from './eventArtwork'
 import { EVENT_CITIES_MAP, eventCityLabel } from '@/shared/config/eventCities'
 import { eventsContent, eventsHubContent } from '@/shared/content/eventsPage'
 
@@ -11,6 +10,7 @@ export interface EventCardData {
   title: string
   excerpt: string | null
   cover: { url: string; alt: string } | null
+  mapPhoto: { url: string; alt: string } | null
   format: EventFormat
   formatLabel: string
   when: string
@@ -93,6 +93,11 @@ const project = (lat: number, lon: number) => ({ x: 567 + 3.33 * lon, y: 348.5 -
 /** One pin per country of the past offline events; thumbnails that would overlap are pushed apart. */
 export function buildMapPins(events: readonly EventCardData[], points: Record<string, readonly [number, number]>) {
   const pins: MapPin[] = []
+  // Events arrive newest first. A dedicated map photo outranks any card cover.
+  const photos = new Map<string, NonNullable<EventCardData['mapPhoto']>>()
+  for (const event of events) {
+    if (event.country && event.mapPhoto && !photos.has(event.country)) photos.set(event.country, event.mapPhoto)
+  }
   for (const event of events) {
     const point = event.country ? points[event.country] : undefined
     if (!event.country || !point) continue
@@ -102,7 +107,7 @@ export function buildMapPins(events: readonly EventCardData[], points: Record<st
       continue
     }
     const { x, y } = project(point[0], point[1])
-    pins.push({ country: event.country, name: countryName(event.country), x, y, thumbX: x, cover: countryPhoto(event.country) ?? event.cover })
+    pins.push({ country: event.country, name: countryName(event.country), x, y, thumbX: x, cover: photos.get(event.country) ?? event.cover })
   }
   pins.sort((a, b) => a.x - b.x)
   pins.forEach((pin, i) => {
@@ -120,7 +125,8 @@ export function toEventCardData(event: EventCard): EventCardData {
     href: `/events/${event.slug}`,
     title: event.title,
     excerpt: event.subtitle ?? null,
-    cover: eventCover(event),
+    cover: event.cover ? { url: event.cover.url, alt: event.cover.alt || event.title } : null,
+    mapPhoto: event.mapPhoto ? { url: event.mapPhoto.url, alt: event.mapPhoto.alt } : null,
     format: event.format,
     formatLabel: event.format === 'online' ? eventsContent.online : eventsContent.offline,
     when: shortDate(event),

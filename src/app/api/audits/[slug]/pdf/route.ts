@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { visiblePublicAuditWhere } from '@/shared/lib/public-audit-where'
+import { downloadAuditFile } from '@/shared/lib/audit-pdf-download'
+import { apiPath } from '@/shared/lib/apiPath'
 import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -19,7 +21,7 @@ const AUDIT_PDF_CACHE_DIR =
 const PDF_HEADERS = {
   'Content-Type': 'application/pdf',
   'X-Robots-Tag': 'noindex, nofollow',
-  'Cache-Control': 'public, max-age=3600',
+  'Cache-Control': 'no-store',
 } as const
 
 /** Один рендер на slug за раз: параллельные запросы ждут общий результат, а не поднимают по Chromium каждый. */
@@ -161,11 +163,11 @@ table tr, table thead, table tbody, table tfoot {
 function internalBaseUrl(): string {
   if (process.env.PDF_INTERNAL_BASE_URL) return process.env.PDF_INTERNAL_BASE_URL
   const port = process.env.PORT || '3000'
-  return `http://127.0.0.1:${port}`
+  return `http://127.0.0.1:${port}${apiPath('')}`
 }
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await params
@@ -177,12 +179,16 @@ export async function GET(
       collection: 'public-audits',
       where: { and: [{ slug: { equals: slug } }, visiblePublicAuditWhere] },
       limit: 1,
-      depth: 0,
+      depth: 1,
+      select: { updatedAt: true, pdfFile: true },
+      populate: { media: { filename: true, mimeType: true } },
     })
     if (!result.docs.length) {
       return NextResponse.json({ error: 'Not found' }, { status: 404 })
     }
-    updatedAt = String((result.docs[0] as { updatedAt?: string }).updatedAt ?? '')
+    const audit = result.docs[0]
+    if (audit.pdfFile != null) return await downloadAuditFile(audit.pdfFile, req.signal)
+    updatedAt = String(audit.updatedAt ?? '')
   } catch {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
