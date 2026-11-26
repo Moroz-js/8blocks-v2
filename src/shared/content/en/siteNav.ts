@@ -41,7 +41,7 @@ export const siteNav = {
         href: '/product/digital-assets',
         title: 'Start with the business case',
         text: 'From strategy to implementation: turn real-world assets and financial instruments into digital products.',
-        more: 'Explore Digital Assets',
+        more: 'Explore Asset Tokenization',
       },
       columns: [
         {
@@ -64,7 +64,7 @@ export const siteNav = {
         href: '/cases',
         title: 'Our work and insights',
         text: 'In-depth cases, audits, research and editorial insights from our team.',
-        more: 'Explore Media',
+        more: 'Explore our work',
       },
       columns: [
         {

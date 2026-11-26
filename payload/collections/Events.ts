@@ -183,6 +183,14 @@ export const Events: CollectionConfig = {
               validate: (value: unknown, context: { data?: unknown }) =>
                 (context.data as { format?: unknown } | undefined)?.format !== 'offline' || value ? true : 'Для офлайн-события выберите город.',
             },
+            {
+              name: 'mapPhoto', type: 'upload', relationTo: 'media', label: 'Фото для карты',
+              filterOptions: { mimeType: { like: 'image/' } },
+              admin: {
+                condition: (data) => data?.format === 'offline',
+                description: 'Для метки страны берётся фото самого свежего прошедшего события с заполненным полем. Если фото нет, используется обложка.',
+              },
+            },
             { name: 'venueName', type: 'text', label: 'Площадка', admin: { condition: (data: Record<string, unknown>) => data?.format === 'offline' } },
             { name: 'address', type: 'textarea', label: 'Адрес', admin: { condition: (data: Record<string, unknown>) => data?.format === 'offline' } },
             { name: 'mapsUrl', type: 'text', label: 'Ссылка на карту', validate: validateUrl, admin: { condition: (data: Record<string, unknown>) => data?.format === 'offline' } },

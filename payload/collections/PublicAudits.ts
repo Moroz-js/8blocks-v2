@@ -99,6 +99,16 @@ export const PublicAudits: CollectionConfig = {
       },
     },
     {
+      name: 'pdfFile',
+      type: 'upload',
+      label: 'PDF для скачивания',
+      relationTo: 'media',
+      filterOptions: { mimeType: { equals: 'application/pdf' } },
+      admin: {
+        description: 'Загрузите PDF или выберите его из медиатеки. Кнопка «Скачать аудит в PDF» будет отдавать этот файл. Если поле пустое, PDF формируется из страницы аудита.',
+      },
+    },
+    {
       type: 'group',
       name: 'hero',
       label: 'Шапка (Hero)',

@@ -35,6 +35,7 @@ export interface EventCard {
   slug: string
   subtitle?: string | null
   cover?: EventMedia | null
+  mapPhoto?: EventMedia | null
   featured: boolean
   format: EventFormat
   startsAt: string

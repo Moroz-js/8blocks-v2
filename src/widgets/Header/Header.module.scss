@@ -86,7 +86,7 @@ $glass-open: color-mix(in srgb, #{$ds-bg} 64%, transparent);
 .nav {
   display: flex;
   align-items: center;
-  gap: $ds-space-7;
+  gap: $ds-space-3;
 
   @include ds-tablet {
     display: none;
@@ -127,19 +127,17 @@ $glass-open: color-mix(in srgb, #{$ds-bg} 64%, transparent);
   @include ds-text-md;
   display: flex;
   align-items: center;
-  gap: $ds-space-2;
+  padding: $ds-space-2 $ds-space-4;
+  border-radius: $ds-radius-pill;
+  white-space: nowrap;
+  @include ds-transition(background-color);
   color: $ds-text;
   @include ds-focus-visible;
 }
 
-.chevron {
-  opacity: 0.6;
-  @include ds-transition(transform, opacity);
-
-  .itemOpen & {
-    transform: rotate(180deg);
-    opacity: 1;
-  }
+.trigger[aria-expanded='true'],
+.trigger:focus-visible {
+  background: $ds-border;
 }
 
 .panel {
@@ -248,13 +246,12 @@ $glass-open: color-mix(in srgb, #{$ds-bg} 64%, transparent);
   mask-image: linear-gradient(90deg, transparent 0, #000 25%);
 }
 
-.introGlyph {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 55%;
-  height: 100%;
-  pointer-events: none;
+.artMedia {
+  left: 49%;
+  top: 3%;
+  width: 60%;
+  height: 96%;
+  mask-image: linear-gradient(90deg, transparent, #000 25%);
 }
 
 .introText {

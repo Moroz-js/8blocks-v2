@@ -26,6 +26,8 @@ import * as migration_20260910_000002_events_our_role from './20260910_000002_ev
 import * as migration_20261030_000000_hreflang_alternate_slug from './20261030_000000_hreflang_alternate_slug'
 import * as migration_20261109_000000_notification_settings from './20261109_000000_notification_settings'
 import * as migration_20261112_000000_seo_content_fixes from './20261112_000000_seo_content_fixes'
+import * as migration_20261126_000000_event_map_photo from './20261126_000000_event_map_photo'
+import * as migration_20261126_000001_public_audit_pdf from './20261126_000001_public_audit_pdf'
 
 import * as migration_20260905_000000_articles_alternate_slug from './20260905_000000_articles_alternate_slug'
 
@@ -174,5 +176,15 @@ export const migrations = [
     up: migration_20261112_000000_seo_content_fixes.up,
     down: migration_20261112_000000_seo_content_fixes.down,
     name: '20261112_000000_seo_content_fixes',
+  },
+  {
+    up: migration_20261126_000000_event_map_photo.up,
+    down: migration_20261126_000000_event_map_photo.down,
+    name: '20261126_000000_event_map_photo',
+  },
+  {
+    up: migration_20261126_000001_public_audit_pdf.up,
+    down: migration_20261126_000001_public_audit_pdf.down,
+    name: '20261126_000001_public_audit_pdf',
   },
 ]

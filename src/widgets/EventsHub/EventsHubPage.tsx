@@ -2,11 +2,9 @@ import type { CSSProperties } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { EventCard as EventCardModel } from '@/entities/event'
-import { AccentSurface, Button, Section } from '@/shared/ds'
-import { socialLinks } from '@/shared/config/site'
+import { Button, Section } from '@/shared/ds'
 import { COUNTRY_POINTS } from '@/shared/config/countryPoints'
 import { eventsHubContent as hub, pastEventsStrings } from '@/shared/content/eventsPage'
-import { BinaryGlyph } from '@/widgets/BinaryArt/BinaryGlyph'
 import { ServiceHero } from '@/widgets/ServicePages/blocks/ServiceHero'
 import { ChevronIcon, FormatTag } from './EventCard'
 import { buildMapPins, toEventCardData, type EventCardData } from './model'
@@ -53,28 +51,6 @@ function FeaturedEvent({ event }: { event: EventCardData }) {
   )
 }
 
-function EmptyUpcoming() {
-  const channels = socialLinks.filter((link) => link.id === 'x' || link.id === 'telegram')
-  return (
-    <div className={styles.empty}>
-      <AccentSurface />
-      <BinaryGlyph shape="clock" ox={0.78} oy={0.5} os={0.9} className={styles.emptyGlyph} />
-      <div className={styles.emptyText}>
-        <h3 className={styles.emptyTitle}>{hub.emptyTitle}</h3>
-        <p>{hub.emptyText}</p>
-      </div>
-      <div className={styles.actions}>
-        <Button href="/contact">{hub.requestMeeting}</Button>
-        {channels.map((link) => (
-          <Button key={link.id} href={link.href} variant="tertiary" target="_blank" rel="noopener noreferrer">
-            {link.id === 'x' ? hub.followX : hub.telegram}
-          </Button>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 interface EventsHubPageProps {
   /** Soonest first. */
   upcoming: readonly EventCardModel[]
@@ -100,17 +76,15 @@ export function EventsHubPage({ upcoming, past }: EventsHubPageProps) {
         <Button href="/contact">{hub.requestMeeting}</Button>
       </ServiceHero>
 
-      <Section title={hub.upcomingTitle} id="upcoming">
-        {upcoming.length > 0 ? (
+      {upcoming.length > 0 && (
+        <Section title={hub.upcomingTitle} id="upcoming">
           <div className={styles.featuredList}>
             {upcoming.map((event) => (
               <FeaturedEvent key={event.id} event={toEventCardData(event)} />
             ))}
           </div>
-        ) : (
-          <EmptyUpcoming />
-        )}
-      </Section>
+        </Section>
+      )}
 
       {pastCards.length > 0 && (
         <Section title={hub.pastTitle} id="past">

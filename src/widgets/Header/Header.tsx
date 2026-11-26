@@ -10,11 +10,11 @@ import { AccentSurface } from '@/shared/ds'
 import { Logo } from '@/shared/ui'
 import { ThemeToggle } from '@/shared/ui/ThemeToggle'
 import { useThemeScopeActive } from '@/shared/lib/ThemeScope'
-import { BinaryGlyph } from '@/widgets/BinaryArt/BinaryGlyph'
 import { StagingBar } from './StagingBar'
 import { filterNav, type NavFlags } from './navFilter'
 import coinArt from './assets/nav-ill-tokenomics-coin.png'
 import houseArt from './assets/nav-ill-assets-house.png'
+import mediaArt from './assets/nav-ill-media.png'
 import profilesArt from './assets/nav-ill-company-profiles.png'
 import styles from './Header.module.scss'
 
@@ -24,25 +24,13 @@ const isStaging = process.env.NEXT_PUBLIC_STAGING === 'true'
 const INTRO_ART: Record<string, { src: StaticImageData; className: string }> = {
   tokenomics: { src: coinArt, className: styles.artCoin },
   assets: { src: houseArt, className: styles.artHouse },
+  media: { src: mediaArt, className: styles.artMedia },
   company: { src: profilesArt, className: styles.artProfiles },
-}
-
-/** Menus without a drawn card art use an engine glyph; it mounts only while the menu is open. */
-const INTRO_GLYPH: Record<string, string> = {
-  media: 'docpage',
 }
 
 interface HeaderProps extends NavFlags {
   nav: SiteNav
   className?: string
-}
-
-function Chevron() {
-  return (
-    <svg className={styles.chevron} width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-      <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
 }
 
 export function Header({ nav: fullNav, className, ...flags }: HeaderProps) {
@@ -133,17 +121,11 @@ export function Header({ nav: fullNav, className, ...flags }: HeaderProps) {
                     onClick={() => setOpenId(open ? null : group.id)}
                   >
                     {group.label}
-                    <Chevron />
                   </button>
                   <div id={`nav-panel-${group.id}`} className={styles.panel}>
                     <Link href={group.intro.href} className={styles.intro} onClick={() => setOpenId(null)}>
                       <AccentSurface />
                       {art && <Image src={art.src} alt="" className={clsx(styles.introArt, art.className)} />}
-                      {open && INTRO_GLYPH[group.id] && (
-                        <span className={styles.introGlyph} aria-hidden="true">
-                          <BinaryGlyph shape={INTRO_GLYPH[group.id]} os={0.8} />
-                        </span>
-                      )}
                       <span className={styles.introText}>
                         <span className={styles.introTitle}>{group.intro.title}</span>
                         <span className={styles.introLead}>{group.intro.text}</span>
