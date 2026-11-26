@@ -17,6 +17,12 @@ const entries = [
   ['what-will-bring-300b-in-capital-from-usd-backed-stablecoins-back-into-defi', '2026-08-20', 'online'],
 ] as const
 
+// The RU catalogue has four of the supplied events and a separate Moscow forum.
+const russianReleaseSlugs = new Set<string>([
+  'token2049-singapore-2026', 'korea-blockchain-week-2026', 'conf3rence-2026',
+  'which-web3-business-models-actually-have-a-chance-in-the-next-cycle',
+])
+
 async function main() {
   const args = process.argv.slice(2)
   if (args.some(a => !['--apply', '--replace-existing', '--verify'].includes(a))) throw new Error('Unknown argument')
@@ -24,12 +30,14 @@ async function main() {
   const replace = args.includes('--replace-existing')
   const verify = args.includes('--verify')
   if (apply && verify) throw new Error('Verify and apply are separate operations')
+  const release = process.env.NEXT_PUBLIC_LANG === 'ru' ? entries.filter(([slug]) => russianReleaseSlugs.has(slug)) : entries
+  const expectedFiles = release.length + release.filter(entry => entry.length === 4).length
   console.log(verify ? 'VERIFY' : apply ? 'APPLY' : 'DRY RUN')
   const payload = await getPayload({ config })
   try {
     const seen = new Set<string>()
     const plan = []
-    for (const [slug, day, format, pin] of entries) {
+    for (const [slug, day, format, pin] of release) {
       let { docs } = await payload.find({ collection: 'events', where: { or: [{ slug: { equals: slug } }, { 'seo.alternateSlug': { equals: slug } }] }, limit: 2, depth: 0 })
       if (!docs.length) {
         const end = new Date(Date.parse(day) + 86_400_000).toISOString()
@@ -52,7 +60,7 @@ async function main() {
       }
     }
     if (verify) {
-      if (plan.length !== 12 || plan.some(p => !p.unchanged)) throw new Error('Incomplete event relationships')
+      if (plan.length !== expectedFiles || plan.some(p => !p.unchanged)) throw new Error('Incomplete event relationships')
       const base = `http://127.0.0.1:${process.env.PORT || '3000'}`
       for (const item of plan) {
         const r = await fetch(`${base}/api/media/file/${encodeURIComponent(item.name)}`, { signal: AbortSignal.timeout(30_000) })
@@ -62,7 +70,7 @@ async function main() {
       if (typeof audits.docs[0]?.slug !== 'string') throw new Error('No visible audit available to verify')
       const pdf = await fetch(`${base}/api/audits/${encodeURIComponent(audits.docs[0].slug)}/pdf`, {signal:AbortSignal.timeout(110_000)})
       if (!pdf.ok || !pdf.headers.get('content-disposition')?.startsWith('attachment') || Buffer.from(await pdf.arrayBuffer()).subarray(0,5).toString() !== '%PDF-') throw new Error(`Audit PDF check failed: ${pdf.status}`)
-      console.log('VERIFIED: 8 event covers, 4 map photos, 12 WebP downloads and 1 audit PDF attachment')
+      console.log(`VERIFIED: ${release.length} covers, ${expectedFiles - release.length} map photos, ${expectedFiles} WebP downloads and 1 audit PDF attachment`)
       return
     }
     if (!apply) return
