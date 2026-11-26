@@ -1,5 +1,6 @@
 import type { EventCard, EventFormat } from '@/entities/event'
 import { lang } from '@/shared/i18n'
+import { countryPhoto, eventCover } from './eventArtwork'
 import { EVENT_CITIES_MAP, eventCityLabel } from '@/shared/config/eventCities'
 import { eventsContent, eventsHubContent } from '@/shared/content/eventsPage'
 
@@ -101,7 +102,7 @@ export function buildMapPins(events: readonly EventCardData[], points: Record<st
       continue
     }
     const { x, y } = project(point[0], point[1])
-    pins.push({ country: event.country, name: countryName(event.country), x, y, thumbX: x, cover: event.cover })
+    pins.push({ country: event.country, name: countryName(event.country), x, y, thumbX: x, cover: countryPhoto(event.country) ?? event.cover })
   }
   pins.sort((a, b) => a.x - b.x)
   pins.forEach((pin, i) => {
@@ -119,7 +120,7 @@ export function toEventCardData(event: EventCard): EventCardData {
     href: `/events/${event.slug}`,
     title: event.title,
     excerpt: event.subtitle ?? null,
-    cover: event.cover ? { url: event.cover.url, alt: event.cover.alt || event.title } : null,
+    cover: eventCover(event),
     format: event.format,
     formatLabel: event.format === 'online' ? eventsContent.online : eventsContent.offline,
     when: shortDate(event),
