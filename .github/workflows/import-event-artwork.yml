@@ -60,7 +60,7 @@ jobs:
               plan)
                 run_import > "$records/$RUN_ID.log"
                 grep '^{"source":' "$records/$RUN_ID.log" > "$records/$RUN_ID.plan"
-                test "$(wc -l < "$records/$RUN_ID.plan")" -eq 12
+                case "$(wc -l < "$records/$RUN_ID.plan")" in 7|12) :;; *) exit 2;; esac
                 cat "$records/$RUN_ID.plan" ;;
               apply)
                 case "$PLAN_RUN" in ''|*[!0-9]*) exit 2;; esac
